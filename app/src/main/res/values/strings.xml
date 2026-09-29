@@ -126,11 +126,8 @@
     <string name="hint_date">Datum wählen</string>
     <string name="error_decision_not_saved">Die Entscheidung wurde nicht gespeichert. Bitte erneut versuchen.</string>
     <string name="error_date_not_saved">Der Termin wurde nicht gespeichert.</string>
-    <string name="not_local_title">Nicht lokal verfügbar</string>
-    <string name="not_local_message">Dieses Medium ist nicht als lokale Datei verfügbar. PhotoMaid lädt nichts automatisch herunter und trifft ohne Vorschau keine Entscheidung.</string>
     <string name="skip_without_decision">Ohne Entscheidung überspringen</string>
     <string name="preview_failed">Vorschau konnte nicht geladen werden</string>
-    <string name="video_not_local">Video nicht lokal verfügbar</string>
     <string name="play">Abspielen</string>
     <string name="pause">Pause</string>
     <string name="playback_position">Wiedergabeposition</string>
@@ -166,7 +163,6 @@
     <string name="picker_show_on">Wieder zeigen am %1$s</string>
     <string name="picker_choose_interval">Abstand wählen</string>
     <string name="picker_specific_date">Bestimmtes Datum …</string>
-    <string name="date">Datum</string>
     <string name="change_date">Datum ändern</string>
 
     <!-- Papierkorb -->
@@ -233,7 +229,6 @@
     <string name="large_filter">Filter: ab %1$d MB</string>
     <string name="decrease">Verringern</string>
     <string name="increase">Erhöhen</string>
-    <string name="sort">Sortierung</string>
     <string name="sort_largest">Größte</string>
     <string name="sort_newest">Neueste</string>
     <string name="sort_oldest">Älteste</string>

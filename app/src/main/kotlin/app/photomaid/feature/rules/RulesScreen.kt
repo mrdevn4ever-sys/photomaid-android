@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -100,6 +101,7 @@ fun RulesScreen(nav: Nav) {
     val app = LocalApp.current
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     val scope = rememberCoroutineScope()
     val state by app.rules.state.collectAsState()
     val sources by app.sources.sources.collectAsState()
@@ -138,7 +140,7 @@ fun RulesScreen(nav: Nav) {
                         GlassButton(stringResource(R.string.rules_run_now)) {
                             scope.launch {
                                 val ok = app.rules.runNow(rule, app)
-                                message = ctx.getString(if (ok) R.string.rules_run_done else R.string.rules_run_unavailable)
+                                message = res.getString(if (ok) R.string.rules_run_done else R.string.rules_run_unavailable)
                             }
                         }
                         GlassButton(stringResource(R.string.rules_edit)) { editing = rule }

@@ -43,6 +43,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -76,6 +77,7 @@ fun SettingsScreen(nav: Nav) {
     val app = LocalApp.current
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     val scope = rememberCoroutineScope()
     val settings by app.settings.collectAsState()
     val notif by app.reminders.access.collectAsState()
@@ -133,7 +135,7 @@ fun SettingsScreen(nav: Nav) {
                     RowDivider()
                     PlainButton(stringResource(R.string.pro_restore)) {
                         scope.launch {
-                            restoreMessage = ctx.getString(if (app.purchases.restore() == PurchaseResult.Purchased) R.string.pro_msg_restored else R.string.pro_msg_nothing)
+                            restoreMessage = res.getString(if (app.purchases.restore() == PurchaseResult.Purchased) R.string.pro_msg_restored else R.string.pro_msg_nothing)
                         }
                     }
                 }

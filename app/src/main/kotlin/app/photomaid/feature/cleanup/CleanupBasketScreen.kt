@@ -38,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -86,6 +87,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     val app = LocalApp.current
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     val scope = rememberCoroutineScope()
     val read by app.read.collectAsState()
     val basket = read.basket
@@ -119,17 +121,17 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
         resultMessage = when (val r = app.runCleanup(items, kind)) {
             is CleanupRunResult.Finished -> when (r.intent.state) {
                 OperationState.SUCCEEDED -> if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE)
-                    ctx.getString(R.string.result_media_trashed, r.intent.confirmedRemoved.size)
-                else ctx.getString(R.string.result_files_deleted, r.intent.confirmedRemoved.size)
-                OperationState.PARTIALLY_SUCCEEDED -> ctx.getString(R.string.result_partial, r.intent.confirmedRemoved.size, r.intent.items.size)
-                OperationState.CANCELLED -> ctx.getString(R.string.result_cancelled)
-                else -> ctx.getString(R.string.result_nothing)
+                    res.getString(R.string.result_media_trashed, r.intent.confirmedRemoved.size)
+                else res.getString(R.string.result_files_deleted, r.intent.confirmedRemoved.size)
+                OperationState.PARTIALLY_SUCCEEDED -> res.getString(R.string.result_partial, r.intent.confirmedRemoved.size, r.intent.items.size)
+                OperationState.CANCELLED -> res.getString(R.string.result_cancelled)
+                else -> res.getString(R.string.result_nothing)
             }
             is CleanupRunResult.Rejected -> when (val e = r.error) {
-                is CleanupError.AllowanceExceeded -> { if (e.available == 0) showProAfter = true; ctx.getString(R.string.result_allowance, e.available, e.requested) }
-                else -> ctx.getString(R.string.result_changed)
+                is CleanupError.AllowanceExceeded -> { if (e.available == 0) showProAfter = true; res.getString(R.string.result_allowance, e.available, e.requested) }
+                else -> res.getString(R.string.result_changed)
             }
-            CleanupRunResult.NeedsReconciliation -> ctx.getString(R.string.result_reconcile)
+            CleanupRunResult.NeedsReconciliation -> res.getString(R.string.result_reconcile)
         }
         running = false
     }

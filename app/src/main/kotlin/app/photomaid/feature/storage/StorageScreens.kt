@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -89,6 +90,7 @@ fun LargeFilesScreen(nav: Nav) {
     val app = LocalApp.current
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     val scope = rememberCoroutineScope()
     val settings by app.settings.collectAsState()
     var index by remember { mutableStateOf(FileIndex()) }
@@ -167,6 +169,7 @@ private fun LargeRowView(r: LargeRow) {
     val app = LocalApp.current
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     val scope = rememberCoroutineScope()
     var menu by remember { mutableStateOf(false) }
     Row(Modifier.fillMaxWidth().heightIn(min = 60.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
@@ -195,6 +198,7 @@ fun StorageInsightsScreen(nav: Nav) {
     val app = LocalApp.current
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     var device by remember { mutableStateOf<DeviceCapacity?>(null) }
     var counts by remember { mutableStateOf<Map<MediaCategory, Int>>(emptyMap()) }
     var tallies by remember { mutableStateOf<Map<MediaCategory, SizeTally>>(emptyMap()) }
@@ -230,7 +234,7 @@ fun StorageInsightsScreen(nav: Nav) {
                             Text(value, style = AppTypography.subheadline, color = c.textSecondary)
                         }
                     }
-                    fun v(cat: MediaCategory) = ctx.getString(R.string.storage_value_items, counts[cat] ?: 0, SizeText.tally(ctx, tallies[cat] ?: SizeTally()))
+                    fun v(cat: MediaCategory) = res.getString(R.string.storage_value_items, counts[cat] ?: 0, SizeText.tally(ctx, tallies[cat] ?: SizeTally()))
                     row(Icons.Rounded.Photo, stringResource(R.string.cat_photos), v(MediaCategory.PHOTOS)); RowDivider()
                     row(Icons.Rounded.CameraAlt, stringResource(R.string.storage_of_which_screens), v(MediaCategory.SCREENSHOTS)); RowDivider()
                     row(Icons.Rounded.Videocam, stringResource(R.string.cat_videos), v(MediaCategory.VIDEOS)); RowDivider()

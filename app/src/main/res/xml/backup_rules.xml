@@ -4,5 +4,4 @@
 <full-backup-content>
     <include domain="database" path="photomaid.db" />
     <exclude domain="database" path="photomaid.db-shm" />
-    <exclude domain="root" path="cache" />
 </full-backup-content>

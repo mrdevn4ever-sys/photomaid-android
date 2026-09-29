@@ -53,6 +53,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -112,19 +113,20 @@ suspend fun scanAll(app: AppModel): FileIndex = withContext(Dispatchers.IO) {
 fun rememberFolderPicker(asDownloads: Boolean, onDone: (String?) -> Unit): () -> Unit {
     val app = LocalApp.current
     val ctx = LocalContext.current
+    val res = LocalResources.current
     val scope = rememberCoroutineScope()
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
         scope.launch {
             val err = withContext(Dispatchers.IO) {
                 try { app.sources.add(uri, asDownloads); null }
-                catch (e: SourceException) { ctx.getString(if (e.problem == SourceProblem.CLOUD_PROVIDER_NOT_SUPPORTED) R.string.error_cloud_folder else R.string.error_folder_connect) }
-                catch (e: Exception) { ctx.getString(R.string.error_folder_connect) }
+                catch (e: SourceException) { res.getString(if (e.problem == SourceProblem.CLOUD_PROVIDER_NOT_SUPPORTED) R.string.error_cloud_folder else R.string.error_folder_connect) }
+                catch (e: Exception) { res.getString(R.string.error_folder_connect) }
             }
             onDone(err)
         }
     }
-    return { runCatching { launcher.launch(null) }.onFailure { onDone(ctx.getString(R.string.error_folder_connect)) } }
+    return { runCatching { launcher.launch(null) }.onFailure { onDone(res.getString(R.string.error_folder_connect)) } }
 }
 
 /** Screen 7 – Downloads/Dateien. Nur verbundene Quellen. Heißt „Downloads“ nur bei erkannter Downloads-Quelle. */
@@ -133,6 +135,7 @@ fun FileBrowserScreen(nav: Nav) {
     val app = LocalApp.current
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     val scope = rememberCoroutineScope()
     val sources by app.sources.sources.collectAsState()
     var index by remember { mutableStateOf(FileIndex(scanning = true)) }
@@ -165,7 +168,7 @@ fun FileBrowserScreen(nav: Nav) {
         if (e.kind == FileKindFilter.ARCHIVE || e.kind == FileKindFilter.OTHER) return
         val intent = Intent(Intent.ACTION_VIEW).setDataAndType(Uri.parse(e.documentUri), e.mimeType ?: "*/*")
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
-        try { ctx.startActivity(intent) } catch (_: ActivityNotFoundException) { errorText = ctx.getString(R.string.no_viewer) }
+        try { ctx.startActivity(intent) } catch (_: ActivityNotFoundException) { errorText = res.getString(R.string.no_viewer) }
     }
     fun decide(e: FileEntry, a: DecisionAction) = scope.launch {
         app.decide(e.reference, a)
@@ -244,6 +247,7 @@ fun kindTint(k: FileKindFilter, c: PhotoMaidColors): Color = when (k) {
 private fun FileRow(e: FileEntry, state: Disposition, onOpen: () -> Unit, onKeep: () -> Unit, onTrash: () -> Unit, onLater: () -> Unit) {
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     var menu by remember { mutableStateOf(false) }
     Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).clickable(onClick = onOpen), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {

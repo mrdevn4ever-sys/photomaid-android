@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -73,6 +74,7 @@ fun ProScreen(nav: Nav) {
     val app = LocalApp.current
     val c = PM.colors
     val ctx = LocalContext.current
+    val res = LocalResources.current
     val scope = rememberCoroutineScope()
     val purchases = app.purchases
     val state by purchases.state.collectAsState()
@@ -125,11 +127,11 @@ fun ProScreen(nav: Nav) {
                                     busy = true
                                     app.player.stop()
                                     message = when (app.purchasePro(activity)) {
-                                        PurchaseResult.Purchased -> ctx.getString(R.string.pro_msg_active)
-                                        PurchaseResult.Pending -> ctx.getString(R.string.pro_msg_pending)
+                                        PurchaseResult.Purchased -> res.getString(R.string.pro_msg_active)
+                                        PurchaseResult.Pending -> res.getString(R.string.pro_msg_pending)
                                         PurchaseResult.Cancelled -> null
-                                        is PurchaseResult.Failed -> ctx.getString(R.string.pro_msg_failed)
-                                        PurchaseResult.NotConfigured -> ctx.getString(R.string.pro_unavailable)
+                                        is PurchaseResult.Failed -> res.getString(R.string.pro_msg_failed)
+                                        PurchaseResult.NotConfigured -> res.getString(R.string.pro_unavailable)
                                     }
                                     app.reload()
                                     busy = false
@@ -143,7 +145,7 @@ fun ProScreen(nav: Nav) {
                         if (purchases.isConfigured) GlassButton(stringResource(R.string.pro_restore), enabled = !busy) {
                             scope.launch {
                                 busy = true
-                                message = ctx.getString(if (purchases.restore() == PurchaseResult.Purchased) R.string.pro_msg_restored else R.string.pro_msg_nothing)
+                                message = res.getString(if (purchases.restore() == PurchaseResult.Purchased) R.string.pro_msg_restored else R.string.pro_msg_nothing)
                                 app.reload()
                                 busy = false
                             }
@@ -166,10 +168,10 @@ fun ProScreen(nav: Nav) {
                             scope.launch {
                                 busy = true
                                 message = when (app.entitlements.watchRewardedAd { app.player.stop() }) {
-                                    is RewardedAdResult.Rewarded -> ctx.getString(R.string.pro_msg_rewarded)
-                                    RewardedAdResult.DismissedWithoutReward -> ctx.getString(R.string.pro_msg_dismissed)
-                                    RewardedAdResult.NoFill -> ctx.getString(R.string.pro_msg_nofill)
-                                    is RewardedAdResult.Failed, RewardedAdResult.NotConfigured -> ctx.getString(R.string.pro_msg_ad_unavailable)
+                                    is RewardedAdResult.Rewarded -> res.getString(R.string.pro_msg_rewarded)
+                                    RewardedAdResult.DismissedWithoutReward -> res.getString(R.string.pro_msg_dismissed)
+                                    RewardedAdResult.NoFill -> res.getString(R.string.pro_msg_nofill)
+                                    is RewardedAdResult.Failed, RewardedAdResult.NotConfigured -> res.getString(R.string.pro_msg_ad_unavailable)
                                 }
                                 busy = false
                             }
