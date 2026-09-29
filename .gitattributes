@@ -1,0 +1,7 @@
+# Zeilenenden: Shell-Skripte immer LF (auch auf Windows), Batch-Dateien CRLF.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.jar binary
+*.png binary
+*.apk binary

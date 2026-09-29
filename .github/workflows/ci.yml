@@ -14,6 +14,8 @@ jobs:
   jvm:
     name: Tests, Lint, Release-Build (JVM)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -22,8 +24,16 @@ jobs:
       - uses: android-actions/setup-android@v3
       - run: sdkmanager "platforms;android-37.0" "build-tools;36.0.0"
       - uses: gradle/actions/setup-gradle@v4
-      - name: Core + App-Tests, Lint, Release (R8)
-        run: ./gradlew :core:test :app:testDebugUnitTest :app:lintDebug :app:assembleRelease -Pphotomaid.signWithDebug=true --continue
+      - name: Core + App-Tests, Lint, Release (R8), installierbare APKs
+        run: ./gradlew :core:test :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease -Pphotomaid.signWithDebug=true --continue
+      - name: Installierbare APKs (Debug + Release mit Debug-Signatur, nur zum Testen)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhotoMaid-APKs
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
       - name: JVM-Screenshots
         run: ./gradlew :app:recordRoborazziDebug --tests '*ScreenshotTest*'
       - if: always()
