@@ -55,6 +55,7 @@ import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.AppearanceChoice
 import app.photomaid.design.ListSection
+import app.photomaid.design.MenuRowPicker
 import app.photomaid.design.PM
 import app.photomaid.design.PlainButton
 import app.photomaid.design.RowDivider
@@ -107,11 +108,11 @@ fun SettingsScreen(nav: Nav) {
                 RowDivider()
                 ToggleRow(stringResource(R.string.set_hints), settings.showGestureHintOnOpen) { v -> scope.launch { app.updateSettings { it.copy(showGestureHintOnOpen = v) } } }
                 RowDivider()
-                MenuRow(stringResource(R.string.set_later_default), LaterInterval.allowedQuickDays.map { d ->
+                MenuRowPicker(stringResource(R.string.set_later_default), LaterInterval.allowedQuickDays.map { d ->
                     d to if (d == 1) stringResource(R.string.set_tomorrow) else stringResource(R.string.set_in_days, d)
                 }, settings.laterDefaultDays) { v -> scope.launch { app.updateSettings { it.copy(laterDefaultDays = v) } } }
                 RowDivider()
-                MenuRow(stringResource(R.string.set_appearance), listOf(
+                MenuRowPicker(stringResource(R.string.set_appearance), listOf(
                     AppearanceChoice.SYSTEM to stringResource(R.string.appearance_system), AppearanceChoice.LIGHT to stringResource(R.string.appearance_light),
                     AppearanceChoice.DARK to stringResource(R.string.appearance_dark),
                 ), settings.appearance) { v -> scope.launch { app.updateSettings { it.copy(appearance = v) } } }
@@ -164,22 +165,6 @@ fun ToggleRow(title: String, checked: Boolean, onChange: (Boolean) -> Unit) {
         verticalAlignment = Alignment.CenterVertically) {
         Text(title, style = AppTypography.body, color = c.textPrimary, modifier = Modifier.weight(1f))
         Switch(checked, onCheckedChange = null, colors = SwitchDefaults.colors(checkedTrackColor = c.success, checkedThumbColor = androidx.compose.ui.graphics.Color.White))
-    }
-}
-
-@Composable
-fun <T> MenuRow(title: String, options: List<Pair<T, String>>, selected: T, onSelect: (T) -> Unit) {
-    val c = PM.colors
-    var open by remember { mutableStateOf(false) }
-    Box {
-        Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clickable(role = Role.DropdownList) { open = true },
-            verticalAlignment = Alignment.CenterVertically) {
-            Text(title, style = AppTypography.body, color = c.textPrimary, modifier = Modifier.weight(1f))
-            Text(options.firstOrNull { it.first == selected }?.second.orEmpty() + " ⌄", style = AppTypography.body, color = c.textSecondary)
-        }
-        DropdownMenu(open, { open = false }, modifier = Modifier.align(Alignment.CenterEnd)) {
-            for ((v, label) in options) DropdownMenuItem({ Text(label) }, onClick = { open = false; onSelect(v) })
-        }
     }
 }
 

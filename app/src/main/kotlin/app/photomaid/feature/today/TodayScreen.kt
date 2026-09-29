@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -48,6 +49,8 @@ import app.photomaid.core.model.ReviewSessionID
 import app.photomaid.core.storage.DeviceCapacity
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
+import app.photomaid.design.readableWidth
+import androidx.compose.foundation.layout.wrapContentWidth
 import app.photomaid.design.AppTypography
 import app.photomaid.design.GlassIconButton
 import app.photomaid.design.LargeTitleHeader
@@ -95,7 +98,7 @@ fun TodayScreen(nav: Nav) {
     }
 
     AppBackground {
-        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
+        Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             LargeTitleHeader(stringResource(R.string.app_name), stringResource(R.string.today_subtitle)) {
                 GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)

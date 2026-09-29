@@ -37,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
@@ -264,8 +265,8 @@ fun ScreenScaffold(
                 leading = { if (onBack != null) GlassIconButton(backIcon, backLabel, onClick = onBack) },
                 trailing = actions,
             )
-            Box(Modifier.weight(1f).fillMaxWidth()) { content(Modifier.fillMaxSize()) }
-            bottomBar()
+            Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.TopCenter) { content(Modifier.readableWidth().fillMaxSize()) }
+            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { Box(Modifier.readableWidth()) { bottomBar() } }
         }
     }
 }
@@ -283,6 +284,9 @@ fun SourceRow(
     showChevron: Boolean = true,
 ) {
     val c = PM.colors
+    // Große Schrift (≥ 130 %): Werte unter den Titel statt daneben (iOS: Accessibility-Größen stapeln).
+    val stacked = LocalDensity.current.fontScale >= 1.3f
+    val trailing = listOfNotNull(value, detail)
     Row(
         modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).semantics(mergeDescendants = true) {},
         verticalAlignment = Alignment.CenterVertically,
@@ -295,11 +299,14 @@ fun SourceRow(
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(title, style = AppTypography.headline, color = c.textPrimary)
             if (subtitle != null) Text(subtitle, style = AppTypography.caption, color = c.textSecondary)
+            if (stacked && trailing.isNotEmpty()) Text(trailing.joinToString(" "), style = AppTypography.caption, color = c.textSecondary)
         }
-        // Detail darf höchstens so breit werden wie der Titelbereich (schmale Geräte, große Schrift).
-        Column(Modifier.weight(1f, fill = false), horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
-            if (detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.End)
+        // Detail begrenzt, damit der Titel auf schmalen Geräten nicht zerquetscht wird.
+        if (!stacked && trailing.isNotEmpty()) {
+            Column(Modifier.widthIn(max = 132.dp), horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+                if (detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.End)
+            }
         }
         if (showChevron) Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(20.dp))
     }
@@ -479,14 +486,24 @@ fun Modifier.clickableRow(enabled: Boolean = true, onClick: () -> Unit): Modifie
 fun <T> MenuRowPicker(title: String, options: List<Pair<T, String>>, selected: T, onSelect: (T) -> Unit) {
     val c = PM.colors
     var open by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    val stacked = LocalDensity.current.fontScale >= 1.3f
+    val valueText = options.firstOrNull { it.first == selected }?.second.orEmpty() + " \u2304"
     Box {
-        Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clickable(role = Role.DropdownList) { open = true },
+        if (stacked) {
+            Column(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clickable(role = Role.DropdownList) { open = true }.padding(vertical = AppSpacing.xxs)) {
+                Text(title, style = AppTypography.body, color = c.textPrimary)
+                Text(valueText, style = AppTypography.body, color = c.accent)
+            }
+        } else Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clickable(role = Role.DropdownList) { open = true },
             verticalAlignment = Alignment.CenterVertically) {
             Text(title, style = AppTypography.body, color = c.textPrimary, modifier = Modifier.weight(1f))
-            Text(options.firstOrNull { it.first == selected }?.second.orEmpty() + " \u2304", style = AppTypography.body, color = c.accent)
+            Text(valueText, style = AppTypography.body, color = c.accent)
         }
         androidx.compose.material3.DropdownMenu(open, { open = false }, modifier = Modifier.align(Alignment.CenterEnd)) {
             for ((v, label) in options) androidx.compose.material3.DropdownMenuItem({ Text(label) }, onClick = { open = false; onSelect(v) })
         }
     }
 }
+
+/** Lesbare Maximalbreite auf Tablets/Foldables (Inhalt zentriert, Telefone unverändert). */
+fun Modifier.readableWidth(): Modifier = widthIn(max = 720.dp)

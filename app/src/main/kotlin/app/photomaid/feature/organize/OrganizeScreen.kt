@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -25,6 +26,8 @@ import app.photomaid.FeedRequest
 import app.photomaid.R
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
+import app.photomaid.design.readableWidth
+import androidx.compose.foundation.layout.wrapContentWidth
 import app.photomaid.design.AppTypography
 import app.photomaid.design.DateText
 import app.photomaid.design.LargeTitleHeader
@@ -45,7 +48,7 @@ fun OrganizeScreen(nav: Nav) {
     val sources by app.sources.sources.collectAsState()
     val rules by app.rules.state.collectAsState()
     AppBackground {
-        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
+        Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             LargeTitleHeader(stringResource(R.string.tab_organize))
             SurfaceCard(Modifier.testTag("organize.later"), onClick = { nav.push(Routes.LATER) }) {

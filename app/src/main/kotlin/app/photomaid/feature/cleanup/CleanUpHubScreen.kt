@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -36,6 +37,8 @@ import app.photomaid.FeedRequest
 import app.photomaid.R
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
+import app.photomaid.design.readableWidth
+import androidx.compose.foundation.layout.wrapContentWidth
 import app.photomaid.design.GlassIconButton
 import app.photomaid.design.LargeTitleHeader
 import app.photomaid.design.PM
@@ -66,7 +69,7 @@ fun CleanUpHubScreen(nav: Nav) {
     LaunchedEffect(token, access) { counts = withContext(Dispatchers.IO) { MediaCategory.entries.associateWith { app.photos.count(it) } } }
 
     AppBackground {
-        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
+        Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             LargeTitleHeader(stringResource(R.string.tab_cleanup), stringResource(R.string.hub_subtitle)) {
                 GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
