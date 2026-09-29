@@ -14,7 +14,8 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 | runter | **Vorheriges Medium** (keine Entscheidung) | – |
 
 - Keine Diagonalgeste (Produktentscheidung 2026-09-29, Abweichung von iOS): zwischen 45° und „hoch“ bzw. „runter“ liegen Totzonen.
-- Tipp aufs Video = Pause/Play (keine Entscheidung). Keine Richtungs-Kapsel beim Ziehen.
+- Tipp aufs Video = Pause/Play (keine Entscheidung). Beim Ziehen eine dezente Richtungs-Pille (hoch/links/rechts), keine bei „runter“.
+- Navigation: Zurück und Tabwechsel ohne Animation; Öffnen nur kurzer leichter Fade (150 ms). Predictive-Back-Vorschau aus.
 - Eine einzige Gesture-/Decision-State-Machine: `core/.../feed/FeedGestureMachine.kt`.
 - Nichts tun = keine Entscheidung. Eine Geste = maximal ein Schritt. Commit trägt Item-ID, Revision, Command-ID, Aktion.
 - Keine Aktions-Buttons im Feed (nur bei TalkBack/Schaltersteuerung).

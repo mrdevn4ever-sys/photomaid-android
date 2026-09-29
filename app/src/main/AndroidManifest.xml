@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
-        android:enableOnBackInvokedCallback="true"
+        android:enableOnBackInvokedCallback="false"
         android:theme="@style/Theme.PhotoMaid"
         tools:targetApi="37">
 
@@ -32,7 +32,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
+            tools:ignore="LockedOrientationActivity,DiscouragedApi"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.PhotoMaid.Starting">
             <intent-filter>

@@ -97,6 +97,18 @@ class PremiumPassTest {
         rule.onNodeWithTag("feed.stage").performTouchInput { up() }
     }
 
+    /** Dezente Pille beim Wischen: links = „Papierkorb“; runter zeigt keine Pille. */
+    @Test fun directionPillWhileDragging() {
+        val app = makeTestApp(ctx)
+        rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), RecordingNav(), {}, {}) } }
+        rule.waitUntil(10_000) { rule.onAllNodes(androidx.compose.ui.test.hasTestTag("feed.media.ready")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("feed.stage").performTouchInput { down(center); moveBy(Offset(-200f, 0f)) }
+        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasTestTag("feed.direction")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("feed.stage").performTouchInput { moveBy(Offset(200f, 0f)); moveBy(Offset(0f, 200f)) }
+        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasTestTag("feed.direction")).fetchSemanticsNodes().isEmpty() }
+        rule.onNodeWithTag("feed.stage").performTouchInput { up() }
+    }
+
     @Test fun gestureHintShownOnFirstFeedOnly() {
         val app = makeTestApp(ctx) { a -> a.updateSettings { it.copy(gestureHintSeen = false) } }
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), RecordingNav(), {}, {}) } }

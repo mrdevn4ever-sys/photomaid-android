@@ -191,11 +191,12 @@ private fun RootNav(app: AppModel) {
     }
     val reduce = LocalReduceMotion.current
     NavHost(root, startDestination = Routes.MAIN,
-        // Vollbild-Seiten (Feed, Einstellungen, Pro, …) kommen von unten und gehen nach unten – kein langes Überblenden.
-        enterTransition = { if (reduce) EnterTransition.None else slideInVertically(NavMotion.spec()) { it } },
-        exitTransition = { if (reduce) ExitTransition.None else fadeOut(NavMotion.spec(), targetAlpha = 0.85f) },
-        popEnterTransition = { if (reduce) EnterTransition.None else fadeIn(NavMotion.spec(), initialAlpha = 0.85f) },
-        popExitTransition = { if (reduce) ExitTransition.None else slideOutVertically(NavMotion.spec()) { it } },
+        // Nutzerwunsch (Gerätetest-Video): keine Bewegung, kein Schrumpfen. Öffnen = sehr kurzes, leichtes
+        // Überblenden; Zurück = sofort.
+        enterTransition = { if (reduce) EnterTransition.None else NavMotion.fadeIn() },
+        exitTransition = { if (reduce) ExitTransition.None else NavMotion.fadeOut() },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
     ) {
         composable(Routes.MAIN) { MainTabs(nav) }
         composable(Routes.FEED) { entry ->
@@ -247,15 +248,14 @@ private fun MainTabs(rootNav: Nav) {
     }
     Box(Modifier.fillMaxSize()) {
         val reduce = LocalReduceMotion.current
-        // Innerhalb eines Tabs: Seiten schieben sich von rechts herein, Zurück schiebt sie wieder hinaus (wie iOS).
-        // Tabwechsel: sehr kurzes Überblenden.
+        // Innerhalb eines Tabs: Unterseite öffnen = sehr kurzes, leichtes Überblenden; Zurück und Tabwechsel = sofort.
         fun AnimatedContentTransitionScope<NavBackStackEntry>.sameTab() =
             initialState.destination.parent?.route == targetState.destination.parent?.route
         NavHost(controller, startDestination = AppTab.TODAY.graph,
-            enterTransition = { when { reduce -> EnterTransition.None; sameTab() -> slideInHorizontally(NavMotion.spec()) { it }; else -> fadeIn(NavMotion.tab()) } },
-            exitTransition = { when { reduce -> ExitTransition.None; sameTab() -> slideOutHorizontally(NavMotion.spec()) { -it / 4 }; else -> fadeOut(NavMotion.tab()) } },
-            popEnterTransition = { when { reduce -> EnterTransition.None; sameTab() -> slideInHorizontally(NavMotion.spec()) { -it / 4 }; else -> fadeIn(NavMotion.tab()) } },
-            popExitTransition = { when { reduce -> ExitTransition.None; sameTab() -> slideOutHorizontally(NavMotion.spec()) { it }; else -> fadeOut(NavMotion.tab()) } },
+            enterTransition = { if (!reduce && sameTab()) NavMotion.fadeIn() else EnterTransition.None },
+            exitTransition = { if (!reduce && sameTab()) NavMotion.fadeOut() else ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = { ExitTransition.None },
         ) {
             for (t in AppTab.entries) {
                 navigation(startDestination = "${t.name}/${t.route}", route = t.graph) {
@@ -333,7 +333,9 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
 
 /** Navigationsbewegung: kurz und weich statt des langen Standard-Überblendens von Navigation Compose. */
 private object NavMotion {
-    fun <T> spec() = AppMotion.normal<T>()
+    private const val FADE_MS = 150
+    fun fadeIn() = fadeIn(tween(FADE_MS))
+    fun fadeOut() = fadeOut(tween(FADE_MS))
     fun <T> tab() = AppMotion.fast<T>()
 }
 

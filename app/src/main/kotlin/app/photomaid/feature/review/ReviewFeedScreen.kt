@@ -93,6 +93,7 @@ import app.photomaid.core.feed.FeedIntent
 import app.photomaid.core.feed.SessionSummary
 import app.photomaid.core.model.MediaKind
 import app.photomaid.design.AppBackground
+import app.photomaid.design.AppIconSize
 import app.photomaid.feature.collections.collectionTitle
 import app.photomaid.design.AppMotion
 import app.photomaid.design.AppRadii
@@ -327,11 +328,40 @@ private fun MediaStage(
                 }
             }
         }
+        DirectionPill(model, Modifier.align(Alignment.TopCenter).padding(top = AppSpacing.s))
         AnimatedVisibility(showHints, enter = fadeIn(), exit = fadeOut(tween(AppMotion.HINT_FADE_MS))) { GestureHintOverlay() }
         val pill = model.laterPill
         AnimatedVisibility(pill != null, Modifier.align(Alignment.BottomCenter).padding(bottom = AppSpacing.l),
             enter = slideInVertically { it } + fadeIn(), exit = slideOutVertically { it } + fadeOut()) {
             pill?.let { LaterPillView(it, model::editLater) }
+        }
+    }
+}
+
+/**
+ * Dezente Pille während des Wischens (Nutzerwunsch): „↑ Behalten“, „← Papierkorb“, „→ Später“. Ruhig oben über dem
+ * Medium, nur für Entscheidungen (nicht für „runter“). Kräftiger, sobald Loslassen entscheiden würde.
+ */
+@Composable
+private fun DirectionPill(model: FeedViewModel, modifier: Modifier) {
+    val c = PM.colors
+    val d = model.lockedDirection
+    val meaning = when (d?.let { FeedIntent.of(it) }) {
+        FeedIntent.KEEP -> Triple(Icons.Rounded.ArrowUpward, R.string.dir_keep, c.keep)
+        FeedIntent.MARK_FOR_CLEANUP -> Triple(Icons.AutoMirrored.Rounded.ArrowBack, R.string.dir_trash, c.cleanup)
+        FeedIntent.LATER -> Triple(Icons.AutoMirrored.Rounded.ArrowForward, R.string.dir_later, c.later)
+        else -> null
+    }
+    var last by remember { mutableStateOf(meaning) }
+    if (meaning != null) last = meaning
+    val ready = model.readyDirection != null
+    AnimatedVisibility(meaning != null, modifier, enter = fadeIn(AppMotion.fast()), exit = fadeOut(AppMotion.fast())) {
+        val (icon, label, tint) = last ?: return@AnimatedVisibility
+        Row(Modifier.alpha(if (ready) 1f else 0.8f).glassCapsule(elevation = 0.dp).padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs + 2.dp)
+            .testTag("feed.direction").clearAndSetSemantics {},
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs + 2.dp)) {
+            Icon(icon, null, tint = tint, modifier = Modifier.size(AppIconSize.small))
+            Text(stringResource(label), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = tint)
         }
     }
 }
