@@ -40,7 +40,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,9 +71,6 @@ import app.photomaid.design.ProminentButton
 import app.photomaid.design.RowDivider
 import app.photomaid.design.glassCapsule
 import app.photomaid.media.MediaAsset
-import app.photomaid.navigation.LocalApp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 /**
  * Kompakte Aktionsleiste unter dem Medium: ♡ Favorit · Teilen · Ordner · ⋯ – daneben der Papierkorb-Zähler.
@@ -167,16 +163,13 @@ fun ProtectedFavoriteDialog(p: ProtectedFavorite, onUnfavorite: () -> Unit, onCa
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FolderSheet(asset: MediaAsset, onPick: (String) -> Unit, onDismiss: () -> Unit) {
-    val app = LocalApp.current
+fun FolderSheet(asset: MediaAsset, folders: List<MediaFolder>?, onPick: (String) -> Unit, onDismiss: () -> Unit) {
     val c = PM.colors
-    var folders by remember { mutableStateOf<List<MediaFolder>?>(null) }
     var query by remember { mutableStateOf("") }
     var creating by remember { mutableStateOf(false) }
     var name by remember { mutableStateOf("") }
     var invalid by remember { mutableStateOf(false) }
     val current = asset.relativePath?.let { MediaFolders.normalize(it) }
-    LaunchedEffect(asset.id) { folders = withContext(Dispatchers.IO) { app.photos.folders() } }
     fun pick(path: String) { onDismiss(); onPick(path) }
 
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = c.background) {

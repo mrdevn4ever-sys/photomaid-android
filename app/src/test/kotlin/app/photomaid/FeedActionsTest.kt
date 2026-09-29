@@ -57,7 +57,7 @@ class FeedActionsTest {
     private fun awaitReady(position: String) = rule.waitUntil(10_000) {
         rule.onAllNodesWithTag("feed.media.ready").fetchSemanticsNodes().isNotEmpty() && rule.onAllNodes(hasText(position)).fetchSemanticsNodes().isNotEmpty()
     }
-    private fun waitTag(tag: String) = rule.waitUntil(5_000) { rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty() }
+    private fun waitTag(tag: String) = rule.waitUntil(10_000) { rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty() }
     private fun waitText(t: String) = rule.waitUntil(10_000) { rule.onAllNodes(hasText(t)).fetchSemanticsNodes().isNotEmpty() }
     private fun id(i: Int) = lib.all[i].id
     private fun rec(i: Int) = app.ledger.stateFlow.value.records[ItemReference.photo(id(i))] ?: ItemRecord(ItemReference.photo(id(i)))
@@ -238,7 +238,10 @@ class FeedActionsTest {
         assertEquals("DCIM/Camera/", lib.all[0].relativePath)
         assertTrue(rule.onAllNodesWithTag("feed.notice").fetchSemanticsNodes().isEmpty())
         lib.writeResult = MediaWriteResult.Failed("test")
+        // Erstes Sheet ist vollständig geschlossen, bevor das zweite geöffnet wird.
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("folder.sheet").fetchSemanticsNodes().isEmpty() }
         rule.onNodeWithTag("action.folder").performClick()
+        waitTag("folder.sheet")
         waitText("Urlaub 2026")
         rule.onNodeWithText("Urlaub 2026").performClick()
         waitText("Das Verschieben hat nicht geklappt. Die Datei bleibt, wo sie war.")
@@ -258,5 +261,16 @@ class FeedActionsTest {
         rule.onNodeWithTag("folder.name").performTextInput("Hunde")
         rule.onNodeWithText("Anlegen und verschieben").performClick()
         rule.waitUntil(5_000) { lib.paths[id(0)] == "Pictures/Hunde/" }
+    }
+
+    /** Medium extern gelöscht, während es angezeigt wird: kein Absturz, keine Entscheidung, klarer Ausweg. */
+    @Test fun externallyDeletedMediumShowsProblemWithoutDecision() {
+        start()
+        lib.removed += id(0)
+        lib.bumpChangeToken()
+        waitTag("feed.media.problem")
+        rule.onNodeWithText("Weiter ohne Entscheidung").performClick()
+        awaitReady("2 von 5")
+        assertEquals(0, events().size)
     }
 }

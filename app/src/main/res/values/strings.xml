@@ -479,7 +479,7 @@
     <string name="privacy_notifications_allow">Mitteilungen erlauben</string>
     <string name="privacy_folders">Ordner (optional)</string>
     <string name="privacy_folders_text">Dateien siehst du nur aus Ordnern, die du selbst auswählst. Das geht jederzeit unter Aufräumen › Dateien.</string>
-    <string name="privacy_purchases">Käufe laufen über Google Play. Freiwillige Werbung stammt von einem Werbeanbieter. Dabei werden keine Fotos, Dateinamen, Pfade oder Hashes übertragen.</string>
+    <string name="privacy_purchases">Käufe laufen über Google Play. Dabei werden keine Fotos, Dateinamen, Pfade oder Hashes übertragen.</string>
     <string name="continue_">Weiter</string>
 
     <!-- Mitteilungen -->
@@ -536,4 +536,6 @@
     <string name="reward_active_tools">30-Minuten-Pro aktiv · noch %1$d Min.</string>
     <string name="pro_active_title">Pro ist aktiv</string>
     <string name="pro_active_sub">Einmalkauf – alle Pro-Werkzeuge, ohne Tageslimit. Danke!</string>
+    <string name="onboarding_safe">Gelöscht wird nur, was du im Papierkorb bestätigst – und Android fragt noch einmal nach.</string>
+    <string name="later_notify_title">Erinnern, wenn es wieder dran ist?</string>
 </resources>

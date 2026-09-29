@@ -143,7 +143,6 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
     var showHints by remember { mutableStateOf(false) }
     var hintToken by remember { mutableIntStateOf(0) }
     var showInfo by remember { mutableStateOf(false) }
-    var folderFor by remember { mutableStateOf<app.photomaid.media.MediaAsset?>(null) }
     var zoom by remember { mutableFloatStateOf(1f) }
     val haptics = LocalHapticFeedback.current
     val animScope = rememberCoroutineScope()
@@ -223,7 +222,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                                         .onFailure { model.errorMessage = ctx.getString(R.string.share_failed) }
                                 }
                             },
-                            onFolder = { folderFor = asset },
+                            onFolder = model::openFolders,
                             onInfo = { showInfo = true },
                             onOpenElsewhere = {
                                 asset?.let { a ->
@@ -254,7 +253,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             title = { Text(stringResource(R.string.info)) }, text = { Text(text) })
     }
     model.protectedFavorite?.let { p -> ProtectedFavoriteDialog(p, onUnfavorite = model::unfavoriteProtected, onCancel = model::dismissProtected) }
-    folderFor?.let { a -> FolderSheet(a, onPick = model::moveCurrent, onDismiss = { folderFor = null }) }
+    model.folderSheetFor?.let { a -> FolderSheet(a, model.folders, onPick = model::moveCurrent, onDismiss = model::closeFolders) }
     model.pickerReceipt?.let { receipt ->
         LaterPickerSheet(initial = model.defaultLaterInterval, today = model.today) { day -> model.pickerFinished(receipt, day) }
     }

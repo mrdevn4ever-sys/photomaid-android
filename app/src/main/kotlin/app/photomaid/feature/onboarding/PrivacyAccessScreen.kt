@@ -42,6 +42,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.testTag
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
+import app.photomaid.design.GestureLegendRow
 import app.photomaid.R
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
@@ -117,29 +123,44 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
                         PhotoAccess.AUTHORIZED -> Unit
                     }
                 }
-                SurfaceCard {
-                    Header(Icons.Rounded.Notifications, stringResource(R.string.set_notifications)) {
-                        Text(stringResource(when (notif) {
-                            ReminderScheduler.Access.ALLOWED -> R.string.allowed
-                            ReminderScheduler.Access.DENIED -> R.string.access_denied
-                            ReminderScheduler.Access.NOT_DETERMINED -> R.string.access_not_asked
-                        }), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+                if (onboarding) {
+                    // Erststart kurz halten: was PhotoMaid macht, die vier Gesten, und dass nichts ohne Bestätigung gelöscht wird.
+                    // Mitteilungen und Ordner werden erst im jeweiligen Kontext angefragt (Später bzw. Dateien).
+                    SurfaceCard(Modifier.testTag("onboarding.gestures")) {
+                        Text(stringResource(R.string.set_how_to_swipe), style = AppTypography.headline, color = c.textPrimary)
+                        Spacer(Modifier.height(AppSpacing.xs))
+                        GestureLegendRow(Icons.Rounded.ArrowUpward, stringResource(R.string.dir_keep), stringResource(R.string.hint_up), c.keep)
+                        GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.dir_trash), stringResource(R.string.hint_left), c.cleanup)
+                        GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.dir_later), stringResource(R.string.hint_right), c.later)
+                        GestureLegendRow(Icons.Rounded.ArrowDownward, stringResource(R.string.dir_back), stringResource(R.string.hint_down), c.textSecondary)
+                        Spacer(Modifier.height(AppSpacing.xs))
+                        Text(stringResource(R.string.onboarding_safe), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
                     }
-                    Text(stringResource(R.string.privacy_notifications_text), style = AppTypography.caption, color = c.textSecondary)
-                    if (notif == ReminderScheduler.Access.NOT_DETERMINED) {
-                        Spacer(Modifier.height(AppSpacing.s))
-                        GlassButton(stringResource(R.string.privacy_notifications_allow)) {
-                            if (Build.VERSION.SDK_INT >= 33) notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                            else scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
+                } else {
+                    SurfaceCard {
+                        Header(Icons.Rounded.Notifications, stringResource(R.string.set_notifications)) {
+                            Text(stringResource(when (notif) {
+                                ReminderScheduler.Access.ALLOWED -> R.string.allowed
+                                ReminderScheduler.Access.DENIED -> R.string.access_denied
+                                ReminderScheduler.Access.NOT_DETERMINED -> R.string.access_not_asked
+                            }), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+                        }
+                        Text(stringResource(R.string.privacy_notifications_text), style = AppTypography.caption, color = c.textSecondary)
+                        if (notif == ReminderScheduler.Access.NOT_DETERMINED) {
+                            Spacer(Modifier.height(AppSpacing.s))
+                            GlassButton(stringResource(R.string.privacy_notifications_allow)) {
+                                if (Build.VERSION.SDK_INT >= 33) notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                else scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
+                            }
                         }
                     }
-                }
-                SurfaceCard {
-                    Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                        Icon(Icons.Rounded.Folder, null, tint = c.accent)
-                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                            Text(stringResource(R.string.privacy_folders), style = AppTypography.headline, color = c.textPrimary)
-                            Text(stringResource(R.string.privacy_folders_text), style = AppTypography.caption, color = c.textSecondary)
+                    SurfaceCard {
+                        Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                            Icon(Icons.Rounded.Folder, null, tint = c.accent)
+                            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                                Text(stringResource(R.string.privacy_folders), style = AppTypography.headline, color = c.textPrimary)
+                                Text(stringResource(R.string.privacy_folders_text), style = AppTypography.caption, color = c.textSecondary)
+                            }
                         }
                     }
                 }
@@ -150,7 +171,6 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
                 fillWidth = true, large = true, onClick = onDone)
         }
     }
-    @Suppress("UNUSED_EXPRESSION") onboarding
 }
 
 @Composable

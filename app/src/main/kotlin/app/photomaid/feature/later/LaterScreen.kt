@@ -60,6 +60,15 @@ import app.photomaid.design.ScreenScaffold
 import app.photomaid.design.SurfaceCard
 import app.photomaid.feature.common.ThumbnailView
 import app.photomaid.feature.review.LaterDateDialog
+import android.Manifest
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.platform.testTag
+import app.photomaid.design.GlassButton
+import app.photomaid.notifications.ReminderScheduler
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.navigation.PageEndSpacer
@@ -90,8 +99,24 @@ fun LaterScreen(nav: Nav) {
         }
     }
 
+    val notif by app.reminders.access.collectAsState()
+    // Mitteilungen erst hier anfragen: im Kontext von „Später“, und nur, wenn es etwas Zurückgestelltes gibt.
+    val notifLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+        scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
+    }
     ScreenScaffold(stringResource(R.string.later), onBack = nav::back) { mod ->
         LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
+            if (groups.isNotEmpty() && notif == ReminderScheduler.Access.NOT_DETERMINED) item {
+                SurfaceCard(Modifier.testTag("later.notify")) {
+                    Text(stringResource(R.string.later_notify_title), style = AppTypography.headline, color = c.textPrimary)
+                    Text(stringResource(R.string.privacy_notifications_text), style = AppTypography.caption, color = c.textSecondary)
+                    Spacer(Modifier.height(AppSpacing.s))
+                    GlassButton(stringResource(R.string.privacy_notifications_allow)) {
+                        if (Build.VERSION.SDK_INT >= 33) notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        else scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
+                    }
+                }
+            }
             if (groups.isEmpty()) item {
                 EmptyState(Icons.Rounded.Schedule, stringResource(R.string.later_empty_title), stringResource(R.string.later_empty),
                     hint = stringResource(R.string.later_empty_hint))

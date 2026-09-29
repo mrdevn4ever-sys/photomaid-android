@@ -139,6 +139,12 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         if (ids.isEmpty()) return
         val fresh = withContext(Dispatchers.IO) { app.photos.assets(ids) }
         fresh.forEach { assets[it.id] = it }
+        // Extern gelöscht/verschoben/Zugriff entzogen: nicht mehr anzeigbar → Problemzustand mit „Weiter ohne Entscheidung“.
+        val present = fresh.map { it.id }.toSet()
+        for (ref in windowItems()) if (ref.localIdentifier !in present && ref in previews) {
+            previews[ref] = PreviewState.FAILED
+            session.markPreviewUnavailable(ref)
+        }
         touch()
     }
 
@@ -472,6 +478,22 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     }
 
     fun dismissProtected() { protectedFavorite = null }
+
+    /** Offenes Ordner-Sheet für dieses Medium; [folders] `null` = wird geladen. */
+    var folderSheetFor by mutableStateOf<MediaAsset?>(null)
+        private set
+    var folders by mutableStateOf<List<MediaFolder>?>(null)
+        private set
+
+    fun openFolders() {
+        val a = currentAsset ?: return
+        if (mediaWriteBusy || isCommitting) return
+        folders = null
+        folderSheetFor = a
+        viewModelScope.launch { folders = withContext(Dispatchers.IO) { runCatching { app.photos.folders() }.getOrDefault(emptyList()) } }
+    }
+
+    fun closeFolders() { folderSheetFor = null }
 
     /** Verschieben in einen Ordner; Erfolgsmeldung nur, wenn MediaStore den neuen Pfad bestätigt. */
     fun moveCurrent(relativePath: String) {
