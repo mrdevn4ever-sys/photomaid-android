@@ -13,7 +13,7 @@
     <string name="back">Zurück</string>
     <string name="notice">Hinweis</string>
     <string name="result">Ergebnis</string>
-    <string name="result_title_done">Bereinigung abgeschlossen</string>
+    <string name="result_title_done">Erledigt</string>
     <string name="result_title_partial">Teilweise ausgeführt</string>
     <string name="result_title_not_done">Nicht ausgeführt</string>
     <string name="result_title_limit">Tageslimit erreicht</string>
@@ -41,7 +41,7 @@
     <string name="error_settings_not_saved">Einstellung konnte nicht gespeichert werden.</string>
     <string name="error_change_not_saved">Die Änderung wurde nicht gespeichert.</string>
     <string name="error_undo_conflict">Rückgängig nicht möglich: Das Element wurde inzwischen verändert.</string>
-    <string name="error_undo_busy">Rückgängig nicht möglich, solange eine Bereinigung läuft.</string>
+    <string name="error_undo_busy">Rückgängig ist gerade nicht möglich, weil der Papierkorb geleert wird.</string>
     <string name="error_undo_generic">Rückgängig nicht möglich.</string>
 
     <!-- Tabs -->
@@ -52,7 +52,7 @@
     <!-- Heute -->
     <string name="today_subtitle">Eine aufgeräumte Galerie für das, was zählt</string>
     <string name="today_limited_title">Eingeschränkter Zugriff</string>
-    <string name="today_limited_text">PhotoMaid kann aktuell nur einen Teil deiner Medien sehen. Freigegebene Fotos und Videos kannst du trotzdem prüfen.</string>
+    <string name="today_limited_text">PhotoMaid sieht nur die Fotos und Videos, die du freigegeben hast. Die kannst du ganz normal aufräumen.</string>
     <string name="today_limited_action">Zugriff ändern</string>
     <string name="today_access_title">Zugriff auf Fotos erforderlich</string>
     <string name="today_access_denied_title">PhotoMaid kann deine Fotos gerade nicht sehen</string>
@@ -60,22 +60,25 @@
     <string name="today_access_default">PhotoMaid braucht Zugriff auf deine Mediathek, um Fotos und Videos zum Sortieren anzuzeigen.</string>
     <string name="storage_used_of">von %1$s belegt</string>
     <string name="storage_device_footnote">Systemwert des Geräts, nicht nur Fotos</string>
-    <string name="today_start_title">Aufräumen starten</string>
-    <string name="today_continue_title">Weiter aufräumen</string>
+    <string name="today_start_sub">Wische dich durch deine Fotos und Videos.</string>
+    <string name="today_continue_sub">Es geht dort weiter, wo du aufgehört hast.</string>
     <string name="today_done_title">Alles geprüft</string>
     <string name="today_done_subtitle">Im Moment wartet nichts auf deine Entscheidung.</string>
-    <string name="today_start_cta">Prüfung starten</string>
-    <string name="today_continue_cta">Prüfung fortsetzen</string>
+    <string name="today_start_cta">Jetzt aufräumen</string>
+    <string name="today_continue_cta">Weiter aufräumen</string>
     <plurals name="today_pending_count">
-        <item quantity="one">%1$d Element wartet auf deine Entscheidung</item>
-        <item quantity="other">%1$d Elemente warten auf deine Entscheidung</item>
+        <item quantity="one">%1$d Medium wartet auf dich</item>
+        <item quantity="other">%1$d Medien warten auf dich</item>
     </plurals>
-    <string name="today_review_hint">Startet die Prüfung deiner Fotos und Videos</string>
+    <string name="today_review_hint">Öffnet deine Fotos und Videos zum Durchwischen</string>
+    <string name="today_gestures">↑ Behalten · ← Papierkorb · → Später</string>
+    <string name="today_storage_title">Gerätespeicher</string>
+    <string name="today_storage_value">%1$s von %2$s belegt</string>
     <plurals name="today_due">
         <item quantity="one">%1$d zurückgestelltes Element ist wieder fällig</item>
         <item quantity="other">%1$d zurückgestellte Elemente sind wieder fällig</item>
     </plurals>
-    <string name="today_reconciliation">Eine frühere Bereinigung konnte nicht eindeutig abgeglichen werden. Es wird nichts erneut gelöscht.</string>
+    <string name="today_reconciliation">Eine frühere Aktion im Papierkorb ließ sich nicht eindeutig prüfen. Es wird nichts erneut gelöscht.</string>
     <string name="cat_photos">Fotos</string>
     <string name="cat_videos">Videos</string>
     <string name="cat_screenshots">Screenshots</string>
@@ -108,14 +111,14 @@
     <string name="connected_sources">Verbundene Quellen</string>
 
     <!-- Feed -->
-    <string name="feed_title_all">Medien prüfen</string>
-    <string name="feed_title_photos">Fotos prüfen</string>
-    <string name="feed_title_videos">Videos prüfen</string>
-    <string name="feed_title_screenshots">Screenshots prüfen</string>
+    <string name="feed_title_all">Aufräumen</string>
+    <string name="feed_title_photos">Fotos</string>
+    <string name="feed_title_videos">Videos</string>
+    <string name="feed_title_screenshots">Screenshots</string>
     <string name="feed_title_due">Wieder fällig</string>
     <string name="feed_position">%1$d von %2$d</string>
-    <string name="feed_empty_title">Nichts zu prüfen</string>
-    <string name="feed_empty_message">In dieser Auswahl warten gerade keine Elemente auf eine Entscheidung.</string>
+    <string name="feed_empty_title">Hier ist alles erledigt</string>
+    <string name="feed_empty_message">In dieser Auswahl wartet gerade nichts auf dich.</string>
     <string name="feed_loading">Medien werden geladen …</string>
     <string name="feed_view_basket">Papierkorb ansehen</string>
     <string name="feed_show_hints">Gestenhilfe zeigen</string>
@@ -153,7 +156,7 @@
     <string name="summary_later">Später</string>
     <string name="summary_view_basket">Papierkorb ansehen (%1$d)</string>
     <string name="summary_basket_hint">Gelöscht wird erst, wenn du den Papierkorb leerst und bestätigst.</string>
-    <string name="summary_last">Zum letzten Element</string>
+    <string name="summary_last">Zum letzten Medium</string>
     <string name="dock_count">Papierkorb: %1$d</string>
     <string name="dock_hint">Öffnet den Papierkorb. Gelöscht wird erst nach deiner Bestätigung.</string>
     <string name="a11y_kind_date">%1$s, %2$s</string>
@@ -180,8 +183,8 @@
 
     <!-- Papierkorb -->
     <string name="basket_count">%1$d im Papierkorb</string>
-    <string name="basket_intro">Noch ist nichts gelöscht. Prüfe den Papierkorb und leere ihn, wenn alles passt. Abgewählte Elemente bleiben erhalten.</string>
-    <string name="basket_allowance">Heute noch %1$d von %2$d Bereinigungen frei</string>
+    <string name="basket_intro">Noch ist nichts gelöscht. Tippe auf ein Vorschaubild, um es groß anzusehen, und leere den Papierkorb, wenn alles passt.</string>
+    <string name="basket_allowance">Heute noch %1$d von %2$d frei zum Entfernen</string>
     <string name="basket_media_header">Fotos &amp; Videos</string>
     <string name="basket_media_footer">Wird über Android entfernt. Android fragt dich zur Bestätigung. Die Medien landen im Papierkorb des Systems und können dort in der Regel noch 30 Tage wiederhergestellt werden. Ob Cloud-Dienste wie Google Fotos die Löschung übernehmen, hängt von deren Einstellungen ab.</string>
     <string name="basket_files_header">Dateien</string>
@@ -290,8 +293,8 @@
     <string name="dup_explain">Findet Fotos, Videos und Dateien, die exakt gleich sind. Du entscheidest selbst, welche Kopie in den Papierkorb kommt.</string>
     <string name="dup_how">Wie funktioniert das? PhotoMaid vergleicht den Dateiinhalt (SHA-256) auf deinem Gerät. Ähnlich aussehende Bilder gelten nicht als Kopie.</string>
     <string name="dup_checking">Identische Dateien werden verglichen …</string>
-    <string name="dup_start">Prüfung starten</string>
-    <string name="dup_again">Erneut prüfen</string>
+    <string name="dup_start">Kopien suchen</string>
+    <string name="dup_again">Erneut suchen</string>
     <string name="pro_view">PhotoMaid Pro ansehen</string>
     <string name="dup_none">Keine identischen Kopien gefunden</string>
     <string name="dup_none_message">In den aktuell zugänglichen Bereichen wurden keine exakten Duplikate gefunden.</string>
@@ -316,18 +319,18 @@
     <string name="later_empty">Medien, die du zurückstellst, erscheinen hier wieder.</string>
     <string name="later_empty_title">Nichts für später</string>
     <string name="later_empty_hint">→ Beim Prüfen nach rechts wischen</string>
-    <string name="later_review_now_count">Jetzt prüfen (%1$d)</string>
+    <string name="later_review_now_count">Jetzt ansehen (%1$d)</string>
     <string name="later_group_due">Wieder fällig · %1$d</string>
     <string name="later_group_tomorrow">Morgen · %1$d</string>
     <string name="later_group_7">In den nächsten 7 Tagen · %1$d</string>
     <string name="later_group_from">Ab %1$s · %2$d</string>
     <string name="later_group_nodate">Ohne Termin · %1$d</string>
-    <string name="later_review_on">Erneut prüfen am %1$s</string>
+    <string name="later_review_on">Wieder dran am %1$s</string>
     <string name="later_due_since">Fällig seit %1$s</string>
     <string name="later_due_today">Heute wieder fällig</string>
-    <string name="later_next_review">Kommt bei der nächsten Prüfung wieder</string>
+    <string name="later_next_review">Kommt beim nächsten Aufräumen wieder</string>
     <string name="file">Datei</string>
-    <string name="later_review_now">Jetzt prüfen</string>
+    <string name="later_review_now">Jetzt ansehen</string>
     <string name="later_remove">Zurückstellung entfernen</string>
 
     <!-- Sammlungen -->
@@ -361,12 +364,12 @@
     <string name="col_older">Älter als</string>
     <string name="col_delete">Sammlung löschen</string>
     <string name="col_edit">Bearbeiten</string>
-    <string name="feed_title_collection">Sammlung prüfen</string>
+    <string name="feed_title_collection">Sammlung</string>
 
     <!-- Verlauf -->
     <string name="history_all">Alle</string>
     <string name="history_kept">Behalten</string>
-    <string name="history_cleaned">Bereinigt</string>
+    <string name="history_cleaned">Entfernt</string>
     <string name="history_later">Später</string>
     <string name="history_empty">Deine Entscheidungen erscheinen hier, sobald du mit dem Prüfen beginnst.</string>
     <string name="history_empty_title">Noch kein Verlauf</string>
@@ -377,9 +380,9 @@
         <item quantity="other">%1$s · %2$d Einträge</item>
     </plurals>
     <string name="history_with_day">%1$s · %2$s</string>
-    <string name="h_cleaned">Bereinigt (bestätigt)</string>
+    <string name="h_cleaned">Entfernt (bestätigt)</string>
     <string name="h_reconciled">Nicht mehr vorhanden (abgeglichen)</string>
-    <string name="h_not_performed">Bereinigung nicht ausgeführt</string>
+    <string name="h_not_performed">Nicht entfernt</string>
     <string name="h_undo">Rückgängig gemacht</string>
     <string name="h_schedule">Termin gesetzt</string>
     <string name="h_deferral_removed">Zurückstellung entfernt</string>
@@ -395,8 +398,8 @@
     <!-- Pro -->
     <string name="pro_title">PhotoMaid Pro</string>
     <string name="pro_subtitle">Mehr Kontrolle, keine laufenden Kosten. Einmalkauf, kein Abo.</string>
-    <string name="pro_f2">Unbegrenzt bereinigen</string>
-    <string name="pro_f2d">Ohne Tageslimit von 15 bestätigten Bereinigungen.</string>
+    <string name="pro_f2">Ohne Tageslimit aufräumen</string>
+    <string name="pro_f2d">Leere den Papierkorb so oft du willst – ohne das Limit von 15 pro Tag.</string>
     <string name="pro_f3">Identische Kopien finden</string>
     <string name="pro_f3d">Exakt gleiche Fotos, Videos und Dateien aus verbundenen Ordnern.</string>
     <string name="pro_f5">Eigene Sammlungen</string>
@@ -405,7 +408,7 @@
     <string name="pro_details">So funktioniert Pro</string>
     <string name="pro_details_dup">Kopien: Verglichen wird der Dateiinhalt (SHA-256) auf deinem Gerät. Ähnlich aussehende Bilder gelten nicht als Kopie.</string>
     <string name="pro_details_rules">Sammlungen: Sie filtern nur, was schon auf deinem Gerät ist, und öffnen den Feed. Es läuft nichts im Hintergrund und es wird nichts automatisch gelöscht.</string>
-    <string name="pro_details_cleanup">Bereinigen: Gezählt werden nur Elemente, die du im Papierkorb bestätigt entfernst.</string>
+    <string name="pro_details_cleanup">Tageslimit: Gezählt wird nur, was du im Papierkorb bestätigt entfernst – nicht das Wischen.</string>
     <string name="pro_preview_header">Pro-Vorschau</string>
     <string name="expanded">Ausgeklappt</string>
     <string name="collapsed">Eingeklappt</string>
@@ -464,7 +467,7 @@
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">Ob Cloud-Dienste wie Google Fotos Löschungen auf andere Geräte übertragen, hängt von deren Einstellungen ab. Medien, die nicht als lokale Datei vorliegen, lädt PhotoMaid nicht herunter.</string>
     <string name="help_free">Kostenlos</string>
-    <string name="help_free_text">Ansehen, sortieren und später prüfen ist unbegrenzt. Bestätigte Bereinigungen sind auf 15 pro Tag begrenzt.</string>
+    <string name="help_free_text">Ansehen, wischen und zurückstellen ist unbegrenzt. Ohne Pro kannst du bis zu 15 Elemente pro Tag endgültig entfernen.</string>
 
     <!-- Datenschutz / Onboarding -->
     <string name="privacy_title">Deine Privatsphäre zuerst</string>
@@ -487,5 +490,5 @@
 
     <!-- Mitteilungen -->
     <string name="notif_channel">Erinnerungen</string>
-    <string name="notif_due_body">Heute sind zurückgestellte Elemente wieder fällig.</string>
+    <string name="notif_due_body">Heute ist etwas Zurückgestelltes wieder dran.</string>
 </resources>

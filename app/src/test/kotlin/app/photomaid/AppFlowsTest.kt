@@ -73,19 +73,18 @@ class AppFlowsTest {
     @Test fun permissionGrantedShowsPendingCount() {
         val app = makeTestApp(ctx)
         rule.setContent { TestHost(app) { TodayScreen(RecordingNav()) } }
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Elemente warten auf deine Entscheidung")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Medien warten auf dich")).fetchSemanticsNodes().isNotEmpty() }
         // Noch keine Entscheidung getroffen → neue Prüfung (nicht „fortsetzen“).
-        rule.onNodeWithText("Aufräumen starten").assertExists()
-        rule.onNodeWithText("Prüfung starten").assertExists()
+        rule.onNodeWithText("Jetzt aufräumen").assertExists()
     }
 
-    /** Zahl und Feed zählen dasselbe: „Prüfung starten“ öffnet den gemeinsamen Feed aller offenen Medien. */
+    /** Zahl und Feed zählen dasselbe: „Jetzt aufräumen“ öffnet den gemeinsamen Feed aller offenen Medien. */
     @Test fun startReviewOpensSharedFeedWithSameCount() {
         val app = makeTestApp(ctx) // 5 Fotos (inkl. 1 Screenshot) + 1 Video
         val nav = RecordingNav()
         rule.setContent { TestHost(app) { TodayScreen(nav) } }
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Elemente warten auf deine Entscheidung")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("Prüfung starten").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Medien warten auf dich")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithText("Jetzt aufräumen").performClick()
         assertTrue(nav.events.last() == "feed:AllMedia")
     }
 
@@ -93,7 +92,7 @@ class AppFlowsTest {
         val app = makeTestApp(ctx)
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.AllMedia), RecordingNav(), onClose = {}, openBasket = {}) } }
         rule.waitUntil(10_000) { rule.onAllNodes(hasText("1 von 6")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("Medien prüfen").assertExists()
+        rule.onNodeWithText("Aufräumen").assertExists()
     }
 
     @Test fun singularTexts() {
@@ -104,7 +103,7 @@ class AppFlowsTest {
         assertEquals("2 Elemente, noch nicht gelöscht", res.getQuantityString(R.plurals.hub_basket_sub, 2, 2))
         assertEquals("1 Medium wurde in den Papierkorb des Systems verschoben.", res.getQuantityString(R.plurals.result_media_trashed, 1, 1))
         assertEquals("1 Kopie in den Papierkorb", res.getQuantityString(R.plurals.dup_move, 1, 1))
-        assertEquals("1 Element wartet auf deine Entscheidung", res.getQuantityString(R.plurals.today_pending_count, 1, 1))
+        assertEquals("1 Medium wartet auf dich", res.getQuantityString(R.plurals.today_pending_count, 1, 1))
     }
 
     @Test fun confirmCleanupTrashesReconcilesAndCountsAllowance() {
@@ -114,7 +113,7 @@ class AppFlowsTest {
         }
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
         rule.onNodeWithText("2 im Papierkorb").assertExists()
-        rule.onNodeWithText("Heute noch 15 von 15 Bereinigungen frei").assertExists()
+        rule.onNodeWithText("Heute noch 15 von 15 frei zum Entfernen").assertExists()
         rule.onNodeWithText("Papierkorb leeren: 2 Fotos/Videos").performClick()
         rule.onNodeWithText("2 über Android entfernen").performClick()
         rule.waitUntil(5_000) { rule.onAllNodes(hasText("2 Medien wurden in den Papierkorb des Systems verschoben.")).fetchSemanticsNodes().isNotEmpty() }
@@ -161,8 +160,8 @@ class AppFlowsTest {
     @Test fun proUnlockedAllowsExactDuplicates() {
         val pro = makeTestApp(ctx, purchase = FakePurchaseGateway(PurchaseState.PURCHASED))
         rule.setContent { TestHost(pro) { DuplicatesScreen(RecordingNav()) } }
-        rule.onNodeWithText("Prüfung starten").assertExists().performClick()
-        rule.waitUntil(10_000) { rule.onAllNodes(hasText("Erneut prüfen")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithText("Kopien suchen").assertExists().performClick()
+        rule.waitUntil(10_000) { rule.onAllNodes(hasText("Erneut suchen")).fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithText("Keine identischen Kopien gefunden").assertExists()
         assertTrue(pro.capabilities.dailyCleanupLimit == null)
     }

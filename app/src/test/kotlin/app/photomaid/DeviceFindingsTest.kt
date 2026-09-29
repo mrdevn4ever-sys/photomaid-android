@@ -33,13 +33,13 @@ class DeviceFindingsTest {
         val app = makeTestApp(ctx)
         rule.setContent { TestHost(app) { RootContent(app) } }
         repeat(3) {
-            waitText("Prüfung starten")
-            rule.onNodeWithText("Prüfung starten").performClick()
-            waitText("Medien prüfen")
+            waitText("Jetzt aufräumen")
+            rule.onNodeWithText("Jetzt aufräumen").performClick()
+            waitText("1 von 6")
             rule.onNode(hasContentDescription("Schließen")).performClick()
             rule.waitForIdle()
             waitText("PhotoMaid")
-            rule.onNodeWithText("Prüfung starten").assertExists()
+            rule.onNodeWithText("Jetzt aufräumen").assertExists()
         }
     }
 
