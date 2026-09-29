@@ -46,30 +46,34 @@ class GestureMachineTest {
         assertEquals(Phase.Idle, m.phase)
     }
 
+    /** Ohne Diagonale: schräg rechts oben oder unten bis 45° ist „rechts“ = Später. */
     @Test fun rightVariants() {
-        for ((t, expected) in listOf(
-            Vector2(180.0, -130.0) to SwipeDirection.RIGHT_UP, // ≈ 36°
-            Vector2(200.0, -100.0) to SwipeDirection.RIGHT_UP, // ≈ 27°
-            Vector2(200.0, -60.0) to SwipeDirection.RIGHT, // ≈ 17°
-            Vector2(180.0, 120.0) to SwipeDirection.RIGHT, // ≈ 34° nach unten
-            Vector2(200.0, 0.0) to SwipeDirection.RIGHT,
+        for (t in listOf(
+            Vector2(180.0, -130.0), // ≈ 36° nach oben (früher Diagonale)
+            Vector2(200.0, -100.0), // ≈ 27° nach oben
+            Vector2(200.0, -190.0), // ≈ 44° nach oben
+            Vector2(200.0, -60.0),  // ≈ 17°
+            Vector2(180.0, 120.0),  // ≈ 34° nach unten
+            Vector2(200.0, 0.0),
         )) {
-            assertEquals("$t", Resolution.Commit(expected), swipe(FeedGestureMachine(), t))
+            assertEquals("$t", Resolution.Commit(SwipeDirection.RIGHT), swipe(FeedGestureMachine(), t))
+            assertEquals(FeedIntent.LATER, FeedIntent.of(SwipeDirection.RIGHT))
         }
     }
 
     @Test fun rightDeadZones() {
         val m = FeedGestureMachine()
-        assertEquals(Resolution.Cancelled, swipe(m, Vector2(120.0, -160.0))) // ≈ 53°
-        assertEquals(Resolution.Cancelled, swipe(m, Vector2(120.0, 170.0))) // ≈ 55° nach unten
-        assertEquals(FeedIntent.LATER_CUSTOM, FeedIntent.of(SwipeDirection.RIGHT_UP))
+        assertEquals(Resolution.Cancelled, swipe(m, Vector2(120.0, -160.0))) // ≈ 53° nach oben: Totzone
+        assertEquals(Resolution.Cancelled, swipe(m, Vector2(120.0, 170.0))) // ≈ 55° nach unten: Totzone
+        // Steil nach oben ist wieder „hoch“.
+        assertEquals(Resolution.Commit(SwipeDirection.UP), swipe(FeedGestureMachine(), Vector2(60.0, -200.0)))
     }
 
-    @Test fun diagonalOffset() {
+    @Test fun rightFollowsHorizontally() {
         val m = FeedGestureMachine()
         m.update(Vector2(90.0, -60.0))
-        assertEquals(SwipeDirection.RIGHT_UP, m.lockedDirection)
-        assertEquals(Vector2(90.0, -60.0), m.displayOffset)
+        assertEquals(SwipeDirection.RIGHT, m.lockedDirection)
+        assertEquals(Vector2(90.0, 0.0), m.displayOffset)
         m.cancel()
         m.update(Vector2(90.0, 30.0))
         assertEquals(SwipeDirection.RIGHT, m.lockedDirection)

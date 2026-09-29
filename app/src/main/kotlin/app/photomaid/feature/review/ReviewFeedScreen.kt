@@ -39,7 +39,6 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.MoreHoriz
-import androidx.compose.material.icons.rounded.NorthEast
 import androidx.compose.material.icons.rounded.PanTool
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -93,6 +92,7 @@ import app.photomaid.core.feed.FeedIntent
 import app.photomaid.core.feed.SessionSummary
 import app.photomaid.core.model.MediaKind
 import app.photomaid.design.AppBackground
+import app.photomaid.feature.collections.collectionTitle
 import app.photomaid.design.AppMotion
 import app.photomaid.design.AppRadii
 import app.photomaid.design.AppSpacing
@@ -117,8 +117,8 @@ import kotlin.math.roundToInt
 
 /**
  * Vertikaler Entscheidungs-Feed (Screens 2 und 3).
- * HOCH = Behalten · LINKS = Papierkorb · RECHTS = Später (Standardtermin) ·
- * SCHRÄG RECHTS OBEN = Drehrad (erst Bestätigen entscheidet, Abbrechen ändert nichts) · RUNTER = Zurück.
+ * HOCH = Behalten · LINKS = Papierkorb · RECHTS (bis 45° schräg) = Später mit Standardtermin, eigener Termin
+ * über „Ändern“ in der Pille · RUNTER = Zurück. Keine Richtungs-Kapsel: das Medium selbst zeigt die Bewegung.
  */
 @Composable
 fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBasket: () -> Unit) {
@@ -172,7 +172,8 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             val (pos, total) = model.session.position
             var menu by remember { mutableStateOf(false) }
             GlassToolbar(
-                title = stringResource(request.titleRes),
+                title = (request.source as? FeedRequest.Source.Collection)?.let { collectionTitle(it.collection) }
+                    ?: stringResource(request.titleRes),
                 subtitle = if (items.isEmpty()) null else stringResource(R.string.feed_position, pos, total),
                 leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), onClick = onClose) },
                 trailing = {
@@ -254,6 +255,7 @@ private fun MediaStage(
     modifier: Modifier,
 ) {
     val density = LocalDensity.current
+    val app = LocalApp.current
     val labels = listOf(
         stringResource(R.string.act_keep_next) to FeedIntent.KEEP, stringResource(R.string.act_trash) to FeedIntent.MARK_FOR_CLEANUP,
         stringResource(R.string.act_later) to FeedIntent.LATER, stringResource(R.string.act_later_custom) to FeedIntent.LATER_CUSTOM,
@@ -281,6 +283,8 @@ private fun MediaStage(
                 onCancel = model::dragCancelled,
                 onZoom = { onZoom(it) },
                 onDoubleTap = onZoomReset,
+                // Tipp aufs Video = Pause/Play (wie TikTok); bei Fotos ohne Wirkung. Nie eine Entscheidung.
+                onTap = { model.currentAsset?.takeIf { it.kind == MediaKind.VIDEO && zoom <= 1.01f }?.let { toggleVideo(app.player, it) } },
             ),
     ) {
         model.viewSizeDp = Size(maxWidth.value, maxHeight.value)
@@ -302,7 +306,6 @@ private fun MediaStage(
                         skip = model::skipWithoutDecision, zoomed = zoom > 1.01f)
                 }
             }
-            DirectionTint(model, Modifier.align(Alignment.Center))
         }
         AnimatedVisibility(showHints, enter = fadeIn(), exit = fadeOut(tween(AppMotion.HINT_FADE_MS))) { GestureHintOverlay() }
         val pill = model.laterPill
@@ -310,25 +313,6 @@ private fun MediaStage(
             enter = slideInVertically { it } + fadeIn(), exit = slideOutVertically { it } + fadeOut()) {
             pill?.let { LaterPillView(it, model::editLater) }
         }
-    }
-}
-
-/** Dezente Richtungsfarbe während der Bewegung (keine permanente Überdeckung). */
-@Composable
-private fun DirectionTint(model: FeedViewModel, modifier: Modifier) {
-    val c = PM.colors
-    val d = model.lockedDirection ?: return
-    val (color, label, icon) = when (FeedIntent.of(d)) {
-        FeedIntent.KEEP -> Triple(c.keep, stringResource(R.string.dir_keep), Icons.Rounded.ArrowUpward)
-        FeedIntent.MARK_FOR_CLEANUP -> Triple(c.cleanup, stringResource(R.string.dir_trash), Icons.Rounded.Delete)
-        FeedIntent.LATER -> Triple(c.later, stringResource(R.string.dir_later), Icons.AutoMirrored.Rounded.ArrowForward)
-        FeedIntent.LATER_CUSTOM -> Triple(c.later, stringResource(R.string.dir_later_custom), Icons.Rounded.NorthEast)
-        FeedIntent.PREVIOUS -> Triple(c.textSecondary, stringResource(R.string.dir_back), Icons.Rounded.ArrowDownward)
-    }
-    Row(modifier.glassCapsule().padding(horizontal = AppSpacing.m, vertical = AppSpacing.xs).clearAndSetSemantics {},
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        Icon(icon, null, tint = color)
-        Text(label, style = AppTypography.headline, color = color)
     }
 }
 
@@ -375,10 +359,7 @@ fun GestureHintOverlay() {
             Hint(Icons.Rounded.ArrowUpward, stringResource(R.string.hint_up), stringResource(R.string.dir_keep), c.keep)
             Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.m), verticalAlignment = Alignment.CenterVertically) {
                 Hint(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.hint_left), stringResource(R.string.dir_trash), c.cleanup)
-                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                    Hint(Icons.Rounded.NorthEast, stringResource(R.string.hint_diag), stringResource(R.string.act_later_custom), c.later)
-                    Hint(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.hint_right), stringResource(R.string.dir_later), c.later)
-                }
+                Hint(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.hint_right), stringResource(R.string.dir_later), c.later)
             }
             Hint(Icons.Rounded.ArrowDownward, stringResource(R.string.hint_down), stringResource(R.string.dir_back), c.textSecondary)
         }

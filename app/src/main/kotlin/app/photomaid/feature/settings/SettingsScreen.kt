@@ -24,7 +24,6 @@ import androidx.compose.material.icons.rounded.ArrowDownward
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.material.icons.rounded.NorthEast
 import androidx.compose.material.icons.rounded.Shield
 import androidx.compose.material.icons.rounded.WorkspacePremium
 import androidx.compose.material3.DropdownMenu
@@ -125,7 +124,6 @@ fun SettingsScreen(nav: Nav) {
                 GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.dir_trash), stringResource(R.string.hint_left), c.cleanup); RowDivider()
                 GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.dir_later),
                     stringResource(R.string.gesture_with_default, stringResource(R.string.hint_right), defaultLater), c.later); RowDivider()
-                GestureLegendRow(Icons.Rounded.NorthEast, stringResource(R.string.hint_date), stringResource(R.string.hint_diag), c.later); RowDivider()
                 GestureLegendRow(Icons.Rounded.ArrowDownward, stringResource(R.string.dir_back), stringResource(R.string.hint_down), c.textSecondary)
             }
             ListSection {

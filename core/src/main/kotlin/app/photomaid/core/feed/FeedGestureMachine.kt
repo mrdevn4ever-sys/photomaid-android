@@ -6,9 +6,6 @@ import kotlin.math.max
 /** Tatsächliche Fingerbewegung (Bildschirmkoordinaten: y wächst nach unten). */
 enum class SwipeDirection {
     UP, DOWN, LEFT, RIGHT,
-
-    /** Schräg nach rechts oben (ca. 25°–50° über der Waagrechten). */
-    RIGHT_UP,
 }
 
 /** Bedeutung einer Fingerbewegung im Entscheidungs-Feed. FEST verdrahtet. */
@@ -22,7 +19,11 @@ enum class FeedIntent {
     /** rechts (gerade oder schräg nach unten): Später mit Standardtermin, danach nächstes Medium. */
     LATER,
 
-    /** schräg nach rechts oben: Termin selbst wählen. Die App öffnet erst die Auswahl; erst Bestätigen = Später + nächstes Medium. */
+    /**
+     * Später mit selbst gewähltem Termin. Keine Geste mehr (Produktentscheidung 2026-09-29: die Diagonale entfällt,
+     * der Termin wird über „Ändern“ in der Pille gewählt). Nur noch als TalkBack-/Schalter-Aktion; öffnet erst die
+     * Auswahl, erst Bestätigen = Später + nächstes Medium.
+     */
     LATER_CUSTOM,
 
     /** runter: vorheriges Medium. Keine Entscheidung. */
@@ -35,7 +36,6 @@ enum class FeedIntent {
             SwipeDirection.UP -> KEEP
             SwipeDirection.LEFT -> MARK_FOR_CLEANUP
             SwipeDirection.RIGHT -> LATER
-            SwipeDirection.RIGHT_UP -> LATER_CUSTOM
             SwipeDirection.DOWN -> PREVIOUS
         }
     }
@@ -58,11 +58,9 @@ data class GestureConfig(
     /** Schwung (dp/s) entlang der Richtung, der zusammen mit [flickMinDistance] genügt. */
     val flickVelocity: Double = 650.0,
     val flickMinDistance: Double = 36.0,
-    /** Rechts schräg nach oben ab |dy|/|dx| ≈ tan 25° = Termin selbst wählen … */
-    val rightUpMinRatio: Double = 0.47,
-    /** … bis ≈ tan 50°. Darüber bis zur Senkrechten: Totzone, dann „hoch“. */
-    val rightUpMaxRatio: Double = 1.2,
-    /** Rechts schräg nach unten bis 45° zählt noch als „rechts“. */
+    /** Rechts schräg nach oben bis 45° (|dy|/|dx| ≤ 1) zählt als „rechts“. Darüber bis „hoch“: Totzone. */
+    val rightUpMaxRatio: Double = 1.0,
+    /** Rechts schräg nach unten bis 45° zählt als „rechts“. Darüber bis „runter“: Totzone. */
     val rightDownMaxRatio: Double = 1.0,
 )
 
@@ -104,7 +102,6 @@ class FeedGestureMachine(val config: GestureConfig = GestureConfig()) {
             is Phase.DirectionLocked -> when (p.direction) {
                 SwipeDirection.UP, SwipeDirection.DOWN -> Vector2(0.0, p.t.dy)
                 SwipeDirection.LEFT, SwipeDirection.RIGHT -> Vector2(p.t.dx, 0.0)
-                SwipeDirection.RIGHT_UP -> p.t // folgt diagonal: sichtbarer Unterschied zu „rechts“
             }
         }
 
@@ -123,8 +120,8 @@ class FeedGestureMachine(val config: GestureConfig = GestureConfig()) {
                 phase = lockCandidate(t)?.let { Phase.DirectionLocked(it, t) } ?: Phase.Dragging(t)
             is Phase.DirectionLocked -> {
                 val d = p.direction
-                if (d == SwipeDirection.RIGHT || d == SwipeDirection.RIGHT_UP) {
-                    // Rechts / rechts-oben: der aktuelle Winkel entscheidet; Totzonen lösen die Bindung.
+                if (d == SwipeDirection.RIGHT) {
+                    // Rechts: der aktuelle Winkel entscheidet; Totzonen lösen die Bindung.
                     phase = if (t.dx < config.unlockDistance) Phase.Dragging(t)
                     else lockCandidate(t)?.let { Phase.DirectionLocked(it, t) } ?: Phase.Dragging(t)
                 } else if (along(d, t) < config.unlockDistance) {
@@ -155,7 +152,7 @@ class FeedGestureMachine(val config: GestureConfig = GestureConfig()) {
                 val distance = along(d, t)
                 val speed = along(d, v)
                 val offAxis = across(d, t)
-                val clearlyDirected = if (d == SwipeDirection.RIGHT || d == SwipeDirection.RIGHT_UP) {
+                val clearlyDirected = if (d == SwipeDirection.RIGHT) {
                     lockCandidate(t) == d
                 } else {
                     offAxis * config.lockRatio <= max(distance, 0.0)
@@ -188,11 +185,8 @@ class FeedGestureMachine(val config: GestureConfig = GestureConfig()) {
         if (ay >= ax * config.lockRatio) return if (t.dy < 0) SwipeDirection.UP else SwipeDirection.DOWN
         if (t.dx < 0) return if (ax >= ay * config.lockRatio) SwipeDirection.LEFT else null
         val ratio = ay / ax
-        if (t.dy < 0) {
-            if (ratio < config.rightUpMinRatio) return SwipeDirection.RIGHT
-            return if (ratio <= config.rightUpMaxRatio) SwipeDirection.RIGHT_UP else null
-        }
-        return if (ratio <= config.rightDownMaxRatio) SwipeDirection.RIGHT else null
+        val max = if (t.dy < 0) config.rightUpMaxRatio else config.rightDownMaxRatio
+        return if (ratio <= max) SwipeDirection.RIGHT else null
     }
 
     /** Strecke in Richtung `d` (negativ bei Gegenrichtung). */
@@ -200,7 +194,7 @@ class FeedGestureMachine(val config: GestureConfig = GestureConfig()) {
         SwipeDirection.UP -> -t.dy
         SwipeDirection.DOWN -> t.dy
         SwipeDirection.LEFT -> -t.dx
-        SwipeDirection.RIGHT, SwipeDirection.RIGHT_UP -> t.dx
+        SwipeDirection.RIGHT -> t.dx
     }
 
     private fun across(d: SwipeDirection, t: Vector2): Double = when (d) {

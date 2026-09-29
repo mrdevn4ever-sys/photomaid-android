@@ -134,7 +134,8 @@ object AppMotion {
 
     const val HINT_VISIBLE_MS = 2_600L
     const val HINT_FADE_MS = 600
-    const val LATER_PILL_MS = 2_400L
+    /** Länger als früher: „Ändern“ in der Pille ist der Weg zum eigenen Termin. */
+    const val LATER_PILL_MS = 4_000L
 }
 
 val LocalPhotoMaidColors = staticCompositionLocalOf { PhotoMaidColors.resolve(dark = false, highContrast = false) }

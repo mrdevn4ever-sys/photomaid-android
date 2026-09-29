@@ -142,6 +142,7 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Reduce Motion | „Animationen entfernen“ (`ANIMATOR_DURATION_SCALE = 0`) | Android-Äquivalent |
 | Erhöhter Kontrast | Android 14+ `UiModeManager.contrast ≥ 0,5` | Android-Äquivalent |
 | UI-Polish (Auftrag „Gezielter UI-Polish“, nur Android) | Heute: Review-Karte zuerst mit Hauptaktion, Zähler als Zahl + Plural; Feed ohne weiße Karte, Rahmen im Seitenverhältnis, Infozeile; Später mit Medientyp/Termin; Verlauf fasst Später + ersten Termin zusammen; Pro mit drei echten Kernvorteilen; Gestenlegende als Liste | ausdrücklicher Auftrag des Nutzers; Verhalten, Gesten und Datenmodell unverändert. Details: `docs/ANDROID_UI_POLISH_REPORT.md` |
+| Umbau 2026-09-29 (Produktentscheidung, nur Android) | Diagonale ↗ entfällt (rechts bis 45° = Später, Termin über „Ändern“); Tipp aufs Video = Pause/Play + dünne Fortschrittsleiste; keine Richtungs-Kapsel; „Regeln & Routinen“ → **Sammlungen** (dauerhafte Filter, fertige gratis, eigene Pro); Tab „Ordnen“ entfällt, Sammlungen als Reiter in „Aufräumen“; Tabbar nur auf Tab-Startseiten; Navigation schiebt statt überblendet | Nutzerwunsch nach Gerätetest; iOS folgt. Details: `docs/REWORK_2026-09-29.md` |
 
 ## 7. Blocker / Plattformgrenzen
 

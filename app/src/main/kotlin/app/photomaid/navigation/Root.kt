@@ -1,5 +1,16 @@
 package app.photomaid.navigation
 
+import app.photomaid.design.LocalReduceMotion
+import androidx.navigation.NavBackStackEntry
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -17,7 +28,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Layers
@@ -75,10 +85,8 @@ import app.photomaid.feature.files.SourcesScreen
 import app.photomaid.feature.history.HistoryScreen
 import app.photomaid.feature.later.LaterScreen
 import app.photomaid.feature.onboarding.PrivacyAccessScreen
-import app.photomaid.feature.organize.OrganizeScreen
 import app.photomaid.feature.pro.ProScreen
 import app.photomaid.feature.review.ReviewFeedScreen
-import app.photomaid.feature.rules.RulesScreen
 import app.photomaid.feature.settings.HelpScreen
 import app.photomaid.feature.settings.SettingsScreen
 import app.photomaid.feature.storage.LargeFilesScreen
@@ -100,9 +108,9 @@ interface Nav {
 }
 
 object Routes {
-    const val TODAY = "today"; const val HUB = "hub"; const val ORGANIZE = "organize"; const val HISTORY = "history"
+    const val TODAY = "today"; const val HUB = "hub"; const val HISTORY = "history"
     const val BASKET = "basket"; const val FILES = "files"; const val SOURCES = "sources"; const val LARGE = "large"
-    const val DUPLICATES = "duplicates"; const val STORAGE = "storage"; const val LATER = "later"; const val RULES = "rules"
+    const val DUPLICATES = "duplicates"; const val STORAGE = "storage"; const val LATER = "later"
     const val MAIN = "main"; const val FEED = "feed/{id}"; const val SETTINGS = "settings"; const val PRO = "pro"
     const val PRIVACY = "privacy"; const val HELP = "help"; const val BASKET_MODAL = "basketModal"
     const val SOURCES_MODAL = "sourcesModal"
@@ -112,7 +120,6 @@ object Routes {
 enum class AppTab(val route: String, val label: Int, val icon: ImageVector) {
     TODAY(Routes.TODAY, R.string.tab_today, Icons.Rounded.Home),
     CLEANUP(Routes.HUB, R.string.tab_cleanup, Icons.Rounded.Layers),
-    ORGANIZE(Routes.ORGANIZE, R.string.tab_organize, Icons.Rounded.Folder),
     HISTORY(Routes.HISTORY, R.string.tab_history, Icons.Rounded.History);
 
     val graph: String get() = "tab_$name"
@@ -178,7 +185,14 @@ private fun RootNav(app: AppModel) {
             override fun back() { root.popBackStack() }
         }
     }
-    NavHost(root, startDestination = Routes.MAIN) {
+    val reduce = LocalReduceMotion.current
+    NavHost(root, startDestination = Routes.MAIN,
+        // Vollbild-Seiten (Feed, Einstellungen, Pro, …) kommen von unten und gehen nach unten – kein langes Überblenden.
+        enterTransition = { if (reduce) EnterTransition.None else slideInVertically(NavMotion.spec()) { it } },
+        exitTransition = { if (reduce) ExitTransition.None else fadeOut(NavMotion.spec(), targetAlpha = 0.85f) },
+        popEnterTransition = { if (reduce) EnterTransition.None else fadeIn(NavMotion.spec(), initialAlpha = 0.85f) },
+        popExitTransition = { if (reduce) ExitTransition.None else slideOutVertically(NavMotion.spec()) { it } },
+    ) {
         composable(Routes.MAIN) { MainTabs(nav) }
         composable(Routes.FEED) { entry ->
             val id = entry.arguments?.getString("id")
@@ -228,14 +242,23 @@ private fun MainTabs(rootNav: Nav) {
         }
     }
     Box(Modifier.fillMaxSize()) {
-        NavHost(controller, startDestination = AppTab.TODAY.graph) {
+        val reduce = LocalReduceMotion.current
+        // Innerhalb eines Tabs: Seiten schieben sich von rechts herein, Zurück schiebt sie wieder hinaus (wie iOS).
+        // Tabwechsel: sehr kurzes Überblenden.
+        fun AnimatedContentTransitionScope<NavBackStackEntry>.sameTab() =
+            initialState.destination.parent?.route == targetState.destination.parent?.route
+        NavHost(controller, startDestination = AppTab.TODAY.graph,
+            enterTransition = { when { reduce -> EnterTransition.None; sameTab() -> slideInHorizontally(NavMotion.spec()) { it }; else -> fadeIn(tween(120)) } },
+            exitTransition = { when { reduce -> ExitTransition.None; sameTab() -> slideOutHorizontally(NavMotion.spec()) { -it / 4 }; else -> fadeOut(tween(120)) } },
+            popEnterTransition = { when { reduce -> EnterTransition.None; sameTab() -> slideInHorizontally(NavMotion.spec()) { -it / 4 }; else -> fadeIn(tween(120)) } },
+            popExitTransition = { when { reduce -> ExitTransition.None; sameTab() -> slideOutHorizontally(NavMotion.spec()) { it }; else -> fadeOut(tween(120)) } },
+        ) {
             for (t in AppTab.entries) {
                 navigation(startDestination = "${t.name}/${t.route}", route = t.graph) {
                     composable("${t.name}/${t.route}") {
                         when (t) {
                             AppTab.TODAY -> TodayScreen(nav)
                             AppTab.CLEANUP -> CleanUpHubScreen(nav)
-                            AppTab.ORGANIZE -> OrganizeScreen(nav)
                             AppTab.HISTORY -> HistoryScreen(nav)
                         }
                     }
@@ -246,11 +269,14 @@ private fun MainTabs(rootNav: Nav) {
                     composable("${t.name}/${Routes.DUPLICATES}") { DuplicatesScreen(nav) }
                     composable("${t.name}/${Routes.STORAGE}") { StorageInsightsScreen(nav) }
                     composable("${t.name}/${Routes.LATER}") { LaterScreen(nav) }
-                    composable("${t.name}/${Routes.RULES}") { RulesScreen(nav) }
                 }
             }
         }
-        GlassTabBar(tab, Modifier.align(Alignment.BottomCenter)) { selected ->
+        // Tabbar nur auf den Tab-Startseiten. Unterseiten (Papierkorb, Dateien, Später, …) haben ihren Zurück-Knopf;
+        // so verdeckt die Leiste dort weder Inhalte noch Aktionsknöpfe am unteren Rand.
+        val atRoot = AppTab.entries.any { t -> entry?.destination?.route == "${t.name}/${t.route}" } || entry == null
+        AnimatedVisibility(atRoot, Modifier.align(Alignment.BottomCenter), enter = fadeIn(tween(150)), exit = fadeOut(tween(100))) {
+        GlassTabBar(tab) { selected ->
             if (selected == tab) {
                 controller.popBackStack("${selected.name}/${selected.route}", inclusive = false)
             } else {
@@ -260,6 +286,7 @@ private fun MainTabs(rootNav: Nav) {
                     restoreState = true
                 }
             }
+        }
         }
     }
 }
@@ -298,6 +325,11 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
             }
         }
     }
+}
+
+/** Navigationsbewegung: kurz und weich statt des langen Standard-Überblendens von Navigation Compose. */
+object NavMotion {
+    fun <T> spec() = tween<T>(durationMillis = 280, easing = FastOutSlowInEasing)
 }
 
 /** Platz am Listenende, damit Inhalte nicht unter der schwebenden Tabbar liegen. */

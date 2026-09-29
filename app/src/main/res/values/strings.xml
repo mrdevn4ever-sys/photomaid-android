@@ -17,10 +17,6 @@
     <string name="error_title">Etwas hat nicht funktioniert</string>
     <string name="retry">Erneut versuchen</string>
     <string name="store_open_failed">Der lokale Speicher konnte nicht geöffnet werden.</string>
-    <plurals name="count_items">
-        <item quantity="one">%1$d Element</item>
-        <item quantity="other">%1$d Elemente</item>
-    </plurals>
     <plurals name="items_count">
         <item quantity="one">%1$d Element</item>
         <item quantity="other">%1$d Elemente</item>
@@ -47,7 +43,6 @@
     <!-- Tabs -->
     <string name="tab_today">Heute</string>
     <string name="tab_cleanup">Aufräumen</string>
-    <string name="tab_organize">Ordnen</string>
     <string name="tab_history">Verlauf</string>
 
     <!-- Heute -->
@@ -90,17 +85,13 @@
 
     <!-- Aufräumen-Hub -->
     <string name="hub_subtitle">Finde und entferne, was du nicht brauchst – auf deinem Gerät.</string>
-    <string name="filter">Filter</string>
-    <string name="filter_all">Alle</string>
-    <string name="filter_media">Medien</string>
-    <string name="filter_files">Dateien</string>
     <string name="hub_photos_sub">Ähnliches prüfst du selbst im Feed</string>
     <string name="hub_videos_sub">Große und unnötige Videos</string>
     <string name="hub_screens_sub">Schnappschüsse aufräumen</string>
     <string name="hub_files_sub">Dateien aus verbundenen Ordnern</string>
     <string name="large_files">Große Dateien</string>
-    <string name="hub_large_sub">Bekannte Größe ab einem Filterwert</string>
-    <string name="hub_dup_sub">Exakte Kopien (Hash-bestätigt)</string>
+    <string name="hub_large_sub">Die größten Dateien in deinen Ordnern</string>
+    <string name="hub_dup_sub">Identische Kopien finden</string>
     <string name="storage_overview">Speicherübersicht</string>
     <string name="hub_storage_sub">Was PhotoMaid sehen kann</string>
     <string name="basket">Papierkorb</string>
@@ -109,14 +100,8 @@
         <item quantity="other">%1$d Elemente, noch nicht gelöscht</item>
     </plurals>
 
-    <!-- Ordnen -->
     <string name="later_manage">Wiedervorlagen verwalten</string>
-    <string name="rules_title">Regeln &amp; Routinen</string>
-    <string name="rules_subtitle">Einrichten und vergessen – nur Review-Aufgaben</string>
     <string name="connected_sources">Verbundene Quellen</string>
-    <string name="connected_sources_sub">Ordner, die PhotoMaid sehen darf</string>
-    <string name="open_tasks">Offene Aufgaben</string>
-    <string name="review_task">Prüfaufgabe</string>
 
     <!-- Feed -->
     <string name="feed_title_all">Medien prüfen</string>
@@ -124,7 +109,6 @@
     <string name="feed_title_videos">Videos prüfen</string>
     <string name="feed_title_screenshots">Screenshots prüfen</string>
     <string name="feed_title_due">Wieder fällig</string>
-    <string name="feed_title_task">Regel-Aufgabe</string>
     <string name="feed_position">%1$d von %2$d</string>
     <string name="feed_empty_title">Nichts zu prüfen</string>
     <string name="feed_empty_message">In dieser Auswahl warten gerade keine Elemente auf eine Entscheidung.</string>
@@ -139,15 +123,12 @@
     <string name="dir_keep">Behalten</string>
     <string name="dir_trash">Papierkorb</string>
     <string name="dir_later">Später</string>
-    <string name="dir_later_custom">Später · Datum wählen</string>
     <string name="dir_back">Zurück</string>
     <string name="hint_up">Hoch</string>
     <string name="hint_left">Links</string>
     <string name="hint_right">Rechts</string>
-    <string name="hint_diag">Schräg hoch rechts</string>
     <string name="hint_down">Runter</string>
-    <string name="hint_date">Datum wählen</string>
-    <string name="gesture_with_default">%1$s · Standard: %2$s</string>
+    <string name="gesture_with_default">%1$s · Standard: %2$s · eigener Termin über „Ändern“</string>
     <string name="error_decision_not_saved">Die Entscheidung wurde nicht gespeichert. Bitte erneut versuchen.</string>
     <string name="error_date_not_saved">Der Termin wurde nicht gespeichert.</string>
     <string name="video_poster_failed">Kein Vorschaubild – spiel das Video ab, um es zu prüfen.</string>
@@ -338,51 +319,38 @@
     <string name="later_review_now">Jetzt prüfen</string>
     <string name="later_remove">Zurückstellung entfernen</string>
 
-    <!-- Regeln -->
-    <string name="rules_intro">Einrichten und vergessen. PhotoMaid arbeitet auf deinem Gerät und erstellt nur Prüfaufgaben.</string>
-    <string name="rules_preview_hint">In der Pro-Vorschau ist je Regel ein einmaliger Testlauf möglich.</string>
-    <string name="rules_pro_hint">Dauerhaft aktive Routinen sind Teil von PhotoMaid Pro. Regeln kannst du trotzdem anlegen.</string>
-    <string name="rules_run_now">Jetzt ausführen</string>
-    <string name="rules_edit">Bearbeiten</string>
-    <string name="rules_delete">Löschen</string>
-    <string name="rules_run_done">Prüfung abgeschlossen. Neue Aufgaben findest du unter Ordnen.</string>
-    <string name="rules_run_unavailable">Für diese Regel ist aktuell kein Lauf möglich.</string>
-    <string name="rules_add">Neue Regel hinzufügen</string>
-    <string name="rules_local">Alle Regeln laufen lokal und werden beim Öffnen der App geprüft.</string>
-    <string name="rule_connected_folder">Verbundener Ordner</string>
-    <plurals name="rule_title_older">
-        <item quantity="one">%1$s älter als %2$d Tag prüfen</item>
-        <item quantity="other">%1$s älter als %2$d Tage prüfen</item>
-    </plurals>
-    <string name="rule_title_size">%1$s ab %2$s zeigen</string>
-    <string name="rule_title_all">%1$s prüfen</string>
-    <string name="rule_detail_daily">Täglich beim Öffnen – erstellt eine Prüfaufgabe</string>
-    <string name="rule_detail_weekly">Jeden %1$s – erstellt eine Prüfaufgabe</string>
-    <plurals name="rule_detail_new">
-        <item quantity="one">Sobald %1$d neu entdecktes Element wartet</item>
-        <item quantity="other">Sobald %1$d neu entdeckte Elemente warten</item>
-    </plurals>
-    <string name="rule_editor_title">Regel</string>
-    <string name="rule_source">Quelle</string>
-    <string name="rule_filter_older">Älter als …</string>
-    <string name="rule_filter_size">Bekannte Größe ab …</string>
-    <string name="rule_filter_all">Alle</string>
-    <plurals name="rule_days">
+    <!-- Sammlungen -->
+    <string name="hub_tab_areas">Bereiche</string>
+    <string name="hub_tab_collections">Sammlungen</string>
+    <string name="col_intro">Eine Sammlung zeigt dir jederzeit alles, was zu einer Bedingung passt – zum Beispiel große Videos. Antippen, durchwischen, fertig. Gelöscht wird nie automatisch.</string>
+    <string name="col_builtin_header">Fertige Sammlungen</string>
+    <string name="col_custom_header">Deine Sammlungen</string>
+    <string name="col_title_larger">%1$s größer als %2$s</string>
+    <string name="col_title_older">%1$s älter als %2$s</string>
+    <string name="col_age_6m">6 Monate</string>
+    <string name="col_age_1y">1 Jahr</string>
+    <string name="col_age_2y">2 Jahre</string>
+    <plurals name="col_age_days">
         <item quantity="one">%1$d Tag</item>
         <item quantity="other">%1$d Tage</item>
     </plurals>
-    <string name="rule_mb">%1$d MB</string>
-    <string name="rule_trigger">Auslöser</string>
-    <string name="rule_trigger_daily">Täglich</string>
-    <string name="rule_trigger_weekly">Wöchentlich</string>
-    <string name="rule_trigger_new">Nach neu entdeckten Elementen</string>
-    <string name="rule_weekday">Wochentag</string>
-    <string name="rule_notify">Erinnerung senden</string>
-    <plurals name="rule_count">
-        <item quantity="one">%1$d Element</item>
-        <item quantity="other">%1$d Elemente</item>
+    <string name="col_summary">%1$s · %2$s</string>
+    <string name="col_nothing_open">Nichts offen</string>
+    <string name="col_counting">Wird gezählt …</string>
+    <plurals name="col_unknown_hint">
+        <item quantity="one">%1$d Element ohne bekannte Größe ist nicht dabei.</item>
+        <item quantity="other">%1$d Elemente ohne bekannte Größe sind nicht dabei.</item>
     </plurals>
-    <string name="rule_note">Regeln erzeugen nur Prüfaufgaben. Es wird nie automatisch gelöscht.</string>
+    <string name="col_add">Eigene Sammlung</string>
+    <string name="col_custom_pro">Eigene Sammlungen sind Teil von PhotoMaid Pro. Die fertigen Sammlungen kann jeder nutzen.</string>
+    <string name="col_editor_title">Eigene Sammlung</string>
+    <string name="col_what">Was?</string>
+    <string name="col_condition">Bedingung</string>
+    <string name="col_larger">Größer als</string>
+    <string name="col_older">Älter als</string>
+    <string name="col_delete">Sammlung löschen</string>
+    <string name="col_edit">Bearbeiten</string>
+    <string name="feed_title_collection">Sammlung prüfen</string>
 
     <!-- Verlauf -->
     <string name="history_all">Alle</string>
@@ -417,12 +385,12 @@
     <string name="pro_f2d">Ohne Tageslimit von 15 bestätigten Bereinigungen.</string>
     <string name="pro_f3">Identische Kopien finden</string>
     <string name="pro_f3d">Exakt gleiche Fotos, Videos und Dateien aus verbundenen Ordnern.</string>
-    <string name="pro_f5">Eigene Prüfroutinen</string>
-    <string name="pro_f5d">Deine Regeln bereiten beim Öffnen der App passende Prüfaufgaben vor.</string>
+    <string name="pro_f5">Eigene Sammlungen</string>
+    <string name="pro_f5d">Lege eigene Filter an, zum Beispiel „Videos größer als 500 MB“ – jederzeit mit einem Tipp prüfbar.</string>
     <string name="pro_also">Außerdem: keine Werbeangebote.</string>
     <string name="pro_details">So funktioniert Pro</string>
     <string name="pro_details_dup">Kopien: Verglichen wird der Dateiinhalt (SHA-256) auf deinem Gerät. Ähnlich aussehende Bilder gelten nicht als Kopie.</string>
-    <string name="pro_details_rules">Routinen: Regeln laufen lokal beim Öffnen der App und erstellen nur Prüfaufgaben. Es wird nichts automatisch gelöscht.</string>
+    <string name="pro_details_rules">Sammlungen: Sie filtern nur, was schon auf deinem Gerät ist, und öffnen den Feed. Es läuft nichts im Hintergrund und es wird nichts automatisch gelöscht.</string>
     <string name="pro_details_cleanup">Bereinigen: Gezählt werden nur Elemente, die du im Papierkorb bestätigt entfernst.</string>
     <string name="pro_preview_header">Pro-Vorschau</string>
     <string name="expanded">Ausgeklappt</string>
@@ -476,7 +444,7 @@
     <string name="version">Version</string>
     <string name="privacy_policy">Datenschutzerklärung</string>
     <string name="help_decide">Entscheiden</string>
-    <string name="help_decide_text">Wisch nach oben, um ein Medium zu behalten. Nach links kommt es in den Papierkorb, nach rechts auf später (Standard: in 2 Tagen), schräg nach rechts oben wählst du das Datum selbst – gespeichert wird erst mit „Fertig“, Abbrechen ändert nichts. Nach unten kommst du zum vorherigen Medium – ohne etwas zu entscheiden.</string>
+    <string name="help_decide_text">Wisch nach oben, um ein Medium zu behalten. Nach links kommt es in den Papierkorb, nach rechts auf später (Standard: in 2 Tagen). Einen anderen Termin wählst du direkt danach mit „Ändern“ in der kleinen Leiste. Nach unten kommst du zum vorherigen Medium – ohne etwas zu entscheiden.</string>
     <string name="help_delete">Löschen</string>
     <string name="help_delete_text">PhotoMaid löscht nie automatisch. Was du nach links wischst, landet im PhotoMaid-Papierkorb; gelöscht wird erst, wenn du ihn leerst. Fotos und Videos verschiebt Android nach deiner Bestätigung in den Papierkorb des Systems. Dateien werden endgültig gelöscht.</string>
     <string name="help_cloud">Cloud</string>
@@ -506,5 +474,4 @@
     <!-- Mitteilungen -->
     <string name="notif_channel">Erinnerungen</string>
     <string name="notif_due_body">Heute sind zurückgestellte Elemente wieder fällig.</string>
-    <string name="notif_rule_body">Zeit für deine geplante Prüfung.</string>
 </resources>

@@ -21,10 +21,10 @@ import app.photomaid.feature.files.FileBrowserScreen
 import app.photomaid.feature.history.HistoryScreen
 import app.photomaid.feature.later.LaterScreen
 import app.photomaid.feature.onboarding.PrivacyAccessScreen
-import app.photomaid.feature.organize.OrganizeScreen
 import app.photomaid.feature.pro.ProScreen
 import app.photomaid.feature.review.ReviewFeedScreen
-import app.photomaid.feature.rules.RulesScreen
+import app.photomaid.feature.collections.CollectionsContent
+import app.photomaid.design.AppBackground
 import app.photomaid.feature.settings.SettingsScreen
 import app.photomaid.feature.storage.LargeFilesScreen
 import app.photomaid.feature.storage.StorageInsightsScreen
@@ -34,6 +34,8 @@ import app.photomaid.navigation.GlassTabBar
 import app.photomaid.navigation.AppTab
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule
+import app.photomaid.design.AppSpacing
+import androidx.compose.foundation.layout.padding
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
@@ -102,13 +104,14 @@ class ScreenshotTest {
     @Test fun s05_basket() = seededApp().let { shot("05_basket", it) { CleanupBasketScreen(nav, showsDone = false) } }
     @Test fun s05_basket_dark() = seededApp(dark = true).let { shot("05_basket_dark", it) { CleanupBasketScreen(nav, showsDone = false) } }
     @Test fun s06_hub() = seededApp().let { shot("06_cleanup_hub", it) { WithTabBar(AppTab.CLEANUP) { CleanUpHubScreen(nav) } } }
-    @Test fun s06b_organize() = seededApp().let { shot("06b_organize", it) { WithTabBar(AppTab.ORGANIZE) { OrganizeScreen(nav) } } }
     @Test fun s07_files() = seededApp().let { shot("07_files", it) { FileBrowserScreen(nav) } }
     @Test fun s08_large() = seededApp().let { shot("08_large_files", it) { LargeFilesScreen(nav) } }
     @Test fun s09_duplicates() = seededApp().let { shot("09_duplicates_free", it) { DuplicatesScreen(nav) } }
     @Test fun s10_storage() = seededApp().let { shot("10_storage", it) { StorageInsightsScreen(nav) } }
     @Test fun s11_later() = seededApp().let { shot("11_later", it) { LaterScreen(nav) } }
-    @Test fun s12_rules() = seededApp().let { shot("12_rules", it) { RulesScreen(nav) } }
+    @Test fun s12_collections() = seededApp().let {
+        shot("12_collections", it) { AppBackground { androidx.compose.foundation.layout.Column(Modifier.padding(AppSpacing.pageMargin)) { CollectionsContent(nav) } } }
+    }
     @Test fun s13_history() = seededApp().let { shot("13_history", it) { WithTabBar(AppTab.HISTORY) { HistoryScreen(nav) } } }
     @Test fun s13_history_dark() = seededApp(dark = true).let { shot("13_history_dark", it) { WithTabBar(AppTab.HISTORY) { HistoryScreen(nav) } } }
     @Test fun s14_pro() = seededApp().let { shot("14_pro", it) { ProScreen(nav) } }

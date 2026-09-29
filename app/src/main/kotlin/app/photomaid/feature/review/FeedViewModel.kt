@@ -123,7 +123,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                     ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
                 }
                 FeedRequest.Source.Due -> ReviewQueues.dueQueue(app.ledger.allRecords(), s, today).filter { it.provider == ItemProvider.PhotoLibrary }
-                is FeedRequest.Source.Task -> src.task.items.filter { it.provider == ItemProvider.PhotoLibrary }
+                is FeedRequest.Source.Collection -> app.collections.result(src.collection, app).items.filter { it.provider == ItemProvider.PhotoLibrary }
                 is FeedRequest.Source.Items -> src.items.filter { it.provider == ItemProvider.PhotoLibrary }
             }
         }
@@ -203,7 +203,15 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         if (intent == FeedIntent.PREVIOUS) {
             val nav = session.goBack()
             machine.finishCommit()
-            resetOffset(reduceMotion)
+            val scope = animationScope
+            if (nav is BackNavigation.Moved && scope != null && !reduceMotion) {
+                // Vorheriges Medium gleitet von oben herein (statt hartem Wechsel).
+                lockedDirection = null
+                scope.launch {
+                    offset.snapTo(Offset(0f, -viewSizeDp.height * 0.35f))
+                    offset.animateTo(Offset.Zero, AppMotion.standard(false))
+                }
+            } else resetOffset(reduceMotion)
             if (nav == BackNavigation.AtStart) emit(FeedHaptic.BUMP) // dezenter Anschlag, keine Aktion
             app.player.stop()
             refreshWindow()

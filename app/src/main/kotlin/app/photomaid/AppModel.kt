@@ -35,7 +35,7 @@ import app.photomaid.core.model.SystemClock
 import app.photomaid.data.KeyValueStore
 import app.photomaid.data.PhotoMaidDatabase
 import app.photomaid.data.RoomLedgerPersistence
-import app.photomaid.feature.rules.RulesStore
+import app.photomaid.feature.collections.CollectionsStore
 import app.photomaid.files.ConnectedSourceStore
 import app.photomaid.media.MediaLibrary
 import app.photomaid.media.PhotoLibraryService
@@ -92,7 +92,7 @@ class AppModel(
         if (id.isBlank()) UnconfiguredPurchaseGateway() else PlayBillingGateway(context, id, store)
     }
     val entitlements = EntitlementCenter(store, purchases, UnconfiguredRewardedAdGateway())
-    val rules = RulesStore(store)
+    val collections = CollectionsStore(store)
 
     private val _read = MutableStateFlow(LedgerReadModel())
     val read: StateFlow<LedgerReadModel> = _read.asStateFlow()
@@ -109,7 +109,7 @@ class AppModel(
     fun loadBlocking() {
         _settings.value = store.value<AppSettingsData>(SETTINGS_KEY) ?: AppSettingsData()
         sources.load()
-        rules.load()
+        collections.load()
         entitlements.load()
         (purchases as? PlayBillingGateway)?.loadCache()
         reminders.ensureChannel()
@@ -145,7 +145,6 @@ class AppModel(
             recoverOperations()
         }
         reload()
-        rules.evaluateOnResume(this)
     }
 
     suspend fun reload() = derive(ledger.snapshotState())

@@ -65,9 +65,8 @@ data class Capabilities(
     val dailyCleanupLimit: Int?,
     val exactDuplicates: Boolean,
     val advancedFileTools: Boolean,
-    /** Dauerhaft aktive Regeln/Routinen (Rewarded: nur einmaliger Testscan). */
-    val persistentRoutines: Boolean,
-    val oneTimeRuleTestScan: Boolean,
+    /** Eigene Sammlungen anlegen und öffnen (fertige Sammlungen sind für alle). */
+    val customCollections: Boolean,
     /** Werbung darf angeboten/angefragt werden (nie für Pro). */
     val adsAllowed: Boolean,
     val rewardRemaining: Duration?,
@@ -79,17 +78,17 @@ data class Capabilities(
 
         fun resolve(purchase: PurchaseState, rewards: RewardLedger, now: Instant): Capabilities {
             if (purchase == PurchaseState.PURCHASED) {
-                return Capabilities(Tier.PRO, null, true, true, true, true, false, null)
+                return Capabilities(Tier.PRO, null, exactDuplicates = true, advancedFileTools = true, customCollections = true, adsAllowed = false, rewardRemaining = null)
             }
             rewards.active(now)?.let { w ->
                 return Capabilities(
                     Tier.REWARDED_PREVIEW, FREE_DAILY_CLEANUP_LIMIT, exactDuplicates = true, advancedFileTools = true,
-                    persistentRoutines = false, oneTimeRuleTestScan = true, adsAllowed = true, rewardRemaining = w.remaining(now),
+                    customCollections = true, adsAllowed = true, rewardRemaining = w.remaining(now),
                 )
             }
             return Capabilities(
                 Tier.FREE, FREE_DAILY_CLEANUP_LIMIT, exactDuplicates = false, advancedFileTools = false,
-                persistentRoutines = false, oneTimeRuleTestScan = false,
+                customCollections = false,
                 // Bei unbekanntem Kaufstatus keine Ad-Requests, bis der Status geklärt ist.
                 adsAllowed = purchase != PurchaseState.UNKNOWN, rewardRemaining = null,
             )

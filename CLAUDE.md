@@ -10,10 +10,11 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 |---|---|---|
 | hoch | **Behalten** | nächstes Medium |
 | links | **Papierkorb** (PhotoMaid-eigen, nichts gelöscht) | nächstes Medium |
-| rechts (gerade oder schräg nach unten, ≤ 45°) | **Später** mit Standardtermin (Vorgabe 2 Tage) | nächstes Medium + Pille „In 2 Tagen wieder · Ändern“ |
-| schräg rechts oben (≈ 25°–50°) | **Datum selbst wählen** – Öffnen ist noch KEINE Entscheidung | Drehrad; Bestätigen = Später bis Datum + nächstes Medium; Abbrechen = nichts geändert, gleiches Medium (bewusste Abweichung von iOS, siehe `docs/PORTING_MATRIX.md`) |
+| rechts (gerade oder schräg nach oben/unten, ≤ 45°) | **Später** mit Standardtermin (Vorgabe 2 Tage) | nächstes Medium + Pille „In 2 Tagen wieder · Ändern“ (eigener Termin über „Ändern“) |
 | runter | **Vorheriges Medium** (keine Entscheidung) | – |
 
+- Keine Diagonalgeste (Produktentscheidung 2026-09-29, Abweichung von iOS): zwischen 45° und „hoch“ bzw. „runter“ liegen Totzonen.
+- Tipp aufs Video = Pause/Play (keine Entscheidung). Keine Richtungs-Kapsel beim Ziehen.
 - Eine einzige Gesture-/Decision-State-Machine: `core/.../feed/FeedGestureMachine.kt`.
 - Nichts tun = keine Entscheidung. Eine Geste = maximal ein Schritt. Commit trägt Item-ID, Revision, Command-ID, Aktion.
 - Keine Aktions-Buttons im Feed (nur bei TalkBack/Schaltersteuerung).
@@ -21,6 +22,7 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 ## Verbote
 
 - Keine automatische Löschung. Kein Backend, Konto, Upload, keine KI/ML.
+- Sammlungen (statt „Regeln & Routinen“) sind reine Filter ohne Auslöser/Hintergrundarbeit; fertige für alle, eigene = Pro.
 - Keine erfundenen Zahlen; unbekannte Größe ≠ 0. Keine simulierten Scans/Berechtigungen/Käufe.
 - Kein `MANAGE_EXTERNAL_STORAGE`, keine Accessibility-/Shell-Tricks zum Löschen.
 - Synthetische Daten nur in Tests, Previews und im Build-Typ `qa`.

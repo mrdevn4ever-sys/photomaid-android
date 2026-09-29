@@ -2,7 +2,6 @@ package app.photomaid.media
 
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
-import android.os.Build
 import android.util.Size
 import coil3.ImageLoader
 import coil3.Uri
@@ -35,8 +34,7 @@ class VideoPosterFetcher(private val uri: Uri, private val options: Options) : F
     private fun frame(u: android.net.Uri, w: Int, h: Int): Bitmap? = runCatching {
         MediaMetadataRetriever().use { r ->
             r.setDataSource(options.context, u)
-            if (Build.VERSION.SDK_INT >= 27) r.getScaledFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC, w, h)
-            else r.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
+            r.getScaledFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC, w, h)
         }
     }.getOrNull()
 

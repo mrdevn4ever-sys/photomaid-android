@@ -51,7 +51,7 @@ class AppFlowsTest {
         rule.waitUntil(5_000) { app.settings.value.privacyIntroSeen }
         rule.onNodeWithText("Heute").assertExists()
         rule.onNodeWithText("Aufräumen").assertExists()
-        rule.onNodeWithText("Ordnen").assertExists()
+        rule.onNodeWithText("Ordnen").assertDoesNotExist() // Tab entfällt; Sammlungen liegen in Aufräumen
         rule.onNodeWithText("Verlauf").assertExists()
     }
 

@@ -6,10 +6,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.provider.MediaStore
-import app.photomaid.core.rules.ReviewRule
-import app.photomaid.core.rules.RuleFilter
-import app.photomaid.core.rules.RuleSource
-import app.photomaid.core.rules.RuleTrigger
+import app.photomaid.core.collections.CollectionFilter
+import app.photomaid.core.collections.CollectionSource
+import app.photomaid.core.collections.SmartCollection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,9 +25,8 @@ object QAFixtures {
     fun install(app: AppModel) {
         app.scope.launch {
             if (seedMedia) withContext(Dispatchers.IO) { seed(app) }
-            // Lokale Beispielregeln, damit „Regeln & Routinen“ nicht leer ist (wie iOS).
-            app.rules.upsert(ReviewRule(source = RuleSource.Screenshots, filter = RuleFilter.OlderThan(30), trigger = RuleTrigger.Daily), app.reminders)
-            app.rules.upsert(ReviewRule(source = RuleSource.Videos, filter = RuleFilter.KnownSizeAtLeast(1_000_000_000), trigger = RuleTrigger.Weekly(1)), app.reminders)
+            // Eine eigene Beispiel-Sammlung, damit „Deine Sammlungen“ im QA-Build nicht leer ist.
+            app.collections.upsert(SmartCollection(source = CollectionSource.VIDEOS, filter = CollectionFilter.LargerThan(1_000_000_000)))
             app.photos.bumpChangeToken()
         }
     }

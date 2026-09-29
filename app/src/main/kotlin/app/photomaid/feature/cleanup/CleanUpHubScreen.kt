@@ -47,6 +47,8 @@ import app.photomaid.design.SegmentedPicker
 import app.photomaid.design.SourceRow
 import app.photomaid.design.SurfaceCard
 import app.photomaid.media.MediaCategory
+import app.photomaid.feature.collections.CollectionsContent
+import androidx.compose.material.icons.rounded.Bookmark
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.navigation.Routes
@@ -54,7 +56,7 @@ import app.photomaid.navigation.TabBarClearance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-private enum class HubFilter { ALL, MEDIA, FILES }
+private enum class HubTab { AREAS, COLLECTIONS }
 
 /** Screen 6 – Aufräumen-Hub. */
 @Composable
@@ -65,7 +67,7 @@ fun CleanUpHubScreen(nav: Nav) {
     val token by app.photos.changeToken.collectAsState()
     val read by app.read.collectAsState()
     val sources by app.sources.sources.collectAsState()
-    var filter by rememberSaveable { mutableStateOf(HubFilter.ALL) }
+    var tab by rememberSaveable { mutableStateOf(HubTab.AREAS) }
     var counts by remember { mutableStateOf<Map<MediaCategory, Int>>(emptyMap()) }
     LaunchedEffect(token, access) { counts = withContext(Dispatchers.IO) { MediaCategory.entries.associateWith { app.photos.count(it) } } }
 
@@ -75,9 +77,11 @@ fun CleanUpHubScreen(nav: Nav) {
             LargeTitleHeader(stringResource(R.string.tab_cleanup), stringResource(R.string.hub_subtitle)) {
                 GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
             }
-            SegmentedPicker(listOf(HubFilter.ALL to stringResource(R.string.filter_all), HubFilter.MEDIA to stringResource(R.string.filter_media),
-                HubFilter.FILES to stringResource(R.string.filter_files)), filter) { filter = it }
-            Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            // Oben zwei Reiter: Bereiche (Kategorien und Werkzeuge) und Sammlungen (dauerhafte Filter, früher „Ordnen“).
+            SegmentedPicker(listOf(HubTab.AREAS to stringResource(R.string.hub_tab_areas), HubTab.COLLECTIONS to stringResource(R.string.hub_tab_collections)),
+                tab, Modifier.testTag("hub.tabs")) { tab = it }
+            if (tab == HubTab.COLLECTIONS) CollectionsContent(nav)
+            else Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                 @Composable
                 fun media(cat: MediaCategory, icon: ImageVector, title: Int, sub: Int) {
                     val enabled = access.canRead
@@ -91,15 +95,12 @@ fun CleanUpHubScreen(nav: Nav) {
                 fun link(id: String, icon: ImageVector, title: String, sub: String, route: String) {
                     SurfaceCard(Modifier.testTag("hub.$id"), onClick = { nav.push(route) }) { SourceRow(icon, c.accent, title, subtitle = sub) }
                 }
-                if (filter != HubFilter.FILES) {
-                    media(MediaCategory.PHOTOS, Icons.Rounded.Photo, R.string.cat_photos, R.string.hub_photos_sub)
-                    media(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos, R.string.hub_videos_sub)
-                    media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots, R.string.hub_screens_sub)
-                }
-                if (filter != HubFilter.MEDIA) {
-                    link("files", Icons.Rounded.Download, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads),
-                        stringResource(if (sources.isEmpty()) R.string.choose_folder else R.string.hub_files_sub), Routes.FILES)
-                }
+                media(MediaCategory.PHOTOS, Icons.Rounded.Photo, R.string.cat_photos, R.string.hub_photos_sub)
+                media(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos, R.string.hub_videos_sub)
+                media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots, R.string.hub_screens_sub)
+                link("files", Icons.Rounded.Download, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads),
+                    stringResource(if (sources.isEmpty()) R.string.choose_folder else R.string.hub_files_sub), Routes.FILES)
+                link("later", Icons.Rounded.Bookmark, stringResource(R.string.later), stringResource(R.string.later_manage), Routes.LATER)
                 link("large", Icons.Rounded.InsertDriveFile, stringResource(R.string.large_files), stringResource(R.string.hub_large_sub), Routes.LARGE)
                 link("duplicates", Icons.Rounded.FilterNone, stringResource(R.string.duplicates), stringResource(R.string.hub_dup_sub), Routes.DUPLICATES)
                 link("storage", Icons.Rounded.BarChart, stringResource(R.string.storage_overview), stringResource(R.string.hub_storage_sub), Routes.STORAGE)
