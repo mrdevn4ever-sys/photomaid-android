@@ -1,6 +1,6 @@
 # Implementierungsstatus (Android)
 
-Stand: 2026-09-29 · Branch `claude/android-port` · Quelle: iOS `main` @ `21717f3` (read-only).
+Stand: 2026-09-29 · Branch `main` · Quelle: iOS `main` @ `21717f3` (read-only).
 
 ## Umgebung
 

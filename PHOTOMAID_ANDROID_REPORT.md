@@ -71,7 +71,7 @@ Werbeanbieter. Vollständig: `docs/RELEASE_BLOCKERS.md`.
 
 ## 11. Git
 
-Branch `claude/android-port` (gepusht, kein PR, kein Merge). `git log --oneline` zeigt thematische Commits:
+Über PR #1 in `main` gemergt (auf ausdrücklichen Wunsch). CI läuft nur manuell (`workflow_dispatch`). `git log --oneline` zeigt thematische Commits:
 Foundation → Core → Design → Persistenz → Infrastruktur → AppModel → Feed → Screens → Tests/Fixes → Doku.
 
 ## 12. Parity Matrix
