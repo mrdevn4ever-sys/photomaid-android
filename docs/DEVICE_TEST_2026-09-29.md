@@ -22,3 +22,29 @@ Nicht geprüft (NOT RUN im Test): Datumsauswahl ↗ offen + HOME, weil der Test 
 4. `pm revoke … READ_MEDIA_IMAGES` → „Heute“ zeigt „Eingeschränkter Zugriff“.
 5. Papierkorb leeren → System-Dialog **ablehnen** → Verlauf zeigt **eine** Zeile „Bereinigung nicht ausgeführt · n Elemente“.
 6. Heute nach unten scrollen: Die Tabbar-Beschriftungen sind lesbar.
+
+## Zweiter Gerätetest (Nachprüfung der Fixes) – 2026-09-29
+
+Branch `claude/device-test-fixes` @ `e1beed4`, dasselbe Gerät (Realme RMX3933, Android 14/API 34, 720×1600).
+Testmedien: 4 synthetische Bilder und 2 synthetische 10-s-Videos im eigenen Testordner. Der System-Papierkorb wurde nur abgelehnt.
+
+| Test | Ergebnis |
+|---|---|
+| R1 Feed 5× schließen und Systemzurück: Heute mit Inhalt | PASS |
+| R2 HOME/Resume 3× | PASS |
+| R3 ↗ Datumsauswahl offen + HOME → gleiche Position, keine Entscheidung, Abbrechen | PASS |
+| R4 Video: Standbild, Play/Pause, Fortschritt, Ton, danach Geste | PASS |
+| R5 Eingeschränkter Zugriff: Karte „Eingeschränkt“, Wiederherstellung | PASS |
+| R6 Papierkorb abgelehnt → genau eine Zeile „Bereinigung nicht ausgeführt · 3 Elemente“ | PASS |
+| R7 Tabbar beim Scrollen lesbar (Heute, Verlauf) | PASS |
+| R8 Gestenhilfe: alle fünf Zeilen | PASS |
+| R9 Regressionslauf inkl. ↗ Abbrechen/Bestätigen, Undo, 20× hoch | PASS |
+
+9 PASS, 0 FAIL, 0 NOT RUN, 0 BLOCKED. Keine Crash-Log-Treffer.
+
+Kosmetische Beobachtung aus den Screenshots (kein Fehler): Zwischen Tabbar und Android-Navigationsleiste
+scrollt Inhalt sichtbar weiter, ein schmaler Streifen unter der Tabbar. Optional für später: Hintergrund-Verlauf
+unter der Tabbar.
+
+Weiterhin nicht auf dem Gerät geprüft: echter bestätigter Löschweg über den System-Dialog (bewusst nur von Hand),
+Android 11/12/13, TalkBack-Durchgang, Play-Billing-Kauf.
