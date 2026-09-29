@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -94,6 +95,7 @@ fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onRe
     val kind = stringResource(when (asset.kind) { MediaKind.VIDEO -> R.string.video; MediaKind.SCREENSHOT -> R.string.screenshot; else -> R.string.photo })
     val description = asset.creationDate?.let { stringResource(R.string.a11y_kind_date, kind, DateText.long(it)) } ?: kind
     BoxWithConstraints(Modifier.fillMaxSize().clip(RoundedCornerShape(AppRadii.sheet)).background(c.surface)
+        .testTag(if (preview == PreviewState.READY) "feed.media.ready" else "feed.media")
         .semantics { contentDescription = description }) {
         val active = asset.kind == MediaKind.VIDEO && player.itemID == asset.id
         if (active && app.player.player != null) {

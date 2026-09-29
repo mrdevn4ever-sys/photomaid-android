@@ -51,7 +51,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -139,6 +141,8 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
     var showInfo by remember { mutableStateOf(false) }
     var zoom by remember { mutableFloatStateOf(1f) }
     val haptics = LocalHapticFeedback.current
+    val animScope = rememberCoroutineScope()
+    DisposableEffect(model, animScope) { model.animationScope = animScope; onDispose { model.animationScope = null } }
 
     fun flashHints() { hintToken++; showHints = true }
     fun hideHints() { if (showHints) { hintToken++; showHints = false } }

@@ -119,6 +119,26 @@ Gefundene iOS-Auffälligkeiten (nicht absichtlich nachgebaut):
 | 1 | `CleanupBasketView.task(id: basket.count)` setzt die Auswahl bei jeder Anzahländerung auf „alle“ zurück – eine manuelle Abwahl geht verloren, sobald ein anderes Item hinzukommt/wegfällt | Abwahl bleibt für verbleibende Items erhalten, neue Items sind ausgewählt | Auswahl = vorige Auswahl ∩ Korb ∪ neue Items |
 | 2 | `PhotoLibraryService.delete` meldet `.partial(requested)` wenn nicht alle IDs löschbar sind, ohne Nachprüfung | Nur tatsächlich entfernte Items zählen | Nach Systemdialog Existenzprüfung je Item → `partial(removed)` |
 | 3 | `LargeFilesView` zählt als „unbekannt“ nur `size == .unknown`, Mindestgröße gilt nur für bekannte | identisch (korrekt) | identisch |
+| 4 | `AppModel.onForeground` ruft bei **jedem** Resume `recoverAfterLaunch` + `resolveReconciliation`. Kehrt die App während des System-Löschdialogs in den Vordergrund zurück, wird eine laufende `submitted`-Operation als `reconciliationRequired` markiert und (Items existieren noch) sofort als `failed` abgeschlossen; die spätere Bestätigung wird dann verworfen | Abgleich nur nach echtem Neustart bzw. nie während einer laufenden Operation | Einmal je Prozessstart und nie während `runCleanup` (`recoveredThisProcess`, `cleanupInFlight`) |
+| 5 | Der erste über den Dateibrowser verbundene Ordner heißt immer „Downloads“ (`asDownloads: importAsDownloads && downloadsSource == nil`, `importAsDownloads` ist immer `true`) – auch wenn es z. B. „Rechnungen“ ist | Titel „Downloads“ nur für eine Downloads-Quelle | Nur Ordner namens „Download“/„Downloads“ werden als Downloads-Quelle markiert |
+
+Android-spezifische Befunde während des Ports (behoben):
+
+| # | Befund | Behebung |
+|---|---|---|
+| A1 | Feed-Animationen im `viewModelScope` (keine `MonotonicFrameClock`) → jede Entscheidung wäre auf dem Gerät mit „nicht gespeichert“ zurückgerollt worden (gefunden durch Compose-UI-Test) | Animationen laufen im Kompositions-Scope; ohne UI wird gesprungen |
+| A2 | `SourceRow`: langer Detailtext drückte den Titel auf schmalen Geräten auf ~0 Breite | Detailspalte höchstens so breit wie der Titel (`weight(1f, fill = false)`) |
+
+Weitere Android-Anpassungen ohne iOS-Gegenstück:
+
+| Thema | Android | Grund |
+|---|---|---|
+| Wischaktionen in Listen (iOS `swipeActions`, ohne Vollwisch) | Sichtbares „⋯“-Aktionsmenü je Zeile (Papierkorb, Später, Dateien, Große Dateien) bzw. sichtbare Buttons (Quellen, Regeln) | Android-Listen haben keine Standard-Wischaktionen; Menü ist zugänglicher und verhindert versehentliche Aktionen |
+| Drehrad | `android.widget.NumberPicker` (natives Rad), Kalender = Material-DatePicker | nativ |
+| Wegwischen des Drehrad-Sheets | wie „Abbrechen“ → Standardtermin | iOS sperrt das Wegwischen (`interactiveDismissDisabled`); Ergebnis identisch |
+| Hash-Cache (Masterprompt §22) | **kein** persistenter Hash-Cache | iOS hält SHA-256 nur im Speicher (Datenschutzkarte); Teilhash + Größenfilter begrenzen den Aufwand |
+| Reduce Motion | „Animationen entfernen“ (`ANIMATOR_DURATION_SCALE = 0`) | Android-Äquivalent |
+| Erhöhter Kontrast | Android 14+ `UiModeManager.contrast ≥ 0,5` | Android-Äquivalent |
 
 ## 7. Blocker / Plattformgrenzen
 

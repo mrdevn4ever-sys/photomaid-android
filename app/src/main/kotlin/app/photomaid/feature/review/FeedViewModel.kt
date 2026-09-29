@@ -77,6 +77,11 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         private set
     private var hapticSeq = 0
     var viewSizeDp: Size = Size(390f, 600f)
+    /**
+     * Kompositions-Scope (mit MonotonicFrameClock) für Animationen. Der viewModelScope hat keine Frame-Clock;
+     * Animationen dort würden scheitern. Ohne UI (Tests der Logik) wird ohne Animation gesprungen.
+     */
+    var animationScope: kotlinx.coroutines.CoroutineScope? = null
     private var pillJob: Job? = null
 
     val current: ItemReference? get() { version; return session.current }
@@ -165,7 +170,9 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
 
     private fun resetOffset(reduceMotion: Boolean) {
         lockedDirection = machine.lockedDirection
-        viewModelScope.launch { offset.animateTo(Offset.Zero, AppMotion.standard(reduceMotion)) }
+        val scope = animationScope
+        if (scope == null) viewModelScope.launch { offset.snapTo(Offset.Zero) }
+        else scope.launch { offset.animateTo(Offset.Zero, AppMotion.standard(reduceMotion)) }
     }
 
     /** Gemeinsamer Pfad für Gesten, Buttons und TalkBack-Aktionen. */
@@ -196,11 +203,15 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 resetOffset(reduceMotion)
                 return
             }
-            val fly = viewModelScope.async { offset.animateTo(exitOffset(intent), AppMotion.commit(reduceMotion)) }
+            val target = exitOffset(intent)
+            val fly = (animationScope ?: viewModelScope).async {
+                runCatching { if (animationScope != null) offset.animateTo(target, AppMotion.commit(reduceMotion)) else offset.snapTo(target) }
+            }
             app.player.stop() // ausgehenden Player sofort anhalten
             try {
                 val out = app.apply(pending.command, session.id)
-                fly.await()
+                // Animation abgebrochen (z. B. Rotation/Recreation) ist kein Fehler der gespeicherten Entscheidung.
+                runCatching { fly.await() }
                 session.commitSucceeded(pending.command.id, out.record)
                 emit(when (intent) { FeedIntent.KEEP -> FeedHaptic.KEEP; FeedIntent.MARK_FOR_CLEANUP -> FeedHaptic.CLEANUP; else -> FeedHaptic.LATER })
                 offset.snapTo(Offset.Zero)

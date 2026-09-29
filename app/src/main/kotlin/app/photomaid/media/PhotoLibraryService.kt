@@ -1,6 +1,7 @@
 package app.photomaid.media
 
 import android.Manifest
+import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
@@ -14,6 +15,10 @@ import android.os.Looper
 import android.provider.MediaStore
 import androidx.core.content.ContextCompat
 import app.photomaid.core.cleanup.ExistenceProbe
+import app.photomaid.core.cleanup.OperationOutcome
+import app.photomaid.system.SystemDialogs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import app.photomaid.core.model.ItemReference
 import app.photomaid.core.model.KnownSize
 import app.photomaid.core.model.MediaKind
@@ -81,21 +86,40 @@ object MediaPermissions {
     }
 }
 
+/** Zugang zur Mediathek. Produktion: [PhotoLibraryService]; Tests/Previews: Fakes mit synthetischen Medien. */
+interface MediaLibrary {
+    val access: StateFlow<PhotoAccess>
+    val changeToken: StateFlow<Int>
+    fun refreshAccess()
+    fun bumpChangeToken()
+    fun count(category: MediaCategory): Int
+    fun assets(category: MediaCategory, limit: Int? = null): List<MediaAsset>
+    fun assets(ids: List<String>): List<MediaAsset>
+    fun probe(ids: List<String>): Map<ItemReference, ExistenceProbe>
+    fun openStream(id: String): java.io.InputStream?
+
+    /**
+     * In den System-Papierkorb verschieben (mit Systembestätigung) und Ergebnis je Item belegen.
+     * `null` = Ergebnis nicht belegbar → Abgleich beim nächsten Start.
+     */
+    suspend fun trash(ids: List<String>): OperationOutcome?
+}
+
 /**
  * Einziger Zugang zu MediaStore (iOS `PhotoLibraryService`). Nur lokale Medien; keine Netzwerkzugriffe.
  * Liest ausschließlich öffentliche Spalten; entzogene Berechtigung führt zu leeren Ergebnissen, nie zum Absturz.
  */
-class PhotoLibraryService(private val context: Context, private val everAsked: () -> Boolean) {
+class PhotoLibraryService(private val context: Context, private val everAsked: () -> Boolean) : MediaLibrary {
     private val resolver: ContentResolver = context.contentResolver
     private val _access = MutableStateFlow(MediaPermissions.current(context, everAsked()))
-    val access: StateFlow<PhotoAccess> = _access.asStateFlow()
+    override val access: StateFlow<PhotoAccess> = _access.asStateFlow()
 
     /** Erhöht sich bei jeder Mediatheksänderung (Screens laden daraufhin neu). */
     private val _changeToken = MutableStateFlow(0)
-    val changeToken: StateFlow<Int> = _changeToken.asStateFlow()
+    override val changeToken: StateFlow<Int> = _changeToken.asStateFlow()
     private var observer: ContentObserver? = null
 
-    fun refreshAccess() {
+    override fun refreshAccess() {
         val new = MediaPermissions.current(context, everAsked())
         if (new != _access.value) {
             _access.value = new
@@ -104,7 +128,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         startObservingIfAllowed()
     }
 
-    fun bumpChangeToken() { _changeToken.value += 1 }
+    override fun bumpChangeToken() { _changeToken.value += 1 }
 
     private fun startObservingIfAllowed() {
         if (!_access.value.canRead || observer != null) return
@@ -192,7 +216,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         return out
     }
 
-    fun count(category: MediaCategory): Int {
+    override fun count(category: MediaCategory): Int {
         if (!_access.value.canRead) return 0
         val video = category == MediaCategory.VIDEOS
         val args = Bundle().apply {
@@ -206,10 +230,10 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         }.getOrElse { 0 }
     }
 
-    fun assets(category: MediaCategory, limit: Int? = null): List<MediaAsset> = query(category, limit)
+    override fun assets(category: MediaCategory, limit: Int?): List<MediaAsset> = query(category, limit)
 
     /** Einträge zu bekannten IDs, in der übergebenen Reihenfolge; nicht (mehr) vorhandene fehlen. */
-    fun assets(ids: List<String>): List<MediaAsset> {
+    override fun assets(ids: List<String>): List<MediaAsset> {
         if (!_access.value.canRead || ids.isEmpty()) return emptyList()
         val byId = HashMap<String, MediaAsset>()
         for (video in listOf(false, true)) {
@@ -233,7 +257,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
      * - Zeile im System-Papierkorb (`IS_TRASHED = 1`) → belegt entfernt
      * - Zeile fehlt: nur bei vollem Zugriff belastbar, sonst UNKNOWN
      */
-    fun probe(ids: List<String>): Map<ItemReference, ExistenceProbe> {
+    override fun probe(ids: List<String>): Map<ItemReference, ExistenceProbe> {
         val access = _access.value
         val out = ids.associate { ItemReference.photo(it) to ExistenceProbe.UNKNOWN }.toMutableMap()
         if (!access.canRead) return out
@@ -256,10 +280,21 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         return out
     }
 
-    /** Offizielle Papierkorb-Anfrage (Android 11+). Das System zeigt seine eigene Bestätigung. */
-    fun trashRequest(ids: List<String>) =
-        MediaStore.createTrashRequest(resolver, ids.map { Uri.parse(it) }, true)
+    /**
+     * Offizielle Papierkorb-Anfrage (Android 11+, `MediaStore.createTrashRequest`). Das System zeigt seine
+     * eigene Bestätigung. Ergebnis wird nie nur aus dem Dialog-Code abgeleitet: nach „OK“ wird jedes Item geprüft.
+     */
+    override suspend fun trash(ids: List<String>): OperationOutcome? {
+        val request = runCatching { MediaStore.createTrashRequest(resolver, ids.map { Uri.parse(it) }, true) }
+            .getOrElse { return OperationOutcome.Failed("request:${it.javaClass.simpleName}") }
+        val code = SystemDialogs.launch(request.intentSender) ?: return OperationOutcome.Failed("no-activity")
+        if (code != Activity.RESULT_OK) return OperationOutcome.Cancelled
+        val probes = withContext(Dispatchers.IO) { probe(ids) }
+        if (probes.values.any { it == ExistenceProbe.UNKNOWN }) return null
+        val removed = probes.filterValues { it == ExistenceProbe.MISSING_WITH_FULL_ACCESS }.keys
+        return if (removed.size == ids.size) OperationOutcome.Succeeded else OperationOutcome.Partial(removed)
+    }
 
     /** Lokale Bytes für Duplikat-Hashing. Nie Netzwerk. */
-    fun openStream(id: String) = runCatching { resolver.openInputStream(Uri.parse(id)) }.getOrNull()
+    override fun openStream(id: String) = runCatching { resolver.openInputStream(Uri.parse(id)) }.getOrNull()
 }

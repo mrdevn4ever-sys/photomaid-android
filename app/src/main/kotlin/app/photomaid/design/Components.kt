@@ -296,7 +296,8 @@ fun SourceRow(
             Text(title, style = AppTypography.headline, color = c.textPrimary)
             if (subtitle != null) Text(subtitle, style = AppTypography.caption, color = c.textSecondary)
         }
-        Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        // Detail darf höchstens so breit werden wie der Titelbereich (schmale Geräte, große Schrift).
+        Column(Modifier.weight(1f, fill = false), horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
             if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
             if (detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.End)
         }

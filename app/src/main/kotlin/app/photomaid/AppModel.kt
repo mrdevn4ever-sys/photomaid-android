@@ -37,10 +37,10 @@ import app.photomaid.data.PhotoMaidDatabase
 import app.photomaid.data.RoomLedgerPersistence
 import app.photomaid.feature.rules.RulesStore
 import app.photomaid.files.ConnectedSourceStore
+import app.photomaid.media.MediaLibrary
 import app.photomaid.media.PhotoLibraryService
 import app.photomaid.notifications.ReminderScheduler
 import app.photomaid.playback.FeedPlayer
-import app.photomaid.system.SystemDialogs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -76,13 +76,15 @@ class AppModel(
     persistence: LedgerPersistence = RoomLedgerPersistence(db),
     val isQAFixtureMode: Boolean = false,
     purchaseOverride: PurchaseGateway? = null,
+    mediaOverride: ((() -> Boolean) -> MediaLibrary)? = null,
 ) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     val store = KeyValueStore(db)
     val ledger = DecisionLedger(persistence, SystemClock)
     private val _settings = MutableStateFlow(AppSettingsData())
     val settings: StateFlow<AppSettingsData> = _settings.asStateFlow()
-    val photos = PhotoLibraryService(context) { _settings.value.mediaPermissionAsked }
+    val photos: MediaLibrary = mediaOverride?.invoke { _settings.value.mediaPermissionAsked }
+        ?: PhotoLibraryService(context) { _settings.value.mediaPermissionAsked }
     val sources = ConnectedSourceStore(context, store)
     val player = FeedPlayer(context)
     val reminders = ReminderScheduler(context) { _settings.value.notificationsOptIn }
@@ -213,7 +215,7 @@ class AppModel(
             }
             player.stop()
             val outcome: OperationOutcome = when (kind) {
-                CleanupOperationKind.PHOTO_LIBRARY_DELETE -> trashMedia(items.map { it.localIdentifier })
+                CleanupOperationKind.PHOTO_LIBRARY_DELETE -> photos.trash(items.map { it.localIdentifier })
                     ?: return CleanupRunResult.NeedsReconciliation
                 CleanupOperationKind.FILE_DELETE_PERMANENTLY -> withContext(Dispatchers.IO) { sources.deletePermanently(items) }
                 // Nicht angeboten: kein universeller Datei-Papierkorb (siehe PORTING_MATRIX).
@@ -230,20 +232,6 @@ class AppModel(
         } finally {
             cleanupInFlight = false
         }
-    }
-
-    /**
-     * MediaStore-Papierkorb mit Systembestätigung. Ergebnis wird nie nur aus dem Dialog-Code abgeleitet:
-     * nach „OK“ wird jedes Item geprüft. `null` = nicht belegbar → Abgleich beim nächsten Start.
-     */
-    private suspend fun trashMedia(ids: List<String>): OperationOutcome? {
-        val request = runCatching { photos.trashRequest(ids) }.getOrElse { return OperationOutcome.Failed("request:${it.javaClass.simpleName}") }
-        val code = SystemDialogs.launch(request.intentSender) ?: return OperationOutcome.Failed("no-activity")
-        if (code != Activity.RESULT_OK) return OperationOutcome.Cancelled
-        val probes = withContext(Dispatchers.IO) { photos.probe(ids) }
-        if (probes.values.any { it == ExistenceProbe.UNKNOWN }) return null
-        val removed = probes.filterValues { it == ExistenceProbe.MISSING_WITH_FULL_ACCESS }.keys
-        return if (removed.size == ids.size) OperationOutcome.Succeeded else OperationOutcome.Partial(removed)
     }
 
     private suspend fun recoverOperations() {
