@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pm_background">#FFEEF5FD</color>
+    <color name="pm_icon_bg">#FFDCEAFB</color>
+    <color name="pm_accent">#FF007AFF</color>
+</resources>

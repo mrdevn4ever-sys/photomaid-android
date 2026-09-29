@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Entscheidungen sollen eine Wiederherstellung überleben (wie iOS: im Geräte-Backup).
+     Abgeleitete Caches (Thumbnails) sind ausgeschlossen. -->
+<full-backup-content>
+    <include domain="database" path="photomaid.db" />
+    <exclude domain="database" path="photomaid.db-shm" />
+    <exclude domain="root" path="cache" />
+</full-backup-content>
