@@ -32,11 +32,13 @@ oder über die Umgebungsvariable `ANDROID_HOME`.
 ./gradlew :core:test :app:testDebugUnitTest   # Tests
 ```
 
-### Variante C – fertige APK ohne Bauen
+### Variante C – APK selbst bauen und aufs Handy kopieren
 
-Jeder Push baut in GitHub Actions eine installierbare APK: Repo › **Actions** › letzter Lauf „CI“ ›
-Artefakt **PhotoMaid-APKs** herunterladen, entpacken, `app-debug.apk` aufs Handy kopieren und installieren
-(„Installation aus unbekannten Quellen“ erlauben). Nur zum Testen – keine Store-Version.
+`gradlew.bat :app:assembleRelease -Pphotomaid.signWithDebug=true` (Windows) bzw. `./gradlew …` erzeugt
+`app/build/outputs/apk/release/app-release.apk` (klein, mit Debug-Schlüssel signiert, nur zum Testen).
+Aufs Handy kopieren, „Installation aus unbekannten Quellen“ erlauben, installieren.
+
+GitHub Actions läuft **nicht** automatisch; der Workflow `CI` kann bei Bedarf manuell gestartet werden.
 
 ## Hinweise
 
