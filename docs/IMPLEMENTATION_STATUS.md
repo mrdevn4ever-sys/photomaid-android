@@ -23,7 +23,7 @@ Roborazzi 1.75, Android-Framework SDK 35). Das ist keine Geräteabnahme.
 | I Home + Navigation | 4 Tabs mit eigenem Back-Stack, Vollbild-Feed, Einstellungen/Pro/Datenschutz als Routen | erledigt |
 | J Pro + Billing + Reward | Capabilities zentral, Play Billing (Kauf, Acknowledge, Restore, Pending, Widerruf, Offline-Cache), Rewarded „nicht konfiguriert“ | Code fertig; Kauf BLOCKED (keine Play-Konfiguration) |
 | K weitere Features | Dateien, Quellen, Große Dateien, Speicherübersicht, Duplikate, Regeln & Routinen | erledigt |
-| L Visual Parity | JVM-Screenshots aller Screens (Light/Dark, Geräte, Schriftgröße) | siehe `docs/QA_MATRIX.md` |
+| L Visual Parity | 31 JVM-Screenshots (Light/Dark, 7 Gerätegrößen, Schrift 150/200 %) in `docs/screenshots/`; Befunde behoben | PASS (JVM), Gerät NOT RUN |
 | M Device QA | Emulator/Gerät | BLOCKED (kein KVM) |
 
 ## Nächster konkreter Schritt

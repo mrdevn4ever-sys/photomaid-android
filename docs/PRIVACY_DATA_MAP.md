@@ -14,10 +14,14 @@ Gegenstück zu `docs/PRIVACY_DATA_MAP.md` der iOS-App.
 
 ## Netzwerk
 
-- Das App-Manifest fordert **keine** `INTERNET`-Berechtigung an. Die Kommunikation für Käufe läuft über den
-  Play-Store-Dienst (IPC, Berechtigung `com.android.vending.BILLING`). Prüfung: `aapt dump permissions` bzw. das
-  Merged Manifest (`app/build/intermediates/merged_manifest`).
-- Keine Analytics-, Crash- oder Werbe-SDKs.
+- PhotoMaid-Code selbst stellt **keine** Netzwerkverbindung her (kein HTTP-Client, Coil ohne Netzwerk-Fetcher).
+- Das gebaute APK enthält trotzdem `INTERNET` + `ACCESS_NETWORK_STATE` (geprüft mit `aapt2 dump permissions`
+  auf `app-release.apk`): `INTERNET` bringt `com.google.android.datatransport:transport-backend-cct` mit, das die
+  **Google Play Billing Library** für eigene Diagnosedaten nutzt; `ACCESS_NETWORK_STATE`/`WAKE_LOCK` stammen aus
+  Media3 (lokale Wiedergabe), `RECEIVE_BOOT_COMPLETED`/`FOREGROUND_SERVICE` aus WorkManager (Erinnerungen).
+  Die Berechtigungen werden bewusst **nicht** per `tools:node="remove"` entfernt (kein Eingriff in das Billing-SDK).
+  Für die Play-„Datensicherheit“ sind die Angaben von Google zur Billing Library zu übernehmen.
+- Keine eigenen Analytics-, Crash- oder Werbe-SDKs.
 
 ## Berechtigungen
 
@@ -28,7 +32,8 @@ Gegenstück zu `docs/PRIVACY_DATA_MAP.md` der iOS-App.
 | `READ_EXTERNAL_STORAGE` (`maxSdkVersion=32`) | 30–32 | wie oben | wie oben |
 | `POST_NOTIFICATIONS` | 33+ | optionale Erinnerungen (ohne Dateinamen) | nur per Button („Mitteilungen erlauben“) |
 | `com.android.vending.BILLING` | alle | Pro-Einmalkauf | – |
-| Nicht verwendet | – | `MANAGE_EXTERNAL_STORAGE`, `INTERNET`, Standort, Kamera, Kontakte | – |
+| Von Bibliotheken | – | `INTERNET` (Billing-Telemetrie), `ACCESS_NETWORK_STATE`, `WAKE_LOCK` (Media3), `RECEIVE_BOOT_COMPLETED`, `FOREGROUND_SERVICE` (WorkManager) | keine Laufzeitabfrage |
+| Nicht verwendet | – | `MANAGE_EXTERNAL_STORAGE`, Standort, Kamera, Kontakte | – |
 
 Löschen von Medien: ausschließlich `MediaStore.createTrashRequest` mit Systembestätigung (kein Schreibrecht nötig).
 Löschen von Dateien: ausschließlich `DocumentsContract.deleteDocument` in vom Nutzer freigegebenen Ordnern.
