@@ -153,3 +153,14 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 - Keine Play-Console-Konfiguration: Produkt-ID fehlt → „Käufe sind in dieser Version noch nicht verfügbar“ (wie iOS).
 - Kein Werbeanbieter entschieden (wie iOS) → Rewarded „nicht verfügbar“.
 - Application-ID `app.photomaid.android` ist ein **Platzhalter** (iOS: `app.photomaid.ios`, ebenfalls Platzhalter).
+
+## Produkt-UX-Pass 2026-09-29 (Android zuerst, iOS noch offen)
+
+| Thema | Android | Grund |
+|---|---|---|
+| Aktionsleiste im Feed (♡, Teilen, Ordner, ⋯) | neu | Produktentscheidung Masterprompt; iOS-Port offen |
+| Favorit | MediaStore `IS_FAVORITE` + `createFavoriteRequest` (Systembestätigung) | iOS wäre `PHAsset.isFavorite` über `PHAssetChangeRequest` |
+| Favoriten schützen | Einstellung, Standard an | neu |
+| Album | nur „In Ordner verschieben“ (`createWriteRequest` + `RELATIVE_PATH`) | Android hat kein universelles Album-API; iOS hätte echte Alben (`PHAssetCollection`) |
+| Papierkorb-Vorschau, Limit vor Bestätigung | neu | Masterprompt §15/§16 |
+| Entitlements | `FREE`/`TEMPORARY_PRO`/`LIFETIME_PRO` explizit | fachlich identisch zu iOS (Vorschau ändert Limit nicht) |

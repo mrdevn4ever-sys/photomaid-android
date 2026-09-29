@@ -54,6 +54,8 @@ fun BasketPreview(asset: MediaAsset, onClose: () -> Unit) {
     val c = PM.colors
     val ctx = LocalContext.current
     DisposableEffect(asset.id) { onDispose { app.player.stop() } }
+    // Kurze Vorschau ohne Ladekreis (das Bild erscheint direkt); nur ein echter Ladefehler zeigt den Problemzustand.
+    var state by remember(asset.id) { mutableStateOf(PreviewState.READY) }
     Dialog(onDismissRequest = onClose, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
         Box(Modifier.fillMaxSize().background(c.background).testTag("basket.preview")) {
             Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(bottom = AppSpacing.s),
@@ -68,8 +70,7 @@ fun BasketPreview(asset: MediaAsset, onClose: () -> Unit) {
                         toggleVideo(app.player, asset)
                     }) {
                     val px = rememberPreviewPx(maxWidth.value, maxHeight.value)
-                    var state by remember(asset.id) { mutableStateOf(PreviewState.LOADING) }
-                    MediaPage(asset, px, state, onResult = { ok -> state = if (ok) PreviewState.READY else PreviewState.FAILED }, skip = onClose, zoomed = false, skipLabel = R.string.close)
+                    MediaPage(asset, px, state, onResult = { ok -> if (!ok) state = PreviewState.FAILED }, skip = onClose, zoomed = false, skipLabel = R.string.close)
                 }
                 Text(stringResource(R.string.basket_preview_note), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin))

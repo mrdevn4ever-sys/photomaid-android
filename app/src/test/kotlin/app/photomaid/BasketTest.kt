@@ -53,6 +53,8 @@ class BasketTest {
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("basket.thumb").fetchSemanticsNodes().size == 2 }
         rule.onAllNodesWithTag("basket.thumb").onFirst().performClick()
         rule.onNodeWithTag("basket.preview").assertExists()
+        // Das Foto ist geladen (kein hängender Ladekreis).
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("feed.media.ready", useUnmergedTree = true).fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithText("Nur ansehen – deine Auswahl bleibt, wie sie ist.").assertExists()
         rule.onNodeWithContentDescription("Schließen").performClick()
         rule.waitForIdle()

@@ -1,5 +1,17 @@
 package app.photomaid
 
+import app.photomaid.media.PhotoAccess
+
+import androidx.compose.ui.test.swipeLeft
+
+import androidx.compose.ui.test.performTouchInput
+
+import androidx.compose.ui.test.performClick
+
+import androidx.compose.ui.test.onNodeWithTag
+
+import com.github.takahirom.roborazzi.captureScreenRoboImage
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -160,4 +172,55 @@ class ScreenshotTest {
         shot("m_font200_feed", it, waitTag = "feed.media.ready") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) }
     }
     @Test fun m_font_200_settings() = seededApp().let { RuntimeEnvironment.setFontScale(2.0f); shot("m_font200_settings", it) { SettingsScreen(nav) } }
+
+    // Produkt-UX-Pass: neue Zustände (Dialoge/Sheets als ganzer Bildschirm inkl. Fenster).
+    private fun shotScreen(name: String) { rule.waitForIdle(); captureScreenRoboImage("build/outputs/roborazzi/$name.png") }
+    private fun waitTagX(tag: String) = rule.waitUntil(10_000) { rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty() }
+    private fun feedPhotos(a: AppModel) = rule.setContent { TestHost(a) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) } }
+
+    @Test fun x01_today_start() = emptyApp().let { shot("x01_today_start", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
+    @Test fun x05_feed_favorite_on() = emptyApp().let {
+        lib.favorites[lib.all[0].id] = true
+        shot("x05_feed_favorite_on", it, waitTag = "feed.media.ready") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) }
+    }
+    @Test fun x07_feed_protected_favorite() = emptyApp().let {
+        lib.favorites[lib.all[0].id] = true
+        feedPhotos(it); waitTagX("feed.media.ready")
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeLeft() }
+        waitTagX("feed.protected"); shotScreen("x07_feed_protected_favorite")
+    }
+    @Test fun x08_folder_sheet() = emptyApp().let {
+        feedPhotos(it); waitTagX("feed.media.ready")
+        rule.onNodeWithTag("action.folder").performClick()
+        waitTagX("folder.new"); shotScreen("x08_folder_sheet")
+    }
+    @Test fun x10_basket_preview() = seededApp().let {
+        rule.setContent { TestHost(it) { CleanupBasketScreen(nav, showsDone = false) } }
+        waitTagX("basket.thumb")
+        rule.onAllNodesWithTag("basket.thumb")[0].performClick()
+        waitTagX("basket.preview"); rule.mainClock.advanceTimeBy(1500); shotScreen("x10_basket_preview")
+    }
+    private fun rewardApp(grantedMinutesAgo: Long?) = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
+        purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED), ads = FakeRewardedAdGateway()) { a ->
+        if (grantedMinutesAgo != null) {
+            val at = java.time.Instant.now().minusSeconds(grantedMinutesAgo * 60)
+            a.store.setValue("rewards.ledger", app.photomaid.core.capabilities.RewardLedger(listOf(app.photomaid.core.capabilities.RewardWindow("r0", at,
+                app.photomaid.core.model.LocalDay.of(at, java.time.ZoneId.systemDefault())))))
+            a.entitlements.load()
+        }
+    }
+    @Test fun x13_pro_reward_available() = rewardApp(null).let { shot("x13_pro_reward_available", it) { ProScreen(nav) } }
+    @Test fun x14_pro_reward_used() = rewardApp(40).let { shot("x14_pro_reward_used", it) { ProScreen(nav) } }
+    @Test fun x15_pro_temporary() = rewardApp(6).let { shot("x15_pro_temporary", it) { ProScreen(nav) } }
+    @Test fun x18_today_limited() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true, access = PhotoAccess.LIMITED).also { l -> lib = l } }).let {
+        shot("x18_today_limited", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } }
+    }
+    @Test fun x19_favorite_error() = emptyApp().let {
+        lib.writeResult = app.photomaid.media.MediaWriteResult.Failed("test")
+        feedPhotos(it); waitTagX("feed.media.ready")
+        rule.onNodeWithTag("action.favorite").performClick()
+        rule.waitUntil(10_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Der Favorit konnte nicht geändert werden. Es ist alles wie vorher.")).fetchSemanticsNodes().isNotEmpty() }
+        shotScreen("x19_favorite_error")
+    }
+    @Test fun x20_later_notify() = seededApp().let { shot("x20_later_notify", it) { LaterScreen(nav) } }
 }

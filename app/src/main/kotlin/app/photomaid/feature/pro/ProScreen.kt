@@ -130,6 +130,7 @@ fun ProScreen(nav: Nav) {
                         Feature(Icons.Rounded.SettingsSuggest, R.string.pro_f5, R.string.pro_f5d)
                     }
                 }
+                if (!lifetime) Text(stringResource(R.string.pro_also), style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
                 // Kaufbereich (primär)
                 when {
                     lifetime -> Row(Modifier.testTag("pro.lifetime"), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
@@ -196,7 +197,6 @@ fun ProScreen(nav: Nav) {
                         busy = false
                     }
                 }
-                if (!lifetime) Text(stringResource(R.string.pro_also), style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
                 // Technische Einzelheiten nachgeordnet und aufklappbar.
                 var details by rememberSaveable { mutableStateOf(false) }
                 val detailState = stringResource(if (details) R.string.expanded else R.string.collapsed)
@@ -211,7 +211,7 @@ fun ProScreen(nav: Nav) {
                             Text(stringResource(t), style = AppTypography.footnote, color = c.textSecondary)
                     }
                 }
-                Text(stringResource(R.string.pro_privacy), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+                Text(stringResource(if (app.entitlements.ads.isConfigured) R.string.pro_privacy else R.string.pro_privacy_no_ads), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
                 Spacer(Modifier.height(AppSpacing.l))
             }
         }

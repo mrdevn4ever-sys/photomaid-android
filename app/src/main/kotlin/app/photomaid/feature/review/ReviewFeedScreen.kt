@@ -213,13 +213,16 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     Column(Modifier.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         if (needsButtons) CompactActions { model.perform(it, reduceMotion) }
                         val asset = model.currentAsset
+                        val shareTitle = stringResource(R.string.share_chooser)
+                        val shareFailed = stringResource(R.string.share_failed)
+                        val openFailed = stringResource(R.string.open_failed)
                         FeedActionBar(asset, read.basket.size, busy = model.mediaWriteBusy || model.isCommitting,
                             onFavorite = model::toggleFavorite,
                             onShare = {
                                 // Teilen ändert nichts am Prüfstand; nach der Rückkehr bleibt dasselbe Medium.
                                 asset?.let { a ->
-                                    runCatching { ctx.startActivity(MediaIntents.share(a.uri, a.kind, a.mimeType, ctx.getString(R.string.share_chooser))) }
-                                        .onFailure { model.errorMessage = ctx.getString(R.string.share_failed) }
+                                    runCatching { ctx.startActivity(MediaIntents.share(a.uri, a.kind, a.mimeType, shareTitle)) }
+                                        .onFailure { model.errorMessage = shareFailed }
                                 }
                             },
                             onFolder = model::openFolders,
@@ -227,7 +230,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                             onOpenElsewhere = {
                                 asset?.let { a ->
                                     runCatching { ctx.startActivity(MediaIntents.view(a.uri, a.kind, a.mimeType)) }
-                                        .onFailure { model.errorMessage = ctx.getString(R.string.open_failed) }
+                                        .onFailure { model.errorMessage = openFailed }
                                 }
                             },
                             onHints = ::flashHints, openBasket = openBasket)

@@ -59,7 +59,6 @@
     <string name="today_access_denied">Der Zugriff wurde abgelehnt. Du kannst ihn jederzeit in den Android-Einstellungen für PhotoMaid ändern – deine Entscheidungen bleiben erhalten.</string>
     <string name="today_access_default">PhotoMaid braucht Zugriff auf deine Mediathek, um Fotos und Videos zum Sortieren anzuzeigen.</string>
     <string name="storage_used_of">von %1$s belegt</string>
-    <string name="storage_device_footnote">Systemwert des Geräts, nicht nur Fotos</string>
     <string name="today_start_sub">Wische dich durch deine Fotos und Videos.</string>
     <string name="today_continue_sub">Es geht dort weiter, wo du aufgehört hast.</string>
     <string name="today_done_title">Alles geprüft</string>
@@ -85,9 +84,7 @@
     <string name="files">Dateien</string>
     <string name="downloads">Downloads</string>
     <string name="choose_folder">Ordner auswählen</string>
-    <string name="connected_sources_short">Verbundene Quellen</string>
     <string name="duplicates">Duplikate</string>
-    <string name="duplicates_subtitle_today">Identische Kopien</string>
     <string name="later">Später</string>
 
     <!-- Aufräumen-Hub -->
@@ -404,7 +401,7 @@
     <string name="pro_f3d">Exakt gleiche Fotos, Videos und Dateien aus verbundenen Ordnern.</string>
     <string name="pro_f5">Eigene Sammlungen</string>
     <string name="pro_f5d">Lege eigene Filter an, zum Beispiel „Videos größer als 500 MB“ – jederzeit mit einem Tipp prüfbar.</string>
-    <string name="pro_also">Keine Werbung, kein Konto, alles bleibt auf deinem Gerät.</string>
+    <string name="pro_also">Mit Pro: keine Werbeangebote. Kein Konto, alles bleibt auf deinem Gerät.</string>
     <string name="pro_details">So funktioniert Pro</string>
     <string name="pro_details_dup">Kopien: Verglichen wird der Dateiinhalt (SHA-256) auf deinem Gerät. Ähnlich aussehende Bilder gelten nicht als Kopie.</string>
     <string name="pro_details_rules">Sammlungen: Sie filtern nur, was schon auf deinem Gerät ist, und öffnen den Feed. Es läuft nichts im Hintergrund und es wird nichts automatisch gelöscht.</string>
@@ -412,7 +409,6 @@
     <string name="expanded">Ausgeklappt</string>
     <string name="collapsed">Eingeklappt</string>
     <string name="pro_privacy">Analyse und Sortierung erfolgen auf deinem Gerät. Für Kauf und Werbung werden technische Daten an Google bzw. den Werbeanbieter übertragen – keine Fotos, Dateinamen oder Hashes.</string>
-    <string name="pro_active">Pro ist aktiv. Danke!</string>
     <string name="pro_pending">Kauf ausstehend (z. B. Zahlung wird noch bestätigt).</string>
     <string name="pro_unlock">PhotoMaid Pro freischalten</string>
     <string name="pro_price_once">%1$s · Einmalkauf</string>
@@ -486,7 +482,6 @@
     <string name="notif_channel">Erinnerungen</string>
     <string name="notif_due_body">Heute ist etwas Zurückgestelltes wieder dran.</string>
     <!-- Aktionsleiste im Feed (keine Entscheidungen) -->
-    <string name="feed_actions">Aktionen für dieses Medium</string>
     <string name="fav_add">Als Favorit markieren</string>
     <string name="fav_remove">Favorit entfernen</string>
     <string name="fav_state_on">Favorit</string>
@@ -538,4 +533,5 @@
     <string name="pro_active_sub">Einmalkauf – alle Pro-Werkzeuge, ohne Tageslimit. Danke!</string>
     <string name="onboarding_safe">Gelöscht wird nur, was du im Papierkorb bestätigst – und Android fragt noch einmal nach.</string>
     <string name="later_notify_title">Erinnern, wenn es wieder dran ist?</string>
+    <string name="pro_privacy_no_ads">Analyse und Sortierung erfolgen auf deinem Gerät. Für den Kauf werden technische Daten an Google übertragen – keine Fotos, Dateinamen oder Hashes.</string>
 </resources>

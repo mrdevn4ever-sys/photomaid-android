@@ -18,7 +18,12 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 - Navigation: Zurück und Tabwechsel ohne Animation; Öffnen nur kurzer leichter Fade (150 ms). Predictive-Back-Vorschau aus.
 - Eine einzige Gesture-/Decision-State-Machine: `core/.../feed/FeedGestureMachine.kt`.
 - Nichts tun = keine Entscheidung. Eine Geste = maximal ein Schritt. Commit trägt Item-ID, Revision, Command-ID, Aktion.
-- Keine Aktions-Buttons im Feed (nur bei TalkBack/Schaltersteuerung).
+- Keine Entscheidungs-Buttons im Feed (nur bei TalkBack/Schaltersteuerung). Unter dem Medium sitzt die kompakte
+  Aktionsleiste ♡ Favorit · Teilen · In Ordner verschieben · ⋯ – außerhalb der Gestenfläche, nie eine Entscheidung.
+- Favoriten = MediaStore-Systemfavoriten (`createFavoriteRequest`), „Favoriten schützen“ (Standard an): Wisch nach
+  links auf einen Favoriten fragt nach. „Album“ gibt es als Systembegriff nicht: nur „In Ordner verschieben“.
+- Pro-Test (Rewarded, 30 min, 1× pro lokalem Tag) schaltet Pro-Werkzeuge frei, hebt das Papierkorb-Limit NIE auf
+  (`hasProToolsAccess` ≠ `hasUnlimitedTrashAccess`).
 
 ## Verbote
 
