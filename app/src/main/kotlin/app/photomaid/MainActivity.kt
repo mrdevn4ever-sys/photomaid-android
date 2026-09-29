@@ -32,6 +32,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         SystemDialogs.attach(this, trashLauncher)
         val application = application as PhotoMaidApplication
+        // Nur im Build-Typ `qa` wirksam (in debug/release sind die Fixtures leer).
+        QAFixtures.seedMedia = BuildConfig.QA_FIXTURES && intent.getBooleanExtra("qa-seed-media", false)
         application.startBoot(qaFixtures = intent.getBooleanExtra("qa-fixtures", false))
         setContent {
             val boot by application.boot.collectAsState()
