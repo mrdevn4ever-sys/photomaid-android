@@ -72,6 +72,7 @@ import app.photomaid.design.clickableRow
 import app.photomaid.feature.common.DeviceStorage
 import app.photomaid.media.MediaCategory
 import app.photomaid.media.PhotoAccess
+import app.photomaid.media.reviewableMedia
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.navigation.Routes
@@ -98,7 +99,7 @@ fun TodayScreen(nav: Nav) {
             device = DeviceStorage.read(ctx)
             counts = MediaCategory.entries.associateWith { app.photos.count(it) }
             pending = if (!access.canRead) null else {
-                val refs = (app.photos.assets(MediaCategory.PHOTOS) + app.photos.assets(MediaCategory.VIDEOS)).map { it.reference }
+                val refs = app.photos.reviewableMedia().map { it.reference }
                 ReviewQueues.normalQueue(refs, app.ledger.records(refs), ReviewSessionID(), app.today).size
             }
         }
@@ -124,7 +125,7 @@ fun TodayScreen(nav: Nav) {
                 }
             }
             if (access.canRead) ReviewEntryCard(pending, hasHistory = read.events.isNotEmpty()) {
-                nav.openFeed(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)))
+                nav.openFeed(FeedRequest(FeedRequest.Source.AllMedia))
             }
             if (app.dueCount > 0) {
                 SurfaceCard(onClick = { nav.openFeed(FeedRequest(FeedRequest.Source.Due)) }) {

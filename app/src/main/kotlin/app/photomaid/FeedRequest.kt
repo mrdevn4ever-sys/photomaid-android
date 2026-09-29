@@ -9,6 +9,8 @@ import java.util.UUID
 data class FeedRequest(val source: Source, val id: String = UUID.randomUUID().toString()) {
     sealed interface Source {
         data class Category(val category: MediaCategory) : Source
+        /** Gemeinsamer Feed aller offenen Medien (Fotos, Screenshots, Videos) – „Prüfung starten“ auf Heute. */
+        data object AllMedia : Source
         data object Due : Source
         data class Task(val task: ReviewTask) : Source
         data class Items(val items: List<ItemReference>, val titleRes: Int) : Source
@@ -21,6 +23,7 @@ data class FeedRequest(val source: Source, val id: String = UUID.randomUUID().to
                 MediaCategory.VIDEOS -> R.string.feed_title_videos
                 MediaCategory.SCREENSHOTS -> R.string.feed_title_screenshots
             }
+            Source.AllMedia -> R.string.feed_title_all
             Source.Due -> R.string.feed_title_due
             is Source.Task -> R.string.feed_title_task
             is Source.Items -> s.titleRes

@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -190,7 +191,7 @@ fun DuplicatesScreen(nav: Nav) {
                             }
                         }
                     }
-                    PlainButton(stringResource(R.string.dup_move, sel.size), enabled = g.isValidSelection(sel) && sel.isNotEmpty()) {
+                    PlainButton(pluralStringResource(R.plurals.dup_move, sel.size, sel.size), enabled = g.isValidSelection(sel) && sel.isNotEmpty()) {
                         scope.launch { for (m in sel) app.decide(m, DecisionAction.MarkForCleanup) }
                     }
                 }
@@ -198,8 +199,8 @@ fun DuplicatesScreen(nav: Nav) {
             if (model.finishedAt != null) item {
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
                     if (model.groups.isEmpty()) Text(stringResource(R.string.dup_none), style = AppTypography.caption, color = c.textSecondary)
-                    if (model.notComparable > 0) Text(stringResource(R.string.dup_not_comparable, model.notComparable), style = AppTypography.caption, color = c.textSecondary)
-                    if (model.notChecked > 0) Text(stringResource(R.string.dup_not_local, model.notChecked), style = AppTypography.caption, color = c.textSecondary)
+                    if (model.notComparable > 0) Text(pluralStringResource(R.plurals.dup_not_comparable, model.notComparable, model.notComparable), style = AppTypography.caption, color = c.textSecondary)
+                    if (model.notChecked > 0) Text(pluralStringResource(R.plurals.dup_not_local, model.notChecked, model.notChecked), style = AppTypography.caption, color = c.textSecondary)
                 }
             }
             item { Spacer(Modifier.height(TabBarClearance)) }

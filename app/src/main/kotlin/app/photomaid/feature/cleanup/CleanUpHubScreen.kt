@@ -103,7 +103,7 @@ fun CleanUpHubScreen(nav: Nav) {
                 link("large", Icons.Rounded.InsertDriveFile, stringResource(R.string.large_files), stringResource(R.string.hub_large_sub), Routes.LARGE)
                 link("duplicates", Icons.Rounded.FilterNone, stringResource(R.string.duplicates), stringResource(R.string.hub_dup_sub), Routes.DUPLICATES)
                 link("storage", Icons.Rounded.BarChart, stringResource(R.string.storage_overview), stringResource(R.string.hub_storage_sub), Routes.STORAGE)
-                link("basket", Icons.Rounded.Delete, stringResource(R.string.basket), stringResource(R.string.hub_basket_sub, read.basket.size), Routes.BASKET)
+                link("basket", Icons.Rounded.Delete, stringResource(R.string.basket), pluralStringResource(R.plurals.hub_basket_sub, read.basket.size, read.basket.size), Routes.BASKET)
             }
             Spacer(Modifier.height(TabBarClearance))
         }

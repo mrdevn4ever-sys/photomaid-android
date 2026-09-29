@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -79,7 +80,7 @@ object RuleText {
             RuleSource.Videos -> R.string.cat_videos; is RuleSource.ConnectedSource -> R.string.rule_connected_folder
         })
         return when (val f = r.filter) {
-            is RuleFilter.OlderThan -> ctx.getString(R.string.rule_title_older, source, f.days)
+            is RuleFilter.OlderThan -> ctx.resources.getQuantityString(R.plurals.rule_title_older, f.days, source, f.days)
             is RuleFilter.KnownSizeAtLeast -> ctx.getString(R.string.rule_title_size, source, SizeText.bytes(f.bytes))
             RuleFilter.All -> ctx.getString(R.string.rule_title_all, source)
         }
@@ -88,7 +89,7 @@ object RuleText {
     fun detail(ctx: Context, r: ReviewRule): String = when (val t = r.trigger) {
         RuleTrigger.Daily -> ctx.getString(R.string.rule_detail_daily)
         is RuleTrigger.Weekly -> ctx.getString(R.string.rule_detail_weekly, weekdayName(t.weekday))
-        is RuleTrigger.NewlyDiscovered -> ctx.getString(R.string.rule_detail_new, t.count)
+        is RuleTrigger.NewlyDiscovered -> ctx.resources.getQuantityString(R.plurals.rule_detail_new, t.count, t.count)
     }
 }
 
@@ -208,7 +209,7 @@ private fun RuleEditor(initial: ReviewRule, sources: List<ConnectedSource>, onDi
                 RowDivider()
                 MenuRowPicker(stringResource(R.string.filter), listOf(0 to stringResource(R.string.rule_filter_older), 1 to stringResource(R.string.rule_filter_size),
                     2 to stringResource(R.string.rule_filter_all)), filterKind) { filterKind = it }
-                if (filterKind == 0) { RowDivider(); Stepper(stringResource(R.string.rule_days, days), days, 1..3650, 1) { days = it } }
+                if (filterKind == 0) { RowDivider(); Stepper(pluralStringResource(R.plurals.rule_days, days, days), days, 1..3650, 1) { days = it } }
                 if (filterKind == 1) { RowDivider(); Stepper(stringResource(R.string.rule_mb, sizeMB), sizeMB, 10..100_000, 100) { sizeMB = it } }
                 RowDivider()
                 MenuRowPicker(stringResource(R.string.rule_trigger), listOf(0 to stringResource(R.string.rule_trigger_daily), 1 to stringResource(R.string.rule_trigger_weekly),
@@ -219,7 +220,7 @@ private fun RuleEditor(initial: ReviewRule, sources: List<ConnectedSource>, onDi
                     RowDivider()
                     ToggleRow(stringResource(R.string.rule_notify), notify) { notify = it }
                 }
-                if (triggerKind == 2) { RowDivider(); Stepper(stringResource(R.string.rule_count, count), count, 1..500, 1) { count = it } }
+                if (triggerKind == 2) { RowDivider(); Stepper(pluralStringResource(R.plurals.rule_count, count, count), count, 1..500, 1) { count = it } }
             }
             Text(stringResource(R.string.rule_note), style = AppTypography.caption, color = c.textSecondary)
             Spacer(Modifier.height(AppSpacing.l))

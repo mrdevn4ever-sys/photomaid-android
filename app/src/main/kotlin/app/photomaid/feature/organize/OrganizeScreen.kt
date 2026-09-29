@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import app.photomaid.FeedRequest
 import app.photomaid.R
@@ -67,7 +68,7 @@ fun OrganizeScreen(nav: Nav) {
                 for (task in rules.tasks) {
                     SurfaceCard(onClick = { nav.openFeed(FeedRequest(FeedRequest.Source.Task(task))) }) {
                         SourceRow(Icons.Rounded.Checklist, c.accent, stringResource(R.string.review_task),
-                            subtitle = stringResource(R.string.count_items, task.items.size), detail = DateText.abbreviated(task.createdAt))
+                            subtitle = pluralStringResource(R.plurals.count_items, task.items.size, task.items.size), detail = DateText.abbreviated(task.createdAt))
                     }
                 }
             }

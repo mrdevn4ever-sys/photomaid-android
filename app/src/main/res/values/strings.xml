@@ -17,7 +17,10 @@
     <string name="error_title">Etwas hat nicht funktioniert</string>
     <string name="retry">Erneut versuchen</string>
     <string name="store_open_failed">Der lokale Speicher konnte nicht geöffnet werden.</string>
-    <string name="count_items">%1$d Elemente</string>
+    <plurals name="count_items">
+        <item quantity="one">%1$d Element</item>
+        <item quantity="other">%1$d Elemente</item>
+    </plurals>
     <plurals name="items_count">
         <item quantity="one">%1$d Element</item>
         <item quantity="other">%1$d Elemente</item>
@@ -65,7 +68,7 @@
         <item quantity="one">%1$d Element wartet auf deine Entscheidung</item>
         <item quantity="other">%1$d Elemente warten auf deine Entscheidung</item>
     </plurals>
-    <string name="today_review_hint">Startet die Prüfung deiner Fotos</string>
+    <string name="today_review_hint">Startet die Prüfung deiner Fotos und Videos</string>
     <plurals name="today_due">
         <item quantity="one">%1$d zurückgestelltes Element ist wieder fällig</item>
         <item quantity="other">%1$d zurückgestellte Elemente sind wieder fällig</item>
@@ -98,7 +101,10 @@
     <string name="storage_overview">Speicherübersicht</string>
     <string name="hub_storage_sub">Was PhotoMaid sehen kann</string>
     <string name="basket">Papierkorb</string>
-    <string name="hub_basket_sub">%1$d Elemente, noch nicht gelöscht</string>
+    <plurals name="hub_basket_sub">
+        <item quantity="one">%1$d Element, noch nicht gelöscht</item>
+        <item quantity="other">%1$d Elemente, noch nicht gelöscht</item>
+    </plurals>
 
     <!-- Ordnen -->
     <string name="later_manage">Wiedervorlagen verwalten</string>
@@ -110,6 +116,7 @@
     <string name="review_task">Prüfaufgabe</string>
 
     <!-- Feed -->
+    <string name="feed_title_all">Medien prüfen</string>
     <string name="feed_title_photos">Fotos prüfen</string>
     <string name="feed_title_videos">Videos prüfen</string>
     <string name="feed_title_screenshots">Screenshots prüfen</string>
@@ -199,14 +206,32 @@
     <string name="not_selected">Nicht ausgewählt</string>
     <string name="keep">Behalten</string>
     <string name="put_back">Zurücklegen</string>
-    <string name="basket_empty_media">Papierkorb leeren: %1$d Fotos/Videos</string>
-    <string name="basket_delete_files">%1$d Dateien endgültig löschen</string>
-    <string name="result_media_trashed">%1$d Medien wurden in den Papierkorb des Systems verschoben.</string>
-    <string name="result_files_deleted">%1$d Dateien wurden endgültig gelöscht.</string>
-    <string name="result_partial">%1$d von %2$d Elementen wurden entfernt. Der Rest bleibt im Papierkorb.</string>
+    <plurals name="basket_empty_media">
+        <item quantity="one">Papierkorb leeren: %1$d Foto/Video</item>
+        <item quantity="other">Papierkorb leeren: %1$d Fotos/Videos</item>
+    </plurals>
+    <plurals name="basket_delete_files">
+        <item quantity="one">%1$d Datei endgültig löschen</item>
+        <item quantity="other">%1$d Dateien endgültig löschen</item>
+    </plurals>
+    <plurals name="result_media_trashed">
+        <item quantity="one">%1$d Medium wurde in den Papierkorb des Systems verschoben.</item>
+        <item quantity="other">%1$d Medien wurden in den Papierkorb des Systems verschoben.</item>
+    </plurals>
+    <plurals name="result_files_deleted">
+        <item quantity="one">%1$d Datei wurde endgültig gelöscht.</item>
+        <item quantity="other">%1$d Dateien wurden endgültig gelöscht.</item>
+    </plurals>
+    <plurals name="result_partial">
+        <item quantity="one">%1$d von %2$d Elementen wurde entfernt. Der Rest bleibt im Papierkorb.</item>
+        <item quantity="other">%1$d von %2$d Elementen wurden entfernt. Der Rest bleibt im Papierkorb.</item>
+    </plurals>
     <string name="result_cancelled">Abgebrochen. Es wurde nichts entfernt.</string>
     <string name="result_nothing">Es wurde nichts entfernt.</string>
-    <string name="result_allowance">Heute sind noch %1$d Bereinigungen frei, ausgewählt sind %2$d. Wähle bis zu %1$d Elemente aus – oder hol dir PhotoMaid Pro.</string>
+    <plurals name="result_allowance">
+        <item quantity="one">Heute ist noch %1$d Bereinigung frei, ausgewählt sind %2$d. Wähle bis zu %1$d Element aus – oder hol dir PhotoMaid Pro.</item>
+        <item quantity="other">Heute sind noch %1$d Bereinigungen frei, ausgewählt sind %2$d. Wähle bis zu %1$d Elemente aus – oder hol dir PhotoMaid Pro.</item>
+    </plurals>
     <string name="result_changed">Die Auswahl hat sich geändert. Bitte prüfe sie erneut.</string>
     <string name="result_reconcile">Das Ergebnis wird beim nächsten Start abgeglichen. Es wird nichts erneut gelöscht.</string>
     <string name="item_actions_for">Aktionen für %1$s</string>
@@ -238,7 +263,10 @@
     <string name="sources_footer">Verbindung entfernen löscht keine Dateien. PhotoMaid sieht nur Ordner, die du hier auswählst.</string>
 
     <!-- Große Dateien / Speicher -->
-    <string name="large_in_files">in %1$d großen Dateien</string>
+    <plurals name="large_in_files">
+        <item quantity="one">in %1$d großen Datei</item>
+        <item quantity="other">in %1$d großen Dateien</item>
+    </plurals>
     <string name="large_footnote">Nur Dateien mit bekannter Größe ab %1$d MB. Kein Versprechen über freiwerdenden Speicher.</string>
     <string name="large_filter">Filter: ab %1$d MB</string>
     <string name="decrease">Verringern</string>
@@ -260,7 +288,10 @@
     <string name="storage_c">C · Nicht einsehbar</string>
     <string name="storage_c_text">Andere Apps, System, Cloud-Inhalte und nicht freigegebene Ordner kann PhotoMaid nicht einsehen. Dafür zeigen wir bewusst keine Zahl.</string>
     <string name="storage_local">Alle Analysen laufen auf deinem Gerät.</string>
-    <string name="storage_value_items">%1$d Elemente · %2$s</string>
+    <plurals name="storage_value_items">
+        <item quantity="one">%1$d Element · %2$s</item>
+        <item quantity="other">%1$d Elemente · %2$s</item>
+    </plurals>
 
     <!-- Duplikate -->
     <string name="dup_find">Exakte Duplikate finden</string>
@@ -270,11 +301,20 @@
     <string name="dup_again">Erneut prüfen</string>
     <string name="pro_view">PhotoMaid Pro ansehen</string>
     <string name="dup_none">Keine exakten Duplikate gefunden.</string>
-    <string name="dup_not_comparable">%1$d Elemente nicht vergleichbar.</string>
-    <string name="dup_not_local">%1$d Elemente nicht lokal lesbar – nicht geprüft.</string>
+    <plurals name="dup_not_comparable">
+        <item quantity="one">%1$d Element nicht vergleichbar.</item>
+        <item quantity="other">%1$d Elemente nicht vergleichbar.</item>
+    </plurals>
+    <plurals name="dup_not_local">
+        <item quantity="one">%1$d Element nicht lokal lesbar – nicht geprüft.</item>
+        <item quantity="other">%1$d Elemente nicht lokal lesbar – nicht geprüft.</item>
+    </plurals>
     <string name="dup_selected_trash">Kopie für den Papierkorb ausgewählt</string>
     <string name="dup_will_keep">Wird behalten</string>
-    <string name="dup_move">%1$d Kopien in den Papierkorb</string>
+    <plurals name="dup_move">
+        <item quantity="one">%1$d Kopie in den Papierkorb</item>
+        <item quantity="other">%1$d Kopien in den Papierkorb</item>
+    </plurals>
     <string name="dup_header">%1$d identische Dateien · %2$s gesamt</string>
     <string name="dup_footer">Zusätzliche Kopien: höchstens %1$s ausgewählt. Das ist keine garantierte Speicherersparnis. Favoriten, Alben und Bearbeitungen können trotz gleicher Bytes relevant sein.</string>
 
@@ -306,18 +346,27 @@
     <string name="rules_add">Neue Regel hinzufügen</string>
     <string name="rules_local">Alle Regeln laufen lokal und werden beim Öffnen der App geprüft.</string>
     <string name="rule_connected_folder">Verbundener Ordner</string>
-    <string name="rule_title_older">%1$s älter als %2$d Tage prüfen</string>
+    <plurals name="rule_title_older">
+        <item quantity="one">%1$s älter als %2$d Tag prüfen</item>
+        <item quantity="other">%1$s älter als %2$d Tage prüfen</item>
+    </plurals>
     <string name="rule_title_size">%1$s ab %2$s zeigen</string>
     <string name="rule_title_all">%1$s prüfen</string>
     <string name="rule_detail_daily">Täglich beim Öffnen – erstellt eine Prüfaufgabe</string>
     <string name="rule_detail_weekly">Jeden %1$s – erstellt eine Prüfaufgabe</string>
-    <string name="rule_detail_new">Sobald %1$d neu entdeckte Elemente warten</string>
+    <plurals name="rule_detail_new">
+        <item quantity="one">Sobald %1$d neu entdecktes Element wartet</item>
+        <item quantity="other">Sobald %1$d neu entdeckte Elemente warten</item>
+    </plurals>
     <string name="rule_editor_title">Regel</string>
     <string name="rule_source">Quelle</string>
     <string name="rule_filter_older">Älter als …</string>
     <string name="rule_filter_size">Bekannte Größe ab …</string>
     <string name="rule_filter_all">Alle</string>
-    <string name="rule_days">%1$d Tage</string>
+    <plurals name="rule_days">
+        <item quantity="one">%1$d Tag</item>
+        <item quantity="other">%1$d Tage</item>
+    </plurals>
     <string name="rule_mb">%1$d MB</string>
     <string name="rule_trigger">Auslöser</string>
     <string name="rule_trigger_daily">Täglich</string>
@@ -325,7 +374,10 @@
     <string name="rule_trigger_new">Nach neu entdeckten Elementen</string>
     <string name="rule_weekday">Wochentag</string>
     <string name="rule_notify">Erinnerung senden</string>
-    <string name="rule_count">%1$d Elemente</string>
+    <plurals name="rule_count">
+        <item quantity="one">%1$d Element</item>
+        <item quantity="other">%1$d Elemente</item>
+    </plurals>
     <string name="rule_note">Regeln erzeugen nur Prüfaufgaben. Es wird nie automatisch gelöscht.</string>
 
     <!-- Verlauf -->
@@ -420,7 +472,7 @@
     <string name="version">Version</string>
     <string name="privacy_policy">Datenschutzerklärung</string>
     <string name="help_decide">Entscheiden</string>
-    <string name="help_decide_text">Wisch nach oben, um ein Medium zu behalten. Nach links kommt es in den Papierkorb, nach rechts auf später (Standard: in 2 Tagen), schräg nach rechts oben wählst du das Datum selbst. Nach unten kommst du zum vorherigen Medium – ohne etwas zu entscheiden.</string>
+    <string name="help_decide_text">Wisch nach oben, um ein Medium zu behalten. Nach links kommt es in den Papierkorb, nach rechts auf später (Standard: in 2 Tagen), schräg nach rechts oben wählst du das Datum selbst – gespeichert wird erst mit „Fertig“, Abbrechen ändert nichts. Nach unten kommst du zum vorherigen Medium – ohne etwas zu entscheiden.</string>
     <string name="help_delete">Löschen</string>
     <string name="help_delete_text">PhotoMaid löscht nie automatisch. Was du nach links wischst, landet im PhotoMaid-Papierkorb; gelöscht wird erst, wenn du ihn leerst. Fotos und Videos verschiebt Android nach deiner Bestätigung in den Papierkorb des Systems. Dateien werden endgültig gelöscht.</string>
     <string name="help_cloud">Cloud</string>

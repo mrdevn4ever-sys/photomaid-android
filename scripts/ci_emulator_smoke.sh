@@ -58,7 +58,7 @@ shot 02_today
 check_crash
 
 tap_text "Prüfung starten"
-wait_text "Fotos prüfen" 20
+wait_text "Medien prüfen" 20
 sleep 2
 shot 03_feed
 read -r W H < <(adb shell wm size | grep -o '[0-9]*x[0-9]*' | tail -1 | tr 'x' ' ')

@@ -26,10 +26,12 @@ import app.photomaid.core.later.LaterUnit
 import app.photomaid.core.later.ReviewQueues
 import app.photomaid.core.model.ItemProvider
 import app.photomaid.core.model.ItemReference
+import app.photomaid.core.decisions.ItemRecord
 import app.photomaid.core.model.LocalDay
 import app.photomaid.core.model.ReviewSessionID
 import app.photomaid.design.AppMotion
 import app.photomaid.media.MediaAsset
+import app.photomaid.media.reviewableMedia
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -42,6 +44,12 @@ enum class PreviewState { LOADING, READY, FAILED }
 
 /** Kurze Bestätigung nach „Später“. Nur Anzeige; der Termin ist bereits gespeichert. */
 data class LaterPill(val id: UUID = UUID.randomUUID(), val receiptID: UUID, val interval: LaterInterval)
+
+/**
+ * Offene Datumsauswahl nach Wisch schräg rechts oben – noch KEINE Entscheidung.
+ * Gebunden an Item und Ledger-Revision beim Öffnen: Bestätigen wirkt nur, wenn beides noch stimmt.
+ */
+data class CustomLaterRequest(val id: UUID = UUID.randomUUID(), val item: ItemReference, val revision: Int)
 
 /** Haptik-Ereignis (feine, unterschiedliche Rückmeldung je Aktion). */
 enum class FeedHaptic { KEEP, CLEANUP, LATER, BUMP, UNDO }
@@ -71,8 +79,11 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         private set
     var laterPill by mutableStateOf<LaterPill?>(null)
         private set
-    /** Drehrad-Sheet nach Wisch schräg rechts oben (oder „Ändern“ in der Pille). */
+    /** Drehrad-Sheet für „Ändern“ in der Pille (Item ist bereits „Später“ mit Standardtermin). */
     var pickerReceipt by mutableStateOf<LaterReceipt?>(null)
+    /** Drehrad-Sheet nach Wisch schräg rechts oben: erst Bestätigen entscheidet. */
+    var customLater by mutableStateOf<CustomLaterRequest?>(null)
+        private set
     var haptic by mutableStateOf<Pair<Int, FeedHaptic>?>(null)
         private set
     private var hapticSeq = 0
@@ -101,6 +112,12 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
             when (val src = request.source) {
                 is FeedRequest.Source.Category -> {
                     val list = app.photos.assets(src.category)
+                    list.forEach { assets[it.id] = it }
+                    val refs = list.map { it.reference }
+                    ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
+                }
+                FeedRequest.Source.AllMedia -> {
+                    val list = app.photos.reviewableMedia()
                     list.forEach { assets[it.id] = it }
                     val refs = list.map { it.reference }
                     ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
@@ -147,6 +164,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     // Gesten
 
     fun dragChanged(t: Offset) {
+        if (customLater != null) return
         machine.update(Vector2(t.x.toDouble(), t.y.toDouble()))
         lockedDirection = machine.lockedDirection
         val o = machine.displayOffset
@@ -154,6 +172,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     }
 
     fun dragEnded(t: Offset, v: Offset, reduceMotion: Boolean) {
+        if (customLater != null) { dragCancelled(); return }
         when (val r = machine.end(Vector2(t.x.toDouble(), t.y.toDouble()), Vector2(v.x.toDouble(), v.y.toDouble()))) {
             is FeedGestureMachine.Resolution.Commit -> perform(FeedIntent.of(r.direction), reduceMotion)
             else -> resetOffset(reduceMotion)
@@ -177,7 +196,10 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
 
     /** Gemeinsamer Pfad für Gesten, Buttons und TalkBack-Aktionen. */
     fun perform(intent: FeedIntent, reduceMotion: Boolean) {
+        // Solange eine Datumsauswahl offen ist, kann nichts anderes entschieden oder navigiert werden.
+        if (customLater != null) { machine.finishCommit(); resetOffset(reduceMotion); return }
         if (isCommitting) return
+        if (intent == FeedIntent.LATER_CUSTOM) { openCustomLater(reduceMotion); return }
         if (intent == FeedIntent.PREVIOUS) {
             val nav = session.goBack()
             machine.finishCommit()
@@ -193,7 +215,37 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         viewModelScope.launch { commit(intent, item, reduceMotion) }
     }
 
-    private suspend fun commit(intent: FeedIntent, item: ItemReference, reduceMotion: Boolean) {
+    /**
+     * Schräg rechts oben: nur die Datumsauswahl öffnen. Keine Entscheidung, kein Ledger-Eintrag, kein
+     * Weiterblättern. Das Medium federt zurück; versehentliches Öffnen bleibt folgenlos.
+     */
+    private fun openCustomLater(reduceMotion: Boolean) {
+        machine.finishCommit()
+        resetOffset(reduceMotion)
+        val item = current ?: return
+        val revision = (app.ledger.stateFlow.value.records[item] ?: ItemRecord(item)).revision
+        customLater = CustomLaterRequest(item = item, revision = revision)
+    }
+
+    /**
+     * Ergebnis der Datumsauswahl nach Wisch schräg rechts oben.
+     * `null` (Abbrechen, Zurück, Wegwischen) = nichts ändern, gleiches Medium.
+     * Datum = „Später“ bis zu diesem Tag, dann nächstes Medium – nur für das ursprüngliche Medium und nur,
+     * wenn es seit dem Öffnen unverändert ist (sonst verworfen, niemals auf ein anderes Medium angewendet).
+     */
+    fun customLaterFinished(request: CustomLaterRequest, day: LocalDay?, reduceMotion: Boolean) {
+        if (customLater?.id != request.id) return
+        customLater = null
+        if (day == null || isCommitting) return
+        val item = current ?: return
+        if (item != request.item) return
+        val revision = (app.ledger.stateFlow.value.records[item] ?: ItemRecord(item)).revision
+        if (revision != request.revision) return
+        isCommitting = true
+        viewModelScope.launch { commit(FeedIntent.LATER_CUSTOM, item, reduceMotion, customDay = day) }
+    }
+
+    private suspend fun commit(intent: FeedIntent, item: ItemReference, reduceMotion: Boolean, customDay: LocalDay? = null) {
         try {
             val revision = app.ledger.record(item).revision
             // Entscheidung nur für das Item, auf dem die Aktion ausgelöst wurde.
@@ -222,7 +274,8 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 touch()
                 val receipt = session.receipt
                 if (receipt != null && receipt.item == item) {
-                    if (receipt.wantsCustomDate) pickerReceipt = receipt else applyDefaultLater(receipt)
+                    // Gewähltes Datum als Ergänzung derselben Später-Aktion (gemeinsames Undo); sonst Standardtermin.
+                    if (customDay != null) schedule(receipt, customDay) else applyDefaultLater(receipt)
                 }
             } catch (e: Exception) {
                 fly.cancel()
@@ -251,7 +304,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
 
     /** Nicht darstellbare Items überspringen – ausdrücklich OHNE Entscheidung. */
     fun skipWithoutDecision() {
-        if (isCommitting) return
+        if (isCommitting || customLater != null) return
         session.jump(session.index + 1)
         app.player.stop()
         refreshWindow()
@@ -276,16 +329,13 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         }
     }
 
-    /** Ergebnis des Drehrads. Abbrechen = Standardtermin (ein Später hat immer einen Termin). */
+    /** Ergebnis des Drehrads aus „Ändern“ in der Pille. Abbrechen = bisheriger Termin bleibt. */
     fun pickerFinished(receipt: LaterReceipt, day: LocalDay?) {
         pickerReceipt = null
+        if (day == null) return
         viewModelScope.launch {
-            if (day != null) {
-                schedule(receipt, day)
-                laterPill = null
-            } else if (session.receipt?.id == receipt.id) {
-                applyDefaultLater(session.receipt ?: receipt)
-            }
+            schedule(receipt, day)
+            laterPill = null
         }
     }
 
@@ -318,7 +368,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     // Undo
 
     fun undo() {
-        if (isCommitting) return
+        if (isCommitting || customLater != null) return
         laterPill = null
         viewModelScope.launch {
             val record = app.undo() ?: return@launch

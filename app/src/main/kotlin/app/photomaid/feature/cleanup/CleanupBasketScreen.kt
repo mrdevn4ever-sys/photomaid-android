@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -121,14 +122,14 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
         resultMessage = when (val r = app.runCleanup(items, kind)) {
             is CleanupRunResult.Finished -> when (r.intent.state) {
                 OperationState.SUCCEEDED -> if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE)
-                    res.getString(R.string.result_media_trashed, r.intent.confirmedRemoved.size)
-                else res.getString(R.string.result_files_deleted, r.intent.confirmedRemoved.size)
-                OperationState.PARTIALLY_SUCCEEDED -> res.getString(R.string.result_partial, r.intent.confirmedRemoved.size, r.intent.items.size)
+                    res.getQuantityString(R.plurals.result_media_trashed, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
+                else res.getQuantityString(R.plurals.result_files_deleted, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
+                OperationState.PARTIALLY_SUCCEEDED -> res.getQuantityString(R.plurals.result_partial, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size, r.intent.items.size)
                 OperationState.CANCELLED -> res.getString(R.string.result_cancelled)
                 else -> res.getString(R.string.result_nothing)
             }
             is CleanupRunResult.Rejected -> when (val e = r.error) {
-                is CleanupError.AllowanceExceeded -> { if (e.available == 0) showProAfter = true; res.getString(R.string.result_allowance, e.available, e.requested) }
+                is CleanupError.AllowanceExceeded -> { if (e.available == 0) showProAfter = true; res.getQuantityString(R.plurals.result_allowance, e.available, e.available, e.requested) }
                 else -> res.getString(R.string.result_changed)
             }
             CleanupRunResult.NeedsReconciliation -> res.getString(R.string.result_reconcile)
@@ -143,9 +144,9 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
         bottomBar = {
             Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs),
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
-                if (selectedPhotos.isNotEmpty()) ProminentButton(stringResource(R.string.basket_empty_media, selectedPhotos.size), fillWidth = true, large = true,
+                if (selectedPhotos.isNotEmpty()) ProminentButton(pluralStringResource(R.plurals.basket_empty_media, selectedPhotos.size, selectedPhotos.size), fillWidth = true, large = true,
                     enabled = !running) { confirmPhotos = true }
-                if (selectedFiles.isNotEmpty()) GlassButton(stringResource(R.string.basket_delete_files, selectedFiles.size), fillWidth = true, large = true,
+                if (selectedFiles.isNotEmpty()) GlassButton(pluralStringResource(R.plurals.basket_delete_files, selectedFiles.size, selectedFiles.size), fillWidth = true, large = true,
                     tint = c.cleanup, enabled = !running) { confirmFiles = true }
                 if (running) CircularProgressIndicator(Modifier.size(28.dp))
             }

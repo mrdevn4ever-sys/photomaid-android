@@ -9,7 +9,66 @@ Geräteaufnahmen und keine Geräteabnahme.
 
 ---
 
-## 0. Konflikt: Diagonalgeste (§3) – gemeldet, nicht geändert
+## Nachtrag P0 (Produktentscheidungen vom 2026-09-29, umgesetzt)
+
+1. **Diagonalgeste ↗ – erst bestätigen, dann speichern** (Entscheidung des Nutzers, bewusste Abweichung von iOS)
+   - ↗ öffnet nur die Datumsauswahl (`FeedViewModel.openCustomLater`). Es gibt keine Entscheidung, keinen
+     Ledger-Eintrag und kein Weiterblättern; das Medium federt zurück.
+   - Solange die Auswahl offen ist, sind Gesten, andere Aktionen, Undo und „Überspringen“ gesperrt.
+   - **Bestätigen** = `Later` + `Schedule(Tag)` mit `amends`, also ein gemeinsames Undo. Danach folgt das
+     nächste Medium. Es gibt keinen Standardtermin und keine Pille.
+   - **Abbrechen, Zurück oder Wegwischen** = nichts geändert, gleiches Medium, kein Journal-Eintrag.
+   - Die Bindung an Item und Ledger-Revision beim Öffnen wird geprüft (`CustomLaterRequest`).
+     - Eine veraltete Revision wird verworfen.
+     - Ein fremder oder verspäteter Callback wird ignoriert.
+     - Eine doppelte Bestätigung entscheidet nur einmal.
+   - Die TalkBack- und Schalter-Aktion „Später, Datum wählen“ nutzt denselben Pfad.
+   - „Ändern“ in der Pille nach → funktioniert wie bisher. Abbrechen lässt dort jetzt den bisherigen Termin
+     stehen, statt ihn neu zu setzen.
+   - Der Core ist unverändert (`FeedGestureMachine`, `FeedSession`, `DecisionLedger`); geändert hat sich
+     nur ein Kommentar.
+   - Aktualisiert: `CLAUDE.md` (Android), `docs/PORTING_MATRIX.md`, `docs/PARITY_MATRIX.md` (DIFF),
+     `docs/QA_MATRIX.md` und der Hilfetext. **iOS ist noch nicht angepasst** und soll nachgezogen werden.
+   - Tests:
+     - `FeedFlowTest.rightUpOpensPickerWithoutDecisionAndCancelChangesNothing`
+     - `FeedFlowTest.rightUpConfirmSetsChosenDateAndAdvances` (Kalenderdatum in 14 Tagen, gemeinsames Undo)
+     - `CustomLaterTest` (5 Tests: Öffnen ohne Entscheidung, Abbrechen, nur Originalmedium, veraltete Revision,
+       fremder oder doppelter Callback)
+     - Alle PASS.
+   - Damit sind die Regressionskriterien 5 und 6 aus §16 jetzt **PASS**.
+2. **Home: Zahl und Hauptaktion konsistent**
+   - „Prüfung starten“ öffnet jetzt den gemeinsamen Feed aller offenen Medien (`FeedRequest.Source.AllMedia`,
+     Titel „Medien prüfen“): Fotos, Screenshots und Videos, neueste zuerst.
+   - Die Zahl auf Heute und der Feed nutzen dieselbe Funktion `MediaLibrary.reviewableMedia()` und dieselbe
+     `normalQueue`.
+   - Tests: `AppFlowsTest.startReviewOpensSharedFeedWithSameCount` und
+     `sharedFeedContainsPhotosScreenshotsAndVideos` („1 von 6“ bei 6 offenen Medien).
+3. **Einzahl und Mehrzahl überall, auch in den Papierkorbtexten.** Nur die Grammatik ist geändert,
+   Bedeutung, Abläufe und Zahlen sind gleich geblieben.
+   - Umgestellt auf `plurals`:
+     - `hub_basket_sub` („1 Element, noch nicht gelöscht“)
+     - `basket_empty_media` („Papierkorb leeren: 1 Foto/Video“)
+     - `basket_delete_files`
+     - `result_media_trashed` („1 Medium wurde …“)
+     - `result_files_deleted`, `result_partial`, `result_allowance`
+     - `count_items`, `large_in_files`, `storage_value_items`
+     - `dup_not_comparable`, `dup_not_local`, `dup_move`
+     - `rule_title_older`, `rule_detail_new`, `rule_days`, `rule_count`
+   - Die 11 übrigen `PluralsCandidate`-Warnungen erzeugen keine falsche Sprache: Der Wert 1 wird separat
+     behandelt, das Substantiv ändert sich nicht, oder die Zahl ist immer mindestens 2.
+   - Test: `AppFlowsTest.singularTexts`. Die zwei Assertions „1 Fotos/Videos“ wurden auf die korrekte Form
+     „1 Foto/Video“ angepasst.
+
+**Prüfstand nach P0:**
+- `:core:test`: 82 PASS
+- `:app:testDebugUnitTest`: 73 PASS
+- `lintDebug`: 0 Fehler, 26 Warnungen (11 davon `PluralsCandidate`, alle sprachlich korrekt)
+- `assembleRelease` (R8): PASS
+- Emulator und Gerät: NOT RUN
+
+---
+
+## 0. Konflikt: Diagonalgeste (§3) – *erledigt durch Nachtrag P0.1*
 
 §3 verlangt: *„Öffnen der Datumsauswahl ist keine Entscheidung. Erst die Bestätigung speichert, dann geht
 es weiter. Abbrechen = gleiches Medium, nichts geändert.“*

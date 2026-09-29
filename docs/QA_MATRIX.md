@@ -21,7 +21,7 @@ Status: PASS / FAIL / NOT RUN / BLOCKED. Stand: 2026-09-29, Branch `claude/andro
 
 | Suite | Tests | Status |
 |---|---|---|
-| FeedFlowTest (Compose-UI, echte Gesten: hoch, links, rechts + Pille, runter, Anschlag, Diagonale + kurzer Drag, abgebrochener Drag, schnelle Mehrfach-Swipes, schräg rechts oben + Abbrechen = Standardtermin, Undo, Session-Ende) | 11 | PASS |
+| FeedFlowTest (Compose-UI, echte Gesten: hoch, links, rechts + Pille, runter, Anschlag, Diagonale + kurzer Drag, abgebrochener Drag, schnelle Mehrfach-Swipes, schräg rechts oben: Öffnen ohne Entscheidung + Abbrechen ändert nichts, Bestätigen mit Kalenderdatum + gemeinsames Undo, Undo, Session-Ende) | 12 | PASS |
 | AppFlowsTest (Onboarding → Tabs, Berechtigung nicht angefragt/verweigert/erteilt, Papierkorb bestätigen/abbrechen/Abwahl, Pro gesperrt/entsperrt, Einstellungen) | 10 | PASS |
 | RoomLedgerPersistenceTest (Roundtrip nach Neustart, Journal → reconciliationRequired, tolerantes Dekodieren) | 3 | PASS |
 | ScreenshotTest (Roborazzi, 31 Aufnahmen → `docs/screenshots/`) | 31 | PASS |
