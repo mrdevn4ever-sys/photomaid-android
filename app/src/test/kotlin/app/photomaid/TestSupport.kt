@@ -135,7 +135,7 @@ fun makeTestApp(
     val lib = media(context)
     val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib })
     app.loadBlocking()
-    if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false) }
+    if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false, gestureHintSeen = true) }
     configure(app)
     app.reload()
     app.start()

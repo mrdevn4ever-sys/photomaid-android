@@ -51,8 +51,11 @@ data class LaterPill(val id: UUID = UUID.randomUUID(), val receiptID: UUID, val 
  */
 data class CustomLaterRequest(val id: UUID = UUID.randomUUID(), val item: ItemReference, val revision: Int)
 
-/** Haptik-Ereignis (feine, unterschiedliche Rückmeldung je Aktion). */
-enum class FeedHaptic { KEEP, CLEANUP, LATER, BUMP, UNDO }
+/**
+ * Haptik-Sprache des Feeds (feine, unterschiedliche Rückmeldung je Bedeutung; respektiert den App-Schalter und –
+ * über `performHapticFeedback` – die Systemeinstellung). READY: einmal, wenn Loslassen jetzt entscheiden würde.
+ */
+enum class FeedHaptic { KEEP, CLEANUP, LATER, READY, DATE, BUMP, UNDO }
 
 /**
  * Presentation-Logik des Entscheidungs-Feeds (iOS `FeedViewModel`). Die Entscheidungslogik selbst liegt in
@@ -73,6 +76,11 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     val offset = Animatable(Offset.Zero, Offset.VectorConverter)
     var lockedDirection by mutableStateOf<SwipeDirection?>(null)
         private set
+    /** Richtung, in die Loslassen jetzt entscheiden würde (für dezente Rahmenfarbe + eine Haptik). */
+    var readyDirection by mutableStateOf<SwipeDirection?>(null)
+        private set
+    /** Vom Screen gesetzt (Animationen entfernen). */
+    var reduceMotion = false
     var errorMessage by mutableStateOf<String?>(null)
     /** Synchron gesetzt, solange ein Commit läuft: Buttons/Aktionen/Zurück können das Item nicht verschieben. */
     var isCommitting by mutableStateOf(false)
@@ -153,6 +161,16 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         for (ref in window) if (ref !in previews) previews[ref] = PreviewState.LOADING
     }
 
+    /** „Erneut versuchen“ je Medium (neuer Wert → Vorschaubild wird neu angefordert). */
+    val retries = mutableStateMapOf<ItemReference, Int>()
+
+    fun retryPreview(ref: ItemReference) {
+        if (ref !in previews) return
+        previews[ref] = PreviewState.LOADING
+        retries[ref] = (retries[ref] ?: 0) + 1
+        touch()
+    }
+
     /** Rückmeldung des Bildladers. Antwort nur übernehmen, wenn das Item noch im Fenster ist. */
     fun previewResult(ref: ItemReference, ok: Boolean) {
         if (ref !in previews) return
@@ -167,11 +185,15 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         if (customLater != null) return
         machine.update(Vector2(t.x.toDouble(), t.y.toDouble()))
         lockedDirection = machine.lockedDirection
+        val ready = if (machine.readyToCommit) machine.lockedDirection else null
+        if (ready != null && ready != readyDirection) emit(FeedHaptic.READY)
+        readyDirection = ready
         val o = machine.displayOffset
         viewModelScope.launch { offset.snapTo(Offset(o.dx.toFloat(), o.dy.toFloat())) }
     }
 
     fun dragEnded(t: Offset, v: Offset, reduceMotion: Boolean) {
+        readyDirection = null
         if (customLater != null) { dragCancelled(); return }
         when (val r = machine.end(Vector2(t.x.toDouble(), t.y.toDouble()), Vector2(v.x.toDouble(), v.y.toDouble()))) {
             is FeedGestureMachine.Resolution.Commit -> perform(FeedIntent.of(r.direction), reduceMotion)
@@ -181,6 +203,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
 
     fun dragCancelled() {
         machine.cancel()
+        readyDirection = null
         lockedDirection = null
         viewModelScope.launch { offset.snapTo(Offset.Zero) }
     }
@@ -342,7 +365,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         pickerReceipt = null
         if (day == null) return
         viewModelScope.launch {
-            schedule(receipt, day)
+            if (schedule(receipt, day)) emit(FeedHaptic.DATE)
             laterPill = null
         }
     }
@@ -379,9 +402,16 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         if (isCommitting || customLater != null) return
         laterPill = null
         viewModelScope.launch {
+            val before = session.index
             val record = app.undo() ?: return@launch
             session.applyUndo(record)
             emit(FeedHaptic.UNDO)
+            // Zurückgeholtes Medium gleitet von oben herein – eindeutige, kurze Rückmeldung.
+            val scope = animationScope
+            if (session.index < before && scope != null && !reduceMotion) scope.launch {
+                offset.snapTo(Offset(0f, -viewSizeDp.height * 0.35f))
+                offset.animateTo(Offset.Zero, AppMotion.standard(false))
+            }
             refreshWindow()
             touch()
         }

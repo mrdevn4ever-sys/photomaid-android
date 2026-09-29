@@ -1,5 +1,14 @@
 package app.photomaid.feature.review
 
+import app.photomaid.design.glassRect
+import app.photomaid.design.PlainButton
+import app.photomaid.design.ProminentButton
+import app.photomaid.design.AppIconSize
+import app.photomaid.design.AppStroke
+import app.photomaid.design.AppMotion
+import androidx.compose.material.icons.rounded.BrokenImage
+import androidx.compose.foundation.border
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.ui.semantics.setProgress
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
@@ -35,7 +44,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.VolumeOff
 import androidx.compose.material.icons.automirrored.rounded.VolumeUp
 import androidx.compose.material.icons.rounded.PlayArrow
-import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -110,7 +118,19 @@ fun PrefetchImage(asset: MediaAsset, px: Pair<Int, Int>, onResult: (Boolean) -> 
  */
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
-fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onResult: (Boolean) -> Unit, skip: () -> Unit, zoomed: Boolean) {
+fun MediaPage(
+    asset: MediaAsset,
+    px: Pair<Int, Int>,
+    preview: PreviewState,
+    onResult: (Boolean) -> Unit,
+    skip: () -> Unit,
+    zoomed: Boolean,
+    /** Bedeutungsfarbe, sobald Loslassen entscheiden würde (feine Kontur statt Text/Kapsel). */
+    intentColor: Color? = null,
+    /** Zähler für „Erneut versuchen“ – ein neuer Wert lädt das Vorschaubild neu. */
+    retry: Int = 0,
+    onRetry: () -> Unit = {},
+) {
     val c = PM.colors
     val app = LocalApp.current
     val player by app.player.state.collectAsState()
@@ -130,27 +150,31 @@ fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onRe
         val shape = RoundedCornerShape(AppRadii.media)
         val tall = ratio < maxWidth / maxHeight
         val frame = if (knownRatio) Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = tall) else Modifier.fillMaxSize()
-        Box(frame.clip(shape).background(if (knownRatio) c.backgroundTint else Color.Transparent).testTag("feed.media.frame")) {
+        val ring by animateColorAsState(intentColor ?: Color.Transparent, AppMotion.fast(), label = "intent")
+        Box(frame.clip(shape).background(if (knownRatio) c.backgroundTint else Color.Transparent)
+            .border(AppStroke.intent, ring, shape).testTag(if (intentColor != null) "feed.media.intent" else "feed.media.frame")) {
             val active = asset.kind == MediaKind.VIDEO && player.itemID == asset.id
             if (active && app.player.player != null) {
                 // Ohne bekannte Maße wie bisher: Player in sein Seitenverhältnis einpassen, nie strecken.
                 PlayerSurface(app.player.player, if (knownRatio) Modifier.fillMaxSize() else Modifier.align(Alignment.Center).fillMaxWidth()
                     .aspectRatio(ratio, matchHeightConstraintsFirst = tall), surfaceType = SURFACE_TYPE_SURFACE_VIEW)
             } else {
-                AsyncImage(
-                    model = previewRequest(asset, px), contentDescription = null, contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxSize().clearAndSetSemantics {},
-                    onSuccess = { onResult(true) }, onError = { onResult(false) },
-                )
+                androidx.compose.runtime.key(retry) {
+                    AsyncImage(
+                        model = previewRequest(asset, px), contentDescription = null, contentScale = ContentScale.Fit,
+                        modifier = Modifier.fillMaxSize().clearAndSetSemantics {},
+                        onSuccess = { onResult(true) }, onError = { onResult(false) },
+                    )
+                }
             }
-            if (isVideo && !zoomed && preview != PreviewState.LOADING) VideoControls(asset)
+            if (isVideo && !zoomed && preview != PreviewState.LOADING) VideoControls(asset, skip)
         }
         // Video ohne Standbild: trotzdem abspielbar; sobald das erste Bild wirklich läuft, gilt es als gesehen.
         LaunchedEffect(asset.id, player.itemID, player.firstFrameRendered) {
             if (asset.kind == MediaKind.VIDEO && player.itemID == asset.id && player.firstFrameRendered && preview != PreviewState.READY) onResult(true)
         }
         when (preview) {
-            PreviewState.LOADING -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+            PreviewState.LOADING -> CircularProgressIndicator(Modifier.align(Alignment.Center).size(AppIconSize.large), strokeWidth = AppStroke.progress)
             PreviewState.FAILED -> if (isVideo && !zoomed) {
                 Column(Modifier.align(Alignment.TopCenter).padding(AppSpacing.m), horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
@@ -158,12 +182,7 @@ fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onRe
                         modifier = Modifier.glassCapsule().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs))
                     GlassButton(stringResource(R.string.skip_without_decision), onClick = skip)
                 }
-            } else Column(Modifier.align(Alignment.Center).padding(AppSpacing.m), horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                Icon(Icons.Rounded.WarningAmber, null, tint = c.warning, modifier = Modifier.size(44.dp))
-                Text(stringResource(R.string.preview_failed), style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
-                GlassButton(stringResource(R.string.skip_without_decision), onClick = skip)
-            }
+            } else MediaProblem(stringResource(R.string.preview_failed), stringResource(R.string.preview_failed_hint), onRetry, skip, Modifier.align(Alignment.Center))
             PreviewState.READY -> Unit
         }
     }
@@ -195,7 +214,7 @@ fun toggleVideo(player: app.photomaid.playback.FeedPlayer, asset: MediaAsset) {
  * keine Entscheidungsgeste) und ein kleines Stumm-Symbol.
  */
 @Composable
-private fun BoxScope.VideoControls(asset: MediaAsset) {
+private fun BoxScope.VideoControls(asset: MediaAsset, skip: () -> Unit) {
     val app = LocalApp.current
     val reduceMotion = LocalReduceMotion.current
     val state by app.player.state.collectAsState()
@@ -203,6 +222,13 @@ private fun BoxScope.VideoControls(asset: MediaAsset) {
     // Autoplay stumm, wenn Animationen nicht reduziert sind.
     LaunchedEffect(asset.id) { if (!reduceMotion && !active) app.player.load(asset.id, asset.uri, autoplay = true, durationSec = asset.duration) }
     LaunchedEffect(active, state.isPlaying) { while (active && state.isPlaying) { app.player.tick(); delay(200) } }
+    if (active && state.failed) {
+        // Wiedergabe fehlgeschlagen: erklären und einen Ausweg anbieten (nie eine Entscheidung).
+        MediaProblem(stringResource(R.string.video_failed), null,
+            onRetry = { app.player.load(asset.id, asset.uri, autoplay = true, durationSec = asset.duration) }, skip = skip,
+            modifier = Modifier.align(Alignment.Center))
+        return
+    }
     if (!(active && state.isPlaying)) {
         Box(Modifier.align(Alignment.Center).size(72.dp).clip(CircleShape).background(Color.Black.copy(alpha = 0.28f)).clearAndSetSemantics {}
             .testTag("video.paused"), contentAlignment = Alignment.Center) {
@@ -221,6 +247,20 @@ private fun BoxScope.VideoControls(asset: MediaAsset) {
             }
         }
         SeekBar(progress = if (active) state.progress else 0f, enabled = active, onSeek = app.player::seek)
+    }
+}
+
+/** Ruhiger Problemzustand eines Mediums: was passiert ist + „Erneut versuchen“ / „Weiter ohne Entscheidung“. */
+@Composable
+private fun MediaProblem(title: String, hint: String?, onRetry: () -> Unit, skip: () -> Unit, modifier: Modifier) {
+    val c = PM.colors
+    Column(modifier.padding(AppSpacing.m).glassRect(AppRadii.card, 0.dp).padding(AppSpacing.l).testTag("feed.media.problem"),
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+        Icon(Icons.Rounded.BrokenImage, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.large))
+        Text(title, style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
+        if (hint != null) Text(hint, style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
+        ProminentButton(stringResource(R.string.retry), onClick = onRetry)
+        PlainButton(stringResource(R.string.skip_without_decision), onClick = skip)
     }
 }
 

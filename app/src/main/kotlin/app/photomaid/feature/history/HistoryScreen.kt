@@ -42,6 +42,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import app.photomaid.R
+import androidx.compose.material.icons.rounded.FilterList
+import androidx.compose.material.icons.rounded.History
+import app.photomaid.design.EmptyState
 import app.photomaid.core.decisions.DecisionEvent
 import app.photomaid.core.decisions.Disposition
 import app.photomaid.core.decisions.HistoryKind
@@ -97,7 +100,10 @@ fun HistoryScreen(nav: Nav) {
                 SegmentedPicker(listOf(HistoryFilter.ALL to stringResource(R.string.history_all), HistoryFilter.KEPT to stringResource(R.string.history_kept),
                     HistoryFilter.CLEANED to stringResource(R.string.history_cleaned), HistoryFilter.LATER to stringResource(R.string.history_later)), filter) { filter = it }
             }
-            if (keys.isEmpty()) item { SurfaceCard { Text(stringResource(R.string.history_empty), style = AppTypography.body, color = c.textSecondary) } }
+            if (keys.isEmpty()) item {
+                if (read.events.isEmpty()) EmptyState(Icons.Rounded.History, stringResource(R.string.history_empty_title), stringResource(R.string.history_empty))
+                else EmptyState(Icons.Rounded.FilterList, stringResource(R.string.history_filter_empty_title), stringResource(R.string.history_filter_empty))
+            }
             items(keys, key = { it.toString() }) { day ->
                 val entries = days.getValue(day)
                 ListSection(header = pluralStringResource(R.plurals.history_day_header, entries.size,

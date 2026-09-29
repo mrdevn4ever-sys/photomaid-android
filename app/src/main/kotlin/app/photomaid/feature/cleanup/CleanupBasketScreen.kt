@@ -50,6 +50,9 @@ import androidx.compose.ui.unit.dp
 import app.photomaid.AppModel
 import app.photomaid.CleanupRunResult
 import app.photomaid.R
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import app.photomaid.core.cleanup.CleanupError
 import app.photomaid.core.cleanup.CleanupOperationKind
 import app.photomaid.core.cleanup.OperationState
@@ -102,6 +105,9 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     var confirmFiles by remember { mutableStateOf(false) }
     var running by remember { mutableStateOf(false) }
     var resultMessage by remember { mutableStateOf<String?>(null) }
+    var resultTitle by remember { mutableIntStateOf(R.string.result) }
+    val haptics = LocalHapticFeedback.current
+    val settings by app.settings.collectAsState()
     var showProAfter by remember { mutableStateOf(false) }
 
     LaunchedEffect(basket.map { it.item }) {
@@ -119,7 +125,19 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
 
     fun run(items: List<ItemReference>, kind: CleanupOperationKind) = scope.launch {
         running = true
-        resultMessage = when (val r = app.runCleanup(items, kind)) {
+        val r = app.runCleanup(items, kind)
+        // Nur die Überschrift je Ausgang (Meldungstexte und Semantik unverändert).
+        resultTitle = when (r) {
+            is CleanupRunResult.Finished -> when (r.intent.state) {
+                OperationState.SUCCEEDED -> R.string.result_title_done
+                OperationState.PARTIALLY_SUCCEEDED -> R.string.result_title_partial
+                else -> R.string.result_title_not_done
+            }
+            is CleanupRunResult.Rejected -> if (r.error is CleanupError.AllowanceExceeded) R.string.result_title_limit else R.string.notice
+            CleanupRunResult.NeedsReconciliation -> R.string.notice
+        }
+        if (settings.haptics && r is CleanupRunResult.Finished && r.intent.state == OperationState.SUCCEEDED) haptics.performHapticFeedback(HapticFeedbackType.Confirm)
+        resultMessage = when (r) {
             is CleanupRunResult.Finished -> when (r.intent.state) {
                 OperationState.SUCCEEDED -> if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE)
                     res.getQuantityString(R.plurals.result_media_trashed, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
@@ -166,7 +184,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
                         val available = a?.available
                         if (a != null && available != null) {
                             Text(stringResource(R.string.basket_allowance, available, a.limit ?: 0), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold),
-                                color = if (available == 0) c.cleanup else c.textSecondary)
+                                color = if (available == 0) c.textPrimary else c.textSecondary)
                         }
                     }
                 }
@@ -204,7 +222,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     if (confirmFiles) ConfirmationSheet(stringResource(R.string.basket_confirm_files_title), stringResource(R.string.basket_confirm_files_message),
         stringResource(R.string.basket_confirm_files_action, selectedFiles.size), onConfirm = { run(selectedFiles, CleanupOperationKind.FILE_DELETE_PERMANENTLY) },
         onDismiss = { confirmFiles = false })
-    NoticeDialog(resultMessage, stringResource(R.string.result)) {
+    NoticeDialog(resultMessage, stringResource(resultTitle)) {
         resultMessage = null
         if (showProAfter) { showProAfter = false; nav.openPro() }
     }

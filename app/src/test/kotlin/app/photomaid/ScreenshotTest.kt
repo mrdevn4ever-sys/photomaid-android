@@ -119,6 +119,16 @@ class ScreenshotTest {
     @Test fun s15_settings() = seededApp().let { shot("15_settings", it) { SettingsScreen(nav) } }
     @Test fun s15_settings_dark() = seededApp(dark = true).let { shot("15_settings_dark", it) { SettingsScreen(nav) } }
 
+    // Premium-Pass: leere Zustände und Problemzustand (ohne Seed-Entscheidungen).
+    private fun emptyApp() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } })
+    @Test fun p01_later_empty() = emptyApp().let { shot("p01_later_empty", it) { LaterScreen(nav) } }
+    @Test fun p02_history_empty() = emptyApp().let { shot("p02_history_empty", it) { WithTabBar(AppTab.HISTORY) { HistoryScreen(nav) } } }
+    @Test fun p03_basket_empty() = emptyApp().let { shot("p03_basket_empty", it) { CleanupBasketScreen(nav, showsDone = false) } }
+    @Test fun p04_feed_problem() = emptyApp().let {
+        java.io.File(lib.all[0].id.removePrefix("file://")).delete()
+        shot("p04_feed_problem", it, waitTag = "feed.media.problem") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Items(listOf(ItemReference.photo(lib.all[0].id)), R.string.feed_title_photos)), nav, {}, {}) }
+    }
+
     // Medien-Geometrie im Feed (UI-Polish §7/§8): jedes Format vollständig, ohne Beschnitt, gleiche Logik für Foto/Video.
     private fun feedOf(i: Int, name: String, title: Int = R.string.feed_title_photos, reduceMotion: Boolean = false) = seededApp().let {
         val ref = ItemReference.photo(lib.all[i].id)

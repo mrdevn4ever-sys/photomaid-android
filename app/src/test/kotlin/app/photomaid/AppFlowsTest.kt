@@ -65,8 +65,9 @@ class AppFlowsTest {
     @Test fun permissionDeniedShowsHonestState() {
         val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, access = PhotoAccess.DENIED) })
         rule.setContent { TestHost(app) { TodayScreen(RecordingNav()) } }
-        rule.onNodeWithText("Zugriff auf Fotos erforderlich").assertExists()
-        rule.onNodeWithText("Der Zugriff wurde abgelehnt. Du kannst ihn in den Android-Einstellungen für PhotoMaid ändern.").assertExists()
+        rule.onNodeWithText("PhotoMaid kann deine Fotos gerade nicht sehen").assertExists()
+        rule.onNodeWithText("Der Zugriff wurde abgelehnt. Du kannst ihn jederzeit in den Android-Einstellungen für PhotoMaid ändern – deine Entscheidungen bleiben erhalten.").assertExists()
+        rule.onNodeWithText("Zugriff ändern").assertExists() // Ausweg statt Sackgasse
     }
 
     @Test fun permissionGrantedShowsPendingCount() {
@@ -162,7 +163,7 @@ class AppFlowsTest {
         rule.setContent { TestHost(pro) { DuplicatesScreen(RecordingNav()) } }
         rule.onNodeWithText("Prüfung starten").assertExists().performClick()
         rule.waitUntil(10_000) { rule.onAllNodes(hasText("Erneut prüfen")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("Keine exakten Duplikate gefunden.").assertExists()
+        rule.onNodeWithText("Keine identischen Kopien gefunden").assertExists()
         assertTrue(pro.capabilities.dailyCleanupLimit == null)
     }
 

@@ -13,6 +13,10 @@
     <string name="back">Zurück</string>
     <string name="notice">Hinweis</string>
     <string name="result">Ergebnis</string>
+    <string name="result_title_done">Bereinigung abgeschlossen</string>
+    <string name="result_title_partial">Teilweise ausgeführt</string>
+    <string name="result_title_not_done">Nicht ausgeführt</string>
+    <string name="result_title_limit">Tageslimit erreicht</string>
     <string name="info">Infos</string>
     <string name="error_title">Etwas hat nicht funktioniert</string>
     <string name="retry">Erneut versuchen</string>
@@ -48,18 +52,18 @@
     <!-- Heute -->
     <string name="today_subtitle">Eine aufgeräumte Galerie für das, was zählt</string>
     <string name="today_limited_title">Eingeschränkter Zugriff</string>
-    <string name="today_limited_text">PhotoMaid sieht nur einen Teil deiner Fotos und Videos. Nicht freigegebene Medien werden weder angezeigt noch gezählt.</string>
+    <string name="today_limited_text">PhotoMaid kann aktuell nur einen Teil deiner Medien sehen. Freigegebene Fotos und Videos kannst du trotzdem prüfen.</string>
     <string name="today_limited_action">Zugriff ändern</string>
     <string name="today_access_title">Zugriff auf Fotos erforderlich</string>
-    <string name="today_access_denied">Der Zugriff wurde abgelehnt. Du kannst ihn in den Android-Einstellungen für PhotoMaid ändern.</string>
+    <string name="today_access_denied_title">PhotoMaid kann deine Fotos gerade nicht sehen</string>
+    <string name="today_access_denied">Der Zugriff wurde abgelehnt. Du kannst ihn jederzeit in den Android-Einstellungen für PhotoMaid ändern – deine Entscheidungen bleiben erhalten.</string>
     <string name="today_access_default">PhotoMaid braucht Zugriff auf deine Mediathek, um Fotos und Videos zum Sortieren anzuzeigen.</string>
-    <string name="learn_more">Mehr erfahren</string>
     <string name="storage_used_of">von %1$s belegt</string>
     <string name="storage_device_footnote">Systemwert des Geräts, nicht nur Fotos</string>
     <string name="today_start_title">Aufräumen starten</string>
     <string name="today_continue_title">Weiter aufräumen</string>
     <string name="today_done_title">Alles geprüft</string>
-    <string name="today_done_subtitle">Gerade wartet nichts auf eine Entscheidung.</string>
+    <string name="today_done_subtitle">Im Moment wartet nichts auf deine Entscheidung.</string>
     <string name="today_start_cta">Prüfung starten</string>
     <string name="today_continue_cta">Prüfung fortsetzen</string>
     <plurals name="today_pending_count">
@@ -90,7 +94,7 @@
     <string name="hub_screens_sub">Schnappschüsse aufräumen</string>
     <string name="hub_files_sub">Dateien aus verbundenen Ordnern</string>
     <string name="large_files">Große Dateien</string>
-    <string name="hub_large_sub">Die größten Dateien in deinen Ordnern</string>
+    <string name="hub_large_sub">Große Videos und Dateien</string>
     <string name="hub_dup_sub">Identische Kopien finden</string>
     <string name="storage_overview">Speicherübersicht</string>
     <string name="hub_storage_sub">Was PhotoMaid sehen kann</string>
@@ -112,6 +116,7 @@
     <string name="feed_position">%1$d von %2$d</string>
     <string name="feed_empty_title">Nichts zu prüfen</string>
     <string name="feed_empty_message">In dieser Auswahl warten gerade keine Elemente auf eine Entscheidung.</string>
+    <string name="feed_loading">Medien werden geladen …</string>
     <string name="feed_view_basket">Papierkorb ansehen</string>
     <string name="feed_show_hints">Gestenhilfe zeigen</string>
     <string name="feed_stage">Aktuelles Medium</string>
@@ -132,8 +137,10 @@
     <string name="error_decision_not_saved">Die Entscheidung wurde nicht gespeichert. Bitte erneut versuchen.</string>
     <string name="error_date_not_saved">Der Termin wurde nicht gespeichert.</string>
     <string name="video_poster_failed">Kein Vorschaubild – spiel das Video ab, um es zu prüfen.</string>
-    <string name="skip_without_decision">Ohne Entscheidung überspringen</string>
-    <string name="preview_failed">Vorschau konnte nicht geladen werden</string>
+    <string name="skip_without_decision">Weiter ohne Entscheidung</string>
+    <string name="preview_failed">Dieses Medium kann gerade nicht angezeigt werden.</string>
+    <string name="preview_failed_hint">Vielleicht wurde es verschoben oder ist noch nicht vollständig gespeichert.</string>
+    <string name="video_failed">Dieses Video konnte nicht wiedergegeben werden.</string>
     <string name="play">Abspielen</string>
     <string name="pause">Pause</string>
     <string name="playback_position">Wiedergabeposition</string>
@@ -180,7 +187,7 @@
     <string name="basket_files_header">Dateien</string>
     <string name="basket_files_footer">Dateien werden endgültig gelöscht. Dafür gibt es keinen Papierkorb und kein Rückgängig.</string>
     <string name="basket_empty_title">Papierkorb ist leer</string>
-    <string name="basket_empty_message">Wische im Feed nach links, um etwas in den Papierkorb zu legen.</string>
+    <string name="basket_empty_message">Hier erscheinen Medien, die du beim Prüfen nach links wischst.</string>
     <string name="basket_confirm_media_title">Fotos &amp; Videos entfernen?</string>
     <string name="basket_confirm_media_action">%1$d über Android entfernen</string>
     <string name="basket_confirm_media_message">Danach bestätigst du im Systemdialog. Die Medien kommen in den Papierkorb des Systems.</string>
@@ -223,7 +230,8 @@
 
     <!-- Dateien -->
     <string name="files_none_title">Noch kein Ordner verbunden</string>
-    <string name="files_none_message">Android erlaubt PhotoMaid keinen Zugriff auf alle Dateien. Wähle einen Ordner aus, z. B. einen Ordner in „Download“. Den Download-Ordner selbst gibt Android nicht frei, seine Unterordner schon.</string>
+    <string name="files_none_message">Verbinde einen Ordner, wenn PhotoMaid dort Dateien zur Prüfung finden soll.</string>
+    <string name="files_none_tip">Tipp: Den Download-Ordner selbst gibt Android nicht frei – einen Ordner darin schon.</string>
     <string name="file_type">Dateityp</string>
     <string name="kind_all">Alle</string>
     <string name="kind_pdf">PDFs</string>
@@ -253,14 +261,13 @@
         <item quantity="other">in %1$d großen Dateien</item>
     </plurals>
     <string name="large_footnote">Nur Dateien mit bekannter Größe ab %1$d MB. Kein Versprechen über freiwerdenden Speicher.</string>
-    <string name="large_filter">Filter: ab %1$d MB</string>
-    <string name="decrease">Verringern</string>
-    <string name="increase">Erhöhen</string>
+    <string name="large_filter">Größer als</string>
     <string name="sort_largest">Größte</string>
     <string name="sort_newest">Neueste</string>
     <string name="sort_oldest">Älteste</string>
     <string name="large_known">Bekannte Größe</string>
-    <string name="large_none">Keine Dateien über dem Filterwert gefunden.</string>
+    <string name="large_none">Keine passenden großen Dateien</string>
+    <string name="large_none_message">Keine zugängliche Datei ist größer als %1$d MB.</string>
     <string name="large_unknown_header">Größe unbekannt (%1$d)</string>
     <string name="large_unknown_footer">Z. B. Einträge, für die Android keine Größe meldet. PhotoMaid schätzt sie nicht.</string>
     <string name="storage_a">A · Gerät</string>
@@ -279,13 +286,15 @@
     </plurals>
 
     <!-- Duplikate -->
-    <string name="dup_find">Exakte Duplikate finden</string>
-    <string name="dup_explain">Byte-identische Dateien per SHA-256, auf deinem Gerät. Gleiche Vorschaubilder allein gelten nicht als Duplikat.</string>
-    <string name="dup_checking">Prüfe …</string>
+    <string name="dup_find">Identische Kopien finden</string>
+    <string name="dup_explain">Findet Fotos, Videos und Dateien, die exakt gleich sind. Du entscheidest selbst, welche Kopie in den Papierkorb kommt.</string>
+    <string name="dup_how">Wie funktioniert das? PhotoMaid vergleicht den Dateiinhalt (SHA-256) auf deinem Gerät. Ähnlich aussehende Bilder gelten nicht als Kopie.</string>
+    <string name="dup_checking">Identische Dateien werden verglichen …</string>
     <string name="dup_start">Prüfung starten</string>
     <string name="dup_again">Erneut prüfen</string>
     <string name="pro_view">PhotoMaid Pro ansehen</string>
-    <string name="dup_none">Keine exakten Duplikate gefunden.</string>
+    <string name="dup_none">Keine identischen Kopien gefunden</string>
+    <string name="dup_none_message">In den aktuell zugänglichen Bereichen wurden keine exakten Duplikate gefunden.</string>
     <plurals name="dup_not_comparable">
         <item quantity="one">%1$d Element nicht vergleichbar.</item>
         <item quantity="other">%1$d Elemente nicht vergleichbar.</item>
@@ -304,7 +313,9 @@
     <string name="dup_footer">Zusätzliche Kopien: höchstens %1$s ausgewählt. Das ist keine garantierte Speicherersparnis. Favoriten, Alben und Bearbeitungen können trotz gleicher Bytes relevant sein.</string>
 
     <!-- Später-Screen -->
-    <string name="later_empty">Nichts zurückgestellt. Wische im Feed nach rechts, um etwas auf später zu legen.</string>
+    <string name="later_empty">Medien, die du zurückstellst, erscheinen hier wieder.</string>
+    <string name="later_empty_title">Nichts für später</string>
+    <string name="later_empty_hint">→ Beim Prüfen nach rechts wischen</string>
     <string name="later_review_now_count">Jetzt prüfen (%1$d)</string>
     <string name="later_group_due">Wieder fällig · %1$d</string>
     <string name="later_group_tomorrow">Morgen · %1$d</string>
@@ -357,7 +368,10 @@
     <string name="history_kept">Behalten</string>
     <string name="history_cleaned">Bereinigt</string>
     <string name="history_later">Später</string>
-    <string name="history_empty">Noch keine Einträge.</string>
+    <string name="history_empty">Deine Entscheidungen erscheinen hier, sobald du mit dem Prüfen beginnst.</string>
+    <string name="history_empty_title">Noch kein Verlauf</string>
+    <string name="history_filter_empty_title">Nichts in dieser Auswahl</string>
+    <string name="history_filter_empty">Für diesen Filter gibt es noch keine Einträge.</string>
     <plurals name="history_day_header">
         <item quantity="one">%1$s · %2$d Eintrag</item>
         <item quantity="other">%1$s · %2$d Einträge</item>
@@ -380,7 +394,7 @@
 
     <!-- Pro -->
     <string name="pro_title">PhotoMaid Pro</string>
-    <string name="pro_subtitle">Einmal kaufen, dauerhaft nutzen. Kein Abo.</string>
+    <string name="pro_subtitle">Mehr Kontrolle, keine laufenden Kosten. Einmalkauf, kein Abo.</string>
     <string name="pro_f2">Unbegrenzt bereinigen</string>
     <string name="pro_f2d">Ohne Tageslimit von 15 bestätigten Bereinigungen.</string>
     <string name="pro_f3">Identische Kopien finden</string>

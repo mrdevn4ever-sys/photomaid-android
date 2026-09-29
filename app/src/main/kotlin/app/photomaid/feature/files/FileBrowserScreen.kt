@@ -88,7 +88,7 @@ import app.photomaid.files.SourceException
 import app.photomaid.files.SourceProblem
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.PageEndSpacer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -184,9 +184,11 @@ fun FileBrowserScreen(nav: Nav) {
                     SurfaceCard {
                         Text(stringResource(R.string.files_none_title), style = AppTypography.headline, color = c.textPrimary)
                         Spacer(Modifier.height(AppSpacing.s))
-                        Text(stringResource(R.string.files_none_message), style = AppTypography.caption, color = c.textSecondary)
+                        Text(stringResource(R.string.files_none_message), style = AppTypography.subheadline, color = c.textSecondary)
                         Spacer(Modifier.height(AppSpacing.s))
                         ProminentButton(stringResource(R.string.choose_folder), onClick = pick)
+                        Spacer(Modifier.height(AppSpacing.s))
+                        Text(stringResource(R.string.files_none_tip), style = AppTypography.caption, color = c.textSecondary)
                     }
                 }
             } else {
@@ -221,7 +223,7 @@ fun FileBrowserScreen(nav: Nav) {
                     }
                 }
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            item { PageEndSpacer() }
         }
     }
     NoticeDialog(errorText) { errorText = null }

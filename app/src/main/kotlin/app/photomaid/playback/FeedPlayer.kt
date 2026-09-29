@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,8 @@ class FeedPlayer(private val context: Context) {
         val durationSec: Double = 0.0,
         /** Erstes Bild dieses Videos wurde tatsächlich angezeigt (zählt als „gesehen“, auch ohne Standbild). */
         val firstFrameRendered: Boolean = false,
+        /** Wiedergabe ist fehlgeschlagen (Decoder/Datei). Die UI bietet „Erneut versuchen“ und „Weiter“ an. */
+        val failed: Boolean = false,
     )
 
     private val _state = MutableStateFlow(State())
@@ -41,6 +44,7 @@ class FeedPlayer(private val context: Context) {
         p.addListener(object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) { _state.value = _state.value.copy(isPlaying = isPlaying) }
             override fun onRenderedFirstFrame() { _state.value = _state.value.copy(firstFrameRendered = true) }
+            override fun onPlayerError(error: PlaybackException) { _state.value = _state.value.copy(isPlaying = false, failed = true) }
             override fun onPlaybackStateChanged(playbackState: Int) {
                 if (playbackState == Player.STATE_ENDED) _state.value = _state.value.copy(isPlaying = false, progress = 1f)
             }

@@ -115,20 +115,61 @@ object AppSpacing {
     val minTouch = 48.dp
 }
 
+/** Konturen. */
+object AppStroke {
+    val hairline = 0.5.dp
+    val regular = 1.dp
+    /** Rahmen des Mediums, sobald Loslassen entscheiden würde. */
+    val intent = 2.dp
+    val progress = 3.dp
+}
+
+/** Icon-Größen (Material Rounded, eine Familie). */
+object AppIconSize {
+    val small = 18.dp
+    val regular = 22.dp
+    val medium = 28.dp
+    val large = 44.dp
+}
+
+/** Höhen von Bedienelementen. Touch-Ziel immer ≥ [AppSpacing.minTouch]. */
+object AppControl {
+    /** Sichtbarer Kreis leiser Kopfzeilen-Buttons (Touch-Ziel bleibt 48 dp). */
+    val quietIcon = 40.dp
+    val largeButton = 52.dp
+    val tabBarItem = 54.dp
+}
+
 object AppRadii {
     val small = 12.dp
     val card = 22.dp
     val sheet = 28.dp
     val thumb = 10.dp
+    /** Segmente, Chips, Eingabefelder. */
+    val control = 10.dp
     /** Medium im Feed: kleiner Radius, damit Ecken von Screenshots/Dokumenten kaum beschnitten werden. */
     val media = 12.dp
 }
 
-/** Animationsdauern/-federn (iOS `AppMotion`). Reduce Motion → keine Kipp-/Flugeffekte. */
+/**
+ * Bewegung: wenige zentrale Stufen. Feed darf dynamischer sein, Navigation ist ruhig.
+ * Reduce Motion („Animationen entfernen“) → Sprung statt Animation.
+ */
 object AppMotion {
+    const val FAST_MS = 120
+    const val NORMAL_MS = 280
+
+    /** Kleine Zustandswechsel (Farbe, Kontur, Druck). */
+    fun <T> fast(): FiniteAnimationSpec<T> = tween(durationMillis = FAST_MS, easing = FastOutSlowInEasing)
+
+    /** Navigation und Sheets. */
+    fun <T> normal(): FiniteAnimationSpec<T> = tween(durationMillis = NORMAL_MS, easing = FastOutSlowInEasing)
+
+    /** Rückfedern im Feed (betont, aber ohne Nachschwingen). */
     fun <T> standard(reduceMotion: Boolean): FiniteAnimationSpec<T> =
         if (reduceMotion) snap() else spring(dampingRatio = 0.86f, stiffness = 380f)
 
+    /** Hinausfliegen beim Commit. */
     fun <T> commit(reduceMotion: Boolean): FiniteAnimationSpec<T> =
         if (reduceMotion) snap() else tween(durationMillis = 220, easing = FastOutSlowInEasing)
 

@@ -1,5 +1,9 @@
 package app.photomaid.navigation
 
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Spacer
+import app.photomaid.design.AppControl
+import app.photomaid.design.AppMotion
 import app.photomaid.design.LocalReduceMotion
 import androidx.navigation.NavBackStackEntry
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -248,10 +252,10 @@ private fun MainTabs(rootNav: Nav) {
         fun AnimatedContentTransitionScope<NavBackStackEntry>.sameTab() =
             initialState.destination.parent?.route == targetState.destination.parent?.route
         NavHost(controller, startDestination = AppTab.TODAY.graph,
-            enterTransition = { when { reduce -> EnterTransition.None; sameTab() -> slideInHorizontally(NavMotion.spec()) { it }; else -> fadeIn(tween(120)) } },
-            exitTransition = { when { reduce -> ExitTransition.None; sameTab() -> slideOutHorizontally(NavMotion.spec()) { -it / 4 }; else -> fadeOut(tween(120)) } },
-            popEnterTransition = { when { reduce -> EnterTransition.None; sameTab() -> slideInHorizontally(NavMotion.spec()) { -it / 4 }; else -> fadeIn(tween(120)) } },
-            popExitTransition = { when { reduce -> ExitTransition.None; sameTab() -> slideOutHorizontally(NavMotion.spec()) { it }; else -> fadeOut(tween(120)) } },
+            enterTransition = { when { reduce -> EnterTransition.None; sameTab() -> slideInHorizontally(NavMotion.spec()) { it }; else -> fadeIn(NavMotion.tab()) } },
+            exitTransition = { when { reduce -> ExitTransition.None; sameTab() -> slideOutHorizontally(NavMotion.spec()) { -it / 4 }; else -> fadeOut(NavMotion.tab()) } },
+            popEnterTransition = { when { reduce -> EnterTransition.None; sameTab() -> slideInHorizontally(NavMotion.spec()) { -it / 4 }; else -> fadeIn(NavMotion.tab()) } },
+            popExitTransition = { when { reduce -> ExitTransition.None; sameTab() -> slideOutHorizontally(NavMotion.spec()) { it }; else -> fadeOut(NavMotion.tab()) } },
         ) {
             for (t in AppTab.entries) {
                 navigation(startDestination = "${t.name}/${t.route}", route = t.graph) {
@@ -275,7 +279,7 @@ private fun MainTabs(rootNav: Nav) {
         // Tabbar nur auf den Tab-Startseiten. Unterseiten (Papierkorb, Dateien, Später, …) haben ihren Zurück-Knopf;
         // so verdeckt die Leiste dort weder Inhalte noch Aktionsknöpfe am unteren Rand.
         val atRoot = AppTab.entries.any { t -> entry?.destination?.route == "${t.name}/${t.route}" } || entry == null
-        AnimatedVisibility(atRoot, Modifier.align(Alignment.BottomCenter), enter = fadeIn(tween(150)), exit = fadeOut(tween(100))) {
+        AnimatedVisibility(atRoot, Modifier.align(Alignment.BottomCenter), enter = fadeIn(NavMotion.tab()), exit = fadeOut(NavMotion.tab())) {
         GlassTabBar(tab) { selected ->
             if (selected == tab) {
                 controller.popBackStack("${selected.name}/${selected.route}", inclusive = false)
@@ -310,7 +314,7 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
             Column(
                 Modifier
                     .weight(1f)
-                    .heightIn(min = 54.dp)
+                    .heightIn(min = AppControl.tabBarItem)
                     .clip(CircleShape)
                     .then(if (isSel) Modifier.glassCapsule(elevation = 0.dp) else Modifier)
                     .clickable(role = Role.Tab) { onSelect(t) }
@@ -320,7 +324,7 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
                 verticalArrangement = Arrangement.Center,
             ) {
                 Icon(t.icon, null, tint = if (isSel) c.accent else c.textPrimary, modifier = Modifier.size(24.dp))
-                Text(stringResource(t.label), style = AppTypography.caption2.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Medium),
+                Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Medium),
                     color = if (isSel) c.accent else c.textPrimary)
             }
         }
@@ -328,9 +332,14 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
 }
 
 /** Navigationsbewegung: kurz und weich statt des langen Standard-Überblendens von Navigation Compose. */
-object NavMotion {
-    fun <T> spec() = tween<T>(durationMillis = 280, easing = FastOutSlowInEasing)
+private object NavMotion {
+    fun <T> spec() = AppMotion.normal<T>()
+    fun <T> tab() = AppMotion.fast<T>()
 }
 
-/** Platz am Listenende, damit Inhalte nicht unter der schwebenden Tabbar liegen. */
+/** Listenende auf Unterseiten (ohne Tabbar): Abstand zur Systemnavigation plus ruhiger Rand. */
+@Composable
+fun PageEndSpacer() = Spacer(Modifier.navigationBarsPadding().height(AppSpacing.xl))
+
+/** Platz am Listenende der Tab-Startseiten, damit Inhalte nicht unter der schwebenden Tabbar liegen. */
 val TabBarClearance = 96.dp

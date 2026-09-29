@@ -57,6 +57,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -126,6 +127,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
     val model: FeedViewModel = viewModel(key = request.id, factory = viewModelFactory { initializer { FeedViewModel(app, request) } })
     val ctx = LocalContext.current
     val reduceMotion = LocalReduceMotion.current
+    SideEffect { model.reduceMotion = reduceMotion }
     val settings by app.settings.collectAsState()
     val read by app.read.collectAsState()
     val a11y = remember { ctx.getSystemService(AccessibilityManager::class.java) }
@@ -151,7 +153,10 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
         if (showHints) { delay(AppMotion.HINT_VISIBLE_MS); showHints = false }
     }
     LaunchedEffect(model.isLoaded) {
-        if (model.isLoaded && settings.showGestureHintOnOpen && model.session.items.isNotEmpty()) flashHints()
+        if (model.isLoaded && model.session.items.isNotEmpty() && (settings.showGestureHintOnOpen || !settings.gestureHintSeen)) {
+            flashHints()
+            if (!settings.gestureHintSeen) app.updateSettings { it.copy(gestureHintSeen = true) }
+        }
     }
     LaunchedEffect(talkBack, zoom) { model.setSuspended(talkBack || zoom > 1.01f) }
     LaunchedEffect(model.haptic) {
@@ -160,7 +165,10 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             FeedHaptic.KEEP -> HapticFeedbackType.Confirm
             FeedHaptic.CLEANUP -> HapticFeedbackType.ContextClick
             FeedHaptic.LATER -> HapticFeedbackType.SegmentTick
-            FeedHaptic.BUMP -> HapticFeedbackType.Reject
+            FeedHaptic.READY -> HapticFeedbackType.GestureThresholdActivate
+            FeedHaptic.DATE -> HapticFeedbackType.ToggleOn
+            // Anschlag am Anfang ist kein Fehler: nur ein sehr leichter Tick.
+            FeedHaptic.BUMP -> HapticFeedbackType.SegmentFrequentTick
             FeedHaptic.UNDO -> HapticFeedbackType.VirtualKey
         })
     }
@@ -175,11 +183,11 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                 title = (request.source as? FeedRequest.Source.Collection)?.let { collectionTitle(it.collection) }
                     ?: stringResource(request.titleRes),
                 subtitle = if (items.isEmpty()) null else stringResource(R.string.feed_position, pos, total),
-                leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), onClick = onClose) },
+                leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), quiet = true, onClick = onClose) },
                 trailing = {
-                    GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = read.canUndo, onClick = model::undo)
+                    GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = read.canUndo, quiet = true, onClick = model::undo)
                     Box {
-                        GlassIconButton(Icons.Rounded.MoreHoriz, stringResource(R.string.more_actions)) { menu = true }
+                        GlassIconButton(Icons.Rounded.MoreHoriz, stringResource(R.string.more_actions), quiet = true) { menu = true }
                         DropdownMenu(menu, onDismissRequest = { menu = false }) {
                             DropdownMenuItem(text = { Text(stringResource(R.string.feed_view_basket)) }, leadingIcon = { Icon(Icons.Rounded.Delete, null) },
                                 onClick = { menu = false; openBasket() })
@@ -192,7 +200,11 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                 },
             )
             when {
-                !model.isLoaded -> Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+                !model.isLoaded -> Column(Modifier.weight(1f).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.s, Alignment.CenterVertically)) {
+                    CircularProgressIndicator()
+                    Text(stringResource(R.string.feed_loading), style = AppTypography.footnote, color = PM.colors.textSecondary)
+                }
                 items.isEmpty() -> Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                     EmptyState(Icons.Rounded.CheckCircle, stringResource(R.string.feed_empty_title), stringResource(R.string.feed_empty_message),
                         actionTitle = stringResource(R.string.close), action = onClose)
@@ -302,8 +314,16 @@ private fun MediaStage(
                     .graphicsLayer { rotationZ = if (reduceMotion) 0f else o.x / 40f; scaleX = zoom; scaleY = zoom },
             ) {
                 androidx.compose.runtime.key(item) {
+                    val c = PM.colors
+                    val intent = when (model.readyDirection?.let { FeedIntent.of(it) }) {
+                        FeedIntent.KEEP -> c.keep
+                        FeedIntent.MARK_FOR_CLEANUP -> c.cleanup
+                        FeedIntent.LATER, FeedIntent.LATER_CUSTOM -> c.later
+                        else -> null
+                    }
                     MediaPage(asset, px, model.previews[item] ?: PreviewState.LOADING, onResult = { ok -> model.previewResult(item, ok) },
-                        skip = model::skipWithoutDecision, zoomed = zoom > 1.01f)
+                        skip = model::skipWithoutDecision, zoomed = zoom > 1.01f, intentColor = intent,
+                        retry = model.retries[item] ?: 0, onRetry = { model.retryPreview(item) })
                 }
             }
         }

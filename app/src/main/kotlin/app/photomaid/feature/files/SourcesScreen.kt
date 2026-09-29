@@ -35,7 +35,7 @@ import app.photomaid.design.ScreenScaffold
 import app.photomaid.feature.common.NoticeDialog
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.PageEndSpacer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -73,7 +73,7 @@ fun SourcesScreen(nav: Nav) {
                 if (sources.isNotEmpty()) RowDivider()
                 PlainButton(stringResource(R.string.add_folder), onClick = pick)
             }
-            Spacer(Modifier.height(TabBarClearance))
+            PageEndSpacer()
         }
     }
     NoticeDialog(errorText) { errorText = null }

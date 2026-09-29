@@ -39,6 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import app.photomaid.FeedRequest
 import app.photomaid.R
+import androidx.compose.material.icons.rounded.Schedule
+import app.photomaid.design.EmptyState
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.decisions.ItemRecord
 import app.photomaid.core.later.LaterGroup
@@ -60,7 +62,7 @@ import app.photomaid.feature.common.ThumbnailView
 import app.photomaid.feature.review.LaterDateDialog
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.PageEndSpacer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -91,7 +93,8 @@ fun LaterScreen(nav: Nav) {
     ScreenScaffold(stringResource(R.string.later), onBack = nav::back) { mod ->
         LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             if (groups.isEmpty()) item {
-                SurfaceCard { Text(stringResource(R.string.later_empty), style = AppTypography.body, color = c.textSecondary) }
+                EmptyState(Icons.Rounded.Schedule, stringResource(R.string.later_empty_title), stringResource(R.string.later_empty),
+                    hint = stringResource(R.string.later_empty_hint))
             }
             items(groups, key = { it.first.toString() }) { (key, records) ->
                 val header = when (key) {
@@ -116,7 +119,7 @@ fun LaterScreen(nav: Nav) {
                     }
                 }
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            item { PageEndSpacer() }
         }
     }
     editing?.let { r ->

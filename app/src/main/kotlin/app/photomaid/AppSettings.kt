@@ -8,8 +8,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AppSettingsData(
     val haptics: Boolean = true,
-    /** Gestenhilfe bei jedem Öffnen des Feeds kurz einblenden (abwählbar). */
-    val showGestureHintOnOpen: Boolean = true,
+    /**
+     * Gestenhilfe zusätzlich bei jedem Öffnen des Feeds einblenden. Standard aus: die Hilfe erscheint von selbst
+     * nur beim ersten Feed ([gestureHintSeen]), damit sie das Medium nicht ständig verdeckt.
+     */
+    val showGestureHintOnOpen: Boolean = false,
+    /** Gestenhilfe wurde einmal gezeigt (Erstnutzung). */
+    val gestureHintSeen: Boolean = false,
     val appearance: AppearanceChoice = AppearanceChoice.SYSTEM,
     val largeFileThresholdMB: Int = 100,
     val privacyIntroSeen: Boolean = false,

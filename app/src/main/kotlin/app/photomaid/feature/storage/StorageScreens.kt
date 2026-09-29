@@ -48,6 +48,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.photomaid.R
+import androidx.compose.material.icons.rounded.InsertDriveFile
+import app.photomaid.design.ChoiceChips
+import app.photomaid.design.EmptyState
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.model.ItemReference
 import app.photomaid.core.model.KnownSize
@@ -72,13 +75,15 @@ import app.photomaid.media.MediaAsset
 import app.photomaid.media.MediaCategory
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.PageEndSpacer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.Instant
 
 private enum class LargeSort { LARGEST, NEWEST, OLDEST }
+
+private val LARGE_CHOICES_MB = listOf(50, 100, 250, 500, 1_000, 2_000)
 
 private data class LargeRow(val id: ItemReference, val title: String, val size: KnownSize, val date: Instant?, val thumb: String?)
 
@@ -119,22 +124,18 @@ fun LargeFilesScreen(nav: Nav) {
 
     ScreenScaffold(stringResource(R.string.large_files), onBack = nav::back) { mod ->
         LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-            item {
+            // Kennzahl nur mit echten Treffern – keine „0 Byte in 0 Dateien“.
+            if (known.isNotEmpty()) item {
                 MetricCard(SizeText.tally(ctx, SizeTally.of(known.map { it.size })), pluralStringResource(R.plurals.large_in_files, known.size, known.size),
                     footnote = stringResource(R.string.large_footnote, settings.largeFileThresholdMB))
             }
             item {
                 ListSection {
-                    Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch), verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(R.string.large_filter, settings.largeFileThresholdMB), style = AppTypography.body, color = c.textPrimary, modifier = Modifier.weight(1f))
-                        // iOS: Stepper 10…5000, Schritt 50.
-                        StepButton(Icons.Rounded.Remove, stringResource(R.string.decrease), settings.largeFileThresholdMB > 10) {
-                            scope.launch { app.updateSettings { it.copy(largeFileThresholdMB = (it.largeFileThresholdMB - 50).coerceAtLeast(10)) } }
-                        }
-                        StepButton(Icons.Rounded.Add, stringResource(R.string.increase), settings.largeFileThresholdMB < 5000) {
-                            scope.launch { app.updateSettings { it.copy(largeFileThresholdMB = (it.largeFileThresholdMB + 50).coerceAtMost(5000)) } }
-                        }
-                    }
+                    // Schnellwahl statt +/−-Zähler (Nutzerrückmeldung): sinnvolle Schwellen für große Dateien.
+                    Text(stringResource(R.string.large_filter), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary,
+                        modifier = Modifier.padding(top = AppSpacing.xs))
+                    ChoiceChips(LARGE_CHOICES_MB.map { it to SizeText.bytes(it * 1_000_000L) }, settings.largeFileThresholdMB,
+                        Modifier.padding(vertical = AppSpacing.xs)) { mb -> scope.launch { app.updateSettings { it.copy(largeFileThresholdMB = mb) } } }
                     RowDivider()
                     SegmentedPicker(listOf(LargeSort.LARGEST to stringResource(R.string.sort_largest), LargeSort.NEWEST to stringResource(R.string.sort_newest),
                         LargeSort.OLDEST to stringResource(R.string.sort_oldest)), sort, Modifier.padding(vertical = AppSpacing.xs)) { sort = it }
@@ -144,7 +145,8 @@ fun LargeFilesScreen(nav: Nav) {
                 ListSection(header = stringResource(R.string.large_known)) {
                     if (scanning && known.isEmpty()) Box(Modifier.fillMaxWidth().padding(AppSpacing.m), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
                     known.forEachIndexed { i, r -> if (i > 0) RowDivider(); LargeRowView(r) }
-                    if (known.isEmpty() && !scanning) Text(stringResource(R.string.large_none), style = AppTypography.body, color = c.textSecondary, modifier = Modifier.padding(vertical = AppSpacing.s))
+                    if (known.isEmpty() && !scanning) EmptyState(Icons.Rounded.InsertDriveFile, stringResource(R.string.large_none),
+                        stringResource(R.string.large_none_message, settings.largeFileThresholdMB))
                 }
             }
             if (unknown.isNotEmpty()) item {
@@ -152,16 +154,8 @@ fun LargeFilesScreen(nav: Nav) {
                     unknown.take(200).forEachIndexed { i, r -> if (i > 0) RowDivider(); LargeRowView(r) }
                 }
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            item { PageEndSpacer() }
         }
-    }
-}
-
-@Composable
-private fun StepButton(icon: ImageVector, label: String, enabled: Boolean, onClick: () -> Unit) {
-    val c = PM.colors
-    Box(Modifier.size(AppSpacing.minTouch).clickable(enabled = enabled, onClick = onClick).semantics { contentDescription = label }, contentAlignment = Alignment.Center) {
-        Icon(icon, null, tint = if (enabled) c.accent else c.textSecondary.copy(alpha = 0.4f))
     }
 }
 
@@ -255,7 +249,7 @@ fun StorageInsightsScreen(nav: Nav) {
                     }
                 }
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            item { PageEndSpacer() }
         }
     }
 }

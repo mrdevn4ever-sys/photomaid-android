@@ -42,14 +42,21 @@ class CollectionsStore(private val store: KeyValueStore) {
     suspend fun delete(id: SmartCollectionID) = save(_custom.value.filter { it.id != id })
 
     /** Aktueller Stand aus einem echten MediaStore-Lesevorgang (keine erfundenen Zahlen). */
-    suspend fun result(c: SmartCollection, app: AppModel): CollectionResult = withContext(Dispatchers.IO) {
-        val cat = when (c.source) {
-            CollectionSource.PHOTOS -> MediaCategory.PHOTOS
-            CollectionSource.VIDEOS -> MediaCategory.VIDEOS
-            CollectionSource.SCREENSHOTS -> MediaCategory.SCREENSHOTS
-        }
-        val candidates = app.photos.assets(cat).map { CollectionCandidate(it.reference, it.creationDate, it.size) }
-        val records = app.ledger.records(candidates.map { it.item })
-        SmartCollections.evaluate(c, candidates, records, Instant.now(), ZoneId.systemDefault())
+    suspend fun result(c: SmartCollection, app: AppModel): CollectionResult = results(listOf(c), app).getValue(c.id)
+
+    /** Mehrere Sammlungen auf einmal: je Quelle genau ein MediaStore-Lesevorgang und eine Ledger-Abfrage. */
+    suspend fun results(list: List<SmartCollection>, app: AppModel): Map<SmartCollectionID, CollectionResult> = withContext(Dispatchers.IO) {
+        val now = Instant.now()
+        val zone = ZoneId.systemDefault()
+        list.groupBy { it.source }.flatMap { (source, cols) ->
+            val cat = when (source) {
+                CollectionSource.PHOTOS -> MediaCategory.PHOTOS
+                CollectionSource.VIDEOS -> MediaCategory.VIDEOS
+                CollectionSource.SCREENSHOTS -> MediaCategory.SCREENSHOTS
+            }
+            val candidates = app.photos.assets(cat).map { CollectionCandidate(it.reference, it.creationDate, it.size) }
+            val records = app.ledger.records(candidates.map { it.item })
+            cols.map { it.id to SmartCollections.evaluate(it, candidates, records, now, zone) }
+        }.toMap()
     }
 }

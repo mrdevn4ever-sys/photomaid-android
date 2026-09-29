@@ -20,6 +20,19 @@ class GestureMachineTest {
         return m.end(t, velocity)
     }
 
+    /** Anzeige „Loslassen entscheidet jetzt“ entspricht exakt der Commit-Bedingung ohne Schwung. */
+    @Test fun readyToCommitMatchesCommitCondition() {
+        for (t in listOf(Vector2(0.0, -200.0), Vector2(-200.0, 0.0), Vector2(200.0, -120.0), Vector2(0.0, -60.0), Vector2(120.0, -160.0), Vector2(0.0, 200.0))) {
+            val m = FeedGestureMachine()
+            for (i in 1..8) m.update(Vector2(t.dx * i / 8, t.dy * i / 8))
+            val ready = m.readyToCommit
+            val committed = m.end(t, Vector2.ZERO) is Resolution.Commit
+            val isDown = t.dy > 0 && t.dx == 0.0
+            assertEquals("$t", committed && !isDown, ready)
+        }
+        assertFalse(FeedGestureMachine().readyToCommit)
+    }
+
     @Test fun directionsMatchFingerMovement() {
         for ((t, expected) in listOf(
             Vector2(0.0, -200.0) to SwipeDirection.UP, Vector2(0.0, 200.0) to SwipeDirection.DOWN,

@@ -112,6 +112,20 @@ class FeedGestureMachine(val config: GestureConfig = GestureConfig()) {
             else -> null
         }
 
+    /**
+     * Würde Loslassen an dieser Stelle (ohne Schwung) eine Entscheidung auslösen? Nur Anzeige/Haptik –
+     * dieselbe Bedingung wie in [end], die Schwellen bleiben unverändert. „Runter“ ist keine Entscheidung.
+     */
+    val readyToCommit: Boolean
+        get() {
+            val p = phase as? Phase.DirectionLocked ?: return false
+            if (p.direction == SwipeDirection.DOWN) return false
+            val distance = along(p.direction, p.t)
+            val directed = if (p.direction == SwipeDirection.RIGHT) lockCandidate(p.t) == p.direction
+            else across(p.direction, p.t) * config.lockRatio <= max(distance, 0.0)
+            return directed && distance >= config.commitDistance
+        }
+
     fun update(t: Vector2) {
         if (isSuspended) return
         when (val p = phase) {

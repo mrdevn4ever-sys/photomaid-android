@@ -60,6 +60,7 @@ import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.Badge
 import app.photomaid.design.Caption
+import app.photomaid.design.ChoiceChips
 import app.photomaid.design.GlassButton
 import app.photomaid.design.ListSection
 import app.photomaid.design.PM
@@ -121,7 +122,7 @@ fun CollectionsContent(nav: Nav) {
     val all = SmartCollections.builtIns + custom
     LaunchedEffect(token, access, read.events.size, custom) {
         if (!access.canRead) { results = emptyMap(); return@LaunchedEffect }
-        results = all.associate { it.id to app.collections.result(it, app) }
+        results = app.collections.results(all, app)
     }
     fun open(col: SmartCollection) = nav.openFeed(FeedRequest(FeedRequest.Source.Collection(col)))
 
@@ -209,24 +210,12 @@ private fun CollectionEditor(initial: SmartCollection, isNew: Boolean, onDismiss
                 CollectionSource.SCREENSHOTS to stringResource(R.string.cat_screenshots)), source) { source = it }
             Text(stringResource(R.string.col_condition), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
             SegmentedPicker(listOf(false to stringResource(R.string.col_larger), true to stringResource(R.string.col_older)), older) { older = it }
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                if (older) for (d in SmartCollections.ageChoices) Chip(ageText(d), d == days) { days = d }
-                else for (b in sizes) Chip(SizeText.bytes(b), b == bytes) { bytes = b }
-            }
+            if (older) ChoiceChips(SmartCollections.ageChoices.map { it to ageText(it) }, days) { days = it }
+            else ChoiceChips(sizes.map { it to SizeText.bytes(it) }, bytes) { bytes = it }
             ProminentButton(stringResource(R.string.save), fillWidth = true, large = true) { onSave(draft) }
             if (!isNew) GlassButton(stringResource(R.string.col_delete), fillWidth = true, tint = c.cleanup, onClick = onDelete)
         }
     }
-}
-
-@Composable
-private fun Chip(label: String, selected: Boolean, onClick: () -> Unit) {
-    val c = PM.colors
-    Text(label, style = AppTypography.subheadline.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
-        color = if (selected) androidx.compose.ui.graphics.Color.White else c.textPrimary,
-        modifier = Modifier.clip(CircleShape).background(if (selected) c.accent else c.backgroundTint)
-            .clickable(role = Role.RadioButton, onClick = onClick).semantics { this.selected = selected }
-            .heightIn(min = AppSpacing.minTouch).padding(horizontal = AppSpacing.m, vertical = AppSpacing.s))
 }
 
 private val Int.dp_ get() = androidx.compose.ui.unit.Dp(toFloat())

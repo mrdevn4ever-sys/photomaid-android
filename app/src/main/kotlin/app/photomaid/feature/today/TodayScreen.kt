@@ -116,19 +116,21 @@ fun TodayScreen(nav: Nav) {
                 SurfaceCard {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         Icon(Icons.Rounded.PhotoLibrary, null, tint = c.accent)
-                        Text(stringResource(R.string.today_access_title), style = AppTypography.headline, color = c.textPrimary)
+                        Text(stringResource(if (access == PhotoAccess.DENIED) R.string.today_access_denied_title else R.string.today_access_title),
+                            style = AppTypography.headline, color = c.textPrimary)
                     }
                     Spacer(Modifier.height(AppSpacing.s))
                     Text(stringResource(if (access == PhotoAccess.DENIED) R.string.today_access_denied else R.string.today_access_default),
                         style = AppTypography.subheadline, color = c.textSecondary)
                     Spacer(Modifier.height(AppSpacing.s))
-                    ProminentButton(stringResource(R.string.learn_more), onClick = nav::openPrivacy)
+                    // Was kann ich tun? Direkt zur Zugriffsseite (dort Systemdialog bzw. Android-Einstellungen).
+                    ProminentButton(stringResource(if (access == PhotoAccess.DENIED) R.string.today_limited_action else R.string.privacy_allow), onClick = nav::openPrivacy)
                 }
             }
             if (access == PhotoAccess.LIMITED) {
                 SurfaceCard(Modifier.testTag("today.limited")) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                        Icon(Icons.Rounded.PhotoLibrary, null, tint = c.warning)
+                        Icon(Icons.Rounded.PhotoLibrary, null, tint = c.accent)
                         Text(stringResource(R.string.today_limited_title), style = AppTypography.headline, color = c.textPrimary)
                     }
                     Spacer(Modifier.height(AppSpacing.xs))

@@ -45,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.photomaid.AppModel
 import app.photomaid.R
+import app.photomaid.design.EmptyState
 import app.photomaid.core.capabilities.WorkUnitGrant
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.duplicates.ByteSourceProvider
@@ -68,7 +69,7 @@ import app.photomaid.feature.common.ThumbnailView
 import app.photomaid.media.MediaCategory
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.PageEndSpacer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
@@ -153,7 +154,7 @@ fun DuplicatesScreen(nav: Nav) {
                                 Text(stringResource(R.string.dup_find), style = AppTypography.headline, color = c.textPrimary)
                                 if (!caps.exactDuplicates) Badge(stringResource(R.string.pro_badge))
                             }
-                            Text(stringResource(R.string.dup_explain), style = AppTypography.caption, color = c.textSecondary)
+                            Text(stringResource(R.string.dup_explain), style = AppTypography.footnote, color = c.textSecondary)
                         }
                     }
                     Spacer(Modifier.height(AppSpacing.s))
@@ -198,12 +199,13 @@ fun DuplicatesScreen(nav: Nav) {
             }
             if (model.finishedAt != null) item {
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
-                    if (model.groups.isEmpty()) Text(stringResource(R.string.dup_none), style = AppTypography.caption, color = c.textSecondary)
+                    if (model.groups.isEmpty()) EmptyState(Icons.Rounded.FilterNone, stringResource(R.string.dup_none), stringResource(R.string.dup_none_message))
                     if (model.notComparable > 0) Text(pluralStringResource(R.plurals.dup_not_comparable, model.notComparable, model.notComparable), style = AppTypography.caption, color = c.textSecondary)
                     if (model.notChecked > 0) Text(pluralStringResource(R.plurals.dup_not_local, model.notChecked, model.notChecked), style = AppTypography.caption, color = c.textSecondary)
                 }
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            item { Text(stringResource(R.string.dup_how), style = AppTypography.caption, color = c.textSecondary, modifier = Modifier.padding(horizontal = AppSpacing.xxs)) }
+            item { PageEndSpacer() }
         }
     }
     @Suppress("UNUSED_EXPRESSION") ctx

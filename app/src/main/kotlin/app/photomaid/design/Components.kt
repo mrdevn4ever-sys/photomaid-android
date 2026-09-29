@@ -1,5 +1,16 @@
 package app.photomaid.design
 
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -62,11 +73,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.photomaid.R
 
-/** Helle, luftige Grundfläche (Verlauf). Kein Präsentations-Wallpaper. */
+/**
+ * Helle, luftige Grundfläche (Verlauf). Kein Präsentations-Wallpaper.
+ * Edge-to-edge: der Hintergrund reicht bis an alle Ränder; der Inhalt weicht seitlich den Systemleisten und
+ * Aussparungen aus (Querformat mit 3-Tasten-Navigation, Kamera-Notch). Oben/unten regeln die Screens selbst.
+ */
 @Composable
 fun AppBackground(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit = {}) {
     val c = PM.colors
-    Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(c.background, c.backgroundTint)))) { content() }
+    Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(c.background, c.backgroundTint)))) {
+        Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))) { content() }
+    }
 }
 
 /** Ruhige Inhaltsfläche (kein Glas), für Listen und Karten. */
@@ -119,17 +136,35 @@ fun GlassIconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     tint: Color = PM.colors.textPrimary,
+    /** Leise Variante (Feed): kleinerer sichtbarer Kreis ohne Schatten, damit das Medium dominiert. Touch bleibt 48 dp. */
+    quiet: Boolean = false,
     onClick: () -> Unit,
 ) {
+    val interaction = remember { MutableInteractionSource() }
     Box(
         modifier
             .size(AppSpacing.minTouch)
             .alpha(if (enabled) 1f else 0.45f)
-            .glassCapsule(elevation = 4.dp)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .clickable(interactionSource = interaction, indication = null, enabled = enabled, role = Role.Button, onClick = onClick)
             .semantics { contentDescription = label },
         contentAlignment = Alignment.Center,
-    ) { Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(22.dp)) }
+    ) {
+        Box(
+            Modifier
+                .size(if (quiet) AppControl.quietIcon else AppSpacing.minTouch)
+                .pressScale(interaction)
+                .then(if (quiet) Modifier.glass(PM.colors, CircleShape, elevation = 0.dp) else Modifier.glassCapsule(elevation = 4.dp)),
+            contentAlignment = Alignment.Center,
+        ) { Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(if (quiet) AppIconSize.small + 2.dp else AppIconSize.regular)) }
+    }
+}
+
+/** Dezente Druck-Rückmeldung (leicht kleiner, kurz). Keine Federshow. */
+@Composable
+fun Modifier.pressScale(interaction: MutableInteractionSource): Modifier {
+    val pressed by interaction.collectIsPressedAsState()
+    val scale by animateFloatAsState(if (pressed) 0.96f else 1f, AppMotion.fast(), label = "press")
+    return graphicsLayer { scaleX = scale; scaleY = scale }
 }
 
 /** Glas-Button (iOS `.buttonStyle(.glass)`). */
@@ -143,13 +178,15 @@ fun GlassButton(
     large: Boolean = false,
     onClick: () -> Unit,
 ) {
+    val interaction = remember { MutableInteractionSource() }
     Box(
         modifier
             .then(if (fillWidth) Modifier.fillMaxWidth() else Modifier)
-            .heightIn(min = if (large) 52.dp else AppSpacing.minTouch)
+            .heightIn(min = if (large) AppControl.largeButton else AppSpacing.minTouch)
+            .pressScale(interaction)
             .alpha(if (enabled) 1f else 0.45f)
             .glassCapsule(elevation = 3.dp)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .clickable(interactionSource = interaction, indication = LocalIndication.current, enabled = enabled, role = Role.Button, onClick = onClick)
             .padding(horizontal = AppSpacing.l, vertical = AppSpacing.xs),
         contentAlignment = Alignment.Center,
     ) {
@@ -170,16 +207,18 @@ fun ProminentButton(
     onClick: () -> Unit,
 ) {
     val shape = CircleShape
+    val interaction = remember { MutableInteractionSource() }
     Column(
         modifier
             .then(if (fillWidth) Modifier.fillMaxWidth() else Modifier)
-            .heightIn(min = if (large) 52.dp else AppSpacing.minTouch)
+            .heightIn(min = if (large) AppControl.largeButton else AppSpacing.minTouch)
+            .pressScale(interaction)
             .alpha(if (enabled) 1f else 0.45f)
             .shadow(6.dp, shape, clip = false, spotColor = color.copy(alpha = 0.5f))
             .clip(shape)
             .background(Brush.verticalGradient(listOf(color.copy(alpha = 0.92f), color)), shape)
-            .border(1.dp, Color.White.copy(alpha = 0.35f), shape)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .border(AppStroke.regular, Color.White.copy(alpha = 0.35f), shape)
+            .clickable(interactionSource = interaction, indication = LocalIndication.current, enabled = enabled, role = Role.Button, onClick = onClick)
             .padding(horizontal = AppSpacing.l, vertical = AppSpacing.xs),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -373,17 +412,24 @@ fun EmptyState(
     modifier: Modifier = Modifier,
     actionTitle: String? = null,
     action: (() -> Unit)? = null,
+    /** Kleiner Zusatz, z. B. die passende Geste („→ Später“). */
+    hint: String? = null,
 ) {
     val c = PM.colors
     Column(
-        modifier.fillMaxWidth().padding(AppSpacing.xl),
+        modifier.fillMaxWidth().padding(horizontal = AppSpacing.xl, vertical = AppSpacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(AppSpacing.s),
     ) {
-        Icon(icon, null, tint = c.textSecondary, modifier = Modifier.size(52.dp))
+        // Ruhig: Symbol in einem weichen Akzentkreis statt großem grauen Icon – kein Problem, nur ein Zustand.
+        Box(Modifier.size(72.dp).clip(CircleShape).background(c.accent.copy(alpha = 0.10f)).clearAndSetSemantics {}, contentAlignment = Alignment.Center) {
+            Icon(icon, null, tint = c.accent, modifier = Modifier.size(AppIconSize.medium + 4.dp))
+        }
+        Spacer(Modifier.size(AppSpacing.xxs))
         Text(title, style = AppTypography.title, color = c.textPrimary, textAlign = TextAlign.Center, modifier = Modifier.semantics { heading() })
         Text(message, style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
-        if (actionTitle != null && action != null) ProminentButton(actionTitle, onClick = action)
+        if (hint != null) Text(hint, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary, textAlign = TextAlign.Center)
+        if (actionTitle != null && action != null) { Spacer(Modifier.size(AppSpacing.xs)); ProminentButton(actionTitle, onClick = action) }
     }
 }
 
@@ -514,6 +560,31 @@ fun <T> MenuRowPicker(title: String, options: List<Pair<T, String>>, selected: T
         }
         androidx.compose.material3.DropdownMenu(open, { open = false }, modifier = Modifier.align(Alignment.CenterEnd)) {
             for ((v, label) in options) androidx.compose.material3.DropdownMenuItem({ Text(label) }, onClick = { open = false; onSelect(v) })
+        }
+    }
+}
+
+/** Schnellwahl als Chips (Einfachauswahl) – ersetzt +/−-Zähler. */
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+@Composable
+fun <T> ChoiceChips(options: List<Pair<T, String>>, selected: T, modifier: Modifier = Modifier, onSelect: (T) -> Unit) {
+    val c = PM.colors
+    androidx.compose.foundation.layout.FlowRow(modifier, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        for ((value, label) in options) {
+            val isSel = value == selected
+            Box(
+                Modifier
+                    .heightIn(min = AppSpacing.minTouch)
+                    .clip(CircleShape)
+                    .background(if (isSel) c.accent else c.backgroundTint)
+                    .clickable(role = Role.RadioButton) { onSelect(value) }
+                    .semantics { this.selected = isSel }
+                    .padding(horizontal = AppSpacing.m),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(label, style = AppTypography.subheadline.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Normal),
+                    color = if (isSel) Color.White else c.textPrimary)
+            }
         }
     }
 }
