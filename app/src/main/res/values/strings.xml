@@ -491,4 +491,34 @@
     <!-- Mitteilungen -->
     <string name="notif_channel">Erinnerungen</string>
     <string name="notif_due_body">Heute ist etwas Zurückgestelltes wieder dran.</string>
+    <!-- Aktionsleiste im Feed (keine Entscheidungen) -->
+    <string name="feed_actions">Aktionen für dieses Medium</string>
+    <string name="fav_add">Als Favorit markieren</string>
+    <string name="fav_remove">Favorit entfernen</string>
+    <string name="fav_state_on">Favorit</string>
+    <string name="fav_state_off">Kein Favorit</string>
+    <string name="fav_failed">Der Favorit konnte nicht geändert werden. Es ist alles wie vorher.</string>
+    <string name="fav_protected_photo">Dieses Foto ist als Favorit geschützt.</string>
+    <string name="fav_protected_video">Dieses Video ist als Favorit geschützt.</string>
+    <string name="fav_protected_text">Entferne den Favoriten, wenn es in den Papierkorb soll. Den Schutz kannst du in den Einstellungen ausschalten.</string>
+    <string name="fav_removed_hint">Favorit entfernt. Wische nach links für den Papierkorb.</string>
+    <string name="share">Teilen</string>
+    <string name="share_chooser">Teilen über</string>
+    <string name="share_failed">Teilen ist für dieses Medium gerade nicht möglich.</string>
+    <string name="open_in_app">In anderer App öffnen</string>
+    <string name="open_failed">Keine App zum Öffnen gefunden.</string>
+    <string name="folder_action">In Ordner verschieben</string>
+    <string name="folder_note">Die Datei wird verschoben, nicht kopiert. Galerie-Apps zeigen Ordner meist als Album. Backup-Einstellungen, zum Beispiel in Google Fotos, gelten je Ordner.</string>
+    <string name="folder_search">Ordner suchen</string>
+    <string name="folder_new">Neuer Ordner</string>
+    <string name="folder_name">Name des Ordners</string>
+    <string name="folder_create_move">Anlegen und verschieben</string>
+    <string name="folder_invalid">Bitte einen kurzen Namen ohne Sonderzeichen wie / eingeben.</string>
+    <string name="folder_current">Aktueller Ordner</string>
+    <string name="folder_none">Keine passenden Ordner. Lege einen neuen an.</string>
+    <string name="folder_moved">Nach „%1$s“ verschoben</string>
+    <string name="folder_failed">Das Verschieben hat nicht geklappt. Die Datei bleibt, wo sie war.</string>
+    <string name="folder_loading">Ordner werden geladen …</string>
+    <string name="set_protect_favorites">Favoriten schützen</string>
+    <string name="set_protect_favorites_detail">Verhindert, dass favorisierte Fotos und Videos versehentlich im Papierkorb landen.</string>
 </resources>

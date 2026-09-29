@@ -114,6 +114,7 @@ import app.photomaid.design.glassCapsule
 import app.photomaid.design.glassRect
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
+import app.photomaid.system.MediaIntents
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
@@ -142,6 +143,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
     var showHints by remember { mutableStateOf(false) }
     var hintToken by remember { mutableIntStateOf(0) }
     var showInfo by remember { mutableStateOf(false) }
+    var folderFor by remember { mutableStateOf<app.photomaid.media.MediaAsset?>(null) }
     var zoom by remember { mutableFloatStateOf(1f) }
     val haptics = LocalHapticFeedback.current
     val animScope = rememberCoroutineScope()
@@ -171,6 +173,8 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             // Anschlag am Anfang ist kein Fehler: nur ein sehr leichter Tick.
             FeedHaptic.BUMP -> HapticFeedbackType.SegmentFrequentTick
             FeedHaptic.UNDO -> HapticFeedbackType.VirtualKey
+            FeedHaptic.FAVORITE_ON -> HapticFeedbackType.ToggleOn
+            FeedHaptic.FAVORITE_OFF -> HapticFeedbackType.ToggleOff
         })
     }
 
@@ -179,7 +183,6 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             model.version // Session-Änderungen beobachten
             val items = model.session.items
             val (pos, total) = model.session.position
-            var menu by remember { mutableStateOf(false) }
             GlassToolbar(
                 title = (request.source as? FeedRequest.Source.Collection)?.let { collectionTitle(it.collection) }
                     ?: stringResource(request.titleRes),
@@ -187,17 +190,6 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                 leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), quiet = true, onClick = onClose) },
                 trailing = {
                     GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = read.canUndo, quiet = true, onClick = model::undo)
-                    Box {
-                        GlassIconButton(Icons.Rounded.MoreHoriz, stringResource(R.string.more_actions), quiet = true) { menu = true }
-                        DropdownMenu(menu, onDismissRequest = { menu = false }) {
-                            DropdownMenuItem(text = { Text(stringResource(R.string.feed_view_basket)) }, leadingIcon = { Icon(Icons.Rounded.Delete, null) },
-                                onClick = { menu = false; openBasket() })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.info)) }, leadingIcon = { Icon(Icons.Rounded.Info, null) },
-                                enabled = model.currentAsset != null, onClick = { menu = false; showInfo = true })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.feed_show_hints)) }, leadingIcon = { Icon(Icons.Rounded.PanTool, null) },
-                                onClick = { menu = false; flashHints() })
-                        }
-                    }
                 },
             )
             when {
@@ -221,7 +213,25 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     MediaInfoLine(model.currentAsset, Modifier.padding(horizontal = AppSpacing.pageMargin))
                     Column(Modifier.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         if (needsButtons) CompactActions { model.perform(it, reduceMotion) }
-                        ReviewDock(read.basket.size, Modifier.testTag("feed.dock"), onClick = openBasket)
+                        val asset = model.currentAsset
+                        FeedActionBar(asset, read.basket.size, busy = model.mediaWriteBusy || model.isCommitting,
+                            onFavorite = model::toggleFavorite,
+                            onShare = {
+                                // Teilen ändert nichts am Prüfstand; nach der Rückkehr bleibt dasselbe Medium.
+                                asset?.let { a ->
+                                    runCatching { ctx.startActivity(MediaIntents.share(a.uri, a.kind, a.mimeType, ctx.getString(R.string.share_chooser))) }
+                                        .onFailure { model.errorMessage = ctx.getString(R.string.share_failed) }
+                                }
+                            },
+                            onFolder = { folderFor = asset },
+                            onInfo = { showInfo = true },
+                            onOpenElsewhere = {
+                                asset?.let { a ->
+                                    runCatching { ctx.startActivity(MediaIntents.view(a.uri, a.kind, a.mimeType)) }
+                                        .onFailure { model.errorMessage = ctx.getString(R.string.open_failed) }
+                                }
+                            },
+                            onHints = ::flashHints, openBasket = openBasket)
                     }
                 }
             }
@@ -243,6 +253,8 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
         AlertDialog(onDismissRequest = { showInfo = false }, confirmButton = { TextButton({ showInfo = false }) { Text(stringResource(R.string.ok)) } },
             title = { Text(stringResource(R.string.info)) }, text = { Text(text) })
     }
+    model.protectedFavorite?.let { p -> ProtectedFavoriteDialog(p, onUnfavorite = model::unfavoriteProtected, onCancel = model::dismissProtected) }
+    folderFor?.let { a -> FolderSheet(a, onPick = model::moveCurrent, onDismiss = { folderFor = null }) }
     model.pickerReceipt?.let { receipt ->
         LaterPickerSheet(initial = model.defaultLaterInterval, today = model.today) { day -> model.pickerFinished(receipt, day) }
     }
@@ -334,6 +346,11 @@ private fun MediaStage(
         AnimatedVisibility(pill != null, Modifier.align(Alignment.BottomCenter).padding(bottom = AppSpacing.l),
             enter = slideInVertically { it } + fadeIn(), exit = slideOutVertically { it } + fadeOut()) {
             pill?.let { LaterPillView(it, model::editLater) }
+        }
+        val notice = model.notice
+        AnimatedVisibility(notice != null && pill == null, Modifier.align(Alignment.BottomCenter).padding(bottom = AppSpacing.l),
+            enter = fadeIn(AppMotion.fast()), exit = fadeOut(AppMotion.fast())) {
+            notice?.let { NoticePill(it.text) }
         }
     }
 }

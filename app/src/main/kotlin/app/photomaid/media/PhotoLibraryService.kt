@@ -22,6 +22,10 @@ import kotlinx.coroutines.withContext
 import app.photomaid.core.model.ItemReference
 import app.photomaid.core.model.KnownSize
 import app.photomaid.core.model.MediaKind
+import app.photomaid.core.organize.MediaFolder
+import app.photomaid.core.organize.MediaFolders
+import android.content.ContentValues
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,6 +61,8 @@ data class MediaAsset(
     val mimeType: String?,
     val displayName: String?,
     val isFavorite: Boolean,
+    /** MediaStore `RELATIVE_PATH` (z. B. `DCIM/Camera/`), `null` wenn unbekannt. */
+    val relativePath: String? = null,
 ) {
     val reference: ItemReference get() = ItemReference.photo(id)
     val uri: Uri get() = Uri.parse(id)
@@ -89,7 +95,15 @@ object MediaPermissions {
     }
 }
 
-/** Zugang zur Mediathek. Produktion: [PhotoLibraryService]; Tests/Previews: Fakes mit synthetischen Medien. */
+/** Ergebnis eines Schreibwunschs an die Mediathek (Favorit, Verschieben). Erfolg nur nach erneutem Lesen. */
+sealed interface MediaWriteResult {
+    data object Done : MediaWriteResult
+    /** Nutzer hat die Systembestätigung abgelehnt. */
+    data object Cancelled : MediaWriteResult
+    /** Technisch gescheitert oder Ergebnis nicht belegbar (Grund nur fürs Log, nie im UI). */
+    data class Failed(val reason: String) : MediaWriteResult
+}
+
 /**
  * Alle prüfbaren Medien der Mediathek (Fotos inkl. Screenshots + Videos), neueste zuerst.
  * Einzige Quelle für die Zahl auf „Heute“ UND den gemeinsamen Feed „Prüfung starten“ – beide zählen dasselbe.
@@ -114,6 +128,21 @@ interface MediaLibrary {
      * `null` = Ergebnis nicht belegbar → Abgleich beim nächsten Start.
      */
     suspend fun trash(ids: List<String>): OperationOutcome?
+
+    /**
+     * Systemfavorit setzen/entfernen (`MediaStore.createFavoriteRequest`, Android zeigt eine Bestätigung).
+     * `Done` nur, wenn der danach gelesene Wert stimmt.
+     */
+    suspend fun setFavorite(id: String, favorite: Boolean): MediaWriteResult
+
+    /** Ordner (RELATIVE_PATH) mit Anzahl sichtbarer Medien. */
+    fun folders(): List<MediaFolder>
+
+    /**
+     * Medium in einen Ordner verschieben (`createWriteRequest` + `RELATIVE_PATH`). Keine Kopie, Content-URI bleibt.
+     * `Done` nur, wenn der danach gelesene Pfad stimmt.
+     */
+    suspend fun moveToFolder(id: String, relativePath: String): MediaWriteResult
 }
 
 /**
@@ -222,6 +251,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
                 duration = if (iDur >= 0 && !c.isNull(iDur)) c.getLong(iDur) / 1000.0 else 0.0,
                 pixelWidth = if (rotated) h else w, pixelHeight = if (rotated) w else h, size = size,
                 mimeType = c.getString(iMime), displayName = c.getString(iName), isFavorite = c.getInt(iFav) == 1,
+                relativePath = path,
             )
         }
         return out
@@ -304,6 +334,58 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         if (probes.values.any { it == ExistenceProbe.UNKNOWN }) return null
         val removed = probes.filterValues { it == ExistenceProbe.MISSING_WITH_FULL_ACCESS }.keys
         return if (removed.size == ids.size) OperationOutcome.Succeeded else OperationOutcome.Partial(removed)
+    }
+
+    /** Einzelne Spalte eines Eintrags frisch lesen (Verifikation nach Schreibwunsch). */
+    private fun readColumn(uri: Uri, column: String): String? = runCatching {
+        resolver.query(uri, arrayOf(column), null, null)?.use { c -> if (c.moveToFirst()) c.getString(0) else null }
+    }.getOrNull()
+
+    override suspend fun setFavorite(id: String, favorite: Boolean): MediaWriteResult {
+        val uri = Uri.parse(id)
+        val request = runCatching { MediaStore.createFavoriteRequest(resolver, listOf(uri), favorite) }
+            .getOrElse { return failed("favorite-request", it) }
+        val code = SystemDialogs.launch(request.intentSender) ?: return MediaWriteResult.Failed("no-activity")
+        if (code != Activity.RESULT_OK) return MediaWriteResult.Cancelled
+        val now = withContext(Dispatchers.IO) { readColumn(uri, MediaStore.MediaColumns.IS_FAVORITE) }
+        return if (now == (if (favorite) "1" else "0")) MediaWriteResult.Done.also { bumpChangeToken() }
+        else MediaWriteResult.Failed("favorite-unverified")
+    }
+
+    override fun folders(): List<MediaFolder> {
+        if (!_access.value.canRead) return emptyList()
+        val counts = HashMap<String, Int>()
+        for (video in listOf(false, true)) runCatching {
+            resolver.query(collection(video), arrayOf(MediaStore.MediaColumns.RELATIVE_PATH), null, null)?.use { c ->
+                while (c.moveToNext()) {
+                    val p = c.getString(0)?.let { MediaFolders.normalize(it) }?.takeIf { it.isNotEmpty() } ?: continue
+                    counts[p] = (counts[p] ?: 0) + 1
+                }
+            }
+        }
+        return counts.map { (p, n) -> MediaFolder(p, n) }
+    }
+
+    override suspend fun moveToFolder(id: String, relativePath: String): MediaWriteResult {
+        val uri = Uri.parse(id)
+        val target = MediaFolders.normalize(relativePath)
+        val request = runCatching { MediaStore.createWriteRequest(resolver, listOf(uri)) }
+            .getOrElse { return failed("write-request", it) }
+        val code = SystemDialogs.launch(request.intentSender) ?: return MediaWriteResult.Failed("no-activity")
+        if (code != Activity.RESULT_OK) return MediaWriteResult.Cancelled
+        return withContext(Dispatchers.IO) {
+            val updated = runCatching {
+                resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.RELATIVE_PATH, target) }, null, null)
+            }.getOrElse { return@withContext failed("update", it) }
+            val now = readColumn(uri, MediaStore.MediaColumns.RELATIVE_PATH)?.let { MediaFolders.normalize(it) }
+            if (updated == 1 && now == target) MediaWriteResult.Done.also { bumpChangeToken() } else MediaWriteResult.Failed("move-unverified")
+        }
+    }
+
+    /** Nur Fehlerart loggen – keine URIs, Dateinamen oder Pfade. */
+    private fun failed(step: String, e: Throwable): MediaWriteResult {
+        Log.w("PhotoMaid", "media write failed: $step ${e.javaClass.simpleName}")
+        return MediaWriteResult.Failed("$step:${e.javaClass.simpleName}")
     }
 
     /** Lokale Bytes für Duplikat-Hashing. Nie Netzwerk. */

@@ -4,6 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -105,6 +108,9 @@ fun SettingsScreen(nav: Nav) {
                     detail = stringResource(R.string.set_connected_n, sources.size))
             }
             ListSection(header = stringResource(R.string.set_controls)) {
+                ToggleRow(stringResource(R.string.set_protect_favorites), settings.protectFavorites, Modifier.testTag("settings.protectFavorites"),
+                    subtitle = stringResource(R.string.set_protect_favorites_detail)) { v -> scope.launch { app.updateSettings { it.copy(protectFavorites = v) } } }
+                RowDivider()
                 ToggleRow(stringResource(R.string.set_haptics), settings.haptics) { v -> scope.launch { app.updateSettings { it.copy(haptics = v) } } }
                 RowDivider()
                 ToggleRow(stringResource(R.string.set_hints), settings.showGestureHintOnOpen) { v -> scope.launch { app.updateSettings { it.copy(showGestureHintOnOpen = v) } } }
@@ -159,11 +165,15 @@ fun SettingsScreen(nav: Nav) {
 }
 
 @Composable
-fun ToggleRow(title: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+fun ToggleRow(title: String, checked: Boolean, modifier: Modifier = Modifier, subtitle: String? = null, onChange: (Boolean) -> Unit) {
     val c = PM.colors
-    Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clickable(role = Role.Switch) { onChange(!checked) },
-        verticalAlignment = Alignment.CenterVertically) {
-        Text(title, style = AppTypography.body, color = c.textPrimary, modifier = Modifier.weight(1f))
+    Row(modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).toggleable(checked, role = Role.Switch) { onChange(it) }
+        .padding(vertical = if (subtitle != null) AppSpacing.xs else 0.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+        Column(Modifier.weight(1f)) {
+            Text(title, style = AppTypography.body, color = c.textPrimary)
+            if (subtitle != null) Text(subtitle, style = AppTypography.caption, color = c.textSecondary)
+        }
         Switch(checked, onCheckedChange = null, colors = SwitchDefaults.colors(checkedTrackColor = c.success, checkedThumbColor = androidx.compose.ui.graphics.Color.White))
     }
 }

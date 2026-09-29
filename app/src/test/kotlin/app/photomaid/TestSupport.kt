@@ -24,6 +24,8 @@ import app.photomaid.design.PhotoMaidTheme
 import app.photomaid.media.MediaAsset
 import app.photomaid.media.MediaCategory
 import app.photomaid.media.MediaLibrary
+import app.photomaid.media.MediaWriteResult
+import app.photomaid.core.organize.MediaFolder
 import app.photomaid.media.PhotoAccess
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
@@ -52,10 +54,17 @@ class FakeMediaLibrary(
     override val changeToken = MutableStateFlow(0)
     val removed = mutableSetOf<String>()
     var trashOutcome: ((List<String>) -> OperationOutcome?)? = null
-    val all: List<MediaAsset>
+    /** Nächste Antwort des (simulierten) Systemdialogs für Favorit/Verschieben: OK, abgelehnt oder Fehler. */
+    var writeResult: MediaWriteResult = MediaWriteResult.Done
+    /** Aktueller Systemzustand je ID (extern änderbar, wie MediaStore). */
+    val favorites = mutableMapOf<String, Boolean>()
+    val paths = mutableMapOf<String, String>()
+    val writes = mutableListOf<String>()
+    private var base: List<MediaAsset> = emptyList()
+    val all: List<MediaAsset> get() = base.map { a -> a.copy(isFavorite = favorites[a.id] ?: a.isFavorite, relativePath = paths[a.id] ?: a.relativePath ?: "DCIM/Camera/") }
 
     init {
-        all = if (visual) VisualTestMedia.create(context) else simple(context, count, videos)
+        base = if (visual) VisualTestMedia.create(context) else simple(context, count, videos)
     }
 
     private fun simple(context: Context, count: Int, videos: Int): List<MediaAsset> {
@@ -105,6 +114,18 @@ class FakeMediaLibrary(
         ItemReference.photo(it) to if (it in removed) ExistenceProbe.MISSING_WITH_FULL_ACCESS else ExistenceProbe.EXISTS
     }
     override fun openStream(id: String) = File(id.removePrefix("file://")).takeIf { it.exists() }?.inputStream()
+    override suspend fun setFavorite(id: String, favorite: Boolean): MediaWriteResult {
+        writes += "favorite:$favorite"
+        if (writeResult == MediaWriteResult.Done) { favorites[id] = favorite; changeToken.value += 1 }
+        return writeResult
+    }
+    override fun folders(): List<MediaFolder> = visible().groupingBy { it.relativePath ?: "DCIM/Camera/" }.eachCount().map { MediaFolder(it.key, it.value) } +
+        listOf(MediaFolder("Pictures/Urlaub 2026/", 12), MediaFolder("Movies/Clips/", 3))
+    override suspend fun moveToFolder(id: String, relativePath: String): MediaWriteResult {
+        writes += "move:$relativePath"
+        if (writeResult == MediaWriteResult.Done) { paths[id] = relativePath; changeToken.value += 1 }
+        return writeResult
+    }
     override suspend fun trash(ids: List<String>): OperationOutcome? {
         trashOutcome?.let { return it(ids) }
         removed += ids

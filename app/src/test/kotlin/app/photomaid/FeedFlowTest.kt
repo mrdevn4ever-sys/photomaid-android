@@ -78,7 +78,7 @@ class FeedFlowTest {
         awaitReady("2 von 5")
         assertEquals(Disposition.MARKED_FOR_CLEANUP, disposition(0))
         assertEquals(0, lib.removed.size)
-        rule.onNodeWithText("Papierkorb: 1").assertExists()
+        rule.onNode(androidx.compose.ui.test.hasContentDescription("Papierkorb: 1")).assertExists()
     }
 
     @Test fun rightLaterWithDefaultDateAndPill() {
@@ -169,7 +169,7 @@ class FeedFlowTest {
     @Test fun undoRestoresPreviousState() {
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeLeft() }
         awaitReady("2 von 5")
-        rule.onNodeWithText("Papierkorb: 1").assertExists()
+        rule.onNode(androidx.compose.ui.test.hasContentDescription("Papierkorb: 1")).assertExists()
         rule.onNode(androidx.compose.ui.test.hasContentDescription("Rückgängig")).performClick()
 
         awaitReady("1 von 5")

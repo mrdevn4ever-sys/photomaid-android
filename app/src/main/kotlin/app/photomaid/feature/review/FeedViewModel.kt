@@ -38,6 +38,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.drop
+import app.photomaid.media.MediaWriteResult
+import app.photomaid.core.model.MediaKind
+import app.photomaid.core.organize.MediaFolder
 import java.util.UUID
 
 enum class PreviewState { LOADING, READY, FAILED }
@@ -55,7 +60,13 @@ data class CustomLaterRequest(val id: UUID = UUID.randomUUID(), val item: ItemRe
  * Haptik-Sprache des Feeds (feine, unterschiedliche Rückmeldung je Bedeutung; respektiert den App-Schalter und –
  * über `performHapticFeedback` – die Systemeinstellung). READY: einmal, wenn Loslassen jetzt entscheiden würde.
  */
-enum class FeedHaptic { KEEP, CLEANUP, LATER, READY, DATE, BUMP, UNDO }
+enum class FeedHaptic { KEEP, CLEANUP, LATER, READY, DATE, BUMP, UNDO, FAVORITE_ON, FAVORITE_OFF }
+
+/** Geschützter Favorit wurde nach links gewischt: Rückfrage statt Papierkorb. Keine Entscheidung. */
+data class ProtectedFavorite(val item: ItemReference, val isVideo: Boolean)
+
+/** Kurzer, nur nach belegtem Erfolg gezeigter Hinweis (z. B. „Nach „Urlaub“ verschoben“). */
+data class FeedNotice(val id: UUID = UUID.randomUUID(), val text: String)
 
 /**
  * Presentation-Logik des Entscheidungs-Feeds (iOS `FeedViewModel`). Die Entscheidungslogik selbst liegt in
@@ -102,6 +113,14 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
      */
     var animationScope: kotlinx.coroutines.CoroutineScope? = null
     private var pillJob: Job? = null
+    private var noticeJob: Job? = null
+    var protectedFavorite by mutableStateOf<ProtectedFavorite?>(null)
+        private set
+    var notice by mutableStateOf<FeedNotice?>(null)
+        private set
+    /** Läuft ein Schreibwunsch (Favorit/Verschieben) für das aktuelle Medium? Dann kein zweiter. */
+    var mediaWriteBusy by mutableStateOf(false)
+        private set
 
     val current: ItemReference? get() { version; return session.current }
     val currentAsset: MediaAsset? get() = current?.let { assets[it.localIdentifier] }
@@ -109,7 +128,24 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     private fun touch() { version++ }
     private fun emit(h: FeedHaptic) { if (app.settings.value.haptics) haptic = (++hapticSeq) to h }
 
-    init { viewModelScope.launch { load() } }
+    init {
+        viewModelScope.launch { load() }
+        // Externe Änderungen (Favorit in der Galerie, Verschieben, Löschen): sichtbares Fenster frisch lesen.
+        viewModelScope.launch { app.photos.changeToken.drop(1).collectLatest { if (isLoaded) refreshWindowAssets() } }
+    }
+
+    private suspend fun refreshWindowAssets() {
+        val ids = windowItems().map { it.localIdentifier }
+        if (ids.isEmpty()) return
+        val fresh = withContext(Dispatchers.IO) { app.photos.assets(ids) }
+        fresh.forEach { assets[it.id] = it }
+        touch()
+    }
+
+    private suspend fun refreshAsset(id: String) {
+        withContext(Dispatchers.IO) { app.photos.assets(listOf(id)) }.firstOrNull()?.let { assets[id] = it }
+        touch()
+    }
 
     // Warteschlange
 
@@ -242,6 +278,16 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
             return
         }
         val item = current ?: run { machine.finishCommit(); lockedDirection = null; return }
+        if (protectedFavorite != null) { machine.finishCommit(); resetOffset(reduceMotion); return }
+        // Favoriten schützen: kein stiller Papierkorb für einen Systemfavoriten – Rückfrage, Medium bleibt.
+        val asset = currentAsset
+        if (intent == FeedIntent.MARK_FOR_CLEANUP && app.settings.value.protectFavorites && asset?.isFavorite == true) {
+            machine.finishCommit()
+            lockedDirection = null
+            resetOffset(reduceMotion)
+            protectedFavorite = ProtectedFavorite(item, asset.kind == MediaKind.VIDEO)
+            return
+        }
         isCommitting = true
         viewModelScope.launch { commit(intent, item, reduceMotion) }
     }
@@ -394,6 +440,64 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
             errorMessage = app.string(R.string.error_date_not_saved)
             false
         }
+    }
+
+    // Favorit, Ordner (keine Review-Entscheidungen, kein Weiterblättern, nicht Teil des Undo-Stapels)
+
+    /** ♡ in der Aktionsleiste. Android fragt per Systemdialog; angezeigt wird nur der danach gelesene Zustand. */
+    fun toggleFavorite() {
+        val a = currentAsset ?: return
+        if (mediaWriteBusy || isCommitting) return
+        writeFavorite(a.id, !a.isFavorite) {}
+    }
+
+    private fun writeFavorite(id: String, value: Boolean, onDone: () -> Unit) {
+        mediaWriteBusy = true
+        viewModelScope.launch {
+            try {
+                when (app.photos.setFavorite(id, value)) {
+                    MediaWriteResult.Done -> { emit(if (value) FeedHaptic.FAVORITE_ON else FeedHaptic.FAVORITE_OFF); refreshAsset(id); onDone() }
+                    MediaWriteResult.Cancelled -> refreshAsset(id)
+                    is MediaWriteResult.Failed -> { refreshAsset(id); errorMessage = app.string(R.string.fav_failed) }
+                }
+            } finally { mediaWriteBusy = false }
+        }
+    }
+
+    /** Schutzdialog → „Favorit entfernen“: nur den Favoriten entfernen. Das Medium bleibt; erneut wischen = Papierkorb. */
+    fun unfavoriteProtected() {
+        val p = protectedFavorite ?: return
+        protectedFavorite = null
+        writeFavorite(p.item.localIdentifier, false) { showNotice(app.string(R.string.fav_removed_hint)) }
+    }
+
+    fun dismissProtected() { protectedFavorite = null }
+
+    /** Verschieben in einen Ordner; Erfolgsmeldung nur, wenn MediaStore den neuen Pfad bestätigt. */
+    fun moveCurrent(relativePath: String) {
+        val a = currentAsset ?: return
+        if (mediaWriteBusy || isCommitting) return
+        mediaWriteBusy = true
+        viewModelScope.launch {
+            try {
+                when (app.photos.moveToFolder(a.id, relativePath)) {
+                    MediaWriteResult.Done -> {
+                        refreshAsset(a.id)
+                        showNotice(app.string(R.string.folder_moved, MediaFolder(relativePath, 0).name))
+                    }
+                    MediaWriteResult.Cancelled -> Unit
+                    is MediaWriteResult.Failed -> { refreshAsset(a.id); errorMessage = app.string(R.string.folder_failed) }
+                }
+            } finally { mediaWriteBusy = false }
+        }
+    }
+
+    private fun showNotice(text: String) {
+        laterPill = null
+        val n = FeedNotice(text = text)
+        notice = n
+        noticeJob?.cancel()
+        noticeJob = viewModelScope.launch { delay(AppMotion.NOTICE_MS); if (notice?.id == n.id) notice = null }
     }
 
     // Undo

@@ -24,4 +24,9 @@ data class AppSettingsData(
     val mediaPermissionAsked: Boolean = false,
     /** Android: Nutzer hat Mitteilungen ausdrücklich erlaubt (Opt-in wie iOS). */
     val notificationsOptIn: Boolean = false,
+    /**
+     * Favoriten schützen: Wisch nach links auf einen Systemfavoriten legt ihn nicht in den Papierkorb, sondern fragt
+     * nach. Standard AN (neu, vorher gab es kein Favoritenverhalten; siehe docs/PRODUCT_UX_AUDIT.md).
+     */
+    val protectFavorites: Boolean = true,
 )

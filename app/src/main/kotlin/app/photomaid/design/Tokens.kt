@@ -177,6 +177,8 @@ object AppMotion {
     const val HINT_FADE_MS = 600
     /** Länger als früher: „Ändern“ in der Pille ist der Weg zum eigenen Termin. */
     const val LATER_PILL_MS = 4_000L
+    /** Kurze Erfolgs-/Hinweispille im Feed (Favorit entfernt, verschoben). */
+    const val NOTICE_MS = 3_000L
 }
 
 val LocalPhotoMaidColors = staticCompositionLocalOf { PhotoMaidColors.resolve(dark = false, highContrast = false) }
