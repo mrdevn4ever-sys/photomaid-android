@@ -25,6 +25,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
+import app.photomaid.feature.review.ReviewFeedScreen
 import org.junit.runner.RunWith
 import org.robolectric.annotation.GraphicsMode
 
@@ -71,8 +72,38 @@ class AppFlowsTest {
     @Test fun permissionGrantedShowsPendingCount() {
         val app = makeTestApp(ctx)
         rule.setContent { TestHost(app) { TodayScreen(RecordingNav()) } }
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Elemente")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("warten auf eine Entscheidung").assertExists()
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Elemente warten auf deine Entscheidung")).fetchSemanticsNodes().isNotEmpty() }
+        // Noch keine Entscheidung getroffen → neue Prüfung (nicht „fortsetzen“).
+        rule.onNodeWithText("Aufräumen starten").assertExists()
+        rule.onNodeWithText("Prüfung starten").assertExists()
+    }
+
+    /** Zahl und Feed zählen dasselbe: „Prüfung starten“ öffnet den gemeinsamen Feed aller offenen Medien. */
+    @Test fun startReviewOpensSharedFeedWithSameCount() {
+        val app = makeTestApp(ctx) // 5 Fotos (inkl. 1 Screenshot) + 1 Video
+        val nav = RecordingNav()
+        rule.setContent { TestHost(app) { TodayScreen(nav) } }
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Elemente warten auf deine Entscheidung")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithText("Prüfung starten").performClick()
+        assertTrue(nav.events.last() == "feed:AllMedia")
+    }
+
+    @Test fun sharedFeedContainsPhotosScreenshotsAndVideos() {
+        val app = makeTestApp(ctx)
+        rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.AllMedia), RecordingNav(), onClose = {}, openBasket = {}) } }
+        rule.waitUntil(10_000) { rule.onAllNodes(hasText("1 von 6")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithText("Medien prüfen").assertExists()
+    }
+
+    @Test fun singularTexts() {
+        val res = ctx.resources
+        assertEquals("1 Element", res.getQuantityString(R.plurals.items_count, 1, 1))
+        assertEquals("15 Elemente", res.getQuantityString(R.plurals.items_count, 15, 15))
+        assertEquals("1 Element, noch nicht gelöscht", res.getQuantityString(R.plurals.hub_basket_sub, 1, 1))
+        assertEquals("2 Elemente, noch nicht gelöscht", res.getQuantityString(R.plurals.hub_basket_sub, 2, 2))
+        assertEquals("1 Medium wurde in den Papierkorb des Systems verschoben.", res.getQuantityString(R.plurals.result_media_trashed, 1, 1))
+        assertEquals("1 Kopie in den Papierkorb", res.getQuantityString(R.plurals.dup_move, 1, 1))
+        assertEquals("1 Element wartet auf deine Entscheidung", res.getQuantityString(R.plurals.today_pending_count, 1, 1))
     }
 
     @Test fun confirmCleanupTrashesReconcilesAndCountsAllowance() {
@@ -98,7 +129,7 @@ class AppFlowsTest {
             a.mark(ItemReference.photo(lib.all[0].id))
         }
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
-        rule.onNodeWithText("Papierkorb leeren: 1 Fotos/Videos").performClick()
+        rule.onNodeWithText("Papierkorb leeren: 1 Foto/Video").performClick()
         rule.onNodeWithText("1 über Android entfernen").performClick()
         rule.waitUntil(5_000) { rule.onAllNodes(hasText("Abgebrochen. Es wurde nichts entfernt.")).fetchSemanticsNodes().isNotEmpty() }
         assertEquals(15, app.available())
@@ -112,7 +143,7 @@ class AppFlowsTest {
         }
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
         rule.onAllNodes(androidx.compose.ui.test.hasContentDescription("Ausgewählt: Foto"))[0].performClick()
-        rule.onNodeWithText("Papierkorb leeren: 1 Fotos/Videos").performClick()
+        rule.onNodeWithText("Papierkorb leeren: 1 Foto/Video").performClick()
         rule.onNodeWithText("1 über Android entfernen").performClick()
         rule.waitForIdle()
         rule.waitUntil(5_000) { rule.waitForIdle(); app.read.value.basket.size == 1 }

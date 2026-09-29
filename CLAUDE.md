@@ -11,7 +11,7 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 | hoch | **Behalten** | nächstes Medium |
 | links | **Papierkorb** (PhotoMaid-eigen, nichts gelöscht) | nächstes Medium |
 | rechts (gerade oder schräg nach unten, ≤ 45°) | **Später** mit Standardtermin (Vorgabe 2 Tage) | nächstes Medium + Pille „In 2 Tagen wieder · Ändern“ |
-| schräg rechts oben (≈ 25°–50°) | **Später, Datum selbst wählen** | nächstes Medium + Drehrad; Abbrechen = Standardtermin |
+| schräg rechts oben (≈ 25°–50°) | **Datum selbst wählen** – Öffnen ist noch KEINE Entscheidung | Drehrad; Bestätigen = Später bis Datum + nächstes Medium; Abbrechen = nichts geändert, gleiches Medium (bewusste Abweichung von iOS, siehe `docs/PORTING_MATRIX.md`) |
 | runter | **Vorheriges Medium** (keine Entscheidung) | – |
 
 - Eine einzige Gesture-/Decision-State-Machine: `core/.../feed/FeedGestureMachine.kt`.

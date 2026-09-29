@@ -118,7 +118,7 @@ import kotlin.math.roundToInt
 /**
  * Vertikaler Entscheidungs-Feed (Screens 2 und 3).
  * HOCH = Behalten · LINKS = Papierkorb · RECHTS = Später (Standardtermin) ·
- * SCHRÄG RECHTS OBEN = Später mit Drehrad · RUNTER = Zurück.
+ * SCHRÄG RECHTS OBEN = Drehrad (erst Bestätigen entscheidet, Abbrechen ändert nichts) · RUNTER = Zurück.
  */
 @Composable
 fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBasket: () -> Unit) {
@@ -204,6 +204,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     MediaStage(model, reduceMotion, showHints, gesturesEnabled = !talkBack && zoom <= 1.01f, zoom = zoom,
                         onZoom = { zoom = it.coerceIn(1f, 5f) }, onZoomReset = { zoom = 1f }, hideHints = ::hideHints,
                         openBasket = openBasket, modifier = Modifier.weight(1f))
+                    MediaInfoLine(model.currentAsset, Modifier.padding(horizontal = AppSpacing.pageMargin))
                     Column(Modifier.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         if (needsButtons) CompactActions { model.perform(it, reduceMotion) }
                         ReviewDock(read.basket.size, Modifier.testTag("feed.dock"), onClick = openBasket)
@@ -230,6 +231,12 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
     }
     model.pickerReceipt?.let { receipt ->
         LaterPickerSheet(initial = model.defaultLaterInterval, today = model.today) { day -> model.pickerFinished(receipt, day) }
+    }
+    // Schräg rechts oben: Auswahl ist noch keine Entscheidung; Abbrechen lässt alles unverändert.
+    model.customLater?.let { req ->
+        androidx.compose.runtime.key(req.id) {
+            LaterPickerSheet(initial = model.defaultLaterInterval, today = model.today) { day -> model.customLaterFinished(req, day, reduceMotion) }
+        }
     }
 }
 
@@ -258,7 +265,7 @@ private fun MediaStage(
     BoxWithConstraints(
         modifier
             .fillMaxWidth()
-            .padding(horizontal = AppSpacing.pageMargin)
+            .padding(horizontal = AppSpacing.xs)
             .testTag("feed.stage")
             // Zugängliche Aktionen zusätzlich zu Gesten. Keine Scroll-Aktion (verhindert unbemerkte Entscheidungen).
             .semantics {

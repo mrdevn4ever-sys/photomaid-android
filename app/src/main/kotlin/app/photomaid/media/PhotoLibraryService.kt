@@ -87,6 +87,14 @@ object MediaPermissions {
 }
 
 /** Zugang zur Mediathek. Produktion: [PhotoLibraryService]; Tests/Previews: Fakes mit synthetischen Medien. */
+/**
+ * Alle prüfbaren Medien der Mediathek (Fotos inkl. Screenshots + Videos), neueste zuerst.
+ * Einzige Quelle für die Zahl auf „Heute“ UND den gemeinsamen Feed „Prüfung starten“ – beide zählen dasselbe.
+ */
+fun MediaLibrary.reviewableMedia(): List<MediaAsset> =
+    (assets(MediaCategory.PHOTOS) + assets(MediaCategory.VIDEOS)).distinctBy { it.id }
+        .sortedWith(compareByDescending<MediaAsset> { it.creationDate }.thenBy { it.id })
+
 interface MediaLibrary {
     val access: StateFlow<PhotoAccess>
     val changeToken: StateFlow<Int>

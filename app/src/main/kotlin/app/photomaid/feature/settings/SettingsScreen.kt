@@ -62,7 +62,7 @@ import app.photomaid.design.PlainButton
 import app.photomaid.design.RowDivider
 import app.photomaid.design.ScreenScaffold
 import app.photomaid.design.SourceRow
-import app.photomaid.design.SwipeTile
+import app.photomaid.design.GestureLegendRow
 import app.photomaid.design.clickableRow
 import app.photomaid.feature.common.NoticeDialog
 import app.photomaid.navigation.LocalApp
@@ -92,7 +92,7 @@ fun SettingsScreen(nav: Nav) {
             verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             ListSection {
                 SourceRow(Icons.Rounded.Shield, c.accent, stringResource(R.string.set_privacy), Modifier.clickableRow(onClick = nav::openPrivacy),
-                    detail = stringResource(R.string.set_privacy_detail))
+                    subtitle = stringResource(R.string.set_privacy_detail))
                 RowDivider()
                 // Android-Einstellungen der App-Mitteilungen (öffentliche, dokumentierte Intent-Aktion).
                 SourceRow(Icons.Rounded.Notifications, c.accent, stringResource(R.string.set_notifications), Modifier.clickableRow {
@@ -119,14 +119,14 @@ fun SettingsScreen(nav: Nav) {
                     AppearanceChoice.DARK to stringResource(R.string.appearance_dark),
                 ), settings.appearance) { v -> scope.launch { app.updateSettings { it.copy(appearance = v) } } }
             }
-            ListSection(header = stringResource(R.string.set_how_to_swipe), plain = true) {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                    SwipeTile(Icons.Rounded.ArrowUpward, stringResource(R.string.hint_up), stringResource(R.string.dir_keep), c.keep, Modifier.weight(1f))
-                    SwipeTile(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.hint_left), stringResource(R.string.dir_trash), c.cleanup, Modifier.weight(1f))
-                    SwipeTile(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.hint_right), stringResource(R.string.dir_later), c.later, Modifier.weight(1f))
-                    SwipeTile(Icons.Rounded.NorthEast, stringResource(R.string.hint_diag), stringResource(R.string.hint_date), c.later, Modifier.weight(1f))
-                    SwipeTile(Icons.Rounded.ArrowDownward, stringResource(R.string.hint_down), stringResource(R.string.dir_back), c.textSecondary, Modifier.weight(1f))
-                }
+            ListSection(header = stringResource(R.string.set_how_to_swipe)) {
+                val defaultLater = if (settings.laterDefaultDays == 1) stringResource(R.string.set_tomorrow) else stringResource(R.string.set_in_days, settings.laterDefaultDays)
+                GestureLegendRow(Icons.Rounded.ArrowUpward, stringResource(R.string.dir_keep), stringResource(R.string.hint_up), c.keep); RowDivider()
+                GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.dir_trash), stringResource(R.string.hint_left), c.cleanup); RowDivider()
+                GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.dir_later),
+                    stringResource(R.string.gesture_with_default, stringResource(R.string.hint_right), defaultLater), c.later); RowDivider()
+                GestureLegendRow(Icons.Rounded.NorthEast, stringResource(R.string.hint_date), stringResource(R.string.hint_diag), c.later); RowDivider()
+                GestureLegendRow(Icons.Rounded.ArrowDownward, stringResource(R.string.dir_back), stringResource(R.string.hint_down), c.textSecondary)
             }
             ListSection {
                 SourceRow(Icons.Rounded.WorkspacePremium, c.accent, stringResource(R.string.pro_title), Modifier.clickableRow(onClick = nav::openPro),

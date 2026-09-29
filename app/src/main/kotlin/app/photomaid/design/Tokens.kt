@@ -59,10 +59,11 @@ data class PhotoMaidColors(
                 return Color(0xFF000000 or hex).copy(alpha = alpha)
             }
             return PhotoMaidColors(
-                background = c(0xEEF5FD, 0x0B1626, 0xF6FAFF, 0x050B14),
-                backgroundTint = c(0xDCEAFB, 0x122540, 0xE8F1FC, 0x0A1628),
-                surface = c(0xFFFFFF, 0x15243A, 0xFFFFFF, 0x101C2E, 0.78f, 0.86f),
-                surfaceStroke = c(0xFFFFFF, 0x2A3E5C, 0x8FA6C4, 0x6C84A6, 0.9f, 0.9f),
+                // Neutraler Grund mit leichtem PhotoMaid-Blau; Flächen fast deckend und mit feiner Kontur statt weißer Kante.
+                background = c(0xF3F6FA, 0x0C1522, 0xF6FAFF, 0x050B14),
+                backgroundTint = c(0xE6EDF6, 0x111F33, 0xE8F1FC, 0x0A1628),
+                surface = c(0xFFFFFF, 0x16233A, 0xFFFFFF, 0x101C2E, 0.94f, 0.92f),
+                surfaceStroke = c(0xDDE5EF, 0x26374F, 0x8FA6C4, 0x6C84A6, 1f, 0.9f),
                 textPrimary = c(0x0F2747, 0xEAF2FF, 0x06152B, 0xFFFFFF),
                 textSecondary = c(0x4A6282, 0xA9BCD6, 0x2B3F5C, 0xD5E1F2),
                 glass = if (highContrast) c(0xFFFFFF, 0x15243A, 0xFFFFFF, 0x101C2E)
@@ -115,6 +116,8 @@ object AppRadii {
     val card = 22.dp
     val sheet = 28.dp
     val thumb = 10.dp
+    /** Medium im Feed: kleiner Radius, damit Ecken von Screenshots/Dokumenten kaum beschnitten werden. */
+    val media = 12.dp
 }
 
 /** Animationsdauern/-federn (iOS `AppMotion`). Reduce Motion → keine Kipp-/Flugeffekte. */

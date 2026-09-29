@@ -36,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -48,6 +49,7 @@ import app.photomaid.core.model.ItemProvider
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.DateText
+import app.photomaid.design.DayText
 import app.photomaid.design.GlassIconButton
 import app.photomaid.design.ListSection
 import app.photomaid.design.PM
@@ -73,7 +75,7 @@ fun HistoryScreen(nav: Nav) {
     val scope = rememberCoroutineScope()
     val read by app.read.collectAsState()
     var filter by rememberSaveable { mutableStateOf(HistoryFilter.ALL) }
-    val filtered = read.events.asReversed().filter { e ->
+    val filtered = read.events.filter { e ->
         when (filter) {
             HistoryFilter.ALL -> true
             HistoryFilter.KEPT -> e.to.disposition == Disposition.KEPT && e.kind != HistoryKind.UNDO
@@ -82,7 +84,9 @@ fun HistoryScreen(nav: Nav) {
         }
     }
     val zone = ZoneId.systemDefault()
-    val days = filtered.groupBy { it.at.atZone(zone).toLocalDate() }
+    // Darstellung: zusammengehörige Später+Termin-Paare als ein Vorgang; das Journal selbst bleibt unverändert.
+    val entries = groupHistory(filtered).asReversed()
+    val days = entries.groupBy { it.primary.at.atZone(zone).toLocalDate() }
     val keys = days.keys.sortedDescending().take(60)
 
     ScreenScaffold(stringResource(R.string.tab_history), onBack = null, actions = {
@@ -96,7 +100,7 @@ fun HistoryScreen(nav: Nav) {
             if (keys.isEmpty()) item { SurfaceCard { Text(stringResource(R.string.history_empty), style = AppTypography.body, color = c.textSecondary) } }
             items(keys, key = { it.toString() }) { day ->
                 val entries = days.getValue(day)
-                ListSection(header = stringResource(R.string.history_day_header,
+                ListSection(header = pluralStringResource(R.plurals.history_day_header, entries.size,
                     DateText.complete(day.atStartOfDay(zone).toInstant()), entries.size)) {
                     entries.take(300).forEachIndexed { i, e -> if (i > 0) RowDivider(); HistoryRow(e) }
                 }
@@ -107,15 +111,19 @@ fun HistoryScreen(nav: Nav) {
 }
 
 @Composable
-private fun HistoryRow(e: DecisionEvent) {
+private fun HistoryRow(entry: HistoryEntry) {
     val c = PM.colors
+    val e = entry.primary
     val (icon, tint, title) = describe(e, c)
+    // Termin des Vorgangs (zusammengefasster Termin oder ein eigenständig geänderter Termin).
+    val day = (entry.schedule ?: e.takeIf { it.kind == HistoryKind.SCHEDULE_CHANGED })?.to?.dueDay
+    val text = if (day != null) stringResource(R.string.history_with_day, stringResource(title), DayText.string(day)) else stringResource(title)
     Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).semantics(mergeDescendants = true) {}, verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
         if (e.item.provider == ItemProvider.PhotoLibrary) ThumbnailView(e.item.localIdentifier, 44.dp)
         Icon(icon, null, tint = tint, modifier = Modifier.size(24.dp))
-        Column {
-            Text(stringResource(title), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+        Column(Modifier.weight(1f)) {
+            Text(text, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
             Text(DateText.time(e.at), style = AppTypography.caption, color = c.textSecondary)
         }
     }

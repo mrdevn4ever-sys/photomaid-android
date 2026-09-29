@@ -6,13 +6,14 @@ Status nur: **MATCH** · **ANDROID PLATFORM ADAPTATION** · **BLOCKED BY PLATFOR
 
 | Feature | iOS | Android | Status | Notes |
 |---|---|---|---|---|
-| Gesten hoch/links/rechts/schräg/runter | `FeedGestureMachine` | `FeedGestureMachine.kt` (identische Schwellen in dp) | MATCH | 15 JVM-Tests + 11 Compose-Gestentests |
+| Gesten hoch/links/rechts/schräg/runter | `FeedGestureMachine` | `FeedGestureMachine.kt` (identische Schwellen in dp) | MATCH | 15 JVM-Tests + 12 Compose-Gestentests |
+| Ablauf schräg rechts oben | sofort „Später“ + nächstes Medium, danach Drehrad, Abbrechen = Standardtermin | erst Drehrad (keine Entscheidung), Bestätigen = Später bis Datum + nächstes Medium, Abbrechen = nichts geändert | DIFF (Produktentscheidung, iOS folgt) | `FeedFlowTest` ↗-Tests, `CustomLaterTest` (5) |
 | Totzonen, Hysterese, Flick, Suspendierung | ja | ja | MATCH | Zoom/TalkBack suspendieren |
 | Commit mit Item-ID/Revision/Command-ID | `FeedSession` | `FeedSession.kt` | MATCH | Callback A ≠ B getestet |
 | Keine Buttons im Feed, außer Bedienungshilfen | VoiceOver/Switch Control | TalkBack/Schaltersteuerung | ANDROID PLATFORM ADAPTATION | + Custom Accessibility Actions |
 | Gestenhilfe beim Öffnen, abwählbar | 2,6 s | 2,6 s | MATCH | |
 | Später-Pille „In 2 Tagen wieder · Ändern“ | 2,4 s | 2,4 s | MATCH | |
-| Drehrad Tage/Wochen/Monate + Kalender | SwiftUI Wheel + graphical DatePicker | `NumberPicker` + Material DatePicker | ANDROID PLATFORM ADAPTATION | Abbrechen/Wegwischen = Standardtermin |
+| Drehrad Tage/Wochen/Monate + Kalender | SwiftUI Wheel + graphical DatePicker | `NumberPicker` + Material DatePicker | ANDROID PLATFORM ADAPTATION | Abbrechen/Wegwischen = nichts geändert (Android) |
 | Undo (200, Revisionsschutz, Termin gehört zu Später) | `DecisionLedger` | `DecisionLedger.kt` | MATCH | |
 | Session-Zusammenfassung | ja | ja | MATCH | |
 | Papierkorb (PhotoMaid-eigen) | Liste + Swipe-Aktionen | Liste + „⋯“-Menü | ANDROID PLATFORM ADAPTATION | Abwahl bleibt erhalten (iOS-Befund 1) |

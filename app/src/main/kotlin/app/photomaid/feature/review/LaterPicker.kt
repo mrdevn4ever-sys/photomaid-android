@@ -60,7 +60,7 @@ private class FromToday(private val today: LocalDate) : SelectableDates {
 /**
  * Drehrad (iOS: Wheel-Picker wie beim Timer): „In [n] [Tagen | Wochen | Monaten]“, optional ein bestimmtes
  * Datum im Kalender. Android-nativ: `NumberPicker` (Rad) bzw. Material-Kalender.
- * Abbrechen oder Wegwischen = Standardtermin (ein Später hat immer einen Termin).
+ * Abbrechen, Zurück oder Wegwischen liefert `null` = nichts ändern (keine Entscheidung, kein Termin).
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.CameraAlt
+import androidx.compose.material.icons.rounded.Screenshot
 import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.rounded.GppGood
 import androidx.compose.material.icons.rounded.MoreHoriz
@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -119,7 +120,7 @@ fun LargeFilesScreen(nav: Nav) {
     ScreenScaffold(stringResource(R.string.large_files), onBack = nav::back) { mod ->
         LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             item {
-                MetricCard(SizeText.tally(ctx, SizeTally.of(known.map { it.size })), stringResource(R.string.large_in_files, known.size),
+                MetricCard(SizeText.tally(ctx, SizeTally.of(known.map { it.size })), pluralStringResource(R.plurals.large_in_files, known.size, known.size),
                     footnote = stringResource(R.string.large_footnote, settings.largeFileThresholdMB))
             }
             item {
@@ -234,9 +235,9 @@ fun StorageInsightsScreen(nav: Nav) {
                             Text(value, style = AppTypography.subheadline, color = c.textSecondary)
                         }
                     }
-                    fun v(cat: MediaCategory) = res.getString(R.string.storage_value_items, counts[cat] ?: 0, SizeText.tally(ctx, tallies[cat] ?: SizeTally()))
+                    fun v(cat: MediaCategory) = (counts[cat] ?: 0).let { n -> res.getQuantityString(R.plurals.storage_value_items, n, n, SizeText.tally(ctx, tallies[cat] ?: SizeTally())) }
                     row(Icons.Rounded.Photo, stringResource(R.string.cat_photos), v(MediaCategory.PHOTOS)); RowDivider()
-                    row(Icons.Rounded.CameraAlt, stringResource(R.string.storage_of_which_screens), v(MediaCategory.SCREENSHOTS)); RowDivider()
+                    row(Icons.Rounded.Screenshot, stringResource(R.string.storage_of_which_screens), v(MediaCategory.SCREENSHOTS)); RowDivider()
                     row(Icons.Rounded.Videocam, stringResource(R.string.cat_videos), v(MediaCategory.VIDEOS)); RowDivider()
                     row(Icons.Rounded.Folder, stringResource(R.string.storage_connected_folders), SizeText.tally(ctx, SizeTally.of(index.entries.map { it.size })))
                 }

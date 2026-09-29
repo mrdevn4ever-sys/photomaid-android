@@ -45,6 +45,8 @@ import app.photomaid.core.later.LaterGroup
 import app.photomaid.core.later.ReviewQueues
 import app.photomaid.core.model.ItemProvider
 import app.photomaid.core.model.ItemReference
+import app.photomaid.core.model.LocalDay
+import app.photomaid.core.model.MediaKind
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.DayText
@@ -76,9 +78,13 @@ fun LaterScreen(nav: Nav) {
     val groups = ReviewQueues.laterGroups(read.laterRecords, app.today)
     var editing by remember { mutableStateOf<ItemRecord?>(null) }
     var names by remember { mutableStateOf<Map<ItemReference, String>>(emptyMap()) }
+    var kinds by remember { mutableStateOf<Map<String, MediaKind>>(emptyMap()) }
     LaunchedEffect(read.laterRecords.size) {
-        names = withContext(Dispatchers.IO) {
-            read.laterRecords.filter { it.item.provider != ItemProvider.PhotoLibrary }.associate { it.item to app.sources.displayName(it.item) }
+        withContext(Dispatchers.IO) {
+            names = read.laterRecords.filter { it.item.provider != ItemProvider.PhotoLibrary }.associate { it.item to app.sources.displayName(it.item) }
+            // Typ (Foto/Video/Screenshot) aus derselben MediaStore-Abfrage wie die Vorschau – kein zusätzlicher Scan.
+            val ids = read.laterRecords.filter { it.item.provider == ItemProvider.PhotoLibrary }.map { it.item.localIdentifier }
+            kinds = if (ids.isEmpty()) emptyMap() else app.photos.assets(ids).associate { it.id to it.kind }
         }
     }
 
@@ -98,7 +104,7 @@ fun LaterScreen(nav: Nav) {
                 ListSection(header = header) {
                     records.forEachIndexed { i, r ->
                         if (i > 0) RowDivider()
-                        LaterRow(r, names[r.item], onEdit = { editing = r },
+                        LaterRow(r, names[r.item], kinds[r.item.localIdentifier], app.today, onEdit = { editing = r },
                             onReview = { nav.openFeed(FeedRequest(FeedRequest.Source.Items(listOf(r.item), R.string.later))) },
                             onRemove = { scope.launch { app.decide(r.item, DecisionAction.RemoveDeferral) } })
                     }
@@ -124,16 +130,32 @@ fun LaterScreen(nav: Nav) {
 }
 
 @Composable
-private fun LaterRow(r: ItemRecord, fileName: String?, onEdit: () -> Unit, onReview: () -> Unit, onRemove: () -> Unit) {
+private fun LaterRow(r: ItemRecord, fileName: String?, kind: MediaKind?, today: LocalDay, onEdit: () -> Unit, onReview: () -> Unit, onRemove: () -> Unit) {
     val c = PM.colors
     var menu by remember { mutableStateOf(false) }
     val isPhoto = r.item.provider == ItemProvider.PhotoLibrary
-    Row(Modifier.fillMaxWidth().heightIn(min = 64.dp_), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+    val title = stringResource(when {
+        !isPhoto -> R.string.file
+        kind == MediaKind.VIDEO -> R.string.video
+        kind == MediaKind.SCREENSHOT -> R.string.screenshot
+        kind != null -> R.string.photo
+        else -> R.string.medium // Medium nicht (mehr) lesbar: Typ unbekannt, nichts erfinden.
+    })
+    val day = r.dueDay
+    val when_ = when {
+        day == null -> stringResource(R.string.later_next_review)
+        day == today -> stringResource(R.string.later_due_today)
+        day < today -> stringResource(R.string.later_due_since, DayText.string(day))
+        else -> stringResource(R.string.later_review_on, DayText.string(day))
+    }
+    Row(Modifier.fillMaxWidth().heightIn(min = 64.dp_).padding(vertical = AppSpacing.xxs).semantics(mergeDescendants = true) {},
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
         ThumbnailView(if (isPhoto) r.item.localIdentifier else null)
-        Column(Modifier.weight(1f)) {
-            Text(if (isPhoto) stringResource(R.string.medium) else (fileName ?: r.item.localIdentifier.substringAfterLast('/')),
-                style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            r.dueDay?.let { Text(DayText.string(it), style = AppTypography.caption, color = c.textSecondary) }
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp_)) {
+            Text(title, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, maxLines = 1)
+            Text(when_, style = AppTypography.footnote, color = if (day != null && day <= today) c.later else c.textSecondary)
+            if (!isPhoto) Text(fileName ?: r.item.localIdentifier.substringAfterLast('/'), style = AppTypography.caption, color = c.textSecondary,
+                maxLines = 1, overflow = TextOverflow.MiddleEllipsis)
         }
         Box {
             val label = stringResource(R.string.actions)

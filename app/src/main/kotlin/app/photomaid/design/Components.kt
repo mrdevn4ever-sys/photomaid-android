@@ -282,6 +282,8 @@ fun SourceRow(
     value: String? = null,
     detail: String? = null,
     showChevron: Boolean = true,
+    /** Vorlesetext für einen knappen Wert (z. B. „6“ → „6 Elemente“). */
+    valueDescription: String? = null,
 ) {
     val c = PM.colors
     // Große Schrift (≥ 130 %): Werte unter den Titel statt daneben (iOS: Accessibility-Größen stapeln).
@@ -299,12 +301,15 @@ fun SourceRow(
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(title, style = AppTypography.headline, color = c.textPrimary)
             if (subtitle != null) Text(subtitle, style = AppTypography.caption, color = c.textSecondary)
-            if (stacked && trailing.isNotEmpty()) Text(trailing.joinToString(" "), style = AppTypography.caption, color = c.textSecondary)
+            // Gestapelt ist Platz für den ausgeschriebenen Wert („6 Elemente“ statt einer nackten Zahl).
+            if (stacked && trailing.isNotEmpty()) Text(valueDescription ?: trailing.joinToString(" "), style = AppTypography.caption, color = c.textSecondary)
         }
         // Detail begrenzt, damit der Titel auf schmalen Geräten nicht zerquetscht wird.
         if (!stacked && trailing.isNotEmpty()) {
             Column(Modifier.widthIn(max = 132.dp), horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+                if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary,
+                    textAlign = TextAlign.End, maxLines = 1,
+                    modifier = if (valueDescription != null) Modifier.semantics { contentDescription = valueDescription } else Modifier)
                 if (detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.End)
             }
         }
@@ -461,16 +466,24 @@ fun Badge(text: String, color: Color = PM.colors.warning) {
 fun Caption(text: String, modifier: Modifier = Modifier, color: Color = PM.colors.textSecondary, align: TextAlign? = null, style: TextStyle = AppTypography.caption) =
     Text(text, modifier = modifier, style = style, color = color, textAlign = align)
 
-/** Kachel der Gestenlegende (Einstellungen › So wischst du). */
+/**
+ * Zeile der Gestenlegende (Einstellungen › So wischst du): Bedeutung groß, Fingerbewegung darunter.
+ * Untereinander statt fünf gequetschter Kacheln – passt auf kleine Displays und bei großer Schrift.
+ */
 @Composable
-fun SwipeTile(icon: ImageVector, dir: String, meaning: String, tint: Color, modifier: Modifier = Modifier) {
+fun GestureLegendRow(icon: ImageVector, meaning: String, motion: String, tint: Color, modifier: Modifier = Modifier) {
     val c = PM.colors
-    Column(modifier.clearAndSetSemantics { contentDescription = "$dir: $meaning" }, horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Box(Modifier.size(48.dp).glassRect(AppRadii.small, 3.dp), contentAlignment = Alignment.Center) {
-            Icon(icon, null, tint = tint, modifier = Modifier.size(24.dp))
+    Row(
+        modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).padding(vertical = AppSpacing.xxs).clearAndSetSemantics { contentDescription = "$motion: $meaning" },
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s),
+    ) {
+        Box(Modifier.size(40.dp).clip(RoundedCornerShape(AppRadii.small)).background(tint.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
+            Icon(icon, null, tint = tint, modifier = Modifier.size(22.dp))
         }
-        Text(dir, style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, textAlign = TextAlign.Center)
-        Text(meaning, style = AppTypography.caption2, color = c.textSecondary, textAlign = TextAlign.Center, modifier = Modifier.widthIn(max = 72.dp))
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(meaning, style = AppTypography.headline, color = c.textPrimary)
+            Text(motion, style = AppTypography.footnote, color = c.textSecondary)
+        }
     }
 }
 

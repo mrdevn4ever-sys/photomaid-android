@@ -40,7 +40,14 @@ import java.time.Instant
  * Synthetische Mediathek für Tests und Screenshots (keine persönlichen Daten, nur generierte Bilder).
  * Entspricht den QA-Medien der iOS-Tests (`scripts/qa_media.swift`).
  */
-class FakeMediaLibrary(context: Context, count: Int = 5, access: PhotoAccess = PhotoAccess.AUTHORIZED, videos: Int = 1) : MediaLibrary {
+class FakeMediaLibrary(
+    context: Context,
+    count: Int = 5,
+    access: PhotoAccess = PhotoAccess.AUTHORIZED,
+    videos: Int = 1,
+    /** Aussagekräftige Motive (Hoch-/Querformat, Panorama, Text-Screenshot, Video) für visuelle Prüfungen. */
+    visual: Boolean = false,
+) : MediaLibrary {
     override val access = MutableStateFlow(access)
     override val changeToken = MutableStateFlow(0)
     val removed = mutableSetOf<String>()
@@ -48,6 +55,11 @@ class FakeMediaLibrary(context: Context, count: Int = 5, access: PhotoAccess = P
     val all: List<MediaAsset>
 
     init {
+        all = if (visual) VisualTestMedia.create(context) else simple(context, count, videos)
+    }
+
+    private fun simple(context: Context, count: Int, videos: Int): List<MediaAsset> {
+        val all: List<MediaAsset>
         val dir = File(context.cacheDir, "qa-media").apply { mkdirs() }
         val palette = listOf(0xFF7FB3F5, 0xFFF5B97F, 0xFF8FD6A4, 0xFFE58FB0, 0xFFB39DDB, 0xFF80CBC4, 0xFFFFE082).map { it.toInt() }
         val now = Instant.parse("2026-09-28T10:00:00Z")
@@ -70,6 +82,7 @@ class FakeMediaLibrary(context: Context, count: Int = 5, access: PhotoAccess = P
                 displayName = "QA_$i", isFavorite = false,
             )
         }
+        return all
     }
 
     private fun visible() = all.filter { it.id !in removed }

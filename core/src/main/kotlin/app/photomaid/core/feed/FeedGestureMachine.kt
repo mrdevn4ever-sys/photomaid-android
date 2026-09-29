@@ -22,7 +22,7 @@ enum class FeedIntent {
     /** rechts (gerade oder schräg nach unten): Später mit Standardtermin, danach nächstes Medium. */
     LATER,
 
-    /** schräg nach rechts oben: Später, Termin selbst wählen (Drehrad), danach nächstes Medium. */
+    /** schräg nach rechts oben: Termin selbst wählen. Die App öffnet erst die Auswahl; erst Bestätigen = Später + nächstes Medium. */
     LATER_CUSTOM,
 
     /** runter: vorheriges Medium. Keine Entscheidung. */

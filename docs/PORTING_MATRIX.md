@@ -91,7 +91,8 @@ Alle 74 Swift-Testfunktionen werden als JUnit-Tests portiert (`core/src/test`).
 
 - Gesten (tatsächliche Fingerbewegung): hoch = Behalten · links = Papierkorb · rechts (gerade/schräg unten ≤ 45°)
   = Später mit Standardtermin (Vorgabe 2 Tage, 1/2/3/7) + Pille „In 2 Tagen wieder · Ändern“ ·
-  schräg rechts oben (≈25°–50°) = Später mit Drehrad · runter = vorheriges Medium (keine Entscheidung).
+  schräg rechts oben (≈25°–50°) = Drehrad öffnen (noch keine Entscheidung; Bestätigen = Später bis Datum + nächstes Medium,
+  Abbrechen = nichts geändert) · runter = vorheriges Medium (keine Entscheidung).
   Totzonen dazwischen. Schwellen: deadZone 14, lockRatio 1,6, unlock 6, commit 110, flick 650/s ab 36 (dp).
 - Keine Aktions-Buttons im Feed, außer bei TalkBack/Schaltersteuerung (iOS: VoiceOver/Switch Control).
   Gestenhilfe blendet beim Öffnen 2,6 s ein (abwählbar). Rückgängig in der Kopfzeile.
@@ -135,10 +136,12 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 |---|---|---|
 | Wischaktionen in Listen (iOS `swipeActions`, ohne Vollwisch) | Sichtbares „⋯“-Aktionsmenü je Zeile (Papierkorb, Später, Dateien, Große Dateien) bzw. sichtbare Buttons (Quellen, Regeln) | Android-Listen haben keine Standard-Wischaktionen; Menü ist zugänglicher und verhindert versehentliche Aktionen |
 | Drehrad | `android.widget.NumberPicker` (natives Rad), Kalender = Material-DatePicker | nativ |
-| Wegwischen des Drehrad-Sheets | wie „Abbrechen“ → Standardtermin | iOS sperrt das Wegwischen (`interactiveDismissDisabled`); Ergebnis identisch |
+| Wegwischen des Drehrad-Sheets | wie „Abbrechen“ → nichts geändert | iOS sperrt das Wegwischen (`interactiveDismissDisabled`) |
+| Ablauf schräg rechts oben | **Abweichung von iOS (Produktentscheidung des Nutzers, 2026-09-29):** Öffnen des Drehrads ist keine Entscheidung; erst Bestätigen speichert „Später bis Datum“ (Later + Schedule mit `amends`, ein Undo) und blättert weiter; Abbrechen/Zurück/Wegwischen ändert nichts. Bindung an Item + Revision beim Öffnen. | iOS speichert sofort „Später“ und setzt beim Abbrechen den Standardtermin – versehentliches Treffen der Diagonale erzeugte eine Entscheidung. iOS wird nachgezogen. |
 | Hash-Cache (Masterprompt §22) | **kein** persistenter Hash-Cache | iOS hält SHA-256 nur im Speicher (Datenschutzkarte); Teilhash + Größenfilter begrenzen den Aufwand |
 | Reduce Motion | „Animationen entfernen“ (`ANIMATOR_DURATION_SCALE = 0`) | Android-Äquivalent |
 | Erhöhter Kontrast | Android 14+ `UiModeManager.contrast ≥ 0,5` | Android-Äquivalent |
+| UI-Polish (Auftrag „Gezielter UI-Polish“, nur Android) | Heute: Review-Karte zuerst mit Hauptaktion, Zähler als Zahl + Plural; Feed ohne weiße Karte, Rahmen im Seitenverhältnis, Infozeile; Später mit Medientyp/Termin; Verlauf fasst Später + ersten Termin zusammen; Pro mit drei echten Kernvorteilen; Gestenlegende als Liste | ausdrücklicher Auftrag des Nutzers; Verhalten, Gesten und Datenmodell unverändert. Details: `docs/ANDROID_UI_POLISH_REPORT.md` |
 
 ## 7. Blocker / Plattformgrenzen
 

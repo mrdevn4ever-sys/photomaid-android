@@ -1,5 +1,18 @@
 package app.photomaid.feature.pro
 
+import app.photomaid.design.clickableRow
+import app.photomaid.design.ListSection
+import app.photomaid.design.AppRadii
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material.icons.rounded.ExpandLess
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.FilterNone
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,11 +27,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AllInclusive
-import androidx.compose.material.icons.rounded.Block
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.HourglassTop
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.SettingsSuggest
 import androidx.compose.material.icons.rounded.Timer
 import androidx.compose.material.icons.rounded.Verified
@@ -56,7 +65,6 @@ import app.photomaid.design.GlassButton
 import app.photomaid.design.PM
 import app.photomaid.design.ProminentButton
 import app.photomaid.design.SurfaceCard
-import app.photomaid.design.glassRect
 import app.photomaid.feature.common.NoticeDialog
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
@@ -94,19 +102,22 @@ fun ProScreen(nav: Nav) {
             }
             Column(Modifier.padding(horizontal = AppSpacing.pageMargin), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
-                Box(Modifier.glassRect().padding(AppSpacing.l)) { Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(48.dp)) }
-                Text(stringResource(R.string.pro_title), style = AppTypography.largeTitle, color = c.textPrimary)
-                Text(stringResource(R.string.pro_subtitle), style = AppTypography.subheadline, color = c.textSecondary)
+                Box(Modifier.size(80.dp).clip(RoundedCornerShape(AppRadii.card)).background(c.accent.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
+                    Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(44.dp))
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
+                    Text(stringResource(R.string.pro_title), style = AppTypography.largeTitle, color = c.textPrimary, textAlign = TextAlign.Center)
+                    Text(stringResource(R.string.pro_subtitle), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
+                }
+                // Drei tatsächlich freigeschaltete Kernvorteile (Capabilities: Limit, Duplikate, dauerhafte Routinen).
                 SurfaceCard {
                     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-                        Feature(Icons.Rounded.AllInclusive, R.string.pro_f1, R.string.pro_f1d)
-                        Feature(Icons.Rounded.Delete, R.string.pro_f2, R.string.pro_f2d)
-                        Feature(Icons.Rounded.Search, R.string.pro_f3, R.string.pro_f3d)
-                        Feature(Icons.Rounded.GridView, R.string.pro_f4, R.string.pro_f4d)
+                        Feature(Icons.Rounded.AllInclusive, R.string.pro_f2, R.string.pro_f2d)
+                        Feature(Icons.Rounded.FilterNone, R.string.pro_f3, R.string.pro_f3d)
                         Feature(Icons.Rounded.SettingsSuggest, R.string.pro_f5, R.string.pro_f5d)
-                        Feature(Icons.Rounded.Block, R.string.pro_f6, R.string.pro_f6d)
                     }
                 }
+                Text(stringResource(R.string.pro_also), style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
                 // Kaufbereich
                 when (state) {
                     PurchaseState.PURCHASED -> Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
@@ -138,9 +149,13 @@ fun ProScreen(nav: Nav) {
                                 }
                             }
                         } else {
-                            // Ohne echte Storekonfiguration kein erfundener Preis und kein toter Button.
-                            Text(stringResource(if (purchases.isConfigured) R.string.pro_price_loading else R.string.pro_unavailable),
-                                style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
+                            // Ohne echte Storekonfiguration kein erfundener Preis und kein toter Button: nur ein kompakter Status.
+                            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(AppRadii.small)).background(c.backgroundTint).padding(AppSpacing.s),
+                                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                                Icon(if (purchases.isConfigured) Icons.Rounded.HourglassTop else Icons.Rounded.Info, null, tint = c.textSecondary)
+                                Text(stringResource(if (purchases.isConfigured) R.string.pro_price_loading else R.string.pro_unavailable),
+                                    style = AppTypography.subheadline, color = c.textPrimary)
+                            }
                         }
                         if (purchases.isConfigured) GlassButton(stringResource(R.string.pro_restore), enabled = !busy) {
                             scope.launch {
@@ -163,22 +178,42 @@ fun ProScreen(nav: Nav) {
                         }
                     }
                 } else if (state != PurchaseState.PURCHASED) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                        GlassButton(stringResource(R.string.pro_reward_cta), fillWidth = true, enabled = app.entitlements.canOfferReward && !busy) {
-                            scope.launch {
-                                busy = true
-                                message = when (app.entitlements.watchRewardedAd { app.player.stop() }) {
-                                    is RewardedAdResult.Rewarded -> res.getString(R.string.pro_msg_rewarded)
-                                    RewardedAdResult.DismissedWithoutReward -> res.getString(R.string.pro_msg_dismissed)
-                                    RewardedAdResult.NoFill -> res.getString(R.string.pro_msg_nofill)
-                                    is RewardedAdResult.Failed, RewardedAdResult.NotConfigured -> res.getString(R.string.pro_msg_ad_unavailable)
+                    // Nachgeordnet: freiwillige Vorschau. Ohne Werbeanbieter nur ein Satz, kein deaktivierter Button.
+                    ListSection(header = stringResource(R.string.pro_preview_header)) {
+                        Column(Modifier.padding(vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                            if (!app.entitlements.ads.isConfigured) {
+                                Text(stringResource(R.string.pro_reward_unavailable), style = AppTypography.footnote, color = c.textSecondary)
+                            } else {
+                                Text(stringResource(R.string.pro_reward_sub), style = AppTypography.footnote, color = c.textSecondary)
+                                GlassButton(stringResource(R.string.pro_reward_cta), fillWidth = true, enabled = app.entitlements.canOfferReward && !busy) {
+                                    scope.launch {
+                                        busy = true
+                                        message = when (app.entitlements.watchRewardedAd { app.player.stop() }) {
+                                            is RewardedAdResult.Rewarded -> res.getString(R.string.pro_msg_rewarded)
+                                            RewardedAdResult.DismissedWithoutReward -> res.getString(R.string.pro_msg_dismissed)
+                                            RewardedAdResult.NoFill -> res.getString(R.string.pro_msg_nofill)
+                                            is RewardedAdResult.Failed, RewardedAdResult.NotConfigured -> res.getString(R.string.pro_msg_ad_unavailable)
+                                        }
+                                        busy = false
+                                    }
                                 }
-                                busy = false
+                                Text(stringResource(R.string.pro_reward_limit), style = AppTypography.caption, color = c.textSecondary)
                             }
                         }
-                        Text(stringResource(R.string.pro_reward_sub), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
-                        if (!app.entitlements.ads.isConfigured) Text(stringResource(R.string.pro_reward_unavailable), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
-                        Text(stringResource(R.string.pro_reward_limit), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+                    }
+                }
+                // Technische Einzelheiten nachgeordnet und aufklappbar.
+                var details by rememberSaveable { mutableStateOf(false) }
+                val detailState = stringResource(if (details) R.string.expanded else R.string.collapsed)
+                ListSection {
+                    Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clickableRow { details = !details }
+                        .semantics { stateDescription = detailState }, verticalAlignment = Alignment.CenterVertically) {
+                        Text(stringResource(R.string.pro_details), style = AppTypography.body, color = c.textPrimary, modifier = Modifier.weight(1f))
+                        Icon(if (details) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore, null, tint = c.textSecondary)
+                    }
+                    if (details) Column(Modifier.padding(bottom = AppSpacing.s), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                        for (t in listOf(R.string.pro_details_cleanup, R.string.pro_details_dup, R.string.pro_details_rules))
+                            Text(stringResource(t), style = AppTypography.footnote, color = c.textSecondary)
                     }
                 }
                 Text(stringResource(R.string.pro_privacy), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)

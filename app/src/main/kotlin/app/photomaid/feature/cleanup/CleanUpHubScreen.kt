@@ -12,7 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BarChart
-import androidx.compose.material.icons.rounded.CameraAlt
+import androidx.compose.material.icons.rounded.Screenshot
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.FilterNone
@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import app.photomaid.FeedRequest
 import app.photomaid.R
@@ -83,7 +84,7 @@ fun CleanUpHubScreen(nav: Nav) {
                     SurfaceCard(Modifier.alpha(if (enabled) 1f else 0.45f).testTag("hub.${cat.name.lowercase()}"),
                         onClick = if (enabled) ({ nav.openFeed(FeedRequest(FeedRequest.Source.Category(cat))) }) else null) {
                         SourceRow(icon, c.accent, stringResource(title), subtitle = stringResource(sub), value = counts[cat]?.toString(),
-                            detail = stringResource(R.string.items_suffix))
+                            valueDescription = counts[cat]?.let { pluralStringResource(R.plurals.items_count, it, it) })
                     }
                 }
                 @Composable
@@ -93,7 +94,7 @@ fun CleanUpHubScreen(nav: Nav) {
                 if (filter != HubFilter.FILES) {
                     media(MediaCategory.PHOTOS, Icons.Rounded.Photo, R.string.cat_photos, R.string.hub_photos_sub)
                     media(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos, R.string.hub_videos_sub)
-                    media(MediaCategory.SCREENSHOTS, Icons.Rounded.CameraAlt, R.string.cat_screenshots, R.string.hub_screens_sub)
+                    media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots, R.string.hub_screens_sub)
                 }
                 if (filter != HubFilter.MEDIA) {
                     link("files", Icons.Rounded.Download, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads),
@@ -102,7 +103,7 @@ fun CleanUpHubScreen(nav: Nav) {
                 link("large", Icons.Rounded.InsertDriveFile, stringResource(R.string.large_files), stringResource(R.string.hub_large_sub), Routes.LARGE)
                 link("duplicates", Icons.Rounded.FilterNone, stringResource(R.string.duplicates), stringResource(R.string.hub_dup_sub), Routes.DUPLICATES)
                 link("storage", Icons.Rounded.BarChart, stringResource(R.string.storage_overview), stringResource(R.string.hub_storage_sub), Routes.STORAGE)
-                link("basket", Icons.Rounded.Delete, stringResource(R.string.basket), stringResource(R.string.hub_basket_sub, read.basket.size), Routes.BASKET)
+                link("basket", Icons.Rounded.Delete, stringResource(R.string.basket), pluralStringResource(R.plurals.hub_basket_sub, read.basket.size, read.basket.size), Routes.BASKET)
             }
             Spacer(Modifier.height(TabBarClearance))
         }
