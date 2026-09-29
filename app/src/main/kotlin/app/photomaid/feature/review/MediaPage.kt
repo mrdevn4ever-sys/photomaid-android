@@ -41,6 +41,8 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.media3.ui.compose.PlayerSurface
 import androidx.media3.ui.compose.SURFACE_TYPE_SURFACE_VIEW
@@ -53,6 +55,7 @@ import app.photomaid.design.DateText
 import app.photomaid.design.GlassButton
 import app.photomaid.design.LocalReduceMotion
 import app.photomaid.design.PM
+import app.photomaid.design.SizeText
 import app.photomaid.design.glassCapsule
 import app.photomaid.media.MediaAsset
 import app.photomaid.navigation.LocalApp
@@ -86,7 +89,11 @@ fun PrefetchImage(asset: MediaAsset, px: Pair<Int, Int>, onResult: (Boolean) -> 
     LaunchedEffect(asset.id, px) { onResult(ctx.imageLoader.execute(req) is SuccessResult) }
 }
 
-/** Ein Medium pro Seite. Vollständiges Motiv (Fit), kein Stretching. */
+/**
+ * Ein Medium pro Seite. Das Original steht vollständig im Mittelpunkt: Rahmen exakt im Seitenverhältnis
+ * des Mediums (Fit, nie Fill, kein Beschnitt), Fotos und Videos nach derselben Geometrie. Die freie Fläche
+ * daneben bleibt ruhiger App-Hintergrund statt weißer Karte.
+ */
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
 fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onResult: (Boolean) -> Unit, skip: () -> Unit, zoomed: Boolean) {
@@ -95,19 +102,27 @@ fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onRe
     val player by app.player.state.collectAsState()
     val kind = stringResource(when (asset.kind) { MediaKind.VIDEO -> R.string.video; MediaKind.SCREENSHOT -> R.string.screenshot; else -> R.string.photo })
     val description = asset.creationDate?.let { stringResource(R.string.a11y_kind_date, kind, DateText.long(it)) } ?: kind
-    BoxWithConstraints(Modifier.fillMaxSize().clip(RoundedCornerShape(AppRadii.sheet)).background(c.surface)
+    BoxWithConstraints(Modifier.fillMaxSize()
         .testTag(if (preview == PreviewState.READY) "feed.media.ready" else "feed.media")
-        .semantics { contentDescription = description }) {
-        val active = asset.kind == MediaKind.VIDEO && player.itemID == asset.id
-        if (active && app.player.player != null) {
-            PlayerSurface(app.player.player, Modifier.align(Alignment.Center).fillMaxWidth().aspectRatio(asset.aspectRatio, matchHeightConstraintsFirst = asset.aspectRatio < maxWidth / maxHeight),
-                surfaceType = SURFACE_TYPE_SURFACE_VIEW)
-        } else {
-            AsyncImage(
-                model = previewRequest(asset, px), contentDescription = null, contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxSize().clearAndSetSemantics {},
-                onSuccess = { onResult(true) }, onError = { onResult(false) },
-            )
+        .semantics { contentDescription = description }, contentAlignment = Alignment.Center) {
+        val knownRatio = asset.pixelWidth > 0 && asset.pixelHeight > 0
+        val ratio = asset.aspectRatio
+        val shape = RoundedCornerShape(AppRadii.media)
+        val tall = ratio < maxWidth / maxHeight
+        val frame = if (knownRatio) Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = tall) else Modifier.fillMaxSize()
+        Box(frame.clip(shape).background(if (knownRatio) c.backgroundTint else Color.Transparent).testTag("feed.media.frame")) {
+            val active = asset.kind == MediaKind.VIDEO && player.itemID == asset.id
+            if (active && app.player.player != null) {
+                // Ohne bekannte Maße wie bisher: Player in sein Seitenverhältnis einpassen, nie strecken.
+                PlayerSurface(app.player.player, if (knownRatio) Modifier.fillMaxSize() else Modifier.align(Alignment.Center).fillMaxWidth()
+                    .aspectRatio(ratio, matchHeightConstraintsFirst = tall), surfaceType = SURFACE_TYPE_SURFACE_VIEW)
+            } else {
+                AsyncImage(
+                    model = previewRequest(asset, px), contentDescription = null, contentScale = ContentScale.Fit,
+                    modifier = Modifier.fillMaxSize().clearAndSetSemantics {},
+                    onSuccess = { onResult(true) }, onError = { onResult(false) },
+                )
+            }
         }
         when (preview) {
             PreviewState.LOADING -> CircularProgressIndicator(Modifier.align(Alignment.Center))
@@ -120,6 +135,21 @@ fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onRe
             PreviewState.READY -> if (asset.kind == MediaKind.VIDEO && !zoomed) VideoOverlay(asset)
         }
     }
+}
+
+/**
+ * Dezente Infozeile unter dem Medium: Datum · Dateigröße · (Video) Dauer. Nur Werte, die MediaStore ohnehin
+ * liefert; unbekannte Größe wird weggelassen (nie „0 B“). Verdeckt weder Medium noch Bedienelemente.
+ */
+@Composable
+fun MediaInfoLine(asset: MediaAsset?, modifier: Modifier = Modifier) {
+    val parts = if (asset == null) emptyList() else listOfNotNull(
+        asset.creationDate?.let { DateText.long(it) },
+        asset.size.bytesOrNull?.let { SizeText.bytes(it) },
+        if (asset.kind == MediaKind.VIDEO && asset.duration > 0) DateText.duration(asset.duration) else null,
+    )
+    Text(parts.joinToString(" · "), style = AppTypography.footnote, color = PM.colors.textSecondary, maxLines = 1,
+        overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = modifier.fillMaxWidth().testTag("feed.info"))
 }
 
 /** Video-Steuerung in eigener Control-Zone (Slider verbraucht seine Bewegung → keine Entscheidungsgeste). */

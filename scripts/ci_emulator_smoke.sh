@@ -53,11 +53,11 @@ adb shell am start -W -n "$PKG/app.photomaid.MainActivity" --ez qa-fixtures true
 wait_text "Deine Privatsphäre zuerst" 40
 shot 01_onboarding
 tap_text "Weiter"
-wait_text "warten auf eine Entscheidung" 30
+wait_text "auf deine Entscheidung" 30
 shot 02_today
 check_crash
 
-tap_text "warten auf eine Entscheidung"
+tap_text "Prüfung starten"
 wait_text "Fotos prüfen" 20
 sleep 2
 shot 03_feed

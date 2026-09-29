@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.CameraAlt
+import androidx.compose.material.icons.rounded.Screenshot
 import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.rounded.GppGood
 import androidx.compose.material.icons.rounded.MoreHoriz
@@ -236,7 +236,7 @@ fun StorageInsightsScreen(nav: Nav) {
                     }
                     fun v(cat: MediaCategory) = res.getString(R.string.storage_value_items, counts[cat] ?: 0, SizeText.tally(ctx, tallies[cat] ?: SizeTally()))
                     row(Icons.Rounded.Photo, stringResource(R.string.cat_photos), v(MediaCategory.PHOTOS)); RowDivider()
-                    row(Icons.Rounded.CameraAlt, stringResource(R.string.storage_of_which_screens), v(MediaCategory.SCREENSHOTS)); RowDivider()
+                    row(Icons.Rounded.Screenshot, stringResource(R.string.storage_of_which_screens), v(MediaCategory.SCREENSHOTS)); RowDivider()
                     row(Icons.Rounded.Videocam, stringResource(R.string.cat_videos), v(MediaCategory.VIDEOS)); RowDivider()
                     row(Icons.Rounded.Folder, stringResource(R.string.storage_connected_folders), SizeText.tally(ctx, SizeTally.of(index.entries.map { it.size })))
                 }

@@ -71,8 +71,10 @@ class AppFlowsTest {
     @Test fun permissionGrantedShowsPendingCount() {
         val app = makeTestApp(ctx)
         rule.setContent { TestHost(app) { TodayScreen(RecordingNav()) } }
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Elemente")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("warten auf eine Entscheidung").assertExists()
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("6 Elemente warten auf deine Entscheidung")).fetchSemanticsNodes().isNotEmpty() }
+        // Noch keine Entscheidung getroffen → neue Prüfung (nicht „fortsetzen“).
+        rule.onNodeWithText("Aufräumen starten").assertExists()
+        rule.onNodeWithText("Prüfung starten").assertExists()
     }
 
     @Test fun confirmCleanupTrashesReconcilesAndCountsAllowance() {

@@ -57,7 +57,7 @@ class ScreenshotTest {
     private lateinit var lib: FakeMediaLibrary
 
     private fun seededApp(dark: Boolean = false, pro: Boolean = false) = makeTestApp(ctx,
-        media = { FakeMediaLibrary(it, count = 6, videos = 2).also { l -> lib = l } },
+        media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
         purchase = if (pro) FakePurchaseGateway(PurchaseState.PURCHASED) else null) { a ->
         if (dark) a.updateSettings { it.copy(appearance = AppearanceChoice.DARK) }
         val s = ReviewSessionID()
@@ -115,6 +115,20 @@ class ScreenshotTest {
     @Test fun s14_pro_active() = seededApp(pro = true).let { shot("14_pro_active", it) { ProScreen(nav) } }
     @Test fun s15_settings() = seededApp().let { shot("15_settings", it) { SettingsScreen(nav) } }
     @Test fun s15_settings_dark() = seededApp(dark = true).let { shot("15_settings_dark", it) { SettingsScreen(nav) } }
+
+    // Medien-Geometrie im Feed (UI-Polish §7/§8): jedes Format vollständig, ohne Beschnitt, gleiche Logik für Foto/Video.
+    private fun feedOf(i: Int, name: String, title: Int = R.string.feed_title_photos, reduceMotion: Boolean = false) = seededApp().let {
+        val ref = ItemReference.photo(lib.all[i].id)
+        shot(name, it, reduceMotion = reduceMotion, waitTag = "feed.media.ready") {
+            ReviewFeedScreen(FeedRequest(FeedRequest.Source.Items(listOf(ref), title)), nav, {}, {})
+        }
+    }
+    @Test fun g01_feed_portrait() = feedOf(0, "g01_feed_portrait")
+    @Test fun g02_feed_landscape() = feedOf(1, "g02_feed_landscape")
+    @Test fun g03_feed_panorama() = feedOf(3, "g03_feed_panorama")
+    @Test fun g04_feed_screenshot_text() = feedOf(2, "g04_feed_screenshot_text", R.string.feed_title_screenshots)
+    @Test fun g05_feed_video_landscape() = feedOf(6, "g05_feed_video_landscape", R.string.feed_title_videos, reduceMotion = true)
+    @Test fun g06_feed_video_portrait() = feedOf(7, "g06_feed_video_portrait", R.string.feed_title_videos, reduceMotion = true)
 
     // Gerätematrix (Masterprompt §17/§45): kleines Telefon, Fold außen/innen, 8"/11"-Tablet, Schriftgröße.
     @Test @Config(qualifiers = "w320dp-h568dp-xhdpi") fun m_small_phone_feed() = seededApp().let {

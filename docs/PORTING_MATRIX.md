@@ -139,6 +139,7 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Hash-Cache (Masterprompt §22) | **kein** persistenter Hash-Cache | iOS hält SHA-256 nur im Speicher (Datenschutzkarte); Teilhash + Größenfilter begrenzen den Aufwand |
 | Reduce Motion | „Animationen entfernen“ (`ANIMATOR_DURATION_SCALE = 0`) | Android-Äquivalent |
 | Erhöhter Kontrast | Android 14+ `UiModeManager.contrast ≥ 0,5` | Android-Äquivalent |
+| UI-Polish (Auftrag „Gezielter UI-Polish“, nur Android) | Heute: Review-Karte zuerst mit Hauptaktion, Zähler als Zahl + Plural; Feed ohne weiße Karte, Rahmen im Seitenverhältnis, Infozeile; Später mit Medientyp/Termin; Verlauf fasst Später + ersten Termin zusammen; Pro mit drei echten Kernvorteilen; Gestenlegende als Liste | ausdrücklicher Auftrag des Nutzers; Verhalten, Gesten und Datenmodell unverändert. Details: `docs/ANDROID_UI_POLISH_REPORT.md` |
 
 ## 7. Blocker / Plattformgrenzen
 
