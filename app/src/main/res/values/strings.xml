@@ -397,19 +397,18 @@
 
     <!-- Pro -->
     <string name="pro_title">PhotoMaid Pro</string>
-    <string name="pro_subtitle">Mehr Kontrolle, keine laufenden Kosten. Einmalkauf, kein Abo.</string>
+    <string name="pro_subtitle">Einmal kaufen, für immer nutzen. Kein Abo.</string>
     <string name="pro_f2">Ohne Tageslimit aufräumen</string>
     <string name="pro_f2d">Leere den Papierkorb so oft du willst – ohne das Limit von 15 pro Tag.</string>
     <string name="pro_f3">Identische Kopien finden</string>
     <string name="pro_f3d">Exakt gleiche Fotos, Videos und Dateien aus verbundenen Ordnern.</string>
     <string name="pro_f5">Eigene Sammlungen</string>
     <string name="pro_f5d">Lege eigene Filter an, zum Beispiel „Videos größer als 500 MB“ – jederzeit mit einem Tipp prüfbar.</string>
-    <string name="pro_also">Außerdem: keine Werbeangebote.</string>
+    <string name="pro_also">Keine Werbung, kein Konto, alles bleibt auf deinem Gerät.</string>
     <string name="pro_details">So funktioniert Pro</string>
     <string name="pro_details_dup">Kopien: Verglichen wird der Dateiinhalt (SHA-256) auf deinem Gerät. Ähnlich aussehende Bilder gelten nicht als Kopie.</string>
     <string name="pro_details_rules">Sammlungen: Sie filtern nur, was schon auf deinem Gerät ist, und öffnen den Feed. Es läuft nichts im Hintergrund und es wird nichts automatisch gelöscht.</string>
     <string name="pro_details_cleanup">Tageslimit: Gezählt wird nur, was du im Papierkorb bestätigt entfernst – nicht das Wischen.</string>
-    <string name="pro_preview_header">Pro-Vorschau</string>
     <string name="expanded">Ausgeklappt</string>
     <string name="collapsed">Eingeklappt</string>
     <string name="pro_privacy">Analyse und Sortierung erfolgen auf deinem Gerät. Für Kauf und Werbung werden technische Daten an Google bzw. den Werbeanbieter übertragen – keine Fotos, Dateinamen oder Hashes.</string>
@@ -421,20 +420,15 @@
     <string name="pro_unavailable">Käufe sind in dieser Version noch nicht verfügbar.</string>
     <string name="pro_restore">Käufe wiederherstellen</string>
     <string name="pro_revoked">Ein früherer Kauf wurde erstattet oder widerrufen.</string>
-    <string name="pro_preview_active">Pro-Vorschau aktiv: noch %1$d Min.</string>
-    <string name="pro_reward_cta">Pro mit einer Werbe-Vorschau testen</string>
-    <string name="pro_reward_sub">Freiwillig: 30 Minuten Pro-Werkzeuge, einmal pro Tag.</string>
-    <string name="pro_reward_unavailable">Freiwillig 30 Minuten Pro-Werkzeuge nach einer Werbung, einmal pro Tag – in dieser Version noch nicht verfügbar.</string>
-    <string name="pro_reward_limit">Das Tageslimit von 15 Bereinigungen bleibt auch in der Vorschau bestehen.</string>
     <string name="pro_msg_active">PhotoMaid Pro ist jetzt aktiv.</string>
     <string name="pro_msg_pending">Der Kauf ist ausstehend. Pro wird aktiv, sobald er genehmigt ist.</string>
     <string name="pro_msg_failed">Der Kauf konnte nicht abgeschlossen werden.</string>
     <string name="pro_msg_restored">Dein Kauf wurde wiederhergestellt.</string>
     <string name="pro_msg_nothing">Es wurde kein Kauf zum Wiederherstellen gefunden.</string>
-    <string name="pro_msg_rewarded">Pro-Vorschau für 30 Minuten aktiv.</string>
-    <string name="pro_msg_dismissed">Die Anzeige wurde vorzeitig geschlossen. Es wurde nichts freigeschaltet.</string>
-    <string name="pro_msg_nofill">Gerade ist keine Anzeige verfügbar.</string>
-    <string name="pro_msg_ad_unavailable">Die Werbe-Vorschau ist gerade nicht verfügbar.</string>
+    <string name="pro_msg_rewarded">Pro-Test aktiv: 30 Minuten Pro-Werkzeuge. Dein tägliches Papierkorb-Limit bleibt unverändert.</string>
+    <string name="pro_msg_dismissed">Die Werbung wurde vorzeitig geschlossen. Es wurde nichts freigeschaltet – du kannst es heute noch einmal versuchen.</string>
+    <string name="pro_msg_nofill">Gerade ist keine Werbung verfügbar. Versuch es später noch einmal.</string>
+    <string name="pro_msg_ad_unavailable">Der Pro-Test ist gerade nicht verfügbar. Es wurde nichts freigeschaltet.</string>
 
     <!-- Einstellungen / Hilfe -->
     <string name="set_privacy">Datenschutz &amp; Zugriff</string>
@@ -529,4 +523,17 @@
     <string name="limit_message">Du hast %2$d ausgewählt. Ohne Pro kannst du pro Tag bis zu %1$d endgültig entfernen. Der Rest bleibt sicher im Papierkorb.</string>
     <string name="limit_tomorrow">Morgen ist das Limit wieder frei.</string>
     <string name="limit_take_partial">%1$d davon entfernen</string>
+    <!-- 30-Minuten-Pro-Test (Rewarded) -->
+    <string name="reward_title">30 Minuten Pro testen</string>
+    <string name="reward_badge">1× täglich</string>
+    <string name="reward_body">Sieh dir eine kurze Werbung an und nutze die Pro-Werkzeuge 30 Minuten.</string>
+    <string name="reward_limit_note">Dein tägliches Papierkorb-Limit bleibt unverändert.</string>
+    <string name="reward_cta">Werbung ansehen</string>
+    <string name="reward_used">Heute bereits genutzt</string>
+    <string name="reward_tomorrow">Morgen wieder verfügbar</string>
+    <string name="reward_not_now">Gerade nicht verfügbar</string>
+    <string name="reward_active">Pro-Test aktiv · noch %1$d Min.</string>
+    <string name="reward_active_tools">30-Minuten-Pro aktiv · noch %1$d Min.</string>
+    <string name="pro_active_title">Pro ist aktiv</string>
+    <string name="pro_active_sub">Einmalkauf – alle Pro-Werkzeuge, ohne Tageslimit. Danke!</string>
 </resources>

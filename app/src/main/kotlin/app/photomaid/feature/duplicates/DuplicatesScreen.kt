@@ -1,5 +1,6 @@
 package app.photomaid.feature.duplicates
 
+import app.photomaid.feature.pro.TemporaryProTag
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -25,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -140,6 +142,9 @@ fun DuplicatesScreen(nav: Nav) {
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
     val model = remember { DuplicateScanState() }
+    // Ablauf des 30-Minuten-Tests: bei jedem Takt neu auflösen (sperrt das Werkzeug beim nächsten Check).
+    val entitlementTick by app.entitlements.now.collectAsState()
+    entitlementTick
     val caps = app.capabilities
     DisposableEffect(Unit) { onDispose { model.job?.cancel() } }
 
@@ -155,6 +160,7 @@ fun DuplicatesScreen(nav: Nav) {
                                 if (!caps.exactDuplicates) Badge(stringResource(R.string.pro_badge))
                             }
                             Text(stringResource(R.string.dup_explain), style = AppTypography.footnote, color = c.textSecondary)
+                            TemporaryProTag(caps)
                         }
                     }
                     Spacer(Modifier.height(AppSpacing.s))

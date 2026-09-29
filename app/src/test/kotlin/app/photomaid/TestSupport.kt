@@ -134,7 +134,7 @@ class FakeMediaLibrary(
 }
 
 class FakePurchaseGateway(state: PurchaseState) : PurchaseGateway {
-    override val state: StateFlow<PurchaseState> = MutableStateFlow(state)
+    override val state: MutableStateFlow<PurchaseState> = MutableStateFlow(state)
     override val product: StateFlow<StoreProductInfo?> = MutableStateFlow(StoreProductInfo("3,99 CHF (TEST)", "PhotoMaid Pro (Test)"))
     override val isConfigured = true
     override suspend fun refresh() {}
@@ -143,10 +143,22 @@ class FakePurchaseGateway(state: PurchaseState) : PurchaseGateway {
 }
 
 /** AppModel mit In-Memory-Room und Fakes. Muss abseits des Main-Threads gebaut werden (Room). */
+/** Test-Werbeanbieter: liefert der Reihe nach die vorgegebenen Ergebnisse (kein SDK, keine echten Ads). */
+class FakeRewardedAdGateway(vararg results: app.photomaid.ads.RewardedAdResult) : app.photomaid.ads.RewardedAdGateway {
+    private val queue = ArrayDeque(results.toList())
+    var shown = 0
+    override val isConfigured = true
+    override suspend fun presentRewardedAd(): app.photomaid.ads.RewardedAdResult {
+        shown++
+        return queue.removeFirstOrNull() ?: app.photomaid.ads.RewardedAdResult.NoFill
+    }
+}
+
 fun makeTestApp(
     context: Context,
     media: (Context) -> MediaLibrary = { FakeMediaLibrary(it) },
     purchase: PurchaseGateway? = null,
+    ads: app.photomaid.ads.RewardedAdGateway? = null,
     introSeen: Boolean = true,
     configure: suspend (AppModel) -> Unit = {},
 ): AppModel = runBlocking(Dispatchers.IO) {
@@ -154,7 +166,7 @@ fun makeTestApp(
     coil3.SingletonImageLoader.setUnsafe(coil3.ImageLoader.Builder(context).imageDecoderEnabled(false).build())
     val db = PhotoMaidDatabase.open(context, inMemory = true)
     val lib = media(context)
-    val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib })
+    val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib }, adsOverride = ads)
     app.loadBlocking()
     if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false, gestureHintSeen = true) }
     configure(app)

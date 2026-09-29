@@ -196,7 +196,7 @@ class CapabilityTest {
         for (state in PurchaseState.entries) {
             val caps = Capabilities.resolve(state, RewardLedger(), Instant.now())
             if (state == PurchaseState.PURCHASED) {
-                assertTrue(caps.tier == Capabilities.Tier.PRO && caps.dailyCleanupLimit == null && !caps.adsAllowed && caps.exactDuplicates)
+                assertTrue(caps.tier == Capabilities.Tier.LIFETIME_PRO && caps.dailyCleanupLimit == null && !caps.adsAllowed && caps.exactDuplicates)
             } else {
                 assertTrue(caps.tier == Capabilities.Tier.FREE && caps.dailyCleanupLimit == 15 && !caps.exactDuplicates)
                 assertEquals(state != PurchaseState.UNKNOWN, caps.adsAllowed)
@@ -210,7 +210,7 @@ class CapabilityTest {
         assertEquals(w, ledger.granting("r1", now.plusSeconds(5), tz, PurchaseState.NOT_PURCHASED).second)
         assertThrowsSuspend<RewardError.DailyUnlockUsed> { ledger.granting("r2", now.plusSeconds(3600), tz, PurchaseState.NOT_PURCHASED) }
         val during = Capabilities.resolve(PurchaseState.NOT_PURCHASED, ledger, now.plusSeconds(600))
-        assertTrue(during.tier == Capabilities.Tier.REWARDED_PREVIEW && during.exactDuplicates && during.dailyCleanupLimit == 15)
+        assertTrue(during.tier == Capabilities.Tier.TEMPORARY_PRO && during.exactDuplicates && during.dailyCleanupLimit == 15)
         assertTrue(during.customCollections)
         assertTrue(abs((during.rewardRemaining ?: Duration.ZERO).seconds - 20 * 60) < 1)
         assertEquals(Capabilities.Tier.FREE, Capabilities.resolve(PurchaseState.NOT_PURCHASED, ledger, now.plusSeconds(30 * 60 + 1)).tier)

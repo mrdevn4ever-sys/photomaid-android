@@ -43,55 +43,65 @@ data class RewardLedger(val windows: List<RewardWindow> = emptyList()) {
     fun granting(rewardID: String, now: Instant, zone: ZoneId, purchase: PurchaseState): Pair<RewardLedger, RewardWindow> {
         windows.firstOrNull { it.rewardID == rewardID }?.let { return this to it }
         if (purchase == PurchaseState.PURCHASED) throw RewardError.AlreadyPurchased
-        val day = LocalDay.of(now, zone)
-        if (windows.any { it.grantedDay == day }) throw RewardError.DailyUnlockUsed
-        val w = RewardWindow(rewardID, now, day)
+        if (usedToday(now, zone)) throw RewardError.DailyUnlockUsed
+        val w = RewardWindow(rewardID, now, LocalDay.of(now, zone))
         return RewardLedger(windows + w) to w
     }
 
     fun active(now: Instant): RewardWindow? = windows.lastOrNull()?.takeIf { it.remaining(now) > Duration.ZERO }
 
-    fun canOfferReward(now: Instant, zone: ZoneId, purchase: PurchaseState): Boolean {
-        if (purchase == PurchaseState.PURCHASED) return false
+    /** Heute schon genutzt? Auch „ja“, wenn die Uhr vor den letzten Reward zurückgestellt wurde (konservativ). */
+    fun usedToday(now: Instant, zone: ZoneId): Boolean {
         val day = LocalDay.of(now, zone)
-        return windows.none { it.grantedDay == day }
+        return windows.any { it.grantedDay == day } || windows.any { now.isBefore(it.grantedAt) }
     }
+
+    fun canOfferReward(now: Instant, zone: ZoneId, purchase: PurchaseState): Boolean =
+        purchase != PurchaseState.PURCHASED && !usedToday(now, zone)
 }
 
-/** Zentrale Capability-Auflösung. Einzige Stelle, die Free/Pro/Rewarded unterscheidet. */
+/**
+ * Zentrale Capability-Auflösung. Einzige Stelle, die Free / Pro-Test / Lifetime Pro unterscheidet.
+ *
+ * Fachlich getrennt (bewusst kein einzelnes `isPro`):
+ * | Stufe          | Pro-Werkzeuge | Papierkorb ohne Tageslimit |
+ * |----------------|---------------|----------------------------|
+ * | FREE           | nein          | nein (15/Tag)              |
+ * | TEMPORARY_PRO  | ja (30 min)   | **nein** (15/Tag bleibt)   |
+ * | LIFETIME_PRO   | ja            | ja                         |
+ */
 data class Capabilities(
     val tier: Tier,
-    /** `null` = unbegrenzt. */
-    val dailyCleanupLimit: Int?,
-    val exactDuplicates: Boolean,
-    val advancedFileTools: Boolean,
-    /** Eigene Sammlungen anlegen und öffnen (fertige Sammlungen sind für alle). */
-    val customCollections: Boolean,
-    /** Werbung darf angeboten/angefragt werden (nie für Pro). */
+    /** Werbung darf angeboten/angefragt werden (nie für Lifetime Pro, nie bei unklarem Kaufstatus). */
     val adsAllowed: Boolean,
+    /** Restzeit des 30-Minuten-Pro-Tests, sonst `null`. */
     val rewardRemaining: Duration?,
 ) {
-    enum class Tier { FREE, REWARDED_PREVIEW, PRO }
+    enum class Tier { FREE, TEMPORARY_PRO, LIFETIME_PRO }
+
+    /** Identische Kopien, eigene Sammlungen – Lifetime Pro und der 30-Minuten-Test. */
+    val hasProToolsAccess: Boolean get() = tier != Tier.FREE
+
+    /** Nur der Kauf hebt das tägliche Papierkorb-Limit auf. Der Pro-Test ändert es NICHT. */
+    val hasUnlimitedTrashAccess: Boolean get() = tier == Tier.LIFETIME_PRO
+
+    /** `null` = unbegrenzt. Abgeleitet ausschließlich aus [hasUnlimitedTrashAccess]. */
+    val dailyCleanupLimit: Int? get() = if (hasUnlimitedTrashAccess) null else FREE_DAILY_CLEANUP_LIMIT
+
+    val exactDuplicates: Boolean get() = hasProToolsAccess
+
+    /** Eigene Sammlungen anlegen und öffnen (fertige Sammlungen sind für alle). */
+    val customCollections: Boolean get() = hasProToolsAccess
 
     companion object {
         const val FREE_DAILY_CLEANUP_LIMIT = 15
 
         fun resolve(purchase: PurchaseState, rewards: RewardLedger, now: Instant): Capabilities {
-            if (purchase == PurchaseState.PURCHASED) {
-                return Capabilities(Tier.PRO, null, exactDuplicates = true, advancedFileTools = true, customCollections = true, adsAllowed = false, rewardRemaining = null)
-            }
-            rewards.active(now)?.let { w ->
-                return Capabilities(
-                    Tier.REWARDED_PREVIEW, FREE_DAILY_CLEANUP_LIMIT, exactDuplicates = true, advancedFileTools = true,
-                    customCollections = true, adsAllowed = true, rewardRemaining = w.remaining(now),
-                )
-            }
-            return Capabilities(
-                Tier.FREE, FREE_DAILY_CLEANUP_LIMIT, exactDuplicates = false, advancedFileTools = false,
-                customCollections = false,
-                // Bei unbekanntem Kaufstatus keine Ad-Requests, bis der Status geklärt ist.
-                adsAllowed = purchase != PurchaseState.UNKNOWN, rewardRemaining = null,
-            )
+            // Lifetime Pro gewinnt immer (auch während eines laufenden Tests).
+            if (purchase == PurchaseState.PURCHASED) return Capabilities(Tier.LIFETIME_PRO, adsAllowed = false, rewardRemaining = null)
+            rewards.active(now)?.let { w -> return Capabilities(Tier.TEMPORARY_PRO, adsAllowed = true, rewardRemaining = w.remaining(now)) }
+            // Bei unbekanntem Kaufstatus keine Ad-Requests, bis der Status geklärt ist.
+            return Capabilities(Tier.FREE, adsAllowed = purchase != PurchaseState.UNKNOWN, rewardRemaining = null)
         }
     }
 }

@@ -1,5 +1,6 @@
 package app.photomaid.feature.collections
 
+import app.photomaid.feature.pro.TemporaryProTag
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -116,6 +117,9 @@ fun CollectionsContent(nav: Nav) {
     val token by app.photos.changeToken.collectAsState()
     val access by app.photos.access.collectAsState()
     val read by app.read.collectAsState()
+    // Ablauf des 30-Minuten-Tests: bei jedem Takt neu auflösen (sperrt das Werkzeug beim nächsten Check).
+    val entitlementTick by app.entitlements.now.collectAsState()
+    entitlementTick
     val caps = app.capabilities
     var results by remember { mutableStateOf<Map<SmartCollectionID, CollectionResult>>(emptyMap()) }
     var editing by remember { mutableStateOf<SmartCollection?>(null) }
@@ -134,6 +138,7 @@ fun CollectionsContent(nav: Nav) {
                 CollectionRow(col, results[col.id], enabled = access.canRead, locked = false, onClick = { open(col) })
             }
         }
+        TemporaryProTag(caps)
         if (custom.isNotEmpty()) {
             ListSection(header = stringResource(R.string.col_custom_header)) {
                 custom.forEachIndexed { i, col ->

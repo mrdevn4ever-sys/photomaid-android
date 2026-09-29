@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import app.photomaid.ads.EntitlementCenter
 import app.photomaid.ads.UnconfiguredRewardedAdGateway
+import app.photomaid.ads.RewardedAdGateway
 import app.photomaid.billing.PlayBillingGateway
 import app.photomaid.billing.PurchaseGateway
 import app.photomaid.billing.UnconfiguredPurchaseGateway
@@ -77,6 +78,8 @@ class AppModel(
     val isQAFixtureMode: Boolean = false,
     purchaseOverride: PurchaseGateway? = null,
     mediaOverride: ((() -> Boolean) -> MediaLibrary)? = null,
+    /** Tests: Werbeanbieter-Fake. Produktion: kein Anbieter konfiguriert (Release-Blocker, siehe docs). */
+    adsOverride: RewardedAdGateway? = null,
 ) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     val store = KeyValueStore(db)
@@ -91,7 +94,7 @@ class AppModel(
     val purchases: PurchaseGateway = purchaseOverride ?: BuildConfig.PLAY_PRO_PRODUCT_ID.let { id ->
         if (id.isBlank()) UnconfiguredPurchaseGateway() else PlayBillingGateway(context, id, store)
     }
-    val entitlements = EntitlementCenter(store, purchases, UnconfiguredRewardedAdGateway())
+    val entitlements = EntitlementCenter(store, purchases, adsOverride ?: UnconfiguredRewardedAdGateway())
     val collections = CollectionsStore(store)
 
     private val _read = MutableStateFlow(LedgerReadModel())

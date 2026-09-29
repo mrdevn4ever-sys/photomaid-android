@@ -1,5 +1,6 @@
 package app.photomaid.feature.settings
 
+import app.photomaid.feature.pro.minutesLeft
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -134,7 +135,8 @@ fun SettingsScreen(nav: Nav) {
             }
             ListSection {
                 SourceRow(Icons.Rounded.WorkspacePremium, c.accent, stringResource(R.string.pro_title), Modifier.clickableRow(onClick = nav::openPro),
-                    detail = stringResource(if (purchase == PurchaseState.PURCHASED) R.string.set_pro_active else R.string.set_pro_once))
+                    detail = app.capabilities.rewardRemaining?.let { stringResource(R.string.reward_active, minutesLeft(it)) }
+                        ?: stringResource(if (purchase == PurchaseState.PURCHASED) R.string.set_pro_active else R.string.set_pro_once))
                 if (app.purchases.isConfigured) {
                     RowDivider()
                     PlainButton(stringResource(R.string.pro_restore)) {
