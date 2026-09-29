@@ -521,4 +521,12 @@
     <string name="folder_loading">Ordner werden geladen …</string>
     <string name="set_protect_favorites">Favoriten schützen</string>
     <string name="set_protect_favorites_detail">Verhindert, dass favorisierte Fotos und Videos versehentlich im Papierkorb landen.</string>
+    <!-- Papierkorb: Vorschau und Tageslimit vor der Bestätigung -->
+    <string name="basket_preview_open">Groß ansehen: %1$s</string>
+    <string name="basket_preview_note">Nur ansehen – deine Auswahl bleibt, wie sie ist.</string>
+    <string name="limit_title_partial">Heute noch %1$d frei</string>
+    <string name="limit_title_none">Tageslimit für heute erreicht</string>
+    <string name="limit_message">Du hast %2$d ausgewählt. Ohne Pro kannst du pro Tag bis zu %1$d endgültig entfernen. Der Rest bleibt sicher im Papierkorb.</string>
+    <string name="limit_tomorrow">Morgen ist das Limit wieder frei.</string>
+    <string name="limit_take_partial">%1$d davon entfernen</string>
 </resources>

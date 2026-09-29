@@ -27,6 +27,11 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.style.TextAlign
+import app.photomaid.design.PlainButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -101,8 +106,12 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     var known by remember { mutableStateOf<Set<ItemReference>>(emptySet()) }
     var assets by remember { mutableStateOf<Map<String, MediaAsset>>(emptyMap()) }
     var fileNames by remember { mutableStateOf<Map<ItemReference, String>>(emptyMap()) }
-    var confirmPhotos by remember { mutableStateOf(false) }
-    var confirmFiles by remember { mutableStateOf(false) }
+    // Offene Bestätigung mit genau den Elementen, die entfernt würden (ggf. auf das Tageslimit gekürzt).
+    var confirmPhotos by remember { mutableStateOf<List<ItemReference>?>(null) }
+    var confirmFiles by remember { mutableStateOf<List<ItemReference>?>(null) }
+    // Auswahl größer als das heute noch freie Limit: VOR jeder Bestätigung erklären (keine Sackgasse).
+    var limitFor by remember { mutableStateOf<Pair<List<ItemReference>, CleanupOperationKind>?>(null) }
+    var previewAsset by remember { mutableStateOf<MediaAsset?>(null) }
     var running by remember { mutableStateOf(false) }
     var resultMessage by remember { mutableStateOf<String?>(null) }
     var resultTitle by remember { mutableIntStateOf(R.string.result) }
@@ -122,6 +131,12 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     }
     val selectedPhotos = photoItems.map { it.item }.filter { it in selection }
     val selectedFiles = fileItems.map { it.item }.filter { it in selection }
+    val available = read.allowance?.available
+
+    fun request(items: List<ItemReference>, kind: CleanupOperationKind) {
+        if (available != null && items.size > available) limitFor = items to kind
+        else if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE) confirmPhotos = items else confirmFiles = items
+    }
 
     fun run(items: List<ItemReference>, kind: CleanupOperationKind) = scope.launch {
         running = true
@@ -163,9 +178,9 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
             Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs),
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
                 if (selectedPhotos.isNotEmpty()) ProminentButton(pluralStringResource(R.plurals.basket_empty_media, selectedPhotos.size, selectedPhotos.size), fillWidth = true, large = true,
-                    enabled = !running) { confirmPhotos = true }
+                    enabled = !running) { request(selectedPhotos, CleanupOperationKind.PHOTO_LIBRARY_DELETE) }
                 if (selectedFiles.isNotEmpty()) GlassButton(pluralStringResource(R.plurals.basket_delete_files, selectedFiles.size, selectedFiles.size), fillWidth = true, large = true,
-                    tint = c.cleanup, enabled = !running) { confirmFiles = true }
+                    tint = c.cleanup, enabled = !running) { request(selectedFiles, CleanupOperationKind.FILE_DELETE_PERMANENTLY) }
                 if (running) CircularProgressIndicator(Modifier.size(28.dp))
             }
         },
@@ -195,7 +210,13 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
                             val a = assets[r.item.localIdentifier]
                             val title = stringResource(when (a?.kind) { MediaKind.VIDEO -> R.string.video; MediaKind.SCREENSHOT -> R.string.screenshot; else -> R.string.photo })
                             val sub = listOfNotNull(a?.creationDate?.let { DateText.abbreviated(it) }, a?.size?.let { SizeText.size(ctx, it) }).joinToString(" · ")
-                            BasketRow(app, r, title, sub, r.item in selection, { ThumbnailView(r.item.localIdentifier) }) {
+                            val openLabel = stringResource(R.string.basket_preview_open, title)
+                            BasketRow(app, r, title, sub, r.item in selection, {
+                                // Tipp aufs Vorschaubild = große Ansicht; ändert die Auswahl nicht.
+                                ThumbnailView(r.item.localIdentifier, size = 60.dp, modifier = Modifier.testTag("basket.thumb")
+                                    .clickable(enabled = a != null, role = Role.Button, onClickLabel = openLabel) { previewAsset = a }
+                                    .semantics { contentDescription = openLabel })
+                            }) {
                                 selection = if (r.item in selection) selection - r.item else selection + r.item
                             }
                         }
@@ -216,15 +237,41 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
             }
         }
     }
-    if (confirmPhotos) ConfirmationSheet(stringResource(R.string.basket_confirm_media_title), stringResource(R.string.basket_confirm_media_message),
-        stringResource(R.string.basket_confirm_media_action, selectedPhotos.size), onConfirm = { run(selectedPhotos, CleanupOperationKind.PHOTO_LIBRARY_DELETE) },
-        onDismiss = { confirmPhotos = false })
-    if (confirmFiles) ConfirmationSheet(stringResource(R.string.basket_confirm_files_title), stringResource(R.string.basket_confirm_files_message),
-        stringResource(R.string.basket_confirm_files_action, selectedFiles.size), onConfirm = { run(selectedFiles, CleanupOperationKind.FILE_DELETE_PERMANENTLY) },
-        onDismiss = { confirmFiles = false })
+    confirmPhotos?.let { items -> ConfirmationSheet(stringResource(R.string.basket_confirm_media_title), stringResource(R.string.basket_confirm_media_message),
+        stringResource(R.string.basket_confirm_media_action, items.size), onConfirm = { run(items, CleanupOperationKind.PHOTO_LIBRARY_DELETE) },
+        onDismiss = { confirmPhotos = null }) }
+    confirmFiles?.let { items -> ConfirmationSheet(stringResource(R.string.basket_confirm_files_title), stringResource(R.string.basket_confirm_files_message),
+        stringResource(R.string.basket_confirm_files_action, items.size), onConfirm = { run(items, CleanupOperationKind.FILE_DELETE_PERMANENTLY) },
+        onDismiss = { confirmFiles = null }) }
+    limitFor?.let { (items, kind) ->
+        LimitSheet(available ?: 0, read.allowance?.limit ?: 0, items.size,
+            takePartial = { limitFor = null; request(items.take(available ?: 0), kind) },
+            openPro = { limitFor = null; nav.openPro() }, onDismiss = { limitFor = null })
+    }
+    previewAsset?.let { a -> BasketPreview(a) { previewAsset = null } }
     NoticeDialog(resultMessage, stringResource(resultTitle)) {
         resultMessage = null
         if (showProAfter) { showProAfter = false; nav.openPro() }
+    }
+}
+
+/** Tageslimit reicht nicht für die Auswahl: erklären, Teilmenge oder Pro anbieten – bevor Android fragt. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun LimitSheet(available: Int, limit: Int, selected: Int, takePartial: () -> Unit, openPro: () -> Unit, onDismiss: () -> Unit) {
+    val c = PM.colors
+    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = c.background) {
+        Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.s).testTag("basket.limit"),
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            Text(if (available > 0) stringResource(R.string.limit_title_partial, available) else stringResource(R.string.limit_title_none),
+                style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
+            Text(stringResource(R.string.limit_message, limit, selected), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
+            if (available == 0) Text(stringResource(R.string.limit_tomorrow), style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
+            if (available > 0) ProminentButton(stringResource(R.string.limit_take_partial, available), fillWidth = true, large = true, color = c.cleanup, onClick = takePartial)
+            val pro: @Composable () -> Unit = { GlassButton(stringResource(R.string.pro_view), fillWidth = true, large = true, onClick = openPro) }
+            if (available == 0) ProminentButton(stringResource(R.string.pro_view), fillWidth = true, large = true, onClick = openPro) else pro()
+            PlainButton(stringResource(R.string.cancel), onClick = onDismiss)
+        }
     }
 }
 

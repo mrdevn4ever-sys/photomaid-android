@@ -130,6 +130,8 @@ fun MediaPage(
     /** Zähler für „Erneut versuchen“ – ein neuer Wert lädt das Vorschaubild neu. */
     retry: Int = 0,
     onRetry: () -> Unit = {},
+    /** Beschriftung des Auswegs (Feed: „Weiter ohne Entscheidung“, Vorschau: „Schließen“). */
+    skipLabel: Int = R.string.skip_without_decision,
 ) {
     val c = PM.colors
     val app = LocalApp.current
@@ -167,7 +169,7 @@ fun MediaPage(
                     )
                 }
             }
-            if (isVideo && !zoomed && preview != PreviewState.LOADING) VideoControls(asset, skip)
+            if (isVideo && !zoomed && preview != PreviewState.LOADING) VideoControls(asset, skip, skipLabel)
         }
         // Video ohne Standbild: trotzdem abspielbar; sobald das erste Bild wirklich läuft, gilt es als gesehen.
         LaunchedEffect(asset.id, player.itemID, player.firstFrameRendered) {
@@ -180,9 +182,9 @@ fun MediaPage(
                     verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                     Text(stringResource(R.string.video_poster_failed), style = AppTypography.footnote, color = c.textPrimary, textAlign = TextAlign.Center,
                         modifier = Modifier.glassCapsule().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs))
-                    GlassButton(stringResource(R.string.skip_without_decision), onClick = skip)
+                    GlassButton(stringResource(skipLabel), onClick = skip)
                 }
-            } else MediaProblem(stringResource(R.string.preview_failed), stringResource(R.string.preview_failed_hint), onRetry, skip, Modifier.align(Alignment.Center))
+            } else MediaProblem(stringResource(R.string.preview_failed), stringResource(R.string.preview_failed_hint), onRetry, skip, Modifier.align(Alignment.Center), skipLabel)
             PreviewState.READY -> Unit
         }
     }
@@ -214,7 +216,7 @@ fun toggleVideo(player: app.photomaid.playback.FeedPlayer, asset: MediaAsset) {
  * keine Entscheidungsgeste) und ein kleines Stumm-Symbol.
  */
 @Composable
-private fun BoxScope.VideoControls(asset: MediaAsset, skip: () -> Unit) {
+private fun BoxScope.VideoControls(asset: MediaAsset, skip: () -> Unit, skipLabel: Int) {
     val app = LocalApp.current
     val reduceMotion = LocalReduceMotion.current
     val state by app.player.state.collectAsState()
@@ -226,7 +228,7 @@ private fun BoxScope.VideoControls(asset: MediaAsset, skip: () -> Unit) {
         // Wiedergabe fehlgeschlagen: erklären und einen Ausweg anbieten (nie eine Entscheidung).
         MediaProblem(stringResource(R.string.video_failed), null,
             onRetry = { app.player.load(asset.id, asset.uri, autoplay = true, durationSec = asset.duration) }, skip = skip,
-            modifier = Modifier.align(Alignment.Center))
+            modifier = Modifier.align(Alignment.Center), skipLabel = skipLabel)
         return
     }
     if (!(active && state.isPlaying)) {
@@ -252,7 +254,7 @@ private fun BoxScope.VideoControls(asset: MediaAsset, skip: () -> Unit) {
 
 /** Ruhiger Problemzustand eines Mediums: was passiert ist + „Erneut versuchen“ / „Weiter ohne Entscheidung“. */
 @Composable
-private fun MediaProblem(title: String, hint: String?, onRetry: () -> Unit, skip: () -> Unit, modifier: Modifier) {
+private fun MediaProblem(title: String, hint: String?, onRetry: () -> Unit, skip: () -> Unit, modifier: Modifier, skipLabel: Int = R.string.skip_without_decision) {
     val c = PM.colors
     Column(modifier.padding(AppSpacing.m).glassRect(AppRadii.card, 0.dp).padding(AppSpacing.l).testTag("feed.media.problem"),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
@@ -260,7 +262,7 @@ private fun MediaProblem(title: String, hint: String?, onRetry: () -> Unit, skip
         Text(title, style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
         if (hint != null) Text(hint, style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
         ProminentButton(stringResource(R.string.retry), onClick = onRetry)
-        PlainButton(stringResource(R.string.skip_without_decision), onClick = skip)
+        PlainButton(stringResource(skipLabel), onClick = skip)
     }
 }
 
