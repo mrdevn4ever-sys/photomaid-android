@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Einzige Quelle aller UI-Texte. Übernommen aus Localizable.xcstrings (iOS, Quellsprache de).
+     iOS-spezifische Begriffe sind plattformgerecht angepasst (siehe docs/PORTING_MATRIX.md §6). -->
+<resources>
+    <string name="app_name">PhotoMaid</string>
+
+    <!-- Allgemein -->
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="done">Fertig</string>
+    <string name="save">Speichern</string>
+    <string name="close">Schließen</string>
+    <string name="back">Zurück</string>
+    <string name="notice">Hinweis</string>
+    <string name="result">Ergebnis</string>
+    <string name="info">Infos</string>
+    <string name="error_title">Etwas hat nicht funktioniert</string>
+    <string name="retry">Erneut versuchen</string>
+    <string name="store_open_failed">Der lokale Speicher konnte nicht geöffnet werden.</string>
+    <string name="items_suffix">Elemente</string>
+    <string name="count_items">%1$d Elemente</string>
+    <string name="size_unknown">Größe unbekannt</string>
+    <string name="size_at_least">mind. %1$s</string>
+    <string name="photo">Foto</string>
+    <string name="video">Video</string>
+    <string name="screenshot">Screenshot</string>
+    <string name="medium">Medium</string>
+    <string name="pro_badge">Pro</string>
+    <string name="actions">Aktionen</string>
+    <string name="more_actions">Weitere Aktionen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="undo">Rückgängig</string>
+
+    <!-- Fehler (AppModel) -->
+    <string name="error_settings_not_saved">Einstellung konnte nicht gespeichert werden.</string>
+    <string name="error_change_not_saved">Die Änderung wurde nicht gespeichert.</string>
+    <string name="error_undo_conflict">Rückgängig nicht möglich: Das Element wurde inzwischen verändert.</string>
+    <string name="error_undo_busy">Rückgängig nicht möglich, solange eine Bereinigung läuft.</string>
+    <string name="error_undo_generic">Rückgängig nicht möglich.</string>
+
+    <!-- Tabs -->
+    <string name="tab_today">Heute</string>
+    <string name="tab_cleanup">Aufräumen</string>
+    <string name="tab_organize">Ordnen</string>
+    <string name="tab_history">Verlauf</string>
+
+    <!-- Heute -->
+    <string name="today_subtitle">Eine aufgeräumte Galerie für das, was zählt</string>
+    <string name="today_access_title">Zugriff auf Fotos erforderlich</string>
+    <string name="today_access_denied">Der Zugriff wurde abgelehnt. Du kannst ihn in den Android-Einstellungen für PhotoMaid ändern.</string>
+    <string name="today_access_default">PhotoMaid braucht Zugriff auf deine Mediathek, um Fotos und Videos zum Sortieren anzuzeigen.</string>
+    <string name="learn_more">Mehr erfahren</string>
+    <string name="storage_used_of">von %1$s belegt</string>
+    <string name="storage_device_footnote">Systemwert des Geräts, nicht nur Fotos</string>
+    <string name="today_pending_title">%1$d Elemente</string>
+    <string name="today_pending_subtitle">warten auf eine Entscheidung</string>
+    <string name="today_pending_caption">Mach Platz und behalte, was du liebst.</string>
+    <string name="today_review_hint">Startet die Prüfung deiner Fotos</string>
+    <string name="today_due">%1$d zurückgestellte Elemente sind wieder fällig</string>
+    <string name="today_reconciliation">Eine frühere Bereinigung konnte nicht eindeutig abgeglichen werden. Es wird nichts erneut gelöscht.</string>
+    <string name="cat_photos">Fotos</string>
+    <string name="cat_videos">Videos</string>
+    <string name="cat_screenshots">Screenshots</string>
+    <string name="files">Dateien</string>
+    <string name="downloads">Downloads</string>
+    <string name="choose_folder">Ordner auswählen</string>
+    <string name="connected_sources_short">Verbundene Quellen</string>
+    <string name="duplicates">Duplikate</string>
+    <string name="duplicates_subtitle_today">Exakt identische Kopien</string>
+    <string name="later">Später</string>
+
+    <!-- Aufräumen-Hub -->
+    <string name="hub_subtitle">Finde und entferne, was du nicht brauchst – auf deinem Gerät.</string>
+    <string name="filter">Filter</string>
+    <string name="filter_all">Alle</string>
+    <string name="filter_media">Medien</string>
+    <string name="filter_files">Dateien</string>
+    <string name="hub_photos_sub">Ähnliches prüfst du selbst im Feed</string>
+    <string name="hub_videos_sub">Große und unnötige Videos</string>
+    <string name="hub_screens_sub">Schnappschüsse aufräumen</string>
+    <string name="hub_files_sub">Dateien aus verbundenen Ordnern</string>
+    <string name="large_files">Große Dateien</string>
+    <string name="hub_large_sub">Bekannte Größe ab einem Filterwert</string>
+    <string name="hub_dup_sub">Exakte Kopien (Hash-bestätigt)</string>
+    <string name="storage_overview">Speicherübersicht</string>
+    <string name="hub_storage_sub">Was PhotoMaid sehen kann</string>
+    <string name="basket">Papierkorb</string>
+    <string name="hub_basket_sub">%1$d Elemente, noch nicht gelöscht</string>
+
+    <!-- Ordnen -->
+    <string name="later_manage">Wiedervorlagen verwalten</string>
+    <string name="rules_title">Regeln &amp; Routinen</string>
+    <string name="rules_subtitle">Einrichten und vergessen – nur Review-Aufgaben</string>
+    <string name="connected_sources">Verbundene Quellen</string>
+    <string name="connected_sources_sub">Ordner, die PhotoMaid sehen darf</string>
+    <string name="open_tasks">Offene Aufgaben</string>
+    <string name="review_task">Prüfaufgabe</string>
+
+    <!-- Feed -->
+    <string name="feed_title_photos">Fotos prüfen</string>
+    <string name="feed_title_videos">Videos prüfen</string>
+    <string name="feed_title_screenshots">Screenshots prüfen</string>
+    <string name="feed_title_due">Wieder fällig</string>
+    <string name="feed_title_task">Regel-Aufgabe</string>
+    <string name="feed_position">%1$d von %2$d</string>
+    <string name="feed_empty_title">Nichts zu prüfen</string>
+    <string name="feed_empty_message">In dieser Auswahl warten gerade keine Elemente auf eine Entscheidung.</string>
+    <string name="feed_view_basket">Papierkorb ansehen</string>
+    <string name="feed_show_hints">Gestenhilfe zeigen</string>
+    <string name="feed_stage">Aktuelles Medium</string>
+    <string name="act_keep_next">Behalten und weiter</string>
+    <string name="act_trash">In den Papierkorb</string>
+    <string name="act_later">Später</string>
+    <string name="act_later_custom">Später, Datum wählen</string>
+    <string name="act_previous">Vorheriges</string>
+    <string name="dir_keep">Behalten</string>
+    <string name="dir_trash">Papierkorb</string>
+    <string name="dir_later">Später</string>
+    <string name="dir_later_custom">Später · Datum wählen</string>
+    <string name="dir_back">Zurück</string>
+    <string name="hint_up">Hoch</string>
+    <string name="hint_left">Links</string>
+    <string name="hint_right">Rechts</string>
+    <string name="hint_diag">Schräg hoch</string>
+    <string name="hint_down">Runter</string>
+    <string name="hint_date">Datum wählen</string>
+    <string name="error_decision_not_saved">Die Entscheidung wurde nicht gespeichert. Bitte erneut versuchen.</string>
+    <string name="error_date_not_saved">Der Termin wurde nicht gespeichert.</string>
+    <string name="skip_without_decision">Ohne Entscheidung überspringen</string>
+    <string name="preview_failed">Vorschau konnte nicht geladen werden</string>
+    <string name="play">Abspielen</string>
+    <string name="pause">Pause</string>
+    <string name="playback_position">Wiedergabeposition</string>
+    <string name="unmute">Ton einschalten</string>
+    <string name="mute">Ton ausschalten</string>
+    <string name="change">Ändern</string>
+    <string name="summary_done">Durchgang abgeschlossen</string>
+    <string name="summary_kept">Behalten</string>
+    <string name="summary_trash">Im Papierkorb</string>
+    <string name="summary_later">Später</string>
+    <string name="summary_view_basket">Papierkorb ansehen (%1$d)</string>
+    <string name="summary_basket_hint">Gelöscht wird erst, wenn du den Papierkorb leerst und bestätigst.</string>
+    <string name="summary_last">Zum letzten Element</string>
+    <string name="dock_count">Papierkorb: %1$d</string>
+    <string name="dock_hint">Öffnet den Papierkorb. Gelöscht wird erst nach deiner Bestätigung.</string>
+    <string name="a11y_kind_date">%1$s, %2$s</string>
+
+    <!-- Später-Drehrad -->
+    <string name="later_tomorrow_again">Morgen wieder</string>
+    <string name="later_in_days_again">In %1$d Tagen wieder</string>
+    <string name="later_in_one_week_again">In 1 Woche wieder</string>
+    <string name="later_in_weeks_again">In %1$d Wochen wieder</string>
+    <string name="later_in_one_month_again">In 1 Monat wieder</string>
+    <string name="later_in_months_again">In %1$d Monaten wieder</string>
+    <string name="unit_day">Tag</string>
+    <string name="unit_days">Tage</string>
+    <string name="unit_week">Woche</string>
+    <string name="unit_weeks">Wochen</string>
+    <string name="unit_month">Monat</string>
+    <string name="unit_months">Monate</string>
+    <string name="picker_count">Anzahl</string>
+    <string name="picker_unit">Einheit</string>
+    <string name="picker_show_on">Wieder zeigen am %1$s</string>
+    <string name="picker_choose_interval">Abstand wählen</string>
+    <string name="picker_specific_date">Bestimmtes Datum …</string>
+    <string name="change_date">Datum ändern</string>
+
+    <!-- Papierkorb -->
+    <string name="basket_count">%1$d im Papierkorb</string>
+    <string name="basket_intro">Noch ist nichts gelöscht. Prüfe den Papierkorb und leere ihn, wenn alles passt. Abgewählte Elemente bleiben erhalten.</string>
+    <string name="basket_allowance">Heute noch %1$d von %2$d Bereinigungen frei</string>
+    <string name="basket_media_header">Fotos &amp; Videos</string>
+    <string name="basket_media_footer">Wird über Android entfernt. Android fragt dich zur Bestätigung. Die Medien landen im Papierkorb des Systems und können dort in der Regel noch 30 Tage wiederhergestellt werden. Ob Cloud-Dienste wie Google Fotos die Löschung übernehmen, hängt von deren Einstellungen ab.</string>
+    <string name="basket_files_header">Dateien</string>
+    <string name="basket_files_footer">Dateien werden endgültig gelöscht. Dafür gibt es keinen Papierkorb und kein Rückgängig.</string>
+    <string name="basket_empty_title">Papierkorb ist leer</string>
+    <string name="basket_empty_message">Wische im Feed nach links, um etwas in den Papierkorb zu legen.</string>
+    <string name="basket_confirm_media_title">Fotos &amp; Videos entfernen?</string>
+    <string name="basket_confirm_media_action">%1$d über Android entfernen</string>
+    <string name="basket_confirm_media_message">Danach bestätigst du im Systemdialog. Die Medien kommen in den Papierkorb des Systems.</string>
+    <string name="basket_confirm_files_title">Dateien endgültig löschen?</string>
+    <string name="basket_confirm_files_action">%1$d endgültig löschen</string>
+    <string name="basket_confirm_files_message">Das kann nicht rückgängig gemacht werden.</string>
+    <string name="selected">Ausgewählt</string>
+    <string name="not_selected">Nicht ausgewählt</string>
+    <string name="keep">Behalten</string>
+    <string name="put_back">Zurücklegen</string>
+    <string name="basket_empty_media">Papierkorb leeren: %1$d Fotos/Videos</string>
+    <string name="basket_delete_files">%1$d Dateien endgültig löschen</string>
+    <string name="result_media_trashed">%1$d Medien wurden in den Papierkorb des Systems verschoben.</string>
+    <string name="result_files_deleted">%1$d Dateien wurden endgültig gelöscht.</string>
+    <string name="result_partial">%1$d von %2$d Elementen wurden entfernt. Der Rest bleibt im Papierkorb.</string>
+    <string name="result_cancelled">Abgebrochen. Es wurde nichts entfernt.</string>
+    <string name="result_nothing">Es wurde nichts entfernt.</string>
+    <string name="result_allowance">Heute sind noch %1$d Bereinigungen frei, ausgewählt sind %2$d. Wähle bis zu %1$d Elemente aus – oder hol dir PhotoMaid Pro.</string>
+    <string name="result_changed">Die Auswahl hat sich geändert. Bitte prüfe sie erneut.</string>
+    <string name="result_reconcile">Das Ergebnis wird beim nächsten Start abgeglichen. Es wird nichts erneut gelöscht.</string>
+    <string name="item_actions_for">Aktionen für %1$s</string>
+
+    <!-- Dateien -->
+    <string name="files_none_title">Noch kein Ordner verbunden</string>
+    <string name="files_none_message">Android erlaubt PhotoMaid keinen Zugriff auf alle Dateien. Wähle einen Ordner aus, z. B. einen Ordner in „Download“. Den Download-Ordner selbst gibt Android nicht frei, seine Unterordner schon.</string>
+    <string name="file_type">Dateityp</string>
+    <string name="kind_all">Alle</string>
+    <string name="kind_pdf">PDFs</string>
+    <string name="kind_archive">Archive</string>
+    <string name="kind_image">Bilder</string>
+    <string name="kind_video">Videos</string>
+    <string name="kind_document">Dokumente</string>
+    <string name="kind_other">Andere</string>
+    <string name="files_source_unreachable">Mindestens eine Quelle ist nicht erreichbar. Verbinde den Ordner erneut.</string>
+    <string name="files_search">Dateien durchsuchen …</string>
+    <string name="add_folder">Ordner hinzufügen</string>
+    <string name="error_cloud_folder">Cloud-Ordner (z. B. Google Drive) werden nicht als lokale Quelle unterstützt.</string>
+    <string name="error_folder_connect">Der Ordner konnte nicht verbunden werden.</string>
+    <string name="group_today">Heute</string>
+    <string name="group_30_days">Letzte 30 Tage</string>
+    <string name="group_older">Älter</string>
+    <string name="no_viewer">Keine App zum Anzeigen dieser Datei gefunden.</string>
+    <string name="sources_rw">Lesen und Löschen möglich</string>
+    <string name="sources_ro">Nur lesen (schreibgeschützt)</string>
+    <string name="sources_unreachable">Nicht erreichbar – bitte erneut verbinden</string>
+    <string name="sources_remove">Verbindung entfernen</string>
+    <string name="sources_footer">Verbindung entfernen löscht keine Dateien. PhotoMaid sieht nur Ordner, die du hier auswählst.</string>
+
+    <!-- Große Dateien / Speicher -->
+    <string name="large_in_files">in %1$d großen Dateien</string>
+    <string name="large_footnote">Nur Dateien mit bekannter Größe ab %1$d MB. Kein Versprechen über freiwerdenden Speicher.</string>
+    <string name="large_filter">Filter: ab %1$d MB</string>
+    <string name="decrease">Verringern</string>
+    <string name="increase">Erhöhen</string>
+    <string name="sort_largest">Größte</string>
+    <string name="sort_newest">Neueste</string>
+    <string name="sort_oldest">Älteste</string>
+    <string name="large_known">Bekannte Größe</string>
+    <string name="large_none">Keine Dateien über dem Filterwert gefunden.</string>
+    <string name="large_unknown_header">Größe unbekannt (%1$d)</string>
+    <string name="large_unknown_footer">Z. B. Einträge, für die Android keine Größe meldet. PhotoMaid schätzt sie nicht.</string>
+    <string name="storage_a">A · Gerät</string>
+    <string name="storage_available">%1$s verfügbar (Systemwert)</string>
+    <string name="storage_unavailable">Gerätespeicher nicht verfügbar</string>
+    <string name="storage_b">B · Für PhotoMaid sichtbar</string>
+    <string name="storage_of_which_screens">davon Screenshots</string>
+    <string name="storage_connected_folders">Verbundene Ordner</string>
+    <string name="storage_b_footer">Screenshots sind eine Teilmenge der Fotos. Große Dateien und Duplikate sind überlappende Ansichten und werden nicht addiert. Größen zählen nur, wenn Android sie meldet („mind.“ bei unbekannten).</string>
+    <string name="storage_c">C · Nicht einsehbar</string>
+    <string name="storage_c_text">Andere Apps, System, Cloud-Inhalte und nicht freigegebene Ordner kann PhotoMaid nicht einsehen. Dafür zeigen wir bewusst keine Zahl.</string>
+    <string name="storage_local">Alle Analysen laufen auf deinem Gerät.</string>
+    <string name="storage_value_items">%1$d Elemente · %2$s</string>
+
+    <!-- Duplikate -->
+    <string name="dup_find">Exakte Duplikate finden</string>
+    <string name="dup_explain">Byte-identische Dateien per SHA-256, auf deinem Gerät. Gleiche Vorschaubilder allein gelten nicht als Duplikat.</string>
+    <string name="dup_checking">Prüfe …</string>
+    <string name="dup_start">Prüfung starten</string>
+    <string name="dup_again">Erneut prüfen</string>
+    <string name="pro_view">PhotoMaid Pro ansehen</string>
+    <string name="dup_none">Keine exakten Duplikate gefunden.</string>
+    <string name="dup_not_comparable">%1$d Elemente nicht vergleichbar.</string>
+    <string name="dup_not_local">%1$d Elemente nicht lokal lesbar – nicht geprüft.</string>
+    <string name="dup_selected_trash">Kopie für den Papierkorb ausgewählt</string>
+    <string name="dup_will_keep">Wird behalten</string>
+    <string name="dup_move">%1$d Kopien in den Papierkorb</string>
+    <string name="dup_header">%1$d identische Dateien · %2$s gesamt</string>
+    <string name="dup_footer">Zusätzliche Kopien: höchstens %1$s ausgewählt. Das ist keine garantierte Speicherersparnis. Favoriten, Alben und Bearbeitungen können trotz gleicher Bytes relevant sein.</string>
+
+    <!-- Später-Screen -->
+    <string name="later_empty">Nichts zurückgestellt. Wische im Feed nach rechts, um etwas auf später zu legen.</string>
+    <string name="later_review_now_count">Jetzt prüfen (%1$d)</string>
+    <string name="later_group_due">Wieder fällig · %1$d</string>
+    <string name="later_group_tomorrow">Morgen · %1$d</string>
+    <string name="later_group_7">In den nächsten 7 Tagen · %1$d</string>
+    <string name="later_group_from">Ab %1$s · %2$d</string>
+    <string name="later_group_nodate">Ohne Datum · %1$d</string>
+    <string name="later_review_now">Jetzt prüfen</string>
+    <string name="later_remove">Zurückstellung entfernen</string>
+
+    <!-- Regeln -->
+    <string name="rules_intro">Einrichten und vergessen. PhotoMaid arbeitet auf deinem Gerät und erstellt nur Prüfaufgaben.</string>
+    <string name="rules_preview_hint">In der Pro-Vorschau ist je Regel ein einmaliger Testlauf möglich.</string>
+    <string name="rules_pro_hint">Dauerhaft aktive Routinen sind Teil von PhotoMaid Pro. Regeln kannst du trotzdem anlegen.</string>
+    <string name="rules_run_now">Jetzt ausführen</string>
+    <string name="rules_edit">Bearbeiten</string>
+    <string name="rules_delete">Löschen</string>
+    <string name="rules_run_done">Prüfung abgeschlossen. Neue Aufgaben findest du unter Ordnen.</string>
+    <string name="rules_run_unavailable">Für diese Regel ist aktuell kein Lauf möglich.</string>
+    <string name="rules_add">Neue Regel hinzufügen</string>
+    <string name="rules_local">Alle Regeln laufen lokal und werden beim Öffnen der App geprüft.</string>
+    <string name="rule_connected_folder">Verbundener Ordner</string>
+    <string name="rule_title_older">%1$s älter als %2$d Tage prüfen</string>
+    <string name="rule_title_size">%1$s ab %2$s zeigen</string>
+    <string name="rule_title_all">%1$s prüfen</string>
+    <string name="rule_detail_daily">Täglich beim Öffnen – erstellt eine Prüfaufgabe</string>
+    <string name="rule_detail_weekly">Jeden %1$s – erstellt eine Prüfaufgabe</string>
+    <string name="rule_detail_new">Sobald %1$d neu entdeckte Elemente warten</string>
+    <string name="rule_editor_title">Regel</string>
+    <string name="rule_source">Quelle</string>
+    <string name="rule_filter_older">Älter als …</string>
+    <string name="rule_filter_size">Bekannte Größe ab …</string>
+    <string name="rule_filter_all">Alle</string>
+    <string name="rule_days">%1$d Tage</string>
+    <string name="rule_mb">%1$d MB</string>
+    <string name="rule_trigger">Auslöser</string>
+    <string name="rule_trigger_daily">Täglich</string>
+    <string name="rule_trigger_weekly">Wöchentlich</string>
+    <string name="rule_trigger_new">Nach neu entdeckten Elementen</string>
+    <string name="rule_weekday">Wochentag</string>
+    <string name="rule_notify">Erinnerung senden</string>
+    <string name="rule_count">%1$d Elemente</string>
+    <string name="rule_note">Regeln erzeugen nur Prüfaufgaben. Es wird nie automatisch gelöscht.</string>
+
+    <!-- Verlauf -->
+    <string name="history_all">Alle</string>
+    <string name="history_kept">Behalten</string>
+    <string name="history_cleaned">Bereinigt</string>
+    <string name="history_later">Später</string>
+    <string name="history_empty">Noch keine Einträge.</string>
+    <string name="history_day_header">%1$s · %2$d Einträge</string>
+    <string name="h_cleaned">Bereinigt (bestätigt)</string>
+    <string name="h_reconciled">Nicht mehr vorhanden (abgeglichen)</string>
+    <string name="h_not_performed">Bereinigung nicht ausgeführt</string>
+    <string name="h_undo">Rückgängig gemacht</string>
+    <string name="h_schedule">Termin gesetzt</string>
+    <string name="h_deferral_removed">Zurückstellung entfernt</string>
+    <string name="h_unmarked">Aus dem Papierkorb zurückgelegt</string>
+    <string name="h_kept">Behalten</string>
+    <string name="h_kept_corr">Korrigiert: behalten</string>
+    <string name="h_trash">In den Papierkorb</string>
+    <string name="h_trash_corr">Korrigiert: Papierkorb</string>
+    <string name="h_later">Auf später gelegt</string>
+    <string name="h_later_corr">Korrigiert: später</string>
+    <string name="h_changed">Geändert</string>
+
+    <!-- Pro -->
+    <string name="pro_title">PhotoMaid Pro</string>
+    <string name="pro_subtitle">Mehr Werkzeuge für das, was zählt.</string>
+    <string name="pro_f1">Einmaliger Kauf</string>
+    <string name="pro_f1d">Kein Abo.</string>
+    <string name="pro_f2">Unbegrenzt bereinigen</string>
+    <string name="pro_f2d">Statt 15 bestätigten Bereinigungen pro Tag.</string>
+    <string name="pro_f3">Exakte Duplikate finden</string>
+    <string name="pro_f3d">Byte-identische Kopien per SHA-256.</string>
+    <string name="pro_f4">Erweiterte Datei- und Speicherwerkzeuge</string>
+    <string name="pro_f4d">Für verbundene Ordner.</string>
+    <string name="pro_f5">Dauerhaft aktive Regeln &amp; Routinen</string>
+    <string name="pro_f5d">Prüfaufgaben automatisch vorbereiten.</string>
+    <string name="pro_f6">Keine Werbung</string>
+    <string name="pro_f6d">Auch keine freiwillige Werbung mehr.</string>
+    <string name="pro_privacy">Analyse und Sortierung erfolgen auf deinem Gerät. Für Kauf und Werbung werden technische Daten an Google bzw. den Werbeanbieter übertragen – keine Fotos, Dateinamen oder Hashes.</string>
+    <string name="pro_active">Pro ist aktiv. Danke!</string>
+    <string name="pro_pending">Kauf ausstehend (z. B. Zahlung wird noch bestätigt).</string>
+    <string name="pro_unlock">PhotoMaid Pro freischalten</string>
+    <string name="pro_price_once">%1$s · Einmalkauf</string>
+    <string name="pro_price_loading">Preis wird geladen …</string>
+    <string name="pro_unavailable">Käufe sind in dieser Version noch nicht verfügbar.</string>
+    <string name="pro_restore">Käufe wiederherstellen</string>
+    <string name="pro_revoked">Ein früherer Kauf wurde erstattet oder widerrufen.</string>
+    <string name="pro_preview_active">Pro-Vorschau aktiv: noch %1$d Min.</string>
+    <string name="pro_reward_cta">Pro mit einer Werbe-Vorschau testen</string>
+    <string name="pro_reward_sub">Freiwillig: 30 Minuten Pro-Werkzeuge, einmal pro Tag.</string>
+    <string name="pro_reward_unavailable">Die Werbe-Vorschau ist in dieser Version noch nicht verfügbar.</string>
+    <string name="pro_reward_limit">Das Tageslimit von 15 Bereinigungen bleibt auch in der Vorschau bestehen.</string>
+    <string name="pro_msg_active">PhotoMaid Pro ist jetzt aktiv.</string>
+    <string name="pro_msg_pending">Der Kauf ist ausstehend. Pro wird aktiv, sobald er genehmigt ist.</string>
+    <string name="pro_msg_failed">Der Kauf konnte nicht abgeschlossen werden.</string>
+    <string name="pro_msg_restored">Dein Kauf wurde wiederhergestellt.</string>
+    <string name="pro_msg_nothing">Es wurde kein Kauf zum Wiederherstellen gefunden.</string>
+    <string name="pro_msg_rewarded">Pro-Vorschau für 30 Minuten aktiv.</string>
+    <string name="pro_msg_dismissed">Die Anzeige wurde vorzeitig geschlossen. Es wurde nichts freigeschaltet.</string>
+    <string name="pro_msg_nofill">Gerade ist keine Anzeige verfügbar.</string>
+    <string name="pro_msg_ad_unavailable">Die Werbe-Vorschau ist gerade nicht verfügbar.</string>
+
+    <!-- Einstellungen / Hilfe -->
+    <string name="set_privacy">Datenschutz &amp; Zugriff</string>
+    <string name="set_privacy_detail">Verarbeitung auf dem Gerät</string>
+    <string name="set_notifications">Mitteilungen</string>
+    <string name="allowed">Erlaubt</string>
+    <string name="off">Aus</string>
+    <string name="set_folder_access">Ordnerzugriff</string>
+    <string name="set_connected_n">%1$d verbunden</string>
+    <string name="set_controls">Bedienung</string>
+    <string name="set_haptics">Haptisches Feedback</string>
+    <string name="set_hints">Gestenhilfe beim Öffnen zeigen</string>
+    <string name="set_later_default">Später (Wisch nach rechts)</string>
+    <string name="set_tomorrow">Morgen</string>
+    <string name="set_in_days">In %1$d Tagen</string>
+    <string name="set_appearance">Erscheinungsbild</string>
+    <string name="appearance_system">System</string>
+    <string name="appearance_light">Hell</string>
+    <string name="appearance_dark">Dunkel</string>
+    <string name="set_how_to_swipe">So wischst du</string>
+    <string name="set_pro_active">Aktiv</string>
+    <string name="set_pro_once">Einmalkauf</string>
+    <string name="help">Hilfe</string>
+    <string name="version">Version</string>
+    <string name="privacy_policy">Datenschutzerklärung</string>
+    <string name="help_decide">Entscheiden</string>
+    <string name="help_decide_text">Wisch nach oben, um ein Medium zu behalten. Nach links kommt es in den Papierkorb, nach rechts auf später (Standard: in 2 Tagen), schräg nach rechts oben wählst du das Datum selbst. Nach unten kommst du zum vorherigen Medium – ohne etwas zu entscheiden.</string>
+    <string name="help_delete">Löschen</string>
+    <string name="help_delete_text">PhotoMaid löscht nie automatisch. Was du nach links wischst, landet im PhotoMaid-Papierkorb; gelöscht wird erst, wenn du ihn leerst. Fotos und Videos verschiebt Android nach deiner Bestätigung in den Papierkorb des Systems. Dateien werden endgültig gelöscht.</string>
+    <string name="help_cloud">Cloud</string>
+    <string name="help_cloud_text">Ob Cloud-Dienste wie Google Fotos Löschungen auf andere Geräte übertragen, hängt von deren Einstellungen ab. Medien, die nicht als lokale Datei vorliegen, lädt PhotoMaid nicht herunter.</string>
+    <string name="help_free">Kostenlos</string>
+    <string name="help_free_text">Ansehen, sortieren und später prüfen ist unbegrenzt. Bestätigte Bereinigungen sind auf 15 pro Tag begrenzt.</string>
+
+    <!-- Datenschutz / Onboarding -->
+    <string name="privacy_title">Deine Privatsphäre zuerst</string>
+    <string name="privacy_text">PhotoMaid analysiert deine Fotos, Videos und freigegebenen Dateien auf diesem Gerät. Es gibt keinen PhotoMaid-Server und kein Konto. Wenn du einen Cloud-Dienst wie Google Fotos nutzt, synchronisiert dieser deine Mediathek – auch Löschungen können dann andere Geräte betreffen.</string>
+    <string name="privacy_media">Fotos &amp; Videos</string>
+    <string name="privacy_media_text">Zum Anzeigen, Sortieren und – nur nach deiner Bestätigung – Entfernen ausgewählter Medien.</string>
+    <string name="privacy_allow">Zugriff erlauben</string>
+    <string name="privacy_manage">Auswahl verwalten</string>
+    <string name="privacy_open_settings">Android-Einstellungen öffnen</string>
+    <string name="access_full">Voller Zugriff</string>
+    <string name="access_limited">Ausgewählte Fotos</string>
+    <string name="access_denied">Abgelehnt</string>
+    <string name="access_not_asked">Nicht angefragt</string>
+    <string name="privacy_notifications_text">Optional: Erinnerungen an fällige Wiedervorlagen. Ohne Dateinamen auf dem Sperrbildschirm.</string>
+    <string name="privacy_notifications_allow">Mitteilungen erlauben</string>
+    <string name="privacy_folders">Ordner (optional)</string>
+    <string name="privacy_folders_text">Dateien siehst du nur aus Ordnern, die du selbst auswählst. Das geht jederzeit unter Aufräumen › Dateien.</string>
+    <string name="privacy_purchases">Käufe laufen über Google Play. Freiwillige Werbung stammt von einem Werbeanbieter. Dabei werden keine Fotos, Dateinamen, Pfade oder Hashes übertragen.</string>
+    <string name="continue_">Weiter</string>
+
+    <!-- Mitteilungen -->
+    <string name="notif_channel">Erinnerungen</string>
+    <string name="notif_due_body">Heute sind zurückgestellte Elemente wieder fällig.</string>
+    <string name="notif_rule_body">Zeit für deine geplante Prüfung.</string>
+</resources>
