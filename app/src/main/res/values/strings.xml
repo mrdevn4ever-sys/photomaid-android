@@ -52,6 +52,9 @@
 
     <!-- Heute -->
     <string name="today_subtitle">Eine aufgeräumte Galerie für das, was zählt</string>
+    <string name="today_limited_title">Eingeschränkter Zugriff</string>
+    <string name="today_limited_text">PhotoMaid sieht nur einen Teil deiner Fotos und Videos. Nicht freigegebene Medien werden weder angezeigt noch gezählt.</string>
+    <string name="today_limited_action">Zugriff ändern</string>
     <string name="today_access_title">Zugriff auf Fotos erforderlich</string>
     <string name="today_access_denied">Der Zugriff wurde abgelehnt. Du kannst ihn in den Android-Einstellungen für PhotoMaid ändern.</string>
     <string name="today_access_default">PhotoMaid braucht Zugriff auf deine Mediathek, um Fotos und Videos zum Sortieren anzuzeigen.</string>
@@ -147,6 +150,7 @@
     <string name="gesture_with_default">%1$s · Standard: %2$s</string>
     <string name="error_decision_not_saved">Die Entscheidung wurde nicht gespeichert. Bitte erneut versuchen.</string>
     <string name="error_date_not_saved">Der Termin wurde nicht gespeichert.</string>
+    <string name="video_poster_failed">Kein Vorschaubild – spiel das Video ab, um es zu prüfen.</string>
     <string name="skip_without_decision">Ohne Entscheidung überspringen</string>
     <string name="preview_failed">Vorschau konnte nicht geladen werden</string>
     <string name="play">Abspielen</string>
@@ -489,7 +493,7 @@
     <string name="privacy_manage">Auswahl verwalten</string>
     <string name="privacy_open_settings">Android-Einstellungen öffnen</string>
     <string name="access_full">Voller Zugriff</string>
-    <string name="access_limited">Ausgewählte Fotos</string>
+    <string name="access_limited">Eingeschränkt</string>
     <string name="access_denied">Abgelehnt</string>
     <string name="access_not_asked">Nicht angefragt</string>
     <string name="privacy_notifications_text">Optional: Erinnerungen an fällige Wiedervorlagen. Ohne Dateinamen auf dem Sperrbildschirm.</string>

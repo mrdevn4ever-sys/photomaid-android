@@ -65,4 +65,22 @@ class HistoryGroupingTest {
         assertEquals(ItemReference.photo("p2"), merged.single().primary.item)
         assertEquals(ledger.events(), entries.flatMap { it.events })
     }
+
+    /** Gerätetest: zehn „Bereinigung nicht ausgeführt“ eines abgebrochenen Systemdialogs → eine Zeile mit Anzahl. */
+    @Test fun sameOperationBecomesOneRowOthersStaySeparate() {
+        val op = app.photomaid.core.model.OperationID()
+        val other = app.photomaid.core.model.OperationID()
+        val snap = app.photomaid.core.decisions.DecisionSnapshot(app.photomaid.core.decisions.Disposition.MARKED_FOR_CLEANUP)
+        fun ev(i: Int, o: app.photomaid.core.model.OperationID?, kind: HistoryKind) = app.photomaid.core.decisions.DecisionEvent(
+            commandID = null, operationID = o, item = ItemReference.photo("p$i"), kind = kind, from = snap, to = snap,
+            revision = 1, at = java.time.Instant.parse("2026-09-29T10:00:00Z"), sessionID = null)
+        val events = (0 until 10).map { ev(it, op, HistoryKind.CLEANUP_NOT_PERFORMED) } +
+            ev(10, other, HistoryKind.CLEANUP_NOT_PERFORMED) + ev(11, other, HistoryKind.CLEANUP_CONFIRMED)
+        val entries = groupHistory(events)
+        assertEquals(3, entries.size)
+        assertEquals(10, entries[0].itemCount)
+        assertEquals(1, entries[1].itemCount) // anderer Vorgang
+        assertEquals(1, entries[2].itemCount) // andere Art im selben Vorgang
+        assertEquals(events, entries.flatMap { it.events })
+    }
 }

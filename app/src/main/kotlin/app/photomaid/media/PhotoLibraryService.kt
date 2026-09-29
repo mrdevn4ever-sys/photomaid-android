@@ -82,6 +82,9 @@ object MediaPermissions {
         } else granted(ctx, Manifest.permission.READ_EXTERNAL_STORAGE)
         if (full) return PhotoAccess.AUTHORIZED
         if (Build.VERSION.SDK_INT >= 34 && granted(ctx, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED)) return PhotoAccess.LIMITED
+        // Nur Fotos ODER nur Videos freigegeben: lesbar, aber unvollständig (nicht „kein Zugriff“).
+        if (Build.VERSION.SDK_INT >= 33 &&
+            (granted(ctx, Manifest.permission.READ_MEDIA_IMAGES) || granted(ctx, Manifest.permission.READ_MEDIA_VIDEO))) return PhotoAccess.LIMITED
         return if (everAsked) PhotoAccess.DENIED else PhotoAccess.NOT_DETERMINED
     }
 }

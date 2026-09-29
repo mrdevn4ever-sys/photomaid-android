@@ -124,9 +124,21 @@ fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onRe
                 )
             }
         }
+        // Video ohne Standbild: trotzdem abspielbar; sobald das erste Bild wirklich läuft, gilt es als gesehen.
+        LaunchedEffect(asset.id, player.itemID, player.firstFrameRendered) {
+            if (asset.kind == MediaKind.VIDEO && player.itemID == asset.id && player.firstFrameRendered && preview != PreviewState.READY) onResult(true)
+        }
         when (preview) {
             PreviewState.LOADING -> CircularProgressIndicator(Modifier.align(Alignment.Center))
-            PreviewState.FAILED -> Column(Modifier.align(Alignment.Center).padding(AppSpacing.m), horizontalAlignment = Alignment.CenterHorizontally,
+            PreviewState.FAILED -> if (asset.kind == MediaKind.VIDEO && !zoomed) {
+                VideoOverlay(asset)
+                Column(Modifier.align(Alignment.TopCenter).padding(AppSpacing.m), horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    Text(stringResource(R.string.video_poster_failed), style = AppTypography.footnote, color = c.textPrimary, textAlign = TextAlign.Center,
+                        modifier = Modifier.glassCapsule().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs))
+                    GlassButton(stringResource(R.string.skip_without_decision), onClick = skip)
+                }
+            } else Column(Modifier.align(Alignment.Center).padding(AppSpacing.m), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                 Icon(Icons.Rounded.WarningAmber, null, tint = c.warning, modifier = Modifier.size(44.dp))
                 Text(stringResource(R.string.preview_failed), style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)

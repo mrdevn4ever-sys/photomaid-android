@@ -117,7 +117,11 @@ private fun HistoryRow(entry: HistoryEntry) {
     val (icon, tint, title) = describe(e, c)
     // Termin des Vorgangs (zusammengefasster Termin oder ein eigenständig geänderter Termin).
     val day = (entry.schedule ?: e.takeIf { it.kind == HistoryKind.SCHEDULE_CHANGED })?.to?.dueDay
-    val text = if (day != null) stringResource(R.string.history_with_day, stringResource(title), DayText.string(day)) else stringResource(title)
+    val text = when {
+        day != null -> stringResource(R.string.history_with_day, stringResource(title), DayText.string(day))
+        entry.itemCount > 1 -> stringResource(R.string.history_with_day, stringResource(title), pluralStringResource(R.plurals.items_count, entry.itemCount, entry.itemCount))
+        else -> stringResource(title)
+    }
     Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).semantics(mergeDescendants = true) {}, verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
         if (e.item.provider == ItemProvider.PhotoLibrary) ThumbnailView(e.item.localIdentifier, 44.dp)

@@ -47,6 +47,7 @@ import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.GlassButton
+import app.photomaid.design.PlainButton
 import app.photomaid.design.PM
 import app.photomaid.design.ProminentButton
 import app.photomaid.design.SurfaceCard
@@ -107,7 +108,11 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
                     when (access) {
                         PhotoAccess.NOT_DETERMINED -> ProminentButton(stringResource(R.string.privacy_allow)) { mediaLauncher.launch(MediaPermissions.requestable()) }
                         // Android 14+: erneute Anfrage zeigt die System-Auswahl „Ausgewählte Fotos“ (iOS: limited picker).
-                        PhotoAccess.LIMITED -> GlassButton(stringResource(R.string.privacy_manage)) { mediaLauncher.launch(MediaPermissions.requestable()) }
+                        PhotoAccess.LIMITED -> Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                            GlassButton(stringResource(R.string.privacy_manage)) { mediaLauncher.launch(MediaPermissions.requestable()) }
+                            // Wurde eine Medienart dauerhaft abgelehnt, zeigt Android keinen Dialog mehr: Weg über die Einstellungen.
+                            PlainButton(stringResource(R.string.privacy_open_settings)) { openAppSettings() }
+                        }
                         PhotoAccess.DENIED -> GlassButton(stringResource(R.string.privacy_open_settings)) { openAppSettings() }
                         PhotoAccess.AUTHORIZED -> Unit
                     }

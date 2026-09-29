@@ -34,6 +34,8 @@ data class PhotoMaidColors(
     val glass: Color,
     val glassHighlight: Color,
     val glassStroke: Color,
+    /** Fläche der Tabbar: deckend (Glas-Anmutung über Kante/Kontur/Schatten), damit darunter scrollender Text nicht durchscheint. */
+    val glassBar: Color,
     val accent: Color,
     val keep: Color,
     val cleanup: Color,
@@ -71,6 +73,8 @@ data class PhotoMaidColors(
                 glassHighlight = if (dark) Color.White.copy(alpha = 0.10f) else Color.White.copy(alpha = 0.75f),
                 glassStroke = if (highContrast) c(0xFFFFFF, 0x2A3E5C, 0x8FA6C4, 0x6C84A6)
                 else if (dark) Color.White.copy(alpha = 0.16f) else Color.White.copy(alpha = 0.85f),
+                glassBar = if (highContrast) c(0xFFFFFF, 0x15243A, 0xFFFFFF, 0x101C2E)
+                else if (dark) Color(0xFF17263D) else Color(0xFFFBFCFE),
                 accent = if (dark) systemBlueDark else systemBlueLight,
                 keep = if (dark) systemBlueDark else systemBlueLight,
                 cleanup = if (dark) systemRedDark else systemRedLight,

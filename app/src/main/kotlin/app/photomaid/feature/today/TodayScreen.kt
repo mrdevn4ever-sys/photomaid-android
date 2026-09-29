@@ -60,6 +60,7 @@ import app.photomaid.design.readableWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import app.photomaid.design.AppTypography
 import app.photomaid.design.GlassIconButton
+import app.photomaid.design.GlassButton
 import app.photomaid.design.LargeTitleHeader
 import app.photomaid.design.MetricCard
 import app.photomaid.design.PM
@@ -122,6 +123,18 @@ fun TodayScreen(nav: Nav) {
                         style = AppTypography.subheadline, color = c.textSecondary)
                     Spacer(Modifier.height(AppSpacing.s))
                     ProminentButton(stringResource(R.string.learn_more), onClick = nav::openPrivacy)
+                }
+            }
+            if (access == PhotoAccess.LIMITED) {
+                SurfaceCard(Modifier.testTag("today.limited")) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                        Icon(Icons.Rounded.PhotoLibrary, null, tint = c.warning)
+                        Text(stringResource(R.string.today_limited_title), style = AppTypography.headline, color = c.textPrimary)
+                    }
+                    Spacer(Modifier.height(AppSpacing.xs))
+                    Text(stringResource(R.string.today_limited_text), style = AppTypography.subheadline, color = c.textSecondary)
+                    Spacer(Modifier.height(AppSpacing.s))
+                    GlassButton(stringResource(R.string.today_limited_action), onClick = nav::openPrivacy)
                 }
             }
             if (access.canRead) ReviewEntryCard(pending, hasHistory = read.events.isNotEmpty()) {

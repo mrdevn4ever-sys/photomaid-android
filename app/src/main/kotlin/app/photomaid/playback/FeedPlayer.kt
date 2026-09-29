@@ -23,6 +23,8 @@ class FeedPlayer(private val context: Context) {
         val isMuted: Boolean = true,
         val progress: Float = 0f,
         val durationSec: Double = 0.0,
+        /** Erstes Bild dieses Videos wurde tatsächlich angezeigt (zählt als „gesehen“, auch ohne Standbild). */
+        val firstFrameRendered: Boolean = false,
     )
 
     private val _state = MutableStateFlow(State())
@@ -38,6 +40,7 @@ class FeedPlayer(private val context: Context) {
         p.setAudioAttributes(AudioAttributes.Builder().setUsage(C.USAGE_MEDIA).setContentType(C.AUDIO_CONTENT_TYPE_MOVIE).build(), false)
         p.addListener(object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) { _state.value = _state.value.copy(isPlaying = isPlaying) }
+            override fun onRenderedFirstFrame() { _state.value = _state.value.copy(firstFrameRendered = true) }
             override fun onPlaybackStateChanged(playbackState: Int) {
                 if (playbackState == Player.STATE_ENDED) _state.value = _state.value.copy(isPlaying = false, progress = 1f)
             }

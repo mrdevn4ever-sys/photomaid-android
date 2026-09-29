@@ -65,6 +65,7 @@ import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.PM
+import app.photomaid.design.glass
 import app.photomaid.design.glassCapsule
 import app.photomaid.feature.cleanup.CleanUpHubScreen
 import app.photomaid.feature.cleanup.CleanupBasketScreen
@@ -182,11 +183,20 @@ private fun RootNav(app: AppModel) {
         composable(Routes.FEED) { entry ->
             val id = entry.arguments?.getString("id")
             val req = id?.let { FeedRequests.map[it] }
+            // Anfrage erst entfernen, wenn der Eintrag wirklich verlassen ist (nicht schon beim Schließen):
+            // sonst sieht die Ausblend-Komposition `req == null` und würde ein zweites Mal zurücknavigieren
+            // (leerer Back-Stack → leerer Bildschirm, Gerätetest RMX3933).
+            DisposableEffect(entry) {
+                val obs = LifecycleEventObserver { _, e -> if (e == Lifecycle.Event.ON_DESTROY) id?.let { FeedRequests.map.remove(it) } }
+                entry.lifecycle.addObserver(obs)
+                onDispose { entry.lifecycle.removeObserver(obs) }
+            }
             if (req == null) {
                 // Nach Prozessende ist die Anfrage verloren: zurück zu den Tabs (Entscheidungen sind gespeichert).
-                LaunchedEffect(Unit) { root.popBackStack() }
+                // Nur, solange dieser Eintrag oben liegt – nie einen anderen Eintrag wegnavigieren.
+                LaunchedEffect(entry) { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
             } else {
-                ReviewFeedScreen(req, nav, onClose = { root.popBackStack(); FeedRequests.map.remove(id) },
+                ReviewFeedScreen(req, nav, onClose = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() },
                     openBasket = { root.navigate(Routes.BASKET_MODAL) })
             }
         }
@@ -264,7 +274,7 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
             .padding(horizontal = AppSpacing.l, vertical = AppSpacing.xs)
             .widthIn(max = 520.dp)
             .fillMaxWidth()
-            .glassCapsule(elevation = 10.dp)
+            .glass(c.copy(glass = c.glassBar), CircleShape, elevation = 10.dp)
             .padding(4.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
