@@ -606,8 +606,8 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     // Undo
 
     fun undo() {
+        dismissAd() // Rückgängig überspringt die Werbekarte – immer, auch wenn gerade noch gespeichert wird
         if (isCommitting || customLater != null) return
-        dismissAd() // Rückgängig überspringt die Werbekarte
         laterPill = null
         viewModelScope.launch {
             val before = session.index

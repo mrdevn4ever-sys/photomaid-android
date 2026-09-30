@@ -36,6 +36,11 @@ fun Modifier.feedGestures(
     onTap: () -> Unit = {},
     /** Nur wenn ein Doppeltipp etwas bewirkt (gezoomt), wartet der einfache Tipp 280 ms; sonst reagiert er sofort. */
     waitForDoubleTap: () -> Boolean = { true },
+    /**
+     * `true` (Feed): übernimmt ein Kind-Control den Finger (Fortschrittsleiste), ist es keine Entscheidungsgeste.
+     * `false` (Werbekarte): die Anzeige (`NativeAdView`) nimmt jede Berührung an – Wischen muss trotzdem wirken.
+     */
+    yieldToChildren: Boolean = true,
 ): Modifier = if (!enabled) this else composed {
     // Immer die aktuellen Callbacks verwenden, ohne die laufende Geste neu zu starten.
     val drag by rememberUpdatedState(onDrag); val end by rememberUpdatedState(onEnd); val cancel by rememberUpdatedState(onCancel)
@@ -47,7 +52,7 @@ fun Modifier.feedGestures(
     awaitEachGesture {
         val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Main)
         // Ein Kind-Control (Wiedergabeposition) hat den Finger schon übernommen: keine Entscheidungsgeste.
-        val childOwnsDown = down.isConsumed
+        val childOwnsDown = yieldToChildren && down.isConsumed
         var secondTap = false
         val last = lastTapUp
         if (last != null && down.uptimeMillis - last < DOUBLE_TAP_MS) { pendingTap?.cancel(); doubleTap(); lastTapUp = null; secondTap = true }
@@ -85,7 +90,7 @@ fun Modifier.feedGestures(
             if (zooming || cancelled) continue
             // positionChange() ist bei verbrauchten Änderungen immer 0 – deshalb die Rohbewegung prüfen (Gerätebefund:
             // Spulen auf der Fortschrittsleiste löste sonst „Später“ aus).
-            if (change.isConsumed && change.positionChangeIgnoreConsumed() != Offset.Zero) {
+            if (yieldToChildren && change.isConsumed && change.positionChangeIgnoreConsumed() != Offset.Zero) {
                 // Ein Kind-Control (z. B. Wiedergabeposition) bedient die Bewegung.
                 cancelled = true; cancel(); continue
             }

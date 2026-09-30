@@ -14,3 +14,14 @@ System-Papierkorb nie bestätigt, keine Dateien gelöscht.
 Nicht reproduzierbar im JVM-Test: Video-Commits hängen unter Robolectric an ExoPlayer (auf dem Gerät funktionieren sie laut Bericht) – deshalb prüft der Regressionstest das Einrasten der Richtung statt eines Commits.
 
 Offen: 33 NOT RUN aus dem Bericht (Werbekarten-Zyklus, Kaufmomente, Aufräumen-Tab, Schnellzugriff-Bearbeiten, 200 %, TalkBack, Release-Gegenprobe, große Listen) → nächster Gerätetest.
+
+## Folgetest 2026-09-30 (Commit `687304c`)
+
+Ergebnis: 17 PASS, 2 FAIL, 18 NOT RUN. Bestätigt behoben: R1 (Spulen keine Entscheidung), R2 (Gerätespeicher über der Tabbar),
+R5 (Später-Pille über der Video-Bedienung). A1 (frische Installation per QA-App), F2 (Limit-Blatt), C4/C5, G1–G5, H1/H3 PASS.
+
+| # | Befund | Ursache | Behebung | Nachweis |
+|---|---|---|---|---|
+| E5 (HOCH) | „Runter“ und Rückgängig ließen die Werbekarte stehen | Folge des Fixes aus `687304c`: „Kind-Control übernimmt den Finger → keine Feed-Geste“. Die echte Anzeige (`NativeAdView`) nimmt **jede** Berührung an – Wische über der Anzeige kamen nicht mehr an. JVM-Tests nutzten eine Anzeige ohne Android-View. Rückgängig brach zudem ab, solange noch gespeichert wurde, bevor es die Karte schloss | Werbekarte: `feedGestures(yieldToChildren = false)`; zusätzlich übernimmt die Karte ab Berührungsschwelle die Geste (Initial-Pass) – die Anzeige erhält ein CANCEL, **ein Wisch zählt nie als Anzeigen-Klick**. Rückgängig schließt die Karte immer zuerst. Test-Attrappe verhält sich jetzt wie `NativeAdView` (nimmt Berührungen an) | `FeedAdsTest.swipesStartingOnTheAdContentStillWork`, `skipSwipeOnTheAdContentAfterMinimumTime`: **FAIL vor dem Fix, PASS danach** |
+| R3 | Verlauf: Einträge „hinter der Tabbar“ (uiautomator y=1549–1600) | Kein Fehler: Das sind Zeilen hinter der Systemnavigation während des Scrollens; sichtbar ist nur der Übergang (Screenshot) | – | Screenshot R3_history_bottom |
+| R4 | Release-Performance nicht messbar | Release-APK war unsigniert (Windows/PowerShell: mehrzeiliger Befehl mit `\` → Properties gingen verloren) | Neuer Build-Typ **`perf`**: wie Release (R8, nicht debuggable), Debug-Signatur, Google-Test-Anzeigen, gleiche App-ID. Ein Befehl ohne Properties: `gradlew :app:assemblePerf` | APK geprüft: signiert, nicht debuggable |

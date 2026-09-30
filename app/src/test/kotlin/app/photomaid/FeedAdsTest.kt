@@ -1,5 +1,7 @@
 package app.photomaid
 
+import androidx.compose.ui.test.swipe
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -117,6 +119,30 @@ class FeedAdsTest {
         rule.waitUntil(10_000) { !adVisible() }
         await("1 von 20")
         assertEquals(1, events(app))
+    }
+
+    /** Gerätebefund E5: Die echte Anzeige (NativeAdView) nimmt Berührungen an – Wischen ÜBER der Anzeige muss trotzdem wirken. */
+    @Test fun swipesStartingOnTheAdContentStillWork() {
+        val app = app()
+        open(app)
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
+        waitAd()
+        // Runter mitten auf der Anzeige: sofort zurück (auch vor der Mindestdauer).
+        rule.onNodeWithTag("feed.ad").performTouchInput { swipe(center, Offset(centerX, bottom - 4f), 250) }
+        rule.waitUntil(10_000) { !adVisible() }
+        await("1 von 20")
+        assertEquals(1, events(app))
+    }
+
+    @Test fun skipSwipeOnTheAdContentAfterMinimumTime() {
+        val app = app()
+        open(app)
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
+        waitAd(); Thread.sleep(1_700); rule.mainClock.advanceTimeBy(1_700)
+        rule.onNodeWithTag("feed.ad").performTouchInput { swipe(center, Offset(left + 4f, centerY), 250) }
+        rule.waitUntil(10_000) { !adVisible() }
+        await("2 von 20")
+        assertEquals(1, events(app)) // Wegwischen ist keine Entscheidung
     }
 
     @Test fun proLinkOpensPro() {

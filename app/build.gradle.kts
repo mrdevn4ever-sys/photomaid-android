@@ -47,6 +47,17 @@ android {
             buildConfigField("String", "ADMOB_NATIVE_UNIT", "\"ca-app-pub-3940256099942544/2247696110\"")
             buildConfigField("String", "ADMOB_REWARDED_UNIT", "\"ca-app-pub-3940256099942544/5224354917\"")
         }
+        // Geräte-QA/Performance: wie Release (R8, nicht debuggable), mit Debug-Schlüssel signiert, Google-TEST-Anzeigen.
+        // Gleiche App-ID wie Debug → `adb install -r` über den Debug-Build ohne Datenverlust. Niemals veröffentlichen.
+        create("perf") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3940256099942544~3347511713\"")
+            buildConfigField("String", "ADMOB_NATIVE_UNIT", "\"ca-app-pub-3940256099942544/2247696110\"")
+            buildConfigField("String", "ADMOB_REWARDED_UNIT", "\"ca-app-pub-3940256099942544/5224354917\"")
+        }
         // QA-Build: synthetische Fixtures (nur mit Intent-Extra „qa-fixtures“), niemals Release.
         create("qa") {
             initWith(getByName("debug"))
@@ -55,6 +66,9 @@ android {
             matchingFallbacks += listOf("debug")
         }
     }
+
+    // `perf` nutzt exakt die Release-Quellen (keine synthetischen Daten).
+    sourceSets { getByName("perf") { kotlin.srcDir("src/release/kotlin") } }
 
     buildFeatures {
         compose = true

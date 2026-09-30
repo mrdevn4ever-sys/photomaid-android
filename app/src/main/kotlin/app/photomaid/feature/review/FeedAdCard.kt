@@ -1,5 +1,9 @@
 package app.photomaid.feature.review
 
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.ui.input.pointer.pointerInput
 import android.graphics.Typeface
 import android.view.Gravity
 import android.view.ViewGroup
@@ -70,8 +74,23 @@ fun AdStage(model: FeedViewModel, card: AdCard, reduceMotion: Boolean, openPro: 
     val skipLabel = stringResource(R.string.ad_skip)
     Column(modifier.fillMaxWidth().padding(horizontal = AppSpacing.xs).testTag("feed.ad")
         .semantics { customActions = listOf(CustomAccessibilityAction(skipLabel) { if (model.adSkippable) model.dismissAd() else false }) }
+        // Ab Berührungsschwelle übernimmt die Karte die Geste (Initial-Pass): die Anzeige bekommt ein CANCEL und
+        // zählt kein Wischen als Klick (AdMob-Richtlinie: keine versehentlichen Klicks). Tipps bleiben bei der Anzeige.
+        .pointerInput(Unit) {
+            awaitEachGesture {
+                val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                var dragging = false
+                while (true) {
+                    val e = awaitPointerEvent(PointerEventPass.Initial)
+                    val ch = e.changes.firstOrNull { it.id == down.id } ?: break
+                    if (!dragging && (ch.position - down.position).getDistance() > viewConfiguration.touchSlop) dragging = true
+                    if (dragging) ch.consume()
+                    if (!ch.pressed) break
+                }
+            }
+        }
         .feedGestures(enabled = true, density = density, onDrag = model::dragChanged, onEnd = { t, v -> model.dragEnded(t, v, reduceMotion) },
-            onCancel = model::dragCancelled, onZoom = {}, onDoubleTap = {}),
+            onCancel = model::dragCancelled, onZoom = {}, onDoubleTap = {}, yieldToChildren = false),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
         Box(Modifier.weight(1f).fillMaxWidth().offset { val o = model.offset.value; with(density) { IntOffset(o.x.dp.roundToPx(), o.y.dp.roundToPx()) } }
             .clip(RoundedCornerShape(AppRadii.media)).background(c.surface)) {
@@ -97,7 +116,14 @@ private fun AdContent(ad: FeedAd) {
     val c = PM.colors
     val native = ad.native
     if (native == null) {
-        Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs, Alignment.CenterVertically)) {
+        // Ohne SDK (Tests) verhält sich die Fläche wie `NativeAdView`: sie nimmt jede Berührung an (Klick-Erfassung).
+        // So prüfen die Tests realistisch, dass Wischen über der Anzeige trotzdem beim Feed ankommt (Gerätebefund E5).
+        Column(Modifier.fillMaxSize().pointerInput(Unit) {
+            awaitEachGesture {
+                awaitFirstDown(requireUnconsumed = false).consume()
+                do { val e = awaitPointerEvent(); e.changes.forEach { it.consume() } } while (e.changes.any { it.pressed })
+            }
+        }, verticalArrangement = Arrangement.spacedBy(AppSpacing.xs, Alignment.CenterVertically)) {
             Text(ad.headline, style = AppTypography.title, color = c.textPrimary)
             ad.body?.let { Text(it, style = AppTypography.body, color = c.textSecondary) }
             ad.advertiser?.let { Text(it, style = AppTypography.footnote, color = c.textSecondary) }
