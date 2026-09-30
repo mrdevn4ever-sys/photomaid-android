@@ -162,11 +162,21 @@ class FakeRewardedAdGateway(vararg results: app.photomaid.ads.RewardedAdResult) 
     }
 }
 
+/** Test-Werbekarten (keine SDK-Anzeigen, keine Netzwerkanfragen). */
+class FakeFeedAds(override val isAvailable: Boolean = true) : app.photomaid.ads.FeedAdSource {
+    var taken = 0
+    var preloads = 0
+    override fun preload() { preloads++ }
+    override fun take(): app.photomaid.ads.FeedAd? = if (!isAvailable) null
+        else app.photomaid.ads.FeedAd("Testanzeige ${++taken}", "Beispieltext der Anzeige", "Mehr erfahren", "Werbepartner")
+}
+
 fun makeTestApp(
     context: Context,
     media: (Context) -> MediaLibrary = { FakeMediaLibrary(it) },
     purchase: PurchaseGateway? = null,
     ads: app.photomaid.ads.RewardedAdGateway? = null,
+    feedAds: app.photomaid.ads.FeedAdSource? = null,
     introSeen: Boolean = true,
     configure: suspend (AppModel) -> Unit = {},
 ): AppModel = runBlocking(Dispatchers.IO) {
@@ -174,7 +184,7 @@ fun makeTestApp(
     coil3.SingletonImageLoader.setUnsafe(coil3.ImageLoader.Builder(context).imageDecoderEnabled(false).build())
     val db = PhotoMaidDatabase.open(context, inMemory = true)
     val lib = media(context)
-    val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib }, adsOverride = ads)
+    val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib }, adsOverride = ads, feedAdsOverride = feedAds)
     app.loadBlocking()
     if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false, gestureHintSeen = true) }
     configure(app)

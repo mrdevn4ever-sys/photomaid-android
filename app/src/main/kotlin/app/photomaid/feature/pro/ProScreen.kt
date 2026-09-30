@@ -1,6 +1,18 @@
 package app.photomaid.feature.pro
 
 import app.photomaid.design.clickableRow
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.material.icons.rounded.Block
 import app.photomaid.design.ListSection
 import app.photomaid.design.AppRadii
 import androidx.compose.ui.semantics.stateDescription
@@ -114,17 +126,16 @@ fun ProScreen(nav: Nav) {
             }
             Column(Modifier.padding(horizontal = AppSpacing.pageMargin), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
-                Box(Modifier.size(80.dp).clip(RoundedCornerShape(AppRadii.card)).background(c.accent.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
-                    Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(44.dp))
-                }
+                ProHero()
                 Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
                     Text(stringResource(R.string.pro_title), style = AppTypography.largeTitle, color = c.textPrimary, textAlign = TextAlign.Center)
                     Text(stringResource(if (lifetime) R.string.pro_active_sub else R.string.pro_subtitle), style = AppTypography.subheadline,
                         color = c.textSecondary, textAlign = TextAlign.Center)
                 }
-                // Drei tatsächlich freigeschaltete Vorteile (Capabilities: Limit, identische Kopien, eigene Sammlungen).
+                // Tatsächlich freigeschaltete Vorteile (Capabilities: werbefrei, Limit, identische Kopien, eigene Sammlungen).
                 SurfaceCard {
                     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
+                        Feature(Icons.Rounded.Block, R.string.pro_f1, R.string.pro_f1d)
                         Feature(Icons.Rounded.AllInclusive, R.string.pro_f2, R.string.pro_f2d)
                         Feature(Icons.Rounded.FilterNone, R.string.pro_f3, R.string.pro_f3d)
                         Feature(Icons.Rounded.SettingsSuggest, R.string.pro_f5, R.string.pro_f5d)
@@ -211,7 +222,7 @@ fun ProScreen(nav: Nav) {
                             Text(stringResource(t), style = AppTypography.footnote, color = c.textSecondary)
                     }
                 }
-                Text(stringResource(if (app.entitlements.ads.isConfigured) R.string.pro_privacy else R.string.pro_privacy_no_ads), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+                Text(stringResource(if (app.adSdk.isConfigured || app.entitlements.ads.isConfigured) R.string.pro_privacy else R.string.pro_privacy_no_ads), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
                 Spacer(Modifier.height(AppSpacing.l))
             }
         }
@@ -281,6 +292,38 @@ private fun Feature(icon: ImageVector, title: Int, detail: Int) {
         Column {
             Text(stringResource(title), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
             Text(stringResource(detail), style = AppTypography.caption, color = c.textSecondary)
+        }
+    }
+}
+
+/** Kopfgrafik: gezeichneter Fächer aus drei Fotokarten mit Pro-Abzeichen (keine Bilddatei, passt sich Hell/Dunkel an). */
+@Composable
+private fun ProHero() {
+    val c = PM.colors
+    Box(Modifier.fillMaxWidth().height(172.dp).clip(RoundedCornerShape(AppRadii.card))
+        .background(Brush.verticalGradient(listOf(c.accent.copy(alpha = 0.22f), c.accent.copy(alpha = 0.04f)))).clearAndSetSemantics {},
+        contentAlignment = Alignment.Center) {
+        val cards = listOf(Triple(-14f, (-58).dp, c.keep), Triple(12f, 58.dp, c.later), Triple(0f, 0.dp, c.accent))
+        cards.forEach { (angle, dx, tint) ->
+            Box(Modifier.offset(x = dx).size(92.dp, 118.dp).graphicsLayer { rotationZ = angle }
+                .shadow(8.dp, RoundedCornerShape(AppRadii.small)).clip(RoundedCornerShape(AppRadii.small)).background(c.surface).padding(6.dp)) {
+                Canvas(Modifier.fillMaxSize().clip(RoundedCornerShape(AppRadii.small - 4.dp))) {
+                    drawRect(Brush.verticalGradient(listOf(tint.copy(alpha = 0.55f), tint.copy(alpha = 0.18f))))
+                    // Landschaft: Sonne + zwei Hügel
+                    drawCircle(Color.White.copy(alpha = 0.85f), radius = size.minDimension * 0.12f, center = Offset(size.width * 0.72f, size.height * 0.28f))
+                    val hill = Path().apply {
+                        moveTo(0f, size.height); lineTo(0f, size.height * 0.7f)
+                        quadraticTo(size.width * 0.3f, size.height * 0.45f, size.width * 0.6f, size.height * 0.72f)
+                        quadraticTo(size.width * 0.8f, size.height * 0.6f, size.width, size.height * 0.68f)
+                        lineTo(size.width, size.height); close()
+                    }
+                    drawPath(hill, tint.copy(alpha = 0.9f))
+                }
+            }
+        }
+        Box(Modifier.align(Alignment.BottomCenter).padding(bottom = 10.dp).size(44.dp).shadow(6.dp, CircleShape).clip(CircleShape).background(c.accent),
+            contentAlignment = Alignment.Center) {
+            Icon(Icons.Rounded.WorkspacePremium, null, tint = Color.White, modifier = Modifier.size(26.dp))
         }
     }
 }

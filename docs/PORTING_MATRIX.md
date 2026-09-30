@@ -98,7 +98,7 @@ Alle 74 Swift-Testfunktionen werden als JUnit-Tests portiert (`core/src/test`).
   Gestenhilfe blendet beim Öffnen 2,6 s ein (abwählbar). Rückgängig in der Kopfzeile.
 - Free: 15 **bestätigte** Bereinigungen je lokalem Kalendertag (Reservierung bei Vorbereitung,
   Buchung auf den Reservierungstag). Pro: unbegrenzt, Duplikate, erweiterte Werkzeuge, dauerhafte Routinen,
-  keine Werbung. Rewarded: 30 Min., 1×/Tag, nur nach Reward-Callback.
+  keine Werbung. Rewarded: 30 Min., 1×/Tag, nur nach Reward-Callback. Android Free: Werbekarte alle 7 Entscheidungen (s. Abweichungen).
 - Später: Termin als lokaler Kalendertag, Gruppen Wieder fällig / Morgen / 7 Tage / ab Datum / ohne Datum.
 - Verlauf: Filter Alle / Behalten / Bereinigt / Später; keine „x GB freigegeben“.
 
@@ -110,6 +110,8 @@ Alle 74 Swift-Testfunktionen werden als JUnit-Tests portiert (`core/src/test`).
 | Speicherübersicht B | nur Anzahl für Fotos/Videos | Anzahl **und** Summe bekannter Größen („mind.“ bei unbekannten) | wie oben |
 | iCloud-Hinweise | „Nur in iCloud“ / „Zuletzt gelöscht“ / iCloud-Sync | „Papierkorb des Systems“ (30 Tage); Cloud-Sync anderer Apps (z. B. Google Fotos) ausdrücklich nicht einsehbar | Plattform |
 | Tageslimit-Anzeige | `Heute noch x von 15` | identisch | – |
+| Werbung (Free) | iOS: nur Rewarded geplant (Anbieter offen) | **Abweichung (Produktentscheidung 2026-09-30):** native Werbekarte (AdMob) im Feed nach je 7 Entscheidungen; erste 30 Entscheidungen werbefrei, max. 20/Tag; Karte ist nie eine Entscheidung, zählt nicht fürs Limit, jede Wischrichtung überspringt sie nach 1,5 s, „runter“/Rückgängig sofort; nie während Videowiedergabe (Player stoppt), nie für Pro/Pro-Test. Einwilligung per Google UMP vor dem SDK-Start (`MobileAdsInitProvider` entfernt). Rewarded über AdMob. | Umsatz Free-Stufe; iOS wird ggf. nachgezogen |
+| Kaufmomente | – | Zusammenfassung: einmalig deutliches Pro-Angebot nach dem ersten Durchgang mit Aussortiertem, danach eine leise Zeile; Limit ab < 5 frei vorab sichtbar; Limit-Blatt: „Alle N entfernen – mit Pro“ primär; leiser Pro-Hinweis auf „Heute“ ab Nutzungstag 2 (nur Free) | Umsatz |
 | „Dateien im Container“ (QA) | QA-Fixtures nur in Debug + Startargument | QA-Fixtures nur im `qa`-Build-Typ | Plattform |
 | Ordner-Cloud-Anbieter | iCloud Drive abgelehnt | SAF-Anbieter mit `FLAG_VIRTUAL_DOCUMENT`/virtuellen Dateien werden nicht gelöscht; Google-Drive-Tree abgelehnt (Authority `com.google.android.apps.docs.storage`) | Plattform |
 

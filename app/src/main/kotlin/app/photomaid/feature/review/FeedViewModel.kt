@@ -42,6 +42,9 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import app.photomaid.media.MediaWriteResult
+import app.photomaid.ads.FeedAd
+import app.photomaid.core.ads.FeedAdPolicy
+import app.photomaid.core.capabilities.Capabilities
 import app.photomaid.core.model.MediaKind
 import app.photomaid.core.organize.MediaFolder
 import java.util.UUID
@@ -65,6 +68,9 @@ enum class FeedHaptic { KEEP, CLEANUP, LATER, READY, DATE, BUMP, UNDO, FAVORITE_
 
 /** Geschützter Favorit wurde nach links gewischt: Rückfrage statt Papierkorb. Keine Entscheidung. */
 data class ProtectedFavorite(val item: ItemReference, val isVideo: Boolean)
+
+/** Werbekarte zwischen zwei Medien (nur Free). Keine Entscheidung; Wegwischen erst nach [FeedAdPolicy.MIN_VISIBLE_MS]. */
+data class AdCard(val id: UUID = UUID.randomUUID(), val ad: FeedAd, val shownAtMs: Long)
 
 /** Kurzer, nur nach belegtem Erfolg gezeigter Hinweis (z. B. „Nach „Urlaub“ verschoben“). */
 data class FeedNotice(val id: UUID = UUID.randomUUID(), val text: String)
@@ -119,6 +125,11 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         private set
     var notice by mutableStateOf<FeedNotice?>(null)
         private set
+    var adCard by mutableStateOf<AdCard?>(null)
+        private set
+    /** Uhr für die Mindestanzeigedauer (Tests können sie ersetzen). */
+    var nowMs: () -> Long = { System.currentTimeMillis() }
+    val adSkippable: Boolean get() = adCard?.let { nowMs() - it.shownAtMs >= FeedAdPolicy.MIN_VISIBLE_MS } == true
     /** Läuft ein Schreibwunsch (Favorit/Verschieben) für das aktuelle Medium? Dann kein zweiter. */
     var mediaWriteBusy by mutableStateOf(false)
         private set
@@ -234,6 +245,13 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     fun dragChanged(t: Offset) {
         if (customLater != null) return
         machine.update(Vector2(t.x.toDouble(), t.y.toDouble()))
+        if (adCard != null) {
+            // Werbekarte folgt dem Finger, zeigt aber keine Bedeutung (keine Entscheidung möglich).
+            lockedDirection = null; readyDirection = null
+            val o = machine.displayOffset
+            viewModelScope.launch { offset.snapTo(Offset(o.dx.toFloat(), o.dy.toFloat())) }
+            return
+        }
         lockedDirection = machine.lockedDirection
         val ready = if (machine.readyToCommit) machine.lockedDirection else null
         if (ready != null && ready != readyDirection) emit(FeedHaptic.READY)
@@ -245,6 +263,19 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     fun dragEnded(t: Offset, v: Offset, reduceMotion: Boolean) {
         readyDirection = null
         if (customLater != null) { dragCancelled(); return }
+        if (adCard != null) {
+            // Jede Richtung überspringt die Werbekarte – erst nach der Mindestdauer, nie eine Entscheidung.
+            val r = machine.end(Vector2(t.x.toDouble(), t.y.toDouble()), Vector2(v.x.toDouble(), v.y.toDouble()))
+            if (r is FeedGestureMachine.Resolution.Commit && FeedIntent.of(r.direction) == FeedIntent.PREVIOUS) {
+                perform(FeedIntent.PREVIOUS, reduceMotion) // „runter“ = sofort zurück, auch vor der Mindestdauer
+                return
+            }
+            machine.finishCommit()
+            if (r is FeedGestureMachine.Resolution.Commit && adSkippable) dismissAd()
+            lockedDirection = null
+            resetOffset(reduceMotion)
+            return
+        }
         when (val r = machine.end(Vector2(t.x.toDouble(), t.y.toDouble()), Vector2(v.x.toDouble(), v.y.toDouble()))) {
             is FeedGestureMachine.Resolution.Commit -> perform(FeedIntent.of(r.direction), reduceMotion)
             else -> resetOffset(reduceMotion)
@@ -271,6 +302,11 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     fun perform(intent: FeedIntent, reduceMotion: Boolean) {
         // Solange eine Datumsauswahl offen ist, kann nichts anderes entschieden oder navigiert werden.
         if (customLater != null) { machine.finishCommit(); resetOffset(reduceMotion); return }
+        if (adCard != null) {
+            // „Zurück“ überspringt die Werbekarte sofort (dann normal zurück); Entscheidungen gibt es auf ihr nicht.
+            machine.finishCommit()
+            if (intent == FeedIntent.PREVIOUS) dismissAd() else { if (adSkippable) dismissAd(); resetOffset(reduceMotion); return }
+        }
         if (isCommitting) return
         if (intent == FeedIntent.LATER_CUSTOM) { openCustomLater(reduceMotion); return }
         if (intent == FeedIntent.PREVIOUS) {
@@ -363,6 +399,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 lockedDirection = null
                 refreshWindow()
                 touch()
+                afterDecisionAds()
                 val receipt = session.receipt
                 if (receipt != null && receipt.item == item) {
                     // Gewähltes Datum als Ergänzung derselben Später-Aktion (gemeinsames Undo); sonst Standardtermin.
@@ -530,10 +567,43 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         noticeJob = viewModelScope.launch { delay(AppMotion.NOTICE_MS); if (notice?.id == n.id) notice = null }
     }
 
+    // Werbekarte (nur Free; Lifetime und 30-Minuten-Pro sehen keine)
+
+    private fun adsForUser(): Boolean = app.capabilities.let { it.tier == Capabilities.Tier.FREE && it.adsAllowed }
+
+    /** Nach jeder gespeicherten Entscheidung: zählen, ggf. vorladen oder die Karte zeigen. */
+    private suspend fun afterDecisionAds() {
+        if (!adsForUser()) return
+        val counter = app.feedAdCounter
+        counter.recordDecision()
+        if (!app.feedAds.isAvailable) return
+        val today = app.today
+        if (counter.isDue(today)) {
+            val ad = app.feedAds.take()
+            if (ad != null) {
+                app.player.stop()
+                laterPill = null
+                adCard = AdCard(ad = ad, shownAtMs = nowMs())
+                counter.recordShown(today)
+                touch()
+            } else app.feedAds.preload()
+        } else if (counter.almostDue(today)) app.feedAds.preload()
+    }
+
+    /** Werbekarte schließen (Wisch nach Mindestdauer, „Weiter“, Zurück, Rückgängig). */
+    fun dismissAd(): Boolean {
+        val a = adCard ?: return false
+        adCard = null
+        a.ad.destroy()
+        touch()
+        return true
+    }
+
     // Undo
 
     fun undo() {
         if (isCommitting || customLater != null) return
+        dismissAd() // Rückgängig überspringt die Werbekarte
         laterPill = null
         viewModelScope.launch {
             val before = session.index
@@ -551,5 +621,5 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         }
     }
 
-    override fun onCleared() { app.player.stop() }
+    override fun onCleared() { app.player.stop(); adCard?.ad?.destroy() }
 }

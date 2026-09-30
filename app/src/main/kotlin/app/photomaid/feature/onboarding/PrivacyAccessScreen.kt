@@ -165,6 +165,7 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
                     }
                 }
                 Text(stringResource(R.string.privacy_purchases), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+                if (LocalApp.current.adSdk.isConfigured) Text(stringResource(R.string.privacy_ads), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
             }
             // „Weiter“ immer sichtbar, auch auf kleinen Geräten und bei großer Schrift.
             ProminentButton(stringResource(R.string.continue_), Modifier.padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs),

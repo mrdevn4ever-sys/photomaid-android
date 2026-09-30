@@ -11,6 +11,8 @@ work = "2.12.0"
 media3 = "1.11.1"
 coil = "3.6.3"
 billing = "9.1.0"
+playAds = "25.5.0"
+ump = "4.0.0"
 coroutines = "1.11.0"
 serialization = "1.11.0"
 coreKtx = "1.19.1"
@@ -53,6 +55,8 @@ media3-ui-compose = { module = "androidx.media3:media3-ui-compose", version.ref 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil" }
 billing = { module = "com.android.billingclient:billing-ktx", version.ref = "billing" }
+play-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playAds" }
+ump = { module = "com.google.android.ump:user-messaging-platform", version.ref = "ump" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }

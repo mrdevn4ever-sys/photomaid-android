@@ -1,5 +1,7 @@
 package app.photomaid.navigation
 
+import app.photomaid.core.capabilities.PurchaseState
+import app.photomaid.system.SystemDialogs
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Spacer
 import app.photomaid.design.AppControl
@@ -156,6 +158,12 @@ fun RootContent(app: AppModel) {
         // Rewarded-Vorschau: Restzeit/Ablauf sichtbar halten.
         LaunchedEffect(Unit) { while (true) { delay(30_000); app.entitlements.tick() } }
 
+        // Werbe-Einwilligung (Google UMP) erst nach dem Onboarding und nie für Lifetime Pro; danach SDK-Start.
+        val purchase by app.purchases.state.collectAsState()
+        LaunchedEffect(settings.privacyIntroSeen, purchase) {
+            if (settings.privacyIntroSeen && purchase != PurchaseState.PURCHASED && !app.isQAFixtureMode)
+                SystemDialogs.activity?.let { app.adSdk.start(it) }
+        }
         if (!settings.privacyIntroSeen) {
             PrivacyAccessScreen(onboarding = true, onDone = { scope.launch { app.updateSettings { it.copy(privacyIntroSeen = true) } } })
         } else {

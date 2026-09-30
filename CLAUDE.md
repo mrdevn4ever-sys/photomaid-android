@@ -26,6 +26,10 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Medien-IDs). Entscheidungen hängen am Medium im Ledger; Zähler immer über `AppModel.pendingQueue` – nie je Quelle speichern.
 - Pro-Test (Rewarded, 30 min, 1× pro lokalem Tag) schaltet Pro-Werkzeuge frei, hebt das Papierkorb-Limit NIE auf
   (`hasProToolsAccess` ≠ `hasUnlimitedTrashAccess`).
+- Werbung nur in Free (`Capabilities.Tier.FREE`): native Werbekarte im Feed alle 7 Entscheidungen (`core/.../ads/FeedAdPolicy.kt`:
+  30 Entscheidungen Aufwärmphase, max. 20/Tag, 1,5 s Mindestdauer). Die Karte ist NIE eine Entscheidung und zählt nicht fürs
+  Limit; „runter“ und Rückgängig überspringen sofort. AdMob startet erst nach UMP-Einwilligung; Anfragen enthalten nie Medien,
+  Dateinamen, Pfade, Hashes oder IDs. Echte AdMob-IDs nie im Repo (Gradle-Properties), sonst Werbung aus.
 
 ## Verbote
 

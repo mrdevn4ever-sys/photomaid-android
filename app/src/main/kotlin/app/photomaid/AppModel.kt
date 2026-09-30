@@ -78,8 +78,9 @@ class AppModel(
     val isQAFixtureMode: Boolean = false,
     purchaseOverride: PurchaseGateway? = null,
     mediaOverride: ((() -> Boolean) -> MediaLibrary)? = null,
-    /** Tests: Werbeanbieter-Fake. Produktion: kein Anbieter konfiguriert (Release-Blocker, siehe docs). */
+    /** Tests: Werbeanbieter-Fakes. Produktion: AdMob, sofern IDs konfiguriert sind (sonst keine Werbung). */
     adsOverride: RewardedAdGateway? = null,
+    feedAdsOverride: app.photomaid.ads.FeedAdSource? = null,
 ) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     val store = KeyValueStore(db)
@@ -94,7 +95,13 @@ class AppModel(
     val purchases: PurchaseGateway = purchaseOverride ?: BuildConfig.PLAY_PRO_PRODUCT_ID.let { id ->
         if (id.isBlank()) UnconfiguredPurchaseGateway() else PlayBillingGateway(context, id, store)
     }
-    val entitlements = EntitlementCenter(store, purchases, adsOverride ?: UnconfiguredRewardedAdGateway())
+    val adSdk = app.photomaid.ads.AdMobSdk(context)
+    private val useAdMob = adsOverride == null && feedAdsOverride == null && !isQAFixtureMode && adSdk.isConfigured
+    val entitlements = EntitlementCenter(store, purchases,
+        adsOverride ?: if (useAdMob) app.photomaid.ads.AdMobRewardedGateway(context, adSdk) else UnconfiguredRewardedAdGateway())
+    /** Werbekarten im Feed (nur Free). */
+    val feedAds: app.photomaid.ads.FeedAdSource = feedAdsOverride ?: if (useAdMob) app.photomaid.ads.AdMobFeedAds(context, adSdk) else app.photomaid.ads.NoFeedAds
+    val feedAdCounter = app.photomaid.ads.FeedAdsStore(store)
     val collections = CollectionsStore(store)
     val quickAccess = app.photomaid.feature.quickaccess.QuickAccessStore(store)
 
@@ -112,9 +119,14 @@ class AppModel(
     /** Blockierend laden (Boot, abseits des Main-Threads). */
     fun loadBlocking() {
         _settings.value = store.value<AppSettingsData>(SETTINGS_KEY) ?: AppSettingsData()
+        if (_settings.value.firstSeenDay == null) {
+            _settings.value = _settings.value.copy(firstSeenDay = today)
+            runCatching { store.setValue(SETTINGS_KEY, _settings.value) }
+        }
         sources.load()
         collections.load()
         quickAccess.load()
+        feedAdCounter.load()
         entitlements.load()
         (purchases as? PlayBillingGateway)?.loadCache()
         reminders.ensureChannel()

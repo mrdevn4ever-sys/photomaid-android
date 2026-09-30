@@ -12,7 +12,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Google Play Billing (Pro-Einmalkauf). -->
     <uses-permission android:name="com.android.vending.BILLING" />
-    <!-- Kein INTERNET für eigene Zwecke: nur Play Billing (über den Play-Dienst). -->
+    <!-- Kein eigenes Netzwerk (kein Backend, kein Upload). INTERNET/ACCESS_NETWORK_STATE/AD_ID kommen nur über das
+         AdMob-SDK (Werbung in Free, erst nach UMP-Einwilligung gestartet). -->
 
     <application
         android:name=".PhotoMaidApplication"
@@ -27,6 +28,11 @@
         android:enableOnBackInvokedCallback="false"
         android:theme="@style/Theme.PhotoMaid"
         tools:targetApi="37">
+
+        <!-- AdMob: App-ID aus Gradle (Debug: Google-Test-ID; Release: nur wenn konfiguriert). -->
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="${admobAppId}" />
+        <!-- SDK erst nach Einwilligung und nur mit konfigurierter ID starten (kein Auto-Start ohne ID). -->
+        <provider android:name="com.google.android.gms.ads.MobileAdsInitProvider" android:authorities="${applicationId}.mobileadsinitprovider" tools:node="remove" />
 
         <activity
             android:name=".MainActivity"

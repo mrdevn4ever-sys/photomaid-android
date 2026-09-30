@@ -1,5 +1,7 @@
 package app.photomaid.feature.today
 
+import androidx.compose.material.icons.rounded.WorkspacePremium
+import app.photomaid.core.capabilities.Capabilities
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -184,6 +186,9 @@ fun TodayScreen(nav: Nav) {
             }
             // Schnellzugriffe: gefilterte Einstiege in denselben Feed; neu berechnet bei Mediathek- oder Entscheidungsänderung.
             if (access.canRead) QuickAccessSection(nav, snapshot, pending?.toSet())
+            // Leiser Pro-Hinweis: nur Free, erst ab dem zweiten Nutzungstag, nie aufdringlich.
+            val firstDay = app.settings.collectAsState().value.firstSeenDay
+            if (app.capabilities.tier == Capabilities.Tier.FREE && firstDay != null && app.today > firstDay) ProHint(nav::openPro)
             device?.let { d -> StorageLine(d) { nav.push(Routes.STORAGE) } }
             Spacer(Modifier.height(TabBarClearance))
         }
@@ -209,6 +214,23 @@ internal fun StatusCard(icon: ImageVector, tint: Color, title: String, count: In
             // Ziffern gleich breit (tnum), damit 0 … 999 sauber rechtsbündig stehen.
             Text("$count", style = AppTypography.headline.copy(fontFeatureSettings = "tnum"), color = c.textPrimary, maxLines = 1, softWrap = false,
                 textAlign = TextAlign.End)
+            Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.regular))
+        }
+    }
+}
+
+@Composable
+private fun ProHint(onClick: () -> Unit) {
+    val c = PM.colors
+    SurfaceCard(Modifier.testTag("today.pro").semantics(mergeDescendants = true) {},
+        padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.s), onClick = onClick) {
+        Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(AppIconSize.regular))
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.today_pro_title), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+                Text(stringResource(R.string.today_pro_text), style = AppTypography.caption, color = c.textSecondary)
+            }
             Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.regular))
         }
     }

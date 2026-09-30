@@ -88,6 +88,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.photomaid.FeedRequest
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.material.icons.rounded.WorkspacePremium
+import app.photomaid.design.PlainButton
+import app.photomaid.core.cleanup.AllowanceSnapshot
+import app.photomaid.core.capabilities.Capabilities
 import app.photomaid.R
 import app.photomaid.core.feed.FeedIntent
 import app.photomaid.core.feed.SessionSummary
@@ -215,10 +220,21 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     EmptyState(Icons.Rounded.CheckCircle, stringResource(R.string.qa_all_done), stringResource(emptyMsg),
                         actionTitle = stringResource(R.string.back), action = onClose)
                 }
-                model.session.isFinished -> SessionSummaryView(
-                    model.session.summary, read.basket.size, Modifier.weight(1f),
-                    reviewBasket = openBasket, goBack = { model.perform(FeedIntent.PREVIOUS, reduceMotion) }, done = onClose,
-                )
+                model.adCard != null -> AdStage(model, model.adCard!!, reduceMotion, openPro = nav::openPro, modifier = Modifier.weight(1f))
+                model.session.isFinished -> {
+                    // Kaufmoment: nur für Nutzer ohne Lifetime-Pro und nur, wenn wirklich aussortiert wurde.
+                    val summary = model.session.summary
+                    val upsell = app.capabilities.tier != Capabilities.Tier.LIFETIME_PRO && summary.marked > 0
+                    // Einmalig deutlicher (erster erfolgreicher Durchgang), danach eine leise Zeile.
+                    val strong = remember { upsell && !app.settings.value.proOfferShown }
+                    if (strong) LaunchedEffect(Unit) { app.updateSettings { it.copy(proOfferShown = true) } }
+                    SessionSummaryView(
+                        summary, read.basket.size, Modifier.weight(1f),
+                        reviewBasket = openBasket, goBack = { model.perform(FeedIntent.PREVIOUS, reduceMotion) }, done = onClose,
+                        upsell = when { !upsell -> null; strong -> SummaryUpsell.STRONG; else -> SummaryUpsell.QUIET },
+                        allowance = read.allowance, openPro = nav::openPro,
+                    )
+                }
                 else -> {
                     MediaStage(model, reduceMotion, showHints, gesturesEnabled = !talkBack && zoom <= 1.01f, zoom = zoom,
                         onZoom = { zoom = it.coerceIn(1f, 5f) }, onZoomReset = { zoom = 1f }, hideHints = ::hideHints,
@@ -459,8 +475,11 @@ private fun Hint(icon: ImageVector, title: String, meaning: String, tint: Color)
     }
 }
 
+enum class SummaryUpsell { QUIET, STRONG }
+
 @Composable
-fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modifier, reviewBasket: () -> Unit, goBack: () -> Unit, done: () -> Unit) {
+fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modifier, reviewBasket: () -> Unit, goBack: () -> Unit, done: () -> Unit,
+                       upsell: SummaryUpsell? = null, allowance: AllowanceSnapshot? = null, openPro: () -> Unit = {}) {
     val c = PM.colors
     Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(AppSpacing.pageMargin),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
@@ -482,6 +501,29 @@ fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modi
         if (basketCount > 0) {
             ProminentButton(stringResource(R.string.summary_view_basket, basketCount), fillWidth = true, large = true, onClick = reviewBasket)
             Text(stringResource(R.string.summary_basket_hint), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+            // Limit früh zeigen (echte Zahl aus dem Ledger), bevor das Leeren daran scheitert.
+            val left = allowance?.available
+            if (upsell != null && left != null && left < LIMIT_SOON) LimitSoon(left, allowance.limit ?: 0, openPro)
+        }
+        when (upsell) {
+            SummaryUpsell.STRONG -> SurfaceCard(Modifier.testTag("summary.offer")) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                    Box(Modifier.size(44.dp).clip(RoundedCornerShape(AppRadii.small)).background(c.accent.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
+                        Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(AppIconSize.medium))
+                    }
+                    Text(stringResource(R.string.summary_offer_title), style = AppTypography.headline, color = c.textPrimary, modifier = Modifier.weight(1f))
+                }
+                Spacer(Modifier.size(AppSpacing.xs))
+                Text(stringResource(R.string.summary_offer_text), style = AppTypography.subheadline, color = c.textSecondary)
+                Spacer(Modifier.size(AppSpacing.s))
+                GlassButton(stringResource(R.string.pro_view), Modifier.testTag("summary.pro"), fillWidth = true, onClick = openPro)
+            }
+            SummaryUpsell.QUIET -> Column(Modifier.fillMaxWidth().testTag("summary.upsell"), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(pluralStringResource(R.plurals.summary_upsell_count, summary.marked, summary.marked) + " " + stringResource(R.string.summary_upsell),
+                    style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
+                PlainButton(stringResource(R.string.pro_view), Modifier.testTag("summary.pro"), onClick = openPro)
+            }
+            null -> Unit
         }
         GlassButton(stringResource(R.string.summary_last), onClick = goBack)
         GlassButton(stringResource(R.string.done), onClick = done)
@@ -491,3 +533,17 @@ fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modi
 
 @Suppress("unused")
 private fun Modifier.dim(v: Boolean) = if (v) alpha(0.45f) else this
+
+/** Ab hier wird das Tageslimit vorab gezeigt („Heute noch 3 von 15 frei“). */
+const val LIMIT_SOON = 5
+
+@Composable
+fun LimitSoon(available: Int, limit: Int, openPro: () -> Unit) {
+    val c = PM.colors
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(AppRadii.small)).background(c.backgroundTint).padding(horizontal = AppSpacing.s).testTag("limit.soon"),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        Text(stringResource(R.string.limit_soon, available, limit), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold),
+            color = c.textPrimary, modifier = Modifier.weight(1f))
+        PlainButton(stringResource(R.string.limit_soon_pro), onClick = openPro)
+    }
+}

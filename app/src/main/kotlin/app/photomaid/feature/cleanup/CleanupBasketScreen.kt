@@ -1,5 +1,6 @@
 package app.photomaid.feature.cleanup
 
+import app.photomaid.feature.review.LIMIT_SOON
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -200,6 +201,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
                         if (a != null && available != null) {
                             Text(stringResource(R.string.basket_allowance, available, a.limit ?: 0), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold),
                                 color = if (available == 0) c.textPrimary else c.textSecondary)
+                            if (available < LIMIT_SOON) PlainButton(stringResource(R.string.limit_soon_pro), Modifier.testTag("basket.limit.soon"), onClick = nav::openPro)
                         }
                     }
                 }
@@ -267,9 +269,10 @@ private fun LimitSheet(available: Int, limit: Int, selected: Int, takePartial: (
                 style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
             Text(stringResource(R.string.limit_message, limit, selected), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
             if (available == 0) Text(stringResource(R.string.limit_tomorrow), style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
-            if (available > 0) ProminentButton(stringResource(R.string.limit_take_partial, available), fillWidth = true, large = true, color = c.cleanup, onClick = takePartial)
-            val pro: @Composable () -> Unit = { GlassButton(stringResource(R.string.pro_view), fillWidth = true, large = true, onClick = openPro) }
-            if (available == 0) ProminentButton(stringResource(R.string.pro_view), fillWidth = true, large = true, onClick = openPro) else pro()
+            // Primär: alles auf einmal mit Pro; die Teilmenge bleibt als ehrliche Alternative.
+            ProminentButton(stringResource(R.string.limit_all_with_pro, selected), Modifier.testTag("basket.limit.pro"), fillWidth = true, large = true, onClick = openPro)
+            if (available > 0) GlassButton(stringResource(R.string.limit_take_partial, available), Modifier.testTag("basket.limit.partial"), fillWidth = true, large = true,
+                tint = c.cleanup, onClick = takePartial)
             PlainButton(stringResource(R.string.cancel), onClick = onDismiss)
         }
     }

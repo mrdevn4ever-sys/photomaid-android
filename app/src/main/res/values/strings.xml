@@ -401,7 +401,9 @@
     <string name="pro_f3d">Exakt gleiche Fotos, Videos und Dateien aus verbundenen Ordnern.</string>
     <string name="pro_f5">Eigene Sammlungen</string>
     <string name="pro_f5d">Lege eigene Filter an, zum Beispiel „Videos größer als 500 MB“ – jederzeit mit einem Tipp prüfbar.</string>
-    <string name="pro_also">Mit Pro: keine Werbeangebote. Kein Konto, alles bleibt auf deinem Gerät.</string>
+    <string name="pro_also">Einmal zahlen, für immer werbefrei. Kein Abo, kein Konto – alles bleibt auf deinem Gerät.</string>
+    <string name="pro_f1">Ohne Werbung</string>
+    <string name="pro_f1d">Keine Werbekarten zwischen deinen Fotos – nur du und deine Mediathek.</string>
     <string name="pro_details">So funktioniert Pro</string>
     <string name="pro_details_dup">Kopien: Verglichen wird der Dateiinhalt (SHA-256) auf deinem Gerät. Ähnlich aussehende Bilder gelten nicht als Kopie.</string>
     <string name="pro_details_rules">Sammlungen: Sie filtern nur, was schon auf deinem Gerät ist, und öffnen den Feed. Es läuft nichts im Hintergrund und es wird nichts automatisch gelöscht.</string>
@@ -476,6 +478,7 @@
     <string name="privacy_folders">Ordner (optional)</string>
     <string name="privacy_folders_text">Dateien siehst du nur aus Ordnern, die du selbst auswählst. Das geht jederzeit unter Aufräumen › Dateien.</string>
     <string name="privacy_purchases">Käufe laufen über Google Play. Dabei werden keine Fotos, Dateinamen, Pfade oder Hashes übertragen.</string>
+    <string name="privacy_ads">Die kostenlose Version zeigt Werbung von Google AdMob. In der EU fragen wir vorher nach deiner Einwilligung. Anzeigen bekommen nie Fotos, Dateinamen, Pfade oder Hashes. Mit Pro ist die App werbefrei.</string>
     <string name="continue_">Weiter</string>
 
     <!-- Mitteilungen -->
@@ -576,4 +579,23 @@
     <string name="feed_empty_latest_videos">Bei deinen neuesten Videos wartet gerade nichts auf dich.</string>
     <string name="feed_empty_this_week">Aus dieser Woche wartet gerade nichts auf dich.</string>
     <string name="feed_empty_folder">In diesem Ordner wartet gerade nichts auf dich.</string>
+    <!-- Werbekarte im Feed (nur Free) -->
+    <string name="ad_label">Anzeige</string>
+    <string name="ad_skip">Weiter</string>
+    <string name="ad_wait">Gleich geht’s weiter …</string>
+    <string name="ad_remove">Ohne Werbung mit Pro</string>
+    <string name="set_ad_privacy">Werbe-Einwilligung ändern</string>
+    <!-- Kaufmomente -->
+    <string name="limit_all_with_pro">Alle %1$d entfernen – mit Pro</string>
+    <string name="summary_upsell">Mit Pro ohne Tageslimit und ohne Werbung.</string>
+    <string name="summary_offer_title">Stark aufgeräumt!</string>
+    <string name="summary_offer_text">Mit PhotoMaid Pro leerst du den Papierkorb ohne Tageslimit – und siehst nie wieder Werbung. Einmal zahlen, kein Abo.</string>
+    <string name="limit_soon">Heute noch %1$d von %2$d frei</string>
+    <string name="limit_soon_pro">Ohne Limit mit Pro</string>
+    <string name="today_pro_title">PhotoMaid Pro</string>
+    <string name="today_pro_text">Ohne Tageslimit, ohne Werbung. Einmalkauf.</string>
+    <plurals name="summary_upsell_count">
+        <item quantity="one">%1$d aussortiert.</item>
+        <item quantity="other">%1$d aussortiert.</item>
+    </plurals>
 </resources>

@@ -1,6 +1,7 @@
 package app.photomaid
 
 import app.photomaid.core.later.LaterInterval
+import app.photomaid.core.model.LocalDay
 import app.photomaid.design.AppearanceChoice
 import kotlinx.serialization.Serializable
 
@@ -29,4 +30,8 @@ data class AppSettingsData(
      * nach. Standard AN (neu, vorher gab es kein Favoritenverhalten; siehe docs/PRODUCT_UX_AUDIT.md).
      */
     val protectFavorites: Boolean = true,
+    /** Erster lokaler Nutzungstag (leiser Pro-Hinweis auf „Heute“ erst ab Tag 2). */
+    val firstSeenDay: LocalDay? = null,
+    /** Deutlicheres Pro-Angebot nach dem ersten erfolgreichen Durchgang wurde einmal gezeigt. */
+    val proOfferShown: Boolean = false,
 )

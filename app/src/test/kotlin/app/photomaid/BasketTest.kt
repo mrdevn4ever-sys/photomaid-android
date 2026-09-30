@@ -101,7 +101,7 @@ class BasketTest {
         rule.onNodeWithText("Papierkorb leeren: 1 Foto/Video").performClick()
         waitText("Tageslimit für heute erreicht")
         rule.onNodeWithText("Morgen ist das Limit wieder frei.").assertExists()
-        rule.onNodeWithText("PhotoMaid Pro ansehen").performClick()
+        rule.onNodeWithText("Alle 1 entfernen – mit Pro").performClick()
         assertEquals("pro", nav.events.last())
         assertEquals(Disposition.MARKED_FOR_CLEANUP, app.read.value.basket.single().disposition)
     }

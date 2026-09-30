@@ -1,5 +1,6 @@
 package app.photomaid.feature.settings
 
+import app.photomaid.system.SystemDialogs
 import app.photomaid.feature.pro.minutesLeft
 import android.content.Intent
 import android.net.Uri
@@ -137,6 +138,10 @@ fun SettingsScreen(nav: Nav) {
                 SourceRow(Icons.Rounded.WorkspacePremium, c.accent, stringResource(R.string.pro_title), Modifier.clickableRow(onClick = nav::openPro),
                     detail = app.capabilities.rewardRemaining?.let { stringResource(R.string.reward_active, minutesLeft(it)) }
                         ?: stringResource(if (purchase == PurchaseState.PURCHASED) R.string.set_pro_active else R.string.set_pro_once))
+                if (purchase != PurchaseState.PURCHASED && app.adSdk.privacyOptionsRequired) {
+                    RowDivider()
+                    PlainButton(stringResource(R.string.set_ad_privacy)) { SystemDialogs.activity?.let { app.adSdk.showPrivacyOptions(it) } }
+                }
                 if (app.purchases.isConfigured) {
                     RowDivider()
                     PlainButton(stringResource(R.string.pro_restore)) {

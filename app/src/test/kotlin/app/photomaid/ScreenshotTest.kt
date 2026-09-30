@@ -17,6 +17,7 @@ import app.photomaid.media.PhotoAccess
 import androidx.compose.ui.test.swipeLeft
 
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeUp
 
 import androidx.compose.ui.test.performClick
 
@@ -323,4 +324,47 @@ class ScreenshotTest {
     @Test @Config(qualifiers = "w320dp-h1100dp-xhdpi") fun r06_home_small() = home("r06_home_small", homeApp(allDone = false, four = true))
     @Test @Config(qualifiers = "w393dp-h1600dp-xxhdpi") fun r07_home_font150() = homeApp(allDone = false, four = true).let { RuntimeEnvironment.setFontScale(1.5f); home("r07_home_font150", it) }
     @Test @Config(qualifiers = "w320dp-h2000dp-xhdpi") fun r08_home_font200_small() = homeApp(allDone = false, four = true).let { RuntimeEnvironment.setFontScale(2.0f); home("r08_home_font200_small", it) }
+
+    // Werbung + Kaufmomente (JVM, keine echte Anzeige: Fake-Quelle ohne SDK).
+    private fun adApp(dark: Boolean = false) = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
+        purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED), feedAds = FakeFeedAds()) { a ->
+        if (dark) a.updateSettings { it.copy(appearance = AppearanceChoice.DARK) }
+        a.store.setValue("feedads.v1", app.photomaid.core.ads.FeedAdState(29, 29)); a.feedAdCounter.load()
+    }
+    private fun adShot(name: String, a: AppModel, skippable: Boolean) {
+        feedPhotos(a); waitTagX("feed.media.ready")
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
+        waitTagX("feed.ad")
+        if (skippable) { Thread.sleep(1_700); waitTagX("feed.ad.skip") }
+        shotScreen(name)
+    }
+    @Test fun z01_ad_card_wait() = adShot("z01_ad_card_wait", adApp(), skippable = false)
+    @Test fun z02_ad_card_skip() = adShot("z02_ad_card_skip", adApp(), skippable = true)
+    @Test fun z03_ad_card_dark() = adShot("z03_ad_card_dark", adApp(dark = true), skippable = true)
+    private fun summary(name: String, upsell: app.photomaid.feature.review.SummaryUpsell?, left: Int?) = seededApp().let { a ->
+        val allowance = left?.let { app.photomaid.core.cleanup.AllowanceSnapshot(a.today, 15, 15 - it, 0) }
+        shot(name, a) { AppBackground { app.photomaid.feature.review.SessionSummaryView(app.photomaid.core.feed.SessionSummary(kept = 9, marked = 6, later = 2), 6,
+            Modifier.fillMaxSize(), {}, {}, {}, upsell = upsell, allowance = allowance) } }
+    }
+    @Test @Config(qualifiers = "w393dp-h1100dp-xxhdpi") fun z04_summary_offer() = summary("z04_summary_offer", app.photomaid.feature.review.SummaryUpsell.STRONG, 3)
+    @Test fun z05_summary_quiet() = summary("z05_summary_quiet", app.photomaid.feature.review.SummaryUpsell.QUIET, null)
+    @Test fun z06_limit_sheet() = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 17, videos = 0).also { l -> lib = l } },
+        purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED)) { a ->
+        val refs = lib.all.map { ItemReference.photo(it.id) }
+        suspend fun mark(r: ItemReference) = a.ledger.apply(DecisionCommand(item = r, expectedRevision = a.ledger.record(r).revision, action = DecisionAction.MarkForCleanup))
+        refs.take(13).forEach { mark(it) }
+        a.runCleanup(refs.take(13), app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE)
+        refs.drop(13).forEach { mark(it) }
+    }.let {
+        rule.setContent { TestHost(it) { CleanupBasketScreen(nav, showsDone = false) } }
+        rule.waitUntil(10_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Papierkorb leeren: 4 Fotos/Videos")).fetchSemanticsNodes().isNotEmpty() }
+        shotScreen("z06a_basket_limit_soon")
+        rule.onNode(androidx.compose.ui.test.hasText("Papierkorb leeren: 4 Fotos/Videos")).performClick()
+        waitTagX("basket.limit.pro"); rule.mainClock.advanceTimeBy(1000); shotScreen("z06b_limit_sheet")
+    }
+    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun z07_pro_full() = seededApp().let { shot("z07_pro_full", it) { ProScreen(nav) } }
+    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun z08_pro_dark() = seededApp(dark = true).let { shot("z08_pro_dark", it) { ProScreen(nav) } }
+    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun z09_today_pro_hint() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
+        purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED)) { a -> a.updateSettings { s -> s.copy(firstSeenDay = a.today.addingDays(-1)) } }
+        .let { shot("z09_today_pro_hint", it, waitTag = "today.pro") { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
 }
