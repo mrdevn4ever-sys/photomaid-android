@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -173,9 +176,10 @@ fun TodayScreen(nav: Nav) {
                 }
             }
             // Echte Zahlen: was gerade im Papierkorb liegt und was zurückgestellt ist (keine „freigegeben“-Behauptung).
-            Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                StatTile(Icons.Rounded.Delete, c.cleanup, stringResource(R.string.basket), read.basket.size, Modifier.weight(1f).testTag("today.basket")) { nav.push(Routes.BASKET) }
-                StatTile(Icons.Rounded.Bookmark, c.later, stringResource(R.string.later), read.laterRecords.size, Modifier.weight(1f).testTag("today.later")) { nav.push(Routes.LATER) }
+            // Untereinander: gleiche Breite, die Zähler beider Karten stehen rechtsbündig auf derselben Achse.
+            Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                StatusCard(Icons.Rounded.Delete, c.cleanup, stringResource(R.string.basket), read.basket.size, Modifier.testTag("today.basket")) { nav.push(Routes.BASKET) }
+                StatusCard(Icons.Rounded.Bookmark, c.later, stringResource(R.string.later), read.laterRecords.size, Modifier.testTag("today.later")) { nav.push(Routes.LATER) }
             }
             device?.let { d -> StorageLine(d) { nav.push(Routes.STORAGE) } }
             Spacer(Modifier.height(TabBarClearance))
@@ -183,18 +187,27 @@ fun TodayScreen(nav: Nav) {
     }
 }
 
-/** Kompakte Kachel mit echter Zahl (Papierkorb, Später). */
+/**
+ * Einzeilige Statuskarte mit echter Zahl (Papierkorb, Später): Icon · Label · Zähler rechtsbündig · Chevron.
+ * Ganze Karte tappbar. Das Label kürzt sich bei großer Schrift, Zähler und Chevron bleiben immer sichtbar.
+ */
 @Composable
-private fun StatTile(icon: ImageVector, tint: Color, title: String, count: Int, modifier: Modifier, onClick: () -> Unit) {
+internal fun StatusCard(icon: ImageVector, tint: Color, title: String, count: Int, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val c = PM.colors
     val desc = pluralStringResource(R.plurals.items_count, count, count)
     SurfaceCard(modifier.semantics(mergeDescendants = true) { contentDescription = "$title, $desc" },
         padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.s), onClick = onClick) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
             Icon(icon, null, tint = tint, modifier = Modifier.size(AppIconSize.regular))
-            Text(title, style = AppTypography.subheadline, color = c.textSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+            // Große Schrift + dreistelliger Zähler auf schmalen Telefonen: Label verkleinert sich minimal statt abgeschnitten zu werden.
+            BasicText(title, Modifier.weight(1f), style = AppTypography.body.copy(color = c.textPrimary), maxLines = 1, overflow = TextOverflow.Ellipsis,
+                autoSize = TextAutoSize.StepBased(minFontSize = AppTypography.footnote.fontSize, maxFontSize = AppTypography.body.fontSize))
+            // Ziffern gleich breit (tnum), damit 0 … 999 sauber rechtsbündig stehen.
+            Text("$count", style = AppTypography.headline.copy(fontFeatureSettings = "tnum"), color = c.textPrimary, maxLines = 1, softWrap = false,
+                textAlign = TextAlign.End)
+            Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.regular))
         }
-        Text("$count", style = AppTypography.title, color = c.textPrimary)
     }
 }
 

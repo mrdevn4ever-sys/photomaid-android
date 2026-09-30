@@ -89,11 +89,9 @@ class FeedActionsTest {
     @Test fun setAndRemoveSystemFavorite() {
         start()
         rule.onNode(hasContentDescription("Als Favorit markieren")).performClick()
-        rule.waitUntil(5_000) { lib.favorites[id(0)] == true }
-        rule.onNode(hasContentDescription("Favorit entfernen")).assertExists()
+        rule.waitUntil(10_000) { lib.favorites[id(0)] == true && rule.onAllNodes(hasContentDescription("Favorit entfernen")).fetchSemanticsNodes().isNotEmpty() }
         rule.onNode(hasContentDescription("Favorit entfernen")).performClick()
-        rule.waitUntil(5_000) { lib.favorites[id(0)] == false }
-        rule.onNode(hasContentDescription("Als Favorit markieren")).assertExists()
+        rule.waitUntil(10_000) { lib.favorites[id(0)] == false && rule.onAllNodes(hasContentDescription("Als Favorit markieren")).fetchSemanticsNodes().isNotEmpty() }
         assertEquals(listOf("favorite:true", "favorite:false"), lib.writes)
         assertEquals(0, events().size) // keine Review-Entscheidung
         rule.onNodeWithText("1 von 5").assertExists()

@@ -1,5 +1,9 @@
 package app.photomaid
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Bookmark
+import androidx.compose.material.icons.rounded.Delete
+
 import app.photomaid.media.PhotoAccess
 
 import androidx.compose.ui.test.swipeLeft
@@ -223,4 +227,24 @@ class ScreenshotTest {
         shotScreen("x19_favorite_error")
     }
     @Test fun x20_later_notify() = seededApp().let { shot("x20_later_notify", it) { LaterScreen(nav) } }
+
+    // Home-Statuskarten: Zähler 0/1/6/99/999, Schrift 1.0–2.0, schmales Telefon.
+    private fun statusCards(name: String, scale: Float) = emptyApp().let {
+        RuntimeEnvironment.setFontScale(scale)
+        shot(name, it) {
+            AppBackground {
+                androidx.compose.foundation.layout.Column(Modifier.padding(AppSpacing.pageMargin),
+                    verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(AppSpacing.xs)) {
+                    val c = app.photomaid.design.PM.colors
+                    for (n in listOf(0, 1, 6, 99, 999)) {
+                        app.photomaid.feature.today.StatusCard(Icons.Rounded.Delete, c.cleanup, "Papierkorb", n) {}
+                        app.photomaid.feature.today.StatusCard(Icons.Rounded.Bookmark, c.later, "Später", n) {}
+                    }
+                }
+            }
+        }
+    }
+    @Test fun h01_status_cards_100() = statusCards("h01_status_cards_100", 1.0f)
+    @Test fun h02_status_cards_150() = statusCards("h02_status_cards_150", 1.5f)
+    @Test @Config(qualifiers = "w320dp-h900dp-xhdpi") fun h03_status_cards_200_small() = statusCards("h03_status_cards_200_small", 2.0f)
 }
