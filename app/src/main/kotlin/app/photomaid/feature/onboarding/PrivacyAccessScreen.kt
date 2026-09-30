@@ -97,6 +97,8 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(AppSpacing.pageMargin),
                 horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
                 Box(Modifier.glassRect().padding(AppSpacing.l)) { Icon(Icons.Rounded.Shield, null, tint = c.accent, modifier = Modifier.size(56.dp)) }
+                // Der Claim erscheint nur hier beim ersten Start – „Heute“ zeigt danach direkt den Inhalt.
+                if (onboarding) Text(stringResource(R.string.today_subtitle), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.accent, textAlign = TextAlign.Center)
                 Text(stringResource(R.string.privacy_title), style = AppTypography.title, color = c.textPrimary, textAlign = TextAlign.Center)
                 Text(stringResource(R.string.privacy_text), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
                 SurfaceCard {

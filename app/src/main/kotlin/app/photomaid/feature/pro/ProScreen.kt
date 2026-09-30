@@ -321,7 +321,7 @@ private fun ProHero() {
                 }
             }
         }
-        Box(Modifier.align(Alignment.BottomCenter).padding(bottom = 10.dp).size(44.dp).shadow(6.dp, CircleShape).clip(CircleShape).background(c.accent),
+        Box(Modifier.align(Alignment.BottomCenter).padding(bottom = 10.dp).size(44.dp).shadow(6.dp, CircleShape).clip(CircleShape).background(c.accentFill),
             contentAlignment = Alignment.Center) {
             Icon(Icons.Rounded.WorkspacePremium, null, tint = Color.White, modifier = Modifier.size(26.dp))
         }

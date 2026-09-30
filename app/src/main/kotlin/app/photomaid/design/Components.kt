@@ -1,5 +1,10 @@
 package app.photomaid.design
 
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.semantics.text
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.togetherWith
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.Offset
@@ -227,7 +232,7 @@ fun ProminentButton(
     enabled: Boolean = true,
     fillWidth: Boolean = false,
     large: Boolean = false,
-    color: Color = PM.colors.accent,
+    color: Color = PM.colors.accentFill,
     subtitle: String? = null,
     onClick: () -> Unit,
 ) {
@@ -255,14 +260,15 @@ fun ProminentButton(
 
 /** Textbutton ohne Fläche (iOS Plain-Button in Listen). */
 @Composable
-fun PlainButton(text: String, modifier: Modifier = Modifier, color: Color = PM.colors.accent, enabled: Boolean = true, onClick: () -> Unit) {
+fun PlainButton(text: String, modifier: Modifier = Modifier, color: Color = PM.colors.accent, enabled: Boolean = true,
+                style: TextStyle = AppTypography.body, onClick: () -> Unit) {
     Box(
         modifier
             .heightIn(min = AppSpacing.minTouch)
             .alpha(if (enabled) 1f else 0.45f)
             .clickable(enabled = enabled, role = Role.Button, onClick = onClick),
         contentAlignment = Alignment.CenterStart,
-    ) { Text(text, style = AppTypography.body, color = color) }
+    ) { Text(text, style = style, color = color) }
 }
 
 /** Kopfzeile mit Titel, Untertitel und Glas-Buttons (Mockup-Stil, iOS `GlassToolbar`). */
@@ -359,14 +365,15 @@ fun SourceRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.s),
     ) {
+        // Gleiche Geometrie wie [ListRow]: 32-dp-Kachel, 20-dp-Symbol, Titel in Body.
         Box(
-            Modifier.size(40.dp).clip(RoundedCornerShape(AppRadii.small)).background(tint.copy(alpha = 0.12f)),
+            Modifier.size(32.dp).clip(RoundedCornerShape(AppRadii.tile)).background(tint.copy(alpha = 0.12f)),
             contentAlignment = Alignment.Center,
-        ) { Icon(icon, null, tint = tint, modifier = Modifier.size(22.dp)) }
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        ) { Icon(icon, null, tint = tint, modifier = Modifier.size(20.dp)) }
+        Column(Modifier.weight(1f).padding(vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             // Große Schrift: lange Wörter („Speicherübersicht“) mit Silbentrennung statt mitten im Wort umbrechen.
-            Text(title, style = AppTypography.headline.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph), color = c.textPrimary)
-            if (subtitle != null) Text(subtitle, style = AppTypography.caption, color = c.textSecondary)
+            Text(title, style = AppTypography.body.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph), color = c.textPrimary)
+            if (subtitle != null) Text(subtitle, style = AppTypography.footnote, color = c.textSecondary)
             if (stacked && detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary)
         }
         if (value != null || valueIcon != null || (!stacked && detail != null)) {
@@ -442,6 +449,8 @@ fun EmptyState(
     action: (() -> Unit)? = null,
     /** Kleiner Zusatz, z. B. die passende Geste („→ Später“). */
     hint: String? = null,
+    /** Bedeutungsfarbe des Zustands (z. B. Später = Türkis); Standard Akzent. */
+    tint: Color = PM.colors.accent,
 ) {
     val c = PM.colors
     Column(
@@ -450,8 +459,8 @@ fun EmptyState(
         verticalArrangement = Arrangement.spacedBy(AppSpacing.s),
     ) {
         // Ruhig: Symbol in einem weichen Akzentkreis statt großem grauen Icon – kein Problem, nur ein Zustand.
-        Box(Modifier.size(72.dp).clip(CircleShape).background(c.accent.copy(alpha = 0.10f)).clearAndSetSemantics {}, contentAlignment = Alignment.Center) {
-            Icon(icon, null, tint = c.accent, modifier = Modifier.size(AppIconSize.medium + 4.dp))
+        Box(Modifier.size(72.dp).clip(CircleShape).background(tint.copy(alpha = 0.10f)).clearAndSetSemantics {}, contentAlignment = Alignment.Center) {
+            Icon(icon, null, tint = tint, modifier = Modifier.size(AppIconSize.medium + 4.dp))
         }
         Spacer(Modifier.size(AppSpacing.xxs))
         Text(title, style = AppTypography.title, color = c.textPrimary, textAlign = TextAlign.Center, modifier = Modifier.semantics { heading() })
@@ -589,8 +598,124 @@ private fun SectionRowSurface(first: Boolean, last: Boolean, content: @Composabl
     }
 }
 
+/** Trenner in Gruppen; [inset] rückt ihn bis zum Zeilentitel ein (nach der Symbolkachel). */
 @Composable
-fun RowDivider() =HorizontalDivider(thickness = 0.5.dp, color = PM.colors.textSecondary.copy(alpha = 0.22f))
+fun RowDivider(inset: Dp = 0.dp) = HorizontalDivider(Modifier.padding(start = inset), thickness = 0.5.dp, color = PM.colors.textSecondary.copy(alpha = 0.22f))
+
+/** Einzug der Trenner unter [ListRow]: Kachel (32) + Abstand (12). */
+val RowDividerInset = 44.dp
+
+/** Status rechts in einer [ListRow] – immer an derselben Stelle, bei jeder Schriftgröße. */
+sealed interface RowStatus {
+    data object None : RowStatus
+    /** Offene Anzahl; 0 wird leise (gedeckt, normal) gezeigt. */
+    data class Count(val n: Int) : RowStatus
+    /** Mitglieder vorhanden, nichts offen. */
+    data object Done : RowStatus
+    /** Kurzer Text, z. B. „Leer“ oder „Auf Heute“. */
+    data class Label(val text: String) : RowStatus
+}
+
+/**
+ * Einheitliche Listenzeile (Heute, Aufräumen, Sheets): Symbolkachel · Titel (+ Untertitel) · Status rechts · Chevron.
+ * 56 dp einzeilig, 64 dp mit Untertitel. Zahlen rollen beim Ändern kurz (ohne „Animationen entfernen“).
+ * Quellen haben neutrale Kacheln; nur Zustände (Papierkorb, Später) tragen Farbe.
+ */
+@Composable
+fun ListRow(
+    icon: ImageVector,
+    title: String,
+    modifier: Modifier = Modifier,
+    tint: Color = PM.colors.accent,
+    tile: Color = PM.colors.backgroundTint,
+    subtitle: String? = null,
+    status: RowStatus = RowStatus.None,
+    badge: String? = null,
+    showChevron: Boolean = true,
+    /** Vorlesetext der ganzen Zeile (sonst Titel + sichtbarer Status). */
+    description: String? = null,
+    titleColor: Color = PM.colors.textPrimary,
+    enabled: Boolean = true,
+    /** Kurz hervorheben (z. B. gerade hinzugefügt). */
+    highlight: Boolean = false,
+    onClick: (() -> Unit)? = null,
+) {
+    val c = PM.colors
+    val large = LocalDensity.current.fontScale >= 1.3f
+    val reduce = LocalReduceMotion.current
+    val hl by androidx.compose.animation.animateColorAsState(if (highlight) c.accent.copy(alpha = 0.10f) else Color.Transparent,
+        if (reduce) androidx.compose.animation.core.snap() else androidx.compose.animation.core.tween(600), label = "highlight")
+    Row(
+        modifier.fillMaxWidth().heightIn(min = if (subtitle != null) AppSpacing.rowTwoLine else AppSpacing.row)
+            .background(hl)
+            .alpha(if (enabled) 1f else 0.45f)
+            .then(if (onClick != null) Modifier.clickable(enabled = enabled, role = Role.Button, onClick = onClick) else Modifier)
+            .semantics(mergeDescendants = true) { if (description != null) contentDescription = description },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppSpacing.s),
+    ) {
+        Box(Modifier.size(32.dp).clip(RoundedCornerShape(AppRadii.tile)).background(tile), contentAlignment = Alignment.Center) {
+            Icon(icon, null, tint = tint, modifier = Modifier.size(20.dp))
+        }
+        Column(Modifier.weight(1f).padding(vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(title, style = AppTypography.body.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph), color = titleColor,
+                maxLines = if (large) 3 else 2, overflow = TextOverflow.Ellipsis)
+            if (subtitle != null) Text(subtitle, style = AppTypography.footnote, color = c.textSecondary, maxLines = if (large) 4 else 2, overflow = TextOverflow.Ellipsis)
+        }
+        if (badge != null) Badge(badge)
+        when (status) {
+            RowStatus.None -> Unit
+            RowStatus.Done -> Icon(androidx.compose.material.icons.Icons.Rounded.Check, null, tint = c.success, modifier = Modifier.size(20.dp))
+            is RowStatus.Label -> Text(status.text, style = AppTypography.subheadline, color = c.textSecondary, maxLines = 1, softWrap = false)
+            is RowStatus.Count -> RollingCount(status.n, reduce)
+        }
+        if (showChevron) Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(20.dp))
+    }
+}
+
+/** Zahl mit kurzem vertikalem Wechsel (200 ms), gleich breite Ziffern; 0 leise. */
+@Composable
+private fun RollingCount(n: Int, reduce: Boolean) {
+    val c = PM.colors
+    androidx.compose.animation.AnimatedContent(n, label = "count", transitionSpec = {
+        if (reduce) androidx.compose.animation.EnterTransition.None togetherWith androidx.compose.animation.ExitTransition.None
+        else {
+            val up = targetState > initialState
+            (androidx.compose.animation.slideInVertically(androidx.compose.animation.core.tween(200)) { h -> if (up) h else -h } +
+                androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(200))) togetherWith
+                (androidx.compose.animation.slideOutVertically(androidx.compose.animation.core.tween(200)) { h -> if (up) -h else h } +
+                    androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(200)))
+        }
+    }) { v ->
+        Text("$v", style = AppTypography.body.copy(fontWeight = if (v == 0) FontWeight.Normal else FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+            color = if (v == 0) c.textSecondary else c.textPrimary, maxLines = 1, softWrap = false, textAlign = TextAlign.End)
+    }
+}
+
+/** Abschnittsüberschrift über einer Gruppe (Versalien, gedeckt) mit optionaler Aktion rechts. 8 dp zur Gruppe. */
+@Composable
+fun SectionTitle(text: String, modifier: Modifier = Modifier, action: (@Composable () -> Unit)? = null) {
+    Row(modifier.fillMaxWidth().padding(start = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
+        // Sichtbar in Versalien; vorgelesen in normaler Schreibweise (TTS buchstabiert sonst manche Wörter).
+        Text(text.uppercase(), style = AppTypography.sectionHeader.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph),
+            color = PM.colors.textSecondary, modifier = Modifier.weight(1f).clearAndSetSemantics { heading(); spokenText(text) })
+        // Aktion behält ihre 48-dp-Tippfläche, zählt aber nur mit 24 dp zur Höhe – die Überschrift bleibt nah an ihrer Gruppe.
+        if (action != null) Box(Modifier.layout { m, cs ->
+            val p = m.measure(cs.copy(minHeight = 0))
+            val h = 24.dp.roundToPx()
+            layout(p.width, h) { p.place(0, (h - p.height) / 2) }
+        }) { action() }
+    }
+}
+
+private fun androidx.compose.ui.semantics.SemanticsPropertyReceiver.spokenText(t: String) {
+    this.text = androidx.compose.ui.text.AnnotatedString(t)
+}
+
+/** Gruppe aus [ListRow]s in einer Karte (Innenrand 16 dp). */
+@Composable
+fun RowGroup(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) =
+    SurfaceCard(modifier.animateContentSize(), padding = PaddingValues(horizontal = AppSpacing.m, vertical = 0.dp), content = content)
 
 /** Kleines Abzeichen (z. B. „Pro“). */
 @Composable

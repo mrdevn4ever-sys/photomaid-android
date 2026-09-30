@@ -1,5 +1,10 @@
 package app.photomaid.feature.collections
 
+import app.photomaid.design.SectionTitle
+import app.photomaid.design.RowStatus
+import app.photomaid.design.RowGroup
+import app.photomaid.design.RowDividerInset
+import app.photomaid.design.ListRow
 import app.photomaid.feature.pro.TemporaryProTag
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -130,36 +135,35 @@ fun CollectionsContent(nav: Nav) {
     }
     fun open(col: SmartCollection) = nav.openFeed(FeedRequest(FeedRequest.Source.Collection(col)))
 
-    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
+    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.block)) {
         Caption(stringResource(R.string.col_intro), style = AppTypography.subheadline, modifier = Modifier.padding(horizontal = AppSpacing.xxs))
-        ListSection(header = stringResource(R.string.col_builtin_header)) {
-            SmartCollections.builtIns.forEachIndexed { i, col ->
-                if (i > 0) RowDivider()
-                CollectionRow(col, results[col.id], enabled = access.canRead, locked = false, onClick = { open(col) })
+        Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
+            SectionTitle(stringResource(R.string.col_builtin_header))
+            RowGroup {
+                SmartCollections.builtIns.forEachIndexed { i, col ->
+                    if (i > 0) RowDivider(RowDividerInset)
+                    CollectionRow(col, results[col.id], enabled = access.canRead, locked = false, onClick = { open(col) })
+                }
             }
         }
         TemporaryProTag(caps)
-        if (custom.isNotEmpty()) {
-            ListSection(header = stringResource(R.string.col_custom_header)) {
+        if (custom.isNotEmpty()) Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
+            SectionTitle(stringResource(R.string.col_custom_header))
+            RowGroup {
                 custom.forEachIndexed { i, col ->
-                    if (i > 0) RowDivider()
+                    if (i > 0) RowDivider(RowDividerInset)
                     CollectionRow(col, results[col.id], enabled = access.canRead, locked = !caps.customCollections,
                         onClick = { if (caps.customCollections) open(col) else nav.openPro() },
                         onEdit = if (caps.customCollections) ({ editing = col }) else null)
                 }
             }
         }
-        SurfaceCard(Modifier.testTag("collections.add"), onClick = {
-            if (caps.customCollections) editing = SmartCollection(source = CollectionSource.VIDEOS, filter = CollectionFilter.LargerThan(500L * SmartCollections.MB))
-            else nav.openPro()
-        }) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                Icon(Icons.Rounded.Add, null, tint = c.accent)
-                Text(stringResource(R.string.col_add), style = AppTypography.headline, color = c.accent, modifier = Modifier.weight(1f))
-                if (!caps.customCollections) Badge(stringResource(R.string.pro_badge))
-            }
-            if (!caps.customCollections) {
-                Text(stringResource(R.string.col_custom_pro), style = AppTypography.footnote, color = c.textSecondary, modifier = Modifier.padding(top = AppSpacing.xxs))
+        RowGroup(Modifier.testTag("collections.add")) {
+            ListRow(Icons.Rounded.Add, stringResource(R.string.col_add), tile = c.accent.copy(alpha = 0.12f), titleColor = c.accent,
+                subtitle = if (caps.customCollections) null else stringResource(R.string.col_custom_pro),
+                badge = if (caps.customCollections) null else stringResource(R.string.pro_badge), showChevron = false) {
+                if (caps.customCollections) editing = SmartCollection(source = CollectionSource.VIDEOS, filter = CollectionFilter.LargerThan(500L * SmartCollections.MB))
+                else nav.openPro()
             }
         }
     }
@@ -170,26 +174,30 @@ fun CollectionsContent(nav: Nav) {
     }
 }
 
+/** Gleiches Statusmuster wie Schnellzugriffe: offene Anzahl rechts, ✓ wenn nichts offen; bekannte Größe als Untertitel. */
 @Composable
 private fun CollectionRow(col: SmartCollection, result: CollectionResult?, enabled: Boolean, locked: Boolean, onClick: () -> Unit, onEdit: (() -> Unit)? = null) {
     val c = PM.colors
-    val summary = when {
+    val title = collectionTitle(col)
+    val open = result?.items?.size
+    val desc = when {
         !enabled -> null
         result == null -> stringResource(R.string.col_counting)
-        result.items.isEmpty() -> stringResource(R.string.col_nothing_open)
-        else -> stringResource(R.string.col_summary, pluralStringResource(R.plurals.items_count, result.items.size, result.items.size),
-            SizeText.bytes(result.knownBytes))
+        open == 0 -> stringResource(R.string.col_nothing_open)
+        else -> pluralStringResource(R.plurals.items_count, open!!, open)
     }
-    Column(Modifier.fillMaxWidth().alpha(if (enabled) 1f else 0.45f).testTag("collection.${col.id.rawValue}")) {
+    Column(Modifier.fillMaxWidth().testTag("collection.${col.id.rawValue}")) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            SourceRow(icon(col), if (col.filter is CollectionFilter.OlderThan) c.later else c.accent, collectionTitle(col),
-                Modifier.weight(1f).then(if (enabled) Modifier.clickableRow(onClick = onClick) else Modifier), subtitle = summary)
-            if (locked) Badge(stringResource(R.string.pro_badge))
+            ListRow(icon(col), title, Modifier.weight(1f), enabled = enabled,
+                subtitle = if (enabled && open != null && open > 0 && result.knownBytes > 0) SizeText.bytes(result.knownBytes) else null,
+                status = when { !enabled -> RowStatus.None; result == null -> RowStatus.Label("…"); open == 0 -> RowStatus.Done; else -> RowStatus.Count(open!!) },
+                badge = if (locked) stringResource(R.string.pro_badge) else null,
+                description = desc?.let { "$title, $it" }, onClick = onClick)
             if (onEdit != null) TextButton(onEdit) { Text(stringResource(R.string.col_edit)) }
         }
         val unknown = result?.unknownSizeCount ?: 0
         if (enabled && unknown > 0) Text(pluralStringResource(R.plurals.col_unknown_hint, unknown, unknown), style = AppTypography.caption,
-            color = c.textSecondary, modifier = Modifier.padding(start = 52.dp_, bottom = AppSpacing.xxs))
+            color = c.textSecondary, modifier = Modifier.padding(start = RowDividerInset, bottom = AppSpacing.xs))
     }
 }
 

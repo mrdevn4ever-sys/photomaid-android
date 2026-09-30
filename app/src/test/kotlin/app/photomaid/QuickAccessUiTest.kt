@@ -1,5 +1,6 @@
 package app.photomaid
 
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasContentDescription
@@ -103,7 +104,10 @@ class QuickAccessUiTest {
         rule.setContent { TestHost(app) { TodayScreen(RecordingNav()) } }
         rule.onNodeWithTag("quick.add").performScrollTo().performClick()
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("quick.option.SCREENSHOTS").fetchSemanticsNodes().isNotEmpty() }
-        assertTrue(rule.onAllNodesWithTag("quick.option.PHOTOS").fetchSemanticsNodes().isEmpty()) // schon vorhanden
+        // Stabiler Katalog: schon vorhandene Quelle bleibt sichtbar, ist aber nicht antippbar („Auf Heute“).
+        rule.onNodeWithTag("quick.option.PHOTOS").assertIsNotEnabled()
+        rule.onNode(hasTestTag("quick.option.PHOTOS") and hasText("Auf Heute", substring = true)).assertExists()
+        rule.onNode(hasTestTag("quick.option.SCREENSHOTS") and hasText("1")).assertExists() // echte offene Anzahl je Option
         rule.onNodeWithTag("quick.option.SCREENSHOTS").performClick()
         tile("SCREENSHOTS", "1 offen")
         for (k in listOf("LATEST_PHOTOS", "LATEST_VIDEOS", "THIS_WEEK")) {
@@ -119,7 +123,10 @@ class QuickAccessUiTest {
         assertEquals(listOf("PHOTOS", "VIDEOS", "SCREENSHOTS", "LATEST_PHOTOS", "LATEST_VIDEOS", "THIS_WEEK"), stored.map { it.key })
         // Bearbeiten: Videos nach vorn, Fotos entfernen.
         rule.onNodeWithTag("quick.edit").performClick()
-        rule.onNode(hasContentDescription("Nach vorn: Videos")).performClick()
+        // Sortieren ohne Ziehen (TalkBack/Schalter): Aktion der Zeile.
+        val up = rule.onNodeWithTag("quick.edit.VIDEOS").fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsActions.CustomActions]
+            .single { it.label == "Nach vorn: Videos" }
+        rule.runOnIdle { up.action() }
         rule.waitUntil(5_000) { app.quickAccess.items.value.first().kind == QuickSourceKind.VIDEOS }
         rule.onNode(hasContentDescription("Entfernen: Fotos")).performClick()
         rule.waitUntil(5_000) { app.quickAccess.items.value.none { it.kind == QuickSourceKind.PHOTOS } }
@@ -129,10 +136,9 @@ class QuickAccessUiTest {
         val app = app()
         rule.setContent { TestHost(app) { TodayScreen(RecordingNav()) } }
         rule.onNodeWithTag("quick.add").performScrollTo().performClick()
-        rule.waitUntil(5_000) { rule.onAllNodesWithTag("quick.option.folder").fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithTag("quick.option.folder").performClick()
+        // Ordner stehen direkt im Sheet (die größten zuerst) – kein zweiter Schritt.
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("quick.folder.DCIM/Camera/").fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithTag("quick.folder.DCIM/Camera/").performClick()
+        rule.onNodeWithTag("quick.folder.DCIM/Camera/").performScrollTo().performClick()
         tile("FOLDER:DCIM/Camera/", "6 offen")
         rule.onNode(hasTestTag("quick.FOLDER:DCIM/Camera/") and hasContentDescription("Camera", substring = true)).assertExists()
     }

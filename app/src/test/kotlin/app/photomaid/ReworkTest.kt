@@ -103,8 +103,8 @@ class ReworkTest {
         rule.setContent { TestHost(app) { RootContent(app) } }
         waitText("Aufräumen")
         rule.onNodeWithText("Aufräumen").performClick()
-        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasTestTag("hub.basket")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithTag("hub.basket").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick) // ohne Trefferprüfung (kleines Testfenster)
+        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasTestTag("hub.large")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("hub.large").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick) // ohne Trefferprüfung (kleines Testfenster)
         rule.waitForIdle()
         rule.waitUntil(5_000) { rule.onAllNodes(hasText("Verlauf")).fetchSemanticsNodes().isEmpty() }
     }

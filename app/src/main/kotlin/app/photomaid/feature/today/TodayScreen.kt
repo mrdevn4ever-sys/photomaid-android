@@ -1,5 +1,24 @@
 package app.photomaid.feature.today
 
+import app.photomaid.design.LocalReduceMotion
+import app.photomaid.design.RowDividerInset
+import app.photomaid.design.RowDivider
+import app.photomaid.design.RowStatus
+import app.photomaid.design.RowGroup
+import app.photomaid.design.ListRow
+import app.photomaid.design.AppControl
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.draw.shadow
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.Crossfade
 import androidx.compose.material.icons.rounded.WorkspacePremium
 import app.photomaid.core.capabilities.Capabilities
 import androidx.compose.foundation.background
@@ -26,7 +45,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
-import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.EventRepeat
@@ -122,10 +140,12 @@ fun TodayScreen(nav: Nav) {
         }
     }
 
+    val settings by app.settings.collectAsState()
     AppBackground {
+        // Rhythmus: 24 dp zwischen Blöcken; Reihenfolge Handlung → Zustand → Einstiege → Info.
         Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-            LargeTitleHeader(stringResource(R.string.app_name), stringResource(R.string.today_subtitle)) {
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.block)) {
+            LargeTitleHeader(stringResource(R.string.tab_today)) {
                 GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
             }
             if (!access.canRead) {
@@ -144,7 +164,7 @@ fun TodayScreen(nav: Nav) {
                         fillWidth = true, large = true, onClick = nav::openPrivacy)
                 }
             }
-            if (access.canRead) ReviewHero(pending, hasHistory = read.events.isNotEmpty()) {
+            if (access.canRead) ReviewHero(pending, hasHistory = read.events.isNotEmpty(), showGestures = !settings.gestureHintSeen) {
                 nav.openFeed(FeedRequest(FeedRequest.Source.AllMedia))
             }
             if (access == PhotoAccess.LIMITED) {
@@ -160,16 +180,6 @@ fun TodayScreen(nav: Nav) {
                     PlainButton(stringResource(R.string.today_limited_action), onClick = nav::openPrivacy)
                 }
             }
-            if (app.dueCount > 0) {
-                SurfaceCard(Modifier.testTag("today.due"), onClick = { nav.openFeed(FeedRequest(FeedRequest.Source.Due)) }) {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                        Icon(Icons.Rounded.EventRepeat, null, tint = c.later)
-                        Text(pluralStringResource(R.plurals.today_due, app.dueCount, app.dueCount), style = AppTypography.headline,
-                            color = c.textPrimary, modifier = Modifier.weight(1f))
-                        Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary)
-                    }
-                }
-            }
             if (read.reconciliationNeeded.isNotEmpty()) {
                 SurfaceCard {
                     Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
@@ -178,78 +188,50 @@ fun TodayScreen(nav: Nav) {
                     }
                 }
             }
-            // Echte Zahlen: was gerade im Papierkorb liegt und was zurückgestellt ist (keine „freigegeben“-Behauptung).
-            // Untereinander: gleiche Breite, die Zähler beider Karten stehen rechtsbündig auf derselben Achse.
-            Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                StatusCard(Icons.Rounded.Delete, c.cleanup, stringResource(R.string.basket), read.basket.size, Modifier.testTag("today.basket")) { nav.push(Routes.BASKET) }
-                StatusCard(Icons.Rounded.Bookmark, c.later, stringResource(R.string.later), read.laterRecords.size, Modifier.testTag("today.later")) { nav.push(Routes.LATER) }
+            // Feste Gruppe: was im Papierkorb liegt, was zurückgestellt ist, was wieder dran ist. Echte Zahlen, 0 leise.
+            RowGroup(Modifier.testTag("today.status")) {
+                val basketDesc = pluralStringResource(R.plurals.items_count, read.basket.size, read.basket.size)
+                val laterDesc = pluralStringResource(R.plurals.items_count, read.laterRecords.size, read.laterRecords.size)
+                val basket = stringResource(R.string.basket); val later = stringResource(R.string.later)
+                if (app.dueCount > 0) {
+                    ListRow(Icons.Rounded.EventRepeat, pluralStringResource(R.plurals.today_due, app.dueCount, app.dueCount), Modifier.testTag("today.due"),
+                        tint = c.later, tile = c.later.copy(alpha = 0.12f), titleColor = c.textPrimary) { nav.openFeed(FeedRequest(FeedRequest.Source.Due)) }
+                    RowDivider(RowDividerInset)
+                }
+                ListRow(Icons.Rounded.Delete, basket, Modifier.testTag("today.basket"), tint = c.cleanup, tile = c.cleanup.copy(alpha = 0.12f),
+                    status = RowStatus.Count(read.basket.size), description = "$basket, $basketDesc") { nav.push(Routes.BASKET) }
+                RowDivider(RowDividerInset)
+                ListRow(Icons.Rounded.Schedule, later, Modifier.testTag("today.later"), tint = c.later, tile = c.later.copy(alpha = 0.12f),
+                    status = RowStatus.Count(read.laterRecords.size), description = "$later, $laterDesc") { nav.push(Routes.LATER) }
             }
             // Schnellzugriffe: gefilterte Einstiege in denselben Feed; neu berechnet bei Mediathek- oder Entscheidungsänderung.
             if (access.canRead) QuickAccessSection(nav, snapshot, pending?.toSet())
-            // Leiser Pro-Hinweis: nur Free, erst ab dem zweiten Nutzungstag, nie aufdringlich.
-            val firstDay = app.settings.collectAsState().value.firstSeenDay
-            if (app.capabilities.tier == Capabilities.Tier.FREE && firstDay != null && app.today > firstDay) ProHint(nav::openPro)
-            device?.let { d -> StorageLine(d) { nav.push(Routes.STORAGE) } }
-            Spacer(Modifier.height(TabBarClearance))
-        }
-    }
-}
-
-/**
- * Einzeilige Statuskarte mit echter Zahl (Papierkorb, Später): Icon · Label · Zähler rechtsbündig · Chevron.
- * Ganze Karte tappbar. Das Label kürzt sich bei großer Schrift, Zähler und Chevron bleiben immer sichtbar.
- */
-@Composable
-internal fun StatusCard(icon: ImageVector, tint: Color, title: String, count: Int, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    val c = PM.colors
-    val desc = pluralStringResource(R.plurals.items_count, count, count)
-    SurfaceCard(modifier.semantics(mergeDescendants = true) { contentDescription = "$title, $desc" },
-        padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.s), onClick = onClick) {
-        Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Icon(icon, null, tint = tint, modifier = Modifier.size(AppIconSize.regular))
-            // Große Schrift + dreistelliger Zähler auf schmalen Telefonen: Label verkleinert sich minimal statt abgeschnitten zu werden.
-            BasicText(title, Modifier.weight(1f), style = AppTypography.body.copy(color = c.textPrimary), maxLines = 1, overflow = TextOverflow.Ellipsis,
-                autoSize = TextAutoSize.StepBased(minFontSize = AppTypography.footnote.fontSize, maxFontSize = AppTypography.body.fontSize))
-            // Ziffern gleich breit (tnum), damit 0 … 999 sauber rechtsbündig stehen.
-            Text("$count", style = AppTypography.headline.copy(fontFeatureSettings = "tnum"), color = c.textPrimary, maxLines = 1, softWrap = false,
-                textAlign = TextAlign.End)
-            Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.regular))
-        }
-    }
-}
-
-@Composable
-private fun ProHint(onClick: () -> Unit) {
-    val c = PM.colors
-    SurfaceCard(Modifier.testTag("today.pro").semantics(mergeDescendants = true) {},
-        padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.s), onClick = onClick) {
-        Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(AppIconSize.regular))
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.today_pro_title), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
-                Text(stringResource(R.string.today_pro_text), style = AppTypography.caption, color = c.textSecondary)
+            // Leiser Pro-Hinweis: nur Free, erst ab dem zweiten Nutzungstag – dieselbe Zeile wie alle anderen, kein Banner.
+            val firstDay = settings.firstSeenDay
+            if (app.capabilities.tier == Capabilities.Tier.FREE && firstDay != null && app.today > firstDay) RowGroup {
+                ListRow(Icons.Rounded.WorkspacePremium, stringResource(R.string.today_pro_title), Modifier.testTag("today.pro"),
+                    subtitle = stringResource(R.string.today_pro_text), onClick = nav::openPro)
             }
-            Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.regular))
+            device?.let { d -> StorageLine(d) { nav.push(Routes.STORAGE) } }
+            Spacer(Modifier.height(TabBarClearance - AppSpacing.block))
         }
     }
 }
 
-/** Gerätespeicher: bewusst leise (eine Zeile + dünner Balken), öffnet die Speicherübersicht. */
+/** Gerätespeicher: bewusst leise – keine Karte, nur eine Zeile + dünner Balken; öffnet die Speicherübersicht. */
 @Composable
 private fun StorageLine(d: DeviceCapacity, onClick: () -> Unit) {
     val c = PM.colors
-    SurfaceCard(Modifier.testTag("today.storage").semantics(mergeDescendants = true) {},
-        padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.s), onClick = onClick) {
+    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(AppRadii.small)).clickable(role = Role.Button, onClick = onClick)
+        .padding(horizontal = AppSpacing.xxs, vertical = AppSpacing.xs).testTag("today.storage").semantics(mergeDescendants = true) {}) {
         val title = stringResource(R.string.today_storage_title)
         val value = stringResource(R.string.today_storage_value, SizeText.bytes(d.usedBytes), SizeText.bytes(d.totalBytes))
         // Große Schrift: untereinander statt nebeneinander (sonst bricht der Titel zeichenweise um).
         if (LocalDensity.current.fontScale >= 1.3f) {
-            Text(title, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+            Text(title, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
             Text(value, style = AppTypography.footnote, color = c.textSecondary)
         } else Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Text(title, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, maxLines = 1,
+            Text(title, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary, maxLines = 1,
                 overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
             Text(value, style = AppTypography.footnote, color = c.textSecondary, maxLines = 1)
         }
@@ -257,24 +239,36 @@ private fun StorageLine(d: DeviceCapacity, onClick: () -> Unit) {
             Spacer(Modifier.height(AppSpacing.xs))
             LinearProgressIndicator(progress = { (d.usedBytes.toFloat() / d.totalBytes).coerceIn(0f, 1f) },
                 modifier = Modifier.fillMaxWidth().height(AppStroke.progress).clip(CircleShape),
-                color = c.accent.copy(alpha = 0.7f), trackColor = c.backgroundTint, strokeCap = StrokeCap.Round, gapSize = 0.dp, drawStopIndicator = {})
+                color = c.textSecondary.copy(alpha = 0.55f), trackColor = c.backgroundTint, strokeCap = StrokeCap.Round, gapSize = 0.dp, drawStopIndicator = {})
         }
     }
 }
 
 /**
- * Hero: der Feed ist das Produkt. Zeigt die nächsten echten Medien als kleine Vorschau, die Zahl offener Medien und
- * EINEN großen CTA. Zustände: neu („Jetzt aufräumen“), Fortsetzung („Weiter aufräumen“), alles geprüft.
+ * Hero: der Feed ist das Produkt. Die nächsten echten Medien randlos oben in der Karte (1–3, nie leere Kacheln),
+ * darunter die Zahl offener Medien und EIN großer CTA. Zustände: neu („Jetzt aufräumen“), Fortsetzung („Weiter
+ * aufräumen“), alles geprüft, Laden (ruhige Fläche statt Spinner). Einzige Karte mit Schatten.
  */
 @Composable
-private fun ReviewHero(pending: List<String>?, hasHistory: Boolean, start: () -> Unit) {
+private fun ReviewHero(pending: List<String>?, hasHistory: Boolean, showGestures: Boolean, start: () -> Unit) {
     val c = PM.colors
-    SurfaceCard(Modifier.testTag("today.review")) {
+    val shape = RoundedCornerShape(AppRadii.hero)
+    Column(Modifier.fillMaxWidth().shadow(12.dp, shape, clip = false, ambientColor = Color(0x14000000), spotColor = Color(0x14000000))
+        .clip(shape).background(c.surface, shape).border(1.dp, c.surfaceStroke, shape).testTag("today.review")) {
         when {
-            pending == null -> Box(Modifier.fillMaxWidth().height(120.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(Modifier.size(28.dp)) }
-            pending.isEmpty() -> Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                Box(Modifier.size(48.dp).clip(RoundedCornerShape(AppRadii.small)).background(c.accent.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
-                    Icon(Icons.Rounded.CheckCircle, null, tint = c.accent, modifier = Modifier.size(AppIconSize.medium))
+            pending == null -> {
+                // Laden: ruhige Flächen in der späteren Geometrie (kein Spinner, kein Springen).
+                Box(Modifier.fillMaxWidth().height(HeroStripHeight).background(c.backgroundTint))
+                Column(Modifier.padding(AppSpacing.m), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    Box(Modifier.fillMaxWidth(0.6f).height(22.dp).clip(RoundedCornerShape(6.dp)).background(c.backgroundTint))
+                    Box(Modifier.fillMaxWidth(0.8f).height(14.dp).clip(RoundedCornerShape(6.dp)).background(c.backgroundTint))
+                    Spacer(Modifier.height(AppSpacing.xs))
+                    Box(Modifier.fillMaxWidth().height(AppControl.largeButton).clip(CircleShape).background(c.backgroundTint))
+                }
+            }
+            pending.isEmpty() -> Row(Modifier.padding(AppSpacing.m), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                Box(Modifier.size(48.dp).clip(RoundedCornerShape(AppRadii.small)).background(c.success.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
+                    Icon(Icons.Rounded.CheckCircle, null, tint = c.success, modifier = Modifier.size(AppIconSize.medium))
                 }
                 Column(Modifier.weight(1f).semantics(mergeDescendants = true) {}) {
                     Text(stringResource(R.string.today_done_title), style = AppTypography.title, color = c.textPrimary)
@@ -282,33 +276,54 @@ private fun ReviewHero(pending: List<String>?, hasHistory: Boolean, start: () ->
                 }
             }
             else -> {
-                // Vorschau der nächsten Medien (echte Thumbnails, keine Deko-Grafik).
-                Row(Modifier.fillMaxWidth().clearAndSetSemantics {}, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                    pending.take(3).forEach { HeroThumb(it, Modifier.weight(1f).aspectRatio(0.8f)) }
-                    repeat(3 - minOf(3, pending.size)) { Spacer(Modifier.weight(1f)) }
+                // Randlos: 1 Bild = volle Breite, 2 = Hälften, 3 = Drittel; 2 dp Fugen.
+                Row(Modifier.fillMaxWidth().height(HeroStripHeight).clearAndSetSemantics {}, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                    pending.take(3).forEachIndexed { i, uri -> HeroThumb(i, uri, Modifier.weight(1f).fillMaxHeight()) }
                 }
-                Spacer(Modifier.height(AppSpacing.m))
-                Column(Modifier.semantics(mergeDescendants = true) {}, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text(pluralStringResource(R.plurals.today_pending_count, pending.size, pending.size), style = AppTypography.title, color = c.textPrimary)
-                    Text(stringResource(if (hasHistory) R.string.today_continue_sub else R.string.today_start_sub), style = AppTypography.subheadline, color = c.textSecondary)
+                Column(Modifier.padding(start = AppSpacing.m, end = AppSpacing.m, top = AppSpacing.m, bottom = AppSpacing.m)) {
+                    Column(Modifier.semantics(mergeDescendants = true) {}, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(pluralStringResource(R.plurals.today_pending_count, pending.size, pending.size), style = AppTypography.title, color = c.textPrimary)
+                        Text(stringResource(if (hasHistory) R.string.today_continue_sub else R.string.today_start_sub), style = AppTypography.subheadline, color = c.textSecondary)
+                    }
+                    Spacer(Modifier.height(AppSpacing.s))
+                    val hint = stringResource(R.string.today_review_hint)
+                    ProminentButton(stringResource(if (hasHistory) R.string.today_continue_cta else R.string.today_start_cta), fillWidth = true, large = true,
+                        modifier = Modifier.testTag("today.cta").semantics { onClick(label = hint) { start(); true } }, onClick = start)
+                    // Gesten nur für Neulinge (bis die Gestenhilfe im Feed gesehen wurde) – Symbole statt Pfeilzeichen.
+                    if (showGestures) {
+                        Spacer(Modifier.height(AppSpacing.xs))
+                        Row(Modifier.fillMaxWidth().clearAndSetSemantics {}.testTag("today.gestures"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.m, Alignment.CenterHorizontally),
+                            verticalAlignment = Alignment.CenterVertically) {
+                            GestureChip(Icons.Rounded.ArrowUpward, stringResource(R.string.dir_keep), c.keep)
+                            GestureChip(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.dir_trash), c.cleanup)
+                            GestureChip(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.dir_later), c.later)
+                        }
+                    }
                 }
-                Spacer(Modifier.height(AppSpacing.m))
-                val hint = stringResource(R.string.today_review_hint)
-                ProminentButton(stringResource(if (hasHistory) R.string.today_continue_cta else R.string.today_start_cta), fillWidth = true, large = true,
-                    modifier = Modifier.testTag("today.cta").semantics { onClick(label = hint) { start(); true } }, onClick = start)
-                Spacer(Modifier.height(AppSpacing.xs))
-                Text(stringResource(R.string.today_gestures), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().clearAndSetSemantics {})
             }
         }
     }
 }
 
+private val HeroStripHeight = 168.dp
+
 @Composable
-private fun HeroThumb(uri: String, modifier: Modifier) {
-    val px = with(LocalDensity.current) { 140.dp.roundToPx() }
-    Box(modifier.clip(RoundedCornerShape(AppRadii.small)).background(PM.colors.backgroundTint)) {
-        AsyncImage(ImageRequest.Builder(LocalContext.current).data(android.net.Uri.parse(uri)).size(px, px).memoryCacheKey("hero:$uri").build(),
-            contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+private fun GestureChip(icon: ImageVector, label: String, tint: Color) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        Icon(icon, null, tint = tint, modifier = Modifier.size(16.dp))
+        Text(label, style = AppTypography.footnote, color = PM.colors.textSecondary)
+    }
+}
+
+/** Vorschaubild der Hero; wechselt nach einer Entscheidung weich zum nächsten offenen Medium. */
+@Composable
+private fun HeroThumb(slot: Int, uri: String, modifier: Modifier) {
+    val px = with(LocalDensity.current) { 180.dp.roundToPx() }
+    val reduce = LocalReduceMotion.current
+    Box(modifier.background(PM.colors.backgroundTint)) {
+        Crossfade(uri, animationSpec = if (reduce) snap() else tween(200), label = "hero$slot") { u ->
+            AsyncImage(ImageRequest.Builder(LocalContext.current).data(android.net.Uri.parse(u)).size(px, px).memoryCacheKey("hero:$u").build(),
+                contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+        }
     }
 }

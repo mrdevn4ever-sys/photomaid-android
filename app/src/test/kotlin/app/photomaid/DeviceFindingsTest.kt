@@ -38,7 +38,7 @@ class DeviceFindingsTest {
             waitText("1 von 6")
             rule.onNode(hasContentDescription("Schließen")).performClick()
             rule.waitForIdle()
-            waitText("PhotoMaid")
+            waitText("Jetzt aufräumen")
             rule.onNodeWithText("Jetzt aufräumen").assertExists()
         }
     }

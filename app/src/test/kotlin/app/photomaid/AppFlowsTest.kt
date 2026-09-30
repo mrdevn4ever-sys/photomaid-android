@@ -1,5 +1,7 @@
 package app.photomaid
 
+import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -49,7 +51,7 @@ class AppFlowsTest {
         rule.onNodeWithText("Voller Zugriff").assertExists()
         rule.onNodeWithText("Weiter").performClick()
         rule.waitUntil(5_000) { app.settings.value.privacyIntroSeen }
-        rule.onNodeWithText("Heute").assertExists()
+        rule.onAllNodesWithText("Heute").onFirst().assertExists() // Titel + Tab
         rule.onNodeWithText("Aufräumen").assertExists()
         rule.onNodeWithText("Ordnen").assertDoesNotExist() // Tab entfällt; Sammlungen liegen in Aufräumen
         rule.onNodeWithText("Verlauf").assertExists()
@@ -99,8 +101,6 @@ class AppFlowsTest {
         val res = ctx.resources
         assertEquals("1 Element", res.getQuantityString(R.plurals.items_count, 1, 1))
         assertEquals("15 Elemente", res.getQuantityString(R.plurals.items_count, 15, 15))
-        assertEquals("1 Element, noch nicht gelöscht", res.getQuantityString(R.plurals.hub_basket_sub, 1, 1))
-        assertEquals("2 Elemente, noch nicht gelöscht", res.getQuantityString(R.plurals.hub_basket_sub, 2, 2))
         assertEquals("1 Medium wurde in den Papierkorb des Systems verschoben.", res.getQuantityString(R.plurals.result_media_trashed, 1, 1))
         assertEquals("1 Kopie in den Papierkorb", res.getQuantityString(R.plurals.dup_move, 1, 1))
         assertEquals("1 Medium wartet auf dich", res.getQuantityString(R.plurals.today_pending_count, 1, 1))

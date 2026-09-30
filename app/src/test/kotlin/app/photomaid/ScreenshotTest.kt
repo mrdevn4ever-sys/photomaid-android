@@ -11,6 +11,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Schedule
 
 import app.photomaid.media.PhotoAccess
 
@@ -245,9 +246,12 @@ class ScreenshotTest {
                 androidx.compose.foundation.layout.Column(Modifier.padding(AppSpacing.pageMargin),
                     verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(AppSpacing.xs)) {
                     val c = app.photomaid.design.PM.colors
-                    for (n in listOf(0, 1, 6, 99, 999)) {
-                        app.photomaid.feature.today.StatusCard(Icons.Rounded.Delete, c.cleanup, "Papierkorb", n) {}
-                        app.photomaid.feature.today.StatusCard(Icons.Rounded.Bookmark, c.later, "Später", n) {}
+                    for (n in listOf(0, 1, 6, 99, 999)) app.photomaid.design.RowGroup {
+                        app.photomaid.design.ListRow(Icons.Rounded.Delete, "Papierkorb", tint = c.cleanup, tile = c.cleanup.copy(alpha = 0.12f),
+                            status = app.photomaid.design.RowStatus.Count(n)) {}
+                        app.photomaid.design.RowDivider(app.photomaid.design.RowDividerInset)
+                        app.photomaid.design.ListRow(Icons.Rounded.Schedule, "Später", tint = c.later, tile = c.later.copy(alpha = 0.12f),
+                            status = app.photomaid.design.RowStatus.Count(n)) {}
                     }
                 }
             }
@@ -367,4 +371,11 @@ class ScreenshotTest {
     @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun z09_today_pro_hint() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
         purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED)) { a -> a.updateSettings { s -> s.copy(firstSeenDay = a.today.addingDays(-1)) } }
         .let { shot("z09_today_pro_hint", it, waitTag = "today.pro") { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
+
+    // Design-Review: Hero mit 1 bzw. 2 offenen Medien (keine leeren Kacheln), Gestenzeile für Neulinge.
+    private fun heroApp(n: Int) = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = n, videos = 0).also { l -> lib = l } }) { a ->
+        a.updateSettings { it.copy(gestureHintSeen = false) }
+    }
+    @Test fun d01_hero_one() = heroApp(1).let { shot("d01_hero_one", it, waitTag = "today.cta") { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
+    @Test fun d02_hero_two() = heroApp(2).let { shot("d02_hero_two", it, waitTag = "today.cta") { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
 }

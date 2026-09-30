@@ -1,5 +1,11 @@
 package app.photomaid.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.drawBehind
 import app.photomaid.core.capabilities.PurchaseState
 import app.photomaid.system.SystemDialogs
 import androidx.compose.foundation.layout.height
@@ -307,8 +313,19 @@ private fun MainTabs(rootNav: Nav) {
 @Composable
 fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppTab) -> Unit) {
     val c = PM.colors
+    // Übergang über der schwebenden Leiste: Inhalte laufen weich aus statt sichtbar darunter weiter.
+    Box(modifier.fillMaxWidth().drawBehind {
+        val ext = 32.dp.toPx()
+        drawRect(Brush.verticalGradient(0f to Color.Transparent, (ext / (size.height + ext)) to c.backgroundTint.copy(alpha = 0.92f), 1f to c.backgroundTint,
+            startY = -ext, endY = size.height), topLeft = Offset(0f, -ext), size = Size(size.width, size.height + ext))
+    }, contentAlignment = Alignment.BottomCenter) { TabBarRow(selected, onSelect) }
+}
+
+@Composable
+private fun TabBarRow(selected: AppTab, onSelect: (AppTab) -> Unit) {
+    val c = PM.colors
     Row(
-        modifier
+        Modifier
             .navigationBarsPadding()
             .padding(horizontal = AppSpacing.l, vertical = AppSpacing.xs)
             .widthIn(max = 520.dp)
@@ -324,7 +341,8 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
                     .weight(1f)
                     .heightIn(min = AppControl.tabBarItem)
                     .clip(CircleShape)
-                    .then(if (isSel) Modifier.glassCapsule(elevation = 0.dp) else Modifier)
+                    // Auswahl als Akzent-Tönung (im Light Mode war die weiße Kapsel auf weißer Leiste kaum sichtbar).
+                    .then(if (isSel) Modifier.background(c.accent.copy(alpha = 0.12f), CircleShape) else Modifier)
                     .clickable(role = Role.Tab) { onSelect(t) }
                     .semantics { this.selected = isSel }
                     .padding(vertical = 6.dp),

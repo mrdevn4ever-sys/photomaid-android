@@ -1,5 +1,13 @@
 package app.photomaid.feature.cleanup
 
+import androidx.compose.material.icons.rounded.Folder
+import app.photomaid.design.SizeText
+import app.photomaid.design.SectionTitle
+import app.photomaid.design.RowStatus
+import app.photomaid.design.RowGroup
+import app.photomaid.design.RowDividerInset
+import app.photomaid.design.RowDivider
+import app.photomaid.design.ListRow
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,8 +21,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BarChart
 import androidx.compose.material.icons.rounded.Screenshot
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.FilterNone
 import androidx.compose.material.icons.rounded.InsertDriveFile
 import androidx.compose.material.icons.rounded.Photo
@@ -29,7 +35,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
@@ -44,12 +49,8 @@ import app.photomaid.design.GlassIconButton
 import app.photomaid.design.LargeTitleHeader
 import app.photomaid.design.PM
 import app.photomaid.design.SegmentedPicker
-import app.photomaid.design.SourceRow
-import app.photomaid.design.SurfaceCard
 import app.photomaid.media.MediaCategory
 import app.photomaid.feature.collections.CollectionsContent
-import androidx.compose.material.icons.rounded.Bookmark
-import androidx.compose.material.icons.rounded.Check
 import app.photomaid.feature.quickaccess.resolveSource
 import app.photomaid.media.reviewableMedia
 import app.photomaid.core.quickaccess.QuickAccessItem
@@ -93,51 +94,56 @@ fun CleanUpHubScreen(nav: Nav) {
         }
     }
 
+    val settings by app.settings.collectAsState()
     AppBackground {
         Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-            LargeTitleHeader(stringResource(R.string.tab_cleanup), stringResource(R.string.hub_subtitle)) {
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.block)) {
+            LargeTitleHeader(stringResource(R.string.tab_cleanup)) {
                 GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
             }
-            // Oben zwei Reiter: Bereiche (Kategorien und Werkzeuge) und Sammlungen (dauerhafte Filter, früher „Ordnen“).
+            // Oben zwei Reiter: Bereiche (Mediathek und Werkzeuge) und Sammlungen (dauerhafte Filter).
             SegmentedPicker(listOf(HubTab.AREAS to stringResource(R.string.hub_tab_areas), HubTab.COLLECTIONS to stringResource(R.string.hub_tab_collections)),
                 tab, Modifier.testTag("hub.tabs")) { tab = it }
             if (tab == HubTab.COLLECTIONS) CollectionsContent(nav)
-            else Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                @Composable
-                fun media(cat: MediaCategory, icon: ImageVector, title: Int, sub: Int) {
-                    val enabled = access.canRead
-                    SurfaceCard(Modifier.alpha(if (enabled) 1f else 0.45f).testTag("hub.${cat.name.lowercase()}"),
-                        onClick = if (enabled) ({ nav.openFeed(FeedRequest(FeedRequest.Source.Category(cat))) }) else null) {
-                        val pending = counts[cat]
-                        // 0 offen → dezenter Haken (heißt nur: gerade nichts zu prüfen; neue Medien zeigen wieder eine Zahl).
-                        SourceRow(icon, c.accent, stringResource(title), subtitle = stringResource(sub),
-                            value = pending?.takeIf { it > 0 }?.toString(),
-                            valueIcon = if (pending == 0) Icons.Rounded.Check else null,
-                            valueDescription = pending?.let { if (it == 0) stringResource(R.string.hub_nothing_pending) else pluralStringResource(R.plurals.hub_pending, it, it) })
+            else {
+                // Zwei ruhige Gruppen statt einer Kachelwand. Papierkorb und Später stehen auf „Heute“ (keine Doppelung).
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
+                    SectionTitle(stringResource(R.string.hub_media_header))
+                    RowGroup {
+                        @Composable
+                        fun media(cat: MediaCategory, icon: ImageVector, title: Int) {
+                            val pending = counts[cat]
+                            val t = stringResource(title)
+                            val desc = pending?.let { if (it == 0) stringResource(R.string.hub_nothing_pending) else pluralStringResource(R.plurals.hub_pending, it, it) }
+                            // 0 offen → Haken (heißt nur: gerade nichts zu prüfen; neue Medien zeigen wieder eine Zahl).
+                            ListRow(icon, t, Modifier.testTag("hub.${cat.name.lowercase()}"), enabled = access.canRead,
+                                status = when (pending) { null -> RowStatus.None; 0 -> RowStatus.Done; else -> RowStatus.Count(pending) },
+                                description = desc?.let { "$t, $it" }) { nav.openFeed(FeedRequest(FeedRequest.Source.Category(cat))) }
+                        }
+                        media(MediaCategory.PHOTOS, Icons.Rounded.Photo, R.string.cat_photos)
+                        RowDivider(RowDividerInset)
+                        media(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos)
+                        RowDivider(RowDividerInset)
+                        media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots)
                     }
                 }
-                @Composable
-                fun link(id: String, icon: ImageVector, title: String, sub: String, route: String) {
-                    SurfaceCard(Modifier.testTag("hub.$id"), onClick = { nav.push(route) }) { SourceRow(icon, c.accent, title, subtitle = sub) }
+                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
+                    SectionTitle(stringResource(R.string.hub_tools_header))
+                    RowGroup {
+                        ListRow(Icons.Rounded.InsertDriveFile, stringResource(R.string.large_files), Modifier.testTag("hub.large"),
+                            subtitle = stringResource(R.string.hub_large_from, SizeText.bytes(settings.largeFileThresholdMB * 1_000_000L))) { nav.push(Routes.LARGE) }
+                        RowDivider(RowDividerInset)
+                        ListRow(Icons.Rounded.FilterNone, stringResource(R.string.duplicates), Modifier.testTag("hub.duplicates"),
+                            subtitle = stringResource(R.string.hub_dup_sub), badge = if (app.capabilities.exactDuplicates) null else stringResource(R.string.pro_badge)) { nav.push(Routes.DUPLICATES) }
+                        RowDivider(RowDividerInset)
+                        ListRow(Icons.Rounded.Folder, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads), Modifier.testTag("hub.files"),
+                            subtitle = stringResource(if (sources.isEmpty()) R.string.choose_folder else R.string.hub_files_sub)) { nav.push(Routes.FILES) }
+                        RowDivider(RowDividerInset)
+                        ListRow(Icons.Rounded.BarChart, stringResource(R.string.storage_overview), Modifier.testTag("hub.storage")) { nav.push(Routes.STORAGE) }
+                    }
                 }
-                media(MediaCategory.PHOTOS, Icons.Rounded.Photo, R.string.cat_photos, R.string.hub_photos_sub)
-                media(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos, R.string.hub_videos_sub)
-                media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots, R.string.hub_screens_sub)
-                link("files", Icons.Rounded.Download, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads),
-                    stringResource(if (sources.isEmpty()) R.string.choose_folder else R.string.hub_files_sub), Routes.FILES)
-                // Später: tatsächlich für später gespeicherte Elemente (nicht die Prüf-Logik der Medienbereiche).
-                SurfaceCard(Modifier.testTag("hub.later"), onClick = { nav.push(Routes.LATER) }) {
-                    SourceRow(Icons.Rounded.Bookmark, c.accent, stringResource(R.string.later), subtitle = stringResource(R.string.later_manage),
-                        value = read.laterRecords.size.toString(),
-                        valueDescription = pluralStringResource(R.plurals.items_count, read.laterRecords.size, read.laterRecords.size))
-                }
-                link("large", Icons.Rounded.InsertDriveFile, stringResource(R.string.large_files), stringResource(R.string.hub_large_sub), Routes.LARGE)
-                link("duplicates", Icons.Rounded.FilterNone, stringResource(R.string.duplicates), stringResource(R.string.hub_dup_sub), Routes.DUPLICATES)
-                link("storage", Icons.Rounded.BarChart, stringResource(R.string.storage_overview), stringResource(R.string.hub_storage_sub), Routes.STORAGE)
-                link("basket", Icons.Rounded.Delete, stringResource(R.string.basket), pluralStringResource(R.plurals.hub_basket_sub, read.basket.size, read.basket.size), Routes.BASKET)
             }
-            Spacer(Modifier.height(TabBarClearance))
+            Spacer(Modifier.height(TabBarClearance - AppSpacing.block))
         }
     }
 }

@@ -1,5 +1,6 @@
 package app.photomaid.feature.later
 
+import androidx.compose.material.icons.rounded.EventBusy
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.BookmarkRemove
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Visibility
@@ -132,7 +132,7 @@ fun LaterScreen(nav: Nav) {
             }
             if (groups.isEmpty()) spacedItem("empty") {
                 EmptyState(Icons.Rounded.Schedule, stringResource(R.string.later_empty_title), stringResource(R.string.later_empty),
-                    hint = stringResource(R.string.later_empty_hint))
+                    hint = stringResource(R.string.later_empty_hint), tint = c.later)
             }
             groups.forEachIndexed { gi, (key, records) ->
                 lazyListSection(key.toString(), records, { it.item.localIdentifier }, header = headers[gi],
@@ -193,7 +193,7 @@ private fun LaterRow(r: ItemRecord, fileName: String?, kind: MediaKind?, today: 
             DropdownMenu(menu, { menu = false }) {
                 DropdownMenuItem({ Text(stringResource(R.string.change_date)) }, leadingIcon = { Icon(Icons.Rounded.CalendarMonth, null) }, onClick = { menu = false; onEdit() })
                 if (isPhoto) DropdownMenuItem({ Text(stringResource(R.string.later_review_now)) }, leadingIcon = { Icon(Icons.Rounded.Visibility, null) }, onClick = { menu = false; onReview() })
-                DropdownMenuItem({ Text(stringResource(R.string.later_remove)) }, leadingIcon = { Icon(Icons.Rounded.BookmarkRemove, null) }, onClick = { menu = false; onRemove() })
+                DropdownMenuItem({ Text(stringResource(R.string.later_remove)) }, leadingIcon = { Icon(Icons.Rounded.EventBusy, null) }, onClick = { menu = false; onRemove() })
             }
         }
     }

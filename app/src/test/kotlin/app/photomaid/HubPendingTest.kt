@@ -1,5 +1,6 @@
 package app.photomaid
 
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
@@ -102,12 +103,16 @@ class HubPendingTest {
         waitRow("hub.videos", "1 zu prüfen")
     }
 
-    /** TEST 10: Später zeigt die gespeicherten Elemente und „Für später gespeichert“. */
-    @Test fun laterCardShowsSavedCount() {
+    /** TEST 10: Später steht mit echter Zahl auf „Heute“ – im Aufräumen-Tab nicht doppelt. */
+    @Test fun laterLivesOnTodayNotTwiceInHub() {
         val app = app { refs -> refs.take(6).forEach { act(it, DecisionAction.Later(ReviewSessionID())) } }
-        rule.setContent { TestHost(app) { CleanUpHubScreen(RecordingNav()) } }
-        waitRow("hub.later", "6 Elemente")
-        assertTrue(rowText("hub.later").contains("Für später gespeichert"))
+        val screen = androidx.compose.runtime.mutableStateOf("today")
+        rule.setContent { TestHost(app) { if (screen.value == "today") TodayScreen(RecordingNav()) else CleanUpHubScreen(RecordingNav()) } }
+        waitRow("today.later", "6 Elemente")
+        screen.value = "hub"
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("hub.photos").fetchSemanticsNodes().isNotEmpty() }
+        assertTrue(rule.onAllNodesWithTag("hub.later").fetchSemanticsNodes().isEmpty())
+        assertTrue(rule.onAllNodesWithTag("hub.basket").fetchSemanticsNodes().isEmpty())
     }
 
     /** TEST 11: keine Büro-/Entwicklerbegriffe in sichtbaren deutschen Texten. */

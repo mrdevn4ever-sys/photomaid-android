@@ -70,7 +70,6 @@
         <item quantity="other">%1$d Medien warten auf dich</item>
     </plurals>
     <string name="today_review_hint">Öffnet deine Fotos und Videos zum Durchwischen</string>
-    <string name="today_gestures">↑ Behalten · ← Papierkorb · → Später</string>
     <string name="today_storage_title">Gerätespeicher</string>
     <string name="today_storage_value">%1$s von %2$s belegt</string>
     <plurals name="today_due">
@@ -88,23 +87,14 @@
     <string name="later">Später</string>
 
     <!-- Aufräumen-Hub -->
-    <string name="hub_subtitle">Finde und entferne, was du nicht brauchst – auf deinem Gerät.</string>
-    <string name="hub_photos_sub">Fotos durchsehen</string>
-    <string name="hub_videos_sub">Videos durchsehen</string>
-    <string name="hub_screens_sub">Screenshots durchsehen</string>
+    <string name="hub_media_header">Mediathek</string>
+    <string name="hub_tools_header">Werkzeuge</string>
+    <string name="hub_large_from">ab %1$s</string>
     <string name="hub_files_sub">Dateien aus verbundenen Ordnern</string>
     <string name="large_files">Große Dateien</string>
-    <string name="hub_large_sub">Große Videos und Dateien</string>
-    <string name="hub_dup_sub">Identische Kopien finden</string>
+    <string name="hub_dup_sub">Identische Kopien</string>
     <string name="storage_overview">Speicher&#173;übersicht</string>
-    <string name="hub_storage_sub">Was PhotoMaid sehen kann</string>
     <string name="basket">Papierkorb</string>
-    <plurals name="hub_basket_sub">
-        <item quantity="one">%1$d Element, noch nicht gelöscht</item>
-        <item quantity="other">%1$d Elemente, noch nicht gelöscht</item>
-    </plurals>
-
-    <string name="later_manage">Für später gespeichert</string>
     <string name="connected_sources">Verbundene Quellen</string>
 
     <!-- Feed -->
@@ -333,7 +323,7 @@
     <!-- Sammlungen -->
     <string name="hub_tab_areas">Bereiche</string>
     <string name="hub_tab_collections">Sammlungen</string>
-    <string name="col_intro">Eine Sammlung zeigt dir jederzeit alles, was zu einer Bedingung passt – zum Beispiel große Videos. Antippen, durchwischen, fertig. Gelöscht wird nie automatisch.</string>
+    <string name="col_intro">Fertige Filter: antippen, durchwischen. Gelöscht wird nie automatisch.</string>
     <string name="col_builtin_header">Fertige Sammlungen</string>
     <string name="col_custom_header">Deine Sammlungen</string>
     <string name="col_title_larger">%1$s größer als %2$s</string>
@@ -353,7 +343,7 @@
         <item quantity="other">%1$d Elemente ohne bekannte Größe sind nicht dabei.</item>
     </plurals>
     <string name="col_add">Eigene Sammlung</string>
-    <string name="col_custom_pro">Eigene Sammlungen sind Teil von PhotoMaid Pro. Die fertigen Sammlungen kann jeder nutzen.</string>
+    <string name="col_custom_pro">Mit PhotoMaid Pro. Die fertigen kann jeder nutzen.</string>
     <string name="col_editor_title">Eigene Sammlung</string>
     <string name="col_what">Was?</string>
     <string name="col_condition">Bedingung</string>
@@ -549,7 +539,6 @@
     <string name="qa_add_title">Schnellzugriff hinzufügen</string>
     <string name="qa_edit_title">Schnellzugriffe bearbeiten</string>
     <string name="qa_limit">Bis zu %1$d Schnellzugriffe. Entferne einen, um einen neuen hinzuzufügen.</string>
-    <string name="qa_all_added">Alle Schnellzugriffe sind schon auf „Heute“.</string>
     <string name="qa_photos">Fotos</string>
     <string name="qa_videos">Videos</string>
     <string name="qa_screenshots">Screenshots</string>
@@ -557,8 +546,6 @@
     <string name="qa_latest_videos">Neueste Videos</string>
     <string name="qa_this_week">Diese Woche</string>
     <string name="qa_folder">Ordner</string>
-    <string name="qa_choose_folder">Ordner auswählen</string>
-    <string name="qa_choose_folder_sub">Galerie-Apps zeigen Ordner meist als Album.</string>
     <string name="qa_latest_photos_sub">Deine neuesten %1$d Fotos</string>
     <string name="qa_latest_videos_sub">Deine neuesten %1$d Videos</string>
     <string name="qa_this_week_sub">Fotos und Videos dieser Kalenderwoche</string>
@@ -571,6 +558,10 @@
     <string name="qa_move_up">Nach vorn: %1$s</string>
     <string name="qa_move_down">Nach hinten: %1$s</string>
     <string name="qa_remove">Entfernen: %1$s</string>
+    <string name="qa_on_today">Auf Heute</string>
+    <string name="qa_folders_header">Ordner</string>
+    <string name="qa_all_folders">Alle Ordner …</string>
+    <string name="qa_remove_note">Entfernen löscht nichts – deine Entscheidungen bleiben.</string>
     <string name="qa_no_folders">Keine Ordner mit Fotos oder Videos gefunden.</string>
     <string name="feed_empty_photos">Bei deinen Fotos wartet gerade nichts auf dich.</string>
     <string name="feed_empty_videos">Bei deinen Videos wartet gerade nichts auf dich.</string>

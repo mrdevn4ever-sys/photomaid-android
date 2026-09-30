@@ -36,7 +36,10 @@ data class PhotoMaidColors(
     val glassStroke: Color,
     /** Fläche der Tabbar: deckend (Glas-Anmutung über Kante/Kontur/Schatten), damit darunter scrollender Text nicht durchscheint. */
     val glassBar: Color,
+    /** Akzent für Text und Symbole (AA ≥ 4,5 : 1 auf Hintergrund und Karten). */
     val accent: Color,
+    /** Akzent als Fläche mit weißer Schrift (Primärbuttons, Abzeichen; ≥ 4,5 : 1 mit Weiß). */
+    val accentFill: Color,
     val keep: Color,
     val cleanup: Color,
     val later: Color,
@@ -50,6 +53,13 @@ data class PhotoMaidColors(
         private val systemBlueLight = Color(0xFF007AFF); private val systemBlueDark = Color(0xFF0A84FF)
         private val systemRedLight = Color(0xFFFF3B30); private val systemRedDark = Color(0xFFFF453A)
         private val systemTealLight = Color(0xFF30B0C7); private val systemTealDark = Color(0xFF40C8E0)
+        // Kontrastgeprüfte Varianten für Light (WCAG): Text-Blau 5,2 : 1, Flächen-Blau 4,7 : 1 mit Weiß,
+        // Rot 5,4 : 1, Türkis 3,8 : 1, Grün 4,4 : 1 (Symbole ≥ 3 : 1). Dark: Text-Blau 6,0 : 1 auf Karten.
+        private val accentTextLight = Color(0xFF0064D2); private val accentTextDark = Color(0xFF4DA3FF)
+        private val accentFillLight = Color(0xFF0071E3)
+        private val redAccessibleLight = Color(0xFFD70015)
+        private val tealAccessibleLight = Color(0xFF0E8FA8)
+        private val greenAccessibleLight = Color(0xFF248A3D)
         private val systemOrangeLight = Color(0xFFFF9500); private val systemOrangeDark = Color(0xFFFF9F0A)
         private val systemGreenLight = Color(0xFF34C759); private val systemGreenDark = Color(0xFF30D158)
         private val systemIndigoLight = Color(0xFF5856D6); private val systemIndigoDark = Color(0xFF5E5CE6)
@@ -75,12 +85,13 @@ data class PhotoMaidColors(
                 else if (dark) Color.White.copy(alpha = 0.16f) else Color.White.copy(alpha = 0.85f),
                 glassBar = if (highContrast) c(0xFFFFFF, 0x15243A, 0xFFFFFF, 0x101C2E)
                 else if (dark) Color(0xFF17263D) else Color(0xFFFBFCFE),
-                accent = if (dark) systemBlueDark else systemBlueLight,
+                accent = if (dark) accentTextDark else accentTextLight,
+                accentFill = if (dark) systemBlueDark else accentFillLight,
                 keep = if (dark) systemBlueDark else systemBlueLight,
-                cleanup = if (dark) systemRedDark else systemRedLight,
-                later = if (dark) systemTealDark else systemTealLight,
+                cleanup = if (dark) systemRedDark else redAccessibleLight,
+                later = if (dark) systemTealDark else tealAccessibleLight,
                 warning = if (dark) systemOrangeDark else systemOrangeLight,
-                success = if (dark) systemGreenDark else systemGreenLight,
+                success = if (dark) systemGreenDark else greenAccessibleLight,
                 indigo = if (dark) systemIndigoDark else systemIndigoLight,
                 isDark = dark,
             )
@@ -90,14 +101,17 @@ data class PhotoMaidColors(
 
 /** Systemschrift, skaliert mit der Schriftgröße (sp). Entspricht den iOS-Dynamic-Type-Stilen. */
 object AppTypography {
-    val largeTitle = TextStyle(fontSize = 34.sp, lineHeight = 41.sp, fontWeight = FontWeight.Bold)
+    val largeTitle = TextStyle(fontSize = 32.sp, lineHeight = 38.sp, fontWeight = FontWeight.SemiBold, letterSpacing = (-0.4).sp)
     val title = TextStyle(fontSize = 22.sp, lineHeight = 28.sp, fontWeight = FontWeight.SemiBold)
     val headline = TextStyle(fontSize = 17.sp, lineHeight = 22.sp, fontWeight = FontWeight.SemiBold)
     val body = TextStyle(fontSize = 17.sp, lineHeight = 22.sp)
     val subheadline = TextStyle(fontSize = 15.sp, lineHeight = 20.sp)
     val footnote = TextStyle(fontSize = 13.sp, lineHeight = 18.sp)
     val caption = TextStyle(fontSize = 12.sp, lineHeight = 16.sp)
-    val caption2 = TextStyle(fontSize = 11.sp, lineHeight = 13.sp)
+    /** Kleinste Schrift der App (nie unter 12 sp). */
+    val caption2 = TextStyle(fontSize = 12.sp, lineHeight = 16.sp)
+    /** Abschnittsüberschrift über Gruppen (Versalien, gedeckt). */
+    val sectionHeader = TextStyle(fontSize = 13.sp, lineHeight = 18.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 0.4.sp)
     val metric = TextStyle(fontSize = 28.sp, lineHeight = 34.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.SansSerif)
 }
 
@@ -110,7 +124,14 @@ object AppSpacing {
     val xl = 24.dp
     val xxl = 32.dp
     /** Seitliche Ränder. */
-    val pageMargin = 18.dp
+    val pageMargin = 16.dp
+    /** Abstand zwischen Blöcken einer Seite. */
+    val block = 24.dp
+    /** Abstand Überschrift → zugehörige Gruppe. */
+    val headerGap = 8.dp
+    /** Zeilenhöhe in Listen: einzeilig / zweizeilig. */
+    val row = 56.dp
+    val rowTwoLine = 64.dp
     /** Mindest-Touchfläche (iOS 44 pt; Android-Empfehlung 48 dp – wir nehmen 48). */
     val minTouch = 48.dp
 }
@@ -142,7 +163,12 @@ object AppControl {
 
 object AppRadii {
     val small = 12.dp
-    val card = 22.dp
+    /** Gruppen und Karten. */
+    val card = 18.dp
+    /** Die Hero-Karte auf „Heute“. */
+    val hero = 24.dp
+    /** Symbolkachel in Listenzeilen. */
+    val tile = 9.dp
     val sheet = 28.dp
     val thumb = 10.dp
     /** Segmente, Chips, Eingabefelder. */

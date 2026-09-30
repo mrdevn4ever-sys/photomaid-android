@@ -1,5 +1,32 @@
 package app.photomaid.feature.quickaccess
 
+import kotlinx.coroutines.delay
+import app.photomaid.design.SectionTitle
+import app.photomaid.design.RowStatus
+import app.photomaid.design.RowGroup
+import app.photomaid.design.RowDividerInset
+import app.photomaid.design.ListRow
+import app.photomaid.design.AppRadii
+import androidx.compose.ui.zIndex
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.clip
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material.icons.rounded.FolderOpen
+import androidx.compose.material.icons.rounded.DragHandle
+import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -75,17 +102,26 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 fun quickIcon(kind: QuickSourceKind): ImageVector = when (kind) {
-    QuickSourceKind.PHOTOS -> Icons.Rounded.Photo
-    QuickSourceKind.VIDEOS -> Icons.Rounded.Videocam
+    QuickSourceKind.PHOTOS, QuickSourceKind.LATEST_PHOTOS -> Icons.Rounded.Photo
+    QuickSourceKind.VIDEOS, QuickSourceKind.LATEST_VIDEOS -> Icons.Rounded.Videocam
     QuickSourceKind.SCREENSHOTS -> Icons.Rounded.Screenshot
-    QuickSourceKind.LATEST_PHOTOS, QuickSourceKind.LATEST_VIDEOS -> Icons.Rounded.Update
-    QuickSourceKind.THIS_WEEK -> Icons.Rounded.DateRange
+    // Nie das Verlauf-Symbol: „Neueste“ unterscheidet sich über den Titel.
+    QuickSourceKind.THIS_WEEK -> Icons.Rounded.CalendarMonth
     QuickSourceKind.FOLDER -> Icons.Rounded.Folder
 }
 
+/** Status einer Quelle: Zahl offen · ✓ nichts offen · „Leer“ ohne Mitglieder. */
+@Composable
+fun rowStatusOf(status: SourceStatus?): RowStatus = when {
+    status == null -> RowStatus.None
+    status.members == 0 -> RowStatus.Label(stringResource(R.string.qa_empty))
+    status.pending == 0 -> RowStatus.Done
+    else -> RowStatus.Count(status.pending)
+}
+
 /**
- * „Schnellzugriffe“ auf Heute: eine leichte Karte mit einer Zeile je Quelle – Symbol · Name · Zahl rechts · Chevron
- * (✓ wenn alles geprüft, „Leer“ ohne Medien) – und „Hinzufügen“. Jede Zeile öffnet denselben Review-Feed.
+ * „Schnellzugriffe“ auf Heute: Überschrift + eine Gruppe, eine Zeile je Quelle – Kachel · Name · Status rechts · Chevron –
+ * und „Hinzufügen“ als letzte Zeile. Jede Zeile öffnet denselben Review-Feed; eine leere Quelle öffnet „Bearbeiten“.
  * Zahlen werden nie gespeichert: [snapshot] (eine Mediathek-Abfrage von „Heute“) + globale offene IDs ([pendingIds]).
  */
 @Composable
@@ -93,27 +129,42 @@ fun QuickAccessSection(nav: Nav, snapshot: List<app.photomaid.media.MediaAsset>,
     val app = LocalApp.current
     val c = PM.colors
     val scope = rememberCoroutineScope()
+    val haptics = LocalHapticFeedback.current
     val items by app.quickAccess.items.collectAsState()
     var adding by remember { mutableStateOf(false) }
     var editing by remember { mutableStateOf(false) }
     var folders by remember { mutableStateOf<List<MediaFolder>?>(null) }
+    var justAdded by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(justAdded) { if (justAdded != null) { delay(900); justAdded = null } }
     // Reine Filter im Speicher – kein weiterer MediaStore-Zugriff.
     val status = remember(items, snapshot, pendingIds) { pendingIds?.let { statusFor(items, snapshot, it) } ?: emptyMap() }
 
-    Column(Modifier.testTag("today.quick"), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.qa_title), style = AppTypography.headline.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph),
-                color = c.textPrimary, modifier = Modifier.weight(1f))
-            if (items.isNotEmpty()) PlainButton(stringResource(R.string.qa_edit), Modifier.testTag("quick.edit")) { editing = true }
+    Column(Modifier.testTag("today.quick"), verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
+        SectionTitle(stringResource(R.string.qa_title)) {
+            if (items.isNotEmpty()) PlainButton(stringResource(R.string.qa_edit), Modifier.testTag("quick.edit"), style = AppTypography.subheadline) { editing = true }
         }
-        SurfaceCard(padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.xxs)) {
+        RowGroup {
             items.forEachIndexed { i, q ->
-                if (i > 0) RowDivider()
-                QuickRow(q, status[q.key]) { nav.openFeed(FeedRequest(FeedRequest.Source.Quick(q))) }
+                if (i > 0) RowDivider(RowDividerInset)
+                val st = status[q.key]
+                val title = quickTitle(q)
+                val desc = when {
+                    st == null -> ""
+                    st.members == 0 -> stringResource(R.string.qa_empty)
+                    st.pending == 0 -> stringResource(R.string.qa_all_done)
+                    else -> pluralStringResource(R.plurals.qa_open, st.pending, st.pending)
+                }
+                androidx.compose.runtime.key(q.key) {
+                    ListRow(quickIcon(q.kind), title, Modifier.testTag("quick.${q.key}"), status = rowStatusOf(st), description = "$title, $desc",
+                        showChevron = st?.members != 0, highlight = justAdded == q.key) {
+                        if (st?.members == 0) editing = true else nav.openFeed(FeedRequest(FeedRequest.Source.Quick(q)))
+                    }
+                }
             }
             if (items.size < QuickAccess.MAX_ITEMS) {
-                if (items.isNotEmpty()) RowDivider()
-                AddRow {
+                if (items.isNotEmpty()) RowDivider(RowDividerInset)
+                ListRow(Icons.Rounded.Add, stringResource(R.string.qa_add), Modifier.testTag("quick.add"), tile = c.accent.copy(alpha = 0.12f),
+                    titleColor = c.accent, showChevron = false) {
                     folders = null
                     adding = true
                     // Außerhalb des Sheets laden (Zustand der Hauptkomposition).
@@ -122,85 +173,83 @@ fun QuickAccessSection(nav: Nav, snapshot: List<app.photomaid.media.MediaAsset>,
             }
         }
     }
-    if (adding) AddSheet(items, folders, onAdd = { q -> adding = false; scope.launch { app.quickAccess.update { QuickAccess.add(it, q) } } }, onDismiss = { adding = false })
-    if (editing) EditSheet(items, onMove = { q, d -> scope.launch { app.quickAccess.update { QuickAccess.move(it, q, d) } } },
-        onRemove = { q -> scope.launch { app.quickAccess.update { QuickAccess.remove(it, q) } } }, onDismiss = { editing = false })
-}
-
-/** Eine Zeile: Zahl/Haken rechtsbündig auf einer Achse – auch bei großer Schrift nie unter dem Titel. */
-@Composable
-private fun QuickRow(item: QuickAccessItem, status: SourceStatus?, onClick: () -> Unit) {
-    val c = PM.colors
-    val title = quickTitle(item)
-    val desc = when {
-        status == null -> ""
-        status.members == 0 -> stringResource(R.string.qa_empty)
-        status.pending == 0 -> stringResource(R.string.qa_all_done)
-        else -> pluralStringResource(R.plurals.qa_open, status.pending, status.pending)
-    }
-    Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch + 4.dp).clickable(role = Role.Button, onClick = onClick)
-        .testTag("quick.${item.key}").semantics(mergeDescendants = true) { contentDescription = "$title, $desc" },
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        Icon(quickIcon(item.kind), null, tint = c.accent, modifier = Modifier.size(AppIconSize.regular))
-        BasicText(title, Modifier.weight(1f), style = AppTypography.body.copy(color = c.textPrimary), maxLines = 1, overflow = TextOverflow.Ellipsis,
-            autoSize = TextAutoSize.StepBased(minFontSize = AppTypography.caption2.fontSize, maxFontSize = AppTypography.body.fontSize))
-        when {
-            status == null -> Unit
-            status.members == 0 -> Text(stringResource(R.string.qa_empty), style = AppTypography.subheadline, color = c.textSecondary, maxLines = 1, softWrap = false)
-            status.pending == 0 -> Icon(Icons.Rounded.Check, null, tint = c.success, modifier = Modifier.size(AppIconSize.regular))
-            else -> Text("${status.pending}", style = AppTypography.headline.copy(fontFeatureSettings = "tnum"), color = c.textPrimary, maxLines = 1, softWrap = false)
-        }
-        Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.regular))
-    }
-}
-
-@Composable
-private fun AddRow(onClick: () -> Unit) {
-    val c = PM.colors
-    Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch + 4.dp).clickable(role = Role.Button, onClick = onClick).testTag("quick.add"),
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        Icon(Icons.Rounded.Add, null, tint = c.accent, modifier = Modifier.size(AppIconSize.regular))
-        Text(stringResource(R.string.qa_add), style = AppTypography.body, color = c.accent, maxLines = 1, overflow = TextOverflow.Ellipsis)
-    }
+    if (adding) AddSheet(items, snapshot, pendingIds, folders, onAdd = { q ->
+        adding = false
+        if (app.settings.value.haptics) haptics.performHapticFeedback(HapticFeedbackType.Confirm)
+        justAdded = q.key
+        scope.launch { app.quickAccess.update { QuickAccess.add(it, q) } }
+    }, onDismiss = { adding = false })
+    if (editing) EditSheet(items, onMove = { q, d ->
+        if (app.settings.value.haptics) haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
+        scope.launch { app.quickAccess.update { QuickAccess.move(it, q, d) } }
+    }, onRemove = { q -> scope.launch { app.quickAccess.update { QuickAccess.remove(it, q) } } }, onDismiss = { editing = false })
 }
 
 private val addable = listOf(QuickSourceKind.PHOTOS, QuickSourceKind.VIDEOS, QuickSourceKind.SCREENSHOTS,
     QuickSourceKind.LATEST_PHOTOS, QuickSourceKind.LATEST_VIDEOS, QuickSourceKind.THIS_WEEK)
 
+/** So viele Ordner direkt im Sheet (nach Anzahl); der Rest über „Alle Ordner …“. */
+private const val INLINE_FOLDERS = 5
+
+/**
+ * Stabiler Katalog: alle Quellen immer an derselben Stelle, schon vorhandene mit „Auf Heute“ (nicht antippbar),
+ * jede mit ihrer echten offenen Anzahl. Ordner direkt darunter (die größten zuerst), Antippen fügt sofort hinzu.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AddSheet(current: List<QuickAccessItem>, folders: List<MediaFolder>?, onAdd: (QuickAccessItem) -> Unit, onDismiss: () -> Unit) {
+private fun AddSheet(current: List<QuickAccessItem>, snapshot: List<app.photomaid.media.MediaAsset>, pendingIds: Set<String>?,
+                     folders: List<MediaFolder>?, onAdd: (QuickAccessItem) -> Unit, onDismiss: () -> Unit) {
     val c = PM.colors
-    var choosingFolder by remember { mutableStateOf(false) }
+    var allFolders by remember { mutableStateOf(false) }
     val full = current.size >= QuickAccess.MAX_ITEMS
+    val onToday = stringResource(R.string.qa_on_today)
+    val catalogue = remember { addable.map { QuickAccessItem(it) } }
+    val folderItems = remember(folders) {
+        folders?.sortedWith(compareByDescending<MediaFolder> { it.count }.thenBy { it.name.lowercase() })
+            ?.map { it to QuickAccessItem(QuickSourceKind.FOLDER, it.relativePath) }
+    }
+    val status = remember(snapshot, pendingIds, folderItems) {
+        pendingIds?.let { statusFor(catalogue + folderItems.orEmpty().map { it.second }, snapshot, it) } ?: emptyMap()
+    }
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = c.background) {
         Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.m).testTag("quick.sheet"),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-            Text(stringResource(if (choosingFolder) R.string.qa_choose_folder else R.string.qa_add_title), style = AppTypography.headline, color = c.textPrimary)
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            Text(stringResource(if (allFolders) R.string.qa_folders_header else R.string.qa_add_title), style = AppTypography.headline, color = c.textPrimary)
             if (full) { Text(stringResource(R.string.qa_limit, QuickAccess.MAX_ITEMS), style = AppTypography.footnote, color = c.textSecondary); return@Column }
-            if (!choosingFolder) {
-                val open = addable.map { QuickAccessItem(it) }.filter { QuickAccess.canAdd(current, it) }
-                LazyColumn(Modifier.heightIn(max = 480.dp)) {
-                    items(open, key = { it.key }) { q ->
-                        SheetRow(quickIcon(q.kind), quickTitle(q), quickSubtitle(q), Modifier.testTag("quick.option.${q.key}")) { onAdd(q) }
-                        RowDivider()
+            @Composable
+            fun option(q: QuickAccessItem, tag: String, title: String = quickTitle(q), subtitle: String? = quickSubtitle(q)) {
+                val present = current.any { it.key == q.key }
+                ListRow(quickIcon(q.kind), title, Modifier.testTag(tag), subtitle = subtitle,
+                    status = if (present) RowStatus.Label(onToday) else rowStatusOf(status[q.key]), showChevron = false,
+                    enabled = !present) { onAdd(q) }
+            }
+            LazyColumn(Modifier.heightIn(max = 560.dp)) {
+                if (!allFolders) {
+                    item(key = "catalogue") {
+                        RowGroup {
+                            catalogue.forEachIndexed { i, q ->
+                                if (i > 0) RowDivider(RowDividerInset)
+                                option(q, "quick.option.${q.key}")
+                            }
+                        }
                     }
-                    item {
-                        SheetRow(Icons.Rounded.Folder, stringResource(R.string.qa_choose_folder), stringResource(R.string.qa_choose_folder_sub),
-                            Modifier.testTag("quick.option.folder")) { choosingFolder = true }
-                    }
+                    item(key = "folders.header") { SectionTitle(stringResource(R.string.qa_folders_header), Modifier.padding(top = AppSpacing.block, bottom = AppSpacing.headerGap)) }
                 }
-            } else {
-                val list = folders?.filter { f -> QuickAccess.canAdd(current, QuickAccessItem(QuickSourceKind.FOLDER, f.relativePath)) }
-                    ?.sortedWith(compareByDescending<MediaFolder> { it.count }.thenBy { it.name.lowercase() })
                 when {
-                    list == null -> Text(stringResource(R.string.folder_loading), style = AppTypography.footnote, color = c.textSecondary)
-                    list.isEmpty() -> Text(stringResource(R.string.qa_no_folders), style = AppTypography.footnote, color = c.textSecondary)
-                    else -> LazyColumn(Modifier.heightIn(max = 480.dp)) {
-                        items(list, key = { it.relativePath }) { f ->
-                            SheetRow(Icons.Rounded.Folder, f.name, pluralStringResource(R.plurals.items_count, f.count, f.count),
-                                Modifier.testTag("quick.folder.${f.relativePath}")) { onAdd(QuickAccessItem(QuickSourceKind.FOLDER, f.relativePath)) }
-                            RowDivider()
+                    folderItems == null -> item { Text(stringResource(R.string.folder_loading), style = AppTypography.footnote, color = c.textSecondary) }
+                    folderItems.isEmpty() -> item { Text(stringResource(R.string.qa_no_folders), style = AppTypography.footnote, color = c.textSecondary) }
+                    else -> item(key = "folders") {
+                        val shown = if (allFolders) folderItems else folderItems.take(INLINE_FOLDERS)
+                        RowGroup {
+                            shown.forEachIndexed { i, (f, q) ->
+                                if (i > 0) RowDivider(RowDividerInset)
+                                option(q, "quick.folder.${f.relativePath}", title = f.name, subtitle = null)
+                            }
+                            if (!allFolders && folderItems.size > INLINE_FOLDERS) {
+                                RowDivider(RowDividerInset)
+                                ListRow(Icons.Rounded.FolderOpen, stringResource(R.string.qa_all_folders), Modifier.testTag("quick.option.folder"),
+                                    status = RowStatus.Label("${folderItems.size}")) { allFolders = true }
+                            }
                         }
                     }
                 }
@@ -217,47 +266,83 @@ private fun quickSubtitle(q: QuickAccessItem): String? = when (q.kind) {
     else -> null
 }
 
-@Composable
-private fun SheetRow(icon: ImageVector, title: String, subtitle: String?, modifier: Modifier, onClick: () -> Unit) {
-    val c = PM.colors
-    Row(modifier.fillMaxWidth().heightIn(min = 56.dp).clickable(role = Role.Button, onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        Icon(icon, null, tint = c.accent)
-        Column(Modifier.weight(1f)) {
-            Text(title, style = AppTypography.body, color = c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            if (subtitle != null) Text(subtitle, style = AppTypography.caption, color = c.textSecondary)
-        }
-        Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary)
-    }
-}
-
-/** Entfernen und Sortieren mit großen Tippflächen (auch mit TalkBack bedienbar, ohne Ziehen). */
+/**
+ * Bearbeiten: ⊖ links (gedämpftes Rot), Ziehgriff rechts (Ziehen sortiert, Haptik je Schritt), „Fertig“ oben.
+ * TalkBack/Schalter: „Nach vorn“/„Nach hinten“ als Aktionen der Zeile – ohne Ziehen bedienbar.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun EditSheet(items: List<QuickAccessItem>, onMove: (QuickAccessItem, Int) -> Unit, onRemove: (QuickAccessItem) -> Unit, onDismiss: () -> Unit) {
     val c = PM.colors
-    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = c.background) {
+    val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scope = rememberCoroutineScope()
+    val rowPx = with(LocalDensity.current) { AppSpacing.row.toPx() }
+    val current by rememberUpdatedState(items)
+    var dragKey by remember { mutableStateOf<String?>(null) }
+    var dragOffset by remember { mutableFloatStateOf(0f) }
+    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = state, containerColor = c.background) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.m).testTag("quick.editSheet"),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-            Text(stringResource(R.string.qa_edit_title), style = AppTypography.headline, color = c.textPrimary)
-            items.forEachIndexed { i, q ->
-                val title = quickTitle(q)
-                Row(Modifier.fillMaxWidth().heightIn(min = 56.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
-                    Icon(quickIcon(q.kind), null, tint = c.accent)
-                    Text(title, style = AppTypography.body, color = c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f).padding(start = AppSpacing.xs))
-                    EditIcon(Icons.Rounded.ArrowUpward, stringResource(R.string.qa_move_up, title), enabled = i > 0) { onMove(q, -1) }
-                    EditIcon(Icons.Rounded.ArrowDownward, stringResource(R.string.qa_move_down, title), enabled = i < items.size - 1) { onMove(q, +1) }
-                    EditIcon(Icons.Rounded.RemoveCircleOutline, stringResource(R.string.qa_remove, title), enabled = true, tint = c.cleanup) { onRemove(q) }
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.qa_edit_title), style = AppTypography.headline, color = c.textPrimary, modifier = Modifier.weight(1f))
+                PlainButton(stringResource(R.string.done), Modifier.testTag("quick.edit.done"), style = AppTypography.headline) {
+                    scope.launch { state.hide() }.invokeOnCompletion { onDismiss() }
                 }
-                if (i < items.size - 1) RowDivider()
             }
+            RowGroup {
+                items.forEachIndexed { i, q ->
+                    androidx.compose.runtime.key(q.key) {
+                        val title = quickTitle(q)
+                        val dragging = dragKey == q.key
+                        val up = stringResource(R.string.qa_move_up, title); val down = stringResource(R.string.qa_move_down, title)
+                        if (i > 0) RowDivider(RowDividerInset + AppSpacing.minTouch)
+                        Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.row).zIndex(if (dragging) 1f else 0f)
+                            .graphicsLayer { translationY = if (dragging) dragOffset else 0f; shadowElevation = if (dragging) 8.dp.toPx() else 0f }
+                            .background(if (dragging) c.surface else androidx.compose.ui.graphics.Color.Transparent)
+                            .testTag("quick.edit.${q.key}")
+                            .semantics(mergeDescendants = true) {
+                                customActions = listOfNotNull(
+                                    if (i > 0) CustomAccessibilityAction(up) { onMove(q, -1); true } else null,
+                                    if (i < items.size - 1) CustomAccessibilityAction(down) { onMove(q, +1); true } else null,
+                                )
+                            },
+                            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
+                            EditIcon(Icons.Rounded.RemoveCircleOutline, stringResource(R.string.qa_remove, title), tint = c.cleanup.copy(alpha = 0.8f)) { onRemove(q) }
+                            Box(Modifier.size(32.dp).clip(RoundedCornerShape(AppRadii.tile)).background(c.backgroundTint), contentAlignment = Alignment.Center) {
+                                Icon(quickIcon(q.kind), null, tint = c.accent, modifier = Modifier.size(20.dp))
+                            }
+                            Text(title, style = AppTypography.body, color = c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.weight(1f).padding(start = AppSpacing.xs))
+                            // Ziehgriff: verbraucht die Bewegung (das Sheet zieht nicht mit).
+                            Box(Modifier.size(AppSpacing.minTouch).testTag("quick.drag.${q.key}").clearAndSetSemantics {}
+                                .pointerInput(q.key) {
+                                    detectDragGestures(
+                                        onDragStart = { dragKey = q.key; dragOffset = 0f },
+                                        onDragEnd = { dragKey = null; dragOffset = 0f },
+                                        onDragCancel = { dragKey = null; dragOffset = 0f },
+                                    ) { change, amount ->
+                                        change.consume()
+                                        dragOffset += amount.y
+                                        val idx = current.indexOfFirst { it.key == q.key }
+                                        if (dragOffset > rowPx / 2 && idx in 0 until current.size - 1) { onMove(q, +1); dragOffset -= rowPx }
+                                        else if (dragOffset < -rowPx / 2 && idx > 0) { onMove(q, -1); dragOffset += rowPx }
+                                    }
+                                }, contentAlignment = Alignment.Center) {
+                                Icon(Icons.Rounded.DragHandle, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.regular))
+                            }
+                        }
+                    }
+                }
+            }
+            Text(stringResource(R.string.qa_remove_note), style = AppTypography.footnote, color = c.textSecondary, modifier = Modifier.padding(horizontal = AppSpacing.xxs))
+            if (items.size >= QuickAccess.MAX_ITEMS) Text(stringResource(R.string.qa_limit, QuickAccess.MAX_ITEMS), style = AppTypography.footnote, color = c.textSecondary,
+                modifier = Modifier.padding(horizontal = AppSpacing.xxs))
         }
     }
 }
 
 @Composable
-private fun EditIcon(icon: ImageVector, label: String, enabled: Boolean, tint: androidx.compose.ui.graphics.Color = PM.colors.textSecondary, onClick: () -> Unit) {
+private fun EditIcon(icon: ImageVector, label: String, enabled: Boolean = true, tint: androidx.compose.ui.graphics.Color = PM.colors.textSecondary, onClick: () -> Unit) {
     Box(Modifier.size(AppSpacing.minTouch).clickable(enabled = enabled, role = Role.Button, onClick = onClick).semantics { contentDescription = label },
         contentAlignment = Alignment.Center) {
         Icon(icon, null, tint = if (enabled) tint else tint.copy(alpha = 0.3f), modifier = Modifier.size(AppIconSize.regular))

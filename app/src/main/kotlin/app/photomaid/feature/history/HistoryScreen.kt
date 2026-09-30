@@ -1,5 +1,6 @@
 package app.photomaid.feature.history
 
+import androidx.compose.material.icons.rounded.EventBusy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Undo
-import androidx.compose.material.icons.rounded.BookmarkRemove
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Circle
@@ -146,7 +146,7 @@ private fun describe(e: DecisionEvent, c: PhotoMaidColors): Triple<ImageVector, 
     HistoryKind.CLEANUP_NOT_PERFORMED -> Triple(Icons.Rounded.HighlightOff, c.textSecondary, R.string.h_not_performed)
     HistoryKind.UNDO -> Triple(Icons.AutoMirrored.Rounded.Undo, c.textSecondary, R.string.h_undo)
     HistoryKind.SCHEDULE_CHANGED -> Triple(Icons.Rounded.CalendarMonth, c.later, R.string.h_schedule)
-    HistoryKind.DEFERRAL_REMOVED -> Triple(Icons.Rounded.BookmarkRemove, c.textSecondary, R.string.h_deferral_removed)
+    HistoryKind.DEFERRAL_REMOVED -> Triple(Icons.Rounded.EventBusy, c.textSecondary, R.string.h_deferral_removed)
     HistoryKind.UNMARKED -> Triple(Icons.Rounded.RemoveCircleOutline, c.textSecondary, R.string.h_unmarked)
     HistoryKind.DECISION, HistoryKind.CORRECTION -> {
         val corr = e.kind == HistoryKind.CORRECTION

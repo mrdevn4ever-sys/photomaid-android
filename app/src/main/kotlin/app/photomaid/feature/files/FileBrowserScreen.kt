@@ -1,5 +1,6 @@
 package app.photomaid.feature.files
 
+import androidx.compose.material.icons.rounded.Schedule
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -20,7 +21,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.CreateNewFolder
 import androidx.compose.material.icons.rounded.Delete
@@ -260,7 +260,7 @@ private fun FileRow(e: FileEntry, state: Disposition, onOpen: () -> Unit, onKeep
         }
         when (state) {
             Disposition.MARKED_FOR_CLEANUP -> Icon(Icons.Rounded.Delete, null, tint = c.cleanup)
-            Disposition.LATER -> Icon(Icons.Rounded.Bookmark, null, tint = c.later)
+            Disposition.LATER -> Icon(Icons.Rounded.Schedule, null, tint = c.later)
             Disposition.KEPT -> Icon(Icons.Rounded.Check, null, tint = c.keep)
             else -> Unit
         }

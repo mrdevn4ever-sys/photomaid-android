@@ -88,6 +88,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.photomaid.FeedRequest
+import androidx.compose.material.icons.rounded.Schedule
 import app.photomaid.design.appearOnce
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.material.icons.rounded.WorkspacePremium
@@ -454,7 +455,7 @@ fun LaterPillView(pill: LaterPill, edit: () -> Unit) {
     val ctx = LocalContext.current
     Row(Modifier.glassCapsule().padding(horizontal = AppSpacing.m).testTag("later.pill"),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        Icon(Icons.Rounded.History, null, tint = c.later)
+        Icon(Icons.Rounded.Schedule, null, tint = c.later)
         Text(LaterText.inInterval(ctx, pill.interval), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
         Box(Modifier.heightIn(min = AppSpacing.minTouch).clickable(onClick = edit).testTag("later.edit"), contentAlignment = Alignment.Center) {
             Text(stringResource(R.string.change), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.accent)
