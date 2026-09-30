@@ -64,8 +64,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.photomaid.FeedRequest
 import app.photomaid.R
-import app.photomaid.core.later.ReviewQueues
-import app.photomaid.core.model.ReviewSessionID
 import app.photomaid.core.storage.DeviceCapacity
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppIconSize
@@ -112,10 +110,7 @@ fun TodayScreen(nav: Nav) {
     LaunchedEffect(token, access, read.basket.size, read.laterRecords.size, read.events.size) {
         withContext(Dispatchers.IO) {
             device = DeviceStorage.read(ctx)
-            pending = if (!access.canRead) null else {
-                val refs = app.photos.reviewableMedia().map { it.reference }
-                ReviewQueues.normalQueue(refs, app.ledger.records(refs), ReviewSessionID(), app.today).map { it.localIdentifier }
-            }
+            pending = if (!access.canRead) null else app.pendingQueue(app.photos.reviewableMedia()).map { it.localIdentifier }
         }
     }
 

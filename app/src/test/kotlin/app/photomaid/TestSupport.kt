@@ -96,6 +96,14 @@ class FakeMediaLibrary(
 
     private fun visible() = all.filter { it.id !in removed }
 
+    /** Simuliert ein extern neu aufgenommenes Medium (Kopie von Eintrag [i] mit neuer ID). */
+    fun addNew(i: Int = 0): MediaAsset {
+        val a = base[i].copy(id = base[i].id + "?new=" + base.size, creationDate = java.time.Instant.parse("2026-09-29T12:00:00Z"))
+        base = base + a
+        changeToken.value += 1
+        return a
+    }
+
     override fun refreshAccess() {}
     override fun bumpChangeToken() { changeToken.value += 1 }
     override fun count(category: MediaCategory) = if (access.value.canRead) assets(category).size else 0

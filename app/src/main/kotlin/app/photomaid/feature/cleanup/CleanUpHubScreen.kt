@@ -49,6 +49,7 @@ import app.photomaid.design.SurfaceCard
 import app.photomaid.media.MediaCategory
 import app.photomaid.feature.collections.CollectionsContent
 import androidx.compose.material.icons.rounded.Bookmark
+import androidx.compose.material.icons.rounded.Check
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.navigation.Routes
@@ -69,7 +70,12 @@ fun CleanUpHubScreen(nav: Nav) {
     val sources by app.sources.sources.collectAsState()
     var tab by rememberSaveable { mutableStateOf(HubTab.AREAS) }
     var counts by remember { mutableStateOf<Map<MediaCategory, Int>>(emptyMap()) }
-    LaunchedEffect(token, access) { counts = withContext(Dispatchers.IO) { MediaCategory.entries.associateWith { app.photos.count(it) } } }
+    // Noch zu prüfen (nicht Gesamtbestand): dieselbe Quelle wie „Heute“, neu bei Mediathek- und Entscheidungsänderung.
+    LaunchedEffect(token, access, read.events.size, read.basket.size, read.laterRecords.size) {
+        counts = withContext(Dispatchers.IO) {
+            if (!access.canRead) emptyMap() else MediaCategory.entries.associateWith { app.pendingQueue(app.photos.assets(it)).size }
+        }
+    }
 
     AppBackground {
         Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
@@ -87,8 +93,12 @@ fun CleanUpHubScreen(nav: Nav) {
                     val enabled = access.canRead
                     SurfaceCard(Modifier.alpha(if (enabled) 1f else 0.45f).testTag("hub.${cat.name.lowercase()}"),
                         onClick = if (enabled) ({ nav.openFeed(FeedRequest(FeedRequest.Source.Category(cat))) }) else null) {
-                        SourceRow(icon, c.accent, stringResource(title), subtitle = stringResource(sub), value = counts[cat]?.toString(),
-                            valueDescription = counts[cat]?.let { pluralStringResource(R.plurals.items_count, it, it) })
+                        val pending = counts[cat]
+                        // 0 offen → dezenter Haken (heißt nur: gerade nichts zu prüfen; neue Medien zeigen wieder eine Zahl).
+                        SourceRow(icon, c.accent, stringResource(title), subtitle = stringResource(sub),
+                            value = pending?.takeIf { it > 0 }?.toString(),
+                            valueIcon = if (pending == 0) Icons.Rounded.Check else null,
+                            valueDescription = pending?.let { if (it == 0) stringResource(R.string.hub_nothing_pending) else pluralStringResource(R.plurals.hub_pending, it, it) })
                     }
                 }
                 @Composable
@@ -100,7 +110,12 @@ fun CleanUpHubScreen(nav: Nav) {
                 media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots, R.string.hub_screens_sub)
                 link("files", Icons.Rounded.Download, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads),
                     stringResource(if (sources.isEmpty()) R.string.choose_folder else R.string.hub_files_sub), Routes.FILES)
-                link("later", Icons.Rounded.Bookmark, stringResource(R.string.later), stringResource(R.string.later_manage), Routes.LATER)
+                // Später: tatsächlich für später gespeicherte Elemente (nicht die Prüf-Logik der Medienbereiche).
+                SurfaceCard(Modifier.testTag("hub.later"), onClick = { nav.push(Routes.LATER) }) {
+                    SourceRow(Icons.Rounded.Bookmark, c.accent, stringResource(R.string.later), subtitle = stringResource(R.string.later_manage),
+                        value = read.laterRecords.size.toString(),
+                        valueDescription = pluralStringResource(R.plurals.items_count, read.laterRecords.size, read.laterRecords.size))
+                }
                 link("large", Icons.Rounded.InsertDriveFile, stringResource(R.string.large_files), stringResource(R.string.hub_large_sub), Routes.LARGE)
                 link("duplicates", Icons.Rounded.FilterNone, stringResource(R.string.duplicates), stringResource(R.string.hub_dup_sub), Routes.DUPLICATES)
                 link("storage", Icons.Rounded.BarChart, stringResource(R.string.storage_overview), stringResource(R.string.hub_storage_sub), Routes.STORAGE)

@@ -323,11 +323,13 @@ fun SourceRow(
     showChevron: Boolean = true,
     /** Vorlesetext für einen knappen Wert (z. B. „6“ → „6 Elemente“). */
     valueDescription: String? = null,
+    /** Symbol statt Zahl an derselben Stelle (z. B. ✓ = nichts zu prüfen). */
+    valueIcon: ImageVector? = null,
 ) {
     val c = PM.colors
     // Große Schrift (≥ 130 %): Werte unter den Titel statt daneben (iOS: Accessibility-Größen stapeln).
     val stacked = LocalDensity.current.fontScale >= 1.3f
-    val trailing = listOfNotNull(value, detail)
+    val trailing = listOfNotNull(value, detail, valueDescription?.takeIf { valueIcon != null })
     Row(
         modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).semantics(mergeDescendants = true) {},
         verticalAlignment = Alignment.CenterVertically,
@@ -346,6 +348,8 @@ fun SourceRow(
         // Detail begrenzt, damit der Titel auf schmalen Geräten nicht zerquetscht wird.
         if (!stacked && trailing.isNotEmpty()) {
             Column(Modifier.widthIn(max = 132.dp), horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                if (valueIcon != null) Icon(valueIcon, null, tint = c.success, modifier = Modifier.size(20.dp)
+                    .then(if (valueDescription != null) Modifier.semantics { contentDescription = valueDescription } else Modifier))
                 if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary,
                     textAlign = TextAlign.End, maxLines = 1,
                     modifier = if (valueDescription != null) Modifier.semantics { contentDescription = valueDescription } else Modifier)

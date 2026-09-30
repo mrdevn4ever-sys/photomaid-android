@@ -164,6 +164,15 @@ class AppModel(
         )
     }
 
+    /**
+     * Noch zu prüfende Medien – dieselbe Regel wie der Feed ([ReviewQueues.normalQueue]).
+     * Einzige Quelle für „Heute“ (Zahl, „Alles geprüft“) und die Zähler im Tab „Aufräumen“.
+     */
+    suspend fun pendingQueue(assets: List<app.photomaid.media.MediaAsset>): List<ItemReference> {
+        val refs = assets.map { it.reference }
+        return ReviewQueues.normalQueue(refs, ledger.records(refs), ReviewSessionID(), today)
+    }
+
     val dueCount: Int
         get() = _read.value.laterRecords.count { ReviewQueues.laterStatus(it, today) is LaterStatus.Due }
 

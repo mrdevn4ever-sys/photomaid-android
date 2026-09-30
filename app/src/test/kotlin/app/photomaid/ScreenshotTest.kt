@@ -247,4 +247,21 @@ class ScreenshotTest {
     @Test fun h01_status_cards_100() = statusCards("h01_status_cards_100", 1.0f)
     @Test fun h02_status_cards_150() = statusCards("h02_status_cards_150", 1.5f)
     @Test @Config(qualifiers = "w320dp-h900dp-xhdpi") fun h03_status_cards_200_small() = statusCards("h03_status_cards_200_small", 2.0f)
+
+    // Aufräumen-Hub: A = alles geprüft (6 für später), B = offene Elemente.
+    private fun hubDoneApp() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } }) { a ->
+        val sid = ReviewSessionID()
+        lib.all.forEachIndexed { i, m ->
+            val ref = ItemReference.photo(m.id)
+            if (i < 6) {
+                a.ledger.apply(DecisionCommand(item = ref, expectedRevision = a.ledger.record(ref).revision, action = DecisionAction.Later(sid)))
+                a.ledger.apply(DecisionCommand(item = ref, expectedRevision = a.ledger.record(ref).revision, action = DecisionAction.Schedule(a.today.addingDays(2))))
+            } else a.ledger.apply(DecisionCommand(item = ref, expectedRevision = a.ledger.record(ref).revision, action = DecisionAction.Keep))
+        }
+    }
+    @Test fun k01_hub_all_done() = hubDoneApp().let { shot("k01_hub_all_done", it) { WithTabBar(AppTab.CLEANUP) { CleanUpHubScreen(nav) } } }
+    @Test fun k02_hub_pending() = emptyApp().let { shot("k02_hub_pending", it) { WithTabBar(AppTab.CLEANUP) { CleanUpHubScreen(nav) } } }
+    @Test @Config(qualifiers = "w320dp-h900dp-xhdpi") fun k03_hub_small_100() = hubDoneApp().let { shot("k03_hub_small_100", it) { CleanUpHubScreen(nav) } }
+    @Test @Config(qualifiers = "w320dp-h1200dp-xhdpi") fun k04_hub_small_150() = emptyApp().let { RuntimeEnvironment.setFontScale(1.5f); shot("k04_hub_small_150", it) { CleanUpHubScreen(nav) } }
+    @Test @Config(qualifiers = "w320dp-h1600dp-xhdpi") fun k05_hub_small_200() = hubDoneApp().let { RuntimeEnvironment.setFontScale(2.0f); shot("k05_hub_small_200", it) { CleanUpHubScreen(nav) } }
 }

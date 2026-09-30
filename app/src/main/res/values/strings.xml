@@ -74,8 +74,8 @@
     <string name="today_storage_title">Gerätespeicher</string>
     <string name="today_storage_value">%1$s von %2$s belegt</string>
     <plurals name="today_due">
-        <item quantity="one">%1$d zurückgestelltes Element ist wieder fällig</item>
-        <item quantity="other">%1$d zurückgestellte Elemente sind wieder fällig</item>
+        <item quantity="one">%1$d Element aus „Später“ ist wieder dran</item>
+        <item quantity="other">%1$d Elemente aus „Später“ sind wieder dran</item>
     </plurals>
     <string name="today_reconciliation">Eine frühere Aktion im Papierkorb ließ sich nicht eindeutig prüfen. Es wird nichts erneut gelöscht.</string>
     <string name="cat_photos">Fotos</string>
@@ -89,9 +89,9 @@
 
     <!-- Aufräumen-Hub -->
     <string name="hub_subtitle">Finde und entferne, was du nicht brauchst – auf deinem Gerät.</string>
-    <string name="hub_photos_sub">Ähnliches prüfst du selbst im Feed</string>
-    <string name="hub_videos_sub">Große und unnötige Videos</string>
-    <string name="hub_screens_sub">Schnappschüsse aufräumen</string>
+    <string name="hub_photos_sub">Fotos durchsehen</string>
+    <string name="hub_videos_sub">Videos durchsehen</string>
+    <string name="hub_screens_sub">Screenshots durchsehen</string>
     <string name="hub_files_sub">Dateien aus verbundenen Ordnern</string>
     <string name="large_files">Große Dateien</string>
     <string name="hub_large_sub">Große Videos und Dateien</string>
@@ -104,7 +104,7 @@
         <item quantity="other">%1$d Elemente, noch nicht gelöscht</item>
     </plurals>
 
-    <string name="later_manage">Wiedervorlagen verwalten</string>
+    <string name="later_manage">Für später gespeichert</string>
     <string name="connected_sources">Verbundene Quellen</string>
 
     <!-- Feed -->
@@ -313,7 +313,7 @@
     <string name="dup_footer">Zusätzliche Kopien: höchstens %1$s ausgewählt. Das ist keine garantierte Speicherersparnis. Favoriten, Alben und Bearbeitungen können trotz gleicher Bytes relevant sein.</string>
 
     <!-- Später-Screen -->
-    <string name="later_empty">Medien, die du zurückstellst, erscheinen hier wieder.</string>
+    <string name="later_empty">Medien, die du für später speicherst, erscheinen hier.</string>
     <string name="later_empty_title">Nichts für später</string>
     <string name="later_empty_hint">→ Beim Prüfen nach rechts wischen</string>
     <string name="later_review_now_count">Jetzt ansehen (%1$d)</string>
@@ -328,7 +328,7 @@
     <string name="later_next_review">Kommt beim nächsten Aufräumen wieder</string>
     <string name="file">Datei</string>
     <string name="later_review_now">Jetzt ansehen</string>
-    <string name="later_remove">Zurückstellung entfernen</string>
+    <string name="later_remove">Aus „Später“ entfernen</string>
 
     <!-- Sammlungen -->
     <string name="hub_tab_areas">Bereiche</string>
@@ -382,7 +382,7 @@
     <string name="h_not_performed">Nicht entfernt</string>
     <string name="h_undo">Rückgängig gemacht</string>
     <string name="h_schedule">Termin gesetzt</string>
-    <string name="h_deferral_removed">Zurückstellung entfernt</string>
+    <string name="h_deferral_removed">Aus „Später“ entfernt</string>
     <string name="h_unmarked">Aus dem Papierkorb zurückgelegt</string>
     <string name="h_kept">Behalten</string>
     <string name="h_kept_corr">Korrigiert: behalten</string>
@@ -457,7 +457,7 @@
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">Ob Cloud-Dienste wie Google Fotos Löschungen auf andere Geräte übertragen, hängt von deren Einstellungen ab. Medien, die nicht als lokale Datei vorliegen, lädt PhotoMaid nicht herunter.</string>
     <string name="help_free">Kostenlos</string>
-    <string name="help_free_text">Ansehen, wischen und zurückstellen ist unbegrenzt. Ohne Pro kannst du bis zu 15 Elemente pro Tag endgültig entfernen.</string>
+    <string name="help_free_text">Ansehen, wischen und für später speichern ist unbegrenzt. Ohne Pro kannst du bis zu 15 Elemente pro Tag endgültig entfernen.</string>
 
     <!-- Datenschutz / Onboarding -->
     <string name="privacy_title">Deine Privatsphäre zuerst</string>
@@ -471,7 +471,7 @@
     <string name="access_limited">Eingeschränkt</string>
     <string name="access_denied">Abgelehnt</string>
     <string name="access_not_asked">Nicht angefragt</string>
-    <string name="privacy_notifications_text">Optional: Erinnerungen an fällige Wiedervorlagen. Ohne Dateinamen auf dem Sperrbildschirm.</string>
+    <string name="privacy_notifications_text">Optional: Erinnerung, wenn etwas aus „Später“ wieder dran ist. Ohne Dateinamen auf dem Sperrbildschirm.</string>
     <string name="privacy_notifications_allow">Mitteilungen erlauben</string>
     <string name="privacy_folders">Ordner (optional)</string>
     <string name="privacy_folders_text">Dateien siehst du nur aus Ordnern, die du selbst auswählst. Das geht jederzeit unter Aufräumen › Dateien.</string>
@@ -480,7 +480,7 @@
 
     <!-- Mitteilungen -->
     <string name="notif_channel">Erinnerungen</string>
-    <string name="notif_due_body">Heute ist etwas Zurückgestelltes wieder dran.</string>
+    <string name="notif_due_body">Heute ist etwas aus „Später“ wieder dran.</string>
     <!-- Aktionsleiste im Feed (keine Entscheidungen) -->
     <string name="fav_add">Als Favorit markieren</string>
     <string name="fav_remove">Favorit entfernen</string>
@@ -534,4 +534,9 @@
     <string name="onboarding_safe">Gelöscht wird nur, was du im Papierkorb bestätigst – und Android fragt noch einmal nach.</string>
     <string name="later_notify_title">Erinnern, wenn es wieder dran ist?</string>
     <string name="pro_privacy_no_ads">Analyse und Sortierung erfolgen auf deinem Gerät. Für den Kauf werden technische Daten an Google übertragen – keine Fotos, Dateinamen oder Hashes.</string>
+    <string name="hub_nothing_pending">Nichts zu prüfen</string>
+    <plurals name="hub_pending">
+        <item quantity="one">%1$d zu prüfen</item>
+        <item quantity="other">%1$d zu prüfen</item>
+    </plurals>
 </resources>

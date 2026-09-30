@@ -120,7 +120,7 @@ class PremiumPassTest {
         val app = makeTestApp(ctx)
         rule.setContent { TestHost(app) { LaterScreen(RecordingNav()) } }
         waitText("Nichts für später")
-        rule.onNodeWithText("Medien, die du zurückstellst, erscheinen hier wieder.").assertExists()
+        rule.onNodeWithText("Medien, die du für später speicherst, erscheinen hier.").assertExists()
     }
 
     @Test fun historyEmptyState() {
