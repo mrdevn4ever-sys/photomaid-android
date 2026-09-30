@@ -213,7 +213,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                         else -> R.string.feed_empty_message
                     }
                     EmptyState(Icons.Rounded.CheckCircle, stringResource(R.string.qa_all_done), stringResource(emptyMsg),
-                        actionTitle = stringResource(R.string.close), action = onClose)
+                        actionTitle = stringResource(R.string.back), action = onClose)
                 }
                 model.session.isFinished -> SessionSummaryView(
                     model.session.summary, read.basket.size, Modifier.weight(1f),

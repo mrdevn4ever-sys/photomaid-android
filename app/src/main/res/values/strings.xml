@@ -96,7 +96,7 @@
     <string name="large_files">Große Dateien</string>
     <string name="hub_large_sub">Große Videos und Dateien</string>
     <string name="hub_dup_sub">Identische Kopien finden</string>
-    <string name="storage_overview">Speicherübersicht</string>
+    <string name="storage_overview">Speicher&#173;übersicht</string>
     <string name="hub_storage_sub">Was PhotoMaid sehen kann</string>
     <string name="basket">Papierkorb</string>
     <plurals name="hub_basket_sub">
@@ -540,7 +540,7 @@
         <item quantity="other">%1$d zu prüfen</item>
     </plurals>
     <!-- Schnellzugriffe auf „Heute“ -->
-    <string name="qa_title">Schnellzugriffe</string>
+    <string name="qa_title">Schnell&#173;zugriffe</string>
     <string name="qa_edit">Bearbeiten</string>
     <string name="qa_add">Hinzufügen</string>
     <string name="qa_add_title">Schnellzugriff hinzufügen</string>
@@ -564,6 +564,7 @@
         <item quantity="other">%1$d offen</item>
     </plurals>
     <string name="qa_all_done">Alles geprüft</string>
+    <string name="qa_empty">Leer</string>
     <string name="qa_move_up">Nach vorn: %1$s</string>
     <string name="qa_move_down">Nach hinten: %1$s</string>
     <string name="qa_remove">Entfernen: %1$s</string>

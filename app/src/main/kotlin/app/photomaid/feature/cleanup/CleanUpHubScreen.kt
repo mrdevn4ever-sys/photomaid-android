@@ -50,6 +50,10 @@ import app.photomaid.media.MediaCategory
 import app.photomaid.feature.collections.CollectionsContent
 import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.Check
+import app.photomaid.feature.quickaccess.resolveSource
+import app.photomaid.media.reviewableMedia
+import app.photomaid.core.quickaccess.QuickAccessItem
+import app.photomaid.core.quickaccess.QuickSourceKind
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.navigation.Routes
@@ -73,7 +77,19 @@ fun CleanUpHubScreen(nav: Nav) {
     // Noch zu prüfen (nicht Gesamtbestand): dieselbe Quelle wie „Heute“, neu bei Mediathek- und Entscheidungsänderung.
     LaunchedEffect(token, access, read.events.size, read.basket.size, read.laterRecords.size) {
         counts = withContext(Dispatchers.IO) {
-            if (!access.canRead) emptyMap() else MediaCategory.entries.associateWith { app.pendingQueue(app.photos.assets(it)).size }
+            if (!access.canRead) emptyMap() else {
+                // Eine Momentaufnahme + eine Ledger-Abfrage; Bereiche sind nur Filter darauf (wie Schnellzugriffe).
+                val all = app.photos.reviewableMedia()
+                val open = app.pendingQueue(all).map { it.localIdentifier }.toSet()
+                val kindOf = { cat: MediaCategory -> when (cat) {
+                    MediaCategory.PHOTOS -> QuickSourceKind.PHOTOS
+                    MediaCategory.VIDEOS -> QuickSourceKind.VIDEOS
+                    MediaCategory.SCREENSHOTS -> QuickSourceKind.SCREENSHOTS
+                } }
+                MediaCategory.entries.associateWith { cat ->
+                    resolveSource(QuickAccessItem(kindOf(cat)), all).count { it.id in open }
+                }
+            }
         }
     }
 

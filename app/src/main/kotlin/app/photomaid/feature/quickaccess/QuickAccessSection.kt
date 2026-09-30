@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -14,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -34,7 +35,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,7 +45,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -54,6 +53,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.text.style.LineBreak
 import app.photomaid.FeedRequest
 import app.photomaid.R
 import app.photomaid.core.organize.MediaFolder
@@ -83,49 +84,41 @@ fun quickIcon(kind: QuickSourceKind): ImageVector = when (kind) {
 }
 
 /**
- * „Schnellzugriffe“ auf Heute: kompakte Kacheln (2 pro Reihe) mit „N offen“ bzw. „Alles geprüft“ und eine
- * Plus-Kachel. Jede Kachel öffnet denselben Review-Feed mit anderer Quelle. Zähler werden nie gespeichert, sondern
- * je Anzeige aus Mitgliedschaft (MediaStore) + globalem Ledger abgeleitet – ein Medium in mehreren Quellen hat
- * überall denselben Zustand.
+ * „Schnellzugriffe“ auf Heute: eine leichte Karte mit einer Zeile je Quelle – Symbol · Name · Zahl rechts · Chevron
+ * (✓ wenn alles geprüft, „Leer“ ohne Medien) – und „Hinzufügen“. Jede Zeile öffnet denselben Review-Feed.
+ * Zahlen werden nie gespeichert: [snapshot] (eine Mediathek-Abfrage von „Heute“) + globale offene IDs ([pendingIds]).
  */
 @Composable
-fun QuickAccessSection(nav: Nav, reloadKey: Any) {
+fun QuickAccessSection(nav: Nav, snapshot: List<app.photomaid.media.MediaAsset>, pendingIds: Set<String>?) {
     val app = LocalApp.current
     val c = PM.colors
     val scope = rememberCoroutineScope()
     val items by app.quickAccess.items.collectAsState()
-    var pending by remember { mutableStateOf<Map<String, Int>>(emptyMap()) }
     var adding by remember { mutableStateOf(false) }
     var editing by remember { mutableStateOf(false) }
     var folders by remember { mutableStateOf<List<MediaFolder>?>(null) }
-
-    LaunchedEffect(items, reloadKey) {
-        pending = withContext(Dispatchers.IO) { items.associate { it.key to app.pendingQueue(app.photos.assetsFor(it)).size } }
-    }
+    // Reine Filter im Speicher – kein weiterer MediaStore-Zugriff.
+    val status = remember(items, snapshot, pendingIds) { pendingIds?.let { statusFor(items, snapshot, it) } ?: emptyMap() }
 
     Column(Modifier.testTag("today.quick"), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        // Große Schrift: eine Kachel pro Reihe und Kopfzeile untereinander (keine abgeschnittenen Namen).
-        val large = LocalDensity.current.fontScale >= 1.3f
-        if (large) {
-            Text(stringResource(R.string.qa_title), style = AppTypography.headline, color = c.textPrimary)
-            if (items.isNotEmpty()) PlainButton(stringResource(R.string.qa_edit), Modifier.testTag("quick.edit")) { editing = true }
-        } else Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.qa_title), style = AppTypography.headline, color = c.textPrimary, modifier = Modifier.weight(1f))
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text(stringResource(R.string.qa_title), style = AppTypography.headline.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph),
+                color = c.textPrimary, modifier = Modifier.weight(1f))
             if (items.isNotEmpty()) PlainButton(stringResource(R.string.qa_edit), Modifier.testTag("quick.edit")) { editing = true }
         }
-        val cells: List<QuickAccessItem?> = items + if (items.size < QuickAccess.MAX_ITEMS) listOf(null) else emptyList()
-        for (row in cells.chunked(if (large) 1 else 2)) {
-            Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                for (cell in row) {
-                    if (cell == null) AddTile(Modifier.weight(1f)) {
-                        folders = null
-                        adding = true
-                        // Außerhalb des Sheets laden (Zustand der Hauptkomposition).
-                        scope.launch { folders = withContext(Dispatchers.IO) { runCatching { app.photos.folders() }.getOrDefault(emptyList()) } }
-                    }
-                    else QuickTile(cell, pending[cell.key], Modifier.weight(1f)) { nav.openFeed(FeedRequest(FeedRequest.Source.Quick(cell))) }
+        SurfaceCard(padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.xxs)) {
+            items.forEachIndexed { i, q ->
+                if (i > 0) RowDivider()
+                QuickRow(q, status[q.key]) { nav.openFeed(FeedRequest(FeedRequest.Source.Quick(q))) }
+            }
+            if (items.size < QuickAccess.MAX_ITEMS) {
+                if (items.isNotEmpty()) RowDivider()
+                AddRow {
+                    folders = null
+                    adding = true
+                    // Außerhalb des Sheets laden (Zustand der Hauptkomposition).
+                    scope.launch { folders = withContext(Dispatchers.IO) { runCatching { app.photos.folders() }.getOrDefault(emptyList()) } }
                 }
-                if (row.size == 1 && !large) Spacer(Modifier.weight(1f))
             }
         }
     }
@@ -134,38 +127,40 @@ fun QuickAccessSection(nav: Nav, reloadKey: Any) {
         onRemove = { q -> scope.launch { app.quickAccess.update { QuickAccess.remove(it, q) } } }, onDismiss = { editing = false })
 }
 
+/** Eine Zeile: Zahl/Haken rechtsbündig auf einer Achse – auch bei großer Schrift nie unter dem Titel. */
 @Composable
-private fun QuickTile(item: QuickAccessItem, pending: Int?, modifier: Modifier, onClick: () -> Unit) {
+private fun QuickRow(item: QuickAccessItem, status: SourceStatus?, onClick: () -> Unit) {
     val c = PM.colors
     val title = quickTitle(item)
-    val status = when (pending) {
-        null -> ""
-        0 -> stringResource(R.string.qa_all_done)
-        else -> pluralStringResource(R.plurals.qa_open, pending, pending)
+    val desc = when {
+        status == null -> ""
+        status.members == 0 -> stringResource(R.string.qa_empty)
+        status.pending == 0 -> stringResource(R.string.qa_all_done)
+        else -> pluralStringResource(R.plurals.qa_open, status.pending, status.pending)
     }
-    SurfaceCard(modifier.testTag("quick.${item.key}").semantics(mergeDescendants = true) { contentDescription = "$title, $status" },
-        padding = PaddingValues(horizontal = AppSpacing.s, vertical = AppSpacing.s), onClick = onClick) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-            Icon(quickIcon(item.kind), null, tint = c.accent, modifier = Modifier.size(AppIconSize.small))
-            Text(title, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, maxLines = 1,
-                overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+    Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch + 4.dp).clickable(role = Role.Button, onClick = onClick)
+        .testTag("quick.${item.key}").semantics(mergeDescendants = true) { contentDescription = "$title, $desc" },
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+        Icon(quickIcon(item.kind), null, tint = c.accent, modifier = Modifier.size(AppIconSize.regular))
+        BasicText(title, Modifier.weight(1f), style = AppTypography.body.copy(color = c.textPrimary), maxLines = 1, overflow = TextOverflow.Ellipsis,
+            autoSize = TextAutoSize.StepBased(minFontSize = AppTypography.caption2.fontSize, maxFontSize = AppTypography.body.fontSize))
+        when {
+            status == null -> Unit
+            status.members == 0 -> Text(stringResource(R.string.qa_empty), style = AppTypography.subheadline, color = c.textSecondary, maxLines = 1, softWrap = false)
+            status.pending == 0 -> Icon(Icons.Rounded.Check, null, tint = c.success, modifier = Modifier.size(AppIconSize.regular))
+            else -> Text("${status.pending}", style = AppTypography.headline.copy(fontFeatureSettings = "tnum"), color = c.textPrimary, maxLines = 1, softWrap = false)
         }
-        Row(Modifier.padding(top = 2.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
-            if (pending == 0) Icon(Icons.Rounded.Check, null, tint = c.success, modifier = Modifier.size(AppIconSize.small))
-            Text(status, style = AppTypography.footnote, color = if (pending == 0) c.textSecondary else c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        }
+        Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.regular))
     }
 }
 
 @Composable
-private fun AddTile(modifier: Modifier, onClick: () -> Unit) {
+private fun AddRow(onClick: () -> Unit) {
     val c = PM.colors
-    SurfaceCard(modifier.testTag("quick.add").heightIn(min = AppSpacing.minTouch), padding = PaddingValues(AppSpacing.s), onClick = onClick) {
-        Row(Modifier.fillMaxWidth().heightIn(min = 36.dp), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs, Alignment.CenterHorizontally)) {
-            Icon(Icons.Rounded.Add, null, tint = c.accent, modifier = Modifier.size(AppIconSize.regular))
-            Text(stringResource(R.string.qa_add), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.accent, maxLines = 1)
-        }
+    Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch + 4.dp).clickable(role = Role.Button, onClick = onClick).testTag("quick.add"),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+        Icon(Icons.Rounded.Add, null, tint = c.accent, modifier = Modifier.size(AppIconSize.regular))
+        Text(stringResource(R.string.qa_add), style = AppTypography.body, color = c.accent, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 

@@ -46,6 +46,8 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalDensity
@@ -327,9 +329,8 @@ fun SourceRow(
     valueIcon: ImageVector? = null,
 ) {
     val c = PM.colors
-    // Große Schrift (≥ 130 %): Werte unter den Titel statt daneben (iOS: Accessibility-Größen stapeln).
+    // Große Schrift (≥ 130 %): nur längere Detailtexte wandern unter den Titel. Zahl/Haken bleiben IMMER rechts.
     val stacked = LocalDensity.current.fontScale >= 1.3f
-    val trailing = listOfNotNull(value, detail, valueDescription?.takeIf { valueIcon != null })
     Row(
         modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).semantics(mergeDescendants = true) {},
         verticalAlignment = Alignment.CenterVertically,
@@ -340,20 +341,20 @@ fun SourceRow(
             contentAlignment = Alignment.Center,
         ) { Icon(icon, null, tint = tint, modifier = Modifier.size(22.dp)) }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(title, style = AppTypography.headline, color = c.textPrimary)
+            // Große Schrift: lange Wörter („Speicherübersicht“) mit Silbentrennung statt mitten im Wort umbrechen.
+            Text(title, style = AppTypography.headline.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph), color = c.textPrimary)
             if (subtitle != null) Text(subtitle, style = AppTypography.caption, color = c.textSecondary)
-            // Gestapelt ist Platz für den ausgeschriebenen Wert („6 Elemente“ statt einer nackten Zahl).
-            if (stacked && trailing.isNotEmpty()) Text(valueDescription ?: trailing.joinToString(" "), style = AppTypography.caption, color = c.textSecondary)
+            if (stacked && detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary)
         }
-        // Detail begrenzt, damit der Titel auf schmalen Geräten nicht zerquetscht wird.
-        if (!stacked && trailing.isNotEmpty()) {
+        if (value != null || valueIcon != null || (!stacked && detail != null)) {
+            // Detail begrenzt, damit der Titel auf schmalen Geräten nicht zerquetscht wird.
             Column(Modifier.widthIn(max = 132.dp), horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 if (valueIcon != null) Icon(valueIcon, null, tint = c.success, modifier = Modifier.size(20.dp)
                     .then(if (valueDescription != null) Modifier.semantics { contentDescription = valueDescription } else Modifier))
-                if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary,
-                    textAlign = TextAlign.End, maxLines = 1,
+                if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    color = c.textPrimary, textAlign = TextAlign.End, maxLines = 1, softWrap = false,
                     modifier = if (valueDescription != null) Modifier.semantics { contentDescription = valueDescription } else Modifier)
-                if (detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.End)
+                if (!stacked && detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.End)
             }
         }
         if (showChevron) Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(20.dp))

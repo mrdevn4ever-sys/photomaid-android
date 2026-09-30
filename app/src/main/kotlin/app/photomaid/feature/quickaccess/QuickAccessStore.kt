@@ -6,7 +6,7 @@ import app.photomaid.core.quickaccess.QuickAccessItem
 import app.photomaid.core.quickaccess.QuickSourceKind
 import app.photomaid.data.KeyValueStore
 import app.photomaid.media.MediaAsset
-import app.photomaid.media.MediaCategory
+import app.photomaid.core.model.MediaKind
 import app.photomaid.media.MediaLibrary
 import app.photomaid.media.reviewableMedia
 import kotlinx.coroutines.Dispatchers
@@ -35,25 +35,40 @@ class QuickAccessStore(private val store: KeyValueStore) {
 }
 
 /**
- * Mitglieder einer Quelle, frisch aus MediaStore (keine gespeicherten Listen). Liefert Medien, keinen Zustand:
- * offen/entschieden ergibt erst `AppModel.pendingQueue` aus dem globalen Ledger.
+ * Mitglieder einer Quelle aus EINER gemeinsamen Momentaufnahme der Mediathek ([reviewableMedia]: Fotos inkl.
+ * Screenshots + Videos, neueste zuerst). Keine eigene MediaStore-Abfrage je Quelle, keine gespeicherten Listen.
+ * Liefert nur Mitglieder – offen/entschieden ergibt ausschließlich der globale Ledger ([app.photomaid.AppModel.pendingQueue]).
  */
-fun MediaLibrary.assetsFor(item: QuickAccessItem, now: Instant = Instant.now(), zone: ZoneId = ZoneId.systemDefault()): List<MediaAsset> =
-    when (item.kind) {
-        QuickSourceKind.PHOTOS -> assets(MediaCategory.PHOTOS)
-        QuickSourceKind.VIDEOS -> assets(MediaCategory.VIDEOS)
-        QuickSourceKind.SCREENSHOTS -> assets(MediaCategory.SCREENSHOTS)
-        QuickSourceKind.LATEST_PHOTOS -> newest(assets(MediaCategory.PHOTOS, QuickAccess.LATEST_PHOTOS_LIMIT), QuickAccess.LATEST_PHOTOS_LIMIT)
-        QuickSourceKind.LATEST_VIDEOS -> newest(assets(MediaCategory.VIDEOS, QuickAccess.LATEST_VIDEOS_LIMIT), QuickAccess.LATEST_VIDEOS_LIMIT)
+fun resolveSource(item: QuickAccessItem, all: List<MediaAsset>, now: Instant = Instant.now(), zone: ZoneId = ZoneId.systemDefault()): List<MediaAsset> {
+    val photos = { all.filter { it.kind != MediaKind.VIDEO } }
+    val videos = { all.filter { it.kind == MediaKind.VIDEO } }
+    return when (item.kind) {
+        QuickSourceKind.PHOTOS -> photos()
+        QuickSourceKind.VIDEOS -> videos()
+        QuickSourceKind.SCREENSHOTS -> all.filter { it.kind == MediaKind.SCREENSHOT }
+        QuickSourceKind.LATEST_PHOTOS -> newest(photos(), QuickAccess.LATEST_PHOTOS_LIMIT)
+        QuickSourceKind.LATEST_VIDEOS -> newest(videos(), QuickAccess.LATEST_VIDEOS_LIMIT)
         QuickSourceKind.THIS_WEEK -> {
             val (from, to) = QuickAccess.thisWeek(now, zone)
-            reviewableMedia().filter { a -> a.creationDate?.let { !it.isBefore(from) && it.isBefore(to) } == true }
+            all.filter { a -> a.creationDate?.let { !it.isBefore(from) && it.isBefore(to) } == true }
         }
         QuickSourceKind.FOLDER -> {
             val folder = item.folder?.let { MediaFolders.normalize(it) }
-            reviewableMedia().filter { a -> a.relativePath?.let { MediaFolders.normalize(it) }.equals(folder, ignoreCase = true) }
+            all.filter { a -> a.relativePath?.let { MediaFolders.normalize(it) }.equals(folder, ignoreCase = true) }
         }
     }
+}
+
+/** Feed-Einstieg: frische Momentaufnahme, dann dieselbe Auflösung wie auf „Heute“. */
+fun MediaLibrary.assetsFor(item: QuickAccessItem, now: Instant = Instant.now(), zone: ZoneId = ZoneId.systemDefault()): List<MediaAsset> =
+    resolveSource(item, reviewableMedia(), now, zone)
+
+/** Anzeige-Stand je Quelle: Mitglieder insgesamt und davon offen (für „Leer“, „✓“ bzw. Zahl). */
+data class SourceStatus(val members: Int, val pending: Int)
+
+/** Alle Quellen aus einer Momentaufnahme + der globalen Menge offener Medien-IDs – ohne weitere Abfragen. */
+fun statusFor(items: List<QuickAccessItem>, all: List<MediaAsset>, pendingIds: Set<String>, now: Instant = Instant.now(), zone: ZoneId = ZoneId.systemDefault()): Map<String, SourceStatus> =
+    items.associate { q -> resolveSource(q, all, now, zone).let { m -> q.key to SourceStatus(m.size, m.count { it.id in pendingIds }) } }
 
 private fun newest(list: List<MediaAsset>, limit: Int) =
     list.sortedWith(compareByDescending<MediaAsset> { it.creationDate }.thenBy { it.id }).take(limit)

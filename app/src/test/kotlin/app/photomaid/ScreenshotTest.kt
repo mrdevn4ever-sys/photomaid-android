@@ -1,5 +1,9 @@
 package app.photomaid
 
+import app.photomaid.core.quickaccess.QuickAccessItem
+
+import app.photomaid.core.quickaccess.QuickSourceKind
+
 import kotlinx.coroutines.runBlocking
 
 import androidx.compose.ui.test.performScrollTo
@@ -279,8 +283,6 @@ class ScreenshotTest {
     private fun todayScroll(name: String, a: AppModel) = shot(name, a, waitTag = "quick.PHOTOS") {
         androidx.compose.foundation.layout.Box(Modifier.fillMaxSize()) { TodayScreen(nav) }
     }
-    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun q01_today_quick_default() = todayScroll("q01_today_quick_default", quickApp(false))
-    @Test @Config(qualifiers = "w393dp-h1500dp-xxhdpi") fun q02_today_quick_six() = todayScroll("q02_today_quick_six", quickApp(true))
     @Test fun q03_quick_add_sheet() = quickApp(false).let {
         rule.setContent { TestHost(it) { TodayScreen(nav) } }
         rule.waitUntil(10_000) { rule.onAllNodesWithTag("quick.add").fetchSemanticsNodes().isNotEmpty() }
@@ -295,6 +297,30 @@ class ScreenshotTest {
         rule.waitUntil(10_000) { rule.onAllNodesWithTag("quick.editSheet").fetchSemanticsNodes().isNotEmpty() }
         shotScreen("q04_quick_edit_sheet")
     }
-    @Test @Config(qualifiers = "w320dp-h1600dp-xhdpi") fun q05_quick_small_150() = quickApp(true).let { RuntimeEnvironment.setFontScale(1.5f); todayScroll("q05_quick_small_150", it) }
-    @Test @Config(qualifiers = "w320dp-h2000dp-xhdpi") fun q06_quick_small_200() = quickApp(true).let { RuntimeEnvironment.setFontScale(2.0f); todayScroll("q06_quick_small_200", it) }
+
+    // Abschnitt 45: A–G.
+    private fun homeApp(dark: Boolean = false, allDone: Boolean, four: Boolean = false) = makeTestApp(ctx,
+        media = { FakeMediaLibrary(it, count = 10, videos = 4).also { l -> lib = l } }) { a ->
+        if (dark) a.updateSettings { it.copy(appearance = AppearanceChoice.DARK) }
+        val sid = ReviewSessionID()
+        suspend fun act(i: Int, action: DecisionAction) {
+            val ref = ItemReference.photo(lib.all[i].id)
+            a.ledger.apply(DecisionCommand(item = ref, expectedRevision = a.ledger.record(ref).revision, action = action), sid)
+        }
+        if (allDone) lib.all.indices.forEach { act(it, DecisionAction.Keep) }
+        else {
+            act(0, DecisionAction.MarkForCleanup); act(1, DecisionAction.MarkForCleanup)
+            for (i in 3..5) { act(i, DecisionAction.Later(sid)); act(i, DecisionAction.Schedule(a.today.addingDays(2))) }
+            act(10, DecisionAction.Keep); act(11, DecisionAction.Keep)
+        }
+        if (four) a.quickAccess.update { listOf(QuickSourceKind.PHOTOS, QuickSourceKind.VIDEOS, QuickSourceKind.SCREENSHOTS, QuickSourceKind.LATEST_PHOTOS).map { k -> QuickAccessItem(k) } }
+    }
+    private fun home(name: String, a: AppModel) = shot(name, a, waitTag = "quick.PHOTOS") { androidx.compose.foundation.layout.Box(Modifier.fillMaxSize()) { TodayScreen(nav) } }
+    @Test @Config(qualifiers = "w393dp-h1100dp-xxhdpi") fun r01_home_all_done() = home("r01_home_all_done", homeApp(allDone = true))
+    @Test @Config(qualifiers = "w393dp-h1100dp-xxhdpi") fun r02_home_open() = home("r02_home_open", homeApp(allDone = false))
+    @Test @Config(qualifiers = "w393dp-h1200dp-xxhdpi") fun r04_home_four_sources() = home("r04_home_four_sources", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "w393dp-h1200dp-xxhdpi") fun r05_home_dark() = home("r05_home_dark", homeApp(dark = true, allDone = false, four = true))
+    @Test @Config(qualifiers = "w320dp-h1100dp-xhdpi") fun r06_home_small() = home("r06_home_small", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "w393dp-h1600dp-xxhdpi") fun r07_home_font150() = homeApp(allDone = false, four = true).let { RuntimeEnvironment.setFontScale(1.5f); home("r07_home_font150", it) }
+    @Test @Config(qualifiers = "w320dp-h2000dp-xhdpi") fun r08_home_font200_small() = homeApp(allDone = false, four = true).let { RuntimeEnvironment.setFontScale(2.0f); home("r08_home_font200_small", it) }
 }

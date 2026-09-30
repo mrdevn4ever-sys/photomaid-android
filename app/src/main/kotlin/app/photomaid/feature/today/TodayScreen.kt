@@ -82,6 +82,7 @@ import app.photomaid.design.readableWidth
 import app.photomaid.feature.common.DeviceStorage
 import app.photomaid.feature.quickaccess.QuickAccessSection
 import app.photomaid.media.PhotoAccess
+import app.photomaid.media.MediaAsset
 import app.photomaid.media.reviewableMedia
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
@@ -106,12 +107,16 @@ fun TodayScreen(nav: Nav) {
     val token by app.photos.changeToken.collectAsState()
     val read by app.read.collectAsState()
     var pending by remember { mutableStateOf<List<String>?>(null) }
+    // Eine Momentaufnahme für Hero UND Schnellzugriffe (keine zweite Mediathek-Abfrage je Kachel).
+    var snapshot by remember { mutableStateOf<List<MediaAsset>>(emptyList()) }
     var device by remember { mutableStateOf<DeviceCapacity?>(null) }
 
     LaunchedEffect(token, access, read.basket.size, read.laterRecords.size, read.events.size) {
         withContext(Dispatchers.IO) {
             device = DeviceStorage.read(ctx)
-            pending = if (!access.canRead) null else app.pendingQueue(app.photos.reviewableMedia()).map { it.localIdentifier }
+            val all = if (access.canRead) app.photos.reviewableMedia() else emptyList()
+            snapshot = all
+            pending = if (!access.canRead) null else app.pendingQueue(all).map { it.localIdentifier }
         }
     }
 
@@ -178,7 +183,7 @@ fun TodayScreen(nav: Nav) {
                 StatusCard(Icons.Rounded.Bookmark, c.later, stringResource(R.string.later), read.laterRecords.size, Modifier.testTag("today.later")) { nav.push(Routes.LATER) }
             }
             // Schnellzugriffe: gefilterte Einstiege in denselben Feed; neu berechnet bei Mediathek- oder Entscheidungsänderung.
-            if (access.canRead) QuickAccessSection(nav, reloadKey = listOf(token, access, read.events.size, read.basket.size, read.laterRecords.size))
+            if (access.canRead) QuickAccessSection(nav, snapshot, pending?.toSet())
             device?.let { d -> StorageLine(d) { nav.push(Routes.STORAGE) } }
             Spacer(Modifier.height(TabBarClearance))
         }
