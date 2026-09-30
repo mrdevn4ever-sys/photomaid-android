@@ -3,6 +3,9 @@ package app.photomaid.feature.review
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
@@ -31,14 +34,21 @@ fun Modifier.feedGestures(
     onZoom: (Float) -> Unit,
     onDoubleTap: () -> Unit,
     onTap: () -> Unit = {},
-): Modifier = if (!enabled) this else pointerInput(density) { coroutineScope {
+    /** Nur wenn ein Doppeltipp etwas bewirkt (gezoomt), wartet der einfache Tipp 280 ms; sonst reagiert er sofort. */
+    waitForDoubleTap: () -> Boolean = { true },
+): Modifier = if (!enabled) this else composed {
+    // Immer die aktuellen Callbacks verwenden, ohne die laufende Geste neu zu starten.
+    val drag by rememberUpdatedState(onDrag); val end by rememberUpdatedState(onEnd); val cancel by rememberUpdatedState(onCancel)
+    val zoom by rememberUpdatedState(onZoom); val doubleTap by rememberUpdatedState(onDoubleTap); val tap by rememberUpdatedState(onTap)
+    val waitDouble by rememberUpdatedState(waitForDoubleTap)
+    pointerInput(density) { coroutineScope {
     var lastTapUp: Long? = null
     var pendingTap: Job? = null
     awaitEachGesture {
         val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Main)
         var secondTap = false
         val last = lastTapUp
-        if (last != null && down.uptimeMillis - last < DOUBLE_TAP_MS) { pendingTap?.cancel(); onDoubleTap(); lastTapUp = null; secondTap = true }
+        if (last != null && down.uptimeMillis - last < DOUBLE_TAP_MS) { pendingTap?.cancel(); doubleTap(); lastTapUp = null; secondTap = true }
         val tracker = VelocityTracker()
         tracker.addPosition(down.uptimeMillis, down.position)
         val start = down.position
@@ -52,7 +62,7 @@ fun Modifier.feedGestures(
             if (pressed.size >= 2) {
                 // Zwei Finger: Zoom. Keine Entscheidungsgeste.
                 val d = hypot((pressed[0].position.x - pressed[1].position.x).toDouble(), (pressed[0].position.y - pressed[1].position.y).toDouble()).toFloat()
-                if (!zooming) { zooming = true; zoomStartDist = d; onCancel() } else if (zoomStartDist > 0f) onZoom(d / zoomStartDist)
+                if (!zooming) { zooming = true; zoomStartDist = d; cancel() } else if (zoomStartDist > 0f) zoom(d / zoomStartDist)
                 event.changes.forEach { it.consume() }
                 continue
             }
@@ -63,24 +73,24 @@ fun Modifier.feedGestures(
                 val v = tracker.calculateVelocity()
                 val moved = hypot(total.x.toDouble(), total.y.toDouble())
                 if (moved < 4.0 && !change.isConsumed && !secondTap) {
-                    lastTapUp = change.uptimeMillis
                     pendingTap?.cancel()
-                    pendingTap = launch { delay(DOUBLE_TAP_MS); onTap() }
+                    if (waitDouble()) { lastTapUp = change.uptimeMillis; pendingTap = launch { delay(DOUBLE_TAP_MS); tap() } }
+                    else { lastTapUp = null; tap() }
                 }
-                with(density) { onEnd(Offset(total.x.toDp().value, total.y.toDp().value), Offset(v.x.toDp().value, v.y.toDp().value)) }
+                with(density) { end(Offset(total.x.toDp().value, total.y.toDp().value), Offset(v.x.toDp().value, v.y.toDp().value)) }
                 break
             }
             if (zooming || cancelled) continue
             if (change.isConsumed && change.positionChange() != Offset.Zero) {
                 // Ein Kind-Control (z. B. Wiedergabeposition) bedient die Bewegung.
-                cancelled = true; onCancel(); continue
+                cancelled = true; cancel(); continue
             }
             tracker.addPosition(change.uptimeMillis, change.position)
             total = change.position - start
-            with(density) { onDrag(Offset(total.x.toDp().value, total.y.toDp().value)) }
+            with(density) { drag(Offset(total.x.toDp().value, total.y.toDp().value)) }
         }
-        if (currentEvent.changes.any { it.pressed }) onCancel()
+        if (currentEvent.changes.any { it.pressed }) cancel()
     }
-} }
+} } }
 
 private const val DOUBLE_TAP_MS = 280L

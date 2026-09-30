@@ -62,6 +62,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.photomaid.AppModel
 import app.photomaid.R
+import app.photomaid.design.spacedItem
+import app.photomaid.design.lazyListSection
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.decisions.Disposition
 import app.photomaid.core.decisions.ItemRecord
@@ -178,9 +180,10 @@ fun FileBrowserScreen(nav: Nav) {
     ScreenScaffold(stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads), onBack = nav::back, actions = {
         GlassIconButton(Icons.Rounded.CreateNewFolder, stringResource(R.string.add_folder), onClick = pick)
     }) { mod ->
-        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
+        // Lazy je Zeile: große Ordner scrollen flüssig.
+        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin)) {
             if (sources.isEmpty()) {
-                item {
+                spacedItem("none") {
                     SurfaceCard {
                         Text(stringResource(R.string.files_none_title), style = AppTypography.headline, color = c.textPrimary)
                         Spacer(Modifier.height(AppSpacing.s))
@@ -192,29 +195,26 @@ fun FileBrowserScreen(nav: Nav) {
                     }
                 }
             } else {
-                item {
+                spacedItem("search") {
                     OutlinedTextField(query, { query = it }, Modifier.fillMaxWidth(), singleLine = true,
                         placeholder = { Text(stringResource(R.string.files_search)) }, leadingIcon = { Icon(Icons.Rounded.Search, null) },
                         shape = RoundedCornerShape(14.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedContainerColor = c.surface, focusedContainerColor = c.surface,
                             unfocusedBorderColor = c.surfaceStroke))
                 }
-                item {
+                spacedItem("kind") {
                     ListSection {
                         MenuRowPicker(stringResource(R.string.file_type), FileKindFilter.entries.map { it to kindLabel(it) }, kind) { kind = it }
                     }
                 }
-                if (index.scanning && index.entries.isEmpty()) item { Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { CircularProgressIndicator() } }
-                items(groups, key = { it.first }) { (title, entries) ->
-                    ListSection(header = title) {
-                        entries.forEachIndexed { i, e ->
-                            if (i > 0) RowDivider()
-                            FileRow(e, records[e.reference]?.disposition ?: Disposition.UNDECIDED, onOpen = { open(e) },
-                                onKeep = { decide(e, DecisionAction.Keep) }, onTrash = { decide(e, DecisionAction.MarkForCleanup) },
-                                onLater = { decide(e, DecisionAction.Later(ReviewSessionID())) })
-                        }
+                if (index.scanning && index.entries.isEmpty()) spacedItem("scanning") { Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { CircularProgressIndicator() } }
+                groups.forEach { (title, entries) ->
+                    lazyListSection("g:$title", entries, { it.reference.localIdentifier }, header = title) { e ->
+                        FileRow(e, records[e.reference]?.disposition ?: Disposition.UNDECIDED, onOpen = { open(e) },
+                            onKeep = { decide(e, DecisionAction.Keep) }, onTrash = { decide(e, DecisionAction.MarkForCleanup) },
+                            onLater = { decide(e, DecisionAction.Later(ReviewSessionID())) })
                     }
                 }
-                if (index.failed.isNotEmpty()) item {
+                if (index.failed.isNotEmpty()) spacedItem("failed") {
                     SurfaceCard {
                         Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                             Icon(Icons.Rounded.WarningAmber, null, tint = c.warning)

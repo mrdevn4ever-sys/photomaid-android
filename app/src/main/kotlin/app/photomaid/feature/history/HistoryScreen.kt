@@ -42,6 +42,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import app.photomaid.R
+import app.photomaid.design.spacedItem
+import app.photomaid.design.lazyListSection
 import androidx.compose.material.icons.rounded.FilterList
 import androidx.compose.material.icons.rounded.History
 import app.photomaid.design.EmptyState
@@ -95,21 +97,20 @@ fun HistoryScreen(nav: Nav) {
     ScreenScaffold(stringResource(R.string.tab_history), onBack = null, actions = {
         GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = read.canUndo) { scope.launch { app.undo() } }
     }) { mod ->
-        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-            item {
+        val headers = keys.map { day -> val n = days.getValue(day).size
+            pluralStringResource(R.plurals.history_day_header, n, DateText.complete(day.atStartOfDay(zone).toInstant()), n) }
+        // Lazy je Eintrag: langer Verlauf scrollt flüssig (vorher bis zu 300 Zeilen je Tag auf einmal).
+        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin)) {
+            spacedItem("filter") {
                 SegmentedPicker(listOf(HistoryFilter.ALL to stringResource(R.string.history_all), HistoryFilter.KEPT to stringResource(R.string.history_kept),
                     HistoryFilter.CLEANED to stringResource(R.string.history_cleaned), HistoryFilter.LATER to stringResource(R.string.history_later)), filter) { filter = it }
             }
-            if (keys.isEmpty()) item {
+            if (keys.isEmpty()) spacedItem("empty") {
                 if (read.events.isEmpty()) EmptyState(Icons.Rounded.History, stringResource(R.string.history_empty_title), stringResource(R.string.history_empty))
                 else EmptyState(Icons.Rounded.FilterList, stringResource(R.string.history_filter_empty_title), stringResource(R.string.history_filter_empty))
             }
-            items(keys, key = { it.toString() }) { day ->
-                val entries = days.getValue(day)
-                ListSection(header = pluralStringResource(R.plurals.history_day_header, entries.size,
-                    DateText.complete(day.atStartOfDay(zone).toInstant()), entries.size)) {
-                    entries.take(300).forEachIndexed { i, e -> if (i > 0) RowDivider(); HistoryRow(e) }
-                }
+            keys.forEachIndexed { i, day ->
+                lazyListSection(day.toString(), days.getValue(day), { it.primary.id }, header = headers[i]) { e -> HistoryRow(e) }
             }
             item { Spacer(Modifier.height(TabBarClearance)) }
         }

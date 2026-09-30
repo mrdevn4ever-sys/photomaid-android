@@ -1,5 +1,13 @@
 package app.photomaid.design
 
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.only
@@ -98,13 +106,16 @@ fun SurfaceCard(
 ) {
     val c = PM.colors
     val shape = RoundedCornerShape(AppRadii.card)
+    val interaction = remember { MutableInteractionSource() }
     Column(
         modifier
             .fillMaxWidth()
+            // Tippbare Karten geben beim Drücken leicht nach (wie iOS), statt nur Ripple.
+            .then(if (onClick != null) Modifier.pressScale(interaction, pressed = 0.98f) else Modifier)
             .clip(shape)
             .background(c.surface, shape)
             .border(1.dp, c.surfaceStroke, shape)
-            .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
+            .then(if (onClick != null) Modifier.clickable(interactionSource = interaction, indication = LocalIndication.current, role = Role.Button, onClick = onClick) else Modifier)
             .padding(padding),
         content = content,
     )
@@ -163,10 +174,22 @@ fun GlassIconButton(
 
 /** Dezente Druck-Rückmeldung (leicht kleiner, kurz). Keine Federshow. */
 @Composable
-fun Modifier.pressScale(interaction: MutableInteractionSource): Modifier {
-    val pressed by interaction.collectIsPressedAsState()
-    val scale by animateFloatAsState(if (pressed) 0.96f else 1f, AppMotion.fast(), label = "press")
+fun Modifier.pressScale(interaction: MutableInteractionSource, pressed: Float = 0.96f): Modifier {
+    val isPressed by interaction.collectIsPressedAsState()
+    val scale by animateFloatAsState(if (isPressed) pressed else 1f, AppMotion.fast(), label = "press")
     return graphicsLayer { scaleX = scale; scaleY = scale }
+}
+
+/**
+ * Weiches Erscheinen (Fade + minimales Anheben) beim ersten Anzeigen – statt harter Zustandswechsel
+ * (Zusammenfassung, Werbekarte). Ohne Bewegung bei „Animationen entfernen“.
+ */
+@Composable
+fun Modifier.appearOnce(): Modifier {
+    val reduce = LocalReduceMotion.current
+    val p = remember { androidx.compose.animation.core.Animatable(if (reduce) 1f else 0f) }
+    androidx.compose.runtime.LaunchedEffect(Unit) { p.animateTo(1f, AppMotion.normal()) }
+    return graphicsLayer { alpha = p.value; translationY = (1f - p.value) * 12.dp.toPx() }
 }
 
 /** Glas-Button (iOS `.buttonStyle(.glass)`). */
@@ -501,8 +524,73 @@ fun ListSection(
     }
 }
 
+/**
+ * Lazy-Variante von [ListSection] für lange Listen (Papierkorb, Später, Verlauf, Große Dateien, Ordner):
+ * sieht gleich aus (eine Karte mit Trennern), aber jede Zeile ist ein eigenes Lazy-Item – nur sichtbare Zeilen
+ * werden komponiert und laden Vorschaubilder. Die umgebende LazyColumn darf KEIN `spacedBy` haben; Abstände
+ * anderer Items über [spacedItem].
+ */
+fun <T> LazyListScope.lazyListSection(
+    sectionKey: String,
+    rows: List<T>,
+    rowKey: (T) -> Any,
+    header: String? = null,
+    footer: String? = null,
+    trailingRow: (@Composable () -> Unit)? = null,
+    row: @Composable (T) -> Unit,
+) {
+    if (header != null) item(key = "$sectionKey:header", contentType = "section.header") { SectionHeader(header) }
+    val count = rows.size + if (trailingRow != null) 1 else 0
+    itemsIndexed(rows, key = { _, r -> "$sectionKey:${rowKey(r)}" }, contentType = { _, _ -> "section.row" }) { i, r ->
+        SectionRowSurface(first = i == 0, last = i == count - 1) { row(r) }
+    }
+    if (trailingRow != null) item(key = "$sectionKey:trailing", contentType = "section.row") {
+        SectionRowSurface(first = rows.isEmpty(), last = true) { trailingRow() }
+    }
+    item(key = "$sectionKey:footer", contentType = "section.footer") {
+        Column(Modifier.fillMaxWidth().padding(bottom = AppSpacing.m)) {
+            if (footer != null) Text(footer, style = AppTypography.caption, color = PM.colors.textSecondary,
+                modifier = Modifier.padding(horizontal = AppSpacing.m, vertical = AppSpacing.xxs))
+        }
+    }
+}
+
+/** Einzelnes Lazy-Item mit dem Abstand, den sonst `spacedBy(AppSpacing.m)` erzeugt hätte. */
+fun LazyListScope.spacedItem(key: Any? = null, content: @Composable () -> Unit) =
+    item(key = key) { Box(Modifier.fillMaxWidth().padding(bottom = AppSpacing.m)) { content() } }
+
 @Composable
-fun RowDivider() = HorizontalDivider(thickness = 0.5.dp, color = PM.colors.textSecondary.copy(alpha = 0.22f))
+private fun SectionHeader(text: String) {
+    Text(text, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = PM.colors.textSecondary,
+        modifier = Modifier.fillMaxWidth().padding(start = AppSpacing.m, bottom = AppSpacing.xxs, top = AppSpacing.xs).semantics { heading() })
+}
+
+/** Ein Stück der Kartenfläche: oben/unten gerundet nur am Rand der Gruppe, Kontur durchgehend, Trenner dazwischen. */
+@Composable
+private fun SectionRowSurface(first: Boolean, last: Boolean, content: @Composable () -> Unit) {
+    val c = PM.colors
+    val r = AppRadii.card
+    val shape = RoundedCornerShape(topStart = if (first) r else 0.dp, topEnd = if (first) r else 0.dp,
+        bottomStart = if (last) r else 0.dp, bottomEnd = if (last) r else 0.dp)
+    Column(Modifier.fillMaxWidth().clip(shape).background(c.surface, shape)
+        .drawBehind {
+            // Kontur als verlängertes Rechteck, auf die Zeile beschnitten: Seiten durchgehend, Rundung nur am Gruppenrand.
+            val sw = 1.dp.toPx(); val ext = r.toPx() * 2
+            val top = if (first) sw / 2 else -ext
+            val bottom = if (last) size.height - sw / 2 else size.height + ext
+            clipRect {
+                drawRoundRect(c.surfaceStroke, topLeft = Offset(sw / 2, top), size = Size(size.width - sw, bottom - top),
+                    cornerRadius = CornerRadius(r.toPx()), style = Stroke(sw))
+            }
+        }
+        .padding(horizontal = AppSpacing.m).padding(top = if (first) AppSpacing.xxs else 0.dp, bottom = if (last) AppSpacing.xxs else 0.dp)) {
+        if (!first) RowDivider()
+        content()
+    }
+}
+
+@Composable
+fun RowDivider() =HorizontalDivider(thickness = 0.5.dp, color = PM.colors.textSecondary.copy(alpha = 0.22f))
 
 /** Kleines Abzeichen (z. B. „Pro“). */
 @Composable

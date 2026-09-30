@@ -39,6 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import app.photomaid.FeedRequest
 import app.photomaid.R
+import app.photomaid.design.spacedItem
+import app.photomaid.design.lazyListSection
 import androidx.compose.material.icons.rounded.Schedule
 import app.photomaid.design.EmptyState
 import app.photomaid.core.decisions.DecisionAction
@@ -105,8 +107,19 @@ fun LaterScreen(nav: Nav) {
         scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
     }
     ScreenScaffold(stringResource(R.string.later), onBack = nav::back) { mod ->
-        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-            if (groups.isNotEmpty() && notif == ReminderScheduler.Access.NOT_DETERMINED) item {
+        val headers = groups.map { (key, records) ->
+            when (key) {
+                LaterGroup.Due -> stringResource(R.string.later_group_due, records.size)
+                LaterGroup.Tomorrow -> stringResource(R.string.later_group_tomorrow, records.size)
+                LaterGroup.WithinSevenDays -> stringResource(R.string.later_group_7, records.size)
+                is LaterGroup.Later -> stringResource(R.string.later_group_from, DayText.string(key.day), records.size)
+                LaterGroup.NoDate -> stringResource(R.string.later_group_nodate, records.size)
+            }
+        }
+        val reviewDue = groups.firstOrNull { it.first == LaterGroup.Due }?.second?.size?.let { stringResource(R.string.later_review_now_count, it) }
+        // Lazy je Zeile: lange Später-Listen laden nur sichtbare Vorschaubilder.
+        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin)) {
+            if (groups.isNotEmpty() && notif == ReminderScheduler.Access.NOT_DETERMINED) spacedItem("notify") {
                 SurfaceCard(Modifier.testTag("later.notify")) {
                     Text(stringResource(R.string.later_notify_title), style = AppTypography.headline, color = c.textPrimary)
                     Text(stringResource(R.string.privacy_notifications_text), style = AppTypography.caption, color = c.textSecondary)
@@ -117,31 +130,18 @@ fun LaterScreen(nav: Nav) {
                     }
                 }
             }
-            if (groups.isEmpty()) item {
+            if (groups.isEmpty()) spacedItem("empty") {
                 EmptyState(Icons.Rounded.Schedule, stringResource(R.string.later_empty_title), stringResource(R.string.later_empty),
                     hint = stringResource(R.string.later_empty_hint))
             }
-            items(groups, key = { it.first.toString() }) { (key, records) ->
-                val header = when (key) {
-                    LaterGroup.Due -> stringResource(R.string.later_group_due, records.size)
-                    LaterGroup.Tomorrow -> stringResource(R.string.later_group_tomorrow, records.size)
-                    LaterGroup.WithinSevenDays -> stringResource(R.string.later_group_7, records.size)
-                    is LaterGroup.Later -> stringResource(R.string.later_group_from, DayText.string(key.day), records.size)
-                    LaterGroup.NoDate -> stringResource(R.string.later_group_nodate, records.size)
-                }
-                ListSection(header = header) {
-                    records.forEachIndexed { i, r ->
-                        if (i > 0) RowDivider()
-                        LaterRow(r, names[r.item], kinds[r.item.localIdentifier], app.today, onEdit = { editing = r },
-                            onReview = { nav.openFeed(FeedRequest(FeedRequest.Source.Items(listOf(r.item), R.string.later))) },
-                            onRemove = { scope.launch { app.decide(r.item, DecisionAction.RemoveDeferral) } })
-                    }
-                    if (key == LaterGroup.Due) {
-                        RowDivider()
-                        PlainButton(stringResource(R.string.later_review_now_count, records.size)) {
-                            nav.openFeed(FeedRequest(FeedRequest.Source.Items(records.map { it.item }, R.string.feed_title_due)))
-                        }
-                    }
+            groups.forEachIndexed { gi, (key, records) ->
+                lazyListSection(key.toString(), records, { it.item.localIdentifier }, header = headers[gi],
+                    trailingRow = if (key == LaterGroup.Due && reviewDue != null) ({
+                        PlainButton(reviewDue) { nav.openFeed(FeedRequest(FeedRequest.Source.Items(records.map { it.item }, R.string.feed_title_due))) }
+                    }) else null) { r ->
+                    LaterRow(r, names[r.item], kinds[r.item.localIdentifier], app.today, onEdit = { editing = r },
+                        onReview = { nav.openFeed(FeedRequest(FeedRequest.Source.Items(listOf(r.item), R.string.later))) },
+                        onRemove = { scope.launch { app.decide(r.item, DecisionAction.RemoveDeferral) } })
                 }
             }
             item { PageEndSpacer() }

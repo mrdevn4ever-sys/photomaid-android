@@ -56,6 +56,8 @@ import androidx.compose.ui.unit.dp
 import app.photomaid.AppModel
 import app.photomaid.CleanupRunResult
 import app.photomaid.R
+import app.photomaid.design.spacedItem
+import app.photomaid.design.lazyListSection
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -191,8 +193,11 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
                 EmptyState(Icons.Rounded.Inbox, stringResource(R.string.basket_empty_title), stringResource(R.string.basket_empty_message))
             }
         } else {
-            LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-                item {
+            val mediaHeader = stringResource(R.string.basket_media_header); val mediaFooter = stringResource(R.string.basket_media_footer)
+            val filesHeader = stringResource(R.string.basket_files_header); val filesFooter = stringResource(R.string.basket_files_footer)
+            // Lazy: bei hunderten Einträgen werden nur sichtbare Zeilen (und Vorschaubilder) geladen.
+            LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin)) {
+                spacedItem("intro") {
                     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         Text(stringResource(R.string.basket_count, basket.size), style = AppTypography.title, color = c.textPrimary)
                         Text(stringResource(R.string.basket_intro), style = AppTypography.caption, color = c.textSecondary)
@@ -205,34 +210,24 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
                         }
                     }
                 }
-                if (photoItems.isNotEmpty()) item {
-                    ListSection(header = stringResource(R.string.basket_media_header), footer = stringResource(R.string.basket_media_footer)) {
-                        photoItems.forEachIndexed { i, r ->
-                            if (i > 0) RowDivider()
-                            val a = assets[r.item.localIdentifier]
-                            val title = stringResource(when (a?.kind) { MediaKind.VIDEO -> R.string.video; MediaKind.SCREENSHOT -> R.string.screenshot; else -> R.string.photo })
-                            val sub = listOfNotNull(a?.creationDate?.let { DateText.abbreviated(it) }, a?.size?.let { SizeText.size(ctx, it) }).joinToString(" · ")
-                            val openLabel = stringResource(R.string.basket_preview_open, title)
-                            BasketRow(app, r, title, sub, r.item in selection, {
-                                // Tipp aufs Vorschaubild = große Ansicht; ändert die Auswahl nicht.
-                                ThumbnailView(r.item.localIdentifier, size = 60.dp, modifier = Modifier.testTag("basket.thumb")
-                                    .clickable(enabled = a != null, role = Role.Button, onClickLabel = openLabel) { previewAsset = a }
-                                    .semantics { contentDescription = openLabel })
-                            }) {
-                                selection = if (r.item in selection) selection - r.item else selection + r.item
-                            }
-                        }
+                if (photoItems.isNotEmpty()) lazyListSection("media", photoItems, { it.item.localIdentifier }, header = mediaHeader, footer = mediaFooter) { r ->
+                    val a = assets[r.item.localIdentifier]
+                    val title = stringResource(when (a?.kind) { MediaKind.VIDEO -> R.string.video; MediaKind.SCREENSHOT -> R.string.screenshot; else -> R.string.photo })
+                    val sub = listOfNotNull(a?.creationDate?.let { DateText.abbreviated(it) }, a?.size?.let { SizeText.size(ctx, it) }).joinToString(" · ")
+                    val openLabel = stringResource(R.string.basket_preview_open, title)
+                    BasketRow(app, r, title, sub, r.item in selection, {
+                        // Tipp aufs Vorschaubild = große Ansicht; ändert die Auswahl nicht.
+                        ThumbnailView(r.item.localIdentifier, size = 60.dp, modifier = Modifier.testTag("basket.thumb")
+                            .clickable(enabled = a != null, role = Role.Button, onClickLabel = openLabel) { previewAsset = a }
+                            .semantics { contentDescription = openLabel })
+                    }) {
+                        selection = if (r.item in selection) selection - r.item else selection + r.item
                     }
                 }
-                if (fileItems.isNotEmpty()) item {
-                    ListSection(header = stringResource(R.string.basket_files_header), footer = stringResource(R.string.basket_files_footer)) {
-                        fileItems.forEachIndexed { i, r ->
-                            if (i > 0) RowDivider()
-                            val name = fileNames[r.item] ?: r.item.localIdentifier.substringAfterLast('/').substringAfterLast(':')
-                            BasketRow(app, r, name, "", r.item in selection, { ThumbnailView(null) }) {
-                                selection = if (r.item in selection) selection - r.item else selection + r.item
-                            }
-                        }
+                if (fileItems.isNotEmpty()) lazyListSection("files", fileItems, { it.item.localIdentifier }, header = filesHeader, footer = filesFooter) { r ->
+                    val name = fileNames[r.item] ?: r.item.localIdentifier.substringAfterLast('/').substringAfterLast(':')
+                    BasketRow(app, r, name, "", r.item in selection, { ThumbnailView(null) }) {
+                        selection = if (r.item in selection) selection - r.item else selection + r.item
                     }
                 }
                 item { Spacer(Modifier.height(AppSpacing.l)) }

@@ -132,6 +132,11 @@ fun MediaPage(
     onRetry: () -> Unit = {},
     /** Beschriftung des Auswegs (Feed: „Weiter ohne Entscheidung“, Vorschau: „Schließen“). */
     skipLabel: Int = R.string.skip_without_decision,
+    /**
+     * `false` = nächstes Medium unter dem aktuellen (Vorschau beim Wischen): kein Player, keine Bedienung,
+     * keine Lade-/Fehleranzeige, für TalkBack unsichtbar.
+     */
+    interactive: Boolean = true,
 ) {
     val c = PM.colors
     val app = LocalApp.current
@@ -141,12 +146,13 @@ fun MediaPage(
     val isVideo = asset.kind == MediaKind.VIDEO
     val playPauseLabel = stringResource(if (player.itemID == asset.id && player.isPlaying) R.string.pause else R.string.play)
     BoxWithConstraints(Modifier.fillMaxSize()
-        .testTag(if (preview == PreviewState.READY) "feed.media.ready" else "feed.media")
-        .semantics {
-            contentDescription = description
-            // TalkBack/Schalter: Wiedergabe ohne Tipp-Geste.
-            if (isVideo) customActions = listOf(CustomAccessibilityAction(playPauseLabel) { toggleVideo(app.player, asset); true })
-        }, contentAlignment = Alignment.Center) {
+        .then(if (!interactive) Modifier.testTag("feed.media.next").clearAndSetSemantics {} else Modifier
+            .testTag(if (preview == PreviewState.READY) "feed.media.ready" else "feed.media")
+            .semantics {
+                contentDescription = description
+                // TalkBack/Schalter: Wiedergabe ohne Tipp-Geste.
+                if (isVideo) customActions = listOf(CustomAccessibilityAction(playPauseLabel) { toggleVideo(app.player, asset); true })
+            }), contentAlignment = Alignment.Center) {
         val knownRatio = asset.pixelWidth > 0 && asset.pixelHeight > 0
         val ratio = asset.aspectRatio
         val shape = RoundedCornerShape(AppRadii.media)
@@ -155,7 +161,7 @@ fun MediaPage(
         val ring by animateColorAsState(intentColor ?: Color.Transparent, AppMotion.fast(), label = "intent")
         Box(frame.clip(shape).background(if (knownRatio) c.backgroundTint else Color.Transparent)
             .border(AppStroke.intent, ring, shape).testTag(if (intentColor != null) "feed.media.intent" else "feed.media.frame")) {
-            val active = asset.kind == MediaKind.VIDEO && player.itemID == asset.id
+            val active = interactive && asset.kind == MediaKind.VIDEO && player.itemID == asset.id
             if (active && app.player.player != null) {
                 // Ohne bekannte Maße wie bisher: Player in sein Seitenverhältnis einpassen, nie strecken.
                 PlayerSurface(app.player.player, if (knownRatio) Modifier.fillMaxSize() else Modifier.align(Alignment.Center).fillMaxWidth()
@@ -169,13 +175,13 @@ fun MediaPage(
                     )
                 }
             }
-            if (isVideo && !zoomed && preview != PreviewState.LOADING) VideoControls(asset, skip, skipLabel)
+            if (interactive && isVideo && !zoomed && preview != PreviewState.LOADING) VideoControls(asset, skip, skipLabel)
         }
         // Video ohne Standbild: trotzdem abspielbar; sobald das erste Bild wirklich läuft, gilt es als gesehen.
         LaunchedEffect(asset.id, player.itemID, player.firstFrameRendered) {
             if (asset.kind == MediaKind.VIDEO && player.itemID == asset.id && player.firstFrameRendered && preview != PreviewState.READY) onResult(true)
         }
-        when (preview) {
+        if (interactive) when (preview) {
             PreviewState.LOADING -> CircularProgressIndicator(Modifier.align(Alignment.Center).size(AppIconSize.large), strokeWidth = AppStroke.progress)
             PreviewState.FAILED -> if (isVideo && !zoomed) {
                 Column(Modifier.align(Alignment.TopCenter).padding(AppSpacing.m), horizontalAlignment = Alignment.CenterHorizontally,

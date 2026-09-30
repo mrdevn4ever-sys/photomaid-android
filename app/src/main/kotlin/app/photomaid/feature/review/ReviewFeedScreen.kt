@@ -88,6 +88,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.photomaid.FeedRequest
+import app.photomaid.design.appearOnce
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.material.icons.rounded.WorkspacePremium
 import app.photomaid.design.PlainButton
@@ -220,7 +221,9 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     EmptyState(Icons.Rounded.CheckCircle, stringResource(R.string.qa_all_done), stringResource(emptyMsg),
                         actionTitle = stringResource(R.string.back), action = onClose)
                 }
-                model.adCard != null -> AdStage(model, model.adCard!!, reduceMotion, openPro = nav::openPro, modifier = Modifier.weight(1f))
+                model.adCard != null -> androidx.compose.runtime.key(model.adCard!!.id) {
+                    AdStage(model, model.adCard!!, reduceMotion, openPro = nav::openPro, modifier = Modifier.weight(1f).appearOnce())
+                }
                 model.session.isFinished -> {
                     // Kaufmoment: nur für Nutzer ohne Lifetime-Pro und nur, wenn wirklich aussortiert wurde.
                     val summary = model.session.summary
@@ -229,7 +232,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     val strong = remember { upsell && !app.settings.value.proOfferShown }
                     if (strong) LaunchedEffect(Unit) { app.updateSettings { it.copy(proOfferShown = true) } }
                     SessionSummaryView(
-                        summary, read.basket.size, Modifier.weight(1f),
+                        summary, read.basket.size, Modifier.weight(1f).appearOnce(),
                         reviewBasket = openBasket, goBack = { model.perform(FeedIntent.PREVIOUS, reduceMotion) }, done = onClose,
                         upsell = when { !upsell -> null; strong -> SummaryUpsell.STRONG; else -> SummaryUpsell.QUIET },
                         allowance = read.allowance, openPro = nav::openPro,
@@ -342,33 +345,44 @@ private fun MediaStage(
                 onDoubleTap = onZoomReset,
                 // Tipp aufs Video = Pause/Play (wie TikTok); bei Fotos ohne Wirkung. Nie eine Entscheidung.
                 onTap = { model.currentAsset?.takeIf { it.kind == MediaKind.VIDEO && zoom <= 1.01f }?.let { toggleVideo(app.player, it) } },
+                waitForDoubleTap = { zoom > 1.01f },
             ),
     ) {
         model.viewSizeDp = Size(maxWidth.value, maxHeight.value)
         val px = rememberPreviewPx(maxWidth.value, maxHeight.value)
         val item = model.current
-        val asset = model.currentAsset
+        val next = model.next
         // Vorschaufenster: vorheriges/nächste Medien vorab dekodieren (unsichtbar, gleiche Zielgröße).
-        for (ref in model.windowItems()) if (ref != item) model.assets[ref.localIdentifier]?.let { PrefetchImage(it, px) { ok -> model.previewResult(ref, ok) } }
-        if (item != null && asset != null) {
-            val o = model.offset.value
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .offset { with(density) { IntOffset(o.x.dp.roundToPx(), o.y.dp.roundToPx()) } }
-                    .graphicsLayer { rotationZ = if (reduceMotion) 0f else o.x / 40f; scaleX = zoom; scaleY = zoom },
-            ) {
-                androidx.compose.runtime.key(item) {
-                    val c = PM.colors
-                    val intent = when (model.readyDirection?.let { FeedIntent.of(it) }) {
+        for (ref in model.windowItems()) if (ref != item && ref != next) model.assets[ref.localIdentifier]?.let { PrefetchImage(it, px) { ok -> model.previewResult(ref, ok) } }
+        if (item != null && model.currentAsset != null) {
+            val c = PM.colors
+            val reveal = maxWidth.value * 0.9f
+            // Zwei Karten: das nächste Medium liegt unsichtbar darunter und blendet beim Wischen ein. Nach dem Commit
+            // wird es ohne Neuladen zur oberen Karte (gleicher key) – kein Aufpoppen, keine leere Fläche.
+            // Versatz/Drehung/Einblendung werden nur in Layout/Zeichnen gelesen: kein Recompose pro Frame.
+            for (ref in listOfNotNull(next, item)) androidx.compose.runtime.key(ref) {
+                val asset = model.assets[ref.localIdentifier]
+                val top = ref == item
+                val layer = if (top) Modifier
+                    .offset { val o = model.offset.value; with(density) { IntOffset(o.x.dp.roundToPx(), o.y.dp.roundToPx()) } }
+                    .graphicsLayer { rotationZ = if (reduceMotion) 0f else model.offset.value.x / 40f; scaleX = zoom; scaleY = zoom }
+                else Modifier.graphicsLayer {
+                    val o = model.offset.value
+                    val p = (kotlin.math.hypot(o.x, o.y) / reveal).coerceIn(0f, 1f)
+                    alpha = p
+                    val sc = if (reduceMotion) 1f else 0.94f + 0.06f * p
+                    scaleX = sc; scaleY = sc
+                }
+                if (asset != null) Box(Modifier.fillMaxSize().then(layer)) {
+                    val intent = if (!top) null else when (model.readyDirection?.let { FeedIntent.of(it) }) {
                         FeedIntent.KEEP -> c.keep
                         FeedIntent.MARK_FOR_CLEANUP -> c.cleanup
                         FeedIntent.LATER, FeedIntent.LATER_CUSTOM -> c.later
                         else -> null
                     }
-                    MediaPage(asset, px, model.previews[item] ?: PreviewState.LOADING, onResult = { ok -> model.previewResult(item, ok) },
-                        skip = model::skipWithoutDecision, zoomed = zoom > 1.01f, intentColor = intent,
-                        retry = model.retries[item] ?: 0, onRetry = { model.retryPreview(item) })
+                    MediaPage(asset, px, model.previews[ref] ?: PreviewState.LOADING, onResult = { ok -> model.previewResult(ref, ok) },
+                        skip = model::skipWithoutDecision, zoomed = top && zoom > 1.01f, intentColor = intent,
+                        retry = model.retries[ref] ?: 0, onRetry = { model.retryPreview(ref) }, interactive = top)
                 }
             }
         }

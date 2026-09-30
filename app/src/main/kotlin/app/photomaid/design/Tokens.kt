@@ -169,9 +169,12 @@ object AppMotion {
     fun <T> standard(reduceMotion: Boolean): FiniteAnimationSpec<T> =
         if (reduceMotion) snap() else spring(dampingRatio = 0.86f, stiffness = 380f)
 
-    /** Hinausfliegen beim Commit. */
-    fun <T> commit(reduceMotion: Boolean): FiniteAnimationSpec<T> =
-        if (reduceMotion) snap() else tween(durationMillis = 220, easing = FastOutSlowInEasing)
+    /**
+     * Hinausfliegen mit Wischgeschwindigkeit (kritisch gedämpfte Feder, ~200 ms). Offset in dp; die Schwelle beendet
+     * die Animation, sobald das Medium sicher außerhalb des Bildes ist.
+     */
+    fun flyOut(reduceMotion: Boolean): FiniteAnimationSpec<androidx.compose.ui.geometry.Offset> =
+        if (reduceMotion) snap() else spring(dampingRatio = 1f, stiffness = 420f, visibilityThreshold = androidx.compose.ui.geometry.Offset(24f, 24f))
 
     const val HINT_VISIBLE_MS = 2_600L
     const val HINT_FADE_MS = 600

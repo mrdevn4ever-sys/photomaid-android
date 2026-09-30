@@ -136,6 +136,8 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
 
     val current: ItemReference? get() { version; return session.current }
     val currentAsset: MediaAsset? get() = current?.let { assets[it.localIdentifier] }
+    /** Nächstes Medium (liegt beim Wischen sichtbar werdend unter dem aktuellen). */
+    val next: ItemReference? get() { version; return session.items.getOrNull(session.index + 1) }
 
     private fun touch() { version++ }
     private fun emit(h: FeedHaptic) { if (app.settings.value.haptics) haptic = (++hapticSeq) to h }
@@ -277,7 +279,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
             return
         }
         when (val r = machine.end(Vector2(t.x.toDouble(), t.y.toDouble()), Vector2(v.x.toDouble(), v.y.toDouble()))) {
-            is FeedGestureMachine.Resolution.Commit -> perform(FeedIntent.of(r.direction), reduceMotion)
+            is FeedGestureMachine.Resolution.Commit -> perform(FeedIntent.of(r.direction), reduceMotion, velocity = v)
             else -> resetOffset(reduceMotion)
         }
     }
@@ -299,7 +301,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     }
 
     /** Gemeinsamer Pfad für Gesten, Buttons und TalkBack-Aktionen. */
-    fun perform(intent: FeedIntent, reduceMotion: Boolean) {
+    fun perform(intent: FeedIntent, reduceMotion: Boolean, velocity: Offset = Offset.Zero) {
         // Solange eine Datumsauswahl offen ist, kann nichts anderes entschieden oder navigiert werden.
         if (customLater != null) { machine.finishCommit(); resetOffset(reduceMotion); return }
         if (adCard != null) {
@@ -339,7 +341,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
             return
         }
         isCommitting = true
-        viewModelScope.launch { commit(intent, item, reduceMotion) }
+        viewModelScope.launch { commit(intent, item, reduceMotion, velocity = velocity) }
     }
 
     /**
@@ -372,7 +374,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         viewModelScope.launch { commit(FeedIntent.LATER_CUSTOM, item, reduceMotion, customDay = day) }
     }
 
-    private suspend fun commit(intent: FeedIntent, item: ItemReference, reduceMotion: Boolean, customDay: LocalDay? = null) {
+    private suspend fun commit(intent: FeedIntent, item: ItemReference, reduceMotion: Boolean, customDay: LocalDay? = null, velocity: Offset = Offset.Zero) {
         try {
             val revision = app.ledger.record(item).revision
             // Entscheidung nur für das Item, auf dem die Aktion ausgelöst wurde.
@@ -382,9 +384,10 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 resetOffset(reduceMotion)
                 return
             }
-            val target = exitOffset(intent)
+            val target = exitOffset(intent, offset.value)
+            // Fliegt mit der Wischgeschwindigkeit weiter (Feder statt fester Dauer) – schneller Wisch, schneller Wechsel.
             val fly = (animationScope ?: viewModelScope).async {
-                runCatching { if (animationScope != null) offset.animateTo(target, AppMotion.commit(reduceMotion)) else offset.snapTo(target) }
+                runCatching { if (animationScope != null) offset.animateTo(target, AppMotion.flyOut(reduceMotion), initialVelocity = velocity) else offset.snapTo(target) }
             }
             app.player.stop() // ausgehenden Player sofort anhalten
             try {
@@ -419,12 +422,13 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         }
     }
 
-    private fun exitOffset(intent: FeedIntent): Offset {
+    /** Ziel außerhalb des Bildschirms; die Querbewegung des Fingers bleibt erhalten (natürliche Flugbahn). */
+    private fun exitOffset(intent: FeedIntent, from: Offset): Offset {
         val w = viewSizeDp.width; val h = viewSizeDp.height
         return when (intent) {
-            FeedIntent.KEEP -> Offset(0f, -h * 1.2f)
-            FeedIntent.MARK_FOR_CLEANUP -> Offset(-w * 1.3f, 0f)
-            FeedIntent.LATER -> Offset(w * 1.3f, 0f)
+            FeedIntent.KEEP -> Offset(from.x, -h * 1.2f)
+            FeedIntent.MARK_FOR_CLEANUP -> Offset(-w * 1.3f, from.y)
+            FeedIntent.LATER -> Offset(w * 1.3f, from.y)
             FeedIntent.LATER_CUSTOM -> Offset(w * 1.3f, -h * 0.6f)
             FeedIntent.PREVIOUS -> Offset.Zero
         }

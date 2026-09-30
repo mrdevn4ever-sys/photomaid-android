@@ -73,8 +73,7 @@ fun AdStage(model: FeedViewModel, card: AdCard, reduceMotion: Boolean, openPro: 
         .feedGestures(enabled = true, density = density, onDrag = model::dragChanged, onEnd = { t, v -> model.dragEnded(t, v, reduceMotion) },
             onCancel = model::dragCancelled, onZoom = {}, onDoubleTap = {}),
         verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        val o = model.offset.value
-        Box(Modifier.weight(1f).fillMaxWidth().offset { with(density) { IntOffset(o.x.dp.roundToPx(), o.y.dp.roundToPx()) } }
+        Box(Modifier.weight(1f).fillMaxWidth().offset { val o = model.offset.value; with(density) { IntOffset(o.x.dp.roundToPx(), o.y.dp.roundToPx()) } }
             .clip(RoundedCornerShape(AppRadii.media)).background(c.surface)) {
             Column(Modifier.fillMaxSize().padding(AppSpacing.m), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                 Text(stringResource(R.string.ad_label), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary,

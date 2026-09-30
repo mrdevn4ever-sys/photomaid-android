@@ -48,6 +48,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.photomaid.R
+import app.photomaid.design.spacedItem
+import app.photomaid.design.lazyListSection
 import androidx.compose.material.icons.rounded.InsertDriveFile
 import app.photomaid.design.ChoiceChips
 import app.photomaid.design.EmptyState
@@ -123,13 +125,16 @@ fun LargeFilesScreen(nav: Nav) {
     val unknown = rows.filter { it.size == KnownSize.Unknown }
 
     ScreenScaffold(stringResource(R.string.large_files), onBack = nav::back) { mod ->
-        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
+        val knownHeader = stringResource(R.string.large_known)
+        val unknownHeader = stringResource(R.string.large_unknown_header, unknown.size); val unknownFooter = stringResource(R.string.large_unknown_footer)
+        // Lazy je Zeile: auch tausende große Dateien scrollen flüssig.
+        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin)) {
             // Kennzahl nur mit echten Treffern – keine „0 Byte in 0 Dateien“.
-            if (known.isNotEmpty()) item {
+            if (known.isNotEmpty()) spacedItem("metric") {
                 MetricCard(SizeText.tally(ctx, SizeTally.of(known.map { it.size })), pluralStringResource(R.plurals.large_in_files, known.size, known.size),
                     footnote = stringResource(R.string.large_footnote, settings.largeFileThresholdMB))
             }
-            item {
+            spacedItem("filter") {
                 ListSection {
                     // Schnellwahl statt +/−-Zähler (Nutzerrückmeldung): sinnvolle Schwellen für große Dateien.
                     Text(stringResource(R.string.large_filter), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary,
@@ -141,19 +146,15 @@ fun LargeFilesScreen(nav: Nav) {
                         LargeSort.OLDEST to stringResource(R.string.sort_oldest)), sort, Modifier.padding(vertical = AppSpacing.xs)) { sort = it }
                 }
             }
-            item {
-                ListSection(header = stringResource(R.string.large_known)) {
-                    if (scanning && known.isEmpty()) Box(Modifier.fillMaxWidth().padding(AppSpacing.m), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
-                    known.forEachIndexed { i, r -> if (i > 0) RowDivider(); LargeRowView(r) }
-                    if (known.isEmpty() && !scanning) EmptyState(Icons.Rounded.InsertDriveFile, stringResource(R.string.large_none),
+            if (known.isNotEmpty()) lazyListSection("known", known, { it.id }, header = knownHeader) { r -> LargeRowView(r) }
+            else spacedItem("known.empty") {
+                ListSection(header = knownHeader) {
+                    if (scanning) Box(Modifier.fillMaxWidth().padding(AppSpacing.m), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+                    else EmptyState(Icons.Rounded.InsertDriveFile, stringResource(R.string.large_none),
                         stringResource(R.string.large_none_message, settings.largeFileThresholdMB))
                 }
             }
-            if (unknown.isNotEmpty()) item {
-                ListSection(header = stringResource(R.string.large_unknown_header, unknown.size), footer = stringResource(R.string.large_unknown_footer)) {
-                    unknown.take(200).forEachIndexed { i, r -> if (i > 0) RowDivider(); LargeRowView(r) }
-                }
-            }
+            if (unknown.isNotEmpty()) lazyListSection("unknown", unknown, { it.id }, header = unknownHeader, footer = unknownFooter) { r -> LargeRowView(r) }
             item { PageEndSpacer() }
         }
     }
