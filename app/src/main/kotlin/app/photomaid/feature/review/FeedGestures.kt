@@ -13,7 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import androidx.compose.ui.input.pointer.positionChange
+import androidx.compose.ui.input.pointer.positionChangeIgnoreConsumed
 import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.unit.Density
 import kotlin.math.hypot
@@ -46,6 +46,8 @@ fun Modifier.feedGestures(
     var pendingTap: Job? = null
     awaitEachGesture {
         val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Main)
+        // Ein Kind-Control (Wiedergabeposition) hat den Finger schon übernommen: keine Entscheidungsgeste.
+        val childOwnsDown = down.isConsumed
         var secondTap = false
         val last = lastTapUp
         if (last != null && down.uptimeMillis - last < DOUBLE_TAP_MS) { pendingTap?.cancel(); doubleTap(); lastTapUp = null; secondTap = true }
@@ -55,7 +57,7 @@ fun Modifier.feedGestures(
         var total = Offset.Zero
         var zoomStartDist = 0f
         var zooming = false
-        var cancelled = false
+        var cancelled = childOwnsDown
         while (true) {
             val event = awaitPointerEvent(PointerEventPass.Main)
             val pressed = event.changes.filter { it.pressed }
@@ -81,7 +83,9 @@ fun Modifier.feedGestures(
                 break
             }
             if (zooming || cancelled) continue
-            if (change.isConsumed && change.positionChange() != Offset.Zero) {
+            // positionChange() ist bei verbrauchten Änderungen immer 0 – deshalb die Rohbewegung prüfen (Gerätebefund:
+            // Spulen auf der Fortschrittsleiste löste sonst „Später“ aus).
+            if (change.isConsumed && change.positionChangeIgnoreConsumed() != Offset.Zero) {
                 // Ein Kind-Control (z. B. Wiedergabeposition) bedient die Bewegung.
                 cancelled = true; cancel(); continue
             }

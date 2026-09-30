@@ -58,7 +58,7 @@ import app.photomaid.core.quickaccess.QuickSourceKind
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.navigation.Routes
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.TabBarEndSpacer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -143,7 +143,7 @@ fun CleanUpHubScreen(nav: Nav) {
                     }
                 }
             }
-            Spacer(Modifier.height(TabBarClearance - AppSpacing.block))
+            TabBarEndSpacer(minus = AppSpacing.block)
         }
     }
 }

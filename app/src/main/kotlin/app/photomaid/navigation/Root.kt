@@ -315,8 +315,8 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
     val c = PM.colors
     // Übergang über der schwebenden Leiste: Inhalte laufen weich aus statt sichtbar darunter weiter.
     Box(modifier.fillMaxWidth().drawBehind {
-        val ext = 32.dp.toPx()
-        drawRect(Brush.verticalGradient(0f to Color.Transparent, (ext / (size.height + ext)) to c.backgroundTint.copy(alpha = 0.92f), 1f to c.backgroundTint,
+        val ext = 40.dp.toPx()
+        drawRect(Brush.verticalGradient(0f to Color.Transparent, (ext * 0.8f / (size.height + ext)) to c.backgroundTint.copy(alpha = 0.97f), 1f to c.backgroundTint,
             startY = -ext, endY = size.height), topLeft = Offset(0f, -ext), size = Size(size.width, size.height + ext))
     }, contentAlignment = Alignment.BottomCenter) { TabBarRow(selected, onSelect) }
 }
@@ -369,5 +369,12 @@ private object NavMotion {
 @Composable
 fun PageEndSpacer() = Spacer(Modifier.navigationBarsPadding().height(AppSpacing.xl))
 
-/** Platz am Listenende der Tab-Startseiten, damit Inhalte nicht unter der schwebenden Tabbar liegen. */
+/**
+ * Platz am Listenende der Tab-Startseiten, damit Inhalte nicht unter der schwebenden Tabbar liegen:
+ * Leiste (≈ 78 dp) + Luft. Die Systemnavigation (3-Tasten-Leiste) kommt über [TabBarEndSpacer] dazu.
+ */
 val TabBarClearance = 96.dp
+
+/** Listenende auf Tab-Startseiten: Tabbar + Systemnavigation (Gerätebefund: 3-Tasten-Leiste verdeckte den Speicher). */
+@Composable
+fun TabBarEndSpacer(minus: androidx.compose.ui.unit.Dp = 0.dp) = Spacer(Modifier.navigationBarsPadding().height(TabBarClearance - minus))

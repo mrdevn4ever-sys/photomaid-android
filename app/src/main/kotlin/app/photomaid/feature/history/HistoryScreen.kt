@@ -66,7 +66,7 @@ import app.photomaid.design.SurfaceCard
 import app.photomaid.feature.common.ThumbnailView
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.TabBarEndSpacer
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 
@@ -112,7 +112,7 @@ fun HistoryScreen(nav: Nav) {
             keys.forEachIndexed { i, day ->
                 lazyListSection(day.toString(), days.getValue(day), { it.primary.id }, header = headers[i]) { e -> HistoryRow(e) }
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            item { TabBarEndSpacer() }
         }
     }
 }

@@ -142,7 +142,11 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
     val reduceMotion = LocalReduceMotion.current
     SideEffect { model.reduceMotion = reduceMotion }
     val settings by app.settings.collectAsState()
-    val read by app.read.collectAsState()
+    // Nur die tatsächlich angezeigten Werte beobachten: eine Entscheidung ohne Papierkorb-Änderung
+    // komponiert den Feed nicht zusätzlich neu (weniger Arbeit auf dem Main-Thread beim schnellen Wischen).
+    val readState = app.read.collectAsState()
+    val canUndo by remember { androidx.compose.runtime.derivedStateOf { readState.value.canUndo } }
+    val basketCount by remember { androidx.compose.runtime.derivedStateOf { readState.value.basket.size } }
     val a11y = remember { ctx.getSystemService(AccessibilityManager::class.java) }
     val talkBack = remember { a11y?.isTouchExplorationEnabled == true }
     val switchAccess = remember {
@@ -200,7 +204,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                 subtitle = if (items.isEmpty()) null else stringResource(R.string.feed_position, pos, total),
                 leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), quiet = true, onClick = onClose) },
                 trailing = {
-                    GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = read.canUndo, quiet = true, onClick = model::undo)
+                    GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = canUndo, quiet = true, onClick = model::undo)
                 },
             )
             when {
@@ -233,10 +237,10 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     val strong = remember { upsell && !app.settings.value.proOfferShown }
                     if (strong) LaunchedEffect(Unit) { app.updateSettings { it.copy(proOfferShown = true) } }
                     SessionSummaryView(
-                        summary, read.basket.size, Modifier.weight(1f).appearOnce(),
+                        summary, basketCount, Modifier.weight(1f).appearOnce(),
                         reviewBasket = openBasket, goBack = { model.perform(FeedIntent.PREVIOUS, reduceMotion) }, done = onClose,
                         upsell = when { !upsell -> null; strong -> SummaryUpsell.STRONG; else -> SummaryUpsell.QUIET },
-                        allowance = read.allowance, openPro = nav::openPro,
+                        allowance = readState.value.allowance, openPro = nav::openPro,
                     )
                 }
                 else -> {
@@ -250,7 +254,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                         val shareTitle = stringResource(R.string.share_chooser)
                         val shareFailed = stringResource(R.string.share_failed)
                         val openFailed = stringResource(R.string.open_failed)
-                        FeedActionBar(asset, read.basket.size, busy = model.mediaWriteBusy || model.isCommitting,
+                        FeedActionBar(asset, basketCount, busy = model.mediaWriteBusy || model.isCommitting,
                             onFavorite = model::toggleFavorite,
                             onShare = {
                                 // Teilen ändert nichts am Prüfstand; nach der Rückkehr bleibt dasselbe Medium.
@@ -390,12 +394,14 @@ private fun MediaStage(
         DirectionPill(model, Modifier.align(Alignment.TopCenter).padding(top = AppSpacing.s))
         AnimatedVisibility(showHints, enter = fadeIn(), exit = fadeOut(tween(AppMotion.HINT_FADE_MS))) { GestureHintOverlay() }
         val pill = model.laterPill
-        AnimatedVisibility(pill != null, Modifier.align(Alignment.BottomCenter).padding(bottom = AppSpacing.l),
+        // Bei Videos über Stumm-Schalter und Fortschrittsleiste (sonst verdeckt die Pille die Bedienung).
+        val pillBottom = if (model.currentAsset?.kind == MediaKind.VIDEO) 72.dp else AppSpacing.l
+        AnimatedVisibility(pill != null, Modifier.align(Alignment.BottomCenter).padding(bottom = pillBottom),
             enter = slideInVertically { it } + fadeIn(), exit = slideOutVertically { it } + fadeOut()) {
             pill?.let { LaterPillView(it, model::editLater) }
         }
         val notice = model.notice
-        AnimatedVisibility(notice != null && pill == null, Modifier.align(Alignment.BottomCenter).padding(bottom = AppSpacing.l),
+        AnimatedVisibility(notice != null && pill == null, Modifier.align(Alignment.BottomCenter).padding(bottom = pillBottom),
             enter = fadeIn(AppMotion.fast()), exit = fadeOut(AppMotion.fast())) {
             notice?.let { NoticePill(it.text) }
         }

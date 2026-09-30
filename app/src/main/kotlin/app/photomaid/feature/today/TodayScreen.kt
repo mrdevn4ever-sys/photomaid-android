@@ -107,7 +107,7 @@ import app.photomaid.media.reviewableMedia
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.navigation.Routes
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.TabBarEndSpacer
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import kotlinx.coroutines.Dispatchers
@@ -213,7 +213,7 @@ fun TodayScreen(nav: Nav) {
                     subtitle = stringResource(R.string.today_pro_text), onClick = nav::openPro)
             }
             device?.let { d -> StorageLine(d) { nav.push(Routes.STORAGE) } }
-            Spacer(Modifier.height(TabBarClearance - AppSpacing.block))
+            TabBarEndSpacer(minus = AppSpacing.block)
         }
     }
 }

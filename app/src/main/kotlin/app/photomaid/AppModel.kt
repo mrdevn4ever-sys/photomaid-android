@@ -50,6 +50,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.withLock
 
 sealed interface CleanupRunResult {
     data class Finished(val intent: OperationIntent) : CleanupRunResult
@@ -133,7 +134,7 @@ class AppModel(
     }
 
     fun start() {
-        scope.launch { ledger.stateFlow.collect { derive(it) } }
+        scope.launch { ledger.stateFlow.collect { publishRead() } }
     }
 
     val capabilities: Capabilities get() = entitlements.capabilities
@@ -164,11 +165,23 @@ class AppModel(
         reload()
     }
 
-    suspend fun reload() = derive(ledger.snapshotState())
+    suspend fun reload() { ledger.snapshotState(); publishRead() }
 
-    private fun derive(s: LedgerState) {
+    private val readMutex = kotlinx.coroutines.sync.Mutex()
+
+    /**
+     * Lesemodell (Papierkorb, Später, Limit …) neu berechnen – NICHT auf dem Main-Thread (Filtern/Sortieren aller
+     * Einträge bei jeder Entscheidung kostete Frames im Feed). Serialisiert und immer aus dem neuesten Ledger-Stand,
+     * damit ein langsamerer älterer Lauf nie einen neueren überschreibt.
+     */
+    private suspend fun publishRead() = readMutex.withLock {
+        val s = ledger.stateFlow.value
         val limit = capabilities.dailyCleanupLimit
-        _read.value = LedgerReadModel(
+        _read.value = withContext(Dispatchers.Default) { derive(s, limit) }
+    }
+
+    private fun derive(s: LedgerState, limit: Int?): LedgerReadModel {
+        return LedgerReadModel(
             basket = s.records.values.filter { it.disposition == Disposition.MARKED_FOR_CLEANUP }.sortedBy { it.item.description },
             laterRecords = s.records.values.filter { it.disposition == Disposition.LATER },
             events = s.events,
