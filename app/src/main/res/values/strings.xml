@@ -539,4 +539,40 @@
         <item quantity="one">%1$d zu prüfen</item>
         <item quantity="other">%1$d zu prüfen</item>
     </plurals>
+    <!-- Schnellzugriffe auf „Heute“ -->
+    <string name="qa_title">Schnellzugriffe</string>
+    <string name="qa_edit">Bearbeiten</string>
+    <string name="qa_add">Hinzufügen</string>
+    <string name="qa_add_title">Schnellzugriff hinzufügen</string>
+    <string name="qa_edit_title">Schnellzugriffe bearbeiten</string>
+    <string name="qa_limit">Bis zu %1$d Schnellzugriffe. Entferne einen, um einen neuen hinzuzufügen.</string>
+    <string name="qa_all_added">Alle Schnellzugriffe sind schon auf „Heute“.</string>
+    <string name="qa_photos">Fotos</string>
+    <string name="qa_videos">Videos</string>
+    <string name="qa_screenshots">Screenshots</string>
+    <string name="qa_latest_photos">Neueste Fotos</string>
+    <string name="qa_latest_videos">Neueste Videos</string>
+    <string name="qa_this_week">Diese Woche</string>
+    <string name="qa_folder">Ordner</string>
+    <string name="qa_choose_folder">Ordner auswählen</string>
+    <string name="qa_choose_folder_sub">Galerie-Apps zeigen Ordner meist als Album.</string>
+    <string name="qa_latest_photos_sub">Deine neuesten %1$d Fotos</string>
+    <string name="qa_latest_videos_sub">Deine neuesten %1$d Videos</string>
+    <string name="qa_this_week_sub">Fotos und Videos dieser Kalenderwoche</string>
+    <plurals name="qa_open">
+        <item quantity="one">%1$d offen</item>
+        <item quantity="other">%1$d offen</item>
+    </plurals>
+    <string name="qa_all_done">Alles geprüft</string>
+    <string name="qa_move_up">Nach vorn: %1$s</string>
+    <string name="qa_move_down">Nach hinten: %1$s</string>
+    <string name="qa_remove">Entfernen: %1$s</string>
+    <string name="qa_no_folders">Keine Ordner mit Fotos oder Videos gefunden.</string>
+    <string name="feed_empty_photos">Bei deinen Fotos wartet gerade nichts auf dich.</string>
+    <string name="feed_empty_videos">Bei deinen Videos wartet gerade nichts auf dich.</string>
+    <string name="feed_empty_screenshots">Bei deinen Screenshots wartet gerade nichts auf dich.</string>
+    <string name="feed_empty_latest_photos">Bei deinen neuesten Fotos wartet gerade nichts auf dich.</string>
+    <string name="feed_empty_latest_videos">Bei deinen neuesten Videos wartet gerade nichts auf dich.</string>
+    <string name="feed_empty_this_week">Aus dieser Woche wartet gerade nichts auf dich.</string>
+    <string name="feed_empty_folder">In diesem Ordner wartet gerade nichts auf dich.</string>
 </resources>

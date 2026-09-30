@@ -15,6 +15,8 @@ data class FeedRequest(val source: Source, val id: String = UUID.randomUUID().to
         /** Dauerhafte Sammlung (z. B. „Videos größer als 100 MB“): beim Öffnen frisch ausgewertet. */
         data class Collection(val collection: SmartCollection) : Source
         data class Items(val items: List<ItemReference>, val titleRes: Int) : Source
+        /** Schnellzugriff von „Heute“: eine Abfrage; offen/entschieden kommt aus dem globalen Ledger. */
+        data class Quick(val item: app.photomaid.core.quickaccess.QuickAccessItem) : Source
     }
 
     val titleRes: Int
@@ -28,5 +30,6 @@ data class FeedRequest(val source: Source, val id: String = UUID.randomUUID().to
             Source.Due -> R.string.feed_title_due
             is Source.Collection -> R.string.feed_title_collection
             is Source.Items -> s.titleRes
+            is Source.Quick -> app.photomaid.feature.quickaccess.quickTitleRes(s.item.kind)
         }
 }

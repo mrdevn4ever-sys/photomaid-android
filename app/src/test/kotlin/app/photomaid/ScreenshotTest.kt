@@ -1,5 +1,9 @@
 package app.photomaid
 
+import kotlinx.coroutines.runBlocking
+
+import androidx.compose.ui.test.performScrollTo
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.Delete
@@ -264,4 +268,33 @@ class ScreenshotTest {
     @Test @Config(qualifiers = "w320dp-h900dp-xhdpi") fun k03_hub_small_100() = hubDoneApp().let { shot("k03_hub_small_100", it) { CleanUpHubScreen(nav) } }
     @Test @Config(qualifiers = "w320dp-h1200dp-xhdpi") fun k04_hub_small_150() = emptyApp().let { RuntimeEnvironment.setFontScale(1.5f); shot("k04_hub_small_150", it) { CleanUpHubScreen(nav) } }
     @Test @Config(qualifiers = "w320dp-h1600dp-xhdpi") fun k05_hub_small_200() = hubDoneApp().let { RuntimeEnvironment.setFontScale(2.0f); shot("k05_hub_small_200", it) { CleanUpHubScreen(nav) } }
+
+    // Schnellzugriffe auf Heute.
+    private fun quickApp(six: Boolean) = seededApp().also { a ->
+        if (six) runBlocking(kotlinx.coroutines.Dispatchers.IO) {
+            a.quickAccess.update { listOf("PHOTOS", "VIDEOS", "SCREENSHOTS", "LATEST_PHOTOS", "LATEST_VIDEOS", "THIS_WEEK")
+                .map { k -> app.photomaid.core.quickaccess.QuickAccessItem(app.photomaid.core.quickaccess.QuickSourceKind.valueOf(k)) } }
+        }
+    }
+    private fun todayScroll(name: String, a: AppModel) = shot(name, a, waitTag = "quick.PHOTOS") {
+        androidx.compose.foundation.layout.Box(Modifier.fillMaxSize()) { TodayScreen(nav) }
+    }
+    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun q01_today_quick_default() = todayScroll("q01_today_quick_default", quickApp(false))
+    @Test @Config(qualifiers = "w393dp-h1500dp-xxhdpi") fun q02_today_quick_six() = todayScroll("q02_today_quick_six", quickApp(true))
+    @Test fun q03_quick_add_sheet() = quickApp(false).let {
+        rule.setContent { TestHost(it) { TodayScreen(nav) } }
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("quick.add").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("quick.add").performScrollTo().performClick()
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("quick.option.SCREENSHOTS").fetchSemanticsNodes().isNotEmpty() }
+        shotScreen("q03_quick_add_sheet")
+    }
+    @Test fun q04_quick_edit_sheet() = quickApp(true).let {
+        rule.setContent { TestHost(it) { TodayScreen(nav) } }
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("quick.edit").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("quick.edit").performScrollTo().performClick()
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("quick.editSheet").fetchSemanticsNodes().isNotEmpty() }
+        shotScreen("q04_quick_edit_sheet")
+    }
+    @Test @Config(qualifiers = "w320dp-h1600dp-xhdpi") fun q05_quick_small_150() = quickApp(true).let { RuntimeEnvironment.setFontScale(1.5f); todayScroll("q05_quick_small_150", it) }
+    @Test @Config(qualifiers = "w320dp-h2000dp-xhdpi") fun q06_quick_small_200() = quickApp(true).let { RuntimeEnvironment.setFontScale(2.0f); todayScroll("q06_quick_small_200", it) }
 }

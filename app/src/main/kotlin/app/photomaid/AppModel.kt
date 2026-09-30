@@ -96,6 +96,7 @@ class AppModel(
     }
     val entitlements = EntitlementCenter(store, purchases, adsOverride ?: UnconfiguredRewardedAdGateway())
     val collections = CollectionsStore(store)
+    val quickAccess = app.photomaid.feature.quickaccess.QuickAccessStore(store)
 
     private val _read = MutableStateFlow(LedgerReadModel())
     val read: StateFlow<LedgerReadModel> = _read.asStateFlow()
@@ -113,6 +114,7 @@ class AppModel(
         _settings.value = store.value<AppSettingsData>(SETTINGS_KEY) ?: AppSettingsData()
         sources.load()
         collections.load()
+        quickAccess.load()
         entitlements.load()
         (purchases as? PlayBillingGateway)?.loadCache()
         reminders.ensureChannel()

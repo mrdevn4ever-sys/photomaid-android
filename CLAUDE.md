@@ -22,6 +22,8 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Aktionsleiste ♡ Favorit · Teilen · In Ordner verschieben · ⋯ – außerhalb der Gestenfläche, nie eine Entscheidung.
 - Favoriten = MediaStore-Systemfavoriten (`createFavoriteRequest`), „Favoriten schützen“ (Standard an): Wisch nach
   links auf einen Favoriten fragt nach. „Album“ gibt es als Systembegriff nicht: nur „In Ordner verschieben“.
+- Schnellzugriffe auf „Heute“ (max. 6, Standard Fotos + Videos) sind nur Abfragen (`QuickAccessItem`, gespeichert ohne
+  Medien-IDs). Entscheidungen hängen am Medium im Ledger; Zähler immer über `AppModel.pendingQueue` – nie je Quelle speichern.
 - Pro-Test (Rewarded, 30 min, 1× pro lokalem Tag) schaltet Pro-Werkzeuge frei, hebt das Papierkorb-Limit NIE auf
   (`hasProToolsAccess` ≠ `hasUnlimitedTrashAccess`).
 

@@ -32,6 +32,7 @@ import app.photomaid.core.model.ReviewSessionID
 import app.photomaid.design.AppMotion
 import app.photomaid.media.MediaAsset
 import app.photomaid.media.reviewableMedia
+import app.photomaid.feature.quickaccess.assetsFor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -168,6 +169,13 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 }
                 FeedRequest.Source.AllMedia -> {
                     val list = app.photos.reviewableMedia()
+                    list.forEach { assets[it.id] = it }
+                    val refs = list.map { it.reference }
+                    ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
+                }
+                is FeedRequest.Source.Quick -> {
+                    // Quelle liefert nur Mitglieder; welche noch offen sind, entscheidet der globale Ledger.
+                    val list = app.photos.assetsFor(src.item)
                     list.forEach { assets[it.id] = it }
                     val refs = list.map { it.reference }
                     ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)

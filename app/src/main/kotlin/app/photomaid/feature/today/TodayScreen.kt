@@ -80,6 +80,7 @@ import app.photomaid.design.SizeText
 import app.photomaid.design.SurfaceCard
 import app.photomaid.design.readableWidth
 import app.photomaid.feature.common.DeviceStorage
+import app.photomaid.feature.quickaccess.QuickAccessSection
 import app.photomaid.media.PhotoAccess
 import app.photomaid.media.reviewableMedia
 import app.photomaid.navigation.LocalApp
@@ -176,6 +177,8 @@ fun TodayScreen(nav: Nav) {
                 StatusCard(Icons.Rounded.Delete, c.cleanup, stringResource(R.string.basket), read.basket.size, Modifier.testTag("today.basket")) { nav.push(Routes.BASKET) }
                 StatusCard(Icons.Rounded.Bookmark, c.later, stringResource(R.string.later), read.laterRecords.size, Modifier.testTag("today.later")) { nav.push(Routes.LATER) }
             }
+            // Schnellzugriffe: gefilterte Einstiege in denselben Feed; neu berechnet bei Mediathek- oder Entscheidungsänderung.
+            if (access.canRead) QuickAccessSection(nav, reloadKey = listOf(token, access, read.events.size, read.basket.size, read.laterRecords.size))
             device?.let { d -> StorageLine(d) { nav.push(Routes.STORAGE) } }
             Spacer(Modifier.height(TabBarClearance))
         }
@@ -212,11 +215,16 @@ private fun StorageLine(d: DeviceCapacity, onClick: () -> Unit) {
     val c = PM.colors
     SurfaceCard(Modifier.testTag("today.storage").semantics(mergeDescendants = true) {},
         padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.s), onClick = onClick) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.today_storage_title), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary,
-                modifier = Modifier.weight(1f))
-            Text(stringResource(R.string.today_storage_value, SizeText.bytes(d.usedBytes), SizeText.bytes(d.totalBytes)),
-                style = AppTypography.footnote, color = c.textSecondary)
+        val title = stringResource(R.string.today_storage_title)
+        val value = stringResource(R.string.today_storage_value, SizeText.bytes(d.usedBytes), SizeText.bytes(d.totalBytes))
+        // Große Schrift: untereinander statt nebeneinander (sonst bricht der Titel zeichenweise um).
+        if (LocalDensity.current.fontScale >= 1.3f) {
+            Text(title, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+            Text(value, style = AppTypography.footnote, color = c.textSecondary)
+        } else Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            Text(title, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, maxLines = 1,
+                overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+            Text(value, style = AppTypography.footnote, color = c.textSecondary, maxLines = 1)
         }
         if (d.totalBytes > 0) {
             Spacer(Modifier.height(AppSpacing.xs))

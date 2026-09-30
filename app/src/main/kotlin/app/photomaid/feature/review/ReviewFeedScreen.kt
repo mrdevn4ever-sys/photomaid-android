@@ -115,6 +115,10 @@ import app.photomaid.design.glassRect
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.system.MediaIntents
+import app.photomaid.feature.quickaccess.quickEmptyRes
+import app.photomaid.feature.quickaccess.quickTitle
+import app.photomaid.core.quickaccess.QuickSourceKind
+import app.photomaid.media.MediaCategory
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
@@ -184,6 +188,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             val (pos, total) = model.session.position
             GlassToolbar(
                 title = (request.source as? FeedRequest.Source.Collection)?.let { collectionTitle(it.collection) }
+                    ?: (request.source as? FeedRequest.Source.Quick)?.let { quickTitle(it.item) }
                     ?: stringResource(request.titleRes),
                 subtitle = if (items.isEmpty()) null else stringResource(R.string.feed_position, pos, total),
                 leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), quiet = true, onClick = onClose) },
@@ -198,7 +203,16 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     Text(stringResource(R.string.feed_loading), style = AppTypography.footnote, color = PM.colors.textSecondary)
                 }
                 items.isEmpty() -> Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    EmptyState(Icons.Rounded.CheckCircle, stringResource(R.string.feed_empty_title), stringResource(R.string.feed_empty_message),
+                    val emptyMsg = when (val src = request.source) {
+                        is FeedRequest.Source.Quick -> quickEmptyRes(src.item.kind)
+                        is FeedRequest.Source.Category -> quickEmptyRes(when (src.category) {
+                            MediaCategory.PHOTOS -> QuickSourceKind.PHOTOS
+                            MediaCategory.VIDEOS -> QuickSourceKind.VIDEOS
+                            MediaCategory.SCREENSHOTS -> QuickSourceKind.SCREENSHOTS
+                        })
+                        else -> R.string.feed_empty_message
+                    }
+                    EmptyState(Icons.Rounded.CheckCircle, stringResource(R.string.qa_all_done), stringResource(emptyMsg),
                         actionTitle = stringResource(R.string.close), action = onClose)
                 }
                 model.session.isFinished -> SessionSummaryView(
