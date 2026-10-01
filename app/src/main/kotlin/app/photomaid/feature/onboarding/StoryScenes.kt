@@ -67,8 +67,8 @@ private fun seg(p: Float, a: Float, b: Float): Float {
 }
 
 /**
- * O1 – Raster aus Demo-Kacheln: drei bekommen das Papierkorb-Abzeichen und fliegen nach links hinaus,
- * danach blenden sie als frische Kacheln wieder ein. Keine Zahlen, keine echten Medien.
+ * O1 – Raster aus Demo-Fotos: drei bekommen das Papierkorb-Abzeichen und fliegen nach links hinaus,
+ * danach rücken andere Motive nach. Keine Zahlen, keine Medien der Nutzer.
  */
 @Composable
 fun GridStoryScene(modifier: Modifier = Modifier) {
@@ -91,7 +91,7 @@ fun GridStoryScene(modifier: Modifier = Modifier) {
                         rotationZ = -10f * out * (1f - back)
                     }
                     .clip(RoundedCornerShape(AppRadii.tile + 4.dp))) {
-                    DemoArtwork(i + if (back > 0f) 3 else 0, Modifier.fillMaxSize())
+                    DemoPhoto(if (back > 0f && order >= 0) DemoArt.gridRefill[order] else DemoArt.grid[i], Modifier.fillMaxSize())
                     if (badge > 0f && back == 0f) Box(Modifier.align(Alignment.BottomEnd).padding(6.dp).graphicsLayer { scaleX = badge; scaleY = badge; alpha = badge }
                         .size(26.dp).clip(CircleShape).background(c.cleanup), contentAlignment = Alignment.Center) {
                         Icon(Icons.Rounded.Delete, null, tint = Color.White, modifier = Modifier.size(15.dp))
@@ -138,7 +138,7 @@ fun SafetyStoryScene(modifier: Modifier = Modifier) {
                 alpha = 1f - seg(p, 0.28f, 0.33f)
             }
             .shadow(10.dp, RoundedCornerShape(AppRadii.hero), clip = false).clip(RoundedCornerShape(AppRadii.hero))) {
-            DemoArtwork(2, Modifier.fillMaxSize())
+            DemoPhoto(DemoArt.grid[5], Modifier.fillMaxSize()) // ein „Aussortier“-Kandidat
         }
         // Angedeutete Bestätigung + Android-Rückfrage.
         Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth().graphicsLayer {
