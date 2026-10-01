@@ -40,3 +40,14 @@ Limit; App-Wechsel bei offenem Dialog ohne Doppelbuchung; extern gelöschte Medi
 | K2 | Verlauf zeigt „Nicht entfernt · 2 Elemente“ statt „Bereinigung nicht ausgeführt · 2 Elemente“ | Kein App-Fehler: veraltete Erwartung im Testauftrag; der Text wurde bei der Microcopy-Überarbeitung gekürzt (`h_not_performed`) | – (Verhalten korrekt) | Bericht: Dateien vorhanden, Limit unverändert, genau ein Eintrag |
 | K5 | Aus dem System-Papierkorb wiederhergestelltes Foto erscheint nicht wieder in PhotoMaid | MediaStore behält beim Wiederherstellen die ID; im Ledger ist das Item endgültig `REMOVED`, die Warteschlange schloss es aus und keine Aktion war erlaubt (von iOS übernommen, PORTING_MATRIX #6) | Vorhandenes Medium mit `REMOVED` gilt als offen; Behalten/Papierkorb/Später erlaubt (Verlauf: Entscheidung), Rückgängig zurück auf „entfernt“ | `DecisionLedgerTest.restoredFromSystemTrashIsPendingAgain`; Gerät: Nachtest nötig |
 
+
+## Lauf 5 (2026-10-02, Commit `77354e6`, perf-APK)
+
+PASS: K5-Nachtest (wiederhergestelltes Foto wieder offen, Behalten/Rückgängig), Limit-Blatt (4 Texte), M1b (Bonus nach
+Reward-Callback → 12/25 → 8/25), M1c (Bonus 1× täglich), M2 (Anzeige unter „Fertig“, Scrollen über der Anzeige öffnet
+sie nicht, gleiche Anzeige nach „Zum letzten Medium“), UMP-Testeinwilligung. NOT RUN: M1a (zweimal zu spät geschlossen –
+die Google-Testanzeige hatte die Belohnung schon vergeben), K7, P, K8, M3, Logcat.
+
+| # | Befund | Ursache | Behebung |
+|---|---|---|---|
+| M2 | AdMob-„native ad validator“: „1 implementation issue found“ (Zusammenfassung) | Sehr wahrscheinlich MediaView zu klein: feste Kartenhöhe 280 dp, Texte + Knopf ließen der MediaView nur wenige dp (Pflicht ≥ 120 × 120 dp). Zusätzlich lag die Kennzeichnung „Anzeige“ außerhalb der `NativeAdView` | Kompakte Anzeige mit fester MediaView-Höhe 168 dp, Höhe nach Inhalt; Feed-Karte MediaView mindestens 120 dp; Kennzeichnung „Anzeige“ jetzt innerhalb der `NativeAdView`; leere Assets ausgeblendet. Gerät: Nachtest + „See issues“ nötig |

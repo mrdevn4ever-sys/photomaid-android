@@ -103,8 +103,8 @@ fun AdStage(model: FeedViewModel, card: AdCard, reduceMotion: Boolean, openPro: 
         Box(Modifier.weight(1f).fillMaxWidth().offset { val o = model.offset.value; with(density) { IntOffset(o.x.dp.roundToPx(), o.y.dp.roundToPx()) } }
             .clip(RoundedCornerShape(AppRadii.media)).background(c.surface)) {
             Column(Modifier.fillMaxSize().padding(AppSpacing.m), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                Text(stringResource(R.string.ad_label), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary,
-                    modifier = Modifier.glassRect(AppRadii.control, 0.dp).padding(horizontal = AppSpacing.xs, vertical = 2.dp).testTag("feed.ad.label"))
+                // Echte Anzeigen tragen die Kennzeichnung IN der NativeAdView (AdMob-Validator); die Attrappe hier.
+                if (card.ad.native == null) AdLabel(Modifier.testTag("feed.ad.label"))
                 Box(Modifier.weight(1f).fillMaxWidth()) { AdContent(card.ad) }
             }
         }
@@ -130,7 +130,7 @@ fun SummaryAd(ad: FeedAd, scroll: ScrollState, openPro: () -> Unit, modifier: Mo
     val fling = ScrollableDefaults.flingBehavior()
     val scope = rememberCoroutineScope()
     Column(modifier.fillMaxWidth().testTag("summary.ad"), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        Box(Modifier.fillMaxWidth().height(280.dp).clip(RoundedCornerShape(AppRadii.card)).background(c.surface)
+        Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(AppRadii.card)).background(c.surface)
             .pointerInput(Unit) {
                 awaitEachGesture {
                     val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
@@ -156,25 +156,39 @@ fun SummaryAd(ad: FeedAd, scroll: ScrollState, openPro: () -> Unit, modifier: Mo
                     }
                 }
             }) {
-            Column(Modifier.fillMaxSize().padding(AppSpacing.m), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                Text(stringResource(R.string.ad_label), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary,
-                    modifier = Modifier.glassRect(AppRadii.control, 0.dp).padding(horizontal = AppSpacing.xs, vertical = 2.dp))
-                Box(Modifier.weight(1f).fillMaxWidth()) { AdContent(ad) }
+            Column(Modifier.fillMaxWidth().padding(AppSpacing.m), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                if (ad.native == null) AdLabel()
+                AdContent(ad, compact = true)
             }
         }
         PlainButton(stringResource(R.string.ad_remove), Modifier.align(Alignment.CenterHorizontally).testTag("summary.ad.pro"), onClick = openPro)
     }
 }
 
-/** Echte Anzeige in `NativeAdView` (Pflicht für AdMob-Native); ohne SDK (Tests) nur die Texte. */
 @Composable
-private fun AdContent(ad: FeedAd) {
+private fun AdLabel(modifier: Modifier = Modifier) {
+    val c = PM.colors
+    Text(stringResource(R.string.ad_label), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary,
+        modifier = modifier.glassRect(AppRadii.control, 0.dp).padding(horizontal = AppSpacing.xs, vertical = 2.dp))
+}
+
+/** Höhe der MediaView in der kompakten Anzeige (AdMob verlangt mindestens 120 × 120 dp). */
+private const val COMPACT_MEDIA_DP = 168
+
+/**
+ * Echte Anzeige in `NativeAdView` (Pflicht für AdMob-Native); ohne SDK (Tests) nur die Texte.
+ * Kennzeichnung „Anzeige“ liegt innerhalb der NativeAdView, die MediaView ist nie kleiner als 120 dp.
+ * [compact]: feste Medienhöhe und Höhe nach Inhalt (Zusammenfassung); sonst füllt die Anzeige die Karte (Feed).
+ */
+@Composable
+private fun AdContent(ad: FeedAd, compact: Boolean = false) {
     val c = PM.colors
     val native = ad.native
+    val label = stringResource(R.string.ad_label)
     if (native == null) {
         // Ohne SDK (Tests) verhält sich die Fläche wie `NativeAdView`: sie nimmt jede Berührung an (Klick-Erfassung).
         // So prüfen die Tests realistisch, dass Wischen über der Anzeige trotzdem beim Feed ankommt (Gerätebefund E5).
-        Column(Modifier.fillMaxSize().pointerInput(Unit) {
+        Column((if (compact) Modifier.fillMaxWidth() else Modifier.fillMaxSize()).pointerInput(Unit) {
             awaitEachGesture {
                 awaitFirstDown(requireUnconsumed = false).consume()
                 do { val e = awaitPointerEvent(); e.changes.forEach { it.consume() } } while (e.changes.any { it.pressed })
@@ -188,26 +202,36 @@ private fun AdContent(ad: FeedAd) {
         return
     }
     val primary = c.textPrimary.toArgb(); val secondary = c.textSecondary.toArgb(); val accent = c.accent.toArgb()
-    AndroidView(modifier = Modifier.fillMaxSize(), factory = { ctx ->
+    val badgeBg = c.backgroundTint.toArgb()
+    AndroidView(modifier = if (compact) Modifier.fillMaxWidth() else Modifier.fillMaxSize(), factory = { ctx ->
+        val dp = ctx.resources.displayMetrics.density
         NativeAdView(ctx).apply {
             val col = LinearLayout(ctx).apply { orientation = LinearLayout.VERTICAL; gravity = Gravity.CENTER_HORIZONTAL }
+            val badge = TextView(ctx).apply {
+                text = label; textSize = 12f; setTypeface(typeface, Typeface.BOLD); setTextColor(secondary)
+                setPadding((8 * dp).toInt(), (2 * dp).toInt(), (8 * dp).toInt(), (2 * dp).toInt())
+                background = android.graphics.drawable.GradientDrawable().apply { cornerRadius = 8 * dp; setColor(badgeBg) }
+            }
             val media = MediaView(ctx)
-            val headline = TextView(ctx).apply { textSize = 20f; setTypeface(typeface, Typeface.BOLD); setTextColor(primary) }
-            val body = TextView(ctx).apply { textSize = 15f; setTextColor(secondary); maxLines = 3 }
-            val advertiser = TextView(ctx).apply { textSize = 13f; setTextColor(secondary) }
+            val headline = TextView(ctx).apply { textSize = if (compact) 17f else 20f; setTypeface(typeface, Typeface.BOLD); setTextColor(primary); maxLines = 2 }
+            val body = TextView(ctx).apply { textSize = 15f; setTextColor(secondary); maxLines = if (compact) 2 else 3 }
+            val advertiser = TextView(ctx).apply { textSize = 13f; setTextColor(secondary); maxLines = 1 }
             val cta = Button(ctx).apply { isAllCaps = false; setTextColor(android.graphics.Color.WHITE); setBackgroundColor(accent) }
-            col.addView(media, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
-            for (v in listOf(headline, body, advertiser)) col.addView(v, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply { topMargin = 12 })
-            col.addView(cta, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply { topMargin = 16 })
-            addView(col, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+            val wrap = ViewGroup.LayoutParams.WRAP_CONTENT; val match = ViewGroup.LayoutParams.MATCH_PARENT
+            col.addView(badge, LinearLayout.LayoutParams(wrap, wrap).apply { gravity = Gravity.START; bottomMargin = (8 * dp).toInt() })
+            col.addView(media, if (compact) LinearLayout.LayoutParams(match, (COMPACT_MEDIA_DP * dp).toInt())
+                else LinearLayout.LayoutParams(match, 0, 1f))
+            if (!compact) media.minimumHeight = (120 * dp).toInt()
+            for (v in listOf(headline, body, advertiser)) col.addView(v, LinearLayout.LayoutParams(match, wrap).apply { topMargin = (8 * dp).toInt() })
+            col.addView(cta, LinearLayout.LayoutParams(match, wrap).apply { topMargin = (12 * dp).toInt() })
+            addView(col, ViewGroup.LayoutParams(match, if (compact) wrap else match))
             mediaView = media; headlineView = headline; bodyView = body; advertiserView = advertiser; callToActionView = cta
         }
     }, update = { v ->
         (v.headlineView as TextView).text = native.headline
-        (v.bodyView as TextView).text = native.body ?: ""
-        (v.advertiserView as TextView).text = native.advertiser ?: ""
-        (v.callToActionView as Button).text = native.callToAction ?: ""
+        (v.bodyView as TextView).apply { text = native.body ?: ""; visibility = if (native.body.isNullOrBlank()) android.view.View.GONE else android.view.View.VISIBLE }
+        (v.advertiserView as TextView).apply { text = native.advertiser ?: ""; visibility = if (native.advertiser.isNullOrBlank()) android.view.View.GONE else android.view.View.VISIBLE }
+        (v.callToActionView as Button).apply { text = native.callToAction ?: ""; visibility = if (native.callToAction.isNullOrBlank()) android.view.View.INVISIBLE else android.view.View.VISIBLE }
         v.setNativeAd(native)
     })
 }
-
