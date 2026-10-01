@@ -6,10 +6,12 @@ import app.photomaid.core.decisions.CommitOutcome
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.decisions.DecisionCommand
 import app.photomaid.core.decisions.DecisionError
+import app.photomaid.core.decisions.DecisionRules
 import app.photomaid.core.decisions.Disposition
 import app.photomaid.core.decisions.HistoryKind
 import app.photomaid.core.decisions.InMemoryLedgerPersistence
 import app.photomaid.core.later.LaterPreset
+import app.photomaid.core.later.ReviewQueues
 import app.photomaid.core.model.ItemReference
 import app.photomaid.core.model.LocalDay
 import app.photomaid.core.model.ReviewSessionID
@@ -199,5 +201,29 @@ class DecisionLedgerTest {
                 events.lastOrNull { it.item == i }?.let { assertEquals(ledger.record(i).revision, it.revision) }
             }
         }
+    }
+
+    /** Gerätetest K5: aus dem System-Papierkorb zurückgeholt (gleiche ID) → wieder offen und neu entscheidbar. */
+    @Test fun restoredFromSystemTrashIsPendingAgain() = runBlocking {
+        val ledger = makeLedger()
+        ledger.decide(photo(1), DecisionAction.MarkForCleanup)
+        val intent = ledger.prepareCleanup(listOf(photo(1)), CleanupOperationKind.PHOTO_LIBRARY_DELETE, 15)
+        ledger.markSubmitted(intent.id)
+        ledger.reconcile(intent.id, OperationOutcome.Succeeded)
+        val removed = ledger.record(photo(1))
+        assertEquals(Disposition.REMOVED, removed.disposition)
+        // Liegt es wieder in der Mediathek, ist es ein Kandidat → normale Warteschlange.
+        val queue = ReviewQueues.normalQueue(listOf(photo(1), photo(2)), ledger.records(listOf(photo(1), photo(2))), ReviewSessionID(), LocalDay(2026, 10, 2))
+        assertEquals(listOf(photo(1), photo(2)), queue)
+        // Neue Entscheidung ist erlaubt und zählt als Entscheidung, nicht als Korrektur.
+        ledger.decide(photo(1), DecisionAction.Keep)
+        assertEquals(Disposition.KEPT, ledger.record(photo(1)).disposition)
+        assertEquals(HistoryKind.DECISION, ledger.events().last().kind)
+        // Rückgängig führt zurück auf „entfernt“.
+        assertEquals(Disposition.REMOVED, ledger.undo().disposition)
+        // Termin-/Markierungsaktionen bleiben auf einem entfernten Item ungültig.
+        assertTrue(DecisionRules.transition(ledger.record(photo(1)), DecisionAction.Unmark).isFailure)
+        assertTrue(DecisionRules.transition(ledger.record(photo(1)), DecisionAction.RemoveDeferral).isFailure)
+        Unit
     }
 }

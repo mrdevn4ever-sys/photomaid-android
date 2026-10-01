@@ -76,7 +76,9 @@ object ReviewQueues {
         val r = records[item] ?: return@filter true
         when (r.disposition) {
             Disposition.UNDECIDED -> true
-            Disposition.KEPT, Disposition.MARKED_FOR_CLEANUP, Disposition.REMOVED -> false
+            // Kandidaten sind nur vorhandene Medien: ein entferntes Item hier wurde zurückgeholt → wieder offen.
+            Disposition.REMOVED -> true
+            Disposition.KEPT, Disposition.MARKED_FOR_CLEANUP -> false
             Disposition.LATER -> r.dueDay == null && r.skippedInSession != session
         }
     }

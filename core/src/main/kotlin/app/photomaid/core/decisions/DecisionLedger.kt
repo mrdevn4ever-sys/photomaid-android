@@ -27,7 +27,10 @@ import kotlinx.coroutines.withContext
 object DecisionRules {
     fun transition(record: ItemRecord, action: DecisionAction): Result<DecisionSnapshot> {
         val from = record.disposition
-        if (from == Disposition.REMOVED) return Result.failure(DecisionError.InvalidTransition(from, name(action)))
+        // REMOVED ist endgültig – außer das Medium ist wieder da (aus dem System-Papierkorb zurückgeholt, gleiche ID).
+        // Dann darf es neu entschieden werden; Termin- und Markierungsaktionen bleiben unten ungültig.
+        if (from == Disposition.REMOVED && action !is DecisionAction.Keep && action != DecisionAction.MarkForCleanup && action !is DecisionAction.Later)
+            return Result.failure(DecisionError.InvalidTransition(from, name(action)))
         return when (action) {
             DecisionAction.Keep -> Result.success(DecisionSnapshot(Disposition.KEPT))
             DecisionAction.MarkForCleanup -> Result.success(DecisionSnapshot(Disposition.MARKED_FOR_CLEANUP))
@@ -50,7 +53,7 @@ object DecisionRules {
 
     fun historyKind(from: DecisionSnapshot, action: DecisionAction): HistoryKind = when (action) {
         DecisionAction.Keep, DecisionAction.MarkForCleanup, is DecisionAction.Later ->
-            if (from.disposition == Disposition.UNDECIDED) HistoryKind.DECISION else HistoryKind.CORRECTION
+            if (from.disposition == Disposition.UNDECIDED || from.disposition == Disposition.REMOVED) HistoryKind.DECISION else HistoryKind.CORRECTION
         is DecisionAction.Schedule -> HistoryKind.SCHEDULE_CHANGED
         DecisionAction.RemoveDeferral -> HistoryKind.DEFERRAL_REMOVED
         DecisionAction.Unmark -> HistoryKind.UNMARKED
