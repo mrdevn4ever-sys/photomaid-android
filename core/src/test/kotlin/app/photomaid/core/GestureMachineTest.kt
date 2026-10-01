@@ -76,8 +76,10 @@ class GestureMachineTest {
 
     @Test fun rightDeadZones() {
         val m = FeedGestureMachine()
-        assertEquals(Resolution.Cancelled, swipe(m, Vector2(120.0, -160.0))) // ≈ 53° nach oben: Totzone
-        assertEquals(Resolution.Cancelled, swipe(m, Vector2(120.0, 170.0))) // ≈ 55° nach unten: Totzone
+        // Totzone zwischen „rechts“ (≤ 45°) und „hoch“/„runter“ (ab ≈ 52°, lockRatio 1.3).
+        assertEquals(Resolution.Cancelled, swipe(m, Vector2(140.0, -160.0))) // ≈ 49° nach oben: Totzone
+        assertEquals(Resolution.Cancelled, swipe(m, Vector2(140.0, 165.0))) // ≈ 50° nach unten: Totzone
+        assertEquals(Resolution.Commit(SwipeDirection.UP), swipe(FeedGestureMachine(), Vector2(120.0, -160.0))) // ≈ 53°: jetzt „hoch“
         // Steil nach oben ist wieder „hoch“.
         assertEquals(Resolution.Commit(SwipeDirection.UP), swipe(FeedGestureMachine(), Vector2(60.0, -200.0)))
     }

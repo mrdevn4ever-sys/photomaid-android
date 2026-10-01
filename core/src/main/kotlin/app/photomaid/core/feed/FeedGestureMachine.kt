@@ -45,19 +45,23 @@ data class Vector2(val dx: Double, val dy: Double) {
     companion object { val ZERO = Vector2(0.0, 0.0) }
 }
 
-/** Schwellen in dp (iOS: pt – beide dichteunabhängig). */
+/**
+ * Schwellen in dp (iOS: pt – beide dichteunabhängig). Gerätebefund 2026-10-04 („zu schwerfällig“): leichter gemacht –
+ * 72 dp statt 110 dp, Schwung ab 380 dp/s und 20 dp (statt 650/36), Achse bis ~38° (lockRatio 1.3 statt 1.6).
+ * Zwischen „rechts“ (≤ 45°) und „hoch“/„runter“ bleibt eine Totzone.
+ */
 data class GestureConfig(
     /** Unterhalb dieser Strecke keine Richtung. */
     val deadZone: Double = 14.0,
     /** Dominante Achse muss um diesen Faktor größer sein (Diagonalen lösen nichts aus). */
-    val lockRatio: Double = 1.6,
+    val lockRatio: Double = 1.3,
     /** Hysterese: Bindung löst sich erst unterhalb dieser Strecke entlang der Achse. */
     val unlockDistance: Double = 6.0,
     /** Mindeststrecke für einen Commit ohne Schwung. */
-    val commitDistance: Double = 110.0,
+    val commitDistance: Double = 72.0,
     /** Schwung (dp/s) entlang der Richtung, der zusammen mit [flickMinDistance] genügt. */
-    val flickVelocity: Double = 650.0,
-    val flickMinDistance: Double = 36.0,
+    val flickVelocity: Double = 380.0,
+    val flickMinDistance: Double = 20.0,
     /** Rechts schräg nach oben bis 45° (|dy|/|dx| ≤ 1) zählt als „rechts“. Darüber bis „hoch“: Totzone. */
     val rightUpMaxRatio: Double = 1.0,
     /** Rechts schräg nach unten bis 45° zählt als „rechts“. Darüber bis „runter“: Totzone. */

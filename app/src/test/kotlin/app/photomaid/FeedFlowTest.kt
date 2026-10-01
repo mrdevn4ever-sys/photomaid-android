@@ -147,7 +147,10 @@ class FeedFlowTest {
         // Jede Geste höchstens ein Schritt; niemals zwei Entscheidungen für dasselbe Item.
         assertEquals(ev.size, ev.map { it.item }.toSet().size)
         assertEquals(ev.size, ev.count { it.kind == HistoryKind.DECISION })
-        rule.onNodeWithText("${ev.size + 1} von 5").assertExists()
+        // Mit leichteren Schwellen zählen mehr der schnellen Wische – die Anzeige folgt nach dem letzten Wegfliegen.
+        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("${events().size + 1} von 5")).fetchSemanticsNodes().isNotEmpty() }
+        val after = events()
+        assertEquals(after.size, after.map { it.item }.toSet().size)
     }
 
     /** Die Diagonale entfällt: schräg rechts oben bis ~45° ist „rechts“ = Später mit Standardtermin + Pille. */
@@ -176,7 +179,7 @@ class FeedFlowTest {
 
     /** Zwischen „rechts“ (≤ 45°) und „hoch“ liegt eine Totzone ohne Wirkung. */
     @Test fun steepRightUpIsDeadZone() {
-        rule.onNodeWithTag("feed.stage").performTouchInput { swipe(center, center + Offset(260f, -340f), 250) } // ≈ 53°
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipe(center, center + Offset(300f, -345f), 250) } // ≈ 49°: Totzone zwischen rechts (≤ 45°) und hoch (ab ≈ 52°)
         rule.waitForIdle()
         awaitReady("1 von 5")
         assertEquals(0, events().size)
