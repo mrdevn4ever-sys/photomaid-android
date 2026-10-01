@@ -99,8 +99,8 @@ class MonetizationTest {
 
     private val feedAds = FakeFeedAds()
 
-    private fun summaryApp(purchase: PurchaseState = PurchaseState.NOT_PURCHASED, offerShown: Boolean = true, decisions: Int = 40, reward: Boolean = false) =
-        makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 2, videos = 0) }, purchase = FakePurchaseGateway(purchase), feedAds = feedAds) { a ->
+    private fun summaryApp(purchase: PurchaseState = PurchaseState.NOT_PURCHASED, offerShown: Boolean = true, decisions: Int = 40, reward: Boolean = false, ads: FakeFeedAds = feedAds) =
+        makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 2, videos = 0) }, purchase = FakePurchaseGateway(purchase), feedAds = ads) { a ->
             a.store.setValue("feedads.v1", FeedAdState(decisionsTotal = decisions, sinceLastAd = 0)); a.feedAdCounter.load()
             a.updateSettings { it.copy(proOfferShown = offerShown) }
             if (reward) {
@@ -145,4 +145,15 @@ class MonetizationTest {
         assertFalse(has("summary.ad"))
         assertEquals(0, feedAds.taken)
     }
+
+    /** Gerätebefund Lauf 6: kurzer Durchgang, Vorladen noch nicht fertig → die Anzeige erscheint, sobald sie geladen ist. */
+    @Test fun summaryAdAppearsWhenItFinishesLoadingLate() {
+        val late = FakeFeedAds(emptyTakes = 4)
+        val app = summaryApp(ads = late)
+        finishFeed(app)
+        waitTag("summary.ad")
+        assertEquals(1, late.taken)
+        assertEquals(1, FeedAdPolicy.shownToday(app.feedAdCounter.state, app.today))
+    }
 }
+

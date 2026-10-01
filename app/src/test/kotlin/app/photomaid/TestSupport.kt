@@ -163,11 +163,13 @@ class FakeRewardedAdGateway(vararg results: app.photomaid.ads.RewardedAdResult) 
 }
 
 /** Test-Werbekarten (keine SDK-Anzeigen, keine Netzwerkanfragen). */
-class FakeFeedAds(override val isAvailable: Boolean = true) : app.photomaid.ads.FeedAdSource {
+class FakeFeedAds(override val isAvailable: Boolean = true, private var emptyTakes: Int = 0) : app.photomaid.ads.FeedAdSource {
     var taken = 0
     var preloads = 0
     override fun preload() { preloads++ }
+    /** [emptyTakes]: so oft noch „nichts geladen“ (Vorladen läuft noch). */
     override fun take(): app.photomaid.ads.FeedAd? = if (!isAvailable) null
+        else if (emptyTakes > 0) { emptyTakes--; null }
         else app.photomaid.ads.FeedAd("Testanzeige ${++taken}", "Beispieltext der Anzeige", "Mehr erfahren", "Werbepartner")
 }
 

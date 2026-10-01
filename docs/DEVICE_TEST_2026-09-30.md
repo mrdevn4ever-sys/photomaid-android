@@ -51,3 +51,13 @@ die Google-Testanzeige hatte die Belohnung schon vergeben), K7, P, K8, M3, Logca
 | # | Befund | Ursache | Behebung |
 |---|---|---|---|
 | M2 | AdMob-„native ad validator“: „1 implementation issue found“ (Zusammenfassung) | Sehr wahrscheinlich MediaView zu klein: feste Kartenhöhe 280 dp, Texte + Knopf ließen der MediaView nur wenige dp (Pflicht ≥ 120 × 120 dp). Zusätzlich lag die Kennzeichnung „Anzeige“ außerhalb der `NativeAdView` | Kompakte Anzeige mit fester MediaView-Höhe 168 dp, Höhe nach Inhalt; Feed-Karte MediaView mindestens 120 dp; Kennzeichnung „Anzeige“ jetzt innerhalb der `NativeAdView`; leere Assets ausgeblendet. Gerät: Nachtest + „See issues“ nötig |
+
+## Lauf 6 (2026-10-02, Commit `4f05322`, perf-APK) – Zwischenstand
+
+PASS: Update per Fast-forward ohne Datenverlust; Feed-Werbekarte – AdMob-Validator „No implementation issues found“ (Fix
+`4f05322` wirkt); Pro-Test per Rewarded („Pro-Test aktiv … Limit bleibt unverändert“); Duplikate: genau die drei Kopien im
+System-Papierkorb, Originale erhalten (Limit-Ablesung offen). NOT RUN: P, K8, M1a, M3, Logcat.
+
+| # | Befund | Ursache | Behebung | Nachweis |
+|---|---|---|---|---|
+| V (1a) | Nach kurzem Durchgang (2 Medien) keine Anzeige in der Zusammenfassung | Die Zusammenfassung nahm nur eine bereits geladene Anzeige; das Vorladen (≤ 2 Medien vor Ende) war noch nicht fertig → einmal „keine“, danach nie wieder | Bis 8 s nachfassen, solange die Zusammenfassung offen ist; die Anzeige erscheint dann ganz unten (nichts darüber verschiebt sich) | `MonetizationTest.summaryAdAppearsWhenItFinishesLoadingLate` |

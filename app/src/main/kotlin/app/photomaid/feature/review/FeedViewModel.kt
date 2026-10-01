@@ -69,6 +69,9 @@ enum class FeedHaptic { KEEP, CLEANUP, LATER, READY, DATE, BUMP, UNDO, FAVORITE_
 /** Geschützter Favorit wurde nach links gewischt: Rückfrage statt Papierkorb. Keine Entscheidung. */
 data class ProtectedFavorite(val item: ItemReference, val isVideo: Boolean)
 
+private const val SUMMARY_AD_WAIT_MS = 8_000L
+private const val SUMMARY_AD_POLL_MS = 250L
+
 /** Werbekarte zwischen zwei Medien (nur Free). Keine Entscheidung; Wegwischen erst nach [FeedAdPolicy.MIN_VISIBLE_MS]. */
 data class AdCard(val id: UUID = UUID.randomUUID(), val ad: FeedAd, val shownAtMs: Long)
 
@@ -606,9 +609,20 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         if (strongUpsell || !adsForUser() || !app.feedAds.isAvailable) return
         val today = app.today
         if (!app.feedAdCounter.summaryAllowed(today)) return
-        val ad = app.feedAds.take() ?: return
-        summaryAd = ad
-        viewModelScope.launch { app.feedAdCounter.recordShown(today) }
+        viewModelScope.launch {
+            // Kurzer Durchgang: das Vorladen ist evtl. noch nicht fertig (Gerätebefund Lauf 6) – kurz nachfassen.
+            // Die Anzeige steht ganz unten; spätes Erscheinen verschiebt nichts darüber. Nur solange die Zusammenfassung offen ist.
+            var ad = app.feedAds.take()
+            var waited = 0L
+            while (ad == null && waited < SUMMARY_AD_WAIT_MS && session.isFinished) {
+                delay(SUMMARY_AD_POLL_MS); waited += SUMMARY_AD_POLL_MS
+                ad = app.feedAds.take()
+            }
+            if (ad == null) return@launch
+            if (!session.isFinished) { ad.destroy(); return@launch }
+            summaryAd = ad
+            app.feedAdCounter.recordShown(today)
+        }
     }
 
     /** Werbekarte schließen (Wisch nach Mindestdauer, „Weiter“, Zurück, Rückgängig). */
