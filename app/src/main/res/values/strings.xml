@@ -652,4 +652,20 @@
     <string name="today_greeting_morning">Guten Morgen</string>
     <string name="today_greeting_day">Hallo</string>
     <string name="today_greeting_evening">Guten Abend</string>
+    <!-- Nach dem Leeren -->
+    <string name="done_title">Papierkorb geleert</string>
+    <string name="done_saved">gespart</string>
+    <string name="done_at_least">mind. %1$s</string>
+    <string name="done_removed">Entfernt</string>
+    <string name="done_kept">Heute behalten</string>
+    <string name="done_total">%1$s insgesamt gespart</string>
+    <string name="done_total_at_least">mind. %1$s insgesamt gespart</string>
+    <string name="done_note_media">Fotos und Videos liegen jetzt im Papierkorb von Android. Der Platz wird frei, sobald er geleert wird – spätestens nach 30 Tagen.</string>
+    <string name="done_note_files">Die Dateien sind endgültig gelöscht – der Platz ist sofort frei.</string>
+    <plurals name="done_unknown">
+        <item quantity="one">Bei einem Element ist die Größe unbekannt – es ist nicht mitgezählt.</item>
+        <item quantity="other">Bei %1$d Elementen ist die Größe unbekannt – sie sind nicht mitgezählt.</item>
+    </plurals>
+    <string name="done_button">Fertig</string>
+    <string name="done_partial">Ein Teil wurde nicht entfernt und bleibt im Papierkorb.</string>
 </resources>

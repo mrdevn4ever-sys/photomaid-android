@@ -409,5 +409,15 @@ class ScreenshotTest {
     }.let { a -> feedPhotos(a); waitTagX("coach.card"); rule.mainClock.advanceTimeBy(800); shotScreen("o07_feed_tour_1")
         rule.onNodeWithTag("coach.next").performClick(); rule.onNodeWithTag("coach.next").performClick(); rule.mainClock.advanceTimeBy(800); shotScreen("o07_feed_tour_3") }
     @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun o08_pro_offer() = seededApp().let { shot("o08_pro_offer", it) { ProScreen(nav) } }
+
+    private fun doneShot(name: String, dark: Boolean, kind: app.photomaid.core.cleanup.CleanupOperationKind, unknown: Int) =
+        makeTestApp(ctx) { a -> if (dark) a.updateSettings { it.copy(appearance = AppearanceChoice.DARK) } }.let { a ->
+            val d = app.photomaid.feature.cleanup.CleanupDone(app.photomaid.core.cleanup.CleanupSavings(42_500_000, unknown, 13), kind,
+                "13 Medien wurden in den Papierkorb des Systems verschoben.", false, 7, 1_240_000_000, unknown > 0)
+            rule.setContent { TestHost(a) { app.photomaid.feature.cleanup.CleanupDoneView(d) {} } }
+            rule.mainClock.advanceTimeBy(2_000); shotScreen(name)
+        }
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun d10_done() = doneShot("d10_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 0)
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun d11_done_dark_unknown() = doneShot("d11_done_dark_unknown", true, app.photomaid.core.cleanup.CleanupOperationKind.FILE_DELETE_PERMANENTLY, 2)
 }
 

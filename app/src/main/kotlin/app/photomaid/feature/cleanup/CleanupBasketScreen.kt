@@ -1,5 +1,9 @@
 package app.photomaid.feature.cleanup
 
+import app.photomaid.core.decisions.Disposition
+import app.photomaid.core.decisions.HistoryKind
+import app.photomaid.core.model.KnownSize
+import app.photomaid.core.cleanup.CleanupSavings
 import app.photomaid.feature.review.LIMIT_SOON
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -123,6 +127,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     val haptics = LocalHapticFeedback.current
     val settings by app.settings.collectAsState()
     var showProAfter by remember { mutableStateOf(false) }
+    var done by remember { mutableStateOf<CleanupDone?>(null) }
 
     LaunchedEffect(basket.map { it.item }) {
         val all = basket.map { it.item }.toSet()
@@ -164,6 +169,12 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
 
     fun run(items: List<ItemReference>, kind: CleanupOperationKind) = scope.launch {
         running = true
+        // Größen VOR dem Löschen festhalten (danach gibt es sie nicht mehr). Fehlende = unbekannt, nie 0.
+        val sizes = withContext(Dispatchers.IO) {
+            items.associateWith { ref ->
+                if (ref.provider == ItemProvider.PhotoLibrary) assets[ref.localIdentifier]?.size ?: KnownSize.Unknown else app.sources.sizeOf(ref)
+            }
+        }
         val r = app.runCleanup(items, kind)
         // Nur die Überschrift je Ausgang (Meldungstexte und Semantik unverändert).
         resultTitle = when (r) {
@@ -190,6 +201,20 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
                 else -> res.getString(R.string.result_changed)
             }
             CleanupRunResult.NeedsReconciliation -> res.getString(R.string.result_reconcile)
+        }
+        // Erfolg (auch teilweise): statt Meldung der „Gespart“-Bildschirm – nur mit tatsächlich entfernten Elementen.
+        if (r is CleanupRunResult.Finished && r.intent.confirmedRemoved.isNotEmpty() &&
+            (r.intent.state == OperationState.SUCCEEDED || r.intent.state == OperationState.PARTIALLY_SUCCEEDED)) {
+            val saving = CleanupSavings.of(r.intent.confirmedRemoved, sizes)
+            app.updateSettings { it.copy(savedTotalBytes = it.savedTotalBytes + saving.bytes, savedTotalLowerBound = it.savedTotalLowerBound || saving.isLowerBound) }
+            val st = app.settings.value
+            val zone = java.time.ZoneId.systemDefault(); val today = java.time.LocalDate.now(zone)
+            val kept = app.read.value.events.count { e ->
+                e.to.disposition == Disposition.KEPT && e.kind != HistoryKind.UNDO && e.at.atZone(zone).toLocalDate() == today
+            }
+            done = CleanupDone(saving, kind, resultMessage ?: "", r.intent.state == OperationState.PARTIALLY_SUCCEEDED, kept,
+                st.savedTotalBytes, st.savedTotalLowerBound)
+            resultMessage = null
         }
         running = false
     }
@@ -268,6 +293,13 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
             openPro = { limitFor = null; nav.openPro() }, onDismiss = { limitFor = null })
     }
     previewAsset?.let { a -> BasketPreview(a) { previewAsset = null } }
+    done?.let { d ->
+        // Vollbild über dem Papierkorb; „Fertig“/Zurück führt zurück (Heute bzw. Feed).
+        androidx.compose.ui.window.Dialog(onDismissRequest = { done = null; nav.back() },
+            properties = androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
+            CleanupDoneView(d) { done = null; nav.back() }
+        }
+    }
     NoticeDialog(resultMessage, stringResource(resultTitle)) {
         resultMessage = null
         if (showProAfter) { showProAfter = false; nav.openPro() }

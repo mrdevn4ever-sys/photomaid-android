@@ -39,4 +39,8 @@ data class AppSettingsData(
     /** Hinweiskarten-Tutorial auf „Heute“ bzw. im Feed einmal gezeigt (oder übersprungen). */
     val todayTourSeen: Boolean = false,
     val feedTourSeen: Boolean = false,
+    /** Summe „gespart“ über alle Leerungen (nur bekannte Größen bestätigt entfernter Elemente). */
+    val savedTotalBytes: Long = 0,
+    /** Mindestens eine Größe war unbekannt → Summe ist eine Untergrenze („mind.“). */
+    val savedTotalLowerBound: Boolean = false,
 )

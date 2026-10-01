@@ -243,6 +243,16 @@ class ConnectedSourceStore(private val context: Context, private val store: KeyV
         }.getOrNull() ?: fallback
     }
 
+    /** Größe laut Anbieter (vor dem Löschen für „gespart“); fehlt sie, `Unknown` – nie 0. */
+    fun sizeOf(item: ItemReference): KnownSize {
+        val uri = documentUri(item) ?: return KnownSize.Unknown
+        return runCatching {
+            resolver.query(uri, arrayOf(DocumentsContract.Document.COLUMN_SIZE), null, null, null)?.use { c ->
+                if (c.moveToFirst() && !c.isNull(0)) KnownSize.Known(c.getLong(0)) else null
+            }
+        }.getOrNull() ?: KnownSize.Unknown
+    }
+
     fun openStream(item: ItemReference): InputStream? =
         documentUri(item)?.let { runCatching { resolver.openInputStream(it) }.getOrNull() }
 
