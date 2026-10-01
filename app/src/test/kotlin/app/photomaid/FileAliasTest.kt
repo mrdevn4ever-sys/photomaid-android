@@ -56,6 +56,6 @@ class FileAliasTest {
         // Beide Verweise zusammen löschen wäre dieselbe Datei zweimal: abgelehnt, bevor Android fragt oder Limit belegt wird.
         val r = app.runCleanup(listOf(viaDownload, viaTest), CleanupOperationKind.FILE_DELETE_PERMANENTLY)
         assertTrue(r is CleanupRunResult.Rejected && r.error is CleanupError.AliasConflict)
-        assertEquals(15, app.read.value.allowance?.available)
+        assertEquals(20, app.read.value.allowance?.available)
     }
 }

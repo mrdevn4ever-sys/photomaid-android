@@ -1,5 +1,7 @@
 package app.photomaid
 
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.hasText
@@ -39,7 +41,7 @@ class AppFlowsTest {
     private val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
 
     private fun AppModel.rec(ref: ItemReference) = ledger.stateFlow.value.records[ref] ?: ItemRecord(ref)
-    private fun AppModel.available() = ledger.allowance(ledger.stateFlow.value, 15).available
+    private fun AppModel.available() = ledger.allowance(ledger.stateFlow.value, 20).available
 
     private suspend fun AppModel.mark(ref: ItemReference) =
         ledger.apply(DecisionCommand(item = ref, expectedRevision = ledger.record(ref).revision, action = DecisionAction.MarkForCleanup))
@@ -47,7 +49,11 @@ class AppFlowsTest {
     @Test fun onboardingShowsPrivacyThenTabs() {
         val app = makeTestApp(ctx, introSeen = false)
         rule.setContent { TestHost(app) { RootContent(app) } }
-        rule.onNodeWithText("Deine Privatsphäre zuerst").assertExists()
+        // Neues Onboarding: Geschichte → (Überspringen) → Angebot → Kostenlos → Berechtigungen.
+        rule.onNodeWithTag("onb.skip").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("offer.free").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("offer.free").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Damit PhotoMaid deine Fotos sehen kann")).fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithText("Voller Zugriff").assertExists()
         rule.onNodeWithText("Weiter").performClick()
         rule.waitUntil(5_000) { app.settings.value.privacyIntroSeen }
@@ -113,14 +119,14 @@ class AppFlowsTest {
         }
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
         rule.onNodeWithText("2 im Papierkorb").assertExists()
-        rule.onNodeWithText("Heute noch 15 von 15 frei zum Entfernen").assertExists()
+        rule.onNodeWithText("Heute noch 20 von 20 frei zum Entfernen").assertExists()
         rule.onNodeWithText("Papierkorb leeren: 2 Fotos/Videos").performClick()
         rule.onNodeWithText("2 über Android entfernen").performClick()
         rule.waitUntil(5_000) { rule.onAllNodes(hasText("2 Medien wurden in den Papierkorb des Systems verschoben.")).fetchSemanticsNodes().isNotEmpty() }
         assertEquals(setOf(lib.all[0].id, lib.all[1].id), lib.removed)
         val r = app.rec(ItemReference.photo(lib.all[0].id))
         assertEquals(Disposition.REMOVED, r.disposition)
-        assertEquals(13, app.available())
+        assertEquals(18, app.available())
     }
 
     @Test fun cancelledSystemDialogRemovesNothing() {
@@ -132,7 +138,7 @@ class AppFlowsTest {
         rule.onNodeWithText("Papierkorb leeren: 1 Foto/Video").performClick()
         rule.onNodeWithText("1 über Android entfernen").performClick()
         rule.waitUntil(5_000) { rule.onAllNodes(hasText("Abgebrochen. Es wurde nichts entfernt.")).fetchSemanticsNodes().isNotEmpty() }
-        assertEquals(15, app.available())
+        assertEquals(20, app.available())
         assertEquals(Disposition.MARKED_FOR_CLEANUP, app.rec(ItemReference.photo(lib.all[0].id)).disposition)
     }
 

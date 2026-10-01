@@ -1,5 +1,7 @@
 package app.photomaid.feature.pro
 
+import app.photomaid.feature.onboarding.OfferBenefits
+import app.photomaid.feature.onboarding.OfferHero
 import app.photomaid.design.clickableRow
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.foundation.shape.CircleShape
@@ -126,14 +128,17 @@ fun ProScreen(nav: Nav) {
             }
             Column(Modifier.padding(horizontal = AppSpacing.pageMargin), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
-                ProHero()
+                // Lebende Wischkarte wie im Onboarding-Angebot (gleiche Bausteine).
+                OfferHero()
                 Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
                     Text(stringResource(R.string.pro_title), style = AppTypography.largeTitle, color = c.textPrimary, textAlign = TextAlign.Center)
                     Text(stringResource(if (lifetime) R.string.pro_active_sub else R.string.pro_subtitle), style = AppTypography.subheadline,
                         color = c.textSecondary, textAlign = TextAlign.Center)
                 }
                 // Tatsächlich freigeschaltete Vorteile (Capabilities: werbefrei, Limit, identische Kopien, eigene Sammlungen).
-                SurfaceCard {
+                // Free: ehrlicher Vergleich wie im Onboarding (kostenlos unbegrenzt + Pro einmalig). Lifetime: freigeschaltete Vorteile.
+                if (!lifetime) OfferBenefits()
+                else SurfaceCard {
                     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
                         Feature(Icons.Rounded.Block, R.string.pro_f1, R.string.pro_f1d)
                         Feature(Icons.Rounded.AllInclusive, R.string.pro_f2, R.string.pro_f2d)
@@ -296,34 +301,3 @@ private fun Feature(icon: ImageVector, title: Int, detail: Int) {
     }
 }
 
-/** Kopfgrafik: gezeichneter Fächer aus drei Fotokarten mit Pro-Abzeichen (keine Bilddatei, passt sich Hell/Dunkel an). */
-@Composable
-private fun ProHero() {
-    val c = PM.colors
-    Box(Modifier.fillMaxWidth().height(172.dp).clip(RoundedCornerShape(AppRadii.card))
-        .background(Brush.verticalGradient(listOf(c.accent.copy(alpha = 0.22f), c.accent.copy(alpha = 0.04f)))).clearAndSetSemantics {},
-        contentAlignment = Alignment.Center) {
-        val cards = listOf(Triple(-14f, (-58).dp, c.keep), Triple(12f, 58.dp, c.later), Triple(0f, 0.dp, c.accent))
-        cards.forEach { (angle, dx, tint) ->
-            Box(Modifier.offset(x = dx).size(92.dp, 118.dp).graphicsLayer { rotationZ = angle }
-                .shadow(8.dp, RoundedCornerShape(AppRadii.small)).clip(RoundedCornerShape(AppRadii.small)).background(c.surface).padding(6.dp)) {
-                Canvas(Modifier.fillMaxSize().clip(RoundedCornerShape(AppRadii.small - 4.dp))) {
-                    drawRect(Brush.verticalGradient(listOf(tint.copy(alpha = 0.55f), tint.copy(alpha = 0.18f))))
-                    // Landschaft: Sonne + zwei Hügel
-                    drawCircle(Color.White.copy(alpha = 0.85f), radius = size.minDimension * 0.12f, center = Offset(size.width * 0.72f, size.height * 0.28f))
-                    val hill = Path().apply {
-                        moveTo(0f, size.height); lineTo(0f, size.height * 0.7f)
-                        quadraticTo(size.width * 0.3f, size.height * 0.45f, size.width * 0.6f, size.height * 0.72f)
-                        quadraticTo(size.width * 0.8f, size.height * 0.6f, size.width, size.height * 0.68f)
-                        lineTo(size.width, size.height); close()
-                    }
-                    drawPath(hill, tint.copy(alpha = 0.9f))
-                }
-            }
-        }
-        Box(Modifier.align(Alignment.BottomCenter).padding(bottom = 10.dp).size(44.dp).shadow(6.dp, CircleShape).clip(CircleShape).background(c.accentFill),
-            contentAlignment = Alignment.Center) {
-            Icon(Icons.Rounded.WorkspacePremium, null, tint = Color.White, modifier = Modifier.size(26.dp))
-        }
-    }
-}

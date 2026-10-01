@@ -346,19 +346,19 @@ class ScreenshotTest {
     @Test fun z02_ad_card_skip() = adShot("z02_ad_card_skip", adApp(), skippable = true)
     @Test fun z03_ad_card_dark() = adShot("z03_ad_card_dark", adApp(dark = true), skippable = true)
     private fun summary(name: String, upsell: app.photomaid.feature.review.SummaryUpsell?, left: Int?) = seededApp().let { a ->
-        val allowance = left?.let { app.photomaid.core.cleanup.AllowanceSnapshot(a.today, 15, 15 - it, 0) }
+        val allowance = left?.let { app.photomaid.core.cleanup.AllowanceSnapshot(a.today, 20, 20 - it, 0) }
         shot(name, a) { AppBackground { app.photomaid.feature.review.SessionSummaryView(app.photomaid.core.feed.SessionSummary(kept = 9, marked = 6, later = 2), 6,
             Modifier.fillMaxSize(), {}, {}, {}, upsell = upsell, allowance = allowance) } }
     }
     @Test @Config(qualifiers = "w393dp-h1100dp-xxhdpi") fun z04_summary_offer() = summary("z04_summary_offer", app.photomaid.feature.review.SummaryUpsell.STRONG, 3)
     @Test fun z05_summary_quiet() = summary("z05_summary_quiet", app.photomaid.feature.review.SummaryUpsell.QUIET, null)
-    @Test fun z06_limit_sheet() = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 17, videos = 0).also { l -> lib = l } },
+    @Test fun z06_limit_sheet() = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 22, videos = 0).also { l -> lib = l } },
         purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED)) { a ->
         val refs = lib.all.map { ItemReference.photo(it.id) }
         suspend fun mark(r: ItemReference) = a.ledger.apply(DecisionCommand(item = r, expectedRevision = a.ledger.record(r).revision, action = DecisionAction.MarkForCleanup))
-        refs.take(13).forEach { mark(it) }
-        a.runCleanup(refs.take(13), app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE)
-        refs.drop(13).forEach { mark(it) }
+        refs.take(18).forEach { mark(it) }
+        a.runCleanup(refs.take(18), app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE)
+        refs.drop(18).forEach { mark(it) }
     }.let {
         rule.setContent { TestHost(it) { CleanupBasketScreen(nav, showsDone = false) } }
         rule.waitUntil(10_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Papierkorb leeren: 4 Fotos/Videos")).fetchSemanticsNodes().isNotEmpty() }
@@ -378,4 +378,36 @@ class ScreenshotTest {
     }
     @Test fun d01_hero_one() = heroApp(1).let { shot("d01_hero_one", it, waitTag = "today.cta") { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
     @Test fun d02_hero_two() = heroApp(2).let { shot("d02_hero_two", it, waitTag = "today.cta") { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
+
+    // Onboarding + Angebot + Tutorial (2026-10-04)
+    private fun onbApp(dark: Boolean = false) = makeTestApp(ctx, purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED), introSeen = false) { a ->
+        if (dark) a.updateSettings { it.copy(appearance = AppearanceChoice.DARK) }
+    }
+    private fun onbTo(a: AppModel, nexts: Int, name: String, skip: Boolean = false) {
+        rule.setContent { TestHost(a) { app.photomaid.navigation.RootContent(a) } }
+        waitTagX("onb.page.0")
+        if (skip) rule.onNodeWithTag("onb.skip").performClick()
+        else repeat(nexts) { rule.onNodeWithTag("onb.next").performClick(); rule.mainClock.advanceTimeBy(400) }
+        rule.mainClock.advanceTimeBy(1_200)
+        shotScreen(name)
+    }
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o01_story() = onbTo(onbApp(), 0, "o01_story")
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o02_try() = onbTo(onbApp(), 1, "o02_try")
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o03_safe() = onbTo(onbApp(), 2, "o03_safe")
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o04_offer() = onbTo(onbApp(), 0, "o04_offer", skip = true)
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o04_offer_dark() = onbTo(onbApp(dark = true), 0, "o04_offer_dark", skip = true)
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o05_access() = onbApp().let { a ->
+        onbTo(a, 0, "o05_tmp", skip = true); rule.onNodeWithTag("offer.free").performClick(); rule.mainClock.advanceTimeBy(600); shotScreen("o05_access")
+    }
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o06_today_tour() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true, count = 8, videos = 2).also { l -> lib = l } }) { a ->
+        a.updateSettings { it.copy(todayTourSeen = false) }
+    }.let { a -> rule.setContent { TestHost(a) { app.photomaid.navigation.RootContent(a) } }; waitTagX("coach.card"); rule.mainClock.advanceTimeBy(800); shotScreen("o06_today_tour_1")
+        rule.onNodeWithTag("coach.next").performClick(); rule.mainClock.advanceTimeBy(800); shotScreen("o06_today_tour_2")
+        rule.onNodeWithTag("coach.next").performClick(); rule.onNodeWithTag("coach.next").performClick(); rule.mainClock.advanceTimeBy(800); shotScreen("o06_today_tour_4") }
+    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o07_feed_tour() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } }) { a ->
+        a.updateSettings { it.copy(feedTourSeen = false) }
+    }.let { a -> feedPhotos(a); waitTagX("coach.card"); rule.mainClock.advanceTimeBy(800); shotScreen("o07_feed_tour_1")
+        rule.onNodeWithTag("coach.next").performClick(); rule.onNodeWithTag("coach.next").performClick(); rule.mainClock.advanceTimeBy(800); shotScreen("o07_feed_tour_3") }
+    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun o08_pro_offer() = seededApp().let { shot("o08_pro_offer", it) { ProScreen(nav) } }
 }
+

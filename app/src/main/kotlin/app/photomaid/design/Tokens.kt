@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * Farbrollen der hellblauen PhotoMaid-Identität (Port von `AppColors` in Tokens.swift).
+ * Farbrollen der PhotoMaid-Identität: warmer Grund, Blau als Akzent (Port von `AppColors` in Tokens.swift).
  * Light ist die Referenz; Dark ist dieselbe Marke (Nachtblau statt Schwarz).
  * Erhöhter Kontrast (Android 14+ `UiModeManager.contrast`) wird über eigene Werte bedient.
  */
@@ -46,6 +46,14 @@ data class PhotoMaidColors(
     val warning: Color,
     val success: Color,
     val indigo: Color,
+    /** Warmer Markenton (Sand/Latte) für Onboarding, Hero und Illustrationen – nie für Text. */
+    val warm: Color,
+    val warmStrong: Color,
+    /** Bernstein (Sonne) in Illustrationen. */
+    val sun: Color,
+    /** Bernstein und Erdton für Symbole auf getönten Kacheln (≥ 3 : 1 auf Kachel und Karte). */
+    val amber: Color,
+    val earth: Color,
     val isDark: Boolean,
 ) {
     companion object {
@@ -71,20 +79,27 @@ data class PhotoMaidColors(
                 return Color(0xFF000000 or hex).copy(alpha = alpha)
             }
             return PhotoMaidColors(
-                // Neutraler Grund mit leichtem PhotoMaid-Blau; Flächen fast deckend und mit feiner Kontur statt weißer Kante.
-                background = c(0xF3F6FA, 0x0C1522, 0xF6FAFF, 0x050B14),
-                backgroundTint = c(0xE6EDF6, 0x111F33, 0xE8F1FC, 0x0A1628),
-                surface = c(0xFFFFFF, 0x16233A, 0xFFFFFF, 0x101C2E, 0.94f, 0.92f),
-                surfaceStroke = c(0xDDE5EF, 0x26374F, 0x8FA6C4, 0x6C84A6, 1f, 0.9f),
-                textPrimary = c(0x0F2747, 0xEAF2FF, 0x06152B, 0xFFFFFF),
-                textSecondary = c(0x4A6282, 0xA9BCD6, 0x2B3F5C, 0xD5E1F2),
-                glass = if (highContrast) c(0xFFFFFF, 0x15243A, 0xFFFFFF, 0x101C2E)
-                else if (dark) Color(0xFF1E3150).copy(alpha = 0.62f) else Color.White.copy(alpha = 0.58f),
-                glassHighlight = if (dark) Color.White.copy(alpha = 0.10f) else Color.White.copy(alpha = 0.75f),
-                glassStroke = if (highContrast) c(0xFFFFFF, 0x2A3E5C, 0x8FA6C4, 0x6C84A6)
-                else if (dark) Color.White.copy(alpha = 0.16f) else Color.White.copy(alpha = 0.85f),
-                glassBar = if (highContrast) c(0xFFFFFF, 0x15243A, 0xFFFFFF, 0x101C2E)
-                else if (dark) Color(0xFF17263D) else Color(0xFFFBFCFE),
+                // Warmer Grund (Creme/Sand, Produktentscheidung 2026-10-04), Blau bleibt der Akzent. Dunkel: warmes Anthrazit.
+                // Kontrast: Text 14 : 1 / sekundär 5,6 : 1 auf Hintergrund (hell); dunkel 13 : 1 / 7 : 1.
+                background = c(0xFAF6F1, 0x161311, 0xFFFBF7, 0x0B0907),
+                backgroundTint = c(0xF2EBE3, 0x201B18, 0xF4EEE7, 0x15110F),
+                surface = c(0xFFFFFF, 0x262120, 0xFFFFFF, 0x1C1816, 0.96f, 0.94f),
+                surfaceStroke = c(0xEADFD3, 0x3A322D, 0xA89584, 0x857565, 1f, 0.9f),
+                textPrimary = c(0x231F1C, 0xF5EFE9, 0x120F0D, 0xFFFFFF),
+                textSecondary = c(0x6B625A, 0xC2B6AA, 0x453E37, 0xE6DDD3),
+                glass = if (highContrast) c(0xFFFFFF, 0x262120, 0xFFFFFF, 0x1C1816)
+                else if (dark) Color(0xFF2E2723).copy(alpha = 0.66f) else Color.White.copy(alpha = 0.62f),
+                glassHighlight = if (dark) Color.White.copy(alpha = 0.08f) else Color.White.copy(alpha = 0.75f),
+                glassStroke = if (highContrast) c(0xFFFFFF, 0x3A322D, 0xA89584, 0x857565)
+                else if (dark) Color.White.copy(alpha = 0.14f) else Color.White.copy(alpha = 0.85f),
+                glassBar = if (highContrast) c(0xFFFFFF, 0x262120, 0xFFFFFF, 0x1C1816)
+                else if (dark) Color(0xFF221D1A) else Color(0xFFFFFCF8),
+                // Eigene Töne (kein Pfirsich/Apricot): Sand und Latte, dazu Bernstein nur in Illustrationen.
+                warm = c(0xEFE7DA, 0x2B2622, 0xE9DFCF, 0x332C27),
+                warmStrong = c(0xDCC9AB, 0x54473A, 0xCDB894, 0x66574A),
+                sun = c(0xF0B53C, 0xE5A92F, 0xF0B53C, 0xE5A92F),
+                amber = c(0xB86A00, 0xF0B53C, 0x8F5200, 0xFFC857),
+                earth = c(0x8A6440, 0xD9B98A, 0x6B4B2C, 0xEBCFA5),
                 accent = if (dark) accentTextDark else accentTextLight,
                 accentFill = if (dark) systemBlueDark else accentFillLight,
                 keep = if (dark) systemBlueDark else systemBlueLight,
@@ -101,7 +116,9 @@ data class PhotoMaidColors(
 
 /** Systemschrift, skaliert mit der Schriftgröße (sp). Entspricht den iOS-Dynamic-Type-Stilen. */
 object AppTypography {
-    val largeTitle = TextStyle(fontSize = 32.sp, lineHeight = 38.sp, fontWeight = FontWeight.SemiBold, letterSpacing = (-0.4).sp)
+    /** Große, freundliche Überschrift (Onboarding, Angebot). */
+    val display = TextStyle(fontSize = 30.sp, lineHeight = 36.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = (-0.6).sp)
+    val largeTitle = TextStyle(fontSize = 32.sp, lineHeight = 38.sp, fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp)
     val title = TextStyle(fontSize = 22.sp, lineHeight = 28.sp, fontWeight = FontWeight.SemiBold)
     val headline = TextStyle(fontSize = 17.sp, lineHeight = 22.sp, fontWeight = FontWeight.SemiBold)
     val body = TextStyle(fontSize = 17.sp, lineHeight = 22.sp)

@@ -386,7 +386,7 @@
     <string name="pro_title">PhotoMaid Pro</string>
     <string name="pro_subtitle">Einmal kaufen, für immer nutzen. Kein Abo.</string>
     <string name="pro_f2">Ohne Tageslimit aufräumen</string>
-    <string name="pro_f2d">Leere den Papierkorb so oft du willst – ohne das Limit von 15 pro Tag.</string>
+    <string name="pro_f2d">Leere den Papierkorb so oft du willst – ohne das Limit von 20 pro Tag.</string>
     <string name="pro_f3">Identische Kopien finden</string>
     <string name="pro_f3d">Exakt gleiche Fotos, Videos und Dateien aus verbundenen Ordnern.</string>
     <string name="pro_f5">Eigene Sammlungen</string>
@@ -449,7 +449,7 @@
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">Ob Cloud-Dienste wie Google Fotos Löschungen auf andere Geräte übertragen, hängt von deren Einstellungen ab. Medien, die nicht als lokale Datei vorliegen, lädt PhotoMaid nicht herunter.</string>
     <string name="help_free">Kostenlos</string>
-    <string name="help_free_text">Ansehen, wischen und für später speichern ist unbegrenzt. Ohne Pro kannst du bis zu 15 Elemente pro Tag endgültig entfernen.</string>
+    <string name="help_free_text">Ansehen, wischen und für später speichern ist unbegrenzt. Ohne Pro kannst du bis zu 20 Elemente pro Tag endgültig entfernen.</string>
 
     <!-- Datenschutz / Onboarding -->
     <string name="privacy_title">Deine Privatsphäre zuerst</string>
@@ -594,4 +594,62 @@
         <item quantity="one">%1$d aussortiert.</item>
         <item quantity="other">%1$d aussortiert.</item>
     </plurals>
+    <!-- Onboarding (2026-10-04) -->
+    <string name="onb_skip">Überspringen</string>
+    <string name="onb_next">Weiter</string>
+    <string name="onb_story_title">Deine Galerie, endlich aufgeräumt</string>
+    <string name="onb_story_text">Foto für Foto entscheiden – ganz in deinem Tempo. Was bleibt, bleibt. Der Rest macht Platz.</string>
+    <string name="onb_try_title">Ein Wisch pro Foto</string>
+    <string name="onb_try_text">Hoch behalten, links in den Papierkorb, rechts für später. Probier’s gleich hier aus!</string>
+    <string name="onb_try_done">Perfekt – so einfach ist das.</string>
+    <string name="onb_demo_desc">Übungskarten. Hier wird nichts gespeichert.</string>
+    <string name="onb_safe_title">Nichts geht aus Versehen verloren</string>
+    <string name="onb_safe_text">Aussortiertes landet erst in PhotoMaids Papierkorb. Gelöscht wird nur, was du dort bestätigst – und Android fragt noch einmal nach.</string>
+    <string name="onb_safe_local">Alles bleibt auf deinem Gerät. Kein Konto, kein Upload.</string>
+    <string name="onb_safe_sheet">Entfernen</string>
+    <string name="onb_safe_dialog">Android fragt nach</string>
+    <string name="onb_offer_title">Kostenlos – so viel du willst</string>
+    <string name="onb_offer_text">Wisch und sortier ohne Grenze. Dafür siehst du ab und zu eine kurze Anzeige.</string>
+    <string name="onb_free_start">Kostenlos loslegen</string>
+    <string name="onb_buy">Pro für %1$s – einmal kaufen</string>
+    <string name="onb_buy_noprice">Pro – einmal kaufen</string>
+    <string name="onb_access_title">Damit PhotoMaid deine Fotos sehen kann</string>
+    <string name="onb_access_text">PhotoMaid zeigt und sortiert deine Fotos und Videos direkt auf diesem Gerät. Es gibt keinen PhotoMaid-Server und kein Konto.</string>
+    <string name="onb_progress">Schritt %1$d von %2$d</string>
+    <string name="offer_free_title">Immer kostenlos</string>
+    <string name="offer_free_text">Unbegrenzt wischen und sortieren – so lange du willst.</string>
+    <string name="offer_ads_title">Ab und zu eine Anzeige</string>
+    <string name="offer_ads_text">Kurz, überspringbar und nie über deinen Videos.</string>
+    <string name="offer_limit_title">Täglich endgültig löschen</string>
+    <string name="offer_limit_text">Bis zu %1$d pro Tag – mit einem kurzen Video %2$d mehr.</string>
+    <string name="offer_pro_title">Pro – einmal zahlen, für immer</string>
+    <string name="offer_pro_text">Ohne Werbung, ohne Löschlimit, identische Kopien finden und eigene Sammlungen.</string>
+    <string name="offer_price_once">%1$s · einmalig</string>
+    <string name="offer_price_store">Preis in Google Play</string>
+    <string name="offer_no_sub">Kein Abo</string>
+    <string name="offer_fine">Kein Abo. Keine Testphase, die abläuft. Bezahlt wird einmal über Google Play.</string>
+    <string name="offer_thanks">Danke! Pro ist aktiv – für immer werbefrei.</string>
+    <!-- Tutorial (Hinweiskarten) -->
+    <string name="tour_skip">Tutorial überspringen</string>
+    <string name="tour_next">Weiter</string>
+    <string name="tour_done">Fertig</string>
+    <string name="tour_count">%1$d/%2$d</string>
+    <string name="tour_today_hero_title">Hier geht’s los</string>
+    <string name="tour_today_hero_text">Ein Tipp auf „Jetzt aufräumen“ und du wischst durch alles, was noch offen ist.</string>
+    <string name="tour_today_status_title">Papierkorb &amp; Später</string>
+    <string name="tour_today_status_text">Hier landet, was du aussortiert oder vertagt hast. Gelöscht wird erst, wenn du es bestätigst.</string>
+    <string name="tour_today_quick_title">Deine Schnellzugriffe</string>
+    <string name="tour_today_quick_text">Fotos, Videos, Screenshots oder ein Ordner – leg dir hier ab, was du oft aufräumst.</string>
+    <string name="tour_today_tab_title">Noch mehr Werkzeuge</string>
+    <string name="tour_today_tab_text">Große Dateien, Kopien, Ordner und Sammlungen findest du unter „Aufräumen“.</string>
+    <string name="tour_feed_basket_title">Dein Papierkorb</string>
+    <string name="tour_feed_basket_text">Die Zahl zeigt, was du aussortiert hast. Tipp darauf, um es anzusehen und zu leeren.</string>
+    <string name="tour_feed_undo_title">Rückgängig</string>
+    <string name="tour_feed_undo_text">Vertippt? Ein Tipp holt deine letzte Entscheidung zurück.</string>
+    <string name="tour_feed_actions_title">Favorit, Teilen, Ordner</string>
+    <string name="tour_feed_actions_text">Markiere Favoriten, teile ein Foto oder verschiebe es – ohne die App zu verlassen. Das ist nie eine Entscheidung.</string>
+    <!-- Heute (freundlicher) -->
+    <string name="today_greeting_morning">Guten Morgen</string>
+    <string name="today_greeting_day">Hallo</string>
+    <string name="today_greeting_evening">Guten Abend</string>
 </resources>

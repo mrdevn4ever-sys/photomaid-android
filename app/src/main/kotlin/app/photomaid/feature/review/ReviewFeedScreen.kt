@@ -1,5 +1,9 @@
 package app.photomaid.feature.review
 
+import kotlinx.coroutines.launch
+import app.photomaid.design.CoachStep
+import app.photomaid.design.CoachHost
+import app.photomaid.design.coachTarget
 import android.view.accessibility.AccessibilityManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -193,6 +197,16 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
         })
     }
 
+    // Hinweiskarten einmal beim ersten Feed: nach der Gestenhilfe, nur bei einem echten Medium (keine Werbung, keine Zusammenfassung).
+    val tourScope = rememberCoroutineScope()
+    val feedTour = listOf(
+        CoachStep("feed.basket", stringResource(R.string.tour_feed_basket_title), stringResource(R.string.tour_feed_basket_text)),
+        CoachStep("feed.undo", stringResource(R.string.tour_feed_undo_title), stringResource(R.string.tour_feed_undo_text)),
+        CoachStep("feed.actions", stringResource(R.string.tour_feed_actions_title), stringResource(R.string.tour_feed_actions_text)),
+    )
+    val tourActive = !settings.feedTourSeen && !showHints && model.isLoaded && model.adCard == null && !model.session.isFinished &&
+        model.currentAsset != null && !talkBack
+    CoachHost(feedTour, active = tourActive, onFinish = { tourScope.launch { app.updateSettings { it.copy(feedTourSeen = true) } } }, modifier = Modifier.fillMaxSize()) {
     AppBackground {
         Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(bottom = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
             model.version // Session-Änderungen beobachten
@@ -205,7 +219,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                 subtitle = if (items.isEmpty()) null else stringResource(R.string.feed_position, pos, total),
                 leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), quiet = true, onClick = onClose) },
                 trailing = {
-                    GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = canUndo, quiet = true, onClick = model::undo)
+                    GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.coachTarget("feed.undo"), enabled = canUndo, quiet = true, onClick = model::undo)
                 },
             )
             when {
@@ -278,6 +292,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                 }
             }
         }
+    }
     }
 
     model.errorMessage?.let { msg ->
@@ -560,7 +575,7 @@ fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modi
 @Suppress("unused")
 private fun Modifier.dim(v: Boolean) = if (v) alpha(0.45f) else this
 
-/** Ab hier wird das Tageslimit vorab gezeigt („Heute noch 3 von 15 frei“). */
+/** Ab hier wird das Tageslimit vorab gezeigt („Heute noch 3 von 20 frei“). */
 const val LIMIT_SOON = 5
 
 @Composable

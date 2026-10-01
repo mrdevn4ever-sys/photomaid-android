@@ -3,7 +3,7 @@
 Vorbild: Swipewipe-Onboarding (Bildschirmaufnahmen vom 01.10.). Übernommen wird das **Muster** (kurze animierte
 Geschichte → selbst ausprobieren → Angebot mit lebender Wischkarte → Berechtigungen), nicht der Inhalt:
 unsere Gesten, unser Design-System, **kein Abo, keine Testphase**, sondern „kostenlos unbegrenzt wischen mit etwas
-Werbung“ + „Pro einmal kaufen, für immer“ zum Store-Preis. Prüfstatus: NOT RUN (nur Plan).
+Werbung“ + „Pro einmal kaufen, für immer“ zum Store-Preis. Status (2026-10-04): **umgesetzt** – JVM-Tests PASS (`OnboardingTest`, Screenshots `o01`–`o08`), Gerät NOT RUN.
 
 ## 1. Was wir vom Vorbild NICHT übernehmen (Regeln/Ehrlichkeit)
 
@@ -128,3 +128,15 @@ Reduzierte Bewegung schaltet alle Schleifen ab.
 2. Löschlimit (15/Tag, +10 per Video) auf O4 nennen? Empfohlen **ja** – ehrlich und das stärkste Pro-Argument.
 3. Hintergrund: unsere Farben (empfohlen) oder ein wärmerer Onboarding-Ton wie im Vorbild?
 4. Soll O4 später auch als In-App-Angebot erscheinen (z. B. aus „Ohne Werbung mit Pro“) statt der heutigen Pro-Seite?
+
+## 7. Entscheidungen (2026-10-04) und Umsetzung
+
+1. Primärknopf „Kostenlos loslegen“ – umgesetzt.
+2. Limit offen genannt; **neu 20 pro Tag + 20 per Video** (überall in der App, `Capabilities.FREE_DAILY_CLEANUP_LIMIT`, `LimitBonus.AMOUNT`).
+3. Wärmer, aber **kein Violett, keine Swipewipe-Töne**: Creme/Sand-Grund, Latte als Markenton, Blau bleibt Akzent, Bernstein/Erdton für Kacheln.
+4. Angebotsbausteine auch in der App: Pro-Seite nutzt `OfferHero` + `OfferBenefits`.
+
+Zusätzlich: Hinweiskarten-Tutorial (`design/CoachMarks.kt`) einmal auf „Heute“ (4 Schritte: Start, Papierkorb & Später,
+Schnellzugriffe, Aufräumen-Tab) und im ersten Feed (3 Schritte: Papierkorb, Rückgängig, Aktionsleiste). Abdunkeln mit Aussparung,
+„n/N · Tutorial überspringen · Weiter/Fertig“, blockiert solange jede Berührung (keine versehentliche Entscheidung),
+Zurück = überspringen. „Heute“ freundlicher: Begrüßung nach Tageszeit, farbige Kacheln je Quelle, kräftigere Titel.

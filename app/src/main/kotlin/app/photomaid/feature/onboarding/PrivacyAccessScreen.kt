@@ -98,9 +98,9 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
                 Box(Modifier.glassRect().padding(AppSpacing.l)) { Icon(Icons.Rounded.Shield, null, tint = c.accent, modifier = Modifier.size(56.dp)) }
                 // Der Claim erscheint nur hier beim ersten Start – „Heute“ zeigt danach direkt den Inhalt.
-                if (onboarding) Text(stringResource(R.string.today_subtitle), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.accent, textAlign = TextAlign.Center)
-                Text(stringResource(R.string.privacy_title), style = AppTypography.title, color = c.textPrimary, textAlign = TextAlign.Center)
-                Text(stringResource(R.string.privacy_text), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
+                Text(stringResource(if (onboarding) R.string.onb_access_title else R.string.privacy_title),
+                    style = if (onboarding) AppTypography.display else AppTypography.title, color = c.textPrimary, textAlign = TextAlign.Center)
+                Text(stringResource(if (onboarding) R.string.onb_access_text else R.string.privacy_text), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
                 SurfaceCard {
                     Header(Icons.Rounded.PhotoLibrary, stringResource(R.string.privacy_media)) {
                         val (label, color) = when (access) {
@@ -125,20 +125,8 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
                         PhotoAccess.AUTHORIZED -> Unit
                     }
                 }
-                if (onboarding) {
-                    // Erststart kurz halten: was PhotoMaid macht, die vier Gesten, und dass nichts ohne Bestätigung gelöscht wird.
-                    // Mitteilungen und Ordner werden erst im jeweiligen Kontext angefragt (Später bzw. Dateien).
-                    SurfaceCard(Modifier.testTag("onboarding.gestures")) {
-                        Text(stringResource(R.string.set_how_to_swipe), style = AppTypography.headline, color = c.textPrimary)
-                        Spacer(Modifier.height(AppSpacing.xs))
-                        GestureLegendRow(Icons.Rounded.ArrowUpward, stringResource(R.string.dir_keep), stringResource(R.string.hint_up), c.keep)
-                        GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.dir_trash), stringResource(R.string.hint_left), c.cleanup)
-                        GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.dir_later), stringResource(R.string.hint_right), c.later)
-                        GestureLegendRow(Icons.Rounded.ArrowDownward, stringResource(R.string.dir_back), stringResource(R.string.hint_down), c.textSecondary)
-                        Spacer(Modifier.height(AppSpacing.xs))
-                        Text(stringResource(R.string.onboarding_safe), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
-                    }
-                } else {
+                // Mitteilungen (optional) – auch im Onboarding, mit ehrlichem Nutzen statt Statistik.
+                run {
                     SurfaceCard {
                         Header(Icons.Rounded.Notifications, stringResource(R.string.set_notifications)) {
                             Text(stringResource(when (notif) {
@@ -156,6 +144,8 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
                             }
                         }
                     }
+                }
+                if (!onboarding) {
                     SurfaceCard {
                         Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                             Icon(Icons.Rounded.Folder, null, tint = c.accent)

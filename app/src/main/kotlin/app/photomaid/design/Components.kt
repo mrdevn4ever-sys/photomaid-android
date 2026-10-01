@@ -304,10 +304,12 @@ fun GlassToolbar(
 
 /** Großer Titel der Tab-Wurzeln (Heute, Aufräumen, Ordnen). */
 @Composable
-fun LargeTitleHeader(title: String, subtitle: String? = null, trailing: @Composable () -> Unit = {}) {
+fun LargeTitleHeader(title: String, subtitle: String? = null, eyebrow: String? = null, trailing: @Composable () -> Unit = {}) {
     val c = PM.colors
     Row(Modifier.fillMaxWidth().padding(top = AppSpacing.s), verticalAlignment = Alignment.Top) {
         Column(Modifier.weight(1f).semantics(mergeDescendants = true) { heading() }, verticalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
+            // Kleine, freundliche Zeile über dem Titel (z. B. Begrüßung auf „Heute“).
+            if (eyebrow != null) Text(eyebrow, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
             Text(title, style = AppTypography.largeTitle, color = c.textPrimary)
             if (subtitle != null) Text(subtitle, style = AppTypography.subheadline, color = c.textSecondary)
         }

@@ -69,7 +69,7 @@ class RewardedProTest {
         assertEquals(Tier.TEMPORARY_PRO, caps.tier)
         assertTrue(caps.hasProToolsAccess && caps.exactDuplicates && caps.customCollections)
         assertFalse(caps.hasUnlimitedTrashAccess)
-        assertEquals(15, caps.dailyCleanupLimit)
+        assertEquals(20, caps.dailyCleanupLimit)
         val w = app.entitlements.rewards.value.windows.single()
         assertEquals(w.grantedAt.plusSeconds(30 * 60), w.endsAt)
         rule.onNodeWithText("OK").performClick()
@@ -154,16 +154,16 @@ class RewardedProTest {
 
     /**
      * TEMPORARY PRO HEBT DAS TÄGLICHE PAPIERKORB-LIMIT NICHT AUF:
-     * Free → Limit teilweise verbraucht → echter Reward → Pro-Werkzeuge an → Limit weiter 15 → Überschreiten scheitert.
+     * Free → Limit teilweise verbraucht → echter Reward → Pro-Werkzeuge an → Limit weiter 20 → Überschreiten scheitert.
      */
     @Test fun temporaryProDoesNotLiftTrashLimit() {
         val ads = FakeRewardedAdGateway(RewardedAdResult.Rewarded("evt-limit"))
-        val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 20, videos = 0).also { l -> lib = l } },
+        val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 25, videos = 0).also { l -> lib = l } },
             purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED), ads = ads) { a ->
             val refs = lib.all.map { ItemReference.photo(it.id) }
-            refs.take(12).forEach { a.mark(it) }
-            a.runCleanup(refs.take(12), CleanupOperationKind.PHOTO_LIBRARY_DELETE) // 12 von 15 verbraucht
-            refs.drop(12).forEach { a.mark(it) } // 8 weitere im Papierkorb
+            refs.take(17).forEach { a.mark(it) }
+            a.runCleanup(refs.take(17), CleanupOperationKind.PHOTO_LIBRARY_DELETE) // 17 von 20 verbraucht
+            refs.drop(17).forEach { a.mark(it) } // 8 weitere im Papierkorb
         }
         assertEquals(RewardedAdResult.Rewarded("evt-limit"), runBlocking { app.entitlements.watchRewardedAd {} })
         runBlocking { app.reload() }
@@ -171,13 +171,13 @@ class RewardedProTest {
         assertEquals(Tier.TEMPORARY_PRO, caps.tier)
         assertTrue(caps.hasProToolsAccess)
         assertFalse(caps.hasUnlimitedTrashAccess)
-        assertEquals(15, caps.dailyCleanupLimit)
+        assertEquals(20, caps.dailyCleanupLimit)
         assertEquals(3, app.read.value.allowance?.available)
         // Überschreiten auf Modellebene: abgelehnt, nichts gelöscht.
-        val rest = lib.all.drop(12).map { ItemReference.photo(it.id) }
+        val rest = lib.all.drop(17).map { ItemReference.photo(it.id) }
         val r = runBlocking(Dispatchers.IO) { app.runCleanup(rest, CleanupOperationKind.PHOTO_LIBRARY_DELETE) }
         assertTrue(r is CleanupRunResult.Rejected && (r.error as CleanupError.AllowanceExceeded).available == 3)
-        assertEquals(12, lib.removed.size)
+        assertEquals(17, lib.removed.size)
         // Und in der UI greift die bestehende Limit-UX vor jeder Bestätigung.
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
         rule.onNodeWithText("Papierkorb leeren: 8 Fotos/Videos").performClick()
@@ -185,12 +185,12 @@ class RewardedProTest {
     }
 
     @Test fun lifetimeKeepsUnlimitedTrash() {
-        val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 20, videos = 0).also { l -> lib = l } },
+        val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 25, videos = 0).also { l -> lib = l } },
             purchase = FakePurchaseGateway(PurchaseState.PURCHASED)) { a ->
             lib.all.forEach { a.mark(ItemReference.photo(it.id)) }
         }
         val r = runBlocking(Dispatchers.IO) { app.runCleanup(lib.all.map { ItemReference.photo(it.id) }, CleanupOperationKind.PHOTO_LIBRARY_DELETE) }
         assertTrue(r is CleanupRunResult.Finished)
-        assertEquals(20, lib.removed.size)
+        assertEquals(25, lib.removed.size) // mehr als das Free-Limit von 20
     }
 }

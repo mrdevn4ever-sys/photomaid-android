@@ -1,5 +1,7 @@
 package app.photomaid.feature.quickaccess
 
+import androidx.compose.ui.graphics.Color
+import app.photomaid.design.coachTarget
 import kotlinx.coroutines.delay
 import app.photomaid.design.SectionTitle
 import app.photomaid.design.RowStatus
@@ -110,6 +112,19 @@ fun quickIcon(kind: QuickSourceKind): ImageVector = when (kind) {
     QuickSourceKind.FOLDER -> Icons.Rounded.Folder
 }
 
+/** Eigene, ruhige Farbe je Art (Kachel getönt, Symbol kräftig) – macht die Liste weniger „technisch“. */
+@Composable
+fun quickTint(kind: QuickSourceKind): Color {
+    val c = PM.colors
+    return when (kind) {
+        QuickSourceKind.PHOTOS, QuickSourceKind.LATEST_PHOTOS -> c.accent
+        QuickSourceKind.VIDEOS, QuickSourceKind.LATEST_VIDEOS -> c.amber
+        QuickSourceKind.SCREENSHOTS -> c.later
+        QuickSourceKind.THIS_WEEK -> c.success
+        QuickSourceKind.FOLDER -> c.earth
+    }
+}
+
 /** Status einer Quelle: Zahl offen · ✓ nichts offen · „Leer“ ohne Mitglieder. */
 @Composable
 fun rowStatusOf(status: SourceStatus?): RowStatus = when {
@@ -139,7 +154,7 @@ fun QuickAccessSection(nav: Nav, snapshot: List<app.photomaid.media.MediaAsset>,
     // Reine Filter im Speicher – kein weiterer MediaStore-Zugriff.
     val status = remember(items, snapshot, pendingIds) { pendingIds?.let { statusFor(items, snapshot, it) } ?: emptyMap() }
 
-    Column(Modifier.testTag("today.quick"), verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
+    Column(Modifier.testTag("today.quick").coachTarget("today.quick"), verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
         SectionTitle(stringResource(R.string.qa_title)) {
             if (items.isNotEmpty()) PlainButton(stringResource(R.string.qa_edit), Modifier.testTag("quick.edit"), style = AppTypography.subheadline) { editing = true }
         }
@@ -155,7 +170,8 @@ fun QuickAccessSection(nav: Nav, snapshot: List<app.photomaid.media.MediaAsset>,
                     else -> pluralStringResource(R.plurals.qa_open, st.pending, st.pending)
                 }
                 androidx.compose.runtime.key(q.key) {
-                    ListRow(quickIcon(q.kind), title, Modifier.testTag("quick.${q.key}"), status = rowStatusOf(st), description = "$title, $desc",
+                    ListRow(quickIcon(q.kind), title, Modifier.testTag("quick.${q.key}"), tint = quickTint(q.kind), tile = quickTint(q.kind).copy(alpha = 0.13f),
+                        status = rowStatusOf(st), description = "$title, $desc",
                         showChevron = st?.members != 0, highlight = justAdded == q.key) {
                         if (st?.members == 0) editing = true else nav.openFeed(FeedRequest(FeedRequest.Source.Quick(q)))
                     }
@@ -219,7 +235,7 @@ private fun AddSheet(current: List<QuickAccessItem>, snapshot: List<app.photomai
             @Composable
             fun option(q: QuickAccessItem, tag: String, title: String = quickTitle(q), subtitle: String? = quickSubtitle(q)) {
                 val present = current.any { it.key == q.key }
-                ListRow(quickIcon(q.kind), title, Modifier.testTag(tag), subtitle = subtitle,
+                ListRow(quickIcon(q.kind), title, Modifier.testTag(tag), subtitle = subtitle, tint = quickTint(q.kind), tile = quickTint(q.kind).copy(alpha = 0.13f),
                     status = if (present) RowStatus.Label(onToday) else rowStatusOf(status[q.key]), showChevron = false,
                     enabled = !present) { onAdd(q) }
             }

@@ -78,23 +78,23 @@ class BasketTest {
 
     /** Auswahl > Rest-Limit: Erklärung vor jeder Bestätigung; Teilmenge führt in die normale Bestätigung. */
     @Test fun partialLimitIsExplainedBeforeConfirmation() {
-        val app = app(used = 13, marked = 4)
+        val app = app(used = 18, marked = 4)
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
         waitText("Papierkorb leeren: 4 Fotos/Videos")
         rule.onNodeWithText("Papierkorb leeren: 4 Fotos/Videos").performClick()
         waitText("Heute noch 2 frei")
-        rule.onNodeWithText("Du hast 4 ausgewählt. Ohne Pro kannst du pro Tag bis zu 15 endgültig entfernen. Der Rest bleibt sicher im Papierkorb.").assertExists()
+        rule.onNodeWithText("Du hast 4 ausgewählt. Ohne Pro kannst du pro Tag bis zu 20 endgültig entfernen. Der Rest bleibt sicher im Papierkorb.").assertExists()
         assertTrue(rule.onAllNodes(hasText("über Android entfernen", substring = true)).fetchSemanticsNodes().isEmpty())
         rule.onNodeWithText("2 davon entfernen").performClick()
         waitText("2 über Android entfernen")
         rule.onNodeWithText("2 über Android entfernen").performClick()
         rule.waitUntil(10_000) { rule.onAllNodes(hasText("2 Medien wurden in den Papierkorb des Systems verschoben.")).fetchSemanticsNodes().isNotEmpty() }
         assertEquals(2, app.read.value.basket.size)
-        assertEquals(15, lib.removed.size) // 13 vorher + 2 jetzt, nie mehr als das Limit
+        assertEquals(20, lib.removed.size) // 18 vorher + 2 jetzt, nie mehr als das Limit
     }
 
     @Test fun exhaustedLimitOffersProInsteadOfDeadEnd() {
-        val app = app(used = 15, marked = 1)
+        val app = app(used = 20, marked = 1)
         val nav = RecordingNav()
         rule.setContent { TestHost(app) { CleanupBasketScreen(nav, showsDone = true) } }
         waitText("Papierkorb leeren: 1 Foto/Video")

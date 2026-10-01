@@ -83,15 +83,15 @@ class PurchaseMomentsTest {
     }
 
     @Test fun limitSheetMakesProPrimaryAndPartialSecondary() {
-        val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 17, videos = 0).also { l -> lib = l } }, purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED)) { a ->
+        val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 22, videos = 0).also { l -> lib = l } }, purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED)) { a ->
             val refs = lib.all.map { ItemReference.photo(it.id) }
-            refs.take(13).forEach { a.mark(it) }
-            a.runCleanup(refs.take(13), CleanupOperationKind.PHOTO_LIBRARY_DELETE)
-            refs.drop(13).forEach { a.mark(it) }
+            refs.take(18).forEach { a.mark(it) }
+            a.runCleanup(refs.take(18), CleanupOperationKind.PHOTO_LIBRARY_DELETE)
+            refs.drop(18).forEach { a.mark(it) }
         }
         rule.setContent { TestHost(app) { CleanupBasketScreen(nav, showsDone = true) } }
         rule.waitUntil(10_000) { rule.onAllNodes(hasText("Papierkorb leeren: 4 Fotos/Videos")).fetchSemanticsNodes().isNotEmpty() }
-        assertTrue(has("basket.limit.soon")) // Limit früh sichtbar (2 von 15 frei)
+        assertTrue(has("basket.limit.soon")) // Limit früh sichtbar (2 von 20 frei)
         rule.onNodeWithText("Papierkorb leeren: 4 Fotos/Videos").performClick()
         waitTag("basket.limit.pro")
         rule.onNodeWithText("Alle 4 entfernen – mit Pro").assertExists()

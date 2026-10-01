@@ -1,5 +1,6 @@
 package app.photomaid.feature.today
 
+import app.photomaid.design.coachTarget
 import app.photomaid.design.LocalReduceMotion
 import app.photomaid.design.RowDividerInset
 import app.photomaid.design.RowDivider
@@ -145,7 +146,10 @@ fun TodayScreen(nav: Nav) {
         // Rhythmus: 24 dp zwischen Blöcken; Reihenfolge Handlung → Zustand → Einstiege → Info.
         Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.block)) {
-            LargeTitleHeader(stringResource(R.string.tab_today)) {
+            // Begrüßung nach Tageszeit: weniger „Werkzeug“, mehr persönlich.
+            val hour = remember { java.time.LocalTime.now().hour }
+            val greeting = stringResource(when (hour) { in 5..10 -> R.string.today_greeting_morning; in 18..23, in 0..4 -> R.string.today_greeting_evening; else -> R.string.today_greeting_day })
+            LargeTitleHeader(stringResource(R.string.tab_today), eyebrow = greeting) {
                 GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
             }
             if (!access.canRead) {
@@ -189,7 +193,7 @@ fun TodayScreen(nav: Nav) {
                 }
             }
             // Feste Gruppe: was im Papierkorb liegt, was zurückgestellt ist, was wieder dran ist. Echte Zahlen, 0 leise.
-            RowGroup(Modifier.testTag("today.status")) {
+            RowGroup(Modifier.testTag("today.status").coachTarget("today.status")) {
                 val basketDesc = pluralStringResource(R.plurals.items_count, read.basket.size, read.basket.size)
                 val laterDesc = pluralStringResource(R.plurals.items_count, read.laterRecords.size, read.laterRecords.size)
                 val basket = stringResource(R.string.basket); val later = stringResource(R.string.later)
@@ -254,7 +258,7 @@ private fun ReviewHero(pending: List<String>?, hasHistory: Boolean, showGestures
     val c = PM.colors
     val shape = RoundedCornerShape(AppRadii.hero)
     Column(Modifier.fillMaxWidth().shadow(12.dp, shape, clip = false, ambientColor = Color(0x14000000), spotColor = Color(0x14000000))
-        .clip(shape).background(c.surface, shape).border(1.dp, c.surfaceStroke, shape).testTag("today.review")) {
+        .clip(shape).background(c.surface, shape).border(1.dp, c.surfaceStroke, shape).testTag("today.review").coachTarget("today.review")) {
         when {
             pending == null -> {
                 // Laden: ruhige Flächen in der späteren Geometrie (kein Spinner, kein Springen).

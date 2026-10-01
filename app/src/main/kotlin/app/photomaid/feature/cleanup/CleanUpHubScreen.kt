@@ -111,35 +111,35 @@ fun CleanUpHubScreen(nav: Nav) {
                     SectionTitle(stringResource(R.string.hub_media_header))
                     RowGroup {
                         @Composable
-                        fun media(cat: MediaCategory, icon: ImageVector, title: Int) {
+                        fun media(cat: MediaCategory, icon: ImageVector, title: Int, tint: androidx.compose.ui.graphics.Color) {
                             val pending = counts[cat]
                             val t = stringResource(title)
                             val desc = pending?.let { if (it == 0) stringResource(R.string.hub_nothing_pending) else pluralStringResource(R.plurals.hub_pending, it, it) }
                             // 0 offen → Haken (heißt nur: gerade nichts zu prüfen; neue Medien zeigen wieder eine Zahl).
-                            ListRow(icon, t, Modifier.testTag("hub.${cat.name.lowercase()}"), enabled = access.canRead,
+                            ListRow(icon, t, Modifier.testTag("hub.${cat.name.lowercase()}"), tint = tint, tile = tint.copy(alpha = 0.13f), enabled = access.canRead,
                                 status = when (pending) { null -> RowStatus.None; 0 -> RowStatus.Done; else -> RowStatus.Count(pending) },
                                 description = desc?.let { "$t, $it" }) { nav.openFeed(FeedRequest(FeedRequest.Source.Category(cat))) }
                         }
-                        media(MediaCategory.PHOTOS, Icons.Rounded.Photo, R.string.cat_photos)
+                        media(MediaCategory.PHOTOS, Icons.Rounded.Photo, R.string.cat_photos, c.accent)
                         RowDivider(RowDividerInset)
-                        media(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos)
+                        media(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos, c.amber)
                         RowDivider(RowDividerInset)
-                        media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots)
+                        media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots, c.later)
                     }
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
                     SectionTitle(stringResource(R.string.hub_tools_header))
                     RowGroup {
-                        ListRow(Icons.Rounded.InsertDriveFile, stringResource(R.string.large_files), Modifier.testTag("hub.large"),
+                        ListRow(Icons.Rounded.InsertDriveFile, stringResource(R.string.large_files), Modifier.testTag("hub.large"), tint = c.earth, tile = c.earth.copy(alpha = 0.13f),
                             subtitle = stringResource(R.string.hub_large_from, SizeText.bytes(settings.largeFileThresholdMB * 1_000_000L))) { nav.push(Routes.LARGE) }
                         RowDivider(RowDividerInset)
-                        ListRow(Icons.Rounded.FilterNone, stringResource(R.string.duplicates), Modifier.testTag("hub.duplicates"),
+                        ListRow(Icons.Rounded.FilterNone, stringResource(R.string.duplicates), Modifier.testTag("hub.duplicates"), tint = c.success, tile = c.success.copy(alpha = 0.13f),
                             subtitle = stringResource(R.string.hub_dup_sub), badge = if (app.capabilities.exactDuplicates) null else stringResource(R.string.pro_badge)) { nav.push(Routes.DUPLICATES) }
                         RowDivider(RowDividerInset)
-                        ListRow(Icons.Rounded.Folder, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads), Modifier.testTag("hub.files"),
+                        ListRow(Icons.Rounded.Folder, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads), Modifier.testTag("hub.files"), tint = c.amber, tile = c.amber.copy(alpha = 0.13f),
                             subtitle = stringResource(if (sources.isEmpty()) R.string.choose_folder else R.string.hub_files_sub)) { nav.push(Routes.FILES) }
                         RowDivider(RowDividerInset)
-                        ListRow(Icons.Rounded.BarChart, stringResource(R.string.storage_overview), Modifier.testTag("hub.storage")) { nav.push(Routes.STORAGE) }
+                        ListRow(Icons.Rounded.BarChart, stringResource(R.string.storage_overview), Modifier.testTag("hub.storage"), tint = c.accent, tile = c.accent.copy(alpha = 0.13f)) { nav.push(Routes.STORAGE) }
                     }
                 }
             }

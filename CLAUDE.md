@@ -26,7 +26,8 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Medien-IDs). Entscheidungen hängen am Medium im Ledger; Zähler immer über `AppModel.pendingQueue` – nie je Quelle speichern.
 - Pro-Test (Rewarded, 30 min, 1× pro lokalem Tag) schaltet Pro-Werkzeuge frei, hebt das Papierkorb-Limit NIE auf
   (`hasProToolsAccess` ≠ `hasUnlimitedTrashAccess`).
-- Video-Bonus (Rewarded, Produktentscheidung 2026-10-02): im Limit-Blatt freiwillig „+10 für heute“, 1× pro lokalem Tag, getrennt
+- Tageslimit Free: 20 endgültige Entfernungen pro lokalem Tag (Produktentscheidung 2026-10-04, vorher 15).
+- Video-Bonus (Rewarded, Produktentscheidung 2026-10-02/04): im Limit-Blatt freiwillig „+20 für heute“, 1× pro lokalem Tag, getrennt
   vom Pro-Test, nur nach SDK-Reward-Callback (`RewardLedger.grantingBonus`, `Capabilities.cleanupBonus`). Erhöht nur die Zahl des
   laufenden Tages – nie unbegrenzt, nie für Lifetime; nur der Kauf hebt das Limit auf.
 - Werbung nur in Free (`Capabilities.Tier.FREE`): native Werbekarte im Feed alle 7 Entscheidungen (`core/.../ads/FeedAdPolicy.kt`:

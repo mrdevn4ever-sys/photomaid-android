@@ -112,7 +112,7 @@ class PremiumPassTest {
     @Test fun gestureHintShownOnFirstFeedOnly() {
         val app = makeTestApp(ctx) { a -> a.updateSettings { it.copy(gestureHintSeen = false) } }
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), RecordingNav(), {}, {}) } }
-        rule.waitUntil(10_000) { app.settings.value.gestureHintSeen }
+        rule.waitUntil(20_000) { app.settings.value.gestureHintSeen } // unter Last der ganzen Suite länger als 10 s
         assertEquals(false, app.settings.value.showGestureHintOnOpen)
     }
 

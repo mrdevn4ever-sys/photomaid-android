@@ -1,5 +1,6 @@
 package app.photomaid.feature.review
 
+import app.photomaid.design.coachTarget
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -95,7 +96,7 @@ fun FeedActionBar(
     var menu by remember { mutableStateOf(false) }
     Box(modifier.fillMaxWidth().testTag("feed.actions")) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-            Row(Modifier.glassCapsule(elevation = 2.dp).padding(horizontal = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
+            Row(Modifier.coachTarget("feed.actions").glassCapsule(elevation = 2.dp).padding(horizontal = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
                 val fav = asset?.isFavorite == true
                 ActionIcon(if (fav) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
                     stringResource(if (fav) R.string.fav_remove else R.string.fav_add), if (fav) c.cleanup else c.textPrimary, enabled,
@@ -117,7 +118,7 @@ fun FeedActionBar(
                 }
             }
             Spacer(Modifier.weight(1f))
-            BasketChip(basketCount, Modifier.testTag("feed.dock"), openBasket)
+            BasketChip(basketCount, Modifier.testTag("feed.dock").coachTarget("feed.basket"), openBasket)
         }
     }
 }

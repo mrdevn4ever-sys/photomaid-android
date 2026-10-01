@@ -25,7 +25,7 @@ Branch `claude/product-ux-favorites`. Prüfstatus: PASS / FAIL / NOT RUN / BLOCK
 ## 3. Kaufmomente
 - **Zusammenfassung:** nach dem ersten Durchgang mit Aussortiertem einmal eine deutliche Karte („Stark aufgeräumt!“ …),
   danach eine leise Zeile „N aussortiert. Mit Pro ohne Tageslimit und ohne Werbung.“ Nicht für Lifetime-Pro.
-- **Limit früh:** ab weniger als 5 freien Entfernungen „Heute noch 3 von 15 frei · Ohne Limit mit Pro“ (Zusammenfassung,
+- **Limit früh:** ab weniger als 5 freien Entfernungen „Heute noch 3 von 20 frei · Ohne Limit mit Pro“ (Zusammenfassung,
   Papierkorb). Echte Zahl aus dem Ledger.
 - **Limit-Blatt:** „Alle N entfernen – mit Pro“ ist primär, „X davon entfernen“ ist sekundär.
 - **Heute:** leise Pro-Zeile nur für Free und erst ab dem zweiten Nutzungstag (`firstSeenDay`).
@@ -51,11 +51,15 @@ Reihenfolge nach Umsatz pro Ärger. Umgesetzt (Prüfstatus JVM: PASS, Gerät: NO
 | # | Hebel | Umsetzung |
 |---|---|---|
 | 2 | Anzeige in der Zusammenfassung | `SummaryAd` ganz unten unter „Fertig“ (Zusammenfassung und Knöpfe zuerst sichtbar), gekennzeichnet „Anzeige“, darunter „Ohne Werbung mit Pro“. Nur Free, nach der Aufwärmphase, nie neben dem einmaligen deutlichen Pro-Angebot, nie für Pro-Test/Lifetime. Einmal je Durchgang (zurück und wieder vor = dieselbe Anzeige). Zählt zur Tagesgrenze. Scrollen über der Anzeige: die Karte übernimmt die Bewegung ab Schwelle (Initial-Pass) und scrollt selbst inkl. Schwung – die Anzeige erhält CANCEL, Scrollen ist nie ein Klick. Vorladen, wenn der Durchgang in ≤ 2 Medien endet |
-| 3 | Video-Bonus „+10 für heute“ | Im Limit-Blatt unter „Alle N entfernen – mit Pro“ (Pro bleibt primär): „Video ansehen: +10 für heute“ + „Kurze Werbung, 1× täglich. Gilt nur heute.“ Nach dem Reward-Callback geht es mit derselben Auswahl direkt weiter (Android-Bestätigung bzw. Limit-Blatt mit neuer Zahl). Abbruch/No-Fill verbraucht nichts. Getrennt vom 30-Minuten-Pro-Test (beides am selben Tag möglich). Für Free und Pro-Test, nie Lifetime |
+| 3 | Video-Bonus „+20 für heute“ | Im Limit-Blatt unter „Alle N entfernen – mit Pro“ (Pro bleibt primär): „Video ansehen: +20 für heute“ + „Kurze Werbung, 1× täglich. Gilt nur heute.“ Nach dem Reward-Callback geht es mit derselben Auswahl direkt weiter (Android-Bestätigung bzw. Limit-Blatt mit neuer Zahl). Abbruch/No-Fill verbraucht nichts. Getrennt vom 30-Minuten-Pro-Test (beides am selben Tag möglich). Für Free und Pro-Test, nie Lifetime |
 | 4 | Tagesgrenze 20 → 30 | `FeedAdPolicy.DAILY_CAP = 30` (Takt 7 und Aufwärmphase 30 unverändert) |
 | 1 | Mediation | vorbereitet, siehe `docs/AD_MEDIATION.md` (Konten/Adapter durch den Inhaber) |
 
 Tests: core `EntitlementTest.limitBonusAddsTenForTodayOnly`, `FeedAdPolicyTest` (Grenze 30); app `MonetizationTest` (7):
-Bonus schaltet +10 frei und führt direkt zur Bestätigung, abgebrochenes Video schaltet nichts frei, Lifetime ohne Bonus,
+Bonus schaltet +20 frei und führt direkt zur Bestätigung, abgebrochenes Video schaltet nichts frei, Lifetime ohne Bonus,
 Zusammenfassungs-Anzeige nur für Free nach der Aufwärmphase, nicht neben dem deutlichen Angebot, nicht für den Pro-Test.
 
+
+
+## 7. Limit 20 + Bonus 20 (2026-10-04)
+Produktentscheidung: Free entfernt bis zu **20** pro Tag endgültig (vorher 15), der Video-Bonus gibt **+20** für den laufenden Tag (vorher +10). Werte nur in `Capabilities.FREE_DAILY_CLEANUP_LIMIT` und `LimitBonus.AMOUNT`; alle Texte lesen die Zahl daraus.

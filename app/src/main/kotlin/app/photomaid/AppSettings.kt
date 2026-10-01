@@ -34,4 +34,9 @@ data class AppSettingsData(
     val firstSeenDay: LocalDay? = null,
     /** Deutlicheres Pro-Angebot nach dem ersten erfolgreichen Durchgang wurde einmal gezeigt. */
     val proOfferShown: Boolean = false,
+    /** Version des abgeschlossenen Onboardings (0 = alter Ablauf bzw. noch nicht gesehen). */
+    val onboardingVersion: Int = 0,
+    /** Hinweiskarten-Tutorial auf „Heute“ bzw. im Feed einmal gezeigt (oder übersprungen). */
+    val todayTourSeen: Boolean = false,
+    val feedTourSeen: Boolean = false,
 )

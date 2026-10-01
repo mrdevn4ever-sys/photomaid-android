@@ -96,7 +96,7 @@ sealed class CleanupError(message: String) : Exception(message) {
     data class PersistenceFailed(val reason: String) : CleanupError(reason)
 }
 
-/** Tageskontingent für bestätigte Bereinigungen (Free: 15 pro lokalem Kalendertag). */
+/** Tageskontingent für bestätigte Bereinigungen (Free: 20 pro lokalem Kalendertag). */
 @Serializable
 data class DayUsage(
     val confirmed: Int = 0,

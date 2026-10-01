@@ -34,7 +34,7 @@ import org.robolectric.annotation.GraphicsMode
 import java.time.Instant
 import java.time.ZoneId
 
-/** Werbung mit wenig Nerven: Video-Bonus „+10 heute“ im Limit-Blatt, Anzeige unter der Zusammenfassung. */
+/** Werbung mit wenig Nerven: Video-Bonus „+20 heute“ im Limit-Blatt, Anzeige unter der Zusammenfassung. */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class MonetizationTest {
@@ -50,14 +50,14 @@ class MonetizationTest {
     private fun shown(t: String): Boolean = rule.onAllNodes(hasText(t)).fetchSemanticsNodes().isNotEmpty()
     private fun waitTag(tag: String) = rule.waitUntil(10_000) { has(tag) }
 
-    /** 13 von 15 heute schon entfernt, 4 im Papierkorb → Limit-Blatt. */
+    /** 18 von 20 heute schon entfernt, 4 im Papierkorb → Limit-Blatt. */
     private fun limitApp(vararg results: RewardedAdResult) =
-        makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 17, videos = 0).also { l -> lib = l } },
+        makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 22, videos = 0).also { l -> lib = l } },
             purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED), ads = FakeRewardedAdGateway(*results)) { a ->
             val refs = lib.all.map { ItemReference.photo(it.id) }
-            refs.take(13).forEach { a.mark(it) }
-            a.runCleanup(refs.take(13), CleanupOperationKind.PHOTO_LIBRARY_DELETE)
-            refs.drop(13).forEach { a.mark(it) }
+            refs.take(18).forEach { a.mark(it) }
+            a.runCleanup(refs.take(18), CleanupOperationKind.PHOTO_LIBRARY_DELETE)
+            refs.drop(18).forEach { a.mark(it) }
         }
 
     private fun openLimitSheet(app: AppModel) {
@@ -67,16 +67,16 @@ class MonetizationTest {
         waitTag("basket.limit.bonus")
     }
 
-    @Test fun bonusVideoAddsTenForTodayAndContinuesToConfirmation() {
+    @Test fun bonusVideoAddsTwentyForTodayAndContinuesToConfirmation() {
         val app = limitApp(RewardedAdResult.Rewarded("bonus-1"))
         openLimitSheet(app)
-        rule.onNodeWithText("Video ansehen: +10 für heute").assertExists()
+        rule.onNodeWithText("Video ansehen: +20 für heute").assertExists()
         rule.onNodeWithTag("basket.limit.pro").assertExists() // Pro bleibt primär
         rule.onNodeWithTag("basket.limit.bonus").performClick()
-        // Danach direkt die Android-Bestätigung für alle 4 – 12 von 25 frei.
+        // Danach direkt die Android-Bestätigung für alle 4 – 22 von 40 frei.
         rule.waitUntil(10_000) { shown("4 über Android entfernen") }
-        assertEquals(25, app.read.value.allowance?.limit)
-        assertEquals(12, app.read.value.allowance?.available)
+        assertEquals(40, app.read.value.allowance?.limit)
+        assertEquals(22, app.read.value.allowance?.available)
         assertFalse(app.entitlements.canOfferLimitBonus) // 1× täglich
         assertEquals(4, app.read.value.basket.size) // nichts ohne Bestätigung entfernt
     }
@@ -86,7 +86,7 @@ class MonetizationTest {
         openLimitSheet(app)
         rule.onNodeWithTag("basket.limit.bonus").performClick()
         rule.waitUntil(10_000) { shown("Die Werbung wurde vorzeitig geschlossen. Es wurde nichts freigeschaltet – du kannst es heute noch einmal versuchen.") }
-        assertEquals(15, app.read.value.allowance?.limit)
+        assertEquals(20, app.read.value.allowance?.limit)
         assertTrue(app.entitlements.canOfferLimitBonus) // Tag nicht verbraucht
     }
 

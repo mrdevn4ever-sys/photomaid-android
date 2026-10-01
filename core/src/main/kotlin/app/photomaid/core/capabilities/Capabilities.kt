@@ -31,14 +31,15 @@ data class RewardWindow(
     companion object { val DURATION: Duration = Duration.ofMinutes(30) }
 }
 
-/** Freiwillige Rewarded-Werbung „+10 heute“: hebt das Papierkorb-Limit für EINEN lokalen Tag um [AMOUNT] an. */
+/** Freiwillige Rewarded-Werbung „+20 heute“: hebt das Papierkorb-Limit für EINEN lokalen Tag um [AMOUNT] an. */
 @Serializable
 data class LimitBonus(
     val rewardID: String,
     @Serializable(InstantSerializer::class) val grantedAt: Instant,
     val grantedDay: LocalDay,
 ) {
-    companion object { const val AMOUNT = 10 }
+    /** Produktentscheidung 2026-10-04: +20 (vorher +10). */
+    companion object { const val AMOUNT = 20 }
 }
 
 sealed class RewardError(message: String) : Exception(message) {
@@ -70,7 +71,7 @@ data class RewardLedger(val windows: List<RewardWindow> = emptyList(), val bonus
     fun canOfferReward(now: Instant, zone: ZoneId, purchase: PurchaseState): Boolean =
         purchase != PurchaseState.PURCHASED && !usedToday(now, zone)
 
-    /** „+10 heute“ – unabhängig vom Pro-Test, ebenfalls 1× pro lokalem Tag, nur nach SDK-Reward-Callback. */
+    /** „+20 heute“ – unabhängig vom Pro-Test, ebenfalls 1× pro lokalem Tag, nur nach SDK-Reward-Callback. */
     fun grantingBonus(rewardID: String, now: Instant, zone: ZoneId, purchase: PurchaseState): Pair<RewardLedger, LimitBonus> {
         bonuses.firstOrNull { it.rewardID == rewardID }?.let { return this to it }
         if (purchase == PurchaseState.PURCHASED) throw RewardError.AlreadyPurchased
@@ -99,11 +100,11 @@ data class RewardLedger(val windows: List<RewardWindow> = emptyList(), val bonus
  * Fachlich getrennt (bewusst kein einzelnes `isPro`):
  * | Stufe          | Pro-Werkzeuge | Papierkorb ohne Tageslimit |
  * |----------------|---------------|----------------------------|
- * | FREE           | nein          | nein (15/Tag)              |
- * | TEMPORARY_PRO  | ja (30 min)   | **nein** (15/Tag bleibt)   |
+ * | FREE           | nein          | nein (20/Tag)              |
+ * | TEMPORARY_PRO  | ja (30 min)   | **nein** (20/Tag bleibt)   |
  * | LIFETIME_PRO   | ja            | ja                         |
  *
- * Der Video-Bonus „+10 heute“ erhöht nur die Zahl für den laufenden Tag (Free und Pro-Test) – nie unbegrenzt.
+ * Der Video-Bonus „+20 heute“ erhöht nur die Zahl für den laufenden Tag (Free und Pro-Test) – nie unbegrenzt.
  */
 data class Capabilities(
     val tier: Tier,
@@ -131,7 +132,8 @@ data class Capabilities(
     val customCollections: Boolean get() = hasProToolsAccess
 
     companion object {
-        const val FREE_DAILY_CLEANUP_LIMIT = 15
+        /** Produktentscheidung 2026-10-04: 20 pro Tag (vorher 15). */
+        const val FREE_DAILY_CLEANUP_LIMIT = 20
 
         fun resolve(purchase: PurchaseState, rewards: RewardLedger, now: Instant, zone: ZoneId = ZoneId.systemDefault()): Capabilities {
             // Lifetime Pro gewinnt immer (auch während eines laufenden Tests).

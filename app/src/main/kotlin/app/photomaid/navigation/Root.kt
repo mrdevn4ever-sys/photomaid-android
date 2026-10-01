@@ -1,5 +1,10 @@
 package app.photomaid.navigation
 
+import app.photomaid.design.CoachStep
+import app.photomaid.design.CoachHost
+import app.photomaid.design.coachTarget
+import app.photomaid.feature.onboarding.ONBOARDING_VERSION
+import app.photomaid.feature.onboarding.OnboardingFlow
 import androidx.compose.foundation.background
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.Offset
@@ -171,7 +176,9 @@ fun RootContent(app: AppModel) {
                 SystemDialogs.activity?.let { app.adSdk.start(it) }
         }
         if (!settings.privacyIntroSeen) {
-            PrivacyAccessScreen(onboarding = true, onDone = { scope.launch { app.updateSettings { it.copy(privacyIntroSeen = true) } } })
+            OnboardingFlow(onDone = {
+                scope.launch { app.updateSettings { it.copy(privacyIntroSeen = true, onboardingVersion = ONBOARDING_VERSION) } }
+            })
         } else {
             RootNav(app)
         }
@@ -260,6 +267,20 @@ private fun MainTabs(rootNav: Nav) {
             override fun back() { controller.popBackStack() }
         }
     }
+    val app = LocalApp.current
+    val settings by app.settings.collectAsState()
+    val access by app.photos.access.collectAsState()
+    val tourScope = rememberCoroutineScope()
+    val atRootNow = AppTab.entries.any { t -> entry?.destination?.route == "${t.name}/${t.route}" } || entry == null
+    // Hinweiskarten-Tutorial einmal auf „Heute“ (nach dem Onboarding, mit Medienzugriff); Überspringen merkt es sich auch.
+    val tourSteps = listOf(
+        CoachStep("today.review", stringResource(R.string.tour_today_hero_title), stringResource(R.string.tour_today_hero_text)),
+        CoachStep("today.status", stringResource(R.string.tour_today_status_title), stringResource(R.string.tour_today_status_text)),
+        CoachStep("today.quick", stringResource(R.string.tour_today_quick_title), stringResource(R.string.tour_today_quick_text)),
+        CoachStep("tab.CLEANUP", stringResource(R.string.tour_today_tab_title), stringResource(R.string.tour_today_tab_text)),
+    )
+    CoachHost(tourSteps, active = !settings.todayTourSeen && tab == AppTab.TODAY && atRootNow && access.canRead,
+        onFinish = { tourScope.launch { app.updateSettings { it.copy(todayTourSeen = true) } } }, modifier = Modifier.fillMaxSize()) {
     Box(Modifier.fillMaxSize()) {
         val reduce = LocalReduceMotion.current
         // Innerhalb eines Tabs: Unterseite öffnen = sehr kurzes, leichtes Überblenden; Zurück und Tabwechsel = sofort.
@@ -307,6 +328,7 @@ private fun MainTabs(rootNav: Nav) {
         }
         }
     }
+    }
 }
 
 /** Schwebende Glas-Tabbar (iOS 26+-Tabbar mit Liquid Glass). */
@@ -344,6 +366,7 @@ private fun TabBarRow(selected: AppTab, onSelect: (AppTab) -> Unit) {
                     // Auswahl als Akzent-Tönung (im Light Mode war die weiße Kapsel auf weißer Leiste kaum sichtbar).
                     .then(if (isSel) Modifier.background(c.accent.copy(alpha = 0.12f), CircleShape) else Modifier)
                     .clickable(role = Role.Tab) { onSelect(t) }
+                    .coachTarget("tab.${t.name}")
                     .semantics { this.selected = isSel }
                     .padding(vertical = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
