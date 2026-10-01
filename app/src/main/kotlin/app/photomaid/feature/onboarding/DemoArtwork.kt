@@ -10,14 +10,14 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import app.photomaid.R
 
 /**
- * Demo-Motive für Onboarding und Angebot: eigene Fotos des Inhabers (Natur, Hunde; keine erkennbaren Gesichter),
+ * Demo-Motive für Onboarding und Angebot: eigene Fotos des Inhabers (Natur, Hunde, Orte; keine erkennbaren Gesichter),
  * verkleinert auf 800 px und ohne Metadaten (kein GPS, keine Kamera-/Datumsangaben) als WebP eingebunden.
  * Nur Illustration – nie mit den Medien der Nutzer vermischt, nie hochgeladen.
  */
 object DemoArt {
     /** Stapel (Üben, Angebot): die schönsten Motive zuerst. */
     @DrawableRes val deck = listOf(
-        R.drawable.demo_lake, R.drawable.demo_dogs_bench, R.drawable.demo_cow,
+        R.drawable.demo_lake, R.drawable.demo_monument, R.drawable.demo_dogs_bench, R.drawable.demo_cow,
         R.drawable.demo_alp, R.drawable.demo_dog_flowers, R.drawable.demo_dog_lap,
     )
 
@@ -28,8 +28,8 @@ object DemoArt {
         R.drawable.demo_beach, R.drawable.demo_dog_flowers, R.drawable.demo_dog_lap,
     )
 
-    /** Nach dem Hinausfliegen rücken an diesen Stellen frische Motive nach. */
-    @DrawableRes val gridRefill = listOf(R.drawable.demo_dog_flowers, R.drawable.demo_lake, R.drawable.demo_dogs_bench)
+    /** Nach dem Hinausfliegen rücken an diesen Stellen frische Motive nach. Der Platz nur klein hier (am Gebäude hängt ein politisches Banner – groß im Stapel wäre es lesbar). */
+    @DrawableRes val gridRefill = listOf(R.drawable.demo_monument, R.drawable.demo_piazza, R.drawable.demo_dogs_bench)
 
     val COUNT: Int get() = deck.size
 }
