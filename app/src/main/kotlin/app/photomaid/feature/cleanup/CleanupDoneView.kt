@@ -113,7 +113,7 @@ fun CleanupDoneView(done: CleanupDone, onDone: () -> Unit) {
                         horizontalAlignment = Alignment.CenterHorizontally) {
                         if (s.isLowerBound) Text(stringResource(R.string.done_at_least, "").trim(), style = AppTypography.subheadline, color = c.textSecondary)
                         Row(verticalAlignment = Alignment.Bottom) {
-                            Text(number, style = AppTypography.display.copy(fontSize = 64.sp, lineHeight = 68.sp, letterSpacing = (-1.5).sp), color = c.textPrimary)
+                            Text(number, style = AppTypography.display.copy(fontSize = 64.sp, lineHeight = 68.sp, letterSpacing = AppTypography.tracking(-1.5f)), color = c.textPrimary)
                             Text(unit, style = AppTypography.display.copy(fontSize = 30.sp, lineHeight = 44.sp), color = c.textPrimary,
                                 modifier = Modifier.padding(start = 4.dp, bottom = 4.dp))
                         }

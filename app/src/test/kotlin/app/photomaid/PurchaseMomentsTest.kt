@@ -53,7 +53,7 @@ class PurchaseMomentsTest {
             rule.waitUntil(10_000) { has("feed.media.ready") && rule.onAllNodes(hasText("$i von 2")).fetchSemanticsNodes().isNotEmpty() }
             rule.onNodeWithTag("feed.stage").performTouchInput { swipeLeft() }
         }
-        rule.waitUntil(10_000) { rule.onAllNodes(hasText("Durchgang abgeschlossen")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(10_000) { rule.onAllNodes(hasText("Für jetzt fertig")).fetchSemanticsNodes().isNotEmpty() }
     }
 
     @Test fun firstSuccessfulSessionShowsStrongOfferOnce() {
@@ -90,9 +90,9 @@ class PurchaseMomentsTest {
             refs.drop(18).forEach { a.mark(it) }
         }
         rule.setContent { TestHost(app) { CleanupBasketScreen(nav, showsDone = true) } }
-        rule.waitUntil(10_000) { rule.onAllNodes(hasText("Papierkorb leeren: 4 Fotos/Videos")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(10_000) { rule.onAllNodes(hasText("4 Fotos und Videos entfernen")).fetchSemanticsNodes().isNotEmpty() }
         assertTrue(has("basket.limit.soon")) // Limit früh sichtbar (2 von 20 frei)
-        rule.onNodeWithText("Papierkorb leeren: 4 Fotos/Videos").performClick()
+        rule.onNodeWithText("4 Fotos und Videos entfernen").performClick()
         waitTag("basket.limit.pro")
         rule.onNodeWithText("Alle 4 entfernen – mit Pro").assertExists()
         rule.onNodeWithText("2 davon entfernen").assertExists()

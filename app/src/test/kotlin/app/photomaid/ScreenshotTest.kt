@@ -78,7 +78,7 @@ import androidx.compose.ui.Modifier
  */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w393dp-h852dp-xxhdpi")
+@Config(qualifiers = "+w393dp-h852dp-xxhdpi")
 class ScreenshotTest {
     @get:Rule val rule = createComposeRule()
     private val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
@@ -170,16 +170,16 @@ class ScreenshotTest {
     @Test fun g06_feed_video_portrait() = feedOf(7, "g06_feed_video_portrait", R.string.feed_title_videos, reduceMotion = true)
 
     // Gerätematrix (Masterprompt §17/§45): kleines Telefon, Fold außen/innen, 8"/11"-Tablet, Schriftgröße.
-    @Test @Config(qualifiers = "w320dp-h568dp-xhdpi") fun m_small_phone_feed() = seededApp().let {
+    @Test @Config(qualifiers = "+w320dp-h568dp-xhdpi") fun m_small_phone_feed() = seededApp().let {
         shot("m_small_phone_feed", it, waitTag = "feed.media.ready") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) }
     }
-    @Test @Config(qualifiers = "w320dp-h568dp-xhdpi") fun m_small_phone_today() = seededApp().let { shot("m_small_phone_today", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
-    @Test @Config(qualifiers = "w360dp-h840dp-xxhdpi") fun m_fold_cover_today() = seededApp().let { shot("m_fold_cover_today", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
-    @Test @Config(qualifiers = "w673dp-h841dp-xhdpi") fun m_fold_open_feed() = seededApp().let {
+    @Test @Config(qualifiers = "+w320dp-h568dp-xhdpi") fun m_small_phone_today() = seededApp().let { shot("m_small_phone_today", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
+    @Test @Config(qualifiers = "+w360dp-h840dp-xxhdpi") fun m_fold_cover_today() = seededApp().let { shot("m_fold_cover_today", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
+    @Test @Config(qualifiers = "+w673dp-h841dp-xhdpi") fun m_fold_open_feed() = seededApp().let {
         shot("m_fold_open_feed", it, waitTag = "feed.media.ready") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) }
     }
-    @Test @Config(qualifiers = "w600dp-h960dp-xhdpi") fun m_tablet8_today() = seededApp().let { shot("m_tablet8_today", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
-    @Test @Config(qualifiers = "w834dp-h1194dp-xhdpi") fun m_tablet11_basket() = seededApp().let { shot("m_tablet11_basket", it) { CleanupBasketScreen(nav, showsDone = false) } }
+    @Test @Config(qualifiers = "+w600dp-h960dp-xhdpi") fun m_tablet8_today() = seededApp().let { shot("m_tablet8_today", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
+    @Test @Config(qualifiers = "+w834dp-h1194dp-xhdpi") fun m_tablet11_basket() = seededApp().let { shot("m_tablet11_basket", it) { CleanupBasketScreen(nav, showsDone = false) } }
     @Test fun m_font_150_today() = seededApp().let { RuntimeEnvironment.setFontScale(1.5f); shot("m_font150_today", it) { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
     @Test fun m_font_200_feed() = seededApp().let {
         RuntimeEnvironment.setFontScale(2.0f)
@@ -233,7 +233,7 @@ class ScreenshotTest {
         lib.writeResult = app.photomaid.media.MediaWriteResult.Failed("test")
         feedPhotos(it); waitTagX("feed.media.ready")
         rule.onNodeWithTag("action.favorite").performClick()
-        rule.waitUntil(10_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Der Favorit konnte nicht geändert werden. Es ist alles wie vorher.")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(10_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Die Favoritenmarkierung konnte nicht geändert werden. Sie bleibt unverändert.")).fetchSemanticsNodes().isNotEmpty() }
         shotScreen("x19_favorite_error")
     }
     @Test fun x20_later_notify() = seededApp().let { shot("x20_later_notify", it) { LaterScreen(nav) } }
@@ -259,7 +259,7 @@ class ScreenshotTest {
     }
     @Test fun h01_status_cards_100() = statusCards("h01_status_cards_100", 1.0f)
     @Test fun h02_status_cards_150() = statusCards("h02_status_cards_150", 1.5f)
-    @Test @Config(qualifiers = "w320dp-h900dp-xhdpi") fun h03_status_cards_200_small() = statusCards("h03_status_cards_200_small", 2.0f)
+    @Test @Config(qualifiers = "+w320dp-h900dp-xhdpi") fun h03_status_cards_200_small() = statusCards("h03_status_cards_200_small", 2.0f)
 
     // Aufräumen-Hub: A = alles geprüft (6 für später), B = offene Elemente.
     private fun hubDoneApp() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } }) { a ->
@@ -274,9 +274,9 @@ class ScreenshotTest {
     }
     @Test fun k01_hub_all_done() = hubDoneApp().let { shot("k01_hub_all_done", it) { WithTabBar(AppTab.CLEANUP) { CleanUpHubScreen(nav) } } }
     @Test fun k02_hub_pending() = emptyApp().let { shot("k02_hub_pending", it) { WithTabBar(AppTab.CLEANUP) { CleanUpHubScreen(nav) } } }
-    @Test @Config(qualifiers = "w320dp-h900dp-xhdpi") fun k03_hub_small_100() = hubDoneApp().let { shot("k03_hub_small_100", it) { CleanUpHubScreen(nav) } }
-    @Test @Config(qualifiers = "w320dp-h1200dp-xhdpi") fun k04_hub_small_150() = emptyApp().let { RuntimeEnvironment.setFontScale(1.5f); shot("k04_hub_small_150", it) { CleanUpHubScreen(nav) } }
-    @Test @Config(qualifiers = "w320dp-h1600dp-xhdpi") fun k05_hub_small_200() = hubDoneApp().let { RuntimeEnvironment.setFontScale(2.0f); shot("k05_hub_small_200", it) { CleanUpHubScreen(nav) } }
+    @Test @Config(qualifiers = "+w320dp-h900dp-xhdpi") fun k03_hub_small_100() = hubDoneApp().let { shot("k03_hub_small_100", it) { CleanUpHubScreen(nav) } }
+    @Test @Config(qualifiers = "+w320dp-h1200dp-xhdpi") fun k04_hub_small_150() = emptyApp().let { RuntimeEnvironment.setFontScale(1.5f); shot("k04_hub_small_150", it) { CleanUpHubScreen(nav) } }
+    @Test @Config(qualifiers = "+w320dp-h1600dp-xhdpi") fun k05_hub_small_200() = hubDoneApp().let { RuntimeEnvironment.setFontScale(2.0f); shot("k05_hub_small_200", it) { CleanUpHubScreen(nav) } }
 
     // Schnellzugriffe auf Heute.
     private fun quickApp(six: Boolean) = seededApp().also { a ->
@@ -321,13 +321,13 @@ class ScreenshotTest {
         if (four) a.quickAccess.update { listOf(QuickSourceKind.PHOTOS, QuickSourceKind.VIDEOS, QuickSourceKind.SCREENSHOTS, QuickSourceKind.LATEST_PHOTOS).map { k -> QuickAccessItem(k) } }
     }
     private fun home(name: String, a: AppModel) = shot(name, a, waitTag = "quick.PHOTOS") { androidx.compose.foundation.layout.Box(Modifier.fillMaxSize()) { TodayScreen(nav) } }
-    @Test @Config(qualifiers = "w393dp-h1100dp-xxhdpi") fun r01_home_all_done() = home("r01_home_all_done", homeApp(allDone = true))
-    @Test @Config(qualifiers = "w393dp-h1100dp-xxhdpi") fun r02_home_open() = home("r02_home_open", homeApp(allDone = false))
-    @Test @Config(qualifiers = "w393dp-h1200dp-xxhdpi") fun r04_home_four_sources() = home("r04_home_four_sources", homeApp(allDone = false, four = true))
-    @Test @Config(qualifiers = "w393dp-h1200dp-xxhdpi") fun r05_home_dark() = home("r05_home_dark", homeApp(dark = true, allDone = false, four = true))
-    @Test @Config(qualifiers = "w320dp-h1100dp-xhdpi") fun r06_home_small() = home("r06_home_small", homeApp(allDone = false, four = true))
-    @Test @Config(qualifiers = "w393dp-h1600dp-xxhdpi") fun r07_home_font150() = homeApp(allDone = false, four = true).let { RuntimeEnvironment.setFontScale(1.5f); home("r07_home_font150", it) }
-    @Test @Config(qualifiers = "w320dp-h2000dp-xhdpi") fun r08_home_font200_small() = homeApp(allDone = false, four = true).let { RuntimeEnvironment.setFontScale(2.0f); home("r08_home_font200_small", it) }
+    @Test @Config(qualifiers = "+w393dp-h1100dp-xxhdpi") fun r01_home_all_done() = home("r01_home_all_done", homeApp(allDone = true))
+    @Test @Config(qualifiers = "+w393dp-h1100dp-xxhdpi") fun r02_home_open() = home("r02_home_open", homeApp(allDone = false))
+    @Test @Config(qualifiers = "+w393dp-h1200dp-xxhdpi") fun r04_home_four_sources() = home("r04_home_four_sources", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "+w393dp-h1200dp-xxhdpi") fun r05_home_dark() = home("r05_home_dark", homeApp(dark = true, allDone = false, four = true))
+    @Test @Config(qualifiers = "+w320dp-h1100dp-xhdpi") fun r06_home_small() = home("r06_home_small", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "+w393dp-h1600dp-xxhdpi") fun r07_home_font150() = homeApp(allDone = false, four = true).let { RuntimeEnvironment.setFontScale(1.5f); home("r07_home_font150", it) }
+    @Test @Config(qualifiers = "+w320dp-h2000dp-xhdpi") fun r08_home_font200_small() = homeApp(allDone = false, four = true).let { RuntimeEnvironment.setFontScale(2.0f); home("r08_home_font200_small", it) }
 
     // Werbung + Kaufmomente (JVM, keine echte Anzeige: Fake-Quelle ohne SDK).
     private fun adApp(dark: Boolean = false) = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
@@ -350,7 +350,7 @@ class ScreenshotTest {
         shot(name, a) { AppBackground { app.photomaid.feature.review.SessionSummaryView(app.photomaid.core.feed.SessionSummary(kept = 9, marked = 6, later = 2), 6,
             Modifier.fillMaxSize(), {}, {}, {}, upsell = upsell, allowance = allowance) } }
     }
-    @Test @Config(qualifiers = "w393dp-h1100dp-xxhdpi") fun z04_summary_offer() = summary("z04_summary_offer", app.photomaid.feature.review.SummaryUpsell.STRONG, 3)
+    @Test @Config(qualifiers = "+w393dp-h1100dp-xxhdpi") fun z04_summary_offer() = summary("z04_summary_offer", app.photomaid.feature.review.SummaryUpsell.STRONG, 3)
     @Test fun z05_summary_quiet() = summary("z05_summary_quiet", app.photomaid.feature.review.SummaryUpsell.QUIET, null)
     @Test fun z06_limit_sheet() = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 22, videos = 0).also { l -> lib = l } },
         purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED)) { a ->
@@ -361,14 +361,14 @@ class ScreenshotTest {
         refs.drop(18).forEach { mark(it) }
     }.let {
         rule.setContent { TestHost(it) { CleanupBasketScreen(nav, showsDone = false) } }
-        rule.waitUntil(10_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Papierkorb leeren: 4 Fotos/Videos")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(10_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("4 Fotos und Videos entfernen")).fetchSemanticsNodes().isNotEmpty() }
         shotScreen("z06a_basket_limit_soon")
-        rule.onNode(androidx.compose.ui.test.hasText("Papierkorb leeren: 4 Fotos/Videos")).performClick()
+        rule.onNode(androidx.compose.ui.test.hasText("4 Fotos und Videos entfernen")).performClick()
         waitTagX("basket.limit.pro"); rule.mainClock.advanceTimeBy(1000); shotScreen("z06b_limit_sheet")
     }
-    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun z07_pro_full() = seededApp().let { shot("z07_pro_full", it) { ProScreen(nav) } }
-    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun z08_pro_dark() = seededApp(dark = true).let { shot("z08_pro_dark", it) { ProScreen(nav) } }
-    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun z09_today_pro_hint() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
+    @Test @Config(qualifiers = "+w393dp-h1300dp-xxhdpi") fun z07_pro_full() = seededApp().let { shot("z07_pro_full", it) { ProScreen(nav) } }
+    @Test @Config(qualifiers = "+w393dp-h1300dp-xxhdpi") fun z08_pro_dark() = seededApp(dark = true).let { shot("z08_pro_dark", it) { ProScreen(nav) } }
+    @Test @Config(qualifiers = "+w393dp-h1300dp-xxhdpi") fun z09_today_pro_hint() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
         purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED)) { a -> a.updateSettings { s -> s.copy(firstSeenDay = a.today.addingDays(-1)) } }
         .let { shot("z09_today_pro_hint", it, waitTag = "today.pro") { WithTabBar(AppTab.TODAY) { TodayScreen(nav) } } }
 
@@ -391,33 +391,73 @@ class ScreenshotTest {
         rule.mainClock.advanceTimeBy(1_200)
         shotScreen(name)
     }
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o01_story() = onbTo(onbApp(), 0, "o01_story")
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o02_try() = onbTo(onbApp(), 1, "o02_try")
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o03_safe() = onbTo(onbApp(), 2, "o03_safe")
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o04_offer() = onbTo(onbApp(), 0, "o04_offer", skip = true)
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o04_offer_dark() = onbTo(onbApp(dark = true), 0, "o04_offer_dark", skip = true)
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o05_access() = onbApp().let { a ->
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun o01_story() = onbTo(onbApp(), 0, "o01_story")
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun o02_try() = onbTo(onbApp(), 1, "o02_try")
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun o03_safe() = onbTo(onbApp(), 2, "o03_safe")
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun o04_offer() = onbTo(onbApp(), 0, "o04_offer", skip = true)
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun o04_offer_dark() = onbTo(onbApp(dark = true), 0, "o04_offer_dark", skip = true)
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun o05_access() = onbApp().let { a ->
         onbTo(a, 0, "o05_tmp", skip = true); rule.onNodeWithTag("offer.free").performClick(); rule.mainClock.advanceTimeBy(600); shotScreen("o05_access")
     }
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o06_today_tour() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true, count = 8, videos = 2).also { l -> lib = l } }) { a ->
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun o06_today_tour() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true, count = 8, videos = 2).also { l -> lib = l } }) { a ->
         a.updateSettings { it.copy(todayTourSeen = false) }
     }.let { a -> rule.setContent { TestHost(a) { app.photomaid.navigation.RootContent(a) } }; waitTagX("coach.card"); rule.mainClock.advanceTimeBy(800); shotScreen("o06_today_tour_1")
         rule.onNodeWithTag("coach.next").performClick(); rule.mainClock.advanceTimeBy(800); shotScreen("o06_today_tour_2")
         rule.onNodeWithTag("coach.next").performClick(); rule.onNodeWithTag("coach.next").performClick(); rule.mainClock.advanceTimeBy(800); shotScreen("o06_today_tour_4") }
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun o07_feed_tour() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } }) { a ->
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun o07_feed_tour() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } }) { a ->
         a.updateSettings { it.copy(feedTourSeen = false) }
     }.let { a -> feedPhotos(a); waitTagX("coach.card"); rule.mainClock.advanceTimeBy(800); shotScreen("o07_feed_tour_1")
         rule.onNodeWithTag("coach.next").performClick(); rule.onNodeWithTag("coach.next").performClick(); rule.mainClock.advanceTimeBy(800); shotScreen("o07_feed_tour_3") }
-    @Test @Config(qualifiers = "w393dp-h1300dp-xxhdpi") fun o08_pro_offer() = seededApp().let { shot("o08_pro_offer", it) { ProScreen(nav) } }
+    @Test @Config(qualifiers = "+w393dp-h1300dp-xxhdpi") fun o08_pro_offer() = seededApp().let { shot("o08_pro_offer", it) { ProScreen(nav) } }
 
     private fun doneShot(name: String, dark: Boolean, kind: app.photomaid.core.cleanup.CleanupOperationKind, unknown: Int) =
         makeTestApp(ctx) { a -> if (dark) a.updateSettings { it.copy(appearance = AppearanceChoice.DARK) } }.let { a ->
             val d = app.photomaid.feature.cleanup.CleanupDone(app.photomaid.core.cleanup.CleanupSavings(42_500_000, unknown, 13), kind,
-                "13 Medien wurden in den Papierkorb des Systems verschoben.", false, 7, 1_240_000_000, unknown > 0)
+                "13 Fotos und Videos liegen jetzt im Android-Papierkorb.", false, 7, 1_240_000_000, unknown > 0)
             rule.setContent { TestHost(a) { app.photomaid.feature.cleanup.CleanupDoneView(d) {} } }
             rule.mainClock.advanceTimeBy(2_000); shotScreen(name)
         }
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun d10_done() = doneShot("d10_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 0)
-    @Test @Config(qualifiers = "w393dp-h852dp-xxhdpi") fun d11_done_dark_unknown() = doneShot("d11_done_dark_unknown", true, app.photomaid.core.cleanup.CleanupOperationKind.FILE_DELETE_PERMANENTLY, 2)
-}
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun d10_done() = doneShot("d10_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 0)
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun d11_done_dark_unknown() = doneShot("d11_done_dark_unknown", true, app.photomaid.core.cleanup.CleanupOperationKind.FILE_DELETE_PERMANENTLY, 2)
 
+    // Sprachen (2026-10): Längen und RTL je Kernbildschirm. Arabisch mit ldrtl – Gestenpfeile bleiben physisch.
+    private fun langFeed(name: String) = seededApp().let {
+        shot(name, it, waitTag = "feed.media.ready") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) }
+    }
+    @Test @Config(qualifiers = "+en-w393dp-h1200dp-xxhdpi") fun l_en_home() = home("l_en_home", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "+en-w393dp-h852dp-xxhdpi") fun l_en_feed() = langFeed("l_en_feed")
+    @Test @Config(qualifiers = "+en-w393dp-h852dp-xxhdpi") fun l_en_offer() = onbTo(onbApp(), 0, "l_en_offer", skip = true)
+    @Test @Config(qualifiers = "+en-w393dp-h852dp-xxhdpi") fun l_en_story() = onbTo(onbApp(), 0, "l_en_story")
+    @Test @Config(qualifiers = "+en-w393dp-h852dp-xxhdpi") fun l_en_done() = doneShot("l_en_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 2)
+    @Test @Config(qualifiers = "+en-w393dp-h1300dp-xxhdpi") fun l_en_settings() = seededApp().let { shot("l_en_settings", it) { SettingsScreen(nav) } }
+    @Test @Config(qualifiers = "+ar-ldrtl-w393dp-h1200dp-xxhdpi") fun l_ar_home() = home("l_ar_home", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "+ar-ldrtl-w393dp-h852dp-xxhdpi") fun l_ar_feed() = langFeed("l_ar_feed")
+    @Test @Config(qualifiers = "+ar-ldrtl-w393dp-h852dp-xxhdpi") fun l_ar_offer() = onbTo(onbApp(), 0, "l_ar_offer", skip = true)
+    @Test @Config(qualifiers = "+ar-ldrtl-w393dp-h852dp-xxhdpi") fun l_ar_story() = onbTo(onbApp(), 0, "l_ar_story")
+    @Test @Config(qualifiers = "+ar-ldrtl-w393dp-h852dp-xxhdpi") fun l_ar_done() = doneShot("l_ar_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 2)
+    @Test @Config(qualifiers = "+ar-ldrtl-w393dp-h1300dp-xxhdpi") fun l_ar_settings() = seededApp().let { shot("l_ar_settings", it) { SettingsScreen(nav) } }
+    @Test @Config(qualifiers = "+ru-w393dp-h1200dp-xxhdpi") fun l_ru_home() = home("l_ru_home", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "+ru-w393dp-h852dp-xxhdpi") fun l_ru_feed() = langFeed("l_ru_feed")
+    @Test @Config(qualifiers = "+ru-w393dp-h852dp-xxhdpi") fun l_ru_offer() = onbTo(onbApp(), 0, "l_ru_offer", skip = true)
+    @Test @Config(qualifiers = "+ru-w393dp-h852dp-xxhdpi") fun l_ru_story() = onbTo(onbApp(), 0, "l_ru_story")
+    @Test @Config(qualifiers = "+ru-w393dp-h852dp-xxhdpi") fun l_ru_done() = doneShot("l_ru_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 2)
+    @Test @Config(qualifiers = "+ru-w393dp-h1300dp-xxhdpi") fun l_ru_settings() = seededApp().let { shot("l_ru_settings", it) { SettingsScreen(nav) } }
+    @Test @Config(qualifiers = "+ja-w393dp-h1200dp-xxhdpi") fun l_ja_home() = home("l_ja_home", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "+ja-w393dp-h852dp-xxhdpi") fun l_ja_feed() = langFeed("l_ja_feed")
+    @Test @Config(qualifiers = "+ja-w393dp-h852dp-xxhdpi") fun l_ja_offer() = onbTo(onbApp(), 0, "l_ja_offer", skip = true)
+    @Test @Config(qualifiers = "+ja-w393dp-h852dp-xxhdpi") fun l_ja_story() = onbTo(onbApp(), 0, "l_ja_story")
+    @Test @Config(qualifiers = "+ja-w393dp-h852dp-xxhdpi") fun l_ja_done() = doneShot("l_ja_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 2)
+    @Test @Config(qualifiers = "+ja-w393dp-h1300dp-xxhdpi") fun l_ja_settings() = seededApp().let { shot("l_ja_settings", it) { SettingsScreen(nav) } }
+    @Test @Config(qualifiers = "+fr-w393dp-h1200dp-xxhdpi") fun l_fr_home() = home("l_fr_home", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "+fr-w393dp-h852dp-xxhdpi") fun l_fr_feed() = langFeed("l_fr_feed")
+    @Test @Config(qualifiers = "+fr-w393dp-h852dp-xxhdpi") fun l_fr_offer() = onbTo(onbApp(), 0, "l_fr_offer", skip = true)
+    @Test @Config(qualifiers = "+fr-w393dp-h852dp-xxhdpi") fun l_fr_story() = onbTo(onbApp(), 0, "l_fr_story")
+    @Test @Config(qualifiers = "+fr-w393dp-h852dp-xxhdpi") fun l_fr_done() = doneShot("l_fr_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 2)
+    @Test @Config(qualifiers = "+fr-w393dp-h1300dp-xxhdpi") fun l_fr_settings() = seededApp().let { shot("l_fr_settings", it) { SettingsScreen(nav) } }
+    @Test @Config(qualifiers = "+pl-w393dp-h1200dp-xxhdpi") fun l_pl_home() = home("l_pl_home", homeApp(allDone = false, four = true))
+    @Test @Config(qualifiers = "+pl-w393dp-h852dp-xxhdpi") fun l_pl_feed() = langFeed("l_pl_feed")
+    @Test @Config(qualifiers = "+pl-w393dp-h852dp-xxhdpi") fun l_pl_offer() = onbTo(onbApp(), 0, "l_pl_offer", skip = true)
+    @Test @Config(qualifiers = "+pl-w393dp-h852dp-xxhdpi") fun l_pl_story() = onbTo(onbApp(), 0, "l_pl_story")
+    @Test @Config(qualifiers = "+pl-w393dp-h852dp-xxhdpi") fun l_pl_done() = doneShot("l_pl_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 2)
+    @Test @Config(qualifiers = "+pl-w393dp-h1300dp-xxhdpi") fun l_pl_settings() = seededApp().let { shot("l_pl_settings", it) { SettingsScreen(nav) } }
+}

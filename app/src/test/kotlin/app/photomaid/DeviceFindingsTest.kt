@@ -29,7 +29,8 @@ class DeviceFindingsTest {
     private fun waitText(t: String, ms: Long = 10_000) = rule.waitUntil(ms) { rule.onAllNodes(hasText(t)).fetchSemanticsNodes().isNotEmpty() }
 
     /** Befund 1: Feed schließen darf nie zu einem leeren Bildschirm führen (doppeltes Zurück). */
-    @Test fun closingFeedReturnsToTodayRepeatedly() {
+    // Telefonmaß: auf der Robolectric-Standardfläche (320×470 px) läge der Knopf unter der Tabbar.
+    @Test @org.robolectric.annotation.Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun closingFeedReturnsToTodayRepeatedly() {
         val app = makeTestApp(ctx)
         rule.setContent { TestHost(app) { RootContent(app) } }
         repeat(3) {

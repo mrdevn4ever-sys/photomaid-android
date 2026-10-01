@@ -45,7 +45,7 @@ import java.time.Instant
  */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w393dp-h1400dp-xxhdpi")
+@Config(qualifiers = "+w393dp-h1400dp-xxhdpi")
 class QuickAccessUiTest {
     @get:Rule val rule = createComposeRule()
     private val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
@@ -79,11 +79,11 @@ class QuickAccessUiTest {
         val app = app(listOf(q(QuickSourceKind.PHOTOS), q(QuickSourceKind.LATEST_PHOTOS), q(QuickSourceKind.SCREENSHOTS), q(QuickSourceKind.VIDEOS)))
         rule.setContent { TestHost(app) { TodayScreen(RecordingNav()) } }
         tile("PHOTOS", "5 offen"); tile("LATEST_PHOTOS", "5 offen"); tile("SCREENSHOTS", "1 offen")
-        waitText("6 Medien warten auf dich")
+        waitText("Noch 6 Fotos und Videos durchsehen")
         val shot = lib.all.indexOfFirst { it.kind == MediaKind.SCREENSHOT }
         runBlocking(Dispatchers.IO) { app.act(ref(shot), DecisionAction.Keep) }
         tile("PHOTOS", "4 offen"); tile("LATEST_PHOTOS", "4 offen"); tile("SCREENSHOTS", "Alles geprüft")
-        waitText("5 Medien warten auf dich") // 1 globales Medium weniger, nicht 3
+        waitText("Noch 5 Fotos und Videos durchsehen") // 1 globales Medium weniger, nicht 3
         assertEquals(1, app.ledger.stateFlow.value.events.size) // ein einziger Write
     }
 
@@ -106,7 +106,7 @@ class QuickAccessUiTest {
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("quick.option.SCREENSHOTS").fetchSemanticsNodes().isNotEmpty() }
         // Stabiler Katalog: schon vorhandene Quelle bleibt sichtbar, ist aber nicht antippbar („Auf Heute“).
         rule.onNodeWithTag("quick.option.PHOTOS").assertIsNotEnabled()
-        rule.onNode(hasTestTag("quick.option.PHOTOS") and hasText("Auf Heute", substring = true)).assertExists()
+        rule.onNode(hasTestTag("quick.option.PHOTOS") and hasText("Auf der Startseite", substring = true)).assertExists()
         rule.onNode(hasTestTag("quick.option.SCREENSHOTS") and hasText("1")).assertExists() // echte offene Anzahl je Option
         rule.onNodeWithTag("quick.option.SCREENSHOTS").performClick()
         tile("SCREENSHOTS", "1 offen")
@@ -161,7 +161,7 @@ class QuickAccessUiTest {
     @Test fun emptySourceShowsSourceSpecificDoneState() {
         val app = app().also { a -> runBlocking(Dispatchers.IO) { lib.all.filter { it.kind == MediaKind.SCREENSHOT }.forEach { a.act(ItemReference.photo(it.id), DecisionAction.Keep) } } }
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Quick(q(QuickSourceKind.SCREENSHOTS))), RecordingNav(), onClose = {}, openBasket = {}) } }
-        waitText("Bei deinen Screenshots wartet gerade nichts auf dich.")
+        waitText("Gerade gibt es keine weiteren Screenshots durchzusehen.")
         rule.onNodeWithText("Alles geprüft").assertExists()
     }
 
@@ -173,7 +173,7 @@ class QuickAccessUiTest {
         val before = lib.assetsFor(q(QuickSourceKind.THIS_WEEK)).size
         val n = lib.addNew(0, date = Instant.now())
         tile("PHOTOS", "6 offen"); tile("THIS_WEEK", "${before + 1} offen"); tile("LATEST_PHOTOS", "6 offen")
-        waitText("7 Medien warten auf dich")
+        waitText("Noch 7 Fotos und Videos durchsehen")
         lib.removed += n.id; lib.bumpChangeToken()
         tile("PHOTOS", "5 offen"); tile("LATEST_PHOTOS", "5 offen")
     }

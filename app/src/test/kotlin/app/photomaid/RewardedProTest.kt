@@ -59,11 +59,11 @@ class RewardedProTest {
         val app = makeTestApp(ctx, purchase = FakePurchaseGateway(PurchaseState.NOT_PURCHASED), ads = ads)
         rule.setContent { TestHost(app) { ProScreen(RecordingNav()) } }
         rule.onNodeWithTag("pro.reward").performScrollTo()
-        rule.onNodeWithText("30 Minuten Pro testen").assertExists()
+        rule.onNodeWithText("Pro-Funktionen 30 Minuten testen").assertExists()
         rule.onNodeWithText("1× täglich").assertExists()
-        rule.onNodeWithText("Dein tägliches Papierkorb-Limit bleibt unverändert.").assertExists()
+        rule.onNodeWithText("Dein Tageslimit zum Entfernen bleibt gleich.").assertExists()
         rule.onNodeWithText("Werbung ansehen").performClick()
-        waitText("Pro-Test aktiv: 30 Minuten Pro-Werkzeuge. Dein tägliches Papierkorb-Limit bleibt unverändert.")
+        waitText("Pro-Funktionen sind für 30 Minuten freigeschaltet. Dein Tageslimit zum Entfernen bleibt gleich.")
         assertEquals(1, ads.shown)
         val caps = app.capabilities
         assertEquals(Tier.TEMPORARY_PRO, caps.tier)
@@ -74,7 +74,7 @@ class RewardedProTest {
         assertEquals(w.grantedAt.plusSeconds(30 * 60), w.endsAt)
         rule.onNodeWithText("OK").performClick()
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("pro.temporary").fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("Pro-Test aktiv · noch 30 Min.").assertExists()
+        rule.onNodeWithText("Pro-Funktionen · noch 30 Min.").assertExists()
         assertTrue(rule.onAllNodesWithTag("pro.reward").fetchSemanticsNodes().isEmpty()) // kein zweites Angebot
     }
 
@@ -127,7 +127,7 @@ class RewardedProTest {
         rule.onNodeWithTag("pro.lifetime").assertExists()
         assertTrue(rule.onAllNodesWithTag("pro.reward").fetchSemanticsNodes().isEmpty())
         assertTrue(rule.onAllNodesWithTag("pro.temporary").fetchSemanticsNodes().isEmpty())
-        assertTrue(rule.onAllNodes(hasText("30 Minuten Pro testen")).fetchSemanticsNodes().isEmpty())
+        assertTrue(rule.onAllNodes(hasText("Pro-Funktionen 30 Minuten testen")).fetchSemanticsNodes().isEmpty())
     }
 
     /** Ohne konfigurierten Werbeanbieter (Produktion heute): kein Angebot, keine tote CTA. */
@@ -180,7 +180,7 @@ class RewardedProTest {
         assertEquals(17, lib.removed.size)
         // Und in der UI greift die bestehende Limit-UX vor jeder Bestätigung.
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
-        rule.onNodeWithText("Papierkorb leeren: 8 Fotos/Videos").performClick()
+        rule.onNodeWithText("8 Fotos und Videos entfernen").performClick()
         waitText("Heute noch 3 frei")
     }
 

@@ -23,7 +23,7 @@ import org.robolectric.annotation.Config
 
 /** „Gespart“-Bildschirm nach dem Leeren: nur echte Größen entfernter Elemente, Summe insgesamt, ehrlicher Hinweis. */
 @RunWith(AndroidJUnit4::class)
-@Config(qualifiers = "w393dp-h852dp-xxhdpi")
+@Config(qualifiers = "+w393dp-h852dp-xxhdpi")
 class CleanupDoneTest {
     @get:Rule val rule = createComposeRule()
     private val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
@@ -42,19 +42,19 @@ class CleanupDoneTest {
         }
         val nav = RecordingNav()
         rule.setContent { TestHost(app) { CleanupBasketScreen(nav, showsDone = true) } }
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("Papierkorb leeren: 2 Fotos/Videos")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("Papierkorb leeren: 2 Fotos/Videos").performClick()
-        rule.onNodeWithText("2 über Android entfernen").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("2 Fotos und Videos entfernen")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithText("2 Fotos und Videos entfernen").performClick()
+        rule.onNodeWithText("2 entfernen").performClick()
         rule.waitUntil(10_000) { has("done") }
         rule.mainClock.advanceTimeBy(2_000)
         // FakeMediaLibrary: 2,4 MB + 2,5 MB = 4,9 MB, nur die beiden entfernten.
         rule.onNodeWithTag("done.saved").assertExists()
         rule.onNodeWithText("4,9").assertExists(); rule.onNodeWithText("MB").assertExists()
-        rule.onNodeWithText("gespart").assertExists()
-        rule.onNodeWithText("2 Medien wurden in den Papierkorb des Systems verschoben.").assertExists()
+        rule.onNodeWithText("aussortiert").assertExists()
+        rule.onNodeWithText("2 Fotos und Videos liegen jetzt im Android-Papierkorb.").assertExists()
         rule.onNodeWithText("Papierkorb geleert").assertExists()
-        rule.onNodeWithText("4,9 MB insgesamt gespart").assertExists()
-        rule.onNodeWithText("Fotos und Videos liegen jetzt im Papierkorb von Android. Der Platz wird frei, sobald er geleert wird – spätestens nach 30 Tagen.").assertExists()
+        rule.onNodeWithText("4,9 MB insgesamt aussortiert").assertExists()
+        rule.onNodeWithText("Fotos und Videos liegen jetzt im Android-Papierkorb. Speicher wird erst frei, wenn sie dort endgültig gelöscht werden.").assertExists()
         assertEquals(4_900_000L, app.settings.value.savedTotalBytes)
         assertFalse(app.settings.value.savedTotalLowerBound)
         rule.onNodeWithTag("done.button").performClick()
@@ -67,9 +67,9 @@ class CleanupDoneTest {
             a.mark(ItemReference.photo(lib.all[0].id))
         }
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
-        rule.onNodeWithText("Papierkorb leeren: 1 Foto/Video").performClick()
-        rule.onNodeWithText("1 über Android entfernen").performClick()
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("Abgebrochen. Es wurde nichts entfernt.")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithText("1 Foto oder Video entfernen").performClick()
+        rule.onNodeWithText("1 entfernen").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("Abgebrochen. Nichts wurde entfernt.")).fetchSemanticsNodes().isNotEmpty() }
         assertFalse(has("done"))
         assertEquals(0L, app.settings.value.savedTotalBytes)
         assertTrue(true)

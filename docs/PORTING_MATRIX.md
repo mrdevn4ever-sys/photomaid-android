@@ -151,6 +151,7 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Umbau 2026-09-29 (Produktentscheidung, nur Android) | Diagonale ↗ entfällt (rechts bis 45° = Später, Termin über „Ändern“); Tipp aufs Video = Pause/Play + dünne Fortschrittsleiste; keine Richtungs-Kapsel; „Regeln & Routinen“ → **Sammlungen** (dauerhafte Filter, fertige gratis, eigene Pro); Tab „Ordnen“ entfällt, Sammlungen als Reiter in „Aufräumen“; Tabbar nur auf Tab-Startseiten; Navigation schiebt statt überblendet | Nutzerwunsch nach Gerätetest; iOS folgt. Details: `docs/REWORK_2026-09-29.md` |
 | Ausrichtung | Hochformat gesperrt (`screenOrientation="portrait"`). Ab Android 16 ignoriert das System die Sperre auf großen Bildschirmen (≥ 600 dp): Tablets und aufgeklappte Foldables drehen weiter; seitliche Safe-Insets bleiben dafür aktiv | Produktentscheidung 2026-09-29: der Feed ist vertikal, Querformat bringt auf dem Telefon keinen Nutzen |
 | Navigation/Rückmeldung (Nutzerwunsch nach Gerätevideo) | Zurück und Tabwechsel sofort, Öffnen 150-ms-Fade, `enableOnBackInvokedCallback=false` (keine schrumpfende Zurück-Vorschau); dezente Richtungs-Pille beim Wischen wieder da (hoch/links/rechts) | Schrumpf-/Schiebe-Effekt beim Zurück wirkte unruhig; ohne Pille fehlte Orientierung beim Wischen |
+| Sprachen (2026-10) | 16 Sprachen aus dem Übersetzungspaket, Standard Deutsch, App-Sprache über Android 13+ (`localeConfig`); Größen-Einheiten und Datumsformate je Sprache; RTL ohne gespiegelte Gestenpfeile | Nutzerauftrag; Längenhinweise in `docs/i18n/UI_Laengenpruefung.json` |
 
 ## 7. Blocker / Plattformgrenzen
 

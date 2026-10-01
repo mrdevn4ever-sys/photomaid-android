@@ -1,5 +1,6 @@
 package app.photomaid.feature.onboarding
 
+import app.photomaid.design.GestureIcons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
@@ -214,8 +215,8 @@ private fun DemoStamp(deck: DemoDeck, modifier: Modifier) {
     val d = deck.locked ?: return
     val (icon, label, tint) = when (FeedIntent.of(d)) {
         FeedIntent.KEEP -> Triple(Icons.Rounded.ArrowUpward, R.string.dir_keep, c.keep)
-        FeedIntent.MARK_FOR_CLEANUP -> Triple(Icons.AutoMirrored.Rounded.ArrowBack, R.string.dir_trash, c.cleanup)
-        FeedIntent.LATER -> Triple(Icons.AutoMirrored.Rounded.ArrowForward, R.string.dir_later, c.later)
+        FeedIntent.MARK_FOR_CLEANUP -> Triple(GestureIcons.Left, R.string.dir_trash, c.cleanup)
+        FeedIntent.LATER -> Triple(GestureIcons.Right, R.string.dir_later, c.later)
         else -> return
     }
     Row(modifier.graphicsLayer {
@@ -247,7 +248,7 @@ fun DemoChecklist(deck: DemoDeck, modifier: Modifier = Modifier) {
             }
         }
         chip(FeedIntent.KEEP, Icons.Rounded.ArrowUpward, R.string.dir_keep, c.keep)
-        chip(FeedIntent.MARK_FOR_CLEANUP, Icons.AutoMirrored.Rounded.ArrowBack, R.string.dir_trash, c.cleanup)
-        chip(FeedIntent.LATER, Icons.AutoMirrored.Rounded.ArrowForward, R.string.dir_later, c.later)
+        chip(FeedIntent.MARK_FOR_CLEANUP, GestureIcons.Left, R.string.dir_trash, c.cleanup)
+        chip(FeedIntent.LATER, GestureIcons.Right, R.string.dir_later, c.later)
     }
 }

@@ -1,5 +1,6 @@
 package app.photomaid.feature.review
 
+import app.photomaid.design.GestureIcons
 import kotlinx.coroutines.launch
 import app.photomaid.design.CoachStep
 import app.photomaid.design.CoachHost
@@ -435,8 +436,8 @@ private fun DirectionPill(model: FeedViewModel, modifier: Modifier) {
     val d = model.lockedDirection
     val meaning = when (d?.let { FeedIntent.of(it) }) {
         FeedIntent.KEEP -> Triple(Icons.Rounded.ArrowUpward, R.string.dir_keep, c.keep)
-        FeedIntent.MARK_FOR_CLEANUP -> Triple(Icons.AutoMirrored.Rounded.ArrowBack, R.string.dir_trash, c.cleanup)
-        FeedIntent.LATER -> Triple(Icons.AutoMirrored.Rounded.ArrowForward, R.string.dir_later, c.later)
+        FeedIntent.MARK_FOR_CLEANUP -> Triple(GestureIcons.Left, R.string.dir_trash, c.cleanup)
+        FeedIntent.LATER -> Triple(GestureIcons.Right, R.string.dir_later, c.later)
         else -> null
     }
     var last by remember { mutableStateOf(meaning) }
@@ -466,7 +467,7 @@ fun CompactActions(act: (FeedIntent) -> Unit) {
         b(Icons.Rounded.ArrowDownward, stringResource(R.string.act_previous), c.textSecondary, FeedIntent.PREVIOUS)
         b(Icons.Rounded.Delete, stringResource(R.string.act_trash), c.cleanup, FeedIntent.MARK_FOR_CLEANUP)
         b(Icons.Rounded.ArrowUpward, stringResource(R.string.act_keep_next), c.keep, FeedIntent.KEEP)
-        b(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.act_later), c.later, FeedIntent.LATER)
+        b(GestureIcons.Right, stringResource(R.string.act_later), c.later, FeedIntent.LATER)
         b(Icons.Rounded.CalendarMonth, stringResource(R.string.act_later_custom), c.later, FeedIntent.LATER_CUSTOM)
     }
 }
@@ -495,8 +496,8 @@ fun GestureHintOverlay() {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             Hint(Icons.Rounded.ArrowUpward, stringResource(R.string.hint_up), stringResource(R.string.dir_keep), c.keep)
             Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.m), verticalAlignment = Alignment.CenterVertically) {
-                Hint(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.hint_left), stringResource(R.string.dir_trash), c.cleanup)
-                Hint(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.hint_right), stringResource(R.string.dir_later), c.later)
+                Hint(GestureIcons.Left, stringResource(R.string.hint_left), stringResource(R.string.dir_trash), c.cleanup)
+                Hint(GestureIcons.Right, stringResource(R.string.hint_right), stringResource(R.string.dir_later), c.later)
             }
             Hint(Icons.Rounded.ArrowDownward, stringResource(R.string.hint_down), stringResource(R.string.dir_back), c.textSecondary)
         }
@@ -535,7 +536,7 @@ fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modi
             }
             row(Icons.Rounded.ArrowUpward, stringResource(R.string.summary_kept), summary.kept, c.keep)
             row(Icons.Rounded.Delete, stringResource(R.string.summary_trash), summary.marked, c.cleanup)
-            row(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.summary_later), summary.later, c.later)
+            row(GestureIcons.Right, stringResource(R.string.summary_later), summary.later, c.later)
         }
         if (basketCount > 0) {
             ProminentButton(stringResource(R.string.summary_view_basket, basketCount), fillWidth = true, large = true, onClick = reviewBasket)

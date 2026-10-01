@@ -50,7 +50,9 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 - `:core` (Kotlin/JVM, auf Linux testbar): Domain-Port von PhotoMaidCore.
 - `:app` (Android): Compose-Features, Design System (`design/`), Infrastruktur (MediaStore, SAF, Media3,
   Play Billing, WorkManager), Room-Persistenz (eine Transaktion je `LedgerChange`).
-- UI-Texte ausschließlich in `res/values/strings.xml` (Deutsch, aus `Localizable.xcstrings` übernommen).
+- UI-Texte ausschließlich in `res/values*/strings.xml`: 16 Sprachen (`locales_config.xml`), Standard `values` = Deutsch.
+  Neue Kennung immer in allen 16 Dateien; Mengen nur als `plurals` (CLDR-Formen), Begriffe laut `docs/i18n/Glossar_16_Sprachen.txt`.
+  Gestenpfeile über `GestureIcons` (nie AutoMirrored): die Fingerrichtung bleibt auch in RTL (Arabisch) physisch.
 
 ## Befehle
 

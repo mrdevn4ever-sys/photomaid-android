@@ -276,8 +276,8 @@ private fun AddSheet(current: List<QuickAccessItem>, snapshot: List<app.photomai
 
 @Composable
 private fun quickSubtitle(q: QuickAccessItem): String? = when (q.kind) {
-    QuickSourceKind.LATEST_PHOTOS -> stringResource(R.string.qa_latest_photos_sub, QuickAccess.LATEST_PHOTOS_LIMIT)
-    QuickSourceKind.LATEST_VIDEOS -> stringResource(R.string.qa_latest_videos_sub, QuickAccess.LATEST_VIDEOS_LIMIT)
+    QuickSourceKind.LATEST_PHOTOS -> pluralStringResource(R.plurals.qa_latest_photos_sub, QuickAccess.LATEST_PHOTOS_LIMIT, QuickAccess.LATEST_PHOTOS_LIMIT)
+    QuickSourceKind.LATEST_VIDEOS -> pluralStringResource(R.plurals.qa_latest_videos_sub, QuickAccess.LATEST_VIDEOS_LIMIT, QuickAccess.LATEST_VIDEOS_LIMIT)
     QuickSourceKind.THIS_WEEK -> stringResource(R.string.qa_this_week_sub)
     else -> null
 }

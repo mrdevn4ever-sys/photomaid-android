@@ -1,0 +1,397 @@
+{
+  "method": "Zeichenbreiten-Heuristik: CJK-Breitzeichen zählen 2, andere 1, kombinierende Zeichen 0. Beispiele 999 und CHF 123.45. Keine Pixelmessung, kein Beweis einer Abschneidung.",
+  "needs_device_screenshots": true,
+  "flag_count": 39,
+  "flags": [
+    {
+      "locale": "de",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Werbung ansehen: heute %1$d mehr entfernen",
+      "example": "Werbung ansehen: heute 999 mehr entfernen",
+      "heuristic_width": 41,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "en",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Watch an ad: remove %1$d more today",
+      "example": "Watch an ad: remove 999 more today",
+      "heuristic_width": 34,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "es",
+      "id": "basket_delete_files",
+      "quantity": "one",
+      "text": "Borrar %1$d archivo definitivamente",
+      "example": "Borrar 999 archivo definitivamente",
+      "heuristic_width": 34,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "es",
+      "id": "basket_delete_files",
+      "quantity": "many",
+      "text": "Borrar %1$d archivos definitivamente",
+      "example": "Borrar 999 archivos definitivamente",
+      "heuristic_width": 35,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "es",
+      "id": "basket_delete_files",
+      "quantity": "other",
+      "text": "Borrar %1$d archivos definitivamente",
+      "example": "Borrar 999 archivos definitivamente",
+      "heuristic_width": 35,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "es",
+      "id": "reward_title",
+      "quantity": "string",
+      "text": "Prueba las herramientas Pro 30 minutos",
+      "example": "Prueba las herramientas Pro 30 minutos",
+      "heuristic_width": 38,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "fr",
+      "id": "basket_delete_files",
+      "quantity": "one",
+      "text": "Supprimer définitivement %1$d fichier",
+      "example": "Supprimer définitivement 999 fichier",
+      "heuristic_width": 36,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "fr",
+      "id": "basket_delete_files",
+      "quantity": "many",
+      "text": "Supprimer définitivement %1$d fichiers",
+      "example": "Supprimer définitivement 999 fichiers",
+      "heuristic_width": 37,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "fr",
+      "id": "basket_delete_files",
+      "quantity": "other",
+      "text": "Supprimer définitivement %1$d fichiers",
+      "example": "Supprimer définitivement 999 fichiers",
+      "heuristic_width": 37,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "fr",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Voir une pub : retirer %1$d de plus aujourd’hui",
+      "example": "Voir une pub : retirer 999 de plus aujourd’hui",
+      "heuristic_width": 46,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "fr",
+      "id": "onb_buy",
+      "quantity": "string",
+      "text": "Acheter Pro · %1$s une fois",
+      "example": "Acheter Pro · CHF 123.45 une fois",
+      "heuristic_width": 33,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "it",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Guarda una pubblicità: rimuovine %1$d in più oggi",
+      "example": "Guarda una pubblicità: rimuovine 999 in più oggi",
+      "heuristic_width": 48,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "it",
+      "id": "onb_buy",
+      "quantity": "string",
+      "text": "Acquista Pro · %1$s una volta",
+      "example": "Acquista Pro · CHF 123.45 una volta",
+      "heuristic_width": 35,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "it",
+      "id": "reward_title",
+      "quantity": "string",
+      "text": "Prova gli strumenti Pro per 30 minuti",
+      "example": "Prova gli strumenti Pro per 30 minuti",
+      "heuristic_width": 37,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "pt-PT",
+      "id": "basket_delete_files",
+      "quantity": "one",
+      "text": "Eliminar %1$d ficheiro definitivamente",
+      "example": "Eliminar 999 ficheiro definitivamente",
+      "heuristic_width": 37,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "pt-PT",
+      "id": "basket_delete_files",
+      "quantity": "many",
+      "text": "Eliminar %1$d ficheiros definitivamente",
+      "example": "Eliminar 999 ficheiros definitivamente",
+      "heuristic_width": 38,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "pt-PT",
+      "id": "basket_delete_files",
+      "quantity": "other",
+      "text": "Eliminar %1$d ficheiros definitivamente",
+      "example": "Eliminar 999 ficheiros definitivamente",
+      "heuristic_width": 38,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "pt-PT",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Ver anúncio: remover mais %1$d hoje",
+      "example": "Ver anúncio: remover mais 999 hoje",
+      "heuristic_width": 34,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "pt-PT",
+      "id": "reward_title",
+      "quantity": "string",
+      "text": "Testar ferramentas Pro por 30 minutos",
+      "example": "Testar ferramentas Pro por 30 minutos",
+      "heuristic_width": 37,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "nl",
+      "id": "basket_empty_media",
+      "quantity": "other",
+      "text": "%1$d foto’s en video’s verwijderen",
+      "example": "999 foto’s en video’s verwijderen",
+      "heuristic_width": 33,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "nl",
+      "id": "basket_delete_files",
+      "quantity": "one",
+      "text": "%1$d bestand definitief verwijderen",
+      "example": "999 bestand definitief verwijderen",
+      "heuristic_width": 34,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "nl",
+      "id": "basket_delete_files",
+      "quantity": "other",
+      "text": "%1$d bestanden definitief verwijderen",
+      "example": "999 bestanden definitief verwijderen",
+      "heuristic_width": 36,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "nl",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Advertentie bekijken: vandaag %1$d extra verwijderen",
+      "example": "Advertentie bekijken: vandaag 999 extra verwijderen",
+      "heuristic_width": 51,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "pl",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Obejrzyj reklamę: usuń dziś o %1$d więcej",
+      "example": "Obejrzyj reklamę: usuń dziś o 999 więcej",
+      "heuristic_width": 40,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "pl",
+      "id": "reward_title",
+      "quantity": "string",
+      "text": "Testuj narzędzia Pro przez 30 minut",
+      "example": "Testuj narzędzia Pro przez 30 minut",
+      "heuristic_width": 35,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ro",
+      "id": "basket_empty_media",
+      "quantity": "one",
+      "text": "Elimină %1$d fotografie sau videoclip",
+      "example": "Elimină 999 fotografie sau videoclip",
+      "heuristic_width": 36,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ro",
+      "id": "basket_empty_media",
+      "quantity": "few",
+      "text": "Elimină %1$d fotografii și videoclipuri",
+      "example": "Elimină 999 fotografii și videoclipuri",
+      "heuristic_width": 38,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ro",
+      "id": "basket_empty_media",
+      "quantity": "other",
+      "text": "Elimină %1$d de fotografii și videoclipuri",
+      "example": "Elimină 999 de fotografii și videoclipuri",
+      "heuristic_width": 41,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ro",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Vezi o reclamă: elimină cu %1$d mai multe azi",
+      "example": "Vezi o reclamă: elimină cu 999 mai multe azi",
+      "heuristic_width": 44,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ro",
+      "id": "onb_buy",
+      "quantity": "string",
+      "text": "Cumpără Pro · %1$s o singură dată",
+      "example": "Cumpără Pro · CHF 123.45 o singură dată",
+      "heuristic_width": 39,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ro",
+      "id": "reward_title",
+      "quantity": "string",
+      "text": "Testează instrumentele Pro 30 de minute",
+      "example": "Testează instrumentele Pro 30 de minute",
+      "heuristic_width": 39,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "uk",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Переглянути рекламу: видалити ще %1$d сьогодні",
+      "example": "Переглянути рекламу: видалити ще 999 сьогодні",
+      "heuristic_width": 45,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "uk",
+      "id": "onb_buy",
+      "quantity": "string",
+      "text": "Купити Pro · %1$s одноразово",
+      "example": "Купити Pro · CHF 123.45 одноразово",
+      "heuristic_width": 34,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "uk",
+      "id": "reward_title",
+      "quantity": "string",
+      "text": "Спробувати інструменти Pro на 30 хвилин",
+      "example": "Спробувати інструменти Pro на 30 хвилин",
+      "heuristic_width": 39,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "tr",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Reklam izle: bugün %1$d daha kaldır",
+      "example": "Reklam izle: bugün 999 daha kaldır",
+      "heuristic_width": 34,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "tr",
+      "id": "onb_buy",
+      "quantity": "string",
+      "text": "Pro satın al · tek seferlik %1$s",
+      "example": "Pro satın al · tek seferlik CHF 123.45",
+      "heuristic_width": 38,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ru",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "Посмотреть рекламу: удалить ещё %1$d сегодня",
+      "example": "Посмотреть рекламу: удалить ещё 999 сегодня",
+      "heuristic_width": 43,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ru",
+      "id": "reward_title",
+      "quantity": "string",
+      "text": "Попробовать инструменты Pro на 30 минут",
+      "example": "Попробовать инструменты Pro на 30 минут",
+      "heuristic_width": 39,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    },
+    {
+      "locale": "ar",
+      "id": "limit_bonus",
+      "quantity": "string",
+      "text": "شاهد إعلانًا: أزل %1$d إضافية اليوم",
+      "example": "شاهد إعلانًا: أزل 999 إضافية اليوم",
+      "heuristic_width": 33,
+      "review_threshold": 32,
+      "status": "VISUAL_REVIEW_NOT_A_PROVEN_OVERFLOW"
+    }
+  ]
+}

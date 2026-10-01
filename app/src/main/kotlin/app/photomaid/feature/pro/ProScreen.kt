@@ -296,7 +296,9 @@ private fun Feature(icon: ImageVector, title: Int, detail: Int) {
         Icon(icon, null, tint = c.accent, modifier = Modifier.size(24.dp))
         Column {
             Text(stringResource(title), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
-            Text(stringResource(detail), style = AppTypography.caption, color = c.textSecondary)
+            // pro_f2d enthält das kostenlose Tageslimit als Platzhalter.
+            Text(if (detail == R.string.pro_f2d) stringResource(detail, Capabilities.FREE_DAILY_CLEANUP_LIMIT) else stringResource(detail),
+                style = AppTypography.caption, color = c.textSecondary)
         }
     }
 }

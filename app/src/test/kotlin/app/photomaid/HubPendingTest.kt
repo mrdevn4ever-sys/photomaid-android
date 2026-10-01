@@ -56,7 +56,7 @@ class HubPendingTest {
     @Test fun allReviewedShowsCheckNotTotals() {
         val app = app { refs -> refs.forEach { act(it, DecisionAction.Keep) } }
         host(app)
-        for (t in listOf("hub.photos", "hub.videos", "hub.screenshots")) waitRow(t, "Nichts zu prüfen")
+        for (t in listOf("hub.photos", "hub.videos", "hub.screenshots")) waitRow(t, "Alles durchgesehen")
         assertTrue(!rowText("hub.photos").contains("Text = '[7]'") && !rowText("hub.videos").contains("Text = '[3]'") && !rowText("hub.screenshots").contains("Text = '[1]'"))
         screen.value = "today"
         rule.waitUntil(10_000) { rule.onAllNodes(hasText("Alles geprüft")).fetchSemanticsNodes().isNotEmpty() }
@@ -70,37 +70,37 @@ class HubPendingTest {
             refsOf { it == MediaKind.SCREENSHOT }.forEach { act(it, DecisionAction.Keep) }
         }
         rule.setContent { TestHost(app) { CleanUpHubScreen(RecordingNav()) } }
-        waitRow("hub.photos", "1 zu prüfen")
-        waitRow("hub.videos", "2 zu prüfen")
-        waitRow("hub.screenshots", "Nichts zu prüfen")
+        waitRow("hub.photos", "1 durchsehen")
+        waitRow("hub.videos", "2 durchsehen")
+        waitRow("hub.screenshots", "Alles durchgesehen")
     }
 
     /** TEST 7: neues Medium → Foto-Zähler steigt, Heute verlässt „Alles geprüft“. */
     @Test fun newMediumReopensBothScreens() {
         val app = app { refs -> refs.forEach { act(it, DecisionAction.Keep) } }
         host(app)
-        waitRow("hub.photos", "Nichts zu prüfen")
+        waitRow("hub.photos", "Alles durchgesehen")
         lib.addNew(0)
-        waitRow("hub.photos", "1 zu prüfen")
+        waitRow("hub.photos", "1 durchsehen")
         screen.value = "today"
-        rule.waitUntil(10_000) { rule.onAllNodes(hasText("1 Medium wartet auf dich")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(10_000) { rule.onAllNodes(hasText("Noch 1 Foto oder Video durchsehen")).fetchSemanticsNodes().isNotEmpty() }
     }
 
     /** TEST 8/9: Behalten, Papierkorb, Später senken den Zähler; Undo stellt ihn wieder her. */
     @Test fun decisionsAndUndoUpdatePending() {
         val app = app()
         rule.setContent { TestHost(app) { CleanUpHubScreen(RecordingNav()) } }
-        waitRow("hub.videos", "3 zu prüfen")
+        waitRow("hub.videos", "3 durchsehen")
         val v = refsOf { it == MediaKind.VIDEO }
         runBlocking(Dispatchers.IO) { app.act(v[0], DecisionAction.Keep) }
-        waitRow("hub.videos", "2 zu prüfen")
+        waitRow("hub.videos", "2 durchsehen")
         runBlocking(Dispatchers.IO) { app.act(v[1], DecisionAction.MarkForCleanup) }
-        waitRow("hub.videos", "1 zu prüfen")
+        waitRow("hub.videos", "1 durchsehen")
         // Wie Wisch nach rechts: Später + Standardtermin (ohne Termin käme es beim nächsten Aufräumen wieder).
         runBlocking(Dispatchers.IO) { app.act(v[2], DecisionAction.Later(ReviewSessionID())); app.act(v[2], DecisionAction.Schedule(app.today.addingDays(2))) }
-        waitRow("hub.videos", "Nichts zu prüfen")
+        waitRow("hub.videos", "Alles durchgesehen")
         runBlocking(Dispatchers.IO) { app.undo() }
-        waitRow("hub.videos", "1 zu prüfen")
+        waitRow("hub.videos", "1 durchsehen")
     }
 
     /** TEST 10: Später steht mit echter Zahl auf „Heute“ – im Aufräumen-Tab nicht doppelt. */

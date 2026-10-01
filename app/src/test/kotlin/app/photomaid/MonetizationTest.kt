@@ -62,19 +62,19 @@ class MonetizationTest {
 
     private fun openLimitSheet(app: AppModel) {
         rule.setContent { TestHost(app) { CleanupBasketScreen(nav, showsDone = true) } }
-        rule.waitUntil(10_000) { shown("Papierkorb leeren: 4 Fotos/Videos") }
-        rule.onNodeWithText("Papierkorb leeren: 4 Fotos/Videos").performClick()
+        rule.waitUntil(10_000) { shown("4 Fotos und Videos entfernen") }
+        rule.onNodeWithText("4 Fotos und Videos entfernen").performClick()
         waitTag("basket.limit.bonus")
     }
 
     @Test fun bonusVideoAddsTwentyForTodayAndContinuesToConfirmation() {
         val app = limitApp(RewardedAdResult.Rewarded("bonus-1"))
         openLimitSheet(app)
-        rule.onNodeWithText("Video ansehen: +20 für heute").assertExists()
+        rule.onNodeWithText("Werbung ansehen: heute 20 mehr entfernen").assertExists()
         rule.onNodeWithTag("basket.limit.pro").assertExists() // Pro bleibt primär
         rule.onNodeWithTag("basket.limit.bonus").performClick()
         // Danach direkt die Android-Bestätigung für alle 4 – 22 von 40 frei.
-        rule.waitUntil(10_000) { shown("4 über Android entfernen") }
+        rule.waitUntil(10_000) { shown("4 entfernen") }
         assertEquals(40, app.read.value.allowance?.limit)
         assertEquals(22, app.read.value.allowance?.available)
         assertFalse(app.entitlements.canOfferLimitBonus) // 1× täglich
@@ -85,7 +85,7 @@ class MonetizationTest {
         val app = limitApp(RewardedAdResult.DismissedWithoutReward)
         openLimitSheet(app)
         rule.onNodeWithTag("basket.limit.bonus").performClick()
-        rule.waitUntil(10_000) { shown("Die Werbung wurde vorzeitig geschlossen. Es wurde nichts freigeschaltet – du kannst es heute noch einmal versuchen.") }
+        rule.waitUntil(10_000) { shown("Die Werbung wurde vorzeitig geschlossen. Du hast keine Freischaltung erhalten und kannst es heute erneut versuchen.") }
         assertEquals(20, app.read.value.allowance?.limit)
         assertTrue(app.entitlements.canOfferLimitBonus) // Tag nicht verbraucht
     }
@@ -115,7 +115,7 @@ class MonetizationTest {
             rule.waitUntil(10_000) { has("feed.media.ready") && shown("$i von 2") }
             rule.onNodeWithTag("feed.stage").performTouchInput { swipeLeft() }
         }
-        rule.waitUntil(10_000) { shown("Durchgang abgeschlossen") }
+        rule.waitUntil(10_000) { shown("Für jetzt fertig") }
         rule.waitForIdle()
     }
 

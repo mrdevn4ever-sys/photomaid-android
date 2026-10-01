@@ -1,5 +1,6 @@
 package app.photomaid.feature.today
 
+import app.photomaid.design.GestureIcons
 import app.photomaid.design.coachTarget
 import app.photomaid.design.LocalReduceMotion
 import app.photomaid.design.RowDividerInset
@@ -299,8 +300,8 @@ private fun ReviewHero(pending: List<String>?, hasHistory: Boolean, showGestures
                         Row(Modifier.fillMaxWidth().clearAndSetSemantics {}.testTag("today.gestures"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.m, Alignment.CenterHorizontally),
                             verticalAlignment = Alignment.CenterVertically) {
                             GestureChip(Icons.Rounded.ArrowUpward, stringResource(R.string.dir_keep), c.keep)
-                            GestureChip(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.dir_trash), c.cleanup)
-                            GestureChip(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.dir_later), c.later)
+                            GestureChip(GestureIcons.Left, stringResource(R.string.dir_trash), c.cleanup)
+                            GestureChip(GestureIcons.Right, stringResource(R.string.dir_later), c.later)
                         }
                     }
                 }

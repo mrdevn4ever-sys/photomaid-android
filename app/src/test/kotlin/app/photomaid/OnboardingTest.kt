@@ -1,5 +1,6 @@
 package app.photomaid
 
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -30,7 +31,7 @@ import org.robolectric.annotation.GraphicsMode
 /** Onboarding (Geschichte → Üben → Sicherheit → Angebot → Berechtigungen) und Hinweiskarten-Tutorials. */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(qualifiers = "w393dp-h852dp-xxhdpi")
+@Config(qualifiers = "+w393dp-h852dp-xxhdpi")
 class OnboardingTest {
     @get:Rule val rule = createComposeRule()
     private val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
@@ -57,21 +58,21 @@ class OnboardingTest {
         rule.waitUntil(5_000) { done() == 2 }
         rule.onNodeWithTag("onb.deck").performTouchInput { swipeRight() }
         rule.waitUntil(5_000) { done() == 3 }
-        rule.onNodeWithText("Perfekt – so einfach ist das.").assertExists()
+        rule.onNodeWithText("So geht’s. Jetzt sind deine Fotos dran.").assertExists()
         assertEquals(0, app.ledger.stateFlow.value.events.size)
         assertEquals(0, app.feedAdCounter.state.decisionsTotal)
         rule.onNodeWithTag("onb.next").performClick()
         waitTag("onb.page.2")
-        rule.onNodeWithText("Nichts geht aus Versehen verloren").assertExists()
+        rule.onNodeWithText("Du entscheidest, was gelöscht wird").assertExists()
         rule.onNodeWithTag("onb.next").performClick()
         // Angebot: kostenlos unbegrenzt + Werbung + echtes Limit + Pro einmalig zum Store-Preis.
         waitTag("offer.free")
-        rule.onNodeWithText("Kostenlos – so viel du willst").assertExists()
-        rule.onNodeWithText("Bis zu 20 pro Tag – mit einem kurzen Video 20 mehr.").assertExists()
+        rule.onNodeWithTag("offer.free").assertTextEquals("Kostenlos loslegen")
+        rule.onNodeWithText("Bis zu 20 pro Tag entfernen. Mit einem Werbevideo sind heute 20 mehr möglich.").assertExists()
         rule.onNodeWithText("3,99 CHF (TEST) · einmalig").performScrollTo().assertExists()
-        rule.onNodeWithText("Pro für 3,99 CHF (TEST) – einmal kaufen").assertExists()
+        rule.onNodeWithText("Pro kaufen · 3,99 CHF (TEST) einmalig").assertExists()
         rule.onNodeWithTag("offer.free").performClick()
-        rule.waitUntil(5_000) { shown("Damit PhotoMaid deine Fotos sehen kann") }
+        rule.waitUntil(5_000) { shown("Zugriff auf Fotos und Videos") }
         rule.onNodeWithText("Weiter").performClick()
         rule.waitUntil(5_000) { app.settings.value.privacyIntroSeen }
         assertEquals(ONBOARDING_VERSION, app.settings.value.onboardingVersion)
@@ -95,7 +96,7 @@ class OnboardingTest {
         rule.setContent { TestHost(app) { RootContent(app) } }
         waitTag("onb.skip")
         rule.onNodeWithTag("onb.skip").performClick()
-        rule.waitUntil(5_000) { shown("Damit PhotoMaid deine Fotos sehen kann") }
+        rule.waitUntil(5_000) { shown("Zugriff auf Fotos und Videos") }
         assertFalse(has("offer.free"))
     }
 
@@ -104,7 +105,7 @@ class OnboardingTest {
         rule.setContent { TestHost(app) { RootContent(app) } }
         rule.waitUntil(10_000) { has("coach.card") }
         for (i in 1..3) { rule.onNodeWithTag("coach.next").performClick(); rule.waitUntil(5_000) { shown("${i + 1}/4") } }
-        rule.onNodeWithText("Noch mehr Werkzeuge").assertExists()
+        rule.onNodeWithText("Mehr zum Aufräumen").assertExists()
         rule.onNodeWithText("Fertig").performClick()
         rule.waitUntil(5_000) { app.settings.value.todayTourSeen }
         rule.waitUntil(5_000) { !has("coach.card") }

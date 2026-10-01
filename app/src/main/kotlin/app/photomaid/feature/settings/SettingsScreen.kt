@@ -1,5 +1,8 @@
 package app.photomaid.feature.settings
 
+import app.photomaid.design.GestureIcons
+import app.photomaid.core.capabilities.Capabilities
+import androidx.compose.ui.res.pluralStringResource
 import app.photomaid.system.SystemDialogs
 import app.photomaid.feature.pro.minutesLeft
 import android.content.Intent
@@ -118,7 +121,7 @@ fun SettingsScreen(nav: Nav) {
                 ToggleRow(stringResource(R.string.set_hints), settings.showGestureHintOnOpen) { v -> scope.launch { app.updateSettings { it.copy(showGestureHintOnOpen = v) } } }
                 RowDivider()
                 MenuRowPicker(stringResource(R.string.set_later_default), LaterInterval.allowedQuickDays.map { d ->
-                    d to if (d == 1) stringResource(R.string.set_tomorrow) else stringResource(R.string.set_in_days, d)
+                    d to if (d == 1) stringResource(R.string.set_tomorrow) else pluralStringResource(R.plurals.set_in_days, d, d)
                 }, settings.laterDefaultDays) { v -> scope.launch { app.updateSettings { it.copy(laterDefaultDays = v) } } }
                 RowDivider()
                 MenuRowPicker(stringResource(R.string.set_appearance), listOf(
@@ -127,10 +130,10 @@ fun SettingsScreen(nav: Nav) {
                 ), settings.appearance) { v -> scope.launch { app.updateSettings { it.copy(appearance = v) } } }
             }
             ListSection(header = stringResource(R.string.set_how_to_swipe)) {
-                val defaultLater = if (settings.laterDefaultDays == 1) stringResource(R.string.set_tomorrow) else stringResource(R.string.set_in_days, settings.laterDefaultDays)
+                val defaultLater = if (settings.laterDefaultDays == 1) stringResource(R.string.set_tomorrow) else pluralStringResource(R.plurals.set_in_days, settings.laterDefaultDays, settings.laterDefaultDays)
                 GestureLegendRow(Icons.Rounded.ArrowUpward, stringResource(R.string.dir_keep), stringResource(R.string.hint_up), c.keep); RowDivider()
-                GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.dir_trash), stringResource(R.string.hint_left), c.cleanup); RowDivider()
-                GestureLegendRow(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.dir_later),
+                GestureLegendRow(GestureIcons.Left, stringResource(R.string.dir_trash), stringResource(R.string.hint_left), c.cleanup); RowDivider()
+                GestureLegendRow(GestureIcons.Right, stringResource(R.string.dir_later),
                     stringResource(R.string.gesture_with_default, stringResource(R.string.hint_right), defaultLater), c.later); RowDivider()
                 GestureLegendRow(Icons.Rounded.ArrowDownward, stringResource(R.string.dir_back), stringResource(R.string.hint_down), c.textSecondary)
             }
@@ -195,7 +198,9 @@ fun HelpScreen(nav: Nav) {
             for ((h, t) in listOf(R.string.help_decide to R.string.help_decide_text, R.string.help_delete to R.string.help_delete_text,
                 R.string.help_cloud to R.string.help_cloud_text, R.string.help_free to R.string.help_free_text)) {
                 ListSection(header = stringResource(h)) {
-                    Text(stringResource(t), style = AppTypography.body, color = c.textPrimary, modifier = Modifier.padding(vertical = AppSpacing.s))
+                    // help_free_text enthält das kostenlose Tageslimit als Platzhalter (Zahl nur aus der Konfiguration).
+                    val text = if (t == R.string.help_free_text) stringResource(t, Capabilities.FREE_DAILY_CLEANUP_LIMIT) else stringResource(t)
+                    Text(text, style = AppTypography.body, color = c.textPrimary, modifier = Modifier.padding(vertical = AppSpacing.s))
                 }
             }
             Spacer(Modifier.height(AppSpacing.xl))

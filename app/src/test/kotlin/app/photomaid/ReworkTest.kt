@@ -84,7 +84,7 @@ class ReworkTest {
         val app = makeTestApp(ctx, purchase = FakePurchaseGateway(PurchaseState.PURCHASED))
         rule.setContent { TestHost(app) { AppBackground { CollectionsContent(RecordingNav()) } } }
         rule.onNodeWithTag("collections.add").performClick()
-        waitText("Eigene Sammlung")
+        waitText("Sammlung erstellen")
         rule.onNodeWithText("Speichern").performClick()
         rule.waitUntil(5_000) { app.collections.custom.value.size == 1 }
         waitText("Deine Sammlungen")

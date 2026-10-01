@@ -49,18 +49,18 @@ class BasketTest {
     @Test fun previewShowsMediumLargeAndKeepsSelection() {
         val app = app(0, 2)
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
-        waitText("Papierkorb leeren: 2 Fotos/Videos")
+        waitText("2 Fotos und Videos entfernen")
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("basket.thumb").fetchSemanticsNodes().size == 2 }
         rule.onAllNodesWithTag("basket.thumb").onFirst().performClick()
         rule.onNodeWithTag("basket.preview").assertExists()
         // Das Foto ist geladen (kein hängender Ladekreis).
         rule.waitUntil(10_000) { rule.onAllNodesWithTag("feed.media.ready", useUnmergedTree = true).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("Nur ansehen – deine Auswahl bleibt, wie sie ist.").assertExists()
+        rule.onNodeWithText("Ansehen ändert nichts an deiner Auswahl.").assertExists()
         rule.onNodeWithContentDescription("Schließen").performClick()
         rule.waitForIdle()
         assertTrue(rule.onAllNodesWithTag("basket.preview").fetchSemanticsNodes().isEmpty())
         // Auswahl und Papierkorb unverändert.
-        rule.onNodeWithText("Papierkorb leeren: 2 Fotos/Videos").assertExists()
+        rule.onNodeWithText("2 Fotos und Videos entfernen").assertExists()
         assertEquals(2, app.read.value.basket.size)
         assertTrue(lib.removed.isEmpty())
     }
@@ -80,15 +80,15 @@ class BasketTest {
     @Test fun partialLimitIsExplainedBeforeConfirmation() {
         val app = app(used = 18, marked = 4)
         rule.setContent { TestHost(app) { CleanupBasketScreen(RecordingNav(), showsDone = true) } }
-        waitText("Papierkorb leeren: 4 Fotos/Videos")
-        rule.onNodeWithText("Papierkorb leeren: 4 Fotos/Videos").performClick()
+        waitText("4 Fotos und Videos entfernen")
+        rule.onNodeWithText("4 Fotos und Videos entfernen").performClick()
         waitText("Heute noch 2 frei")
-        rule.onNodeWithText("Du hast 4 ausgewählt. Ohne Pro kannst du pro Tag bis zu 20 endgültig entfernen. Der Rest bleibt sicher im Papierkorb.").assertExists()
+        rule.onNodeWithText("Ausgewählt: 4. Ohne Pro kannst du pro Tag bis zu 20 entfernen. Alles Weitere bleibt im PhotoMaid-Papierkorb.").assertExists()
         assertTrue(rule.onAllNodes(hasText("über Android entfernen", substring = true)).fetchSemanticsNodes().isEmpty())
         rule.onNodeWithText("2 davon entfernen").performClick()
-        waitText("2 über Android entfernen")
-        rule.onNodeWithText("2 über Android entfernen").performClick()
-        rule.waitUntil(10_000) { rule.onAllNodes(hasText("2 Medien wurden in den Papierkorb des Systems verschoben.")).fetchSemanticsNodes().isNotEmpty() }
+        waitText("2 entfernen")
+        rule.onNodeWithText("2 entfernen").performClick()
+        rule.waitUntil(10_000) { rule.onAllNodes(hasText("2 Fotos und Videos liegen jetzt im Android-Papierkorb.")).fetchSemanticsNodes().isNotEmpty() }
         assertEquals(2, app.read.value.basket.size)
         assertEquals(20, lib.removed.size) // 18 vorher + 2 jetzt, nie mehr als das Limit
     }
@@ -97,10 +97,10 @@ class BasketTest {
         val app = app(used = 20, marked = 1)
         val nav = RecordingNav()
         rule.setContent { TestHost(app) { CleanupBasketScreen(nav, showsDone = true) } }
-        waitText("Papierkorb leeren: 1 Foto/Video")
-        rule.onNodeWithText("Papierkorb leeren: 1 Foto/Video").performClick()
-        waitText("Tageslimit für heute erreicht")
-        rule.onNodeWithText("Morgen ist das Limit wieder frei.").assertExists()
+        waitText("1 Foto oder Video entfernen")
+        rule.onNodeWithText("1 Foto oder Video entfernen").performClick()
+        waitText("Tageslimit erreicht")
+        rule.onNodeWithText("Morgen steht dir dein Tageslimit wieder zur Verfügung.").assertExists()
         rule.onNodeWithText("Alle 1 entfernen – mit Pro").performClick()
         assertEquals("pro", nav.events.last())
         assertEquals(Disposition.MARKED_FOR_CLEANUP, app.read.value.basket.single().disposition)

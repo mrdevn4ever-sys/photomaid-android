@@ -89,8 +89,8 @@ class FeedActionsTest {
     @Test fun setAndRemoveSystemFavorite() {
         start()
         rule.onNode(hasContentDescription("Als Favorit markieren")).performClick()
-        rule.waitUntil(10_000) { lib.favorites[id(0)] == true && rule.onAllNodes(hasContentDescription("Favorit entfernen")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNode(hasContentDescription("Favorit entfernen")).performClick()
+        rule.waitUntil(10_000) { lib.favorites[id(0)] == true && rule.onAllNodes(hasContentDescription("Aus Favoriten entfernen")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNode(hasContentDescription("Aus Favoriten entfernen")).performClick()
         rule.waitUntil(10_000) { lib.favorites[id(0)] == false && rule.onAllNodes(hasContentDescription("Als Favorit markieren")).fetchSemanticsNodes().isNotEmpty() }
         assertEquals(listOf("favorite:true", "favorite:false"), lib.writes)
         assertEquals(0, events().size) // keine Review-Entscheidung
@@ -104,14 +104,14 @@ class FeedActionsTest {
         rule.waitForIdle()
         rule.onNode(hasContentDescription("Als Favorit markieren")).assertExists()
         assertFalse(lib.favorites[id(0)] == true)
-        assertTrue(rule.onAllNodes(hasText("Der Favorit konnte nicht geändert werden. Es ist alles wie vorher.")).fetchSemanticsNodes().isEmpty())
+        assertTrue(rule.onAllNodes(hasText("Die Favoritenmarkierung konnte nicht geändert werden. Sie bleibt unverändert.")).fetchSemanticsNodes().isEmpty())
     }
 
     @Test fun favoriteFailureShowsHonestError() {
         start()
         lib.writeResult = MediaWriteResult.Failed("test")
         rule.onNode(hasContentDescription("Als Favorit markieren")).performClick()
-        waitText("Der Favorit konnte nicht geändert werden. Es ist alles wie vorher.")
+        waitText("Die Favoritenmarkierung konnte nicht geändert werden. Sie bleibt unverändert.")
         rule.onNode(hasContentDescription("Als Favorit markieren")).assertExists()
     }
 
@@ -120,7 +120,7 @@ class FeedActionsTest {
         start()
         lib.favorites[id(0)] = true
         lib.bumpChangeToken()
-        rule.waitUntil(5_000) { rule.onAllNodes(hasContentDescription("Favorit entfernen")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(5_000) { rule.onAllNodes(hasContentDescription("Aus Favoriten entfernen")).fetchSemanticsNodes().isNotEmpty() }
         lib.favorites[id(0)] = false
         lib.bumpChangeToken()
         rule.waitUntil(5_000) { rule.onAllNodes(hasContentDescription("Als Favorit markieren")).fetchSemanticsNodes().isNotEmpty() }
@@ -144,9 +144,9 @@ class FeedActionsTest {
         start(favoriteFirst = true)
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeLeft() }
         waitText("Dieses Foto ist als Favorit geschützt.")
-        rule.onNodeWithText("Favorit entfernen").performClick()
+        rule.onNodeWithText("Aus Favoriten entfernen").performClick()
         rule.waitUntil(5_000) { lib.favorites[id(0)] == false }
-        waitText("Favorit entfernt. Wische nach links für den Papierkorb.")
+        waitText("Nicht mehr als Favorit markiert. Wische nach links für den Papierkorb.")
         // Kein automatisches Weiterlegen: Medium bleibt, keine Entscheidung.
         rule.onNodeWithText("1 von 5").assertExists()
         assertEquals(Disposition.UNDECIDED, rec(0).disposition)
@@ -242,7 +242,7 @@ class FeedActionsTest {
         waitTag("folder.sheet")
         waitText("Urlaub 2026")
         rule.onNodeWithText("Urlaub 2026").performClick()
-        waitText("Das Verschieben hat nicht geklappt. Die Datei bleibt, wo sie war.")
+        waitText("Die Datei konnte nicht verschoben werden. Sie bleibt im bisherigen Ordner.")
         assertEquals("DCIM/Camera/", lib.all[0].relativePath)
     }
 
@@ -253,7 +253,7 @@ class FeedActionsTest {
         rule.onNodeWithTag("folder.new").performClick()
         rule.onNodeWithTag("folder.name").performTextInput("a/b")
         rule.onNodeWithText("Anlegen und verschieben").performClick()
-        waitText("Bitte einen kurzen Namen ohne Sonderzeichen wie / eingeben.")
+        waitText("Gib einen kurzen Ordnernamen ohne Zeichen wie / ein.")
         assertTrue(lib.writes.isEmpty())
         rule.onNodeWithTag("folder.name").performTextClearance()
         rule.onNodeWithTag("folder.name").performTextInput("Hunde")
@@ -267,7 +267,7 @@ class FeedActionsTest {
         lib.removed += id(0)
         lib.bumpChangeToken()
         waitTag("feed.media.problem")
-        rule.onNodeWithText("Weiter ohne Entscheidung").performClick()
+        rule.onNodeWithText("Ohne Auswahl weiter").performClick()
         awaitReady("2 von 5")
         assertEquals(0, events().size)
     }

@@ -117,8 +117,8 @@ data class PhotoMaidColors(
 /** Systemschrift, skaliert mit der Schriftgröße (sp). Entspricht den iOS-Dynamic-Type-Stilen. */
 object AppTypography {
     /** Große, freundliche Überschrift (Onboarding, Angebot). */
-    val display = TextStyle(fontSize = 30.sp, lineHeight = 36.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = (-0.6).sp)
-    val largeTitle = TextStyle(fontSize = 32.sp, lineHeight = 38.sp, fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp)
+    val display get() = TextStyle(fontSize = 30.sp, lineHeight = 36.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = tracking(-0.6f))
+    val largeTitle get() = TextStyle(fontSize = 32.sp, lineHeight = 38.sp, fontWeight = FontWeight.Bold, letterSpacing = tracking(-0.5f))
     val title = TextStyle(fontSize = 22.sp, lineHeight = 28.sp, fontWeight = FontWeight.SemiBold)
     val headline = TextStyle(fontSize = 17.sp, lineHeight = 22.sp, fontWeight = FontWeight.SemiBold)
     val body = TextStyle(fontSize = 17.sp, lineHeight = 22.sp)
@@ -128,7 +128,15 @@ object AppTypography {
     /** Kleinste Schrift der App (nie unter 12 sp). */
     val caption2 = TextStyle(fontSize = 12.sp, lineHeight = 16.sp)
     /** Abschnittsüberschrift über Gruppen (Versalien, gedeckt). */
-    val sectionHeader = TextStyle(fontSize = 13.sp, lineHeight = 18.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 0.4.sp)
+    val sectionHeader get() = TextStyle(fontSize = 13.sp, lineHeight = 18.sp, fontWeight = FontWeight.SemiBold, letterSpacing = tracking(0.4f))
+
+    /**
+     * Zeichenabstand nur für lateinische/kyrillische Schriften: Arabisch (verbundene Schrift) und CJK vertragen keinen
+     * Abstand – Buchstaben trennen sich bzw. Wörter brechen unnötig um.
+     */
+    fun tracking(sp: Float): androidx.compose.ui.unit.TextUnit =
+        if (java.util.Locale.getDefault().language in UNTRACKED) 0.sp else sp.sp
+    private val UNTRACKED = setOf("ar", "ja", "ko", "zh")
     val metric = TextStyle(fontSize = 28.sp, lineHeight = 34.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.SansSerif)
 }
 

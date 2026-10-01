@@ -49,6 +49,8 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.automirrored.rounded.ArrowBackIos
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Delete
@@ -811,3 +813,12 @@ fun <T> ChoiceChips(options: List<Pair<T, String>>, selected: T, modifier: Modif
 
 /** Lesbare Maximalbreite auf Tablets/Foldables (Inhalt zentriert, Telefone unverändert). */
 fun Modifier.readableWidth(): Modifier = widthIn(max = 720.dp)
+
+/**
+ * Pfeile für die PHYSISCHE Wischrichtung (links = Papierkorb, rechts = Später). Sie werden – anders als
+ * `Icons.AutoMirrored` – bei Rechts-nach-links-Sprachen (Arabisch) NICHT gespiegelt, weil die Geste gleich bleibt.
+ */
+object GestureIcons {
+    @Suppress("DEPRECATION") val Left: ImageVector = Icons.Rounded.ArrowBack
+    @Suppress("DEPRECATION") val Right: ImageVector = Icons.Rounded.ArrowForward
+}

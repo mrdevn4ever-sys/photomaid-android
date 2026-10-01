@@ -160,7 +160,7 @@ class FeedFlowTest {
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().isNotEmpty() }
         assertEquals(Disposition.LATER, disposition(0))
         assertEquals(app.today.addingDays(2), rec(0).dueDay)
-        rule.onNodeWithText("Bestimmtes Datum …").assertDoesNotExist() // keine Datumsauswahl mehr per Geste
+        rule.onNodeWithText("Datum auswählen …").assertDoesNotExist() // keine Datumsauswahl mehr per Geste
     }
 
     /** Eigener Termin: „Ändern“ in der Pille öffnet die Auswahl für genau dieses Medium. */
@@ -169,8 +169,8 @@ class FeedFlowTest {
         awaitReady("2 von 5")
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("later.edit").fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithTag("later.edit").performClick()
-        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Bestimmtes Datum …")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("Bestimmtes Datum …").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Datum auswählen …")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithText("Datum auswählen …").performClick()
         rule.onNodeWithText("Fertig").performClick()
         rule.waitUntil(5_000) { rec(0).dueDay == app.today.addingDays(14) }
         assertEquals(Disposition.UNDECIDED, disposition(1))
@@ -200,7 +200,7 @@ class FeedFlowTest {
             rule.onNodeWithTag("feed.stage").performTouchInput { if (i % 2 == 0) swipeUp() else swipeLeft() }
             if (i < 4) awaitReady("${i + 2} von 5")
         }
-        rule.waitUntil(5_000) { rule.onAllNodesWithText("Durchgang abgeschlossen").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(5_000) { rule.onAllNodesWithText("Für jetzt fertig").fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithText("Papierkorb ansehen (2)").assertExists()
     }
 }

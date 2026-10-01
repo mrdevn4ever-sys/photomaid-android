@@ -77,9 +77,9 @@ class PremiumPassTest {
         val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, count = 3, videos = 0).also { l -> lib = l } })
         File(lib.all[0].id.removePrefix("file://")).delete()
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), RecordingNav(), {}, {}) } }
-        waitText("Dieses Medium kann gerade nicht angezeigt werden.")
+        waitText("Dieses Foto oder Video lässt sich gerade nicht anzeigen.")
         rule.onNodeWithText("Erneut versuchen").assertExists()
-        rule.onNodeWithText("Weiter ohne Entscheidung").performClick()
+        rule.onNodeWithText("Ohne Auswahl weiter").performClick()
         waitText("2 von 3")
         assertTrue(app.ledger.stateFlow.value.events.isEmpty())
     }
@@ -119,8 +119,8 @@ class PremiumPassTest {
     @Test fun calmEmptyStates() {
         val app = makeTestApp(ctx)
         rule.setContent { TestHost(app) { LaterScreen(RecordingNav()) } }
-        waitText("Nichts für später")
-        rule.onNodeWithText("Medien, die du für später speicherst, erscheinen hier.").assertExists()
+        waitText("Nichts für später gespeichert")
+        rule.onNodeWithText("Hier findest du Fotos, Videos und Dateien, die du für später gespeichert hast.").assertExists()
     }
 
     @Test fun historyEmptyState() {
