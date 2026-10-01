@@ -61,3 +61,13 @@ System-Papierkorb, Originale erhalten (Limit-Ablesung offen). NOT RUN: P, K8, M1
 | # | Befund | Ursache | Behebung | Nachweis |
 |---|---|---|---|---|
 | V (1a) | Nach kurzem Durchgang (2 Medien) keine Anzeige in der Zusammenfassung | Die Zusammenfassung nahm nur eine bereits geladene Anzeige; das Vorladen (≤ 2 Medien vor Ende) war noch nicht fertig → einmal „keine“, danach nie wieder | Bis 8 s nachfassen, solange die Zusammenfassung offen ist; die Anzeige erscheint dann ganz unten (nichts darüber verschiebt sich) | `MonetizationTest.summaryAdAppearsWhenItFinishesLoadingLate` |
+
+### Lauf 6 – Abschluss (Commit `04bbb2a`)
+
+PASS: V1a-Nachtest (Anzeige unter „Fertig“, Validator „No implementation issues found“), K7 (nur die 3 Kopien entfernt,
+Originale erhalten, Limit 8/25 → 5/25 – Pro-Test hebt das Limit nicht auf), M3 (3 native Anzeigen ≤ 30), Logcat
+(0 FATAL, 0 ANR). BLOCKED: P (Pro-Test vor Messbeginn abgelaufen), M1a (Bonus heute verbraucht). FAIL: K8.
+
+| # | Befund | Ursache | Behebung | Nachweis |
+|---|---|---|---|---|
+| K8 | Eine Datei erschien mehrfach im Papierkorb (9 → 14), Löschen blockiert („Tageslimit erreicht“), Datei blieb | Dieselbe Datei war über mehrere verbundene Ordner erreichbar (z. B. „Download“ und „Download/Test“) und bekam je Ordner einen eigenen Verweis. Dateiliste, Speicher-Übersicht und Papierkorb zählten sie mehrfach; Leeren hätte dieselbe Datei mehrfach gegen das Limit gebucht. Die Alias-Prüfung im Ledger wurde vom App-Code nie genutzt | Dateiliste/Speicher: je Datei (Anbieter + Dokument-ID) ein Eintrag, bevorzugt der schon entschiedene. Papierkorb zählt je Datei einmal. Leeren übergibt Alias-Schlüssel (doppelte Verweise werden vor Android und vor dem Limit abgelehnt). Nach dem Löschen verlassen ältere Doppel-Markierungen den Papierkorb (nur „Zurücklegen“) | `FileAliasTest.sameFileViaTwoFoldersCountsOnce` |

@@ -182,7 +182,9 @@ class AppModel(
 
     private fun derive(s: LedgerState, limit: Int?): LedgerReadModel {
         return LedgerReadModel(
-            basket = s.records.values.filter { it.disposition == Disposition.MARKED_FOR_CLEANUP }.sortedBy { it.item.description },
+            // Eine Datei, die über mehrere verbundene Ordner markiert wurde, zählt nur einmal (keine erfundenen Zahlen).
+            basket = s.records.values.filter { it.disposition == Disposition.MARKED_FOR_CLEANUP }.sortedBy { it.item.description }
+                .distinctBy { aliasOf(it.item) },
             laterRecords = s.records.values.filter { it.disposition == Disposition.LATER },
             events = s.events,
             allowance = ledger.allowance(s, limit),
@@ -190,6 +192,9 @@ class AppModel(
             reconciliationNeeded = s.intents.values.filter { it.state == OperationState.RECONCILIATION_REQUIRED },
         )
     }
+
+    /** Schlüssel der tatsächlichen Ressource (Datei über mehrere Quellen = ein Schlüssel). */
+    fun aliasOf(item: ItemReference): String = sources.aliasKey(item) ?: item.description
 
     /**
      * Noch zu prüfende Medien – dieselbe Regel wie der Feed ([ReviewQueues.normalQueue]).
@@ -245,7 +250,7 @@ class AppModel(
         try {
             val limit = capabilities.dailyCleanupLimit
             val intent = try {
-                ledger.prepareCleanup(items, kind, limit).also { ledger.markSubmitted(it.id) }
+                ledger.prepareCleanup(items, kind, limit, aliasKeys = items.associateWith(::aliasOf)).also { ledger.markSubmitted(it.id) }
             } catch (e: CleanupError) {
                 return CleanupRunResult.Rejected(e)
             } catch (e: Exception) {
@@ -260,7 +265,9 @@ class AppModel(
                 CleanupOperationKind.FILE_MOVE_TO_TRASH -> OperationOutcome.Failed("trash-not-supported")
             }
             return try {
-                CleanupRunResult.Finished(ledger.reconcile(intent.id, outcome))
+                val done = ledger.reconcile(intent.id, outcome)
+                unmarkAliasesOf(done.confirmedRemoved)
+                CleanupRunResult.Finished(done)
             } catch (e: Exception) {
                 // Systemoperation lief, DB-Abgleich scheiterte: beim nächsten Start reconciliationRequired.
                 CleanupRunResult.NeedsReconciliation
@@ -269,6 +276,19 @@ class AppModel(
             }
         } finally {
             cleanupInFlight = false
+        }
+    }
+
+    /**
+     * Ältere Doppel-Markierungen derselben Datei (anderer verbundener Ordner) verlassen den Papierkorb, sobald die Datei
+     * entfernt ist – sonst tauchte sie dort danach erneut auf. Nur „Zurücklegen“, nie eine weitere Löschung.
+     */
+    private suspend fun unmarkAliasesOf(removed: Set<ItemReference>) {
+        if (removed.none { it.provider != ItemProvider.PhotoLibrary }) return
+        val gone = removed.map(::aliasOf).toSet()
+        for (r in ledger.stateFlow.value.records.values) {
+            if (r.disposition == Disposition.MARKED_FOR_CLEANUP && r.item !in removed && aliasOf(r.item) in gone)
+                runCatching { apply(DecisionCommand(item = r.item, expectedRevision = r.revision, action = DecisionAction.Unmark)) }
         }
     }
 

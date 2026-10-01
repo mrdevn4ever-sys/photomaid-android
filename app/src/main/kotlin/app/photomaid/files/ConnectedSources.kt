@@ -215,6 +215,16 @@ class ConnectedSourceStore(private val context: Context, private val store: KeyV
         return result
     }
 
+    /**
+     * Gleiche Ressource über mehrere Quellen: Anbieter + Dokument-ID (wie [FileEntry.aliasKey]).
+     * `null` für Medien oder unbekannte Quellen.
+     */
+    fun aliasKey(item: ItemReference): String? {
+        val p = item.provider as? ItemProvider.ConnectedSource ?: return null
+        val s = _sources.value.firstOrNull { it.id == p.id } ?: return null
+        return "${Uri.parse(s.treeUri).authority}|${item.localIdentifier}"
+    }
+
     /** Dokument-URI eines Items (für Vorschau, Löschen, Hashing). */
     fun documentUri(item: ItemReference): Uri? {
         val p = item.provider as? ItemProvider.ConnectedSource ?: return null

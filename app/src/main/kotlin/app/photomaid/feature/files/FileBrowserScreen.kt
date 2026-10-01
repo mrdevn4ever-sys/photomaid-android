@@ -107,7 +107,13 @@ suspend fun scanAll(app: AppModel): FileIndex = withContext(Dispatchers.IO) {
     for (s in app.sources.sources.value) {
         try { all += app.sources.scan(s.id) } catch (e: Exception) { failed += s.id }
     }
-    FileIndex(all, failed, false)
+    // Dieselbe Datei über mehrere verbundene Ordner (z. B. „Download“ und „Download/Test“) nur einmal zeigen und zählen
+    // (Gerätebefund Lauf 6). Bevorzugt der Eintrag, über den schon entschieden wurde.
+    val records = app.ledger.records(all.map { it.reference })
+    val unique = all.groupBy { it.aliasKey ?: it.reference.description }.values.map { same ->
+        same.firstOrNull { (records[it.reference]?.disposition ?: Disposition.UNDECIDED) != Disposition.UNDECIDED } ?: same.first()
+    }
+    FileIndex(unique, failed, false)
 }
 
 /** Launcher für den Ordnerdialog (SAF). Ablehnung von Cloud-Ordnern wie iOS (iCloud Drive). */
