@@ -82,3 +82,14 @@ M1a: mit Google-Testanzeigen nicht prüfbar (die Testanzeige vergibt die Belohnu
 | # | Befund | Ursache | Behebung |
 |---|---|---|---|
 | P RECHTS | 0,67 % janky, aber p50 22 ms / p90 26 ms (HOCH/LINKS: p90 15/18 ms) | Nur „Später“ macht nach dem Speichern zusätzliche Arbeit: (1) Erinnerung einplanen – WorkManager-Abfragen + Einplanen bei JEDEM Wisch, obwohl der Standardtag gleich bleibt; (2) die Später-Pille wurde bei jedem Wisch aus- und wieder eingeblendet (zwei zusätzliche Animationen parallel zum Wegfliegen) | (1) Einmal je Tag und Prozess einplanen; (2) bei aufeinanderfolgenden „Später“ bleibt die Pille stehen und wird nur ersetzt. Test `FeedFlowTest.consecutiveLaterKeepsOnePillForTheLatestItem`. Gerät: Neumessung nötig |
+
+### Lauf 7b (Gerätetag 2026-10-04, Commit `af24c1c`, perf-APK, Pro-Test aktiv, keine Werbekarten)
+
+| Richtung | Janky | p50 | p90 | p99 | Status |
+|---|---|---|---|---|---|
+| RECHTS / Später | 2,83 % | 13 ms | 20 ms | 27 ms | PASS (vorher p90 26 ms) |
+| HOCH / Behalten | 2,65 % | 11 ms | 15 ms | 20 ms | PASS |
+
+„Ändern“ nach zwei „Später“ hintereinander betrifft das zuletzt gewischte Medium (Später-Bereich: 1. Medium Standardtermin
+6.10., 2. Medium per Drehrad 7.10.) – PASS. Damit sind alle drei Wischrichtungen auf dem Gerät innerhalb der Grenzen
+(janky < 10 %, p90 < 25 ms; LINKS aus Lauf 7: 2,89 %, p90 18 ms).
