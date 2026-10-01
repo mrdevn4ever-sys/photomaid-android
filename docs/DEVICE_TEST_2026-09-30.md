@@ -93,3 +93,16 @@ M1a: mit Google-Testanzeigen nicht prüfbar (die Testanzeige vergibt die Belohnu
 „Ändern“ nach zwei „Später“ hintereinander betrifft das zuletzt gewischte Medium (Später-Bereich: 1. Medium Standardtermin
 6.10., 2. Medium per Drehrad 7.10.) – PASS. Damit sind alle drei Wischrichtungen auf dem Gerät innerhalb der Grenzen
 (janky < 10 %, p90 < 25 ms; LINKS aus Lauf 7: 2,89 %, p90 18 ms).
+
+## Lauf 8 / 8b (2026-10-01, Commits `9796bee` / `0974248`, perf-APK, frische Installation)
+
+PASS: Onboarding 1a–1c, 1e, 1f; Heute- und Feed-Tutorial; Design hell/dunkel, Pro-Seite; Limit 20 + Bonus 20 (21 entfernt,
+danach 19/40); Performance Onboarding-Demo (5,82 % janky, p90 17 ms); Logcat (0 App-FATAL, 0 ANR).
+BLOCKED: 1d Kauf (kein Play-Produkt – App zeigt korrekt keinen Preis und keinen Kaufknopf).
+Lauf 8 Punkt 9 „Gespart“ war auf `9796bee` geprüft, der Bildschirm kam erst mit `0974248` → Nachtest 8b: **PASS**.
+
+| Prüfung (8b) | Gerät (stat) | Anzeige |
+|---|---|---|
+| 3 Fotos geleert | 147.370 Byte | „147 KB gespart“, Entfernt 3, „147 KB insgesamt gespart“, Hinweis 30 Tage |
+| +1 Foto | 49.934 Byte (Summe 197.304) | „50 KB gespart“, „197 KB insgesamt gespart“ |
+| Android-Dialog abgelehnt | – | kein Gespart-Bildschirm, „Abgebrochen. Es wurde nichts entfernt.“ |
