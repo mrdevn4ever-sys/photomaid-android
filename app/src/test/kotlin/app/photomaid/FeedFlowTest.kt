@@ -91,6 +91,22 @@ class FeedFlowTest {
         assertEquals(app.today.addingDays(2), r.dueDay)
     }
 
+    /** Gerätebefund Lauf 7: mehrere „Später“ hintereinander – die Pille bleibt stehen und gehört zum neuesten Medium. */
+    @Test fun consecutiveLaterKeepsOnePillForTheLatestItem() {
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeRight() }
+        awaitReady("2 von 5")
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeRight() }
+        awaitReady("3 von 5")
+        rule.waitUntil(5_000) { rec(1).dueDay != null }
+        assertEquals(1, rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().size)
+        assertEquals(app.today.addingDays(2), rec(0).dueDay)
+        assertEquals(app.today.addingDays(2), rec(1).dueDay)
+        // „Ändern“ bezieht sich auf das zuletzt zurückgestellte Medium (nicht auf das vorige).
+        rule.onNodeWithTag("later.edit").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().isEmpty() }
+    }
+
     @Test fun downGoesBackWithoutDecision() {
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
         awaitReady("2 von 5")

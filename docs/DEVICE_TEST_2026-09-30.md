@@ -71,3 +71,14 @@ Originale erhalten, Limit 8/25 → 5/25 – Pro-Test hebt das Limit nicht auf), 
 | # | Befund | Ursache | Behebung | Nachweis |
 |---|---|---|---|---|
 | K8 | Eine Datei erschien mehrfach im Papierkorb (9 → 14), Löschen blockiert („Tageslimit erreicht“), Datei blieb | Dieselbe Datei war über mehrere verbundene Ordner erreichbar (z. B. „Download“ und „Download/Test“) und bekam je Ordner einen eigenen Verweis. Dateiliste, Speicher-Übersicht und Papierkorb zählten sie mehrfach; Leeren hätte dieselbe Datei mehrfach gegen das Limit gebucht. Die Alias-Prüfung im Ledger wurde vom App-Code nie genutzt | Dateiliste/Speicher: je Datei (Anbieter + Dokument-ID) ein Eintrag, bevorzugt der schon entschiedene. Papierkorb zählt je Datei einmal. Leeren übergibt Alias-Schlüssel (doppelte Verweise werden vor Android und vor dem Limit abgelehnt). Nach dem Löschen verlassen ältere Doppel-Markierungen den Papierkorb (nur „Zurücklegen“) | `FileAliasTest.sameFileViaTwoFoldersCountsOnce` |
+
+## Lauf 7 (2026-10-03 Gerätetag manuell, Commit `13d924d`, perf-APK)
+
+PASS: K8-Nachtest (Datei 1× in der Liste, nur die Datei gelöscht, Limit exakt −1, Verlauf „Entfernt (bestätigt)“),
+P HOCH (2,84 % janky, p90 15 ms), P LINKS (2,89 %, p90 18 ms), Logcat (0 FATAL, 0 ANR).
+M1a: mit Google-Testanzeigen nicht prüfbar (die Testanzeige vergibt die Belohnung sofort) – abgedeckt durch
+`MonetizationTest.closedBonusVideoGrantsNothing`; Gerätetest mit echter Anzeige im Release-Lauf.
+
+| # | Befund | Ursache | Behebung |
+|---|---|---|---|
+| P RECHTS | 0,67 % janky, aber p50 22 ms / p90 26 ms (HOCH/LINKS: p90 15/18 ms) | Nur „Später“ macht nach dem Speichern zusätzliche Arbeit: (1) Erinnerung einplanen – WorkManager-Abfragen + Einplanen bei JEDEM Wisch, obwohl der Standardtag gleich bleibt; (2) die Später-Pille wurde bei jedem Wisch aus- und wieder eingeblendet (zwei zusätzliche Animationen parallel zum Wegfliegen) | (1) Einmal je Tag und Prozess einplanen; (2) bei aufeinanderfolgenden „Später“ bleibt die Pille stehen und wird nur ersetzt. Test `FeedFlowTest.consecutiveLaterKeepsOnePillForTheLatestItem`. Gerät: Neumessung nötig |

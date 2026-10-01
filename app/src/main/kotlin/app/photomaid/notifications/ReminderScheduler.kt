@@ -77,9 +77,15 @@ class ReminderScheduler(private val context: Context, private val everAsked: () 
     }.getOrDefault(false)
 
     /** Erinnerung am Termintag (09:00 lokal). Idempotent je Tag. */
+    /** In diesem Prozess schon eingeplante Tage: jeder Wisch nach rechts trifft meist denselben Standardtag. */
+    private val scheduledThisProcess = java.util.concurrent.ConcurrentHashMap.newKeySet<String>()
+
     fun scheduleDueReminder(day: LocalDay) {
         if (_access.value != Access.ALLOWED) return
         val name = "later.$day"
+        // Gerätebefund Lauf 7 (RECHTS p90 26 ms): WorkManager-Abfragen + Einplanen bei JEDEM „Später“ kosteten
+        // CPU während der nächsten Animation. Gleicher Tag (KEEP-Policy) → nichts zu tun.
+        if (name in scheduledThisProcess) return
         if (!alreadyScheduled(name) && pendingCount() >= MAX_PENDING) return
         val zone = ZoneId.systemDefault()
         val at = day.toLocalDate().atTime(LocalTime.of(9, 0)).atZone(zone)
@@ -89,6 +95,7 @@ class ReminderScheduler(private val context: Context, private val everAsked: () 
             .setInputData(workDataOf(KEY_KIND to "due"))
             .addTag(TAG).build()
         WorkManager.getInstance(context).enqueueUniqueWork(name, ExistingWorkPolicy.KEEP, req)
+        scheduledThisProcess += name
     }
 
 }

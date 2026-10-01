@@ -400,7 +400,9 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 session.commitSucceeded(pending.command.id, out.record)
                 emit(when (intent) { FeedIntent.KEEP -> FeedHaptic.KEEP; FeedIntent.MARK_FOR_CLEANUP -> FeedHaptic.CLEANUP; else -> FeedHaptic.LATER })
                 offset.snapTo(Offset.Zero)
-                laterPill = null
+                // Mehrere „Später“ hintereinander: die Pille bleibt stehen und wird nur ersetzt (kein Aus- und
+                // Wiedereinblenden bei jedem Wisch – Gerätebefund Lauf 7). Sonst verschwindet sie.
+                if (intent != FeedIntent.LATER || customDay != null) laterPill = null
                 machine.finishCommit()
                 lockedDirection = null
                 refreshWindow()
@@ -454,7 +456,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     /** Wisch nach rechts: sofort Standardtermin setzen und kurz als Pille zeigen. */
     private suspend fun applyDefaultLater(receipt: LaterReceipt) {
         val interval = defaultLaterInterval
-        if (!schedule(receipt, interval.dueDay(app.today))) return
+        if (!schedule(receipt, interval.dueDay(app.today))) { laterPill = null; return }
         val pill = LaterPill(receiptID = receipt.id, interval = interval)
         laterPill = pill
         pillJob?.cancel()
