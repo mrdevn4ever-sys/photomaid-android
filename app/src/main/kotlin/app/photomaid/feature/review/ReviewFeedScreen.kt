@@ -98,6 +98,7 @@ import app.photomaid.core.capabilities.Capabilities
 import app.photomaid.R
 import app.photomaid.core.feed.FeedIntent
 import app.photomaid.core.feed.SessionSummary
+import app.photomaid.ads.FeedAd
 import app.photomaid.core.model.MediaKind
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppIconSize
@@ -236,11 +237,12 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     // Einmalig deutlicher (erster erfolgreicher Durchgang), danach eine leise Zeile.
                     val strong = remember { upsell && !app.settings.value.proOfferShown }
                     if (strong) LaunchedEffect(Unit) { app.updateSettings { it.copy(proOfferShown = true) } }
+                    LaunchedEffect(Unit) { model.prepareSummaryAd(strongUpsell = strong) }
                     SessionSummaryView(
                         summary, basketCount, Modifier.weight(1f).appearOnce(),
                         reviewBasket = openBasket, goBack = { model.perform(FeedIntent.PREVIOUS, reduceMotion) }, done = onClose,
                         upsell = when { !upsell -> null; strong -> SummaryUpsell.STRONG; else -> SummaryUpsell.QUIET },
-                        allowance = readState.value.allowance, openPro = nav::openPro,
+                        allowance = readState.value.allowance, openPro = nav::openPro, ad = model.summaryAd,
                     )
                 }
                 else -> {
@@ -500,9 +502,10 @@ enum class SummaryUpsell { QUIET, STRONG }
 
 @Composable
 fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modifier, reviewBasket: () -> Unit, goBack: () -> Unit, done: () -> Unit,
-                       upsell: SummaryUpsell? = null, allowance: AllowanceSnapshot? = null, openPro: () -> Unit = {}) {
+                       upsell: SummaryUpsell? = null, allowance: AllowanceSnapshot? = null, openPro: () -> Unit = {}, ad: FeedAd? = null) {
     val c = PM.colors
-    Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(AppSpacing.pageMargin),
+    val scroll = rememberScrollState()
+    Column(modifier.fillMaxWidth().verticalScroll(scroll).padding(AppSpacing.pageMargin),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
         Icon(Icons.Rounded.Verified, null, tint = c.accent, modifier = Modifier.size(56.dp))
         Text(stringResource(R.string.summary_done), style = AppTypography.title, color = c.textPrimary)
@@ -548,6 +551,8 @@ fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modi
         }
         GlassButton(stringResource(R.string.summary_last), onClick = goBack)
         GlassButton(stringResource(R.string.done), onClick = done)
+        // Anzeige ganz unten: die Zusammenfassung und ihre Knöpfe bleiben zuerst sichtbar.
+        if (ad != null) SummaryAd(ad, scroll, openPro, Modifier.appearOnce())
         Spacer(Modifier.size(AppSpacing.s))
     }
 }

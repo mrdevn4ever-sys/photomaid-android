@@ -35,6 +35,6 @@ class FeedAdPolicyTest {
     }
 
     @Test fun constants() {
-        assertEquals(7, FeedAdPolicy.INTERVAL); assertEquals(30, FeedAdPolicy.WARMUP_DECISIONS); assertEquals(20, FeedAdPolicy.DAILY_CAP)
+        assertEquals(7, FeedAdPolicy.INTERVAL); assertEquals(30, FeedAdPolicy.WARMUP_DECISIONS); assertEquals(30, FeedAdPolicy.DAILY_CAP)
     }
 }

@@ -84,18 +84,36 @@ class EntitlementCenter(
             return RewardOffer.AVAILABLE
         }
 
+    /** „+10 heute“ anbieten? Free und Pro-Test (beide haben ein Tageslimit), 1× pro lokalem Tag, nur mit Anbieter. */
+    val canOfferLimitBonus: Boolean
+        get() {
+            val caps = capabilities
+            return ads.isConfigured && caps.adsAllowed && !caps.hasUnlimitedTrashAccess &&
+                !_rewards.value.bonusUsedToday(Instant.now(), ZoneId.systemDefault())
+        }
+
     /**
      * Zeigt eine freiwillige Anzeige – nur nach bewusster Nutzeraktion. Freischaltung ausschließlich nach dem
      * Reward-Callback des Anbieters (idempotent je `rewardID`); Abbruch, No-Fill oder Fehler verbrauchen den Tag nicht.
      */
     suspend fun watchRewardedAd(pausePlayback: () -> Unit): RewardedAdResult {
         if (!canOfferReward) return RewardedAdResult.NotConfigured
+        return watch(pausePlayback) { ledger, id -> ledger.granting(id, Instant.now(), ZoneId.systemDefault(), purchases.state.value).first }
+    }
+
+    /** Video-Bonus: +10 Löschungen nur für heute. Gleiche Regeln wie der Pro-Test (nur nach Reward-Callback). */
+    suspend fun watchLimitBonusAd(pausePlayback: () -> Unit): RewardedAdResult {
+        if (!canOfferLimitBonus) return RewardedAdResult.NotConfigured
+        return watch(pausePlayback) { ledger, id -> ledger.grantingBonus(id, Instant.now(), ZoneId.systemDefault(), purchases.state.value).first }
+    }
+
+    private suspend fun watch(pausePlayback: () -> Unit, grant: (RewardLedger, String) -> RewardLedger): RewardedAdResult {
         pausePlayback()
         val result = ads.presentRewardedAd()
         tick()
         if (result !is RewardedAdResult.Rewarded) return result
         return try {
-            val (ledger, _) = _rewards.value.granting(result.rewardID, Instant.now(), ZoneId.systemDefault(), purchases.state.value)
+            val ledger = grant(_rewards.value, result.rewardID)
             // Room erlaubt keinen Main-Thread-Zugriff; erst nach erfolgreichem Speichern gilt der Reward.
             withContext(Dispatchers.IO) { store.setValue(KEY, ledger) }
             _rewards.value = ledger

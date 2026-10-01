@@ -591,7 +591,24 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 counter.recordShown(today)
                 touch()
             } else app.feedAds.preload()
-        } else if (counter.almostDue(today)) app.feedAds.preload()
+        } else if (counter.almostDue(today) || (session.items.size - session.index <= 2 && counter.summaryAllowed(today))) app.feedAds.preload()
+    }
+
+    /** Anzeige unter der Sitzungs-Zusammenfassung (nur Free; nie zusammen mit dem deutlichen Pro-Angebot). */
+    var summaryAd by mutableStateOf<FeedAd?>(null)
+        private set
+    private var summaryAdDecided = false
+
+    /** Einmal pro Durchgang entscheiden; „Letztes Medium“ und zurück zeigt dieselbe Anzeige, keine neue. */
+    fun prepareSummaryAd(strongUpsell: Boolean) {
+        if (summaryAdDecided) return
+        summaryAdDecided = true
+        if (strongUpsell || !adsForUser() || !app.feedAds.isAvailable) return
+        val today = app.today
+        if (!app.feedAdCounter.summaryAllowed(today)) return
+        val ad = app.feedAds.take() ?: return
+        summaryAd = ad
+        viewModelScope.launch { app.feedAdCounter.recordShown(today) }
     }
 
     /** Werbekarte schließen (Wisch nach Mindestdauer, „Weiter“, Zurück, Rückgängig). */
@@ -625,5 +642,5 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         }
     }
 
-    override fun onCleared() { app.player.stop(); adCard?.ad?.destroy() }
+    override fun onCleared() { app.player.stop(); adCard?.ad?.destroy(); summaryAd?.destroy() }
 }

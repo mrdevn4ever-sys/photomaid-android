@@ -106,4 +106,35 @@ class EntitlementTest {
         assertFalse(Capabilities.resolve(PurchaseState.UNKNOWN, RewardLedger(), t0).adsAllowed)
         assertTrue(Capabilities.resolve(PurchaseState.NOT_PURCHASED, RewardLedger(), t0).adsAllowed)
     }
+
+    /** Video-Bonus „+10 heute“: nur der heutige Tag, 1× täglich, unabhängig vom Pro-Test, nie unbegrenzt. */
+    @Test fun limitBonusAddsTenForTodayOnly() {
+        val (ledger, _) = RewardLedger().grantingBonus("b1", t0, zone, PurchaseState.NOT_PURCHASED)
+        val free = Capabilities.resolve(PurchaseState.NOT_PURCHASED, ledger, t0, zone)
+        assertEquals(Tier.FREE, free.tier); assertFalse(free.hasUnlimitedTrashAccess); assertFalse(free.hasProToolsAccess)
+        assertEquals(Capabilities.FREE_DAILY_CLEANUP_LIMIT + 10, free.dailyCleanupLimit)
+        // Gleiche Reward-ID → keine zweite Buchung; neue ID am selben Tag → abgelehnt.
+        assertEquals(ledger, ledger.grantingBonus("b1", t0, zone, PurchaseState.NOT_PURCHASED).first)
+        assertThrows(RewardError.DailyBonusUsed::class.java) { ledger.grantingBonus("b2", t0.plusSeconds(60), zone, PurchaseState.NOT_PURCHASED) }
+        // Morgen gilt wieder 15 – und der Bonus ist erneut verfügbar.
+        val tomorrow = Instant.parse("2026-09-30T06:00:00Z")
+        assertEquals(15, Capabilities.resolve(PurchaseState.NOT_PURCHASED, ledger, tomorrow, zone).dailyCleanupLimit)
+        assertFalse(ledger.bonusUsedToday(tomorrow, zone))
+        // Unabhängig vom Pro-Test: beide am selben Tag möglich, Test hebt das Limit weiter nicht auf.
+        val (both, _) = ledger.granting("r1", t0, zone, PurchaseState.NOT_PURCHASED)
+        assertEquals(1, both.bonuses.size)
+        val temp = Capabilities.resolve(PurchaseState.NOT_PURCHASED, both, t0, zone)
+        assertEquals(Tier.TEMPORARY_PRO, temp.tier); assertEquals(25, temp.dailyCleanupLimit)
+        // Gekauft: kein Bonus nötig/möglich, unbegrenzt.
+        assertThrows(RewardError.AlreadyPurchased::class.java) { RewardLedger().grantingBonus("b3", t0, zone, PurchaseState.PURCHASED) }
+        assertNull(Capabilities.resolve(PurchaseState.PURCHASED, both, t0, zone).dailyCleanupLimit)
+        // Uhr zurückgestellt → konservativ kein Bonus und kein zweiter.
+        val past = t0.minus(Duration.ofHours(1))
+        assertEquals(15, Capabilities.resolve(PurchaseState.NOT_PURCHASED, ledger, past, zone).dailyCleanupLimit)
+        assertTrue(ledger.bonusUsedToday(past, zone))
+        // Altes gespeichertes Format (ohne bonuses) bleibt lesbar.
+        val old = Json { ignoreUnknownKeys = true }.decodeFromString(RewardLedger.serializer(), """{"windows":[]}""")
+        assertTrue(old.bonuses.isEmpty())
+    }
 }
+

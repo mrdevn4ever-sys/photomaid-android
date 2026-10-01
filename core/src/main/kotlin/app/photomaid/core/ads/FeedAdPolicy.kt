@@ -21,8 +21,8 @@ object FeedAdPolicy {
     const val INTERVAL = 7
     /** Die ersten 30 Entscheidungen nach der Installation bleiben werbefrei. */
     const val WARMUP_DECISIONS = 30
-    /** Höchstens 20 Werbekarten pro lokalem Kalendertag. */
-    const val DAILY_CAP = 20
+    /** Höchstens 30 Anzeigen (Feed-Karte + Zusammenfassung) pro lokalem Kalendertag (Produktentscheidung 2026-10-02). */
+    const val DAILY_CAP = 30
     /** Wegwischen erst nach dieser Zeit (keine versehentlichen Klicks, „bisschen nerven“). */
     const val MIN_VISIBLE_MS = 1_500L
 
@@ -32,6 +32,13 @@ object FeedAdPolicy {
 
     fun isDue(s: FeedAdState, today: LocalDay): Boolean =
         s.decisionsTotal >= WARMUP_DECISIONS && s.sinceLastAd >= INTERVAL && shownToday(s, today) < DAILY_CAP
+
+    /**
+     * Anzeige unter der Sitzungs-Zusammenfassung: nach der Schonfrist und innerhalb der gemeinsamen Tagesgrenze.
+     * Kein Takt – die Zusammenfassung kommt höchstens einmal pro Durchgang. Zählt wie eine Karte ([onShown]).
+     */
+    fun summaryAdAllowed(s: FeedAdState, today: LocalDay): Boolean =
+        s.decisionsTotal >= WARMUP_DECISIONS && shownToday(s, today) < DAILY_CAP
 
     fun onShown(s: FeedAdState, today: LocalDay): FeedAdState =
         s.copy(sinceLastAd = 0, day = today, shownOnDay = shownToday(s, today) + 1)

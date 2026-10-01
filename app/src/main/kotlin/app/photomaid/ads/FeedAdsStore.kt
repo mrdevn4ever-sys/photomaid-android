@@ -26,5 +26,6 @@ class FeedAdsStore(private val store: KeyValueStore) {
     /** Bald fällig → rechtzeitig vorladen, damit die Karte ohne Wartezeit erscheint. */
     fun almostDue(today: LocalDay) = state.decisionsTotal + 2 >= FeedAdPolicy.WARMUP_DECISIONS && state.sinceLastAd + 2 >= FeedAdPolicy.INTERVAL &&
         FeedAdPolicy.shownToday(state, today) < FeedAdPolicy.DAILY_CAP
+    fun summaryAllowed(today: LocalDay) = FeedAdPolicy.summaryAdAllowed(state, today)
     suspend fun recordShown(today: LocalDay) = save(FeedAdPolicy.onShown(state, today))
 }

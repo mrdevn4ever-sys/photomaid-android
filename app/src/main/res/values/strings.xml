@@ -583,6 +583,11 @@
     <string name="summary_offer_text">Mit PhotoMaid Pro leerst du den Papierkorb ohne Tageslimit – und siehst nie wieder Werbung. Einmal zahlen, kein Abo.</string>
     <string name="limit_soon">Heute noch %1$d von %2$d frei</string>
     <string name="limit_soon_pro">Ohne Limit mit Pro</string>
+    <string name="limit_bonus">Video ansehen: +%1$d für heute</string>
+    <string name="limit_bonus_note">Kurze Werbung, 1× täglich. Gilt nur heute.</string>
+    <string name="limit_bonus_done">+%1$d für heute freigeschaltet.</string>
+    <string name="limit_bonus_dismissed">Die Werbung wurde vorzeitig geschlossen. Es wurde nichts freigeschaltet – du kannst es heute noch einmal versuchen.</string>
+    <string name="limit_bonus_unavailable">Gerade ist keine Werbung verfügbar. Es wurde nichts freigeschaltet.</string>
     <string name="today_pro_title">PhotoMaid Pro</string>
     <string name="today_pro_text">Ohne Tageslimit, ohne Werbung. Einmalkauf.</string>
     <plurals name="summary_upsell_count">

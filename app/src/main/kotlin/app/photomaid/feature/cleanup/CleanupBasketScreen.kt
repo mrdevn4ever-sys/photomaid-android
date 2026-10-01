@@ -34,6 +34,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import app.photomaid.design.PlainButton
 import androidx.compose.runtime.Composable
+import app.photomaid.ads.RewardedAdResult
+import app.photomaid.core.capabilities.LimitBonus
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -141,6 +143,25 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
         else if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE) confirmPhotos = items else confirmFiles = items
     }
 
+    // Video-Bonus „+10 heute“ aus dem Limit-Blatt. Erst nach dem Reward-Callback gilt die neue Zahl; dann geht es
+    // mit derselben Auswahl direkt weiter (Bestätigung bzw. erneutes Limit-Blatt mit neuer Zahl).
+    fun watchBonus(items: List<ItemReference>, kind: CleanupOperationKind) = scope.launch {
+        limitFor = null
+        running = true
+        val r = app.entitlements.watchLimitBonusAd { app.player.stop() }
+        app.reload()
+        running = false
+        when (r) {
+            is RewardedAdResult.Rewarded -> {
+                val left = app.read.value.allowance?.available
+                if (left != null && items.size > left) limitFor = items to kind
+                else if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE) confirmPhotos = items else confirmFiles = items
+            }
+            RewardedAdResult.DismissedWithoutReward -> { resultTitle = R.string.notice; resultMessage = res.getString(R.string.limit_bonus_dismissed) }
+            else -> { resultTitle = R.string.notice; resultMessage = res.getString(R.string.limit_bonus_unavailable) }
+        }
+    }
+
     fun run(items: List<ItemReference>, kind: CleanupOperationKind) = scope.launch {
         running = true
         val r = app.runCleanup(items, kind)
@@ -242,6 +263,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
         onDismiss = { confirmFiles = null }) }
     limitFor?.let { (items, kind) ->
         LimitSheet(available ?: 0, read.allowance?.limit ?: 0, items.size,
+            bonus = if (app.entitlements.canOfferLimitBonus) ({ watchBonus(items, kind) }) else null,
             takePartial = { limitFor = null; request(items.take(available ?: 0), kind) },
             openPro = { limitFor = null; nav.openPro() }, onDismiss = { limitFor = null })
     }
@@ -255,7 +277,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
 /** Tageslimit reicht nicht für die Auswahl: erklären, Teilmenge oder Pro anbieten – bevor Android fragt. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LimitSheet(available: Int, limit: Int, selected: Int, takePartial: () -> Unit, openPro: () -> Unit, onDismiss: () -> Unit) {
+private fun LimitSheet(available: Int, limit: Int, selected: Int, bonus: (() -> Unit)?, takePartial: () -> Unit, openPro: () -> Unit, onDismiss: () -> Unit) {
     val c = PM.colors
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = c.background) {
         Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.s).testTag("basket.limit"),
@@ -266,6 +288,11 @@ private fun LimitSheet(available: Int, limit: Int, selected: Int, takePartial: (
             if (available == 0) Text(stringResource(R.string.limit_tomorrow), style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
             // Primär: alles auf einmal mit Pro; die Teilmenge bleibt als ehrliche Alternative.
             ProminentButton(stringResource(R.string.limit_all_with_pro, selected), Modifier.testTag("basket.limit.pro"), fillWidth = true, large = true, onClick = openPro)
+            // Freiwillig: kurze Werbung gegen +10 nur für heute (1× täglich). Nie automatisch gestartet.
+            if (bonus != null) {
+                GlassButton(stringResource(R.string.limit_bonus, LimitBonus.AMOUNT), Modifier.testTag("basket.limit.bonus"), fillWidth = true, large = true, onClick = bonus)
+                Text(stringResource(R.string.limit_bonus_note), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+            }
             if (available > 0) GlassButton(stringResource(R.string.limit_take_partial, available), Modifier.testTag("basket.limit.partial"), fillWidth = true, large = true,
                 tint = c.cleanup, onClick = takePartial)
             PlainButton(stringResource(R.string.cancel), onClick = onDismiss)

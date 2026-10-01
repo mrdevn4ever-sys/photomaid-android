@@ -1,6 +1,14 @@
 package app.photomaid.feature.review
 
 import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.MutatePriority
+import androidx.compose.foundation.gestures.ScrollableDefaults
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.input.pointer.util.VelocityTracker
+import kotlinx.coroutines.launch
+import kotlin.math.abs
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.ui.input.pointer.pointerInput
@@ -107,6 +115,54 @@ fun AdStage(model: FeedViewModel, card: AdCard, reduceMotion: Boolean, openPro: 
             GlassButton(skipLabel, Modifier.testTag(if (canSkip) "feed.ad.skip" else "feed.ad.wait")
                 .semantics { if (!canSkip) stateDescription = wait }, enabled = canSkip) { model.dismissAd() }
         }
+    }
+}
+
+/**
+ * Anzeige unter der Sitzungs-Zusammenfassung (nur Free). Ruhig, fest gekennzeichnet, keine Entscheidung.
+ * Die Anzeige (`NativeAdView`) nimmt jede Berührung an; damit die Zusammenfassung über ihr trotzdem scrollt,
+ * übernimmt die Karte ab der Berührungsschwelle die Bewegung (Initial-Pass) und scrollt selbst –
+ * die Anzeige erhält ein CANCEL, ein Scrollen zählt nie als Klick.
+ */
+@Composable
+fun SummaryAd(ad: FeedAd, scroll: ScrollState, openPro: () -> Unit, modifier: Modifier = Modifier) {
+    val c = PM.colors
+    val fling = ScrollableDefaults.flingBehavior()
+    val scope = rememberCoroutineScope()
+    Column(modifier.fillMaxWidth().testTag("summary.ad"), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        Box(Modifier.fillMaxWidth().height(280.dp).clip(RoundedCornerShape(AppRadii.card)).background(c.surface)
+            .pointerInput(Unit) {
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                    val tracker = VelocityTracker().apply { addPosition(down.uptimeMillis, down.position) }
+                    var dragging = false
+                    while (true) {
+                        val e = awaitPointerEvent(PointerEventPass.Initial)
+                        val ch = e.changes.firstOrNull { it.id == down.id } ?: break
+                        tracker.addPosition(ch.uptimeMillis, ch.position)
+                        if (!dragging && abs(ch.position.y - down.position.y) > viewConfiguration.touchSlop) dragging = true
+                        if (dragging) {
+                            val dy = ch.position.y - ch.previousPosition.y
+                            ch.consume()
+                            scroll.dispatchRawDelta(-dy)
+                        }
+                        if (!ch.pressed) {
+                            if (dragging) {
+                                val v = -tracker.calculateVelocity().y
+                                scope.launch { scroll.scroll(MutatePriority.UserInput) { with(fling) { performFling(v) } } }
+                            }
+                            break
+                        }
+                    }
+                }
+            }) {
+            Column(Modifier.fillMaxSize().padding(AppSpacing.m), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                Text(stringResource(R.string.ad_label), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary,
+                    modifier = Modifier.glassRect(AppRadii.control, 0.dp).padding(horizontal = AppSpacing.xs, vertical = 2.dp))
+                Box(Modifier.weight(1f).fillMaxWidth()) { AdContent(ad) }
+            }
+        }
+        PlainButton(stringResource(R.string.ad_remove), Modifier.align(Alignment.CenterHorizontally).testTag("summary.ad.pro"), onClick = openPro)
     }
 }
 
