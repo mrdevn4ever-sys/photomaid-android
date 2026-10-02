@@ -20,3 +20,6 @@ Kein Release, kein Upload in die Play Console und keine Fertigmeldung, solange e
 | 14 | Menschliche Code-Review | Abnahme | Inhaber |
 
 | 9 | Favorit/Verschieben: Systemdialoge (`createFavoriteRequest`, `createWriteRequest`) und Sichtbarkeit in OEM-Galerien (Realme, Samsung, Google Fotos) nur auf echtem Gerät prüfbar | Geräteabnahme | Inhaber/Testagent |
+| 15 | Vordergrunddienst für Video-Export (`mediaProcessing` ab Android 15, `dataSync` auf 14): Play-Console-Erklärung der Dienst-Typen mit Video („Export läuft weiter, wenn der Editor geschlossen wird“) | Store-Policy | Inhaber |
+| 16 | Video-Editor auf Gerät: Schnitte/Tempo/Farbe (LUT)/Format/Text im Export, HDR-Video (SDR-Umwandlung), 4K, Ton als M4A, Abbrechen und „Im Hintergrund fortsetzen“ – JVM-Tests prüfen nur die Planung, nicht die Media3-Kodierung | Geräteabnahme | Testagent |
+

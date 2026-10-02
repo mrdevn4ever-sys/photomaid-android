@@ -65,6 +65,12 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   P4: Perspektive (`EditRecipe.perspective`, vier Ecken → `Homography`, kostenlos wie Zuschneiden) und Rote Augen
   (`redEyes`, Farbregel, kostenlos); Farbmischer (helligkeitserhaltend) und Bereiche (`locals`: Kreis/Verlauf/Pinsel,
   rein manuell) speichern mit Pro. Keine Erkennung von Gesichtern, Augen, Himmel o. Ä.
+  P5 Video (`feature/editor/VideoEditor.kt`, Kern `core/.../studio/VideoPlan.kt`, Export `media/VideoEditExporter.kt`):
+  Kürzen, Bereiche wirklich entfernen, Tempo, Ton (Lautstärke, Blenden, Ton entfernen = keine Tonspur), Format
+  (Ausfüllen/Ganzes Video), Farbe als Farbtabelle aus derselben Pipeline, Text/Sticker mit Zeitfenster, Standbild,
+  Ton als M4A. Vorschau = Export (gleiche Media3-Effekte). Nur Anfang/Ende gekürzt → schneller Weg ohne Neukodierung.
+  Ausnahme zur Größenregel (Nutzer-Hinweis 2026-10-02): Video-Profile zeigen eine ausdrücklich als „ca.“ beschriftete
+  Schätzung. Lange Exporte über `ExportCoordinator` + Vordergrunddienst; nie hochskalieren.
 
 ## Verbote
 

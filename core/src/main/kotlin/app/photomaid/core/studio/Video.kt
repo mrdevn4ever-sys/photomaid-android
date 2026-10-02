@@ -52,6 +52,7 @@ data class VideoClip(
     val adjust: Adjustments = Adjustments(),
     val filter: FilterId = FilterId.NONE,
     val filterIntensity: Float = 1f,
+    val colorMix: app.photomaid.core.edit.ColorMix = app.photomaid.core.edit.ColorMix(),
     /** Foto-Clip: sanfter Zoom. */
     val kenBurns: Boolean = true,
 ) {

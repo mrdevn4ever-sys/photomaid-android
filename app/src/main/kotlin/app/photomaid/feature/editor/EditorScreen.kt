@@ -111,6 +111,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
     var showSave by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(vm.result) { if (vm.result != null) onClose() }
+    LaunchedEffect(vm.continuedInBackground) { if (vm.continuedInBackground) onClose() }
     BackHandler {
         when {
             vm.saving -> Unit
@@ -145,7 +146,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                         if (vm.hasChanges) confirmDiscard = true else onClose()
                     }
                     Spacer(Modifier.weight(1f))
-                    if (!vm.isVideo) {
+                    run {
                         GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.testTag("editor.undo"),
                             enabled = vm.canUndo && !vm.saving, quiet = true, onClick = vm::undo)
                         GlassIconButton(Icons.AutoMirrored.Rounded.Redo, stringResource(R.string.redo), Modifier.testTag("editor.redo"),
@@ -160,7 +161,11 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                     color = c.textSecondary, textAlign = TextAlign.Center)
 
                 val stageMod = Modifier.weight(1f).fillMaxWidth().coachTarget("editor.stage")
-                if (vm.isVideo) VideoTrimStage(vm, stageMod) else EditorStage(vm, stageMod)
+                when {
+                    vm.isVideo && vm.tab == EditorTab.MARKUP -> VideoPosterStage(vm, stageMod)
+                    vm.isVideo -> VideoEditStage(vm, stageMod)
+                    else -> EditorStage(vm, stageMod)
+                }
 
                 Column(Modifier.fillMaxWidth().widthIn(max = 720.dp).align(Alignment.CenterHorizontally)
                     .padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
@@ -171,13 +176,16 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                             EditorTab.ADJUST -> AdjustPanel(vm)
                             EditorTab.FILTER -> FilterPanel(vm)
                             EditorTab.RETOUCH -> RetouchPanel(vm)
-                            EditorTab.MARKUP -> MarkupPanel(vm.markup)
+                            EditorTab.MARKUP -> if (vm.isVideo) Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) { LayerTimeRow(vm); MarkupPanel(vm.markup) } else MarkupPanel(vm.markup)
                             EditorTab.FRAME -> FramePanel(vm)
                             EditorTab.RESIZE -> ResizePanel(vm)
                             EditorTab.TRIM -> TrimPanel(vm)
+                            EditorTab.SPEED -> SpeedPanel(vm)
+                            EditorTab.AUDIO -> AudioPanel(vm)
+                            EditorTab.FORMAT -> VideoFormatPanel(vm)
                         }
                     }
-                    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM) else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.RETOUCH, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
+                    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM, EditorTab.SPEED, EditorTab.AUDIO, EditorTab.FORMAT, EditorTab.FILTER, EditorTab.ADJUST, EditorTab.MARKUP) else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.RETOUCH, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
                     if (tabs.size > 1) EditorTabs(tabs, vm.tab, locked = !app.capabilities.hasProToolsAccess, onSelect = { vm.tab = it },
                         modifier = Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
                     else Box(Modifier.coachTarget("editor.tabs").size(1.dp))
@@ -218,6 +226,11 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
         confirmButton = { TextButton({ confirmDiscard = false; onClose() }, Modifier.testTag("editor.discard.confirm")) { Text(stringResource(R.string.edit_discard)) } },
         dismissButton = { TextButton({ confirmDiscard = false }) { Text(stringResource(R.string.edit_keep_editing)) } })
 
+    vm.notice?.let { msg ->
+        AlertDialog(onDismissRequest = { vm.notice = null }, modifier = Modifier.testTag("editor.notice"),
+            title = { Text(stringResource(R.string.notice)) }, text = { Text(msg) },
+            confirmButton = { TextButton({ vm.notice = null }, Modifier.testTag("editor.notice.ok")) { Text(stringResource(R.string.ok)) } })
+    }
     vm.error?.let { msg ->
         AlertDialog(onDismissRequest = { vm.error = null }, modifier = Modifier.testTag("editor.error"),
             title = { Text(stringResource(R.string.notice)) }, text = { Text(msg) },
@@ -236,10 +249,14 @@ private fun SavingOverlay(vm: EditorViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                 val p = vm.progress
                 if (p != null) CircularProgressIndicator(progress = { p }, Modifier.size(48.dp)) else CircularProgressIndicator(Modifier.size(48.dp))
-                val text = if (vm.isVideo) stringResource(R.string.edit_trimming, NumberFormat.getPercentInstance().format((p ?: 0f).toDouble()))
+                val text = if (vm.isVideo && p != null) stringResource(R.string.vid_exporting, NumberFormat.getPercentInstance().format(p.toDouble()))
                 else stringResource(R.string.edit_saving)
                 Text(text, style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
-                if (vm.isVideo) GlassButton(stringResource(R.string.cancel), Modifier.testTag("editor.saving.cancel"), onClick = vm::cancelSave)
+                if (vm.isVideo) {
+                    GlassButton(stringResource(R.string.cancel), Modifier.testTag("editor.saving.cancel"), onClick = vm::cancelSave)
+                    // Langer Export: Editor schließen, Export läuft mit Benachrichtigung weiter.
+                    if (vm.progress != null && !vm.isFrameSave) PlainButton(stringResource(R.string.vid_continue_background), Modifier.testTag("editor.saving.background"), onClick = vm::continueInBackground)
+                }
             }
         }
     }
@@ -293,6 +310,7 @@ private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> U
             if (!vm.isVideo && vm.recipe.isOrientationOnly && EditFormat.forSource(mime) == EditFormat.JPEG)
                 Hint(Icons.Rounded.CheckCircle, stringResource(R.string.edit_hint_lossless))
             if (mode == SaveMode.REPLACE) Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_replace_confirm))
+            if (vm.isVideo) VideoProfileRow(vm)
 
             if (vm.needsPro) {
                 Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(c.accent.copy(alpha = 0.10f)).padding(AppSpacing.m)

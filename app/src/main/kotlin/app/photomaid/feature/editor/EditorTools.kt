@@ -27,6 +27,9 @@ import androidx.compose.material.icons.rounded.BrightnessMedium
 import androidx.compose.material.icons.rounded.Contrast
 import androidx.compose.material.icons.rounded.Crop
 import androidx.compose.material.icons.rounded.Healing
+import androidx.compose.material.icons.rounded.Speed
+import androidx.compose.material.icons.rounded.GraphicEq
+import androidx.compose.material.icons.rounded.AspectRatio
 import androidx.compose.material.icons.rounded.Flip
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.LockOpen
@@ -120,6 +123,7 @@ internal val EditorTab.icon: ImageVector get() = when (this) {
     EditorTab.RETOUCH -> Icons.Rounded.Healing
     EditorTab.MARKUP -> Icons.Rounded.Draw; EditorTab.FRAME -> Icons.Rounded.CropFree
     EditorTab.RESIZE -> Icons.Rounded.PhotoSizeSelectLarge; EditorTab.TRIM -> Icons.Rounded.ContentCut
+    EditorTab.SPEED -> Icons.Rounded.Speed; EditorTab.AUDIO -> Icons.Rounded.GraphicEq; EditorTab.FORMAT -> Icons.Rounded.AspectRatio
 }
 
 internal val EditorTab.label: Int get() = when (this) {
@@ -127,6 +131,7 @@ internal val EditorTab.label: Int get() = when (this) {
     EditorTab.RETOUCH -> R.string.edit_tab_retouch
     EditorTab.MARKUP -> R.string.edit_tab_markup; EditorTab.FRAME -> R.string.edit_tab_frame
     EditorTab.RESIZE -> R.string.edit_tab_resize; EditorTab.TRIM -> R.string.edit_tab_trim
+    EditorTab.SPEED -> R.string.vid_tab_speed; EditorTab.AUDIO -> R.string.vid_tab_audio; EditorTab.FORMAT -> R.string.vid_tab_format
 }
 
 /** Reiter, deren Speichern Pro braucht (Vorschau bleibt frei). */
@@ -292,7 +297,8 @@ internal fun AdjustPanel(vm: EditorViewModel) {
     val a = vm.recipe.adjust
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("adjust.groups"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-            for (g in AdjustGroup.entries) Chip(stringResource(g.label), vm.adjustGroup == g, Modifier.testTag("group.${g.name}"),
+            val groups = if (vm.isVideo) listOf(AdjustGroup.LIGHT, AdjustGroup.COLOR, AdjustGroup.MIX) else AdjustGroup.entries
+            for (g in groups) Chip(stringResource(g.label), vm.adjustGroup == g, Modifier.testTag("group.${g.name}"),
                 dot = if (g == AdjustGroup.MIX) !vm.recipe.colorMix.isNeutral else AdjustTool.of(g).any { it.get(a) != 0f }) {
                 vm.adjustGroup = g
                 if (g != AdjustGroup.MIX && vm.adjustTool.group != g) vm.adjustTool = AdjustTool.of(g).first()

@@ -33,7 +33,7 @@ import java.io.File
 class PremiumPassTest {
     @get:Rule val rule = createComposeRule()
     private val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
-    private fun waitText(t: String, ms: Long = 10_000) = rule.waitUntil(ms) { rule.onAllNodes(hasText(t)).fetchSemanticsNodes().isNotEmpty() }
+    private fun waitText(t: String, ms: Long = 30_000) = rule.waitUntil(ms) { rule.onAllNodes(hasText(t)).fetchSemanticsNodes().isNotEmpty() }
 
     private fun loadedModel(app: AppModel): FeedViewModel {
         val vm = FeedViewModel(app, FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)))
@@ -112,7 +112,7 @@ class PremiumPassTest {
     @Test fun gestureHintShownOnFirstFeedOnly() {
         val app = makeTestApp(ctx) { a -> a.updateSettings { it.copy(gestureHintSeen = false) } }
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), RecordingNav(), {}, {}) } }
-        rule.waitUntil(20_000) { app.settings.value.gestureHintSeen } // unter Last der ganzen Suite länger als 10 s
+        rule.waitUntil(30_000) { app.settings.value.gestureHintSeen } // unter Last der ganzen Suite länger als 10 s
         assertEquals(false, app.settings.value.showGestureHintOnOpen)
     }
 

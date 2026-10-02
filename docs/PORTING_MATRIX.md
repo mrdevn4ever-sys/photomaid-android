@@ -200,4 +200,6 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Farbmischer | 8 Farbbereiche, Farbton/Sättigung/Helligkeit; Farbton und Sättigung erhalten die Helligkeit (Entsättigen → Grau, nicht Weiß) | Qualität |
 | Retusche | Kreis, Verlauf, Pinsel (bis 8 Bereiche) mit Licht-/Farbreglern, Maske einblendbar, zwei Finger zoomen; Pro wie Regler | Plan §5 |
 | Rote Augen | Tippen setzt Kreis; nur deutlich rote Pixel werden zu dunklem Neutral; kostenlos | Plan §5, keine Erkennung |
+| Video-Editor | Kürzen (schneller Weg) · Bereiche entfernen (echte Neukodierung) · Tempo 0,25–4× (Tonhöhe bleibt) · Ton/Blenden/Entfernen · Format Ausfüllen/Einpassen · Farbe (LUT) · Text/Sticker mit Zeitfenster · Standbild · Ton als M4A · Profile mit „ca.“-Schätzung | Plan §6/§12 |
+| Video-Export im Hintergrund | `ExportCoordinator` im App-Bereich + Vordergrunddienst; „Im Hintergrund fortsetzen“, Fertig-Meldung | Android-Plattform (iOS: BGProcessingTask) |
 

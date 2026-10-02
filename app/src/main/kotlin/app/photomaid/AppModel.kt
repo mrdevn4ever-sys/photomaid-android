@@ -112,6 +112,9 @@ class AppModel(
     /** Bearbeiten (lokal): Bild-Engine, Video-Schnitt, Liste „Bearbeitet“, Ergebnis-Meldungen an den Feed. */
     val editEngine = app.photomaid.media.ImageEditEngine(context)
     var videoTrimmer: app.photomaid.media.VideoTrimmer = app.photomaid.media.Media3VideoTrimmer(context)
+    var videoExporter: app.photomaid.media.VideoEditExporter = app.photomaid.media.Media3VideoEditExporter(context)
+    /** Lange Exporte (Video) unabhängig vom Bildschirm, mit Vordergrunddienst. */
+    val exports = app.photomaid.export.ExportCoordinator(context, scope)
     val edits = app.photomaid.feature.editor.EditStore(store)
     val presets = app.photomaid.feature.editor.PresetStore(store)
     /** Studio: Collage-Zeichner (Vorschau = Export) und lokale Entwürfe. */

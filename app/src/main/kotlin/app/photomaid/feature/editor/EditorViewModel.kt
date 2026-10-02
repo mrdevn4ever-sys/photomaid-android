@@ -50,6 +50,16 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import app.photomaid.core.edit.FrameMath
+import app.photomaid.core.studio.ExportProfile
+import app.photomaid.core.studio.TimedLayer
+import app.photomaid.core.studio.VSize
+import app.photomaid.core.studio.VideoClip
+import app.photomaid.core.studio.VideoLayout
+import app.photomaid.core.studio.VideoPlan
+import app.photomaid.core.studio.VideoProject
+import app.photomaid.core.studio.VideoRules
+import app.photomaid.core.studio.TimeRange
+import app.photomaid.media.VideoInfo
 import app.photomaid.core.edit.ColorBand
 import app.photomaid.core.edit.LocalAdjustment
 import app.photomaid.core.edit.Mask
@@ -61,7 +71,7 @@ import app.photomaid.core.edit.RedEyeSpot
 /** Ausschnitt der 100-%-Ansicht (normiert auf das Ausgabebild) und sein Bild. */
 data class DetailTile(val view: NormRect, val bitmap: Bitmap)
 
-enum class EditorTab { CROP, ADJUST, FILTER, RETOUCH, MARKUP, FRAME, RESIZE, TRIM }
+enum class EditorTab { CROP, ADJUST, FILTER, RETOUCH, MARKUP, FRAME, RESIZE, TRIM, SPEED, AUDIO, FORMAT }
 
 /** Werkzeug im Reiter „Markieren“. */
 enum class MarkupTool { SELECT, DRAW, SHAPE, REDACT }
@@ -79,8 +89,10 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
 
     var recipe by mutableStateOf(EditRecipe()); private set
     private var committed = EditRecipe()
-    private val undoStack = ArrayDeque<EditRecipe>()
-    private val redoStack = ArrayDeque<EditRecipe>()
+    /** Ein Rückgängig-Schritt: Rezept und (bei Videos) die Video-Einstellungen. */
+    private data class Snapshot(val recipe: EditRecipe, val video: VideoProject?)
+    private val undoStack = ArrayDeque<Snapshot>()
+    private val redoStack = ArrayDeque<Snapshot>()
     var canUndo by mutableStateOf(false); private set
     var canRedo by mutableStateOf(false); private set
 
@@ -88,7 +100,7 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     /** Reiterwechsel rechnet die passende Vorschau (Zuschneiden: ganzer Rahmen, sonst Ergebnis). */
     var tab: EditorTab
         get() = tabState
-        set(v) { if (v != tabState) { tabState = v; rerender() } }
+        set(v) { if (v != tabState) { tabState = v; rerender(); if (isVideo && v == EditorTab.MARKUP) loadPoster() } }
     var adjustGroup by mutableStateOf(AdjustGroup.LIGHT)
     var adjustTool by mutableStateOf(AdjustTool.EXPOSURE)
     var aspect by mutableStateOf(AspectPreset.FREE); private set
@@ -123,7 +135,13 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     private var detailJob: Job? = null
 
     // Video
-    var trim by mutableStateOf<TrimRange?>(null); private set
+    /** Video: Schnitte, Tempo, Ton, Format, Zeitfenster der Texte (Farbe/Drehung/Texte stehen im Rezept). */
+    var video by mutableStateOf<VideoProject?>(null); private set
+    private var committedVideo: VideoProject? = null
+    private var videoBase: VideoProject? = null
+    var videoInfo by mutableStateOf<VideoInfo?>(null); private set
+    val trim: TrimRange? get() = video?.clips?.firstOrNull()?.let { TrimRange(it.trimStartMs, it.trimEndMs) }
+    val clip: VideoClip? get() = video?.clips?.firstOrNull()
     /** `null` = wird geladen; leer = keine Vorschaubilder lesbar (Zeitleiste bleibt bedienbar). */
     var thumbnails by mutableStateOf<List<Bitmap>?>(null); private set
     /** Wiedergabeposition der Vorschau (Zeitleiste). */
@@ -137,7 +155,7 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     var result by mutableStateOf<EditOutcome.Saved?>(null); private set
     private var saveJob: Job? = null
 
-    val hasChanges: Boolean get() = if (isVideo) trim?.let { it.startMs > 0 || it.endMs < durationMs } == true else !recipe.isIdentity
+    val hasChanges: Boolean get() = if (isVideo) videoProject() != videoBase?.let { withRecipe(it, EditRecipe()) } else !recipe.isIdentity
     val needsPro: Boolean get() = (isVideo || recipe.usesProTools) && !app.capabilities.hasProToolsAccess
     val fullSize: PxSize? get() = source?.full
     val outputSize: PxSize? get() = fullSize?.let { FrameMath.layout(EditGeometry(it, recipe).output, recipe.frame).first }
@@ -152,8 +170,17 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
             asset = a
             if (a == null) { loadFailed = true; return@launch }
             if (a.kind == MediaKind.VIDEO) {
-                trim = TrimRange(0, ((a.duration) * 1000).toLong().coerceAtLeast(TrimRange.MIN_MS))
+                val dur = ((a.duration) * 1000).toLong().coerceAtLeast(TrimRange.MIN_MS)
+                val base = VideoProject(a.id, listOf(VideoClip("c", a.id, sourceDurationMs = dur)))
+                video = base; committedVideo = base; videoBase = base
                 tab = EditorTab.TRIM
+                videoInfo = withContext(Dispatchers.IO) { app.videoExporter.info(a.uri) }
+                // Filter-Vorschaubilder aus einem Bild des Videos (gleiche Pipeline).
+                val thumb = app.videoExporter.frame(a.uri, minOf(1000L, dur / 2), 220)
+                filterThumb = thumb
+                if (thumb != null) filterThumbs = withContext(Dispatchers.Default) {
+                    FilterId.entries.associateWith { f -> thumb.copy(Bitmap.Config.ARGB_8888, true).also { app.editEngine.applyPixels(it, EditRecipe(filter = f)) } }
+                }
                 thumbnails = withContext(Dispatchers.IO) { videoFrames(a) }
             } else {
                 source = runCatching { app.editEngine.loadPreview(a.uri, a.mimeType) }.getOrElse { loadFailed = true; return@launch }
@@ -189,9 +216,9 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     /** [commit] = Schritt für Rückgängig (Loslassen eines Reglers, Tipp auf einen Knopf). */
     fun update(next: EditRecipe, commit: Boolean = true) {
         recipe = next
-        if (commit && next != committed) {
-            undoStack.addLast(committed); if (undoStack.size > 100) undoStack.removeFirst()
-            redoStack.clear(); committed = next
+        if (commit && (next != committed || video != committedVideo)) {
+            undoStack.addLast(Snapshot(committed, committedVideo)); if (undoStack.size > 100) undoStack.removeFirst()
+            redoStack.clear(); committed = next; committedVideo = video
         }
         canUndo = undoStack.isNotEmpty(); canRedo = redoStack.isNotEmpty()
         detail = null
@@ -202,15 +229,17 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
 
     fun undo() {
         val prev = undoStack.removeLastOrNull() ?: return
-        redoStack.addLast(committed); committed = prev; recipe = prev; detail = null
+        redoStack.addLast(Snapshot(committed, committedVideo)); restore(prev)
         canUndo = undoStack.isNotEmpty(); canRedo = true; rerender()
     }
 
     fun redo() {
         val next = redoStack.removeLastOrNull() ?: return
-        undoStack.addLast(committed); committed = next; recipe = next; detail = null
+        undoStack.addLast(Snapshot(committed, committedVideo)); restore(next)
         canUndo = true; canRedo = redoStack.isNotEmpty(); rerender()
     }
+
+    private fun restore(s: Snapshot) { committed = s.recipe; recipe = s.recipe; committedVideo = s.video; video = s.video; detail = null }
 
     fun resetTab() {
         val r = recipe
@@ -223,7 +252,10 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
             EditorTab.RESIZE -> r.copy(resizeWidth = null, resizeHeight = null)
             EditorTab.MARKUP -> r.copy(layers = emptyList()).also { markup.selectedLayerId = null }
             EditorTab.FRAME -> r.copy(frame = null)
-            EditorTab.TRIM -> r
+            EditorTab.TRIM -> r.also { clip?.let { c -> video = video?.withClips(listOf(c.copy(trimStartMs = 0, trimEndMs = c.sourceDurationMs, cuts = emptyList()))) } }
+            EditorTab.SPEED -> r.also { clip?.let { c -> video = video?.withClips(listOf(c.copy(speed = 1f))) } }
+            EditorTab.AUDIO -> r.also { clip?.let { c -> video = video?.withClips(listOf(c.copy(volume = 1f, fadeInMs = 0, fadeOutMs = 0)))?.copy(removeAudio = false) } }
+            EditorTab.FORMAT -> r.copy(quarterTurns = 0, flipH = false).also { video = video?.copy(aspect = null, fill = false) }
         }.also { if (tab == EditorTab.CROP) aspect = AspectPreset.FREE })
     }
 
@@ -482,7 +514,150 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
 
     // Video
 
-    fun setTrim(start: Long, end: Long) { trim = TrimRange.clamp(start, end, durationMs) }
+    fun setTrim(start: Long, end: Long) {
+        val c = clip ?: return
+        val t = TrimRange.clamp(start, end, durationMs)
+        // Schnitte außerhalb des neuen Bereichs fallen weg.
+        updateClip(c.copy(trimStartMs = t.startMs, trimEndMs = t.endMs, cuts = c.cuts.filter { it.startMs < t.endMs && it.endMs > t.startMs }), commit = false)
+    }
+
+    // Video-Einstellungen (alle mit Rückgängig)
+
+    fun updateVideo(next: VideoProject, commit: Boolean = true) { video = next; update(recipe, commit) }
+    fun updateClip(next: VideoClip, commit: Boolean = true) { video?.let { updateVideo(it.withClips(listOf(next)), commit) } }
+
+    /** Bereich (Quellzeit) wirklich entfernen; überlappende Schnitte werden zusammengelegt, nie alles. */
+    fun addCut(start: Long, end: Long): Boolean {
+        val c = clip ?: return false
+        val n = VideoRules.addCut(c, TimeRange(minOf(start, end), maxOf(start, end)))
+        if (n == c) return false
+        updateClip(n); return true
+    }
+    fun removeCut(i: Int) { val c = clip ?: return; updateClip(c.copy(cuts = c.cuts.filterIndexed { k, _ -> k != i })) }
+    fun setSpeed(s: Float) { clip?.let { updateClip(it.copy(speed = s)) } }
+    fun setVolume(v: Float, commit: Boolean) { clip?.let { updateClip(it.copy(volume = v.coerceIn(0f, 2f)), commit) } }
+    fun setFades(inMs: Long, outMs: Long) { clip?.let { updateClip(it.copy(fadeInMs = inMs, fadeOutMs = outMs)) } }
+    fun setRemoveAudio(on: Boolean) { video?.let { updateVideo(it.copy(removeAudio = on)) } }
+    fun setVideoAspect(a: Float?) { video?.let { updateVideo(it.copy(aspect = a)) } }
+    fun setVideoFill(fill: Boolean) { video?.let { updateVideo(it.copy(fill = fill)) } }
+    fun setProfile(p: ExportProfile) { video?.let { updateVideo(it.copy(profile = p), commit = false) } }
+    /** Zeitfenster eines Textes/Stickers (Ergebniszeit). */
+    fun setLayerTime(id: String, startMs: Long, endMs: Long, commit: Boolean) {
+        val v = video ?: return
+        val l = recipe.layers.firstOrNull { it.id == id } ?: return
+        val others = v.layers.filterNot { it.layer.id == id }
+        updateVideo(v.copy(layers = others + TimedLayer(l, startMs.coerceAtLeast(0), endMs)), commit)
+    }
+    fun layerTime(id: String): Pair<Long, Long> {
+        val total = clip?.outputDurationMs ?: 0L
+        return video?.layers?.firstOrNull { it.layer.id == id }?.let { it.startMs to minOf(it.endMs, total) } ?: (0L to total)
+    }
+
+    /** Video-Projekt mit Farbe/Drehung/Texten aus dem Rezept (das, was exportiert wird). */
+    fun videoProject(): VideoProject? = video?.let { withRecipe(it, recipe) }
+
+    private fun withRecipe(v: VideoProject, r: EditRecipe): VideoProject {
+        val c = v.clips.first().copy(adjust = r.adjust, filter = r.filter, filterIntensity = r.filterIntensity, colorMix = r.colorMix,
+            quarterTurns = r.turns, flipH = r.flipH)
+        val layers = r.layers.map { l -> v.layers.firstOrNull { it.layer.id == l.id }?.copy(layer = l) ?: TimedLayer(l) }
+        return v.withClips(listOf(c)).copy(layers = layers)
+    }
+
+    /** Ausgabe-Layout (Größe nach Drehen, Seitenverhältnis, Profil). */
+    val videoLayout: VideoLayout? get() {
+        val p = videoProject() ?: return null
+        val d = videoInfo?.display ?: asset?.let { VSize(maxOf(2, it.pixelWidth), maxOf(2, it.pixelHeight)) } ?: return null
+        return VideoPlan.layout(d, p.clips.first(), p)
+    }
+
+    /** „ca. 48 MB“ – nur Schätzung aus Bitrate × Dauer, ausdrücklich so beschriftet. */
+    fun estimateBytes(profile: ExportProfile): Long? {
+        val p = videoProject()?.copy(profile = profile) ?: return null
+        val d = videoInfo?.display ?: return null
+        return VideoPlan.estimateBytes(p, VideoPlan.layout(d, p.clips.first(), p), videoInfo?.fps ?: 30f)
+    }
+
+    /** Bereich zum Entfernen (Quellzeit), solange er gewählt wird. */
+    var cutDraft by mutableStateOf<TimeRange?>(null)
+    fun startCut() {
+        val t = trim ?: return
+        val s0 = playheadMs.coerceIn(t.startMs, maxOf(t.startMs, t.endMs - 1000))
+        cutDraft = TimeRange(s0, minOf(t.endMs, s0 + 2000))
+    }
+    fun moveCutDraft(start: Long, end: Long) {
+        val t = trim ?: return
+        val s0 = start.coerceIn(t.startMs, t.endMs - VideoRules.MIN_SEGMENT_MS); val e0 = end.coerceIn(s0 + VideoRules.MIN_SEGMENT_MS, t.endMs)
+        cutDraft = TimeRange(s0, e0)
+    }
+    /** Entfernen bestätigen; `false`, wenn sonst nichts übrig bliebe. */
+    fun confirmCut(): Boolean { val d = cutDraft ?: return false; val ok = addCut(d.startMs, d.endMs); if (ok) cutDraft = null; return ok }
+
+    /** Sprung der Vorschau (Quellzeit), vom Bedienfeld angefordert. */
+    var seekRequest by mutableStateOf<Long?>(null)
+
+    /** Bild an der Abspielstelle wie im Ergebnis (Drehung, Farbe, Format) – Untergrund für Text/Sticker. */
+    var videoPoster by mutableStateOf<Bitmap?>(null); private set
+    private var posterJob: Job? = null
+    fun loadPoster() {
+        val a = asset ?: return; val layout = videoLayout ?: return
+        val r = recipe.copy(layers = emptyList(), crop = NormRect.FULL)
+        val at = playheadMs
+        posterJob?.cancel()
+        posterJob = viewModelScope.launch {
+            val raw = app.videoExporter.frame(a.uri, at, 1080) ?: return@launch
+            videoPoster = withContext(Dispatchers.Default) {
+                val shaped = app.editEngine.render(raw, r, colorAndSharpen = true)
+                val k = 1080f / maxOf(layout.output.width, layout.output.height)
+                val w = maxOf(2, (layout.output.width * minOf(1f, k)).toInt()); val h = maxOf(2, (layout.output.height * minOf(1f, k)).toInt())
+                val out = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+                val cv = android.graphics.Canvas(out); cv.drawColor(android.graphics.Color.BLACK)
+                val sa = shaped.width.toFloat() / shaped.height; val da = w.toFloat() / h
+                val (dw, dh) = if ((sa > da) != layout.fill) w.toFloat() to w / sa else h * sa to h.toFloat()
+                cv.drawBitmap(shaped, null, android.graphics.RectF((w - dw) / 2, (h - dh) / 2, (w + dw) / 2, (h + dh) / 2),
+                    android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG))
+                out
+            }
+        }
+    }
+
+    /** Hinweis nach Standbild/Ton (bleibt im Editor). */
+    var notice by mutableStateOf<String?>(null)
+    /** Export läuft im Hintergrund weiter; der Editor wird geschlossen. */
+    var continuedInBackground by mutableStateOf(false); private set
+    fun continueInBackground() { app.exports.background(); continuedInBackground = true }
+
+    /** Gerade wird ein Standbild gespeichert (kurz, kein Hintergrund-Weiter). */
+    var isFrameSave by mutableStateOf(false); private set
+    fun saveFrame() {
+        val a = asset ?: return; val p = videoProject() ?: return
+        if (saving) return
+        if (needsPro) { error = app.string(R.string.vid_pro_needed); return }
+        saving = true; error = null; isFrameSave = true
+        viewModelScope.launch {
+            try {
+                EditSaver.saveFrame(app, a, p, playheadMs)
+                notice = app.string(R.string.vid_frame_saved)
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e
+            } catch (e: Exception) { error = app.string(R.string.edit_err_save)
+            } finally { saving = false; isFrameSave = false }
+        }
+    }
+
+    fun saveAudio() {
+        val a = asset ?: return; val p = videoProject() ?: return
+        if (saving || app.exports.isBusy) return
+        if (needsPro) { error = app.string(R.string.vid_pro_needed); return }
+        val info = videoInfo ?: return
+        saving = true; progress = null; error = null
+        val job = app.exports.run(app.string(R.string.vid_audio_running)) { onP -> EditSaver.saveAudio(app, a, p, info, onP) }
+        saveJob = viewModelScope.launch {
+            val watch = launch { app.exports.state.collect { s -> progress = s?.progress } }
+            try { val name = job.await(); notice = app.string(R.string.vid_audio_saved, name) }
+            catch (e: kotlinx.coroutines.CancellationException) { if (job.isCancelled) Unit else throw e }
+            catch (e: Exception) { error = app.string(R.string.vid_audio_failed) }
+            finally { watch.cancel(); saving = false; progress = null }
+        }
+    }
 
     // Vorschau
 
@@ -596,7 +771,14 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
                 // Geändert, gelöscht oder verschoben seit dem Öffnen? Dann nichts speichern.
                 val now = withContext(Dispatchers.IO) { app.allPhotos.assets(listOf(a.id)).firstOrNull() }
                 if (now == null) { error = app.string(R.string.edit_err_gone); return@launch }
-                result = if (a.kind == MediaKind.VIDEO) EditSaver.saveVideo(app, a, trim ?: return@launch, mode) { p -> progress = p }
+                result = if (a.kind == MediaKind.VIDEO) {
+                    val p = videoProject() ?: return@launch
+                    val info = videoInfo ?: VideoInfo(VSize(maxOf(2, a.pixelWidth), maxOf(2, a.pixelHeight)), 30f, false, true, durationMs)
+                    // Im App-Bereich: läuft weiter, wenn der Editor geschlossen wird (Vordergrunddienst mit Fortschritt).
+                    val job = app.exports.run(app.string(R.string.vid_export_running)) { onP -> EditSaver.saveVideoProject(app, a, p, info, mode, onP) }
+                    val watch = launch { app.exports.state.collect { s -> progress = s?.progress } }
+                    try { job.await() } finally { watch.cancel() }
+                }
                 else EditSaver.savePhoto(app, a, recipe, source?.full ?: return@launch, mode, removeLocation, targetFolder)
             } catch (e: EditError.TooLarge) {
                 error = app.string(R.string.edit_err_too_large)
@@ -608,5 +790,5 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
         }
     }
 
-    fun cancelSave() { saveJob?.cancel(); saving = false; progress = null }
+    fun cancelSave() { if (isVideo) app.exports.cancel(); saveJob?.cancel(); saving = false; progress = null }
 }

@@ -66,6 +66,10 @@ Keine Bildanalyse, keine automatischen Werte, keine Werbung im Editor; Werbe-Anf
 | Vorschaubild je Entwurf (`files/drafts/<id>.jpg`, max. 360 px) | App-Speicher | Liste im Studio | nein; wird mit dem Entwurf gelöscht |
 | „Nur teilen“-Datei | App-Cache `shared/`, beim nächsten Start gelöscht | Teilen ohne Galerie-Kopie | nur an die vom Nutzer gewählte App |
 
+| Ton als M4A | MediaStore `Music/PhotoMaid/` | Ergebnis „Ton als M4A speichern“ | nein |
+| Standbild aus Video | Ordner des Videos | neues Foto (gilt als „Behalten“) | nein |
+| Export-Fortschritt | Benachrichtigung (Vordergrunddienst, lokal) | Export läuft weiter, wenn der Editor geschlossen wird | nein |
+
 Keine Werbung im Studio. Medienauswahl speichert nichts.
 
 ## Entwurf „Datensicherheit“ (Play Console) – vom Inhaber zu bestätigen

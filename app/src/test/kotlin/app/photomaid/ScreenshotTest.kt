@@ -646,4 +646,20 @@ class ScreenshotTest {
     @Test fun r06_red_eye() = expApp().let { editor("r06_red_eye", it, i = 1) {
         tap("tab.RETOUCH"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("retouch.canvas").fetchSemanticsNodes().isNotEmpty() }
         tap("rtool.RED_EYE"); tapAt("retouch.canvas", 0.4f, 0.4f); tapAt("retouch.canvas", 0.6f, 0.4f) } }
+
+    // P5: Video-Editor (Vorschau ist in Robolectric schwarz; geprüft werden Bedienfelder und Zeitleiste).
+    private fun video(name: String, a: AppModel, after: () -> Unit = {}) {
+        a.videoExporter = FakeVideoEditExporter(ctx); a.exports.useService = false
+        editor(name, a, i = lib.all.indexOfFirst { it.kind == app.photomaid.core.model.MediaKind.VIDEO }, after)
+    }
+    private fun prog(tag: String, v: Float) { rule.onNodeWithTag(tag).performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { it(v) }; rule.waitForIdle() }
+    @Test fun v01_video_cut() = expApp(pro = true).let { video("v01_video_cut", it) { prog("trim.start", 2_000f); tap("cut.start"); prog("cut.draft.start", 9_000f); tap("cut.confirm"); tap("cut.start") } }
+    @Test fun v02_video_speed() = expApp(pro = true).let { video("v02_video_speed", it) { tap("tab.SPEED"); tap("speed.1.5") } }
+    @Test fun v03_video_audio() = expApp(pro = true).let { video("v03_video_audio", it) { tap("tab.AUDIO"); tap("fade.1000") } }
+    @Test fun v04_video_format() = expApp(pro = true, dark = true).let { video("v04_video_format", it) { tap("tab.FORMAT"); tap("vaspect.0.5625"); tap("vformat.fill") } }
+    @Test fun v05_video_save_sheet() = expApp(pro = true).let { video("v05_video_save_sheet", it) { tap("tab.SPEED"); tap("speed.2.0"); tap("editor.save")
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("vprofile.SMALL").fetchSemanticsNodes().isNotEmpty() } } }
+    @Test fun v06_video_text() = expApp(pro = true).let { video("v06_video_text", it) { tap("tab.MARKUP")
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("markup.canvas").fetchSemanticsNodes().isNotEmpty() }
+        tap("mk.sticker"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("sticker.HEART").fetchSemanticsNodes().isNotEmpty() }; tap("sticker.HEART") } }
 }

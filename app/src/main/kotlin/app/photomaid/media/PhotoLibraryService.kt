@@ -182,6 +182,8 @@ interface MediaLibrary {
 
     /** Bearbeitete Fassung als neue Datei speichern (atomar, erst nach vollständigem Schreiben sichtbar). */
     suspend fun saveEdited(request: EditSaveRequest): EditSaveResult = EditSaveResult.Failed("unsupported")
+    /** Ton allein (M4A) nach `Music/PhotoMaid/` – kein Medium der Mediathek, keine Entscheidung. */
+    suspend fun saveAudio(file: java.io.File, displayName: String): EditSaveResult = EditSaveResult.Failed("unsupported")
 
     /** Medium aus dem Android-Papierkorb zurückholen (Systembestätigung). `Done` nur, wenn danach belegt. */
     suspend fun restoreFromTrash(id: String): MediaWriteResult = MediaWriteResult.Failed("unsupported")
@@ -486,6 +488,27 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
             journalRemove(uri)
         }
         return removed
+    }
+
+    override suspend fun saveAudio(file: java.io.File, displayName: String): EditSaveResult = withContext(Dispatchers.IO) {
+        val values = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp4")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, "Music/PhotoMaid/")
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
+        }
+        val uri = runCatching { resolver.insert(MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values) }.getOrNull()
+            ?: return@withContext EditSaveResult.Failed("insert")
+        journalAdd(uri)
+        try {
+            resolver.openOutputStream(uri, "w")?.use { o -> file.inputStream().use { it.copyTo(o) } } ?: throw IllegalStateException("stream")
+            resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }, null, null)
+        } catch (e: Exception) {
+            runCatching { resolver.delete(uri, null, null) }; journalRemove(uri)
+            return@withContext EditSaveResult.Failed("write")
+        }
+        journalRemove(uri)
+        EditSaveResult.Saved(uri.toString(), replaced = false, replaceDeclined = false, bytes = readColumn(uri, MediaStore.MediaColumns.SIZE)?.toLongOrNull() ?: file.length())
     }
 
     override suspend fun saveEdited(request: EditSaveRequest): EditSaveResult = withContext(Dispatchers.IO) {

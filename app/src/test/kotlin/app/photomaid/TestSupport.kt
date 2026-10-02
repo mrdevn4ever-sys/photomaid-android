@@ -169,6 +169,11 @@ class FakeMediaLibrary(
         changeToken.value += 1
         return app.photomaid.media.EditSaveResult.Saved(a.id, replaced, declined, f.length())
     }
+    val audio = mutableListOf<String>()
+    override suspend fun saveAudio(file: File, displayName: String): app.photomaid.media.EditSaveResult {
+        audio += displayName
+        return app.photomaid.media.EditSaveResult.Saved("audio://$displayName", replaced = false, replaceDeclined = false, bytes = file.length())
+    }
     override fun isTrashed(id: String): Boolean? = if (id in trashed) true else if (all.any { it.id == id }) false else null
     override suspend fun restoreFromTrash(id: String): MediaWriteResult {
         if (id !in trashed) return MediaWriteResult.Failed("not-trashed")
@@ -188,6 +193,26 @@ class FakeVideoTrimmer(private val context: Context) : app.photomaid.media.Video
         File(uri.path!!).copyTo(out, overwrite = true)
         onProgress(1f)
         return out
+    }
+}
+
+/** Video-Export ohne Media3-Kodierung (Robolectric): merkt sich das Projekt; Datei = Kopie der Quelle. */
+class FakeVideoEditExporter(private val context: Context) : app.photomaid.media.VideoEditExporter {
+    val exports = mutableListOf<Pair<app.photomaid.core.studio.VideoProject, Boolean>>()
+    var frames = mutableListOf<Long>()
+    var info = app.photomaid.media.VideoInfo(app.photomaid.core.studio.VSize(1280, 720), 30f, hdr = false, hasAudio = true, durationMs = 32_000)
+    override fun info(uri: Uri) = info
+    override suspend fun export(uri: Uri, project: app.photomaid.core.studio.VideoProject, info: app.photomaid.media.VideoInfo, audioOnly: Boolean, onProgress: (Float) -> Unit): File {
+        exports += project to audioOnly
+        onProgress(0.5f)
+        val out = File(context.cacheDir, "vexp_${System.nanoTime()}.${if (audioOnly) "m4a" else "mp4"}")
+        File(uri.path!!).copyTo(out, overwrite = true)
+        onProgress(1f)
+        return out
+    }
+    override suspend fun frame(uri: Uri, sourceMs: Long, maxEdge: Int?): android.graphics.Bitmap? {
+        frames += sourceMs
+        return android.graphics.BitmapFactory.decodeFile(uri.path!!)
     }
 }
 
@@ -237,6 +262,8 @@ fun makeTestApp(
     val db = PhotoMaidDatabase.open(context, inMemory = true)
     val lib = media(context)
     val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib }, adsOverride = ads, feedAdsOverride = feedAds)
+    app.videoExporter = FakeVideoEditExporter(context)
+    app.exports.useService = false
     app.loadBlocking()
     if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false, gestureHintSeen = true, todayTourSeen = true, feedTourSeen = true,
         monthsTourSeen = true, seriesTourSeen = true, gridTourSeen = true, editorTourSeen = true) }
