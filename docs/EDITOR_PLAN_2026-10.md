@@ -17,7 +17,7 @@ erfundenen Zahlen, nichts ohne ausdrückliche Bestätigung, Bearbeiten ist nie e
 | 4 | Schärfe und Wärme | **übernehmen, Schärfe eingeschränkt** | Wärme = Farbmatrix (überall). Schärfe braucht Faltung: GPU erst ab Android 13 (`RuntimeShader`); darunter CPU – nur bis zur Speichergrenze, sonst Regler ausgeblendet und erklärt |
 | 5 | Einfache Filter | **übernehmen** | Feste, eingebaute Farbmatrizen, mit Stärke-Regler und Vorschau-Leiste aus dem eigenen Foto. Kein Download, keine KI |
 | 6 | Größe ändern | **übernehmen** | Nie hochskalieren; Vorgaben (lange Kante 4096/2048/1080 px) + eigene Werte mit Seitenverhältnis-Schloss. Dateigröße erst **nach** dem Speichern anzeigen (keine Schätzung) |
-| 7 | Bearbeiten nach Behalten | **übernehmen, erweitert** | Nach „hoch“ kurz eine Pille „Behalten · Bearbeiten“ (wie die Später-Pille). Zusätzlich ⋯ › „Bearbeiten“ für jedes Foto – Bearbeiten selbst entscheidet nichts |
+| 7 | Bearbeiten nach Behalten | **übernehmen, geändert** | Entschieden: Stift-Symbol in der Aktionsleiste für jedes Medium (statt Pille nach „Behalten“). Bearbeiten selbst entscheidet nichts |
 | 8 | Video kürzen | **übernehmen** | Media3 Transformer; Schnitt mit Vorschau. Ohne Neukodierung wo möglich (Trim-Optimierung), sonst gleiche Qualität neu kodiert |
 | 9 | Liste der Bearbeitungen | **übernehmen** | Aufräumen › „Bearbeitet“: von PhotoMaid gespeicherte Kopien und angepasste Originale. Nur lokal |
 | 10 | Original nie überschreiben | **ersetzt durch Wahl** | Nutzerwunsch: Standard „Original behalten“; „Original anpassen“ als bewusste zweite Wahl – sicher umgesetzt (Abschnitt 2) |
@@ -98,11 +98,13 @@ Für alle Werkzeuge gemeinsam (Premium-Grundlagen):
   → gleiche Qualität, schnell. Fortschritt in %, Abbrechen jederzeit, läuft als Vordergrundarbeit weiter, wenn die
   App kurz verlassen wird. Ton bleibt; Drehung/HDR-Kennzeichnung wird übernommen, sonst ehrlicher Hinweis.
 
-### 3.6 Einstiege (Idee 7)
-- Nach „hoch“ (Behalten): Pille unten „Behalten · **Bearbeiten**“ (4 s, wie die Später-Pille; nicht bei Videos ohne
-  Kürzen-Funktion, nicht bei Werbekarte). Tipp öffnet den Editor für genau dieses Medium; danach zurück an dieselbe
-  Feed-Stelle (nächstes Medium).
-- Feed ⋯ › „Bearbeiten“ für jedes Foto/Video (auch unentschiedene) – speichert nur, entscheidet nichts.
+### 3.6 Einstieg (Idee 7) – entschieden 2026-10-02
+- **Ein Bearbeiten-Symbol (Stift) in der Aktionsleiste** unter dem Medium: ♡ Favorit · Teilen · Ordner · **Bearbeiten** · ⋯.
+  Gilt für jedes Foto und Video (Video öffnet „Kürzen“), egal ob schon entschieden. Keine Pille nach „Behalten“, kein
+  zusätzlicher ⋯-Eintrag. Liegt außerhalb der Gestenfläche, ist nie eine Entscheidung.
+- Nach dem Speichern zurück an dieselbe Feed-Stelle; das Medium bleibt sichtbar (bei „Original anpassen“ die neue Fassung).
+- Schmale Telefone (< 360 dp): Leiste bleibt einzeilig – „Teilen“ wandert dort ins ⋯-Menü, damit Papierkorb-Zähler und
+  Serie-Knopf Platz behalten (Screenshot-Test 320 dp).
 - Bearbeiten-Knopf in der Papierkorb-Vorschau: nein (dort wird entfernt, nicht bearbeitet).
 
 ### 3.7 Liste „Bearbeitet“ (Idee 9)
@@ -176,10 +178,10 @@ Für alle Werkzeuge gemeinsam (Premium-Grundlagen):
 
 Jeder Schritt endet mit grünen Tests, perf-Build, Commit und Gerätetest-Prompt.
 
-## 9. Offene Entscheidungen
+## 9. Entscheidungen (2026-10-02)
 
-1. „Original anpassen“ als **B1 Ersetzen** (neue Datei + Original in Android-Papierkorb) – empfohlen – oder B2 direkt überschreiben?
-2. Gespeicherte Kopie automatisch „Behalten“ (sonst erscheint sie als neues offenes Medium im Feed) – empfohlen **ja**, als eigener Verlaufseintrag.
-3. Free/Pro-Aufteilung wie in Abschnitt 5?
-4. Standard im Speichern-Blatt: immer „Original behalten“ oder die zuletzt gewählte Option? Empfohlen: zuletzt gewählte, beim ersten Mal „behalten“.
-5. Bearbeiten auch über ⋯ für noch nicht entschiedene Medien – empfohlen **ja**.
+1. „Original anpassen“ = **B1 Ersetzen** (neue Datei + Original in den Android-Papierkorb). ✔
+2. Gespeicherte Kopie gilt automatisch als „Behalten“ (eigener Verlaufseintrag `EDIT_SAVED`). ✔
+3. Free/Pro wie Abschnitt 5. ✔
+4. Vorauswahl im Speichern-Blatt: **offen** (Empfehlung: zuletzt gewählte Option, beim ersten Mal „Original behalten“).
+5. Bearbeiten für jedes Medium über das Stift-Symbol in der Aktionsleiste. ✔
