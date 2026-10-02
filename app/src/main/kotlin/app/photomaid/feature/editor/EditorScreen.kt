@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -160,15 +161,21 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                 if (!vm.isVideo && out != null) Text(out.label(), Modifier.fillMaxWidth().testTag("editor.size"), style = AppTypography.caption,
                     color = c.textSecondary, textAlign = TextAlign.Center)
 
-                val stageMod = Modifier.weight(1f).fillMaxWidth().coachTarget("editor.stage")
+                // Vorschau immer gleich groß (Nutzerwunsch Gerätetest): feste Höhe, unabhängig vom Werkzeug. Das Bedienfeld
+                // darunter scrollt, die Werkzeugleiste bleibt unten.
+                androidx.compose.foundation.layout.BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
+                val stageH = maxHeight * 0.56f
+                Column(Modifier.fillMaxSize()) {
+                val stageMod = Modifier.height(stageH).fillMaxWidth().coachTarget("editor.stage")
                 when {
                     vm.isVideo && vm.tab == EditorTab.MARKUP -> VideoPosterStage(vm, stageMod)
                     vm.isVideo -> VideoEditStage(vm, stageMod)
                     else -> EditorStage(vm, stageMod)
                 }
 
-                Column(Modifier.fillMaxWidth().widthIn(max = 720.dp).align(Alignment.CenterHorizontally)
+                Column(Modifier.weight(1f).fillMaxWidth().widthIn(max = 720.dp).align(Alignment.CenterHorizontally)
                     .padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                    Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                     if (vm.needsPro && (vm.isVideo || vm.recipe.usesProTools)) ProHint(onPro = nav::openPro)
                     Box(Modifier.fillMaxWidth().testTag("editor.panel.${vm.tab.name}")) {
                         when (vm.tab) {
@@ -185,10 +192,13 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                             EditorTab.FORMAT -> VideoFormatPanel(vm)
                         }
                     }
+                    }
                     val tabs = if (vm.isVideo) listOf(EditorTab.TRIM, EditorTab.SPEED, EditorTab.AUDIO, EditorTab.FORMAT, EditorTab.FILTER, EditorTab.ADJUST, EditorTab.MARKUP) else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.RETOUCH, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
                     if (tabs.size > 1) EditorTabs(tabs, vm.tab, locked = !app.capabilities.hasProToolsAccess, onSelect = { vm.tab = it },
                         modifier = Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
                     else Box(Modifier.coachTarget("editor.tabs").size(1.dp))
+                }
+                }
                 }
             }
             SavingOverlay(vm)

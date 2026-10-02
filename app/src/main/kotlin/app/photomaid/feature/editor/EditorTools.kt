@@ -3,6 +3,8 @@ package app.photomaid.feature.editor
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.draw.shadow
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -174,7 +176,10 @@ internal fun signed(v: Float, digits: Int = 0): String {
 @Composable
 internal fun EditSlider(
     label: String, value: Float, range: ClosedFloatingPointRange<Float>, valueText: String, modifier: Modifier = Modifier,
-    snap: Float = 1.5f, onChange: (Float, Boolean) -> Unit,
+    snap: Float = 1.5f,
+    /** Farbverlauf als Spur (Farbmischer): zeigt, wohin der Regler die Farbe verschiebt. */
+    trackBrush: androidx.compose.ui.graphics.Brush? = null,
+    onChange: (Float, Boolean) -> Unit,
 ) {
     val c = PM.colors
     val haptics = LocalHapticFeedback.current
@@ -194,7 +199,7 @@ internal fun EditSlider(
             inactiveTrackColor = c.textSecondary.copy(alpha = 0.25f), activeTickColor = Color.Transparent, inactiveTickColor = Color.Transparent)
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             // Nullpunkt-Markierung (Regler −100…+100 füllen nicht von links, sondern zeigen die Abweichung von 0).
-            if (bipolar) Box(Modifier.size(width = 2.dp, height = 14.dp).clip(CircleShape).background(c.textSecondary.copy(alpha = 0.6f)))
+            if (bipolar && trackBrush == null) Box(Modifier.size(width = 2.dp, height = 14.dp).clip(CircleShape).background(c.textSecondary.copy(alpha = 0.6f)))
             Slider(value = value, valueRange = range, modifier = Modifier.fillMaxWidth().testTag("editor.slider")
                 .semantics { contentDescription = label; stateDescription = valueText },
                 onValueChange = { raw ->
@@ -205,7 +210,11 @@ internal fun EditSlider(
                 },
                 onValueChangeFinished = { onChange(last, true) },
                 colors = colors,
-                track = { st -> SliderDefaults.Track(sliderState = st, colors = colors, drawStopIndicator = null, thumbTrackGapSize = 4.dp) })
+                thumb = { if (trackBrush != null) Box(Modifier.size(24.dp).shadow(2.dp, CircleShape).clip(CircleShape).background(Color.White)
+                    .border(2.dp, c.textPrimary.copy(alpha = 0.15f), CircleShape)) else SliderDefaults.Thumb(remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, colors = colors) },
+                track = { st ->
+                    if (trackBrush != null) Box(Modifier.fillMaxWidth().height(10.dp).clip(CircleShape).background(trackBrush))
+                    else SliderDefaults.Track(sliderState = st, colors = colors, drawStopIndicator = null, thumbTrackGapSize = 4.dp) })
         }
     }
 }

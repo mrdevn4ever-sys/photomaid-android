@@ -134,15 +134,21 @@ internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) 
     val segments = remember(clip.trimStartMs, clip.trimEndMs, clip.cuts) { VideoPlan.segments(clip) }
     // Effekte für die Vorschau in kleiner Auflösung (flüssig); gleiche Reihenfolge wie beim Export.
     val effectsKey = listOf(clip.quarterTurns, clip.flipH, clip.adjust, clip.filter, clip.filterIntensity, clip.colorMix, project.aspect, project.fill)
-    LaunchedEffect(segments, effectsKey) {
+    // Media3: Effekte müssen VOR prepare() gesetzt sein, sonst entsteht keine Effekt-Kette und spätere Filter wirken nicht
+    // (Gerätetest: „Filter gehen nicht“). Deshalb bei jeder Änderung: anhalten, Effekte setzen, neu vorbereiten, Position und
+    // Wiedergabe beibehalten. Auch neu, sobald die Video-Infos (Abmessungen) da sind.
+    LaunchedEffect(segments, effectsKey, vm.videoInfo) {
         delay(150)
-        val keepIndex = player.currentMediaItemIndex; val keepPos = player.currentPosition
+        val keepIndex = player.currentMediaItemIndex; val keepPos = player.currentPosition; val wasPlaying = player.isPlaying
         val items = segments.map { s -> MediaItem.Builder().setUri(a.uri).setClippingConfiguration(MediaItem.ClippingConfiguration.Builder()
             .setStartPositionMs(s.source.startMs).setEndPositionMs(s.source.endMs).build()).build() }
-        player.setMediaItems(items, keepIndex.coerceIn(0, items.lastIndex.coerceAtLeast(0)), keepPos.coerceAtLeast(0))
         val small = vm.videoInfo?.display?.let { VideoPlan.layout(it, clip, project.copy(profile = ExportProfile.SMALL)) }
-        if (small != null) runCatching { player.setVideoEffects(Media3VideoEditExporter.videoEffects(clip, small)) }
+        player.stop()
+        runCatching { player.setVideoEffects(if (small != null) Media3VideoEditExporter.videoEffects(clip, small) else emptyList()) }
+            .onFailure { android.util.Log.w("PhotoMaid", "Video-Vorschau ohne Effekte", it) }
+        player.setMediaItems(items, keepIndex.coerceIn(0, items.lastIndex.coerceAtLeast(0)), keepPos.coerceAtLeast(0))
         player.prepare()
+        if (wasPlaying) player.play()
     }
     LaunchedEffect(clip.speed) { player.setPlaybackSpeed(VideoPlan.speedOf(clip).toFloat()) }
     LaunchedEffect(vm.seekRequest) {
@@ -166,7 +172,7 @@ internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) 
     }
     val ratio = layout?.output?.aspect ?: if (a.pixelWidth > 0 && a.pixelHeight > 0) a.aspectRatio else 16f / 9f
     val playLabel = stringResource(if (playing) R.string.pause else R.string.play)
-    Box(modifier.padding(AppSpacing.m), contentAlignment = Alignment.Center) {
+    Box(modifier.padding(horizontal = AppSpacing.xs, vertical = AppSpacing.xxs), contentAlignment = Alignment.Center) {
         Box(Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = ratio < 1f).clip(RoundedCornerShape(12.dp)).background(Color.Black)
             .clickable(role = Role.Button, onClickLabel = playLabel) { if (player.isPlaying) player.pause() else player.play() }
             .testTag("editor.video")) {

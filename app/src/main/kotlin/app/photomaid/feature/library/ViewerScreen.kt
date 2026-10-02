@@ -62,6 +62,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -148,6 +149,10 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
     DisposableEffect(Unit) { onDispose { app.player.stop() } }
     LaunchedEffect(pager.currentPage) { app.player.stop(); zoomed = false }
     LaunchedEffect(undo) { if (undo != null) { delay(5_000); undo = null } }
+    // Video läuft: Leisten blenden nach kurzer Zeit von selbst aus (Tipp holt sie zurück).
+    val playerState by app.player.state.collectAsState()
+    val videoPlaying = playerState.isPlaying && playerState.itemID == current?.id
+    LaunchedEffect(videoPlaying, chrome) { if (videoPlaying && chrome) { delay(2_500); chrome = false } }
     LaunchedEffect(hiddenUndo) { if (hiddenUndo != null) { delay(5_000); hiddenUndo = null } }
     LaunchedEffect(assets.isEmpty()) { if (assets.isEmpty() && hiddenUndo == null) onClose() }
 
@@ -155,7 +160,7 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
         HorizontalPager(pager, Modifier.fillMaxSize().graphicsLayer { translationY = dragDown }, userScrollEnabled = !zoomed, key = { assets[it].id },
             beyondViewportPageCount = 1) { page ->
             val a = assets[page]
-            ViewerPage(a, active = page == pager.currentPage, onTap = { chrome = !chrome }, onZoom = { zoomed = it },
+            ViewerPage(a, active = page == pager.currentPage, onTap = { chrome = !chrome }, onPlay = { chrome = false }, onZoom = { zoomed = it },
                 onDragDown = { dy, end -> if (end) { if (dragDown > 220f) onClose() else dragDown = 0f } else dragDown = max(0f, dragDown + dy) })
         }
         // Kopfzeile
@@ -319,7 +324,7 @@ private fun VideoControls(a: MediaAsset) {
 /** Eine Seite: Foto mit Zoom bzw. Video mit Abspielen. Runterziehen (ohne Zoom) schließt. */
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onZoom: (Boolean) -> Unit, onDragDown: (Float, Boolean) -> Unit) {
+private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onPlay: () -> Unit, onZoom: (Boolean) -> Unit, onDragDown: (Float, Boolean) -> Unit) {
     val app = LocalApp.current
     val state by app.player.state.collectAsState()
     var scale by remember { mutableFloatStateOf(1f) }
@@ -361,12 +366,8 @@ private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onZoom
                 if (!moved) {
                     val now = System.currentTimeMillis()
                     if (now - lastTap < 300) { lastTap = 0; if (scale > 1.01f) { scale = 1f; offset = Offset.Zero } else scale = 2.5f; onZoom(scale > 1.01f) }
-                    else { lastTap = now
-                        if (a.kind == MediaKind.VIDEO) {
-                            if (state.itemID == a.id) app.player.togglePlay()
-                            else { app.player.load(a.id, a.uri, autoplay = true, durationSec = a.duration); if (app.player.state.value.isMuted) app.player.toggleMute() }
-                        } else onTap()
-                    }
+                    // Tipp = Leisten ein/aus (auch beim Video, damit man es ohne Bedienelemente sehen kann).
+                    else { lastTap = now; onTap() }
                 }
             }
         }.graphicsLayer { scaleX = scale; scaleY = scale; translationX = offset.x; translationY = offset.y }, contentAlignment = Alignment.Center) {
@@ -374,9 +375,15 @@ private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onZoom
             if (a.kind == MediaKind.VIDEO && active && state.itemID == a.id && app.player.player != null)
                 PlayerSurface(app.player.player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_SURFACE_VIEW)
         }
-        if (a.kind == MediaKind.VIDEO) Box(Modifier.align(Alignment.Center).size(64.dp).glassCapsule(elevation = 4.dp).testTag("viewer.play"), contentAlignment = Alignment.Center) {
-            val playing = state.itemID == a.id && state.isPlaying
-            if (!playing) Icon(Icons.Rounded.PlayArrow, stringResource(R.string.play), tint = PM.colors.textPrimary, modifier = Modifier.size(36.dp))
+        // Großer Start-Knopf nur, solange das Video nicht läuft; beim Abspielen ist nichts über dem Bild.
+        val playing = state.itemID == a.id && state.isPlaying
+        if (a.kind == MediaKind.VIDEO && !playing) Box(Modifier.align(Alignment.Center).size(72.dp).clip(CircleShape).glassCapsule(elevation = 4.dp)
+            .clickable(role = androidx.compose.ui.semantics.Role.Button) {
+                if (state.itemID == a.id) app.player.play()
+                else { app.player.load(a.id, a.uri, autoplay = true, durationSec = a.duration); if (app.player.state.value.isMuted) app.player.toggleMute() }
+                onPlay()
+            }.testTag("viewer.play"), contentAlignment = Alignment.Center) {
+            Icon(Icons.Rounded.PlayArrow, stringResource(R.string.play), tint = PM.colors.textPrimary, modifier = Modifier.size(40.dp))
         }
     }
 }

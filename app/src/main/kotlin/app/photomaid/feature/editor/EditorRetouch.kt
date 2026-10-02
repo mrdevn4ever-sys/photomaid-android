@@ -49,6 +49,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.asImageBitmap
@@ -92,6 +93,18 @@ import kotlin.math.roundToInt
 // Farbmischer
 
 /** Anzeigefarbe je Farbbereich (nur für die Auswahl). */
+/** Spur des Farbmischer-Reglers: Farbton = Nachbarfarben, Sättigung = Grau → Farbe, Helligkeit = dunkel → hell. */
+internal fun mixBrush(b: ColorBand, f: MixField): androidx.compose.ui.graphics.Brush {
+    val hsv = FloatArray(3); android.graphics.Color.colorToHSV(b.swatch.toArgb(), hsv)
+    fun hue(h: Float, s: Float = 0.85f, v: Float = 0.95f) = Color(android.graphics.Color.HSVToColor(floatArrayOf(((h % 360f) + 360f) % 360f, s, v)))
+    val colors = when (f) {
+        MixField.HUE -> listOf(hue(hsv[0] - 40f), hue(hsv[0]), hue(hsv[0] + 40f))
+        MixField.SATURATION -> listOf(hue(hsv[0], 0f, 0.7f), hue(hsv[0], 0.45f, 0.85f), hue(hsv[0], 1f, 0.95f))
+        MixField.LUMINANCE -> listOf(hue(hsv[0], 0.9f, 0.25f), hue(hsv[0], 0.85f, 0.8f), hue(hsv[0], 0.35f, 1f))
+    }
+    return androidx.compose.ui.graphics.Brush.horizontalGradient(colors)
+}
+
 internal val ColorBand.swatch: Color get() = when (this) {
     ColorBand.RED -> Color(0xFFE5484D); ColorBand.ORANGE -> Color(0xFFF76B15); ColorBand.YELLOW -> Color(0xFFFFC53D)
     ColorBand.GREEN -> Color(0xFF30A46C); ColorBand.AQUA -> Color(0xFF12A594); ColorBand.BLUE -> Color(0xFF3E63DD)
@@ -125,7 +138,8 @@ internal fun MixPanel(vm: EditorViewModel) {
         Text(stringResource(vm.mixBand.label), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
         for (f in MixField.entries) {
             val v = vm.mixValue(vm.mixBand, f)
-            EditSlider(stringResource(f.label), v, -100f..100f, signed(v), Modifier.testTag("mix.${f.name}")) { nv, commit -> vm.mix(f, nv.roundToInt().toFloat(), commit) }
+            EditSlider(stringResource(f.label), v, -100f..100f, signed(v), Modifier.testTag("mix.${f.name}"), trackBrush = mixBrush(vm.mixBand, f)) { nv, commit ->
+                vm.mix(f, nv.roundToInt().toFloat(), commit) }
         }
     }
 }

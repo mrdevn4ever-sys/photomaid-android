@@ -208,8 +208,10 @@ fun RootContent(app: AppModel) {
             val obs = LifecycleEventObserver { _, e ->
                 when (e) {
                     Lifecycle.Event.ON_RESUME -> { privacyShield = false; scope.launch { app.onForeground() } }
-                    Lifecycle.Event.ON_PAUSE -> { privacyShield = true; app.player.stop() }
-                    Lifecycle.Event.ON_STOP -> app.player.release()
+                    // Systembestätigung (Favorit, Verschieben, Papierkorb) pausiert die App nur kurz: kein Sichtschutz-Flackern,
+                    // Video nur anhalten statt stoppen.
+                    Lifecycle.Event.ON_PAUSE -> if (SystemDialogs.inProgress) app.player.pause() else { privacyShield = true; app.player.stop() }
+                    Lifecycle.Event.ON_STOP -> if (!SystemDialogs.inProgress) app.player.release()
                     else -> Unit
                 }
             }

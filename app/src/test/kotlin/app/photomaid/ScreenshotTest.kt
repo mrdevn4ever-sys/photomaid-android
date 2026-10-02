@@ -750,4 +750,15 @@ class ScreenshotTest {
         val vi = list.indexOfFirst { it.kind == app.photomaid.core.model.MediaKind.VIDEO }
         shot("sl04_viewer_video_bar_rtl", a, waitTag = "viewer.video") { app.photomaid.feature.library.ViewerScreen(app.photomaid.feature.library.ViewerRequest("v", list, vi), nav, onClose = {}) }
     }
+
+    // Gerätegröße realme RMX3933 (720×1600 ≈ 360×800 dp): Video-Editor je Werkzeug.
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rv01_trim() = expApp(pro = true).let { video("rv01_trim", it) }
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rv02_filter() = expApp(pro = true).let { video("rv02_filter", it) { tap("tab.FILTER") } }
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rv03_adjust() = expApp(pro = true).let { video("rv03_adjust", it) { tap("tab.ADJUST") } }
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rv04_mix() = expApp(pro = true).let { video("rv04_mix", it) { tap("tab.ADJUST")
+        rule.onAllNodes(androidx.compose.ui.test.hasTestTag("group.MIX")).fetchSemanticsNodes().takeIf { n -> n.isNotEmpty() }?.let { tap("group.MIX") } } }
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rv05_audio() = expApp(pro = true).let { video("rv05_audio", it) { tap("tab.AUDIO") } }
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rv06_free_filter() = expApp().let { video("rv06_free_filter", it) { tap("tab.FILTER") } }
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rp01_photo_mix() = expApp(pro = true).let { editor("rp01_photo_mix", it, i = 1) { tap("tab.ADJUST")
+        rule.onAllNodes(androidx.compose.ui.test.hasTestTag("group.MIX")).fetchSemanticsNodes().takeIf { n -> n.isNotEmpty() }?.let { tap("group.MIX") } } }
 }
