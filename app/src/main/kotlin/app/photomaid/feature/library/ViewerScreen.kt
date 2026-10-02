@@ -82,6 +82,7 @@ import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.compose.PlayerSurface
 import androidx.media3.ui.compose.SURFACE_TYPE_SURFACE_VIEW
+import app.photomaid.playback.FitVideo
 import app.photomaid.FeedRequest
 import app.photomaid.R
 import app.photomaid.core.model.MediaKind
@@ -373,7 +374,7 @@ private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onPlay
         }.graphicsLayer { scaleX = scale; scaleY = scale; translationX = offset.x; translationY = offset.y }, contentAlignment = Alignment.Center) {
             AsyncImage(req, contentDescription = null, contentScale = ContentScale.Fit, modifier = Modifier.fillMaxSize().testTag("viewer.image"))
             if (a.kind == MediaKind.VIDEO && active && state.itemID == a.id && app.player.player != null)
-                PlayerSurface(app.player.player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_SURFACE_VIEW)
+                FitVideo(app.player.player!!, Modifier.fillMaxSize())
         }
         // Großer Start-Knopf nur, solange das Video nicht läuft; beim Abspielen ist nichts über dem Bild.
         val playing = state.itemID == a.id && state.isPlaying

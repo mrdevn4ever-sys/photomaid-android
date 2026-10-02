@@ -86,6 +86,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.compose.PlayerSurface
 import androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW
+import app.photomaid.playback.FitVideo
 import app.photomaid.R
 import app.photomaid.core.studio.ExportProfile
 import app.photomaid.core.studio.VideoPlan
@@ -176,7 +177,7 @@ internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) 
         Box(Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = ratio < 1f).clip(RoundedCornerShape(12.dp)).background(Color.Black)
             .clickable(role = Role.Button, onClickLabel = playLabel) { if (player.isPlaying) player.pause() else player.play() }
             .testTag("editor.video")) {
-            PlayerSurface(player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_TEXTURE_VIEW)
+            FitVideo(player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_TEXTURE_VIEW)
             LayerPreview(vm, outMs, Modifier.fillMaxSize())
             Row(Modifier.align(Alignment.BottomStart).padding(AppSpacing.xs), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs),
                 verticalAlignment = Alignment.CenterVertically) {

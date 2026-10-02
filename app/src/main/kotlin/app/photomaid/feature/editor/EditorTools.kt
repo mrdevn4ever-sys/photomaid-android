@@ -444,7 +444,6 @@ internal fun ResizePanel(vm: EditorViewModel) {
     val out = vm.outputSize ?: base
     val presets = ResizeRules.presetsFor(base)
     var custom by remember { mutableStateOf(false) }
-    var locked by remember { mutableStateOf(true) }
     val current = when {
         vm.recipe.resizeWidth == null -> 0
         custom -> -1
@@ -460,17 +459,12 @@ internal fun ResizePanel(vm: EditorViewModel) {
         }
         if (current == -1 || custom) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                SizeField(stringResource(R.string.edit_width), out.width, Modifier.weight(1f).testTag("size.width")) { w ->
-                    vm.resize(if (locked) ResizeRules.forWidth(base, w) else ResizeRules.clampToSource(w, out.height, base))
+                // Verhältnis immer fest (nie verzerren): Breite oder Höhe eingeben, die andere Kante folgt.
+                SizeField(stringResource(R.string.edit_width), out.width, Modifier.weight(1f).testTag("size.width")) { w -> vm.resize(ResizeRules.forWidth(base, w)) }
+                Box(Modifier.size(AppSpacing.minTouch).testTag("size.lock"), contentAlignment = Alignment.Center) {
+                    Icon(Icons.Rounded.Lock, stringResource(R.string.edit_ratio_locked), tint = c.textSecondary)
                 }
-                Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape).clickable(role = Role.Switch) { locked = !locked }
-                    .semantics { contentDescription = "" }.testTag("size.lock"), contentAlignment = Alignment.Center) {
-                    Icon(if (locked) Icons.Rounded.Lock else Icons.Rounded.LockOpen,
-                        stringResource(if (locked) R.string.edit_ratio_locked else R.string.edit_ratio_free), tint = if (locked) c.accent else c.textSecondary)
-                }
-                SizeField(stringResource(R.string.edit_height), out.height, Modifier.weight(1f).testTag("size.height")) { h ->
-                    vm.resize(if (locked) ResizeRules.forHeight(base, h) else ResizeRules.clampToSource(out.width, h, base))
-                }
+                SizeField(stringResource(R.string.edit_height), out.height, Modifier.weight(1f).testTag("size.height")) { h -> vm.resize(ResizeRules.forHeight(base, h)) }
             }
         }
         Text(stringResource(R.string.edit_size_result, base.width, base.height, out.width, out.height), style = AppTypography.subheadline,

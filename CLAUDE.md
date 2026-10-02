@@ -86,6 +86,10 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 
 ## Verbote
 
+- NIE verzerren (Nutzer-Grundsatz 2026-10-02): Fotos/Videos nur einpassen (Fit) oder beschneiden (Fill/Crop), nie
+  strecken. Videos immer über `playback/FitVideo` (`ContentFrame`, `ContentScale.Fit`), Größe ändern nur proportional
+  (`ResizeRules`, kein freies Verhältnis), Collage-Felder beschneiden oder passen ein.
+
 - Keine automatische Löschung. Kein Backend, Konto, Upload, keine KI/ML.
 - Sammlungen (statt „Regeln & Routinen“) sind reine Filter ohne Auslöser/Hintergrundarbeit; fertige für alle, eigene = Pro.
 - Keine erfundenen Zahlen; unbekannte Größe ≠ 0. Keine simulierten Scans/Berechtigungen/Käufe.

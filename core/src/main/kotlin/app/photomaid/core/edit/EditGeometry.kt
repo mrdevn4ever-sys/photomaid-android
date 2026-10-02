@@ -329,9 +329,15 @@ object ResizeRules {
         return PxSize(max(1, (h.toDouble() * size.width / size.height).roundToInt()), h)
     }
 
-    /** Nie hochskalieren: jede Kante höchstens wie der Ausschnitt; ohne Ziel = Ausschnitt. */
-    fun clampToSource(w: Int?, h: Int?, crop: PxSize): PxSize =
-        if (w == null || h == null) crop else PxSize(w.coerceIn(1, crop.width), h.coerceIn(1, crop.height))
+    /**
+     * Nie hochskalieren und NIE verzerren: ein gemeinsamer Faktor für beide Kanten (passt das Ziel nicht ins Verhältnis,
+     * gilt die engere Kante). Ohne Ziel = Ausschnitt. So bleibt auch ein älteres Rezept mit getrennten Werten unverzerrt.
+     */
+    fun clampToSource(w: Int?, h: Int?, crop: PxSize): PxSize {
+        if (w == null || h == null) return crop
+        val s = minOf(1.0, w.toDouble() / crop.width, h.toDouble() / crop.height).coerceAtLeast(1.0 / max(crop.width, crop.height))
+        return PxSize(max(1, (crop.width * s).roundToInt()), max(1, (crop.height * s).roundToInt()))
+    }
 }
 
 /**

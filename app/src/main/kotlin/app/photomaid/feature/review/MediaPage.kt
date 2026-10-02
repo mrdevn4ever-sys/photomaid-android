@@ -1,5 +1,6 @@
 package app.photomaid.feature.review
 
+import app.photomaid.playback.FitVideo
 import app.photomaid.design.glassRect
 import app.photomaid.design.PlainButton
 import app.photomaid.design.ProminentButton
@@ -164,8 +165,7 @@ fun MediaPage(
             val active = interactive && asset.kind == MediaKind.VIDEO && player.itemID == asset.id
             if (active && app.player.player != null) {
                 // Ohne bekannte Maße wie bisher: Player in sein Seitenverhältnis einpassen, nie strecken.
-                PlayerSurface(app.player.player, if (knownRatio) Modifier.fillMaxSize() else Modifier.align(Alignment.Center).fillMaxWidth()
-                    .aspectRatio(ratio, matchHeightConstraintsFirst = tall), surfaceType = SURFACE_TYPE_SURFACE_VIEW)
+                FitVideo(app.player.player!!, Modifier.fillMaxSize())
             } else {
                 androidx.compose.runtime.key(retry) {
                     AsyncImage(

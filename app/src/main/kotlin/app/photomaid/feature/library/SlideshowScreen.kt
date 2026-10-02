@@ -63,6 +63,7 @@ import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.compose.PlayerSurface
 import androidx.media3.ui.compose.SURFACE_TYPE_SURFACE_VIEW
+import app.photomaid.playback.FitVideo
 import app.photomaid.R
 import app.photomaid.core.library.Slideshow
 import app.photomaid.core.library.SlideshowOrder
@@ -183,7 +184,7 @@ fun SlideshowScreen(req: SlideshowRequest, onClose: () -> Unit) {
                 AsyncImage(ImageRequest.Builder(LocalContext.current).data(a.uri).size(minOf(4096, w * 2), minOf(4096, h * 2)).memoryCacheKey("viewer:${a.id}").build(), null,
                     contentScale = ContentScale.Fit, modifier = Modifier.fillMaxSize().testTag("slideshow.image"))
                 if (a.kind == MediaKind.VIDEO && player.itemID == a.id && app.player.player != null)
-                    PlayerSurface(app.player.player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_SURFACE_VIEW)
+                    FitVideo(app.player.player!!, Modifier.fillMaxSize())
             }
         }
         AnimatedVisibility(controls || paused || finished, Modifier.fillMaxSize(), enter = fadeIn(), exit = fadeOut()) {
