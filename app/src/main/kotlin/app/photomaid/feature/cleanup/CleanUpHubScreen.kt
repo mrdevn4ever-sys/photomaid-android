@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.rounded.BarChart
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Screenshot
@@ -129,6 +130,9 @@ fun CleanUpHubScreen(nav: Nav) {
                         RowDivider(RowDividerInset)
                         ListRow(Icons.Rounded.CalendarMonth, stringResource(R.string.months_title), Modifier.testTag("hub.months"), tint = c.earth,
                             tile = c.earth.copy(alpha = 0.13f), subtitle = stringResource(R.string.hub_months_sub), enabled = access.canRead) { nav.push(Routes.MONTHS) }
+                        RowDivider(RowDividerInset)
+                        ListRow(Icons.Outlined.Edit, stringResource(R.string.edits_title), Modifier.testTag("hub.edits"), tint = c.accent,
+                            tile = c.accent.copy(alpha = 0.13f), subtitle = stringResource(R.string.hub_edits_sub), enabled = access.canRead) { nav.push(Routes.EDITS) }
                     }
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {

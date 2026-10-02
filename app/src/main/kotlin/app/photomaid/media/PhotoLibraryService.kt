@@ -97,6 +97,29 @@ object MediaPermissions {
     }
 }
 
+/** Speichern einer bearbeiteten Fassung (Datei liegt fertig im Cache). */
+data class EditSaveRequest(
+    val sourceId: String,
+    val file: java.io.File,
+    val mime: String,
+    val displayName: String,
+    /** Gewünschter Ordner (der des Originals); ungeeignete Ordner → `Pictures/PhotoMaid/` bzw. `Movies/PhotoMaid/`. */
+    val relativePath: String?,
+    val dateTakenMs: Long?,
+    val video: Boolean,
+    /** `true` = Original ersetzen: danach Original in den Android-Papierkorb (Systembestätigung). */
+    val replace: Boolean,
+    val favorite: Boolean,
+    /** Bei Ersetzen: Name, den die neue Datei nach dem Papierkorb des Originals bekommt. */
+    val replaceName: String?,
+)
+
+sealed interface EditSaveResult {
+    /** [replaced] = Original liegt im Android-Papierkorb; `false` bei Kopie oder abgelehnter Papierkorb-Bestätigung. */
+    data class Saved(val newId: String, val replaced: Boolean, val replaceDeclined: Boolean, val bytes: Long) : EditSaveResult
+    data class Failed(val reason: String) : EditSaveResult
+}
+
 /** Ergebnis eines Schreibwunschs an die Mediathek (Favorit, Verschieben). Erfolg nur nach erneutem Lesen. */
 sealed interface MediaWriteResult {
     data object Done : MediaWriteResult
@@ -156,6 +179,15 @@ interface MediaLibrary {
     /** Mehrere Medien mit EINER Systembestätigung als Favorit markieren/entmarkieren; Ergebnis je Medium nach erneutem Lesen. */
     suspend fun setFavoriteMany(ids: List<String>, favorite: Boolean): Map<String, MediaWriteResult> =
         ids.associateWith { setFavorite(it, favorite) }
+
+    /** Bearbeitete Fassung als neue Datei speichern (atomar, erst nach vollständigem Schreiben sichtbar). */
+    suspend fun saveEdited(request: EditSaveRequest): EditSaveResult = EditSaveResult.Failed("unsupported")
+
+    /** Medium aus dem Android-Papierkorb zurückholen (Systembestätigung). `Done` nur, wenn danach belegt. */
+    suspend fun restoreFromTrash(id: String): MediaWriteResult = MediaWriteResult.Failed("unsupported")
+
+    /** Liegt das Medium im Android-Papierkorb? `null` = unbekannt. */
+    fun isTrashed(id: String): Boolean? = null
 }
 
 /**
@@ -430,6 +462,56 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         bumpChangeToken()
         return out
     }
+
+    override suspend fun saveEdited(request: EditSaveRequest): EditSaveResult = withContext(Dispatchers.IO) {
+        val col = collection(request.video)
+        val top = setOf("DCIM", "Pictures") + if (request.video) setOf("Movies") else emptySet()
+        val wanted = request.relativePath?.let { MediaFolders.normalize(it) }?.takeIf { p -> p.substringBefore('/') in top && !p.split('/').any { it.startsWith(".") } }
+        val path = wanted ?: if (request.video) "Movies/PhotoMaid/" else "Pictures/PhotoMaid/"
+        val values = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, request.displayName)
+            put(MediaStore.MediaColumns.MIME_TYPE, request.mime)
+            put(MediaStore.MediaColumns.RELATIVE_PATH, path)
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
+            request.dateTakenMs?.let { put(MediaStore.MediaColumns.DATE_TAKEN, it) }
+        }
+        val uri = runCatching { resolver.insert(col, values) }.getOrNull() ?: return@withContext EditSaveResult.Failed("insert")
+        try {
+            resolver.openOutputStream(uri, "w")?.use { o -> request.file.inputStream().use { it.copyTo(o) } } ?: throw IllegalStateException("stream")
+            val done = ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0); if (request.favorite) put(MediaStore.MediaColumns.IS_FAVORITE, 1) }
+            if (runCatching { resolver.update(uri, done, null, null) }.getOrDefault(0) != 1)
+                resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }, null, null)
+            val bytes = readColumn(uri, MediaStore.MediaColumns.SIZE)?.toLongOrNull() ?: 0L
+            if (bytes <= 0L) throw IllegalStateException("empty")
+        } catch (e: Exception) {
+            runCatching { resolver.delete(uri, null, null) }
+            Log.w("PhotoMaid", "edit save failed: ${e.javaClass.simpleName}")
+            return@withContext EditSaveResult.Failed("write")
+        }
+        val bytes = readColumn(uri, MediaStore.MediaColumns.SIZE)?.toLongOrNull() ?: 0L
+        bumpChangeToken()
+        if (!request.replace) return@withContext EditSaveResult.Saved(uri.toString(), replaced = false, replaceDeclined = false, bytes = bytes)
+        // Ersetzen: Original in den Android-Papierkorb (30 Tage wiederherstellbar), erst dann den Namen übernehmen.
+        val outcome = withContext(Dispatchers.Main) { trash(listOf(request.sourceId)) }
+        val trashed = outcome == app.photomaid.core.cleanup.OperationOutcome.Succeeded
+        if (trashed && request.replaceName != null)
+            runCatching { resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.DISPLAY_NAME, request.replaceName) }, null, null) }
+        bumpChangeToken()
+        EditSaveResult.Saved(uri.toString(), replaced = trashed, replaceDeclined = !trashed, bytes = bytes)
+    }
+
+    override suspend fun restoreFromTrash(id: String): MediaWriteResult {
+        val request = runCatching { MediaStore.createTrashRequest(resolver, listOf(Uri.parse(id)), false) }
+            .getOrElse { return failed("untrash-request", it) }
+        val code = SystemDialogs.launch(request.intentSender) ?: return MediaWriteResult.Failed("no-activity")
+        if (code != Activity.RESULT_OK) return MediaWriteResult.Cancelled
+        return if (withContext(Dispatchers.IO) { isTrashed(id) } == false) MediaWriteResult.Done.also { bumpChangeToken() } else MediaWriteResult.Failed("untrash-unverified")
+    }
+
+    override fun isTrashed(id: String): Boolean? = runCatching {
+        val args = Bundle().apply { putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_INCLUDE) }
+        resolver.query(Uri.parse(id), arrayOf(MediaStore.MediaColumns.IS_TRASHED), args, null)?.use { c -> if (c.moveToFirst()) c.getInt(0) == 1 else null }
+    }.getOrNull()
 
     /** Nur Fehlerart loggen – keine URIs, Dateinamen oder Pfade. */
     private fun failed(step: String, e: Throwable): MediaWriteResult {

@@ -2,6 +2,7 @@ package app.photomaid
 
 import android.app.Activity
 import android.content.Context
+import android.net.Uri
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -43,7 +44,7 @@ import java.time.Instant
  * Entspricht den QA-Medien der iOS-Tests (`scripts/qa_media.swift`).
  */
 class FakeMediaLibrary(
-    context: Context,
+    private val context: Context,
     count: Int = 5,
     access: PhotoAccess = PhotoAccess.AUTHORIZED,
     videos: Int = 1,
@@ -143,6 +144,49 @@ class FakeMediaLibrary(
         removed += ids
         return OperationOutcome.Succeeded
     }
+
+    // Bearbeiten: neue Datei wie MediaStore (eigene ID), Ersetzen = Original in den (simulierten) Android-Papierkorb.
+    /** Antwort der simulierten Papierkorb-Bestätigung beim Ersetzen. */
+    var replaceConfirmed = true
+    val trashed = mutableSetOf<String>()
+    val saved = mutableListOf<app.photomaid.media.EditSaveRequest>()
+    override suspend fun saveEdited(request: app.photomaid.media.EditSaveRequest): app.photomaid.media.EditSaveResult {
+        val src = all.firstOrNull { it.id == request.sourceId } ?: return app.photomaid.media.EditSaveResult.Failed("gone")
+        val dir = File(context.cacheDir, "qa-edits").apply { mkdirs() }
+        val f = File(dir, "${base.size}_${request.displayName}")
+        request.file.copyTo(f, overwrite = true)
+        val o = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        android.graphics.BitmapFactory.decodeFile(f.absolutePath, o)
+        val a = src.copy(id = "file://${f.absolutePath}", displayName = request.displayName, mimeType = request.mime, size = KnownSize.Known(f.length()),
+            pixelWidth = if (o.outWidth > 0) o.outWidth else src.pixelWidth, pixelHeight = if (o.outHeight > 0) o.outHeight else src.pixelHeight,
+            isFavorite = request.favorite, creationDate = request.dateTakenMs?.let { Instant.ofEpochMilli(it) } ?: src.creationDate)
+        base = base + a
+        saved += request
+        var replaced = false; var declined = false
+        if (request.replace) { if (replaceConfirmed) { removed += src.id; trashed += src.id; replaced = true } else declined = true }
+        changeToken.value += 1
+        return app.photomaid.media.EditSaveResult.Saved(a.id, replaced, declined, f.length())
+    }
+    override fun isTrashed(id: String): Boolean? = if (id in trashed) true else if (all.any { it.id == id }) false else null
+    override suspend fun restoreFromTrash(id: String): MediaWriteResult {
+        if (id !in trashed) return MediaWriteResult.Failed("not-trashed")
+        if (writeResult != MediaWriteResult.Done) return writeResult
+        trashed -= id; removed -= id; changeToken.value += 1
+        return MediaWriteResult.Done
+    }
+}
+
+/** Video kürzen ohne Transformer (JVM): kopiert die Quelle, meldet Fortschritt. */
+class FakeVideoTrimmer(private val context: Context) : app.photomaid.media.VideoTrimmer {
+    val calls = mutableListOf<app.photomaid.core.edit.TrimRange>()
+    override suspend fun trim(uri: Uri, range: app.photomaid.core.edit.TrimRange, onProgress: (Float) -> Unit): File {
+        calls += range
+        onProgress(0.5f)
+        val out = File(context.cacheDir, "trim_${System.nanoTime()}.mp4")
+        File(uri.path!!).copyTo(out, overwrite = true)
+        onProgress(1f)
+        return out
+    }
 }
 
 class FakePurchaseGateway(state: PurchaseState) : PurchaseGateway {
@@ -193,7 +237,7 @@ fun makeTestApp(
     val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib }, adsOverride = ads, feedAdsOverride = feedAds)
     app.loadBlocking()
     if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false, gestureHintSeen = true, todayTourSeen = true, feedTourSeen = true,
-        monthsTourSeen = true, seriesTourSeen = true, gridTourSeen = true) }
+        monthsTourSeen = true, seriesTourSeen = true, gridTourSeen = true, editorTourSeen = true) }
     configure(app)
     app.reload()
     app.start()
@@ -204,6 +248,7 @@ class RecordingNav : Nav {
     val events = mutableListOf<String>()
     override fun openFeed(request: FeedRequest) { events += "feed:${request.source}"; requests += request }
     override fun openGrid(request: FeedRequest) { events += "grid:${request.source}"; requests += request }
+    override fun openEditor(assetId: String) { events += "editor:$assetId" }
     val requests = mutableListOf<FeedRequest>()
     override fun openSettings() { events += "settings" }
     override fun openPro() { events += "pro" }

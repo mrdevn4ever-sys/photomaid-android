@@ -15,6 +15,8 @@ import androidx.lifecycle.viewModelScope
 import app.photomaid.AppModel
 import app.photomaid.FeedRequest
 import app.photomaid.R
+import app.photomaid.feature.editor.EditOutcome
+import app.photomaid.design.SizeText
 import app.photomaid.core.feed.BackNavigation
 import app.photomaid.core.feed.FeedGestureMachine
 import app.photomaid.core.feed.FeedIntent
@@ -165,6 +167,29 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         viewModelScope.launch { load() }
         // Externe Änderungen (Favorit in der Galerie, Verschieben, Löschen): sichtbares Fenster frisch lesen.
         viewModelScope.launch { app.photos.changeToken.drop(1).collectLatest { if (isLoaded) refreshWindowAssets() } }
+        // Gespeicherte Bearbeitung (Editor): bei „Original ersetzen“ die neue Fassung an dieselbe Stelle setzen, kurzer Hinweis.
+        viewModelScope.launch { app.editEvents.collect { onEdited(it) } }
+    }
+
+    private suspend fun onEdited(o: EditOutcome) {
+        val saved = o as? EditOutcome.Saved ?: return
+        val old = ItemReference.photo(saved.sourceId)
+        if (saved.replaced && old in session.items) {
+            withContext(Dispatchers.IO) { app.photos.assets(listOf(saved.newId)) }.firstOrNull()?.let { assets[it.id] = it }
+            if (saved.newId in assets) {
+                session.replaceItem(old, ItemReference.photo(saved.newId))
+                previews.remove(old)
+                refreshWindow()
+                touch()
+            }
+        }
+        val size = if (saved.bytes > 0) SizeText.bytes(saved.bytes) else null
+        showNotice(when {
+            saved.replaced -> app.string(R.string.edit_done_replaced)
+            saved.replaceDeclined -> app.string(R.string.edit_done_declined)
+            size != null -> app.string(R.string.edit_done_copy_size, size)
+            else -> app.string(R.string.edit_done_copy)
+        })
     }
 
     private suspend fun refreshWindowAssets() {

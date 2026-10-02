@@ -29,6 +29,7 @@ import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.outlined.Folder
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material.icons.rounded.PushPin
 import androidx.compose.material.icons.rounded.Info
@@ -102,10 +103,14 @@ fun FeedActionBar(
     onSeries: () -> Unit = {},
     onExcludeFolder: (() -> Unit)? = null,
     onGrid: (() -> Unit)? = null,
+    /** Stift-Symbol: Editor öffnen (jedes Foto/Video, egal ob schon entschieden). Nie eine Entscheidung. */
+    onEdit: (() -> Unit)? = null,
 ) {
     val c = PM.colors
     val enabled = asset != null && !busy
     var menu by remember { mutableStateOf(false) }
+    // Schmale Telefone (< 360 dp): Leiste bleibt einzeilig, „Teilen“ wandert ins ⋯-Menü.
+    val narrow = androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp < 360 && onEdit != null
     Box(modifier.fillMaxWidth().testTag("feed.actions")) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
             Row(Modifier.coachTarget("feed.actions").glassCapsule(elevation = 2.dp).padding(horizontal = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
@@ -113,11 +118,15 @@ fun FeedActionBar(
                 ActionIcon(if (fav) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
                     stringResource(if (fav) R.string.fav_remove else R.string.fav_add), if (fav) c.cleanup else c.textPrimary, enabled,
                     Modifier.testTag("action.favorite"), state = stringResource(if (fav) R.string.fav_state_on else R.string.fav_state_off), onClick = onFavorite)
-                ActionIcon(Icons.Rounded.Share, stringResource(R.string.share), c.textPrimary, asset != null, Modifier.testTag("action.share"), onClick = onShare)
+                if (!narrow) ActionIcon(Icons.Rounded.Share, stringResource(R.string.share), c.textPrimary, asset != null, Modifier.testTag("action.share"), onClick = onShare)
                 ActionIcon(Icons.Outlined.Folder, stringResource(R.string.folder_action), c.textPrimary, enabled, Modifier.testTag("action.folder"), onClick = onFolder)
+                if (onEdit != null) ActionIcon(Icons.Outlined.Edit, stringResource(R.string.edit_action), c.textPrimary, enabled,
+                    Modifier.testTag("action.edit").coachTarget("feed.edit"), onClick = onEdit)
                 Box {
                     ActionIcon(Icons.Rounded.MoreHoriz, stringResource(R.string.more_actions), c.textPrimary, true, Modifier.testTag("action.more")) { menu = true }
                     DropdownMenu(menu, onDismissRequest = { menu = false }) {
+                        if (narrow) DropdownMenuItem(text = { Text(stringResource(R.string.share)) }, leadingIcon = { Icon(Icons.Rounded.Share, null) },
+                            modifier = Modifier.testTag("action.share"), enabled = asset != null, onClick = { menu = false; onShare() })
                         DropdownMenuItem(text = { Text(stringResource(R.string.info)) }, leadingIcon = { Icon(Icons.Rounded.Info, null) },
                             enabled = asset != null, onClick = { menu = false; onInfo() })
                         DropdownMenuItem(text = { Text(stringResource(R.string.open_in_app)) }, leadingIcon = { Icon(Icons.AutoMirrored.Rounded.OpenInNew, null) },

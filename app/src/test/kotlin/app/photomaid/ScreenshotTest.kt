@@ -505,4 +505,48 @@ class ScreenshotTest {
     }
     @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n07_later_bookmarked() = expApp().let { shot("n07_later_bookmarked", it) { LaterScreen(nav) } }
     @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n08_hub_months() = expApp().let { shot("n08_hub", it) { WithTabBar(AppTab.CLEANUP) { CleanUpHubScreen(nav) } } }
+
+    // Editor (E1–E6). Visuelle Prüfung: Zuschneiden, Anpassen, Filter (Free mit Pro-Hinweis), Größe, Speichern-Blatt,
+    // Video kürzen, Liste „Bearbeitet“, schmale Aktionsleiste (Teilen im ⋯-Menü).
+    private fun editor(name: String, a: AppModel, i: Int = 0, after: () -> Unit = {}) {
+        val id = lib.all[i].id
+        a.editEngine.io = kotlinx.coroutines.Dispatchers.Main
+        rule.setContent { TestHost(a) { app.photomaid.feature.editor.EditorScreen(id, nav, onClose = {}) } }
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.stage").fetchSemanticsNodes().isNotEmpty() || rule.onAllNodesWithTag("trim.timeline").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitForIdle()
+        after()
+        Thread.sleep(200); rule.waitForIdle()
+        captureScreenRoboImage("build/outputs/roborazzi/$name.png")
+    }
+    private fun tap(tag: String) { rule.onNodeWithTag(tag).performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick); rule.waitForIdle() }
+
+    @Test fun e01_editor_crop() = expApp(pro = true).let { editor("e01_editor_crop", it, i = 1) { tap("aspect.R4_5") } }
+    @Test fun e02_editor_crop_dark() = expApp(pro = true, dark = true).let { editor("e02_editor_crop_dark", it, i = 1) { tap("editor.rotate") } }
+    @Test fun e03_editor_adjust() = expApp(pro = true).let { editor("e03_editor_adjust", it, i = 1) { tap("tab.ADJUST"); tap("adjust.WARMTH") } }
+    @Test fun e04_editor_filter_free() = expApp().let { editor("e04_editor_filter_free", it, i = 1) { tap("tab.FILTER"); tap("filter.MONO") } }
+    @Test fun e05_editor_resize() = expApp(pro = true).let { editor("e05_editor_resize", it, i = 1) { tap("tab.RESIZE") } }
+    @Test fun e06_editor_save_sheet() = expApp(pro = true).let { editor("e06_editor_save_sheet", it, i = 1) {
+        tap("editor.rotate"); tap("editor.save")
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.sheet.save").fetchSemanticsNodes().isNotEmpty() }
+    } }
+    @Test fun e07_editor_save_sheet_pro() = expApp().let { editor("e07_editor_save_sheet_pro", it, i = 1) {
+        tap("editor.rotate"); tap("tab.FILTER"); tap("filter.WARM"); tap("editor.save")
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.sheet.pro").fetchSemanticsNodes().isNotEmpty() }
+    } }
+    @Test fun e08_editor_trim() = expApp(pro = true).let { a -> editor("e08_editor_trim", a, i = lib.all.indexOfFirst { it.kind == app.photomaid.core.model.MediaKind.VIDEO }) }
+    @Test @Config(qualifiers = "ar-w393dp-h852dp-xxhdpi") fun e09_editor_rtl() = expApp(pro = true).let { editor("e09_editor_rtl", it, i = 1) { tap("tab.ADJUST") } }
+    @Test fun e10_edits_list() = expApp().let { a ->
+        runBlocking(kotlinx.coroutines.Dispatchers.IO) {
+            val x = lib.all[1]; val y = lib.all[3]
+            app.photomaid.feature.editor.EditSaver.savePhoto(a, x, app.photomaid.core.edit.EditRecipe(quarterTurns = 1), a.editEngine.loadPreview(x.uri, x.mimeType).full,
+                app.photomaid.core.edit.SaveMode.REPLACE, false)
+            app.photomaid.feature.editor.EditSaver.savePhoto(a, y, app.photomaid.core.edit.EditRecipe(filter = app.photomaid.core.edit.FilterId.SEPIA), a.editEngine.loadPreview(y.uri, y.mimeType).full,
+                app.photomaid.core.edit.SaveMode.COPY, false)
+        }
+        shot("e10_edits_list", a, waitTag = "edits") { app.photomaid.feature.editor.EditsScreen(nav) }
+    }
+    @Test @Config(qualifiers = "w320dp-h640dp-xxhdpi") fun e11_feed_actions_320() = expApp().let { a ->
+        shot("e11_feed_actions_320", a, waitTag = "feed.media.ready") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) }
+    }
 }
+

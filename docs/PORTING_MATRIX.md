@@ -172,3 +172,18 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Album | nur „In Ordner verschieben“ (`createWriteRequest` + `RELATIVE_PATH`) | Android hat kein universelles Album-API; iOS hätte echte Alben (`PHAssetCollection`) |
 | Papierkorb-Vorschau, Limit vor Bestätigung | neu | Masterprompt §15/§16 |
 | Entitlements | `FREE`/`TEMPORARY_PRO`/`LIFETIME_PRO` explizit | fachlich identisch zu iOS (Vorschau ändert Limit nicht) |
+
+## Editor 2026-10 (Android zuerst, iOS noch offen)
+
+| Thema | Android | Grund |
+|---|---|---|
+| Einstieg | Stift-Symbol in der Aktionsleiste (♡ · Teilen · Ordner · ✏️ · ⋯), unter 360 dp „Teilen“ im ⋯-Menü | Produktentscheidung 2026-10-02 |
+| Speichern | „Original behalten“ (Kopie, gleicher Ordner, `IS_PENDING`) oder „Original ersetzen“ = neue Datei + Original per `createTrashRequest` in den Android-Papierkorb (B1) | Android kann Dateien nicht sicher in-place ersetzen; iOS hätte `PHContentEditingOutput` (Original bleibt in Fotos rücksetzbar) |
+| Ersetzen und Tageslimit | zählt **nicht** zum Limit (kein Aufräumen) | Produktentscheidung |
+| Ledger | neue Fassung = „Behalten“; ersetztes Original verlässt Papierkorb/Später | Produktentscheidung 2026-10-02 |
+| Verlustfreies Drehen | JPEG: nur EXIF-Ausrichtung (`ExifOrientationMath`) | Plattformgrenze (iOS ändert Ausrichtung im Edit-Output) |
+| HEIC | Ausgabe JPEG (Hinweis) | kein verlässlicher HEIC-Encoder auf allen Geräten |
+| Ultra-HDR | Gain-Map bei reiner Geometrie übernommen, bei Farbänderungen Hinweis | API 34 |
+| Free/Pro | Zuschneiden/Drehen/Spiegeln/Begradigen + beide Speicherarten frei; Regler, Filter, Größe, Video kürzen speichern mit Pro oder 30-Minuten-Test (Vorschau frei, „Nur Zuschnitt speichern“) | Produktentscheidung 2026-10-02 |
+| Video kürzen | Media3 Transformer mit Trim-Optimierung | — |
+

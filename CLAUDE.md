@@ -21,7 +21,8 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 - Keine Entscheidungs-Buttons im Feed – außer bei TalkBack/Schaltersteuerung oder wenn der Nutzer die Bedienungshilfe
   „Tasten zum Entscheiden“ einschaltet (Einstellungen, Standard aus; Produktentscheidung 2026-10-02). Tasten rufen exakt
   `FeedViewModel.perform` auf (derselbe Weg wie die Geste). Unter dem Medium sitzt die kompakte
-  Aktionsleiste ♡ Favorit · Teilen · In Ordner verschieben · ⋯ – außerhalb der Gestenfläche, nie eine Entscheidung.
+  Aktionsleiste ♡ Favorit · Teilen · In Ordner verschieben · ✏️ Bearbeiten · ⋯ – außerhalb der Gestenfläche, nie eine
+  Entscheidung (unter 360 dp wandert „Teilen“ ins ⋯-Menü).
 - Favoriten = MediaStore-Systemfavoriten (`createFavoriteRequest`), „Favoriten schützen“ (Standard an): Wisch nach
   links auf einen Favoriten fragt nach. „Album“ gibt es als Systembegriff nicht: nur „In Ordner verschieben“.
 - Schnellzugriffe auf „Heute“ (max. 6, Standard Fotos + Videos) sind nur Abfragen (`QuickAccessItem`, gespeichert ohne
@@ -49,6 +50,13 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   - Raster/Mehrfachauswahl und Verschieben sind NIE eine Entscheidung (kein Ledger-Eintrag). Reihenfolge ändert nur die Abfolge.
   - Ordner-Dateien: ab Android 17 (API 37) mit `FLAG_SUPPORTS_TRASH` per `DocumentsContract.trashDocument` in den Papierkorb
     des Speicherorts, sonst endgültig mit Warnung.
+
+- Editor (2026-10, `feature/editor/`, Kern `core/.../edit/`): nicht destruktives Rezept (`EditRecipe`), Vorschau = Export
+  (gleiche Geometrie/Farbmatrix). Speichern nur als neue Datei: „Original behalten“ (Kopie) oder „Original ersetzen“
+  (Original per `createTrashRequest` in den Android-Papierkorb, wiederherstellbar in „Bearbeitet“) – nie überschreiben.
+  Gespeicherte Fassung = „Behalten“; Ersetzen zählt nicht zum Tageslimit. Vorauswahl = zuletzt gewählt (`editSaveMode`).
+  Free: Zuschneiden/Drehen/Spiegeln/Begradigen; Regler, Filter, Größe, Video kürzen speichern nur mit `hasProToolsAccess`
+  (Vorschau frei). Nie hochskalieren, keine Größenschätzung vor dem Speichern, keine Werbung im Editor.
 
 ## Verbote
 

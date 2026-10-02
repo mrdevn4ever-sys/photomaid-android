@@ -1,6 +1,8 @@
 package app.photomaid.navigation
 
 import app.photomaid.feature.months.MonthsScreen
+import app.photomaid.feature.editor.EditorScreen
+import app.photomaid.feature.editor.EditsScreen
 import app.photomaid.feature.grid.MediaGridScreen
 import app.photomaid.feature.settings.ExcludedFoldersScreen
 import app.photomaid.design.CoachStep
@@ -122,6 +124,8 @@ interface Nav {
     fun openFeed(request: FeedRequest)
     /** Raster-Übersicht derselben Quelle (Auswählen, mehrere verschieben). */
     fun openGrid(request: FeedRequest) {}
+    /** Editor für ein Medium (Stift-Symbol in der Aktionsleiste). Nie eine Entscheidung. */
+    fun openEditor(assetId: String) {}
     fun openSettings()
     fun openPro()
     fun openPrivacy()
@@ -136,7 +140,8 @@ object Routes {
     const val MAIN = "main"; const val FEED = "feed/{id}"; const val SETTINGS = "settings"; const val PRO = "pro"
     const val PRIVACY = "privacy"; const val HELP = "help"; const val BASKET_MODAL = "basketModal"
     const val SOURCES_MODAL = "sourcesModal"; const val EXCLUDED = "excluded"; const val MONTHS = "months"
-    const val GRID = "grid/{id}"
+    const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"
+    fun editor(id: String) = "editor/$id"
     fun grid(id: String) = "grid/$id"
     fun feed(id: String) = "feed/$id"
 }
@@ -152,6 +157,11 @@ enum class AppTab(val route: String, val label: Int, val icon: ImageVector) {
 /** Offene Feed-Anfragen (Aufgaben/Itemlisten sind zu groß für Routenargumente). */
 object FeedRequests {
     val map = mutableStateMapOf<String, FeedRequest>()
+}
+
+/** Offene Editor-Aufrufe (Medien-IDs sind Content-URIs und taugen nicht als Routenargument). */
+object EditorRequests {
+    val map = mutableStateMapOf<String, String>()
 }
 
 @Composable
@@ -211,6 +221,9 @@ private fun RootNav(app: AppModel) {
         object : Nav {
             override fun openFeed(request: FeedRequest) { FeedRequests.map[request.id] = request; root.navigate(Routes.feed(request.id)) }
             override fun openGrid(request: FeedRequest) { FeedRequests.map[request.id] = request; root.navigate(Routes.grid(request.id)) }
+            override fun openEditor(assetId: String) {
+                val key = java.util.UUID.randomUUID().toString(); EditorRequests.map[key] = assetId; root.navigate(Routes.editor(key))
+            }
             override fun openSettings() = root.navigate(Routes.SETTINGS)
             override fun openPro() = root.navigate(Routes.PRO)
             override fun openPrivacy() = root.navigate(Routes.PRIVACY)
@@ -257,6 +270,17 @@ private fun RootNav(app: AppModel) {
             val req = entry.arguments?.getString("id")?.let { FeedRequests.map[it] }
             if (req == null) LaunchedEffect(entry) { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
             else MediaGridScreen(req, nav, onClose = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() })
+        }
+        composable(Routes.EDITOR) { entry ->
+            val key = entry.arguments?.getString("id")
+            val assetId = key?.let { EditorRequests.map[it] }
+            DisposableEffect(entry) {
+                val obs = LifecycleEventObserver { _, e -> if (e == Lifecycle.Event.ON_DESTROY) key?.let { EditorRequests.map.remove(it) } }
+                entry.lifecycle.addObserver(obs)
+                onDispose { entry.lifecycle.removeObserver(obs) }
+            }
+            if (assetId == null) LaunchedEffect(entry) { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            else EditorScreen(assetId, nav, onClose = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() })
         }
         composable(Routes.PRO) { ProScreen(nav) }
         composable(Routes.PRIVACY) { PrivacyAccessScreen(onboarding = false, onDone = { root.popBackStack() }) }
@@ -323,6 +347,7 @@ private fun MainTabs(rootNav: Nav) {
                     composable("${t.name}/${Routes.STORAGE}") { StorageInsightsScreen(nav) }
                     composable("${t.name}/${Routes.LATER}") { LaterScreen(nav) }
                     composable("${t.name}/${Routes.MONTHS}") { MonthsScreen(nav) }
+                    composable("${t.name}/${Routes.EDITS}") { EditsScreen(nav) }
                 }
             }
         }

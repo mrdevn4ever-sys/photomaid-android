@@ -150,6 +150,20 @@ class FeedSession(val id: ReviewSessionID = ReviewSessionID(), items: List<ItemR
         items = items.take(index) + sorted
     }
 
+    /**
+     * Bearbeitet und „Original anpassen“: das ersetzte Medium an derselben Stelle gegen die neue Datei tauschen.
+     * Keine Entscheidung (die neue Datei ist im Ledger bereits „Behalten“); die Zählung der Sitzung bleibt unverändert.
+     */
+    fun replaceItem(old: ItemReference, new: ItemReference) {
+        if (pending != null || old == new || new in items) return
+        val i = items.indexOf(old)
+        if (i < 0) return
+        items = items.toMutableList().also { it[i] = new }
+        decisions.remove(old)?.let { decisions[new] = it }
+        previewReady.remove(old)
+        if (receipt?.item == old) receipt = null
+    }
+
     /** Außerhalb des Wischens getroffene Entscheidung (Serienauswahl) für die Zusammenfassung zählen. */
     fun recordDecision(item: ItemReference, intent: FeedIntent) {
         if (intent.isDecision) decisions[item] = intent

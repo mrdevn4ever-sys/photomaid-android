@@ -46,6 +46,17 @@ Löschen von Dateien: ausschließlich `DocumentsContract.deleteDocument` in vom 
   betreffen – PhotoMaid kann das nicht einsehen. ✔
 - Nicht verwendet: „100 % offline“, „100 % privat“.
 
+## Editor (2026-10)
+
+| Daten | Wo | Zweck | Verlässt das Gerät? |
+|---|---|---|---|
+| Bearbeitete Fassung (neue Datei) | MediaStore, Ordner des Originals | Ergebnis der Bearbeitung | nein (nur wenn die Galerie/Cloud-App sie selbst sichert) |
+| Liste „Bearbeitet“ (`edits.v1`: neue/alte Medien-ID, Art, Zeitpunkt; max. 500) | App-Speicher | Kennzeichen und „Original wiederherstellen“ | nein |
+| Zwischendateien beim Export | App-Cache, sofort gelöscht | Kodieren vor dem atomaren Einfügen | nein |
+| EXIF (Datum, Kamera, Belichtung, Ort) | in der neuen Datei | wie im Original; „Standort entfernen“ entfernt GPS | nein |
+
+Keine Bildanalyse, keine automatischen Werte, keine Werbung im Editor; Werbe-Anfragen erhalten nie Medien, Namen, Pfade oder IDs.
+
 ## Entwurf „Datensicherheit“ (Play Console) – vom Inhaber zu bestätigen
 
 - Erfasste Daten: **keine** durch den Entwickler (Käufe werden von Google Play verarbeitet).

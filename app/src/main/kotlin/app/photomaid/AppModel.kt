@@ -109,6 +109,11 @@ class AppModel(
     val feedAds: app.photomaid.ads.FeedAdSource = feedAdsOverride ?: if (useAdMob) app.photomaid.ads.AdMobFeedAds(context, adSdk) else app.photomaid.ads.NoFeedAds
     val feedAdCounter = app.photomaid.ads.FeedAdsStore(store)
     val collections = CollectionsStore(store)
+    /** Bearbeiten (lokal): Bild-Engine, Video-Schnitt, Liste „Bearbeitet“, Ergebnis-Meldungen an den Feed. */
+    val editEngine = app.photomaid.media.ImageEditEngine(context)
+    var videoTrimmer: app.photomaid.media.VideoTrimmer = app.photomaid.media.Media3VideoTrimmer(context)
+    val edits = app.photomaid.feature.editor.EditStore(store)
+    val editEvents = kotlinx.coroutines.flow.MutableSharedFlow<app.photomaid.feature.editor.EditOutcome>(extraBufferCapacity = 8)
     val quickAccess = app.photomaid.feature.quickaccess.QuickAccessStore(store)
 
     private val _read = MutableStateFlow(LedgerReadModel())
@@ -131,6 +136,7 @@ class AppModel(
         }
         sources.load()
         collections.load()
+        edits.load()
         quickAccess.load()
         feedAdCounter.load()
         entitlements.load()

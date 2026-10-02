@@ -60,4 +60,7 @@ data class AppSettingsData(
     val monthsTourSeen: Boolean = false,
     val seriesTourSeen: Boolean = false,
     val gridTourSeen: Boolean = false,
+    /** Zuletzt gewählte Speicherart im Editor (Standard beim ersten Mal: Kopie, Original bleibt). */
+    val editSaveMode: app.photomaid.core.edit.SaveMode = app.photomaid.core.edit.SaveMode.COPY,
+    val editorTourSeen: Boolean = false,
 )

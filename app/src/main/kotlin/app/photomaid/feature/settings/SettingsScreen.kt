@@ -214,7 +214,7 @@ fun HelpScreen(nav: Nav) {
                 PlainButton(stringResource(R.string.help_tours_again), Modifier.testTag("help.tours")) {
                     scope.launch {
                         app.updateSettings { it.copy(todayTourSeen = false, feedTourSeen = false, monthsTourSeen = false, seriesTourSeen = false,
-                            gridTourSeen = false, gestureHintSeen = false) }
+                            gridTourSeen = false, editorTourSeen = false, gestureHintSeen = false) }
                         reset = true
                     }
                 }

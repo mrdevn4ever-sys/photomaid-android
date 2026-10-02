@@ -320,6 +320,7 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                                         .onFailure { model.errorMessage = openFailed }
                                 }
                             },
+                            onEdit = { asset?.let { a -> app.player.stop(); nav.openEditor(a.id) } },
                             onHints = ::flashHints, openBasket = openBasket)
                     }
                 }

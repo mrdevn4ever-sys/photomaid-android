@@ -183,5 +183,19 @@ Jeder Schritt endet mit grünen Tests, perf-Build, Commit und Gerätetest-Prompt
 1. „Original anpassen“ = **B1 Ersetzen** (neue Datei + Original in den Android-Papierkorb). ✔
 2. Gespeicherte Kopie gilt automatisch als „Behalten“ (eigener Verlaufseintrag `EDIT_SAVED`). ✔
 3. Free/Pro wie Abschnitt 5. ✔
-4. Vorauswahl im Speichern-Blatt: **offen** (Empfehlung: zuletzt gewählte Option, beim ersten Mal „Original behalten“).
+4. Vorauswahl im Speichern-Blatt: zuletzt gewählte Speicherart (`editSaveMode`), beim ersten Mal „Original behalten“. ✔
 5. Bearbeiten für jedes Medium über das Stift-Symbol in der Aktionsleiste. ✔
+
+## 10. Umsetzungsstand (2026-10-02)
+
+E1–E6 umgesetzt. Abweichungen vom Plan:
+- Liste „Bearbeitet“ liegt im KeyValueStore (`edits.v1`, max. 500) statt einer Room-Migration – keine Schemaänderung nötig.
+- Ledger: kein eigener `HistoryKind`; die neue Fassung bekommt eine normale „Behalten“-Entscheidung, das ersetzte Original
+  verlässt Papierkorb/Später (Unmark/RemoveDeferral).
+- Schärfen läuft auf der CPU (in Streifen) statt über `RuntimeShader`; Farbe live über die GPU (`ColorFilter.colorMatrix`).
+- „Parallel geändert“: geprüft wird, ob das Original vor dem Speichern noch existiert; ein Vergleich von `DATE_MODIFIED`
+  folgt, sobald `MediaAsset` das Feld trägt.
+- Video kürzen läuft im Vordergrund des Editors (Fortschritt, Abbrechen); Weiterlaufen nach Verlassen der App ist offen.
+
+Prüfstatus: siehe Commit/Bericht (JVM PASS/FAIL je Lauf). Gerätetest: NOT RUN.
+

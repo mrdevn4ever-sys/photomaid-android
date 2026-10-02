@@ -40,6 +40,8 @@ import org.robolectric.annotation.GraphicsMode
 @OptIn(ExperimentalTestApi::class)
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
+// Normale Telefonbreite: unter 360 dp liegt „Teilen“ im ⋯-Menü (eigener Test in EditorTest).
+@org.robolectric.annotation.Config(qualifiers = "+w393dp-h852dp")
 class FeedActionsTest {
     @get:Rule val rule = createAndroidComposeRule<ComponentActivity>()
     private lateinit var app: AppModel
