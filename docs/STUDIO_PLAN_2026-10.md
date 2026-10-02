@@ -240,6 +240,8 @@ Perf-Build, Commit, Gerätetest-Prompt. Geräte-Pflicht ab S4: Export-Zeiten 108
 | P1 Fundament | fertig | be0fce4 |
 | P2 Ebenen | fertig | 7799145 |
 | P3 Collage + Studio-Tab + Medienauswahl + Entwürfe | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) | 3b2695a |
-| P4 Perspektive, Farbmischer, Retusche (Kreis/Verlauf/Pinsel), Rote Augen | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) | dieser Stand |
-| P5–P7 | offen | – |
+| P4 Perspektive, Farbmischer, Retusche (Kreis/Verlauf/Pinsel), Rote Augen | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) | 7df02f7 |
+| P5 Video-Editor | in Arbeit | – |
+| G1–G4 Mediathek (Tab „Fotos“, Ordnerbaum, Suche, Player, Diashow, Papierkorb, RAW) | geplant, siehe `GALLERY_PLAN_2026-10.md` | – |
+| P6–P7 | offen (nach G1–G4) | – |
 
