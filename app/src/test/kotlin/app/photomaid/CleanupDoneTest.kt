@@ -50,10 +50,10 @@ class CleanupDoneTest {
         // FakeMediaLibrary: 2,4 MB + 2,5 MB = 4,9 MB, nur die beiden entfernten.
         rule.onNodeWithTag("done.saved").assertExists()
         rule.onNodeWithText("4,9").assertExists(); rule.onNodeWithText("MB").assertExists()
-        rule.onNodeWithText("aussortiert").assertExists()
+        rule.onNodeWithText("gespart").assertExists()
         rule.onNodeWithText("2 Fotos und Videos liegen jetzt im Android-Papierkorb.").assertExists()
         rule.onNodeWithText("Papierkorb geleert").assertExists()
-        rule.onNodeWithText("4,9 MB insgesamt aussortiert").assertExists()
+        rule.onNodeWithText("4,9 MB insgesamt gespart").assertExists()
         rule.onNodeWithText("Fotos und Videos liegen jetzt im Android-Papierkorb. Speicher wird erst frei, wenn sie dort endgültig gelöscht werden.").assertExists()
         assertEquals(4_900_000L, app.settings.value.savedTotalBytes)
         assertFalse(app.settings.value.savedTotalLowerBound)

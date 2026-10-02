@@ -14,7 +14,7 @@ Verschieben/Vergleichen ist nie automatisch „Behalten“, Werbung nie mitten i
 
 | # | Änderung | Details | Free/Pro |
 |---|---|---|---|
-| 0.1 | „gespart“ ehrlich nach Vorgang | Medien (`createTrashRequest`, Android-Papierkorb): **„… MB werden frei“** + Hinweis (spätestens 30 Tage). Dateien (endgültig gelöscht): **„… MB gespart“**. Summe auf Heute/Gespart: „insgesamt frei gemacht“ nur aus endgültig gelöschten Dateien + „im Android-Papierkorb“ getrennt | – |
+| 0.1 | ~~„werden frei“~~ – **entschieden 2026-10-02: „gespart“ bleibt** | Umgesetzt: „gespart“ (de) / „saved“ (en) nach dem Leeren, der bestehende Hinweis „Speicher wird erst frei, wenn sie dort endgültig gelöscht werden“ bleibt. Keine weitere Änderung | – |
 | 0.2 | Werbeabstand | Takt bleibt 7 Entscheidungen, zusätzlich **mind. 60 s seit der letzten Karte** (`FeedAdPolicy.MIN_GAP_MS`). Nie in Vergleich (Phase 3), Mehrfachauswahl (Phase 4), Rückgängig oder zwischen Papierkorb und Android-Dialog | – |
 | 0.3 | Ordner vom Aufräumen ausnehmen | „Nicht beim Aufräumen anzeigen“ im Ordner-Menü (Schnellzugriff-Bearbeiten, Ordnerliste, ⋯ im Feed: „Diesen Ordner ausnehmen“). Ausgenommene Medien erscheinen in keinem Feed, keiner Zahl, keiner Monatsübersicht. Liste in Einstellungen › „Ausgenommene Ordner“ mit „Wieder anzeigen“. Gespeichert nur als Pfade (keine Medien-IDs) | Free |
 | 0.4 | Große Videos besser beurteilen | Große Dateien: Grenze direkt im Kopf änderbar (Chips 50 / 100 / 250 / 500 MB / eigene), Sortierung „Größte zuerst“ als Standard (gibt es schon). Zeilen zeigen bei Videos **Dauer · Größe · Auflösung**; Vorschau mit gut greifbarer Zeitleiste | Free |
@@ -120,7 +120,50 @@ Jede Phase endet mit grünen Tests, perf-Build, Commit und einem Gerätetest-Pro
 
 ## Offene Entscheidungen
 
-1. 0.1: „werden frei“ für Medien – empfohlen **ja**.
+1. ~~0.1: „werden frei“~~ – entschieden: **„gespart“** bleibt (2026-10-02).
 2. 0.2: Mindestabstand 60 s zusätzlich zum Takt 7 – empfohlen **ja** (sonst nur Takt 7 wie heute).
 3. Phase 2: Serienschwelle 10 s / mind. 3 Medien als Start – anpassbar nach Gerätetest.
 4. Phase 3: Raster-Umschalter auch im normalen Kategorie-Feed (Fotos/Videos) oder nur in Monat/Schnellzugriff?
+
+---
+
+## Ergänzung 2026-10-02: Ideen aus dem Tagescheck (geprüft gegen den Code)
+
+Stand der App: Commit 022b86e + Fallback Englisch/„gespart“. Prüfstatus: NOT RUN (nur Plan, nichts gebaut).
+
+### Schon vorhanden – nichts zu tun
+| Idee (Quelle) | Stand in PhotoMaid |
+|---|---|
+| Abschlusskontrolle vor dem Entfernen (PhotoSwooper) | Gibt es: Wischen legt nur in den PhotoMaid-Papierkorb; Leeren erst nach Vorschau + Bestätigung + Android-Dialog. Zusammenfassung zeigt „Papierkorb ansehen (n)“ |
+| Größe + bei Videos Dauer auf der Karte (Android-Doku) | Gibt es: Infozeile im Feed „Datum · Größe“, bei Videos zusätzlich Dauer (`ReviewFeedScreen` Infozeile, MediaStore-Spalten, offline). Unbekannte Größe wird nicht als 0 gezeigt |
+| Teilen vom aktuellen Bild (Swipelit) | Gibt es: Aktionsleiste „Teilen“ (Android-Teilen-Auswahl, kein Upload) |
+| Während des Wischens in Geräteordner verschieben (Sponge) | Gibt es: Aktionsleiste „In Ordner verschieben“ (`createWriteRequest`); schneller mit Phase 3.1 |
+| Videos als eigener Stapel (Swipelit) | Gibt es: Mediathek/Schnellzugriff „Videos“ |
+| Fortschritt, Pause und Weiter an derselben Stelle (Swipewipe) | Teilweise: Feed beginnt immer beim ersten offenen Medium. Monatsfortschritt + „Weitermachen“ sind schon als **Phase 1.1/1.2** geplant |
+
+### Neu in den Plan aufgenommen
+| # | Änderung | Details | Wert | Free/Pro |
+|---|---|---|---|---|
+| 0.5 | **Ordner-Dateien in den Papierkorb statt endgültig** (Android 17+) | `DocumentsContract.trashDocument` gibt es ab API 37 (geprüft in `android.jar` 36 vs. 37). Wenn das Dokument `FLAG_SUPPORTS_TRASH` meldet: Papierkorb statt `deleteDocument`, Text „liegt im Papierkorb des Speicherorts“; sonst wie heute endgültig mit deutlicher Warnung. Größen-/„gespart“-Logik unverändert. Tests mit Fake-Provider beider Fälle | hoch (Sicherheit) | Free |
+| 0.6 | **Fertige Sammlung „Fotos älter als 1 Jahr“** (Wiper) | Heute gibt es fertig nur „Videos älter als 1 Jahr“; für Fotos nur als eigene Sammlung (Pro). Fünfte fertige Sammlung `fixed(5)`, PHOTOS + `OlderThan(365)`, kostenlos | mittel | Free |
+| 1.4 | **Monat erneut durchsehen** (Swipewipe) | Durchgesehene Monate zeigen einen Haken (statt durchgestrichen); Menü „Erneut durchsehen“ öffnet alle Medien des Monats inkl. behaltener. Bestehende Entscheidungen bleiben, bis neu gewischt wird (ein Commit je Wisch). Nichts wird zurückgesetzt | mittel | Free |
+| 1.5 | **Später ohne Termin** („Lesezeichen“, Swipewipe) | In „Ändern“ der Später-Pille Option „Ohne Termin – ich hole es selbst“. Kommt nie automatisch zurück, steht in „Später“ unter „Ohne Termin“ mit „Zurück in den Stapel“. Core: `Later` mit `dueDay = null` als eigener Zustand, eigener Test, kein Erinnerungs-Push | mittel | Free |
+| 3.3 | **Reihenfolge im Feed** (Sponge) | Chip im Feed-Kopf: Neueste (Standard) · Älteste · Größte zuerst · Zufällig. Zufall mit festem Startwert je Sitzung, damit „runter“ stabil zurückführt. „Name“ nur in Dateien-Ordnern. Gemerkt je Quelle (ohne Medien-IDs) | mittel (Größte) / gering (Zufall) | Free |
+
+### Braucht deine Entscheidung (Regelkonflikt)
+| Idee | Problem | Empfehlung |
+|---|---|---|
+| Tasten statt/neben Wischen (Swiftly) | Widerspricht der festen Regel „Keine Entscheidungs-Buttons im Feed (nur TalkBack/Schaltersteuerung)“ | **Nur als Bedienungshilfe**: Einstellung „Tasten zum Entscheiden“ (Standard aus) unter Bedienungshilfen, Tasten außerhalb der Gestenfläche, gleicher Commit-Pfad wie Gesten. Sonst weglassen |
+
+### Release / Recht (Store-Schritte, kein App-Code)
+| # | Punkt | Was zu tun ist |
+|---|---|---|
+| R1 | Play-Richtlinie Foto-/Video-Berechtigungen | `READ_MEDIA_IMAGES/VIDEO` sind nur für Apps mit Kernfunktion „Medien verwalten“ erlaubt; der Photo Picker passt für einen Aufräumer nicht (ganze Mediathek nötig). In der Play Console die **Berechtigungs-Erklärung** ausfüllen (Begründung: Galerie aufräumen, alles lokal). Text vorbereiten aus `docs/PRIVACY_DATA_MAP.md` |
+| R2 | Datenschutz-URL + Data-Safety-Formular | Öffentliche Seite nötig (weiter offen). Grundlage `docs/PRIVACY_DATA_MAP.md`; Werbe-SDK (AdMob) und Kauf angeben |
+| R3 | Einwilligung EWR/UK/Schweiz | Erledigt im Code (UMP vor AdMob). Im AdMob-Konto die Einwilligungsnachricht (GDPR-Message) veröffentlichen, sonst keine Anzeigen |
+| R4 | Zielgruppe / Families | In der Play Console **keine Altersgruppe unter 13** wählen (Zielgruppe Erwachsene). Dann gilt die Families-Richtlinie nicht, kein Age-Screen nötig. Sollen Kinder Zielgruppe sein: nur zertifizierte Werbung, nicht personalisiert – nicht empfohlen |
+
+### Reihenfolge (ergänzt)
+0.5/0.6 kommen zu Phase 0 (klein–mittel), 1.4/1.5 zu Phase 1, 3.3 zu Phase 3; Tutorials (Phase 4) bekommen je einen Schritt
+für „Ohne Termin“ und „Reihenfolge“. Alle neuen Texte in allen 16 Sprachen (Deutsch + Englisch selbst, Rest als
+Übersetzungsliste).
