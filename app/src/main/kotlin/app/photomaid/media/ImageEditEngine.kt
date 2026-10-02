@@ -128,10 +128,12 @@ class ImageEditEngine(private val context: Context) {
         if (colorAndSharpen) {
             applyPixels(out, recipe)
             applyDetail(out, recipe.adjust, max(out.width, out.height))
+            LayerRenderer.apply(out, recipe.layers, out.width, out.height)
         }
         // Ultra HDR (Android 14+): Gain-Map bei reiner Geometrie mitführen, damit die HDR-Helligkeit erhalten bleibt.
-        if (Build.VERSION.SDK_INT >= 34 && src.hasGainmap() && !recipe.hasColor && !recipe.hasSharpen) carryGainmap(src, out, g.sourceToOutput * extra)
-        return out
+        if (Build.VERSION.SDK_INT >= 34 && src.hasGainmap() && !recipe.hasColor && !recipe.hasSharpen && !recipe.hasLayers && !recipe.hasFrame)
+            carryGainmap(src, out, g.sourceToOutput * extra)
+        return if (colorAndSharpen && recipe.hasFrame) LayerRenderer.frame(out, recipe.frame).also { if (it !== out) out.recycle() } else out
     }
 
     private val cores = max(2, min(6, Runtime.getRuntime().availableProcessors()))
@@ -231,6 +233,7 @@ class ImageEditEngine(private val context: Context) {
             val vw = (ow * k).roundToInt(); val vh = (oh * th / rh).roundToInt()
             applyPixels(out, recipe, (rl * k).roundToInt(), (rt * th / rh).roundToInt(), vw, vh)
             applyDetail(out, recipe.adjust, max(vw, vh))
+            LayerRenderer.apply(out, recipe.layers, g.output.width, g.output.height, android.graphics.RectF(rl.toFloat(), rt.toFloat(), (rl + rw).toFloat(), (rt + rh).toFloat()))
             out
         }.getOrNull()
     }
@@ -289,7 +292,7 @@ class ImageEditEngine(private val context: Context) {
                 val size = PxSize(rendered.width, rendered.height)
                 rendered.recycle()
                 copyExif(uri, out, size, removeLocation, softwareTag)
-                EditExport(out, format, size, hdrDropped = gain && (recipe.hasColor || recipe.hasSharpen), lossless = false)
+                EditExport(out, format, size, hdrDropped = gain && (recipe.hasColor || recipe.hasSharpen || recipe.hasLayers || recipe.hasFrame), lossless = false)
             } catch (e: OutOfMemoryError) {
                 out.delete(); throw EditError.TooLarge()
             } catch (e: EditError) {

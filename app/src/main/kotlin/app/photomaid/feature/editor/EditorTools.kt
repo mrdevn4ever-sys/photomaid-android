@@ -49,6 +49,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Draw
+import androidx.compose.material.icons.rounded.CropFree
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Exposure
 import androidx.compose.material.icons.rounded.WbSunny
@@ -113,16 +116,18 @@ import app.photomaid.navigation.LocalApp
 
 internal val EditorTab.icon: ImageVector get() = when (this) {
     EditorTab.CROP -> Icons.Rounded.Crop; EditorTab.ADJUST -> Icons.Rounded.Tune; EditorTab.FILTER -> Icons.Rounded.AutoAwesome
+    EditorTab.MARKUP -> Icons.Rounded.Draw; EditorTab.FRAME -> Icons.Rounded.CropFree
     EditorTab.RESIZE -> Icons.Rounded.PhotoSizeSelectLarge; EditorTab.TRIM -> Icons.Rounded.ContentCut
 }
 
 internal val EditorTab.label: Int get() = when (this) {
     EditorTab.CROP -> R.string.edit_tab_crop; EditorTab.ADJUST -> R.string.edit_tab_adjust; EditorTab.FILTER -> R.string.edit_tab_filter
+    EditorTab.MARKUP -> R.string.edit_tab_markup; EditorTab.FRAME -> R.string.edit_tab_frame
     EditorTab.RESIZE -> R.string.edit_tab_resize; EditorTab.TRIM -> R.string.edit_tab_trim
 }
 
 /** Reiter, deren Speichern Pro braucht (Vorschau bleibt frei). */
-internal val EditorTab.isPro: Boolean get() = this != EditorTab.CROP
+internal val EditorTab.isPro: Boolean get() = this != EditorTab.CROP && this != EditorTab.MARKUP
 
 private val AdjustTool.icon: ImageVector get() = when (this) {
     AdjustTool.EXPOSURE -> Icons.Rounded.Exposure; AdjustTool.BRIGHTNESS -> Icons.Rounded.BrightnessMedium
@@ -457,21 +462,26 @@ private fun SizeField(label: String, value: Int, modifier: Modifier, onDone: (In
 @Composable
 internal fun EditorTabs(tabs: List<EditorTab>, selected: EditorTab, locked: Boolean, onSelect: (EditorTab) -> Unit, modifier: Modifier = Modifier) {
     val c = PM.colors
-    Row(modifier.fillMaxWidth().glassCapsule(elevation = 2.dp).padding(4.dp), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-        for (t in tabs) {
-            val sel = t == selected
-            Column(Modifier.weight(1f).heightIn(min = 52.dp).clip(RoundedCornerShape(18.dp))
-                .background(if (sel) c.accent.copy(alpha = 0.14f) else Color.Transparent)
-                .clickable(role = Role.Tab) { onSelect(t) }.semantics(mergeDescendants = true) { this.selected = sel }.testTag("tab.${t.name}")
-                .padding(vertical = 4.dp),
-                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Box {
-                    Icon(t.icon, null, tint = if (sel) c.accent else c.textSecondary, modifier = Modifier.size(22.dp))
-                    if (locked && t.isPro) Icon(Icons.Rounded.WorkspacePremium, stringResource(R.string.pro_badge), tint = c.accent,
-                        modifier = Modifier.align(Alignment.TopEnd).offset(x = 8.dp, y = (-4).dp).size(12.dp))
+    BoxWithConstraints(modifier.fillMaxWidth().glassCapsule(elevation = 2.dp).padding(4.dp)) {
+        // Passen nicht alle Reiter mit mindestens 64 dp, wird die Leiste waagrecht scrollbar.
+        val fits = maxWidth / tabs.size >= 64.dp
+        val itemW = if (fits) maxWidth / tabs.size else 72.dp
+        Row(if (fits) Modifier.fillMaxWidth() else Modifier.horizontalScroll(rememberScrollState())) {
+            for (t in tabs) {
+                val sel = t == selected
+                Column(Modifier.width(itemW).heightIn(min = 52.dp).clip(RoundedCornerShape(18.dp))
+                    .background(if (sel) c.accent.copy(alpha = 0.14f) else Color.Transparent)
+                    .clickable(role = Role.Tab) { onSelect(t) }.semantics(mergeDescendants = true) { this.selected = sel }.testTag("tab.${t.name}")
+                    .padding(vertical = 4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                    Box {
+                        Icon(t.icon, null, tint = if (sel) c.accent else c.textSecondary, modifier = Modifier.size(22.dp))
+                        if (locked && t.isPro) Icon(Icons.Rounded.WorkspacePremium, stringResource(R.string.pro_badge), tint = c.accent,
+                            modifier = Modifier.align(Alignment.TopEnd).offset(x = 8.dp, y = (-4).dp).size(12.dp))
+                    }
+                    Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
+                        color = if (sel) c.accent else c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
                 }
-                Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
-                    color = if (sel) c.accent else c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
             }
         }
     }

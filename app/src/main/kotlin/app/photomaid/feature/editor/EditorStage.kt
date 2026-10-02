@@ -101,6 +101,7 @@ internal fun EditorStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
         when {
             src == null -> CircularProgressIndicator()
             vm.tab == EditorTab.CROP -> CropStage(vm)
+            vm.tab == EditorTab.MARKUP -> MarkupStage(vm, Modifier.fillMaxSize())
             else -> ResultStage(vm, src.preview)
         }
     }
@@ -252,7 +253,7 @@ private fun StageToggle(icon: androidx.compose.ui.graphics.vector.ImageVector, l
     Box(Modifier.size(AppSpacing.minTouch).clickable(role = Role.Switch, onClick = onClick)
         .semantics { contentDescription = label; toggleableState = androidx.compose.ui.state.ToggleableState(on) }
         .testTag(tag), contentAlignment = Alignment.Center) {
-        Box(Modifier.size(36.dp).clip(CircleShape).background(if (on) c.accentFill else c.glass), contentAlignment = Alignment.Center) {
+        Box(Modifier.size(36.dp).then(if (on) Modifier.clip(CircleShape).background(c.accentFill) else Modifier.glassCapsule(elevation = 3.dp)), contentAlignment = Alignment.Center) {
             Icon(icon, null, tint = if (on) Color.White else c.textPrimary, modifier = Modifier.size(20.dp))
         }
     }

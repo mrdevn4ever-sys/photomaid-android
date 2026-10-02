@@ -170,11 +170,13 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                             EditorTab.CROP -> CropPanel(vm)
                             EditorTab.ADJUST -> AdjustPanel(vm)
                             EditorTab.FILTER -> FilterPanel(vm)
+                            EditorTab.MARKUP -> MarkupPanel(vm)
+                            EditorTab.FRAME -> FramePanel(vm)
                             EditorTab.RESIZE -> ResizePanel(vm)
                             EditorTab.TRIM -> TrimPanel(vm)
                         }
                     }
-                    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM) else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.RESIZE)
+                    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM) else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
                     if (tabs.size > 1) EditorTabs(tabs, vm.tab, locked = !app.capabilities.hasProToolsAccess, onSelect = { vm.tab = it },
                         modifier = Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
                     else Box(Modifier.coachTarget("editor.tabs").size(1.dp))

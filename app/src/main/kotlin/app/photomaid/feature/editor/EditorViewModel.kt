@@ -14,6 +14,21 @@ import app.photomaid.core.edit.AspectPreset
 import app.photomaid.core.edit.FilterId
 import app.photomaid.core.edit.ColorMix
 import app.photomaid.core.edit.Histogram
+import app.photomaid.core.edit.BrushKind
+import app.photomaid.core.edit.BrushStroke
+import app.photomaid.core.edit.DrawLayer
+import app.photomaid.core.edit.DrawStroke
+import app.photomaid.core.edit.FrameStyle
+import app.photomaid.core.edit.Layer
+import app.photomaid.core.edit.LayerOps
+import app.photomaid.core.edit.NormPoint
+import app.photomaid.core.edit.RedactLayer
+import app.photomaid.core.edit.RedactMode
+import app.photomaid.core.edit.ShapeKind
+import app.photomaid.core.edit.ShapeLayer
+import app.photomaid.core.edit.StickerKind
+import app.photomaid.core.edit.StickerLayer
+import app.photomaid.core.edit.TextLayer
 import app.photomaid.core.edit.EditPreset
 import app.photomaid.core.edit.CropMath
 import app.photomaid.core.edit.EditGeometry
@@ -27,17 +42,22 @@ import app.photomaid.core.edit.flippedV
 import app.photomaid.core.model.MediaKind
 import app.photomaid.media.EditError
 import app.photomaid.media.EditSource
+import app.photomaid.media.LayerRenderer
 import app.photomaid.media.MediaAsset
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import app.photomaid.core.edit.FrameMath
 
 /** Ausschnitt der 100-%-Ansicht (normiert auf das Ausgabebild) und sein Bild. */
 data class DetailTile(val view: NormRect, val bitmap: Bitmap)
 
-enum class EditorTab { CROP, ADJUST, FILTER, RESIZE, TRIM }
+enum class EditorTab { CROP, ADJUST, FILTER, MARKUP, FRAME, RESIZE, TRIM }
+
+/** Werkzeug im Reiter „Markieren“. */
+enum class MarkupTool { SELECT, DRAW, SHAPE, REDACT }
 
 /**
  * Zustand des Editors. Bearbeitet wird ein Rezept ([EditRecipe]) – nicht destruktiv, mit eigenem Rückgängig/Wiederholen.
@@ -75,6 +95,11 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     /** Kleine Stellvertreter-Fassung für flüssiges Ziehen; nach dem Loslassen wird in Vorschaugröße nachgerechnet. */
     private var proxy: Bitmap? = null
     private var renderJob: Job? = null
+    /** Grundbild ohne Ebenen/Rahmen (Schlüssel, Bild, aus Stellvertreter gerechnet?). */
+    private var baseCache: Triple<EditRecipe, Bitmap, Boolean>? = null
+    /** Ergebnis ohne Ebenen (Markieren zeigt die gewählte Ebene live darüber). */
+    var baseResult by mutableStateOf<Bitmap?>(null); private set
+
 
     // Anzeige-Hilfen (zeigen nur an, entscheiden nichts)
     var histogram by mutableStateOf<Histogram?>(null); private set
@@ -107,7 +132,9 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     val hasChanges: Boolean get() = if (isVideo) trim?.let { it.startMs > 0 || it.endMs < durationMs } == true else !recipe.isIdentity
     val needsPro: Boolean get() = (isVideo || recipe.usesProTools) && !app.capabilities.hasProToolsAccess
     val fullSize: PxSize? get() = source?.full
-    val outputSize: PxSize? get() = fullSize?.let { EditGeometry(it, recipe).output }
+    val outputSize: PxSize? get() = fullSize?.let { FrameMath.layout(EditGeometry(it, recipe).output, recipe.frame).first }
+    /** Größe des Bildes ohne Rahmen (Ebenen-Koordinaten). */
+    val imageSize: PxSize? get() = fullSize?.let { EditGeometry(it, recipe).output }
     val cropSize: PxSize? get() = fullSize?.let { EditGeometry(it, recipe).cropSize }
     val frameSize: PxSize? get() = fullSize?.let { EditGeometry(it, recipe).frame }
 
@@ -184,6 +211,8 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
             EditorTab.ADJUST -> r.copy(adjust = Adjustments(), colorMix = ColorMix())
             EditorTab.FILTER -> r.copy(filter = FilterId.NONE, filterIntensity = 1f)
             EditorTab.RESIZE -> r.copy(resizeWidth = null, resizeHeight = null)
+            EditorTab.MARKUP -> r.copy(layers = emptyList()).also { selectedLayerId = null }
+            EditorTab.FRAME -> r.copy(frame = null)
             EditorTab.TRIM -> r
         }.also { if (tab == EditorTab.CROP) aspect = AspectPreset.FREE })
     }
@@ -257,7 +286,85 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     fun filterIntensity(v: Float, commit: Boolean) = update(recipe.copy(filterIntensity = v.coerceIn(0f, 1f)), commit)
     /** „Nur Zuschnitt speichern“ (ohne Pro): Regler, Filter und Größe zurücknehmen, Geometrie bleibt. */
     fun dropProTools() = update(recipe.copy(adjust = Adjustments(), filter = FilterId.NONE, filterIntensity = 1f, resizeWidth = null, resizeHeight = null,
-        colorMix = ColorMix(), locals = emptyList()))
+        colorMix = ColorMix(), locals = emptyList(), frame = null))
+    // Markieren (Ebenen) – kostenlos; nie eine Entscheidung
+
+    var markupTool by mutableStateOf(MarkupTool.SELECT)
+    var selectedLayerId by mutableStateOf<String?>(null)
+    /** Text, der gerade im Blatt bearbeitet wird. */
+    var editingTextId by mutableStateOf<String?>(null)
+    var showStickers by mutableStateOf(false)
+    var brush by mutableStateOf(BrushKind.PEN)
+    var drawWidth by mutableStateOf(0.012f)
+    var drawColor by mutableStateOf(0xFFFF3B30.toInt())
+    var shapeKind by mutableStateOf(ShapeKind.ARROW)
+    var shapeFilled by mutableStateOf(false)
+    var redactMode by mutableStateOf(RedactMode.SOLID)
+    var redactBrush by mutableStateOf(false)
+    var redactStrength by mutableStateOf(0.6f)
+
+    val layers: List<Layer> get() = recipe.layers
+    val selectedLayer: Layer? get() = selectedLayerId?.let { id -> recipe.layers.firstOrNull { it.id == id } }
+
+    private fun newId() = java.util.UUID.randomUUID().toString()
+    private fun setLayers(list: List<Layer>, commit: Boolean = true) = update(recipe.copy(layers = list), commit)
+
+    fun addText() {
+        val l = TextLayer(newId(), app.string(R.string.edit_text_default), color = 0xFFFFFFFF.toInt())
+        setLayers(recipe.layers + l); selectedLayerId = l.id; editingTextId = l.id; markupTool = MarkupTool.SELECT
+    }
+
+    fun addSticker(kind: StickerKind, value: String = "") {
+        val v = if (kind == StickerKind.DATE) value.ifEmpty { stickerDate() } else value
+        val l = StickerLayer(newId(), kind, v, color = if (kind == StickerKind.DATE) 0xFFFF8A00.toInt() else drawColor)
+        setLayers(recipe.layers + l); selectedLayerId = l.id; showStickers = false; markupTool = MarkupTool.SELECT
+    }
+
+    /** Datum des Fotos (Aufnahme), sonst heute – nur lokale Formatierung. */
+    fun stickerDate(): String {
+        val d = asset?.creationDate?.let { java.util.Date(it.toEpochMilli()) } ?: java.util.Date()
+        return java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT).format(d)
+    }
+
+    /** Ebene ändern; [commit] = Schritt fürs Rückgängig (beim Loslassen). */
+    fun updateLayer(l: Layer, commit: Boolean) = setLayers(LayerOps.replace(recipe.layers, l), commit)
+
+    fun deleteSelected() { selectedLayerId?.let { setLayers(LayerOps.remove(recipe.layers, it)) }; selectedLayerId = null }
+    fun duplicateSelected() { selectedLayerId?.let { id -> val n = newId(); setLayers(LayerOps.duplicate(recipe.layers, id, n)); selectedLayerId = n } }
+    fun selectedToFront() { selectedLayerId?.let { setLayers(LayerOps.toFront(recipe.layers, it)) } }
+    fun selectedToBack() { selectedLayerId?.let { setLayers(LayerOps.toBack(recipe.layers, it)) } }
+
+    /** Strich fertig: an die oberste Zeichnung anhängen (der Radierer wirkt nur dort), sonst neue Zeichenebene. */
+    fun addStroke(points: List<NormPoint>) {
+        if (points.isEmpty()) return
+        val st = DrawStroke(points, drawWidth, drawColor, brush)
+        val top = recipe.layers.lastOrNull()
+        val next = if (top is DrawLayer) LayerOps.replace(recipe.layers, top.copy(strokes = top.strokes + st))
+            else if (brush == BrushKind.ERASER) return
+            else recipe.layers + DrawLayer(newId(), listOf(st))
+        setLayers(next)
+    }
+
+    fun addShape(a: NormPoint, b: NormPoint) {
+        if (kotlin.math.hypot(b.x - a.x, b.y - a.y) < 0.01f) return
+        val l = ShapeLayer(newId(), shapeKind, a, b, drawColor, drawWidth, shapeFilled)
+        setLayers(recipe.layers + l); selectedLayerId = l.id
+    }
+
+    fun addRedactRect(a: NormPoint, b: NormPoint) {
+        val r = NormRect(minOf(a.x, b.x).coerceIn(0f, 1f), minOf(a.y, b.y).coerceIn(0f, 1f), maxOf(a.x, b.x).coerceIn(0f, 1f), maxOf(a.y, b.y).coerceIn(0f, 1f))
+        if (r.width < 0.01f || r.height < 0.01f) return
+        setLayers(recipe.layers + RedactLayer(newId(), redactMode, rect = r, strength = redactStrength))
+    }
+
+    fun addRedactStroke(points: List<NormPoint>) {
+        if (points.isEmpty()) return
+        setLayers(recipe.layers + RedactLayer(newId(), redactMode, strokes = listOf(BrushStroke(points, radius = drawWidth * 2f, hardness = 1f)), strength = redactStrength))
+    }
+
+    // Rahmen (Pro)
+    fun setFrame(f: FrameStyle?, commit: Boolean = true) = update(recipe.copy(frame = f), commit)
+
     fun resize(size: PxSize?) = update(recipe.copy(resizeWidth = size?.width, resizeHeight = size?.height))
 
     // Video
@@ -281,11 +388,20 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
                 app.editEngine.applyPixels(frame, previewRecipe, pointOnly = true)
                 withContext(Dispatchers.Main) { framePreview = frame }
             } else {
-                val res = app.editEngine.render(base, previewRecipe, colorAndSharpen = true)
+                // Ebenen/Rahmen ändern das Foto darunter nicht: Grundbild wiederverwenden (scharf auch beim Ziehen einer Ebene).
+                val key = previewRecipe.copy(layers = emptyList(), frame = null)
+                val cached = baseCache
+                val baseRes = if (cached != null && cached.first == key && (!cached.third || fast)) cached.second
+                    else app.editEngine.render(base, key, colorAndSharpen = true).also { baseCache = Triple(key, it, fast) }
+                val res = if (!r.hasLayers && !r.hasFrame) baseRes else {
+                    val c = baseRes.copy(Bitmap.Config.ARGB_8888, true)
+                    LayerRenderer.apply(c, r.layers, c.width, c.height)
+                    LayerRenderer.frame(c, r.frame)
+                }
                 val px = IntArray(res.width * res.height).also { res.getPixels(it, 0, res.width, 0, 0, res.width, res.height) }
                 val hist = Histogram.of(px, step = 2)
                 val overlay = if (clip) clippingOverlay(px, res.width, res.height) else null
-                withContext(Dispatchers.Main) { resultPreview = res; histogram = hist; clipOverlay = overlay }
+                withContext(Dispatchers.Main) { resultPreview = res; baseResult = baseRes; histogram = hist; clipOverlay = overlay }
             }
         }
     }

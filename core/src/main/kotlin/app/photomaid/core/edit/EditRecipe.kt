@@ -112,6 +112,9 @@ data class EditRecipe(
     val resizeHeight: Int? = null,
     val colorMix: ColorMix = ColorMix(),
     val locals: List<LocalAdjustment> = emptyList(),
+    /** Markieren: Text, Sticker, Zeichnungen, Formen, Abdeckungen (in dieser Reihenfolge gezeichnet). */
+    val layers: List<Layer> = emptyList(),
+    val frame: FrameStyle? = null,
 ) {
     val turns: Int get() = ((quarterTurns % 4) + 4) % 4
     val hasGeometry: Boolean get() = turns != 0 || flipH || flipV || abs(straighten) > 0.01f || !crop.isFull
@@ -121,14 +124,16 @@ data class EditRecipe(
     /** Schärfen oder Klarheit (Nachbarpixel nötig). */
     val hasSharpen: Boolean get() = !adjust.detailNeutral
     val hasResize: Boolean get() = resizeWidth != null && resizeHeight != null
-    val isIdentity: Boolean get() = !hasGeometry && !hasColor && !hasSharpen && !hasResize
+    val hasLayers: Boolean get() = layers.isNotEmpty()
+    val hasFrame: Boolean get() = frame != null && !frame.isNeutral
+    val isIdentity: Boolean get() = !hasGeometry && !hasColor && !hasSharpen && !hasResize && !hasLayers && !hasFrame
 
     /** Nur Drehen/Spiegeln – bei JPEG verlustfrei über die EXIF-Ausrichtung möglich. */
     val isOrientationOnly: Boolean get() =
-        (turns != 0 || flipH || flipV) && abs(straighten) <= 0.01f && crop.isFull && !hasColor && !hasSharpen && !hasResize
+        (turns != 0 || flipH || flipV) && abs(straighten) <= 0.01f && crop.isFull && !hasColor && !hasSharpen && !hasResize && !hasLayers && !hasFrame
 
-    /** Pro-Werkzeuge (Regler, Filter, Größe) – Zuschneiden/Drehen sind kostenlos. */
-    val usesProTools: Boolean get() = hasColor || hasSharpen || hasResize
+    /** Pro-Werkzeuge (Regler, Filter, Größe, Rahmen) – Zuschneiden/Drehen und Markieren sind kostenlos. */
+    val usesProTools: Boolean get() = hasColor || hasSharpen || hasResize || hasFrame
 
     fun rotatedClockwise(): EditRecipe = copy(quarterTurns = (turns + 1) % 4, crop = crop.rotatedClockwise(), resizeWidth = null, resizeHeight = null)
 }

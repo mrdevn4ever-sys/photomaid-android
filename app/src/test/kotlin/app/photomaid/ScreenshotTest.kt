@@ -558,4 +558,32 @@ class ScreenshotTest {
         rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.histogram").fetchSemanticsNodes().isNotEmpty() }
     } }
     @Test fun e13_editor_filters_presets() = expApp(pro = true).let { editor("e13_editor_filters_presets", it, i = 1) { tap("tab.FILTER"); tap("filter.WARM") } }
+
+    private fun swipeOn(tag: String, from: androidx.compose.ui.geometry.Offset, to: androidx.compose.ui.geometry.Offset) {
+        rule.onNodeWithTag(tag).performTouchInput {
+            down(androidx.compose.ui.geometry.Offset(width * from.x, height * from.y))
+            for (i in 1..10) moveTo(androidx.compose.ui.geometry.Offset(width * (from.x + (to.x - from.x) * i / 10), height * (from.y + (to.y - from.y) * i / 10)))
+            up()
+        }
+        rule.waitForIdle()
+    }
+    @Test fun e14_editor_markup() = expApp().let { editor("e14_editor_markup", it, i = 1) {
+        tap("tab.MARKUP"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("markup.canvas").fetchSemanticsNodes().isNotEmpty() }
+        tap("mk.shape"); swipeOn("markup.canvas", androidx.compose.ui.geometry.Offset(0.2f, 0.7f), androidx.compose.ui.geometry.Offset(0.55f, 0.45f))
+        tap("mk.redact"); swipeOn("markup.canvas", androidx.compose.ui.geometry.Offset(0.6f, 0.62f), androidx.compose.ui.geometry.Offset(0.85f, 0.7f))
+        tap("mk.sticker"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("sticker.HEART").fetchSemanticsNodes().isNotEmpty() }; tap("sticker.HEART")
+    } }
+    @Test fun e15_editor_text_sheet() = expApp().let { editor("e15_editor_text_sheet", it, i = 1) {
+        tap("tab.MARKUP"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("markup.canvas").fetchSemanticsNodes().isNotEmpty() }
+        tap("mk.text"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("text.sheet").fetchSemanticsNodes().isNotEmpty() }
+        tap("ts.PILL")
+    } }
+    @Test fun e16_editor_sticker_sheet() = expApp().let { editor("e16_editor_sticker_sheet", it, i = 1) {
+        tap("tab.MARKUP"); tap("mk.sticker"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("sticker.sheet").fetchSemanticsNodes().isNotEmpty() }
+    } }
+    @Test fun e17_editor_frame() = expApp(pro = true).let { editor("e17_editor_frame", it, i = 1) {
+        tap("tab.FRAME"); tap("frame.aspect.0.8")
+        rule.onNode(androidx.compose.ui.test.hasTestTag("editor.slider") and androidx.compose.ui.test.hasAnyAncestor(androidx.compose.ui.test.hasTestTag("slider.FRAME")))
+            .performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { it(6f) }
+    } }
 }
