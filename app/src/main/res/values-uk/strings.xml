@@ -1376,4 +1376,53 @@
     <string name="slideshow_videos">Відтворювати відео (без звуку)</string>
     <string name="slideshow_loop">Повторювати</string>
     <string name="slideshow_note">Перегляд ніколи не є рішенням. Під час слайд-шоу екран не гасне.</string>
+    <string name="basket_sort_added">Нещодавно додані</string>
+    <string name="basket_sort_taken">Дата зйомки</string>
+    <string name="basket_intro_delete">Ще нічого не видалено. «Видаляти назавжди» увімкнено: очищення видаляє назавжди, без кошика Android.</string>
+    <string name="basket_confirm_delete_title">Видалити назавжди?</string>
+    <string name="basket_confirm_delete_message">Потім підтвердьте в Android. Ці фото й відео не потраплять до кошика Android, відновити їх не можна.</string>
+    <string name="done_note_media_deleted">Фото й відео видалено назавжди – їх немає в кошику Android.</string>
+    <string name="systrash_open">Відкрити кошик Android</string>
+    <string name="systrash_title">Кошик Android</string>
+    <string name="systrash_intro">Усе, що Android зберігає в кошику, – з PhotoMaid та інших застосунків. Після закінчення строку Android видаляє це сам.</string>
+    <string name="systrash_empty_title">Кошик Android порожній</string>
+    <string name="systrash_empty_text">Видалені фото й відео деякий час є тут, їх можна відновити.</string>
+    <string name="systrash_partial">Виконано %1$d з %2$d. Решта без змін.</string>
+    <string name="systrash_delete_text">Потім підтвердьте в Android. Назавжди видалені фото й відео відновити не можна.</string>
+    <string name="lib_info_raw">Файл RAW</string>
+    <string name="set_delete_permanently">Видаляти назавжди</string>
+    <string name="set_delete_permanently_detail">Вимк.: очищення переміщує до кошика Android (деякий час можна відновити). Увімк.: одразу видаляється назавжди.</string>
+    <string name="set_delete_permanently_confirm_title">Увімкнути видалення назавжди?</string>
+    <string name="set_delete_permanently_confirm_text">Відтепер очищення кошика PhotoMaid видаляє фото й відео назавжди. Вони не потрапляють до кошика Android, відновити їх не можна – навіть із ще не синхронізованих копій. Android однаково питатиме щоразу.</string>
+    <string name="set_delete_permanently_confirm_action">Увімкнути</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d файл видалено назавжди.</item>
+        <item quantity="few">%1$d файли видалено назавжди.</item>
+        <item quantity="many">%1$d файлів видалено назавжди.</item>
+        <item quantity="other">%1$d файлу видалено назавжди.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Видалити %1$d файл назавжди</item>
+        <item quantity="few">Видалити %1$d файли назавжди</item>
+        <item quantity="many">Видалити %1$d файлів назавжди</item>
+        <item quantity="other">Видалити %1$d файлу назавжди</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Відновити %1$d файл</item>
+        <item quantity="few">Відновити %1$d файли</item>
+        <item quantity="many">Відновити %1$d файлів</item>
+        <item quantity="other">Відновити %1$d файлу</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d файл відновлено.</item>
+        <item quantity="few">%1$d файли відновлено.</item>
+        <item quantity="many">%1$d файлів відновлено.</item>
+        <item quantity="other">%1$d файлу відновлено.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">ще %1$d день</item>
+        <item quantity="few">ще %1$d дні</item>
+        <item quantity="many">ще %1$d днів</item>
+        <item quantity="other">ще %1$d дня</item>
+    </plurals>
 </resources>

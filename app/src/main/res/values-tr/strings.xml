@@ -1276,4 +1276,43 @@
     <string name="slideshow_videos">Videoları oynat (sessiz)</string>
     <string name="slideshow_loop">Tekrarla</string>
     <string name="slideshow_note">İzlemek asla bir karar değildir. Slayt gösterisi sırasında ekran açık kalır.</string>
+    <string name="basket_sort_added">Son eklenenler</string>
+    <string name="basket_sort_taken">Çekim tarihi</string>
+    <string name="basket_intro_delete">Henüz hiçbir şey silinmedi. “Kalıcı olarak sil” açık: boşaltmak, Android çöp kutusuna atmadan kalıcı olarak siler.</string>
+    <string name="basket_confirm_delete_title">Kalıcı olarak silinsin mi?</string>
+    <string name="basket_confirm_delete_message">Ardından Android’de onayla. Bu fotoğraf ve videolar Android çöp kutusuna gitmez ve geri yüklenemez.</string>
+    <string name="done_note_media_deleted">Fotoğraflar ve videolar kalıcı olarak silindi; Android çöp kutusunda değiller.</string>
+    <string name="systrash_open">Android çöp kutusunu aç</string>
+    <string name="systrash_title">Android çöp kutusu</string>
+    <string name="systrash_intro">Android’in çöp kutusunda tuttuğu her şey – PhotoMaid’den ve diğer uygulamalardan. Süre dolunca Android kendisi siler.</string>
+    <string name="systrash_empty_title">Android çöp kutusu boş</string>
+    <string name="systrash_empty_text">Kaldırdığın fotoğraf ve videolar bir süre burada görünür ve geri yüklenebilir.</string>
+    <string name="systrash_partial">%2$d öğeden %1$d tamamlandı. Kalanlar olduğu gibi kaldı.</string>
+    <string name="systrash_delete_text">Ardından Android’de onayla. Kalıcı olarak silinen fotoğraf ve videolar geri yüklenemez.</string>
+    <string name="lib_info_raw">RAW dosyası</string>
+    <string name="set_delete_permanently">Kalıcı olarak sil</string>
+    <string name="set_delete_permanently_detail">Kapalı: boşaltma Android çöp kutusuna taşır (bir süre geri yüklenebilir). Açık: hemen kalıcı olarak silinir.</string>
+    <string name="set_delete_permanently_confirm_title">Kalıcı silme açılsın mı?</string>
+    <string name="set_delete_permanently_confirm_text">Bundan sonra PhotoMaid çöp kutusunu boşaltmak fotoğraf ve videoları kalıcı olarak siler. Android çöp kutusuna gitmezler ve geri yüklenemezler – henüz eşitlenmemiş yedeklerden de. Android yine her seferinde sorar.</string>
+    <string name="set_delete_permanently_confirm_action">Aç</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d öğe kalıcı olarak silindi.</item>
+        <item quantity="other">%1$d öğe kalıcı olarak silindi.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">%1$d öğeyi kalıcı olarak sil</item>
+        <item quantity="other">%1$d öğeyi kalıcı olarak sil</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">%1$d öğeyi geri yükle</item>
+        <item quantity="other">%1$d öğeyi geri yükle</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d öğe geri yüklendi.</item>
+        <item quantity="other">%1$d öğe geri yüklendi.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">%1$d gün kaldı</item>
+        <item quantity="other">%1$d gün kaldı</item>
+    </plurals>
 </resources>

@@ -114,7 +114,8 @@ import kotlin.math.max
 import app.photomaid.core.decisions.Disposition
 
 /** Öffnen des Betrachters: Reihenfolge wie in der Übersicht (nur im Prozess). */
-data class ViewerRequest(val id: String, val assets: List<MediaAsset>, val start: Int)
+/** [raw]: JPEG-ID → RAW-Partner (geht bei Papierkorb/Ausblenden mit, Info zeigt die RAW-Datei). */
+data class ViewerRequest(val id: String, val assets: List<MediaAsset>, val start: Int, val raw: Map<String, MediaAsset> = emptyMap())
 
 object ViewerRequests { val map = androidx.compose.runtime.mutableStateMapOf<String, ViewerRequest>() }
 
@@ -223,13 +224,13 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
                         DropdownMenuItem(text = { Text(stringResource(R.string.lib_hide)) }, leadingIcon = { Icon(Icons.Rounded.VisibilityOff, null) },
                             modifier = Modifier.testTag("viewer.hide"), onClick = {
                                 menu = false; undo = null
-                                scope.launch { setMediaHidden(app, listOf(a.id), true); hiddenNow[a.id] = true; hiddenUndo = a.id }
+                                scope.launch { setMediaHidden(app, listOfNotNull(a.id, req.raw[a.id]?.id), true); hiddenNow[a.id] = true; hiddenUndo = a.id }
                             })
                         DropdownMenuItem(text = { Text(stringResource(R.string.lib_trash_action)) }, leadingIcon = { Icon(Icons.Rounded.Delete, null) },
                             modifier = Modifier.testTag("viewer.trash"), onClick = {
                                 menu = false
                                 if (settings.protectFavorites && a.isFavorite) message = app.string(R.string.lib_trash_fav_protected)
-                                else scope.launch { hiddenUndo = null; undo = markForCleanup(app, listOf(a)) }
+                                else scope.launch { hiddenUndo = null; undo = markForCleanup(app, listOfNotNull(a, req.raw[a.id])) }
                             })
                     }
                 }
@@ -250,14 +251,14 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
             Row(Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 84.dp).glassCapsule(elevation = 6.dp)
                 .padding(start = AppSpacing.m, end = AppSpacing.xxs).testTag("viewer.hidden"), verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.lib_hidden_one), style = AppTypography.subheadline, color = PM.colors.textPrimary)
-                TextButton({ scope.launch { setMediaHidden(app, listOf(id), false); hiddenNow.remove(id); hiddenUndo = null } },
+                TextButton({ scope.launch { setMediaHidden(app, listOfNotNull(id, req.raw[id]?.id), false); hiddenNow.remove(id); hiddenUndo = null } },
                     Modifier.testTag("viewer.hidden.undo")) { Text(stringResource(R.string.undo)) }
             }
         }
     }
 
     if (info && current != null) ModalBottomSheet(onDismissRequest = { info = false }, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        modifier = Modifier.testTag("viewer.infosheet")) { InfoContent(current) }
+        modifier = Modifier.testTag("viewer.infosheet")) { InfoContent(current, req.raw[current.id]) }
     if (folderSheet && current != null) FolderSheet(current.kind, current.relativePath, folders, settings.pinnedFolders, settings.recentFolders,
         onTogglePin = { p -> scope.launch { togglePinnedFolder(app, p) } },
         onPick = { path ->
@@ -390,7 +391,7 @@ private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onPlay
 }
 
 @Composable
-private fun InfoContent(a: MediaAsset) {
+private fun InfoContent(a: MediaAsset, raw: MediaAsset? = null) {
     val c = PM.colors
     val app = LocalApp.current
     // Kamera aus EXIF (nur lesen, lokal; fehlt sie, gibt es keine Zeile).
@@ -406,6 +407,7 @@ private fun InfoContent(a: MediaAsset) {
         if (a.kind == MediaKind.VIDEO) stringResource(R.string.lib_info_duration) to clock((a.duration * 1000).toLong()) else null,
         a.mimeType?.let { stringResource(R.string.lib_info_type) to it.substringAfter('/').uppercase() },
         camera?.let { stringResource(R.string.lib_info_camera) to it },
+        raw?.let { r -> stringResource(R.string.lib_info_raw) to listOfNotNull(r.displayName, SizeText.size(LocalContext.current, r.size)).joinToString(" · ") },
         a.dateAdded?.let { stringResource(R.string.lib_info_added) to DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(it.toEpochMilli())) },
     )
     Column(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.xl), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {

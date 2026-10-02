@@ -1376,4 +1376,53 @@
     <string name="slideshow_videos">Odtwarzaj filmy (bez dźwięku)</string>
     <string name="slideshow_loop">Powtarzaj</string>
     <string name="slideshow_note">Oglądanie nigdy nie jest decyzją. Podczas pokazu ekran pozostaje włączony.</string>
+    <string name="basket_sort_added">Ostatnio dodane</string>
+    <string name="basket_sort_taken">Data wykonania</string>
+    <string name="basket_intro_delete">Nic nie zostało jeszcze usunięte. „Trwale usuwaj” jest włączone: opróżnienie usuwa na zawsze, z pominięciem kosza Androida.</string>
+    <string name="basket_confirm_delete_title">Trwale usunąć?</string>
+    <string name="basket_confirm_delete_message">Następnie potwierdź w Androidzie. Te zdjęcia i filmy nie trafią do kosza Androida i nie da się ich przywrócić.</string>
+    <string name="done_note_media_deleted">Zdjęcia i filmy zostały trwale usunięte – nie ma ich w koszu Androida.</string>
+    <string name="systrash_open">Pokaż kosz Androida</string>
+    <string name="systrash_title">Kosz Androida</string>
+    <string name="systrash_intro">Wszystko, co Android trzyma w koszu – z PhotoMaid i innych aplikacji. Po upływie czasu Android sam to usuwa.</string>
+    <string name="systrash_empty_title">Kosz Androida jest pusty</string>
+    <string name="systrash_empty_text">Usunięte zdjęcia i filmy pojawiają się tu na jakiś czas i można je przywrócić.</string>
+    <string name="systrash_partial">Wykonano %1$d z %2$d. Reszta bez zmian.</string>
+    <string name="systrash_delete_text">Następnie potwierdź w Androidzie. Trwale usuniętych zdjęć i filmów nie da się przywrócić.</string>
+    <string name="lib_info_raw">Plik RAW</string>
+    <string name="set_delete_permanently">Trwale usuwaj</string>
+    <string name="set_delete_permanently_detail">Wyłączone: opróżnienie przenosi do kosza Androida (przez pewien czas można przywrócić). Włączone: od razu trwale usuwa.</string>
+    <string name="set_delete_permanently_confirm_title">Włączyć trwałe usuwanie?</string>
+    <string name="set_delete_permanently_confirm_text">Od teraz opróżnienie kosza PhotoMaid trwale usuwa zdjęcia i filmy. Nie trafiają do kosza Androida i nie da się ich przywrócić – także z niezsynchronizowanych kopii. Android i tak zapyta za każdym razem.</string>
+    <string name="set_delete_permanently_confirm_action">Włącz</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">Trwale usunięto %1$d element.</item>
+        <item quantity="few">Trwale usunięto %1$d elementy.</item>
+        <item quantity="many">Trwale usunięto %1$d elementów.</item>
+        <item quantity="other">Trwale usunięto %1$d elementu.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Trwale usuń %1$d element</item>
+        <item quantity="few">Trwale usuń %1$d elementy</item>
+        <item quantity="many">Trwale usuń %1$d elementów</item>
+        <item quantity="other">Trwale usuń %1$d elementu</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Przywróć %1$d element</item>
+        <item quantity="few">Przywróć %1$d elementy</item>
+        <item quantity="many">Przywróć %1$d elementów</item>
+        <item quantity="other">Przywróć %1$d elementu</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">Przywrócono %1$d element.</item>
+        <item quantity="few">Przywrócono %1$d elementy.</item>
+        <item quantity="many">Przywrócono %1$d elementów.</item>
+        <item quantity="other">Przywrócono %1$d elementu.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">jeszcze %1$d dzień</item>
+        <item quantity="few">jeszcze %1$d dni</item>
+        <item quantity="many">jeszcze %1$d dni</item>
+        <item quantity="other">jeszcze %1$d dnia</item>
+    </plurals>
 </resources>

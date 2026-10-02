@@ -1376,4 +1376,53 @@
     <string name="slideshow_videos">Воспроизводить видео (без звука)</string>
     <string name="slideshow_loop">Повторять</string>
     <string name="slideshow_note">Просмотр никогда не является решением. Во время слайд-шоу экран не гаснет.</string>
+    <string name="basket_sort_added">Недавно добавленные</string>
+    <string name="basket_sort_taken">Дата съёмки</string>
+    <string name="basket_intro_delete">Пока ничего не удалено. «Удалять навсегда» включено: очистка удаляет навсегда, минуя корзину Android.</string>
+    <string name="basket_confirm_delete_title">Удалить навсегда?</string>
+    <string name="basket_confirm_delete_message">Затем подтвердите в Android. Эти фото и видео не попадут в корзину Android, восстановить их нельзя.</string>
+    <string name="done_note_media_deleted">Фото и видео удалены навсегда – их нет в корзине Android.</string>
+    <string name="systrash_open">Открыть корзину Android</string>
+    <string name="systrash_title">Корзина Android</string>
+    <string name="systrash_intro">Всё, что Android хранит в корзине, – из PhotoMaid и других приложений. По истечении срока Android удаляет это сам.</string>
+    <string name="systrash_empty_title">Корзина Android пуста</string>
+    <string name="systrash_empty_text">Удалённые фото и видео какое-то время находятся здесь, их можно восстановить.</string>
+    <string name="systrash_partial">Выполнено %1$d из %2$d. Остальное без изменений.</string>
+    <string name="systrash_delete_text">Затем подтвердите в Android. Удалённые навсегда фото и видео восстановить нельзя.</string>
+    <string name="lib_info_raw">Файл RAW</string>
+    <string name="set_delete_permanently">Удалять навсегда</string>
+    <string name="set_delete_permanently_detail">Выкл.: очистка перемещает в корзину Android (можно восстановить какое-то время). Вкл.: сразу удаляется навсегда.</string>
+    <string name="set_delete_permanently_confirm_title">Включить удаление навсегда?</string>
+    <string name="set_delete_permanently_confirm_text">Теперь очистка корзины PhotoMaid удаляет фото и видео навсегда. Они не попадают в корзину Android, восстановить их нельзя – даже из ещё не синхронизированных копий. Android всё равно спросит каждый раз.</string>
+    <string name="set_delete_permanently_confirm_action">Включить</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d файл удалён навсегда.</item>
+        <item quantity="few">%1$d файла удалены навсегда.</item>
+        <item quantity="many">%1$d файлов удалены навсегда.</item>
+        <item quantity="other">%1$d файла удалены навсегда.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Удалить %1$d файл навсегда</item>
+        <item quantity="few">Удалить %1$d файла навсегда</item>
+        <item quantity="many">Удалить %1$d файлов навсегда</item>
+        <item quantity="other">Удалить %1$d файла навсегда</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Восстановить %1$d файл</item>
+        <item quantity="few">Восстановить %1$d файла</item>
+        <item quantity="many">Восстановить %1$d файлов</item>
+        <item quantity="other">Восстановить %1$d файла</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d файл восстановлен.</item>
+        <item quantity="few">%1$d файла восстановлены.</item>
+        <item quantity="many">%1$d файлов восстановлены.</item>
+        <item quantity="other">%1$d файла восстановлены.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">ещё %1$d день</item>
+        <item quantity="few">ещё %1$d дня</item>
+        <item quantity="many">ещё %1$d дней</item>
+        <item quantity="other">ещё %1$d дня</item>
+    </plurals>
 </resources>

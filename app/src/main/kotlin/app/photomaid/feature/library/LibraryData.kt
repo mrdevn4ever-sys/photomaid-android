@@ -185,3 +185,22 @@ fun AppModel.cleanupCandidates(assets: List<MediaAsset>): List<MediaAsset> {
     val keys = settings.value.excludedFolders.map { MediaFolders.normalize(it).lowercase() }.filter { it.isNotEmpty() }
     return if (keys.isEmpty()) assets else assets.filterNot { ExcludingMediaLibrary.isExcluded(it, keys) }
 }
+
+/**
+ * RAW+JPEG-Paare einer Momentaufnahme: das RAW steht hinter seinem JPEG (nicht einzeln im Raster) und geht bei
+ * Papierkorb, Ausblenden und Verschieben immer mit. Reine Namensregel, siehe [app.photomaid.core.library.RawPairs].
+ */
+class RawIndex(assets: List<MediaAsset>) {
+    /** JPEG/HEIC-ID → RAW. */
+    val partner: Map<String, MediaAsset> = app.photomaid.core.library.RawPairs.pairs(assets, { it.displayName }, { it.relativePath }, { it.mimeType })
+        .entries.associate { (k, v) -> k.id to v }
+    private val hidden: Set<String> = partner.values.map { it.id }.toHashSet()
+
+    /** Ohne RAWs, die einen Partner haben. */
+    fun visible(list: List<MediaAsset>): List<MediaAsset> = if (hidden.isEmpty()) list else list.filter { it.id !in hidden }
+
+    /** Auswahl samt RAW-Partnern (für Papierkorb, Ausblenden, Verschieben). */
+    fun withPartners(list: List<MediaAsset>): List<MediaAsset> = if (partner.isEmpty()) list else (list + list.mapNotNull { partner[it.id] }).distinctBy { it.id }
+
+    companion object { val EMPTY = RawIndex(emptyList()) }
+}

@@ -1276,4 +1276,43 @@
     <string name="slideshow_videos">Video’s afspelen (zonder geluid)</string>
     <string name="slideshow_loop">Herhalen</string>
     <string name="slideshow_note">Bekijken is nooit een beslissing. Het scherm blijft aan tijdens de diavoorstelling.</string>
+    <string name="basket_sort_added">Recent toegevoegd</string>
+    <string name="basket_sort_taken">Opnamedatum</string>
+    <string name="basket_intro_delete">Er is nog niets verwijderd. ‘Definitief verwijderen’ staat aan: legen verwijdert definitief, zonder Android-prullenbak.</string>
+    <string name="basket_confirm_delete_title">Definitief verwijderen?</string>
+    <string name="basket_confirm_delete_message">Bevestig daarna bij Android. Deze foto’s en video’s gaan niet naar de Android-prullenbak en zijn niet terug te halen.</string>
+    <string name="done_note_media_deleted">De foto’s en video’s zijn definitief verwijderd – ze staan niet in de Android-prullenbak.</string>
+    <string name="systrash_open">Android-prullenbak bekijken</string>
+    <string name="systrash_title">Android-prullenbak</string>
+    <string name="systrash_intro">Alles wat Android in de prullenbak bewaart – uit PhotoMaid en andere apps. Na afloop verwijdert Android het zelf.</string>
+    <string name="systrash_empty_title">Android-prullenbak is leeg</string>
+    <string name="systrash_empty_text">Verwijderde foto’s en video’s staan hier een tijdje en zijn terug te halen.</string>
+    <string name="systrash_partial">%1$d van %2$d gedaan. De rest blijft zoals het was.</string>
+    <string name="systrash_delete_text">Bevestig daarna bij Android. Definitief verwijderde foto’s en video’s zijn niet terug te halen.</string>
+    <string name="lib_info_raw">RAW-bestand</string>
+    <string name="set_delete_permanently">Definitief verwijderen</string>
+    <string name="set_delete_permanently_detail">Uit: legen verplaatst naar de Android-prullenbak (een tijd terug te halen). Aan: meteen definitief verwijderd.</string>
+    <string name="set_delete_permanently_confirm_title">Definitief verwijderen inschakelen?</string>
+    <string name="set_delete_permanently_confirm_text">Vanaf nu verwijdert het legen van de PhotoMaid-prullenbak foto’s en video’s definitief. Ze gaan niet naar de Android-prullenbak en zijn niet terug te halen – ook niet uit nog niet gesynchroniseerde back-ups. Android vraagt toch elke keer.</string>
+    <string name="set_delete_permanently_confirm_action">Inschakelen</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d item definitief verwijderd.</item>
+        <item quantity="other">%1$d items definitief verwijderd.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">%1$d item definitief verwijderen</item>
+        <item quantity="other">%1$d items definitief verwijderen</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">%1$d item terugzetten</item>
+        <item quantity="other">%1$d items terugzetten</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d item teruggezet.</item>
+        <item quantity="other">%1$d items teruggezet.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">nog %1$d dag</item>
+        <item quantity="other">nog %1$d dagen</item>
+    </plurals>
 </resources>

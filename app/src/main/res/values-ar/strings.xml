@@ -1476,4 +1476,63 @@
     <string name="slideshow_videos">تشغيل الفيديوهات (بلا صوت)</string>
     <string name="slideshow_loop">تكرار</string>
     <string name="slideshow_note">المشاهدة ليست قرارًا أبدًا. تبقى الشاشة مضاءة أثناء عرض الشرائح.</string>
+    <string name="basket_sort_added">المضافة مؤخرًا</string>
+    <string name="basket_sort_taken">تاريخ الالتقاط</string>
+    <string name="basket_intro_delete">لم يُحذف شيء بعد. «حذف نهائيًا» مفعَّل: الإفراغ يحذف نهائيًا دون سلة مهملات Android.</string>
+    <string name="basket_confirm_delete_title">حذف نهائيًا؟</string>
+    <string name="basket_confirm_delete_message">ثم أكِّد لدى Android. لن تذهب هذه الصور والفيديوهات إلى سلة مهملات Android ولا يمكن استعادتها.</string>
+    <string name="done_note_media_deleted">حُذفت الصور والفيديوهات نهائيًا – وهي ليست في سلة مهملات Android.</string>
+    <string name="systrash_open">عرض سلة مهملات Android</string>
+    <string name="systrash_title">سلة مهملات Android</string>
+    <string name="systrash_intro">كل ما يحتفظ به Android في سلة المهملات – من PhotoMaid وتطبيقات أخرى. عند انتهاء المدة يحذفه Android بنفسه.</string>
+    <string name="systrash_empty_title">سلة مهملات Android فارغة</string>
+    <string name="systrash_empty_text">تظهر هنا الصور والفيديوهات التي تزيلها لفترة ويمكن استعادتها.</string>
+    <string name="systrash_partial">اكتمل %1$d من %2$d. يبقى الباقي كما كان.</string>
+    <string name="systrash_delete_text">ثم أكِّد لدى Android. لا يمكن استعادة الصور والفيديوهات المحذوفة نهائيًا.</string>
+    <string name="lib_info_raw">ملف RAW</string>
+    <string name="set_delete_permanently">حذف نهائيًا</string>
+    <string name="set_delete_permanently_detail">إيقاف: الإفراغ ينقل إلى سلة مهملات Android (قابلة للاستعادة لفترة). تشغيل: حذف نهائي فورًا.</string>
+    <string name="set_delete_permanently_confirm_title">تشغيل الحذف النهائي؟</string>
+    <string name="set_delete_permanently_confirm_text">من الآن فصاعدًا، يؤدي إفراغ سلة PhotoMaid إلى حذف الصور والفيديوهات نهائيًا. لن تذهب إلى سلة مهملات Android ولا يمكن استعادتها – ولا من نسخ احتياطية لم تُزامَن بعد. سيسأل Android في كل مرة.</string>
+    <string name="set_delete_permanently_confirm_action">تشغيل</string>
+    <plurals name="result_media_deleted">
+        <item quantity="zero">حُذف %1$d عنصر نهائيًا.</item>
+        <item quantity="one">حُذف عنصر واحد نهائيًا.</item>
+        <item quantity="two">حُذف عنصران نهائيًا.</item>
+        <item quantity="few">حُذفت %1$d عناصر نهائيًا.</item>
+        <item quantity="many">حُذف %1$d عنصرًا نهائيًا.</item>
+        <item quantity="other">حُذف %1$d عنصر نهائيًا.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="zero">حذف %1$d عنصر نهائيًا</item>
+        <item quantity="one">حذف عنصر واحد نهائيًا</item>
+        <item quantity="two">حذف عنصرين نهائيًا</item>
+        <item quantity="few">حذف %1$d عناصر نهائيًا</item>
+        <item quantity="many">حذف %1$d عنصرًا نهائيًا</item>
+        <item quantity="other">حذف %1$d عنصر نهائيًا</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="zero">استعادة %1$d عنصر</item>
+        <item quantity="one">استعادة عنصر واحد</item>
+        <item quantity="two">استعادة عنصرين</item>
+        <item quantity="few">استعادة %1$d عناصر</item>
+        <item quantity="many">استعادة %1$d عنصرًا</item>
+        <item quantity="other">استعادة %1$d عنصر</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="zero">استُعيد %1$d عنصر.</item>
+        <item quantity="one">استُعيد عنصر واحد.</item>
+        <item quantity="two">استُعيد عنصران.</item>
+        <item quantity="few">استُعيدت %1$d عناصر.</item>
+        <item quantity="many">استُعيد %1$d عنصرًا.</item>
+        <item quantity="other">استُعيد %1$d عنصر.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="zero">بقي %1$d يوم</item>
+        <item quantity="one">بقي يوم واحد</item>
+        <item quantity="two">بقي يومان</item>
+        <item quantity="few">بقيت %1$d أيام</item>
+        <item quantity="many">بقي %1$d يومًا</item>
+        <item quantity="other">بقي %1$d يوم</item>
+    </plurals>
 </resources>

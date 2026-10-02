@@ -1326,4 +1326,48 @@
     <string name="slideshow_videos">Riproduci video (senza audio)</string>
     <string name="slideshow_loop">Ripeti</string>
     <string name="slideshow_note">Guardare non è mai una decisione. Lo schermo resta acceso durante la presentazione.</string>
+    <string name="basket_sort_added">Aggiunti di recente</string>
+    <string name="basket_sort_taken">Data di scatto</string>
+    <string name="basket_intro_delete">Non è ancora stato eliminato nulla. “Elimina definitivamente” è attivo: svuotare elimina per sempre, senza cestino di Android.</string>
+    <string name="basket_confirm_delete_title">Eliminare definitivamente?</string>
+    <string name="basket_confirm_delete_message">Poi conferma con Android. Queste foto e questi video non finiranno nel cestino di Android e non si potranno recuperare.</string>
+    <string name="done_note_media_deleted">Le foto e i video sono eliminati definitivamente: non sono nel cestino di Android.</string>
+    <string name="systrash_open">Apri il cestino di Android</string>
+    <string name="systrash_title">Cestino di Android</string>
+    <string name="systrash_intro">Tutto ciò che Android conserva nel cestino, da PhotoMaid e da altre app. Alla scadenza Android lo elimina da solo.</string>
+    <string name="systrash_empty_title">Il cestino di Android è vuoto</string>
+    <string name="systrash_empty_text">Le foto e i video rimossi compaiono qui per un po’ e si possono recuperare.</string>
+    <string name="systrash_partial">%1$d di %2$d fatti. Il resto resta com’era.</string>
+    <string name="systrash_delete_text">Poi conferma con Android. Foto e video eliminati definitivamente non si possono recuperare.</string>
+    <string name="lib_info_raw">File RAW</string>
+    <string name="set_delete_permanently">Elimina definitivamente</string>
+    <string name="set_delete_permanently_detail">Disattivato: svuotare sposta nel cestino di Android (recuperabile per un po’). Attivo: eliminato subito per sempre.</string>
+    <string name="set_delete_permanently_confirm_title">Attivare l’eliminazione definitiva?</string>
+    <string name="set_delete_permanently_confirm_text">Da ora in poi svuotare il cestino di PhotoMaid elimina foto e video per sempre. Non finiscono nel cestino di Android e non si possono recuperare, nemmeno da backup non ancora sincronizzati. Android chiede comunque ogni volta.</string>
+    <string name="set_delete_permanently_confirm_action">Attiva</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d elemento eliminato definitivamente.</item>
+        <item quantity="many">%1$d elementi eliminati definitivamente.</item>
+        <item quantity="other">%1$d elementi eliminati definitivamente.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Elimina %1$d elemento definitivamente</item>
+        <item quantity="many">Elimina %1$d elementi definitivamente</item>
+        <item quantity="other">Elimina %1$d elementi definitivamente</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Ripristina %1$d elemento</item>
+        <item quantity="many">Ripristina %1$d elementi</item>
+        <item quantity="other">Ripristina %1$d elementi</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d elemento ripristinato.</item>
+        <item quantity="many">%1$d elementi ripristinati.</item>
+        <item quantity="other">%1$d elementi ripristinati.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">ancora %1$d giorno</item>
+        <item quantity="many">ancora %1$d giorni</item>
+        <item quantity="other">ancora %1$d giorni</item>
+    </plurals>
 </resources>

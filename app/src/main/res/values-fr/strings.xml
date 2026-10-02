@@ -1326,4 +1326,48 @@
     <string name="slideshow_videos">Lire les vidéos (sans son)</string>
     <string name="slideshow_loop">Répéter</string>
     <string name="slideshow_note">Regarder n’est jamais une décision. L’écran reste allumé pendant le diaporama.</string>
+    <string name="basket_sort_added">Ajoutés récemment</string>
+    <string name="basket_sort_taken">Date de prise de vue</string>
+    <string name="basket_intro_delete">Rien n’a encore été supprimé. « Supprimer définitivement » est activé : vider supprime pour de bon, sans passer par la corbeille Android.</string>
+    <string name="basket_confirm_delete_title">Supprimer définitivement ?</string>
+    <string name="basket_confirm_delete_message">Confirmez ensuite auprès d’Android. Ces photos et vidéos n’iront pas dans la corbeille Android et ne pourront pas être restaurées.</string>
+    <string name="done_note_media_deleted">Les photos et vidéos sont supprimées définitivement : elles ne sont pas dans la corbeille Android.</string>
+    <string name="systrash_open">Voir la corbeille Android</string>
+    <string name="systrash_title">Corbeille Android</string>
+    <string name="systrash_intro">Tout ce qu’Android garde dans sa corbeille – de PhotoMaid et d’autres apps. À l’échéance, Android le supprime lui-même.</string>
+    <string name="systrash_empty_title">La corbeille Android est vide</string>
+    <string name="systrash_empty_text">Les photos et vidéos retirées apparaissent ici un moment et peuvent être restaurées.</string>
+    <string name="systrash_partial">%1$d sur %2$d effectués. Le reste ne change pas.</string>
+    <string name="systrash_delete_text">Confirmez ensuite auprès d’Android. Les photos et vidéos supprimées définitivement ne peuvent pas être restaurées.</string>
+    <string name="lib_info_raw">Fichier RAW</string>
+    <string name="set_delete_permanently">Supprimer définitivement</string>
+    <string name="set_delete_permanently_detail">Désactivé : vider place dans la corbeille Android (restaurable un temps). Activé : supprimé définitivement tout de suite.</string>
+    <string name="set_delete_permanently_confirm_title">Activer la suppression définitive ?</string>
+    <string name="set_delete_permanently_confirm_text">Désormais, vider la corbeille PhotoMaid supprime définitivement photos et vidéos. Elles ne vont pas dans la corbeille Android et ne peuvent pas être restaurées – pas même depuis des sauvegardes pas encore synchronisées. Android demande quand même à chaque fois.</string>
+    <string name="set_delete_permanently_confirm_action">Activer</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d élément supprimé définitivement.</item>
+        <item quantity="many">%1$d éléments supprimés définitivement.</item>
+        <item quantity="other">%1$d éléments supprimés définitivement.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Supprimer %1$d élément définitivement</item>
+        <item quantity="many">Supprimer %1$d éléments définitivement</item>
+        <item quantity="other">Supprimer %1$d éléments définitivement</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Restaurer %1$d élément</item>
+        <item quantity="many">Restaurer %1$d éléments</item>
+        <item quantity="other">Restaurer %1$d éléments</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d élément restauré.</item>
+        <item quantity="many">%1$d éléments restaurés.</item>
+        <item quantity="other">%1$d éléments restaurés.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">%1$d jour restant</item>
+        <item quantity="many">%1$d jours restants</item>
+        <item quantity="other">%1$d jours restants</item>
+    </plurals>
 </resources>

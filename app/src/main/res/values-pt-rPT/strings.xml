@@ -1326,4 +1326,48 @@
     <string name="slideshow_videos">Reproduzir vídeos (sem som)</string>
     <string name="slideshow_loop">Repetir</string>
     <string name="slideshow_note">Ver nunca é uma decisão. O ecrã fica ligado durante a apresentação.</string>
+    <string name="basket_sort_added">Adicionados recentemente</string>
+    <string name="basket_sort_taken">Data de captura</string>
+    <string name="basket_intro_delete">Ainda nada foi eliminado. “Eliminar definitivamente” está ativo: esvaziar elimina de vez, sem passar pelo lixo do Android.</string>
+    <string name="basket_confirm_delete_title">Eliminar definitivamente?</string>
+    <string name="basket_confirm_delete_message">Depois confirme no Android. Estas fotos e vídeos não vão para o lixo do Android e não podem ser recuperados.</string>
+    <string name="done_note_media_deleted">As fotos e vídeos foram eliminados definitivamente – não estão no lixo do Android.</string>
+    <string name="systrash_open">Ver o lixo do Android</string>
+    <string name="systrash_title">Lixo do Android</string>
+    <string name="systrash_intro">Tudo o que o Android guarda no lixo – do PhotoMaid e de outras apps. Quando o prazo termina, o Android elimina-o.</string>
+    <string name="systrash_empty_title">O lixo do Android está vazio</string>
+    <string name="systrash_empty_text">As fotos e vídeos removidos aparecem aqui durante algum tempo e podem ser recuperados.</string>
+    <string name="systrash_partial">%1$d de %2$d concluídos. O resto fica como estava.</string>
+    <string name="systrash_delete_text">Depois confirme no Android. Fotos e vídeos eliminados definitivamente não podem ser recuperados.</string>
+    <string name="lib_info_raw">Ficheiro RAW</string>
+    <string name="set_delete_permanently">Eliminar definitivamente</string>
+    <string name="set_delete_permanently_detail">Desativado: esvaziar move para o lixo do Android (recuperável durante algum tempo). Ativado: eliminado de vez imediatamente.</string>
+    <string name="set_delete_permanently_confirm_title">Ativar a eliminação definitiva?</string>
+    <string name="set_delete_permanently_confirm_text">A partir de agora, esvaziar o lixo do PhotoMaid elimina fotos e vídeos de vez. Não vão para o lixo do Android e não podem ser recuperados – nem de cópias ainda não sincronizadas. O Android pergunta sempre.</string>
+    <string name="set_delete_permanently_confirm_action">Ativar</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d item eliminado definitivamente.</item>
+        <item quantity="many">%1$d itens eliminados definitivamente.</item>
+        <item quantity="other">%1$d itens eliminados definitivamente.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Eliminar %1$d item definitivamente</item>
+        <item quantity="many">Eliminar %1$d itens definitivamente</item>
+        <item quantity="other">Eliminar %1$d itens definitivamente</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Restaurar %1$d item</item>
+        <item quantity="many">Restaurar %1$d itens</item>
+        <item quantity="other">Restaurar %1$d itens</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d item restaurado.</item>
+        <item quantity="many">%1$d itens restaurados.</item>
+        <item quantity="other">%1$d itens restaurados.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">falta %1$d dia</item>
+        <item quantity="many">faltam %1$d dias</item>
+        <item quantity="other">faltam %1$d dias</item>
+    </plurals>
 </resources>

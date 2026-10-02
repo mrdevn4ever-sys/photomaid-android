@@ -291,6 +291,9 @@ class AppModel(
             val outcome: OperationOutcome = when (kind) {
                 CleanupOperationKind.PHOTO_LIBRARY_DELETE -> photos.trash(items.map { it.localIdentifier })
                     ?: return CleanupRunResult.NeedsReconciliation
+                // Nur mit der Einstellung „Endgültig löschen“ (Standard aus); Android bestätigt selbst.
+                CleanupOperationKind.PHOTO_LIBRARY_DELETE_PERMANENTLY -> photos.deletePermanently(items.map { it.localIdentifier })
+                    ?: return CleanupRunResult.NeedsReconciliation
                 CleanupOperationKind.FILE_DELETE_PERMANENTLY -> withContext(Dispatchers.IO) { sources.deletePermanently(items) }
                 // Nur angeboten, wenn der Speicherort einen Papierkorb hat (Android 17+, FLAG_SUPPORTS_TRASH).
                 CleanupOperationKind.FILE_MOVE_TO_TRASH -> withContext(Dispatchers.IO) { sources.moveToTrash(items) }

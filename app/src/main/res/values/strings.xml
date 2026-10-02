@@ -1276,4 +1276,43 @@
     <string name="slideshow_videos">Play videos (muted)</string>
     <string name="slideshow_loop">Repeat</string>
     <string name="slideshow_note">Watching is never a decision. The screen stays on during the slideshow.</string>
+    <string name="basket_sort_added">Recently added</string>
+    <string name="basket_sort_taken">Date taken</string>
+    <string name="basket_intro_delete">Nothing has been deleted yet. “Permanently delete” is on: emptying deletes for good and skips the Android trash.</string>
+    <string name="basket_confirm_delete_title">Permanently delete?</string>
+    <string name="basket_confirm_delete_message">Then confirm with Android. These photos and videos will not go to the Android trash and cannot be restored.</string>
+    <string name="done_note_media_deleted">The photos and videos are permanently deleted – they are not in the Android trash.</string>
+    <string name="systrash_open">Open Android trash</string>
+    <string name="systrash_title">Android trash</string>
+    <string name="systrash_intro">Everything Android keeps in its trash – from PhotoMaid and other apps. Android deletes items itself when the time runs out.</string>
+    <string name="systrash_empty_title">Android trash is empty</string>
+    <string name="systrash_empty_text">Photos and videos you remove appear here for a while and can be restored.</string>
+    <string name="systrash_partial">%1$d of %2$d done. The rest stays as it was.</string>
+    <string name="systrash_delete_text">Then confirm with Android. Permanently deleted photos and videos cannot be restored.</string>
+    <string name="lib_info_raw">RAW file</string>
+    <string name="set_delete_permanently">Permanently delete</string>
+    <string name="set_delete_permanently_detail">Off: emptying the PhotoMaid trash moves items to the Android trash (restorable for a while). On: deleted for good right away.</string>
+    <string name="set_delete_permanently_confirm_title">Turn on permanent deletion?</string>
+    <string name="set_delete_permanently_confirm_text">From now on, emptying the PhotoMaid trash deletes photos and videos for good. They do not go to the Android trash and cannot be restored – also not from backups that have not synced yet. Android still asks each time.</string>
+    <string name="set_delete_permanently_confirm_action">Turn on</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d item permanently deleted.</item>
+        <item quantity="other">%1$d items permanently deleted.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Permanently delete %1$d item</item>
+        <item quantity="other">Permanently delete %1$d items</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Restore %1$d item</item>
+        <item quantity="other">Restore %1$d items</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d item restored.</item>
+        <item quantity="other">%1$d items restored.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">%1$d day left</item>
+        <item quantity="other">%1$d days left</item>
+    </plurals>
 </resources>

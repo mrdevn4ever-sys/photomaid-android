@@ -65,7 +65,11 @@ class FakeMediaLibrary(
     val takenAt = mutableMapOf<Int, Instant>()
     val addedAt = mutableMapOf<Int, Instant>()
     private var base: List<MediaAsset> = emptyList()
+    /** G4: Dateiname/MIME je Medium überschreiben (RAW+JPEG-Paare). */
+    val names = mutableMapOf<String, String>()
+    val mimes = mutableMapOf<String, String>()
     val all: List<MediaAsset> get() = base.mapIndexed { i, a -> a.copy(isFavorite = favorites[a.id] ?: a.isFavorite, relativePath = paths[a.id] ?: a.relativePath ?: "DCIM/Camera/",
+        displayName = names[a.id] ?: a.displayName, mimeType = mimes[a.id] ?: a.mimeType,
         creationDate = takenAt[i] ?: a.creationDate, dateAdded = addedAt[i] ?: a.dateAdded ?: a.creationDate) }
 
     init {
@@ -141,9 +145,20 @@ class FakeMediaLibrary(
     }
     override suspend fun trash(ids: List<String>): OperationOutcome? {
         trashOutcome?.let { return it(ids) }
-        removed += ids
+        removed += ids; trashed += ids
         return OperationOutcome.Succeeded
     }
+    /** Endgültig gelöscht (G4: Einstellung „Endgültig löschen“ bzw. Android-Papierkorb). */
+    val deleted = mutableSetOf<String>()
+    val trashExpiry = mutableMapOf<String, java.time.Instant>()
+    override fun trashed(): List<app.photomaid.media.TrashedAsset> = all.filter { it.id in trashed && it.id !in deleted }
+        .map { app.photomaid.media.TrashedAsset(it, trashExpiry[it.id] ?: java.time.Instant.now().plus(java.time.Duration.ofDays(30))) }
+    override suspend fun deletePermanently(ids: List<String>): OperationOutcome? {
+        writes += "delete:${ids.size}"
+        removed += ids; trashed -= ids.toSet(); deleted += ids; changeToken.value += 1
+        return OperationOutcome.Succeeded
+    }
+    override suspend fun restoreManyFromTrash(ids: List<String>): Map<String, MediaWriteResult> = ids.associateWith { restoreFromTrash(it) }
 
     // Bearbeiten: neue Datei wie MediaStore (eigene ID), Ersetzen = Original in den (simulierten) Android-Papierkorb.
     /** Antwort der simulierten Papierkorb-Bestätigung beim Ersetzen. */

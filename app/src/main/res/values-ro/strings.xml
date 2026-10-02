@@ -1326,4 +1326,48 @@
     <string name="slideshow_videos">Redă videoclipurile (fără sunet)</string>
     <string name="slideshow_loop">Repetă</string>
     <string name="slideshow_note">Vizionarea nu este niciodată o decizie. Ecranul rămâne aprins în timpul prezentării.</string>
+    <string name="basket_sort_added">Adăugate recent</string>
+    <string name="basket_sort_taken">Data fotografierii</string>
+    <string name="basket_intro_delete">Încă nu s-a șters nimic. „Șterge definitiv” este activat: golirea șterge definitiv, fără coșul Android.</string>
+    <string name="basket_confirm_delete_title">Ștergi definitiv?</string>
+    <string name="basket_confirm_delete_message">Apoi confirmă în Android. Aceste fotografii și videoclipuri nu ajung în coșul Android și nu pot fi recuperate.</string>
+    <string name="done_note_media_deleted">Fotografiile și videoclipurile sunt șterse definitiv – nu sunt în coșul Android.</string>
+    <string name="systrash_open">Vezi coșul Android</string>
+    <string name="systrash_title">Coșul Android</string>
+    <string name="systrash_intro">Tot ce păstrează Android în coș – din PhotoMaid și alte aplicații. La expirare, Android le șterge singur.</string>
+    <string name="systrash_empty_title">Coșul Android este gol</string>
+    <string name="systrash_empty_text">Fotografiile și videoclipurile eliminate apar aici o vreme și pot fi recuperate.</string>
+    <string name="systrash_partial">%1$d din %2$d gata. Restul rămâne neschimbat.</string>
+    <string name="systrash_delete_text">Apoi confirmă în Android. Fotografiile și videoclipurile șterse definitiv nu pot fi recuperate.</string>
+    <string name="lib_info_raw">Fișier RAW</string>
+    <string name="set_delete_permanently">Șterge definitiv</string>
+    <string name="set_delete_permanently_detail">Dezactivat: golirea mută în coșul Android (recuperabil o vreme). Activat: șters definitiv imediat.</string>
+    <string name="set_delete_permanently_confirm_title">Activezi ștergerea definitivă?</string>
+    <string name="set_delete_permanently_confirm_text">De acum, golirea coșului PhotoMaid șterge definitiv fotografiile și videoclipurile. Nu ajung în coșul Android și nu pot fi recuperate – nici din copii nesincronizate încă. Android întreabă totuși de fiecare dată.</string>
+    <string name="set_delete_permanently_confirm_action">Activează</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d element șters definitiv.</item>
+        <item quantity="few">%1$d elemente șterse definitiv.</item>
+        <item quantity="other">%1$d de elemente șterse definitiv.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Șterge definitiv %1$d element</item>
+        <item quantity="few">Șterge definitiv %1$d elemente</item>
+        <item quantity="other">Șterge definitiv %1$d de elemente</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Restaurează %1$d element</item>
+        <item quantity="few">Restaurează %1$d elemente</item>
+        <item quantity="other">Restaurează %1$d de elemente</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d element restaurat.</item>
+        <item quantity="few">%1$d elemente restaurate.</item>
+        <item quantity="other">%1$d de elemente restaurate.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">încă %1$d zi</item>
+        <item quantity="few">încă %1$d zile</item>
+        <item quantity="other">încă %1$d de zile</item>
+    </plurals>
 </resources>

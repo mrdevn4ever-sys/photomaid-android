@@ -1226,4 +1226,38 @@
     <string name="slideshow_videos">動画を再生（ミュート）</string>
     <string name="slideshow_loop">繰り返す</string>
     <string name="slideshow_note">見るだけでは何も決定されません。スライドショー中は画面がオンのままです。</string>
+    <string name="basket_sort_added">最近追加した順</string>
+    <string name="basket_sort_taken">撮影日</string>
+    <string name="basket_intro_delete">まだ何も削除されていません。「完全に削除」がオンです。空にするとAndroidのゴミ箱を通さず完全に削除されます。</string>
+    <string name="basket_confirm_delete_title">完全に削除しますか？</string>
+    <string name="basket_confirm_delete_message">続けてAndroidで確認します。これらの写真と動画はAndroidのゴミ箱に入らず、復元できません。</string>
+    <string name="done_note_media_deleted">写真と動画は完全に削除されました。Androidのゴミ箱にはありません。</string>
+    <string name="systrash_open">Androidのゴミ箱を見る</string>
+    <string name="systrash_title">Androidのゴミ箱</string>
+    <string name="systrash_intro">Androidがゴミ箱に保管しているもの（PhotoMaidや他のアプリから）すべて。期限が来るとAndroidが自動で削除します。</string>
+    <string name="systrash_empty_title">Androidのゴミ箱は空です</string>
+    <string name="systrash_empty_text">削除した写真や動画はしばらくここに表示され、復元できます。</string>
+    <string name="systrash_partial">%2$d件中%1$d件完了。残りはそのままです。</string>
+    <string name="systrash_delete_text">続けてAndroidで確認します。完全に削除した写真と動画は復元できません。</string>
+    <string name="lib_info_raw">RAWファイル</string>
+    <string name="set_delete_permanently">完全に削除</string>
+    <string name="set_delete_permanently_detail">オフ：空にするとAndroidのゴミ箱へ（しばらく復元可能）。オン：すぐに完全に削除。</string>
+    <string name="set_delete_permanently_confirm_title">完全に削除をオンにしますか？</string>
+    <string name="set_delete_permanently_confirm_text">今後PhotoMaidのゴミ箱を空にすると、写真と動画は完全に削除されます。Androidのゴミ箱には入らず、まだ同期されていないバックアップからも復元できません。Androidは毎回確認します。</string>
+    <string name="set_delete_permanently_confirm_action">オンにする</string>
+    <plurals name="result_media_deleted">
+        <item quantity="other">%1$d件を完全に削除しました。</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="other">%1$d件を完全に削除</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="other">%1$d件を復元</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="other">%1$d件を復元しました。</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="other">残り%1$d日</item>
+    </plurals>
 </resources>

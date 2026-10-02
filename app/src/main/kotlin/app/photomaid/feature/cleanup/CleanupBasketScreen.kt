@@ -8,6 +8,10 @@ import app.photomaid.feature.review.LIMIT_SOON
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import app.photomaid.navigation.Routes
+import app.photomaid.feature.editor.Chip
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -100,6 +104,12 @@ import kotlinx.coroutines.withContext
  * Screen 5 – Papierkorb (PhotoMaid-eigen, nichts ist bisher gelöscht). Reale Kandidaten, Vorschau, Abwahl,
  * genaue Beschreibung der Operation. Gemischter Korb wird nach Provider getrennt bestätigt.
  */
+/** Reihenfolge im PhotoMaid-Papierkorb (nur Ansicht): zuletzt hineingelegt, Aufnahmedatum, Größe (unbekannt am Ende). */
+enum class BasketSort(val label: Int) { ADDED(R.string.basket_sort_added), TAKEN(R.string.basket_sort_taken), SIZE(R.string.lib_sort_largest) }
+
+private val CleanupOperationKind.isPhotoLibrary get() =
+    this == CleanupOperationKind.PHOTO_LIBRARY_DELETE || this == CleanupOperationKind.PHOTO_LIBRARY_DELETE_PERMANENTLY
+
 @Composable
 fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     val app = LocalApp.current
@@ -109,11 +119,26 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     val scope = rememberCoroutineScope()
     val read by app.read.collectAsState()
     val basket = read.basket
-    val photoItems = basket.filter { it.item.provider == ItemProvider.PhotoLibrary }
+    val settingsNow by app.settings.collectAsState()
+    var assets by remember { mutableStateOf<Map<String, MediaAsset>>(emptyMap()) }
+    // Zeitpunkt des Hineinlegens = letzte Entscheidung „In den Papierkorb“ im Verlauf (nichts zusätzlich gespeichert).
+    val placedAt = remember(read.events) {
+        read.events.filter { it.to.disposition == Disposition.MARKED_FOR_CLEANUP }.groupBy { it.item }.mapValues { (_, v) -> v.maxOf { it.at } }
+    }
+    val photoItems = remember(basket, assets, settingsNow.basketSort, placedAt) {
+        val p = basket.filter { it.item.provider == ItemProvider.PhotoLibrary }
+        when (settingsNow.basketSort) {
+            BasketSort.ADDED -> p.sortedByDescending { placedAt[it.item] ?: java.time.Instant.MIN }
+            BasketSort.TAKEN -> p.sortedWith(compareBy<ItemRecord> { if (assets[it.item.localIdentifier]?.creationDate == null) 1 else 0 }
+                .thenByDescending { assets[it.item.localIdentifier]?.creationDate })
+            BasketSort.SIZE -> p.sortedWith(compareBy<ItemRecord> { if (assets[it.item.localIdentifier]?.size?.bytesOrNull == null) 1 else 0 }
+                .thenByDescending { assets[it.item.localIdentifier]?.size?.bytesOrNull ?: 0L })
+        }
+    }
+    val photoKind = if (settingsNow.deletePermanently) CleanupOperationKind.PHOTO_LIBRARY_DELETE_PERMANENTLY else CleanupOperationKind.PHOTO_LIBRARY_DELETE
     val fileItems = basket.filter { it.item.provider != ItemProvider.PhotoLibrary }
     var selection by remember { mutableStateOf<Set<ItemReference>>(emptySet()) }
     var known by remember { mutableStateOf<Set<ItemReference>>(emptySet()) }
-    var assets by remember { mutableStateOf<Map<String, MediaAsset>>(emptyMap()) }
     var fileNames by remember { mutableStateOf<Map<ItemReference, String>>(emptyMap()) }
     // Offene Bestätigung mit genau den Elementen, die entfernt würden (ggf. auf das Tageslimit gekürzt).
     var confirmPhotos by remember { mutableStateOf<List<ItemReference>?>(null) }
@@ -135,7 +160,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
         selection = (selection intersect all) + (all - known)
         known = all
         withContext(Dispatchers.IO) {
-            assets = app.photos.assets(photoItems.map { it.item.localIdentifier }).associateBy { it.id }
+            assets = app.photos.assets(basket.filter { it.item.provider == ItemProvider.PhotoLibrary }.map { it.item.localIdentifier }).associateBy { it.id }
             fileNames = fileItems.associate { it.item to app.sources.displayName(it.item) }
         }
     }
@@ -149,7 +174,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
 
     fun request(items: List<ItemReference>, kind: CleanupOperationKind) {
         if (available != null && items.size > available) limitFor = items to kind
-        else if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE) confirmPhotos = items else confirmFiles = items
+        else if (kind.isPhotoLibrary) confirmPhotos = items else confirmFiles = items
     }
 
     // Video-Bonus „+10 heute“ aus dem Limit-Blatt. Erst nach dem Reward-Callback gilt die neue Zahl; dann geht es
@@ -164,7 +189,7 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
             is RewardedAdResult.Rewarded -> {
                 val left = app.read.value.allowance?.available
                 if (left != null && items.size > left) limitFor = items to kind
-                else if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE) confirmPhotos = items else confirmFiles = items
+                else if (kind.isPhotoLibrary) confirmPhotos = items else confirmFiles = items
             }
             RewardedAdResult.DismissedWithoutReward -> { resultTitle = R.string.notice; resultMessage = res.getString(R.string.limit_bonus_dismissed) }
             else -> { resultTitle = R.string.notice; resultMessage = res.getString(R.string.limit_bonus_unavailable) }
@@ -195,6 +220,8 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
             is CleanupRunResult.Finished -> when (r.intent.state) {
                 OperationState.SUCCEEDED -> if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE)
                     res.getQuantityString(R.plurals.result_media_trashed, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
+                else if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE_PERMANENTLY)
+                    res.getQuantityString(R.plurals.result_media_deleted, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
                 else if (kind == CleanupOperationKind.FILE_MOVE_TO_TRASH)
                     res.getQuantityString(R.plurals.result_files_trashed, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
                 else res.getQuantityString(R.plurals.result_files_deleted, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
@@ -232,8 +259,8 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
         bottomBar = {
             Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs),
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
-                if (selectedPhotos.isNotEmpty()) ProminentButton(pluralStringResource(R.plurals.basket_empty_media, selectedPhotos.size, selectedPhotos.size), fillWidth = true, large = true,
-                    enabled = !running) { request(selectedPhotos, CleanupOperationKind.PHOTO_LIBRARY_DELETE) }
+                if (selectedPhotos.isNotEmpty()) ProminentButton(pluralStringResource(R.plurals.basket_empty_media, selectedPhotos.size, selectedPhotos.size), Modifier.testTag("basket.empty.media"), fillWidth = true, large = true,
+                    enabled = !running) { request(selectedPhotos, photoKind) }
                 if (selectedFiles.isNotEmpty()) GlassButton(pluralStringResource(if (filesTrashable) R.plurals.basket_trash_files else R.plurals.basket_delete_files,
                     selectedFiles.size, selectedFiles.size), fillWidth = true, large = true,
                     tint = c.cleanup, enabled = !running) { request(selectedFiles, fileKind) }
@@ -253,7 +280,13 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
                 spacedItem("intro") {
                     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         Text(stringResource(R.string.basket_count, basket.size), style = AppTypography.title, color = c.textPrimary)
-                        Text(stringResource(R.string.basket_intro), style = AppTypography.caption, color = c.textSecondary)
+                        Text(stringResource(if (settingsNow.deletePermanently) R.string.basket_intro_delete else R.string.basket_intro), style = AppTypography.caption, color = c.textSecondary)
+                        if (photoItems.size > 1) Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("basket.sort"),
+                            horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                            for (b in BasketSort.entries) Chip(stringResource(b.label), settingsNow.basketSort == b, Modifier.testTag("basket.sort.${b.name}")) {
+                                scope.launch { app.updateSettings { it.copy(basketSort = b) } } }
+                        }
+                        PlainButton(stringResource(R.string.systrash_open), Modifier.testTag("basket.systrash")) { nav.push(Routes.SYSTEM_TRASH) }
                         val a = read.allowance
                         val available = a?.available
                         if (a != null && available != null) {
@@ -287,9 +320,14 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
             }
         }
     }
-    confirmPhotos?.let { items -> ConfirmationSheet(stringResource(R.string.basket_confirm_media_title), stringResource(R.string.basket_confirm_media_message),
-        stringResource(R.string.basket_confirm_media_action, items.size), onConfirm = { run(items, CleanupOperationKind.PHOTO_LIBRARY_DELETE) },
-        onDismiss = { confirmPhotos = null }) }
+    confirmPhotos?.let { items ->
+        if (photoKind == CleanupOperationKind.PHOTO_LIBRARY_DELETE_PERMANENTLY) ConfirmationSheet(stringResource(R.string.basket_confirm_delete_title),
+            stringResource(R.string.basket_confirm_delete_message), pluralStringResource(R.plurals.basket_confirm_delete_action, items.size, items.size),
+            onConfirm = { run(items, photoKind) }, onDismiss = { confirmPhotos = null })
+        else ConfirmationSheet(stringResource(R.string.basket_confirm_media_title), stringResource(R.string.basket_confirm_media_message),
+            stringResource(R.string.basket_confirm_media_action, items.size), onConfirm = { run(items, CleanupOperationKind.PHOTO_LIBRARY_DELETE) },
+            onDismiss = { confirmPhotos = null })
+    }
     confirmFiles?.let { items ->
         if (fileKind == CleanupOperationKind.FILE_MOVE_TO_TRASH) ConfirmationSheet(stringResource(R.string.basket_confirm_files_trash_title),
             stringResource(R.string.basket_confirm_files_trash_message), pluralStringResource(R.plurals.basket_trash_files, items.size, items.size),

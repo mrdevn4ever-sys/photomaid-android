@@ -71,6 +71,9 @@ data class MediaAsset(
     val aspectRatio: Float get() = if (pixelHeight > 0 && pixelWidth > 0) pixelWidth.toFloat() / pixelHeight else 1f
 }
 
+/** Medium im Android-Papierkorb mit Ablaufdatum (danach löscht Android es selbst; `null` = unbekannt). */
+data class TrashedAsset(val asset: MediaAsset, val expires: Instant?)
+
 /** Laufzeitberechtigungen je Android-Version (keine veraltete READ_EXTERNAL_STORAGE-only-Logik). */
 object MediaPermissions {
     fun requestable(): Array<String> = when {
@@ -187,6 +190,18 @@ interface MediaLibrary {
 
     /** Medium aus dem Android-Papierkorb zurückholen (Systembestätigung). `Done` nur, wenn danach belegt. */
     suspend fun restoreFromTrash(id: String): MediaWriteResult = MediaWriteResult.Failed("unsupported")
+
+    /** Mehrere mit EINER Systembestätigung zurückholen; Ergebnis je Medium nach erneutem Lesen. */
+    suspend fun restoreManyFromTrash(ids: List<String>): Map<String, MediaWriteResult> = ids.associateWith { restoreFromTrash(it) }
+
+    /** Inhalt des Android-Papierkorbs (`QUERY_ARG_MATCH_TRASHED = MATCH_ONLY`) mit Ablaufdatum, neueste zuerst. */
+    fun trashed(): List<TrashedAsset> = emptyList()
+
+    /**
+     * Endgültig löschen (`MediaStore.createDeleteRequest`, Systembestätigung). Nur auf ausdrücklichen Nutzerwunsch.
+     * Ergebnis je Medium belegt (danach weder sichtbar noch im Papierkorb); `null` = nicht belegbar.
+     */
+    suspend fun deletePermanently(ids: List<String>): OperationOutcome? = OperationOutcome.Failed("unsupported")
 
     /** Liegt das Medium im Android-Papierkorb? `null` = unbekannt. */
     fun isTrashed(id: String): Boolean? = null
@@ -549,6 +564,52 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
             runCatching { resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.DISPLAY_NAME, request.replaceName) }, null, null) }
         bumpChangeToken()
         EditSaveResult.Saved(uri.toString(), replaced = trashed, replaceDeclined = !trashed, bytes = bytes)
+    }
+
+    override suspend fun restoreManyFromTrash(ids: List<String>): Map<String, MediaWriteResult> {
+        if (ids.isEmpty()) return emptyMap()
+        val request = runCatching { MediaStore.createTrashRequest(resolver, ids.map { Uri.parse(it) }, false) }
+            .getOrElse { e -> return ids.associateWith { failed("untrash-request", e) } }
+        val code = SystemDialogs.launch(request.intentSender) ?: return ids.associateWith { MediaWriteResult.Failed("no-activity") }
+        if (code != Activity.RESULT_OK) return ids.associateWith { MediaWriteResult.Cancelled }
+        val out = withContext(Dispatchers.IO) { ids.associateWith { if (isTrashed(it) == false) MediaWriteResult.Done else MediaWriteResult.Failed("untrash-unverified") } }
+        bumpChangeToken()
+        return out
+    }
+
+    override fun trashed(): List<TrashedAsset> {
+        if (!_access.value.canRead) return emptyList()
+        val out = ArrayList<TrashedAsset>()
+        for (video in listOf(false, true)) runCatching {
+            val cols = (if (video) baseColumns + MediaStore.Video.VideoColumns.DURATION else baseColumns) + MediaStore.MediaColumns.DATE_EXPIRES
+            val args = Bundle().apply { putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_ONLY) }
+            resolver.query(collection(video), cols, args, null)?.use { c ->
+                val iExp = c.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_EXPIRES)
+                val exp = ArrayList<Instant?>()
+                while (c.moveToNext()) exp += if (c.isNull(iExp)) null else c.getLong(iExp).takeIf { it > 0 }?.let { Instant.ofEpochSecond(it) }
+                c.moveToPosition(-1)
+                readAll(c, video).forEachIndexed { i, a -> out += TrashedAsset(a, exp.getOrNull(i)) }
+            }
+        }
+        return out.sortedByDescending { it.expires ?: Instant.MIN }
+    }
+
+    override suspend fun deletePermanently(ids: List<String>): OperationOutcome? {
+        val request = runCatching { MediaStore.createDeleteRequest(resolver, ids.map { Uri.parse(it) }) }
+            .getOrElse { return OperationOutcome.Failed("request:${it.javaClass.simpleName}") }
+        val code = SystemDialogs.launch(request.intentSender) ?: return OperationOutcome.Failed("no-activity")
+        if (code != Activity.RESULT_OK) return OperationOutcome.Cancelled
+        // Belegt nur, was danach auch im Papierkorb nicht mehr existiert.
+        val gone = withContext(Dispatchers.IO) {
+            ids.map { id ->
+                val args = Bundle().apply { putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_INCLUDE) }
+                id to runCatching { resolver.query(Uri.parse(id), arrayOf(MediaStore.MediaColumns._ID), args, null)?.use { it.count == 0 } }.getOrNull()
+            }
+        }
+        if (gone.any { it.second == null }) return null
+        val removed = gone.filter { it.second == true }.map { ItemReference.photo(it.first) }.toSet()
+        bumpChangeToken()
+        return if (removed.size == ids.size) OperationOutcome.Succeeded else OperationOutcome.Partial(removed)
     }
 
     override suspend fun restoreFromTrash(id: String): MediaWriteResult {

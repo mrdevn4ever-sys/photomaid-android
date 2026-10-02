@@ -133,6 +133,7 @@ fun CleanupDoneView(done: CleanupDone, onDone: () -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                     Text(stringResource(when (done.kind) {
                         CleanupOperationKind.PHOTO_LIBRARY_DELETE -> R.string.done_note_media
+                        CleanupOperationKind.PHOTO_LIBRARY_DELETE_PERMANENTLY -> R.string.done_note_media_deleted
                         CleanupOperationKind.FILE_MOVE_TO_TRASH -> R.string.done_note_files_trash
                         else -> R.string.done_note_files
                     }),

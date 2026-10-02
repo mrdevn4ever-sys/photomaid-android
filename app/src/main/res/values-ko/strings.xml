@@ -1226,4 +1226,38 @@
     <string name="slideshow_videos">동영상 재생(음소거)</string>
     <string name="slideshow_loop">반복</string>
     <string name="slideshow_note">보는 것은 결정이 아닙니다. 슬라이드쇼 중에는 화면이 켜져 있습니다.</string>
+    <string name="basket_sort_added">최근 추가순</string>
+    <string name="basket_sort_taken">촬영 날짜</string>
+    <string name="basket_intro_delete">아직 아무것도 삭제되지 않았습니다. ‘영구 삭제’가 켜져 있어 비우면 Android 휴지통을 거치지 않고 영구 삭제됩니다.</string>
+    <string name="basket_confirm_delete_title">영구 삭제할까요?</string>
+    <string name="basket_confirm_delete_message">이어서 Android에서 확인하세요. 이 사진과 동영상은 Android 휴지통에 들어가지 않으며 복원할 수 없습니다.</string>
+    <string name="done_note_media_deleted">사진과 동영상이 영구 삭제되었습니다. Android 휴지통에 없습니다.</string>
+    <string name="systrash_open">Android 휴지통 보기</string>
+    <string name="systrash_title">Android 휴지통</string>
+    <string name="systrash_intro">PhotoMaid와 다른 앱에서 Android 휴지통에 보관 중인 모든 항목입니다. 기간이 지나면 Android가 직접 삭제합니다.</string>
+    <string name="systrash_empty_title">Android 휴지통이 비어 있습니다</string>
+    <string name="systrash_empty_text">제거한 사진과 동영상이 한동안 여기에 표시되며 복원할 수 있습니다.</string>
+    <string name="systrash_partial">%2$d개 중 %1$d개 완료. 나머지는 그대로입니다.</string>
+    <string name="systrash_delete_text">이어서 Android에서 확인하세요. 영구 삭제한 사진과 동영상은 복원할 수 없습니다.</string>
+    <string name="lib_info_raw">RAW 파일</string>
+    <string name="set_delete_permanently">영구 삭제</string>
+    <string name="set_delete_permanently_detail">끄기: 비우면 Android 휴지통으로 이동(한동안 복원 가능). 켜기: 즉시 영구 삭제.</string>
+    <string name="set_delete_permanently_confirm_title">영구 삭제를 켤까요?</string>
+    <string name="set_delete_permanently_confirm_text">이제부터 PhotoMaid 휴지통을 비우면 사진과 동영상이 영구 삭제됩니다. Android 휴지통에 들어가지 않으며 아직 동기화되지 않은 백업에서도 복원할 수 없습니다. Android는 매번 확인합니다.</string>
+    <string name="set_delete_permanently_confirm_action">켜기</string>
+    <plurals name="result_media_deleted">
+        <item quantity="other">%1$d개를 영구 삭제했습니다.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="other">%1$d개 영구 삭제</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="other">%1$d개 복원</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="other">%1$d개를 복원했습니다.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="other">%1$d일 남음</item>
+    </plurals>
 </resources>

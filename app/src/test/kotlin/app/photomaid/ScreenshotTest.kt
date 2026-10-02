@@ -761,4 +761,13 @@ class ScreenshotTest {
     @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rv06_free_filter() = expApp().let { video("rv06_free_filter", it) { tap("tab.FILTER") } }
     @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun rp01_photo_mix() = expApp(pro = true).let { editor("rp01_photo_mix", it, i = 1) { tap("tab.ADJUST")
         rule.onAllNodes(androidx.compose.ui.test.hasTestTag("group.MIX")).fetchSemanticsNodes().takeIf { n -> n.isNotEmpty() }?.let { tap("group.MIX") } } }
+
+    // G4: Android-Papierkorb mit Restzeit, PhotoMaid-Papierkorb mit Sortierung.
+    @Test fun t01_system_trash() = expApp().let { a ->
+        lib.all.take(5).forEachIndexed { i, m -> lib.trashed += m.id; lib.removed += m.id; lib.trashExpiry[m.id] = java.time.Instant.now().plus(java.time.Duration.ofDays(listOf(2L, 9L, 17L, 25L, 29L)[i])) }
+        shot("t01_system_trash", a, waitTag = "systrash.tile") { app.photomaid.feature.cleanup.SystemTrashScreen(nav) }
+        rule.onAllNodesWithTag("systrash.tile")[0].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick)
+        rule.waitForIdle(); rule.onRoot().captureRoboImage("build/outputs/roborazzi/t02_system_trash_selected.png")
+    }
+    @Test fun t03_basket_sort_dark() = expApp(dark = true).also { a -> runBlocking { lib.all.take(3).forEach { m -> a.decide(m.reference, DecisionAction.MarkForCleanup) } } }.let { shot("t03_basket_sort_dark", it, waitTag = "basket.sort") { CleanupBasketScreen(nav, showsDone = false) } }
 }

@@ -73,6 +73,7 @@ import app.photomaid.design.ScreenScaffold
 import app.photomaid.design.SourceRow
 import app.photomaid.design.GestureLegendRow
 import app.photomaid.design.clickableRow
+import app.photomaid.feature.common.ConfirmationSheet
 import app.photomaid.feature.common.NoticeDialog
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
@@ -93,6 +94,7 @@ fun SettingsScreen(nav: Nav) {
     val sources by app.sources.sources.collectAsState()
     val purchase by app.purchases.state.collectAsState()
     var restoreMessage by remember { mutableStateOf<String?>(null) }
+    var confirmPermanent by remember { mutableStateOf(false) }
 
     ScreenScaffold(stringResource(R.string.settings), onBack = null, actions = {
         TextButton(nav::back) { Text(stringResource(R.string.done), fontWeight = FontWeight.SemiBold) }
@@ -129,6 +131,10 @@ fun SettingsScreen(nav: Nav) {
             ListSection(header = stringResource(R.string.set_controls)) {
                 ToggleRow(stringResource(R.string.set_protect_favorites), settings.protectFavorites, Modifier.testTag("settings.protectFavorites"),
                     subtitle = stringResource(R.string.set_protect_favorites_detail)) { v -> scope.launch { app.updateSettings { it.copy(protectFavorites = v) } } }
+                // „Endgültig löschen“: Einschalten nur nach deutlicher Erklärung; Ausschalten sofort.
+                ToggleRow(stringResource(R.string.set_delete_permanently), settings.deletePermanently, Modifier.testTag("settings.deletePermanently"),
+                    subtitle = stringResource(R.string.set_delete_permanently_detail)) { v ->
+                    if (v) confirmPermanent = true else scope.launch { app.updateSettings { it.copy(deletePermanently = false) } } }
                 RowDivider()
                 ToggleRow(stringResource(R.string.set_haptics), settings.haptics) { v -> scope.launch { app.updateSettings { it.copy(haptics = v) } } }
                 RowDivider()
@@ -184,6 +190,9 @@ fun SettingsScreen(nav: Nav) {
         }
     }
     NoticeDialog(restoreMessage) { restoreMessage = null }
+    if (confirmPermanent) ConfirmationSheet(stringResource(R.string.set_delete_permanently_confirm_title),
+        stringResource(R.string.set_delete_permanently_confirm_text), stringResource(R.string.set_delete_permanently_confirm_action),
+        onConfirm = { scope.launch { app.updateSettings { it.copy(deletePermanently = true) } } }, onDismiss = { confirmPermanent = false })
 }
 
 @Composable

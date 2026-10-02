@@ -1326,4 +1326,48 @@
     <string name="slideshow_videos">Reproducir vídeos (sin sonido)</string>
     <string name="slideshow_loop">Repetir</string>
     <string name="slideshow_note">Ver nunca es una decisión. La pantalla permanece encendida durante la presentación.</string>
+    <string name="basket_sort_added">Añadidos recientemente</string>
+    <string name="basket_sort_taken">Fecha de captura</string>
+    <string name="basket_intro_delete">Aún no se ha eliminado nada. «Eliminar definitivamente» está activado: vaciar elimina para siempre, sin pasar por la papelera de Android.</string>
+    <string name="basket_confirm_delete_title">¿Eliminar definitivamente?</string>
+    <string name="basket_confirm_delete_message">Después confirma en Android. Estas fotos y vídeos no irán a la papelera de Android y no se podrán recuperar.</string>
+    <string name="done_note_media_deleted">Las fotos y vídeos se han eliminado definitivamente; no están en la papelera de Android.</string>
+    <string name="systrash_open">Ver la papelera de Android</string>
+    <string name="systrash_title">Papelera de Android</string>
+    <string name="systrash_intro">Todo lo que Android guarda en su papelera, de PhotoMaid y de otras apps. Cuando vence el plazo, Android lo elimina.</string>
+    <string name="systrash_empty_title">La papelera de Android está vacía</string>
+    <string name="systrash_empty_text">Las fotos y vídeos que quitas aparecen aquí durante un tiempo y se pueden recuperar.</string>
+    <string name="systrash_partial">%1$d de %2$d hechos. El resto queda como estaba.</string>
+    <string name="systrash_delete_text">Después confirma en Android. Las fotos y vídeos eliminados definitivamente no se pueden recuperar.</string>
+    <string name="lib_info_raw">Archivo RAW</string>
+    <string name="set_delete_permanently">Eliminar definitivamente</string>
+    <string name="set_delete_permanently_detail">Desactivado: vaciar mueve a la papelera de Android (recuperable un tiempo). Activado: se elimina definitivamente al instante.</string>
+    <string name="set_delete_permanently_confirm_title">¿Activar la eliminación definitiva?</string>
+    <string name="set_delete_permanently_confirm_text">A partir de ahora, vaciar la papelera de PhotoMaid elimina fotos y vídeos para siempre. No van a la papelera de Android y no se pueden recuperar, ni desde copias aún no sincronizadas. Android seguirá preguntando cada vez.</string>
+    <string name="set_delete_permanently_confirm_action">Activar</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d elemento eliminado definitivamente.</item>
+        <item quantity="many">%1$d elementos eliminados definitivamente.</item>
+        <item quantity="other">%1$d elementos eliminados definitivamente.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">Eliminar %1$d elemento definitivamente</item>
+        <item quantity="many">Eliminar %1$d elementos definitivamente</item>
+        <item quantity="other">Eliminar %1$d elementos definitivamente</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">Restaurar %1$d elemento</item>
+        <item quantity="many">Restaurar %1$d elementos</item>
+        <item quantity="other">Restaurar %1$d elementos</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d elemento restaurado.</item>
+        <item quantity="many">%1$d elementos restaurados.</item>
+        <item quantity="other">%1$d elementos restaurados.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">queda %1$d día</item>
+        <item quantity="many">quedan %1$d días</item>
+        <item quantity="other">quedan %1$d días</item>
+    </plurals>
 </resources>

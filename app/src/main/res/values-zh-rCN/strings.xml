@@ -1226,4 +1226,38 @@
     <string name="slideshow_videos">播放视频（静音）</string>
     <string name="slideshow_loop">循环播放</string>
     <string name="slideshow_note">观看绝不会做出任何决定。幻灯片播放期间屏幕保持常亮。</string>
+    <string name="basket_sort_added">最近加入</string>
+    <string name="basket_sort_taken">拍摄日期</string>
+    <string name="basket_intro_delete">尚未删除任何内容。“永久删除”已开启：清空将直接永久删除，不进入 Android 回收站。</string>
+    <string name="basket_confirm_delete_title">要永久删除吗？</string>
+    <string name="basket_confirm_delete_message">随后请在 Android 中确认。这些照片和视频不会进入 Android 回收站，且无法恢复。</string>
+    <string name="done_note_media_deleted">照片和视频已被永久删除，不在 Android 回收站中。</string>
+    <string name="systrash_open">查看 Android 回收站</string>
+    <string name="systrash_title">Android 回收站</string>
+    <string name="systrash_intro">Android 回收站中的所有内容（来自 PhotoMaid 和其他应用）。到期后 Android 会自行删除。</string>
+    <string name="systrash_empty_title">Android 回收站为空</string>
+    <string name="systrash_empty_text">移除的照片和视频会在此保留一段时间，可以恢复。</string>
+    <string name="systrash_partial">已完成 %1$d/%2$d，其余保持不变。</string>
+    <string name="systrash_delete_text">随后请在 Android 中确认。永久删除的照片和视频无法恢复。</string>
+    <string name="lib_info_raw">RAW 文件</string>
+    <string name="set_delete_permanently">永久删除</string>
+    <string name="set_delete_permanently_detail">关闭：清空会移入 Android 回收站（一段时间内可恢复）。开启：立即永久删除。</string>
+    <string name="set_delete_permanently_confirm_title">要开启永久删除吗？</string>
+    <string name="set_delete_permanently_confirm_text">此后清空 PhotoMaid 回收站将永久删除照片和视频。它们不会进入 Android 回收站，也无法恢复（包括尚未同步的备份）。Android 仍会每次确认。</string>
+    <string name="set_delete_permanently_confirm_action">开启</string>
+    <plurals name="result_media_deleted">
+        <item quantity="other">已永久删除 %1$d 项。</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="other">永久删除 %1$d 项</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="other">恢复 %1$d 项</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="other">已恢复 %1$d 项。</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="other">剩 %1$d 天</item>
+    </plurals>
 </resources>

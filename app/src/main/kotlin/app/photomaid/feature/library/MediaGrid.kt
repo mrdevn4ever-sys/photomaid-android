@@ -131,6 +131,8 @@ internal fun MediaGridPane(
     onLevel: ((TimelineLevel, String?) -> Unit)? = null,
     bottomPadding: androidx.compose.ui.unit.Dp = TabBarClearance + 48.dp,
     tag: String = "lib.grid",
+    /** Medien mit RAW-Partner (Abzeichen „RAW“). */
+    rawIds: Set<String> = emptySet(),
 ) {
     val haptics = LocalHapticFeedback.current
     Box(modifier.fillMaxSize()) {
@@ -167,7 +169,7 @@ internal fun MediaGridPane(
                 contentType = { _, cell -> if (cell is GridCell.Header) 0 else 1 }) { _, cell ->
                 when (cell) {
                     is GridCell.Header -> SectionHeader(cell.title, cell.count)
-                    is GridCell.Tile -> LibraryTile(cell.asset, level, cell.asset.id in selection, selection.isNotEmpty(),
+                    is GridCell.Tile -> LibraryTile(cell.asset, level, cell.asset.id in selection, selection.isNotEmpty(), raw = cell.asset.id in rawIds,
                         onClick = { if (selection.isNotEmpty()) onSelection(selection.toggle(cell.asset.id)) else onOpen(cell.asset) },
                         onLongClick = { haptics.performHapticFeedback(HapticFeedbackType.LongPress); onSelection(selection.toggle(cell.asset.id)) })
                 }
@@ -191,7 +193,7 @@ private fun SectionHeader(title: String, count: Int) {
 }
 
 @Composable
-private fun LibraryTile(a: MediaAsset, level: TimelineLevel, selected: Boolean, selecting: Boolean, onClick: () -> Unit, onLongClick: () -> Unit) {
+private fun LibraryTile(a: MediaAsset, level: TimelineLevel, selected: Boolean, selecting: Boolean, raw: Boolean = false, onClick: () -> Unit, onLongClick: () -> Unit) {
     val c = PM.colors
     val px = with(LocalDensity.current) { (if (level == TimelineLevel.DAY) 140.dp else if (level == TimelineLevel.MONTH) 90.dp else 56.dp).roundToPx() }
     val label = stringResource(when (a.kind) { MediaKind.VIDEO -> R.string.video; MediaKind.SCREENSHOT -> R.string.cat_screenshots; else -> R.string.photo })
@@ -207,6 +209,9 @@ private fun LibraryTile(a: MediaAsset, level: TimelineLevel, selected: Boolean, 
             if (level == TimelineLevel.DAY) Text(clock((a.duration * 1000).toLong()), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold),
                 color = Color.White, modifier = Modifier.padding(start = 3.dp))
         }
+        if (raw && level != TimelineLevel.YEAR) Text("RAW", Modifier.align(Alignment.TopStart).padding(4.dp).clip(androidx.compose.foundation.shape.RoundedCornerShape(4.dp))
+            .background(Color.Black.copy(alpha = 0.55f)).padding(horizontal = 4.dp, vertical = 1.dp).testTag("lib.tile.raw"),
+            style = AppTypography.caption.copy(fontWeight = FontWeight.Bold), color = Color.White)
         if (a.isFavorite && level != TimelineLevel.YEAR) Icon(Icons.Rounded.Favorite, null, tint = Color.White, modifier = Modifier.align(Alignment.BottomEnd).padding(4.dp).size(14.dp))
         if (selecting) {
             if (selected) Box(Modifier.fillMaxSize().border(3.dp, c.accent))
@@ -273,6 +278,8 @@ internal fun SelectionActions(
     onClear: () -> Unit,
     modifier: Modifier = Modifier,
     unhide: Boolean = false,
+    /** RAW-Partner gehen bei Papierkorb, Ausblenden und Verschieben mit. */
+    raw: RawIndex = RawIndex.EMPTY,
 ) {
     val app = LocalApp.current
     val settings by app.settings.collectAsState()
@@ -319,7 +326,7 @@ internal fun SelectionActions(
         message = stringResource(R.string.lib_hide_text),
         actionTitle = stringResource(R.string.lib_hide), destructive = false,
         onConfirm = {
-            val ids = chosen.map { it.id }
+            val ids = raw.withPartners(chosen).map { it.id }
             scope.launch { setMediaHidden(app, ids, true); onClear()
                 message = app.context.resources.getQuantityString(R.plurals.lib_hidden_done, ids.size, ids.size) }
         }, onDismiss = { confirmHide = false })
@@ -328,7 +335,7 @@ internal fun SelectionActions(
         message = stringResource(if (settings.protectFavorites && chosen.any { it.isFavorite }) R.string.lib_trash_text_fav else R.string.lib_trash_text),
         actionTitle = stringResource(R.string.lib_trash_action),
         onConfirm = {
-            val list = if (settings.protectFavorites) chosen.filterNot { it.isFavorite } else chosen
+            val list = raw.withPartners(if (settings.protectFavorites) chosen.filterNot { it.isFavorite } else chosen)
             scope.launch { markForCleanup(app, list); onClear()
                 message = app.context.resources.getQuantityString(R.plurals.lib_trashed, list.size, list.size) }
         }, onDismiss = { confirmTrash = false })
@@ -338,7 +345,7 @@ internal fun SelectionActions(
             onTogglePin = { p -> scope.launch { togglePinnedFolder(app, p) } },
             onPick = { path ->
                 folderSheet = false
-                scope.launch { message = moveAll(app, chosen.map { it.id }, path) { onClear() } }
+                scope.launch { message = moveAll(app, raw.withPartners(chosen).map { it.id }, path) { onClear() } }
             }, onDismiss = { folderSheet = false }, title = pluralStringResource(R.plurals.grid_move_title, chosen.size, chosen.size))
     }
     message?.let { m -> NoticeDialog(m) { message = null } }

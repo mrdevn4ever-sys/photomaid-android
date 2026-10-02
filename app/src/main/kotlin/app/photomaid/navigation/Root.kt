@@ -8,6 +8,7 @@ import app.photomaid.feature.settings.ExcludedFoldersScreen
 import app.photomaid.feature.library.FolderScreen
 import app.photomaid.feature.library.FolderTarget
 import app.photomaid.feature.library.HiddenScreen
+import app.photomaid.feature.cleanup.SystemTrashScreen
 import app.photomaid.feature.library.SlideshowRequest
 import app.photomaid.feature.library.SlideshowRequests
 import app.photomaid.feature.library.SlideshowScreen
@@ -170,7 +171,7 @@ object Routes {
     const val PRIVACY = "privacy"; const val HELP = "help"; const val BASKET_MODAL = "basketModal"
     const val SOURCES_MODAL = "sourcesModal"; const val EXCLUDED = "excluded"; const val MONTHS = "months"
     const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"; const val STUDIO = "studio"
-    const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"; const val FOLDER = "folder/{target}"; const val HIDDEN = "hidden"; const val SLIDESHOW = "slideshow/{id}"
+    const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"; const val FOLDER = "folder/{target}"; const val HIDDEN = "hidden"; const val SLIDESHOW = "slideshow/{id}"; const val SYSTEM_TRASH = "systemTrash"
     const val PICKER = "picker/{id}"; const val COLLAGE = "collage/{id}"
     fun editor(id: String) = "editor/$id"
     fun grid(id: String) = "grid/$id"
@@ -356,6 +357,7 @@ private fun RootNav(app: AppModel) {
             else FolderScreen(target, nav, onClose = { close() })
         }
         composable(Routes.HIDDEN) { HiddenScreen(nav) }
+        composable(Routes.SYSTEM_TRASH) { SystemTrashScreen(nav) }
         composable(Routes.SLIDESHOW) { entry ->
             val key = entry.arguments?.getString("id")
             val req = key?.let { SlideshowRequests.map[it] }

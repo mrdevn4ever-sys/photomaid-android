@@ -9953,6 +9953,348 @@
    "tr": "İzlemek asla bir karar değildir. Slayt gösterisi sırasında ekran açık kalır.",
    "uk": "Перегляд ніколи не є рішенням. Під час слайд-шоу екран не гасне.",
    "zh": "观看绝不会做出任何决定。幻灯片播放期间屏幕保持常亮。"
+  },
+  "basket_sort_added": {
+   "en": "Recently added",
+   "de": "Zuletzt hineingelegt",
+   "ar": "المضافة مؤخرًا",
+   "es": "Añadidos recientemente",
+   "fr": "Ajoutés récemment",
+   "it": "Aggiunti di recente",
+   "ja": "最近追加した順",
+   "ko": "최근 추가순",
+   "nl": "Recent toegevoegd",
+   "pl": "Ostatnio dodane",
+   "pt": "Adicionados recentemente",
+   "ro": "Adăugate recent",
+   "ru": "Недавно добавленные",
+   "tr": "Son eklenenler",
+   "uk": "Нещодавно додані",
+   "zh": "最近加入"
+  },
+  "basket_sort_taken": {
+   "en": "Date taken",
+   "de": "Aufnahmedatum",
+   "ar": "تاريخ الالتقاط",
+   "es": "Fecha de captura",
+   "fr": "Date de prise de vue",
+   "it": "Data di scatto",
+   "ja": "撮影日",
+   "ko": "촬영 날짜",
+   "nl": "Opnamedatum",
+   "pl": "Data wykonania",
+   "pt": "Data de captura",
+   "ro": "Data fotografierii",
+   "ru": "Дата съёмки",
+   "tr": "Çekim tarihi",
+   "uk": "Дата зйомки",
+   "zh": "拍摄日期"
+  },
+  "basket_intro_delete": {
+   "en": "Nothing has been deleted yet. “Permanently delete” is on: emptying deletes for good and skips the Android trash.",
+   "de": "Noch ist nichts gelöscht. „Endgültig löschen“ ist an: Leeren löscht endgültig, ohne Android-Papierkorb.",
+   "ar": "لم يُحذف شيء بعد. «حذف نهائيًا» مفعَّل: الإفراغ يحذف نهائيًا دون سلة مهملات Android.",
+   "es": "Aún no se ha eliminado nada. «Eliminar definitivamente» está activado: vaciar elimina para siempre, sin pasar por la papelera de Android.",
+   "fr": "Rien n’a encore été supprimé. « Supprimer définitivement » est activé : vider supprime pour de bon, sans passer par la corbeille Android.",
+   "it": "Non è ancora stato eliminato nulla. “Elimina definitivamente” è attivo: svuotare elimina per sempre, senza cestino di Android.",
+   "ja": "まだ何も削除されていません。「完全に削除」がオンです。空にするとAndroidのゴミ箱を通さず完全に削除されます。",
+   "ko": "아직 아무것도 삭제되지 않았습니다. ‘영구 삭제’가 켜져 있어 비우면 Android 휴지통을 거치지 않고 영구 삭제됩니다.",
+   "nl": "Er is nog niets verwijderd. ‘Definitief verwijderen’ staat aan: legen verwijdert definitief, zonder Android-prullenbak.",
+   "pl": "Nic nie zostało jeszcze usunięte. „Trwale usuwaj” jest włączone: opróżnienie usuwa na zawsze, z pominięciem kosza Androida.",
+   "pt": "Ainda nada foi eliminado. “Eliminar definitivamente” está ativo: esvaziar elimina de vez, sem passar pelo lixo do Android.",
+   "ro": "Încă nu s-a șters nimic. „Șterge definitiv” este activat: golirea șterge definitiv, fără coșul Android.",
+   "ru": "Пока ничего не удалено. «Удалять навсегда» включено: очистка удаляет навсегда, минуя корзину Android.",
+   "tr": "Henüz hiçbir şey silinmedi. “Kalıcı olarak sil” açık: boşaltmak, Android çöp kutusuna atmadan kalıcı olarak siler.",
+   "uk": "Ще нічого не видалено. «Видаляти назавжди» увімкнено: очищення видаляє назавжди, без кошика Android.",
+   "zh": "尚未删除任何内容。“永久删除”已开启：清空将直接永久删除，不进入 Android 回收站。"
+  },
+  "basket_confirm_delete_title": {
+   "en": "Permanently delete?",
+   "de": "Endgültig löschen?",
+   "ar": "حذف نهائيًا؟",
+   "es": "¿Eliminar definitivamente?",
+   "fr": "Supprimer définitivement ?",
+   "it": "Eliminare definitivamente?",
+   "ja": "完全に削除しますか？",
+   "ko": "영구 삭제할까요?",
+   "nl": "Definitief verwijderen?",
+   "pl": "Trwale usunąć?",
+   "pt": "Eliminar definitivamente?",
+   "ro": "Ștergi definitiv?",
+   "ru": "Удалить навсегда?",
+   "tr": "Kalıcı olarak silinsin mi?",
+   "uk": "Видалити назавжди?",
+   "zh": "要永久删除吗？"
+  },
+  "basket_confirm_delete_message": {
+   "en": "Then confirm with Android. These photos and videos will not go to the Android trash and cannot be restored.",
+   "de": "Bestätige anschließend bei Android. Die Fotos und Videos kommen nicht in den Android-Papierkorb und lassen sich nicht wiederherstellen.",
+   "ar": "ثم أكِّد لدى Android. لن تذهب هذه الصور والفيديوهات إلى سلة مهملات Android ولا يمكن استعادتها.",
+   "es": "Después confirma en Android. Estas fotos y vídeos no irán a la papelera de Android y no se podrán recuperar.",
+   "fr": "Confirmez ensuite auprès d’Android. Ces photos et vidéos n’iront pas dans la corbeille Android et ne pourront pas être restaurées.",
+   "it": "Poi conferma con Android. Queste foto e questi video non finiranno nel cestino di Android e non si potranno recuperare.",
+   "ja": "続けてAndroidで確認します。これらの写真と動画はAndroidのゴミ箱に入らず、復元できません。",
+   "ko": "이어서 Android에서 확인하세요. 이 사진과 동영상은 Android 휴지통에 들어가지 않으며 복원할 수 없습니다.",
+   "nl": "Bevestig daarna bij Android. Deze foto’s en video’s gaan niet naar de Android-prullenbak en zijn niet terug te halen.",
+   "pl": "Następnie potwierdź w Androidzie. Te zdjęcia i filmy nie trafią do kosza Androida i nie da się ich przywrócić.",
+   "pt": "Depois confirme no Android. Estas fotos e vídeos não vão para o lixo do Android e não podem ser recuperados.",
+   "ro": "Apoi confirmă în Android. Aceste fotografii și videoclipuri nu ajung în coșul Android și nu pot fi recuperate.",
+   "ru": "Затем подтвердите в Android. Эти фото и видео не попадут в корзину Android, восстановить их нельзя.",
+   "tr": "Ardından Android’de onayla. Bu fotoğraf ve videolar Android çöp kutusuna gitmez ve geri yüklenemez.",
+   "uk": "Потім підтвердьте в Android. Ці фото й відео не потраплять до кошика Android, відновити їх не можна.",
+   "zh": "随后请在 Android 中确认。这些照片和视频不会进入 Android 回收站，且无法恢复。"
+  },
+  "done_note_media_deleted": {
+   "en": "The photos and videos are permanently deleted – they are not in the Android trash.",
+   "de": "Die Fotos und Videos sind endgültig gelöscht – sie liegen nicht im Android-Papierkorb.",
+   "ar": "حُذفت الصور والفيديوهات نهائيًا – وهي ليست في سلة مهملات Android.",
+   "es": "Las fotos y vídeos se han eliminado definitivamente; no están en la papelera de Android.",
+   "fr": "Les photos et vidéos sont supprimées définitivement : elles ne sont pas dans la corbeille Android.",
+   "it": "Le foto e i video sono eliminati definitivamente: non sono nel cestino di Android.",
+   "ja": "写真と動画は完全に削除されました。Androidのゴミ箱にはありません。",
+   "ko": "사진과 동영상이 영구 삭제되었습니다. Android 휴지통에 없습니다.",
+   "nl": "De foto’s en video’s zijn definitief verwijderd – ze staan niet in de Android-prullenbak.",
+   "pl": "Zdjęcia i filmy zostały trwale usunięte – nie ma ich w koszu Androida.",
+   "pt": "As fotos e vídeos foram eliminados definitivamente – não estão no lixo do Android.",
+   "ro": "Fotografiile și videoclipurile sunt șterse definitiv – nu sunt în coșul Android.",
+   "ru": "Фото и видео удалены навсегда – их нет в корзине Android.",
+   "tr": "Fotoğraflar ve videolar kalıcı olarak silindi; Android çöp kutusunda değiller.",
+   "uk": "Фото й відео видалено назавжди – їх немає в кошику Android.",
+   "zh": "照片和视频已被永久删除，不在 Android 回收站中。"
+  },
+  "systrash_open": {
+   "en": "Open Android trash",
+   "de": "Android-Papierkorb ansehen",
+   "ar": "عرض سلة مهملات Android",
+   "es": "Ver la papelera de Android",
+   "fr": "Voir la corbeille Android",
+   "it": "Apri il cestino di Android",
+   "ja": "Androidのゴミ箱を見る",
+   "ko": "Android 휴지통 보기",
+   "nl": "Android-prullenbak bekijken",
+   "pl": "Pokaż kosz Androida",
+   "pt": "Ver o lixo do Android",
+   "ro": "Vezi coșul Android",
+   "ru": "Открыть корзину Android",
+   "tr": "Android çöp kutusunu aç",
+   "uk": "Відкрити кошик Android",
+   "zh": "查看 Android 回收站"
+  },
+  "systrash_title": {
+   "en": "Android trash",
+   "de": "Android-Papierkorb",
+   "ar": "سلة مهملات Android",
+   "es": "Papelera de Android",
+   "fr": "Corbeille Android",
+   "it": "Cestino di Android",
+   "ja": "Androidのゴミ箱",
+   "ko": "Android 휴지통",
+   "nl": "Android-prullenbak",
+   "pl": "Kosz Androida",
+   "pt": "Lixo do Android",
+   "ro": "Coșul Android",
+   "ru": "Корзина Android",
+   "tr": "Android çöp kutusu",
+   "uk": "Кошик Android",
+   "zh": "Android 回收站"
+  },
+  "systrash_intro": {
+   "en": "Everything Android keeps in its trash – from PhotoMaid and other apps. Android deletes items itself when the time runs out.",
+   "de": "Alles, was Android im Papierkorb aufbewahrt – aus PhotoMaid und anderen Apps. Nach Ablauf löscht Android es selbst.",
+   "ar": "كل ما يحتفظ به Android في سلة المهملات – من PhotoMaid وتطبيقات أخرى. عند انتهاء المدة يحذفه Android بنفسه.",
+   "es": "Todo lo que Android guarda en su papelera, de PhotoMaid y de otras apps. Cuando vence el plazo, Android lo elimina.",
+   "fr": "Tout ce qu’Android garde dans sa corbeille – de PhotoMaid et d’autres apps. À l’échéance, Android le supprime lui-même.",
+   "it": "Tutto ciò che Android conserva nel cestino, da PhotoMaid e da altre app. Alla scadenza Android lo elimina da solo.",
+   "ja": "Androidがゴミ箱に保管しているもの（PhotoMaidや他のアプリから）すべて。期限が来るとAndroidが自動で削除します。",
+   "ko": "PhotoMaid와 다른 앱에서 Android 휴지통에 보관 중인 모든 항목입니다. 기간이 지나면 Android가 직접 삭제합니다.",
+   "nl": "Alles wat Android in de prullenbak bewaart – uit PhotoMaid en andere apps. Na afloop verwijdert Android het zelf.",
+   "pl": "Wszystko, co Android trzyma w koszu – z PhotoMaid i innych aplikacji. Po upływie czasu Android sam to usuwa.",
+   "pt": "Tudo o que o Android guarda no lixo – do PhotoMaid e de outras apps. Quando o prazo termina, o Android elimina-o.",
+   "ro": "Tot ce păstrează Android în coș – din PhotoMaid și alte aplicații. La expirare, Android le șterge singur.",
+   "ru": "Всё, что Android хранит в корзине, – из PhotoMaid и других приложений. По истечении срока Android удаляет это сам.",
+   "tr": "Android’in çöp kutusunda tuttuğu her şey – PhotoMaid’den ve diğer uygulamalardan. Süre dolunca Android kendisi siler.",
+   "uk": "Усе, що Android зберігає в кошику, – з PhotoMaid та інших застосунків. Після закінчення строку Android видаляє це сам.",
+   "zh": "Android 回收站中的所有内容（来自 PhotoMaid 和其他应用）。到期后 Android 会自行删除。"
+  },
+  "systrash_empty_title": {
+   "en": "Android trash is empty",
+   "de": "Android-Papierkorb ist leer",
+   "ar": "سلة مهملات Android فارغة",
+   "es": "La papelera de Android está vacía",
+   "fr": "La corbeille Android est vide",
+   "it": "Il cestino di Android è vuoto",
+   "ja": "Androidのゴミ箱は空です",
+   "ko": "Android 휴지통이 비어 있습니다",
+   "nl": "Android-prullenbak is leeg",
+   "pl": "Kosz Androida jest pusty",
+   "pt": "O lixo do Android está vazio",
+   "ro": "Coșul Android este gol",
+   "ru": "Корзина Android пуста",
+   "tr": "Android çöp kutusu boş",
+   "uk": "Кошик Android порожній",
+   "zh": "Android 回收站为空"
+  },
+  "systrash_empty_text": {
+   "en": "Photos and videos you remove appear here for a while and can be restored.",
+   "de": "Entfernte Fotos und Videos erscheinen hier eine Zeit lang und lassen sich zurückholen.",
+   "ar": "تظهر هنا الصور والفيديوهات التي تزيلها لفترة ويمكن استعادتها.",
+   "es": "Las fotos y vídeos que quitas aparecen aquí durante un tiempo y se pueden recuperar.",
+   "fr": "Les photos et vidéos retirées apparaissent ici un moment et peuvent être restaurées.",
+   "it": "Le foto e i video rimossi compaiono qui per un po’ e si possono recuperare.",
+   "ja": "削除した写真や動画はしばらくここに表示され、復元できます。",
+   "ko": "제거한 사진과 동영상이 한동안 여기에 표시되며 복원할 수 있습니다.",
+   "nl": "Verwijderde foto’s en video’s staan hier een tijdje en zijn terug te halen.",
+   "pl": "Usunięte zdjęcia i filmy pojawiają się tu na jakiś czas i można je przywrócić.",
+   "pt": "As fotos e vídeos removidos aparecem aqui durante algum tempo e podem ser recuperados.",
+   "ro": "Fotografiile și videoclipurile eliminate apar aici o vreme și pot fi recuperate.",
+   "ru": "Удалённые фото и видео какое-то время находятся здесь, их можно восстановить.",
+   "tr": "Kaldırdığın fotoğraf ve videolar bir süre burada görünür ve geri yüklenebilir.",
+   "uk": "Видалені фото й відео деякий час є тут, їх можна відновити.",
+   "zh": "移除的照片和视频会在此保留一段时间，可以恢复。"
+  },
+  "systrash_partial": {
+   "en": "%1$d of %2$d done. The rest stays as it was.",
+   "de": "%1$d von %2$d erledigt. Der Rest bleibt, wie er war.",
+   "ar": "اكتمل %1$d من %2$d. يبقى الباقي كما كان.",
+   "es": "%1$d de %2$d hechos. El resto queda como estaba.",
+   "fr": "%1$d sur %2$d effectués. Le reste ne change pas.",
+   "it": "%1$d di %2$d fatti. Il resto resta com’era.",
+   "ja": "%2$d件中%1$d件完了。残りはそのままです。",
+   "ko": "%2$d개 중 %1$d개 완료. 나머지는 그대로입니다.",
+   "nl": "%1$d van %2$d gedaan. De rest blijft zoals het was.",
+   "pl": "Wykonano %1$d z %2$d. Reszta bez zmian.",
+   "pt": "%1$d de %2$d concluídos. O resto fica como estava.",
+   "ro": "%1$d din %2$d gata. Restul rămâne neschimbat.",
+   "ru": "Выполнено %1$d из %2$d. Остальное без изменений.",
+   "tr": "%2$d öğeden %1$d tamamlandı. Kalanlar olduğu gibi kaldı.",
+   "uk": "Виконано %1$d з %2$d. Решта без змін.",
+   "zh": "已完成 %1$d/%2$d，其余保持不变。"
+  },
+  "systrash_delete_text": {
+   "en": "Then confirm with Android. Permanently deleted photos and videos cannot be restored.",
+   "de": "Bestätige anschließend bei Android. Endgültig gelöschte Fotos und Videos lassen sich nicht wiederherstellen.",
+   "ar": "ثم أكِّد لدى Android. لا يمكن استعادة الصور والفيديوهات المحذوفة نهائيًا.",
+   "es": "Después confirma en Android. Las fotos y vídeos eliminados definitivamente no se pueden recuperar.",
+   "fr": "Confirmez ensuite auprès d’Android. Les photos et vidéos supprimées définitivement ne peuvent pas être restaurées.",
+   "it": "Poi conferma con Android. Foto e video eliminati definitivamente non si possono recuperare.",
+   "ja": "続けてAndroidで確認します。完全に削除した写真と動画は復元できません。",
+   "ko": "이어서 Android에서 확인하세요. 영구 삭제한 사진과 동영상은 복원할 수 없습니다.",
+   "nl": "Bevestig daarna bij Android. Definitief verwijderde foto’s en video’s zijn niet terug te halen.",
+   "pl": "Następnie potwierdź w Androidzie. Trwale usuniętych zdjęć i filmów nie da się przywrócić.",
+   "pt": "Depois confirme no Android. Fotos e vídeos eliminados definitivamente não podem ser recuperados.",
+   "ro": "Apoi confirmă în Android. Fotografiile și videoclipurile șterse definitiv nu pot fi recuperate.",
+   "ru": "Затем подтвердите в Android. Удалённые навсегда фото и видео восстановить нельзя.",
+   "tr": "Ardından Android’de onayla. Kalıcı olarak silinen fotoğraf ve videolar geri yüklenemez.",
+   "uk": "Потім підтвердьте в Android. Назавжди видалені фото й відео відновити не можна.",
+   "zh": "随后请在 Android 中确认。永久删除的照片和视频无法恢复。"
+  },
+  "lib_info_raw": {
+   "en": "RAW file",
+   "de": "RAW-Datei",
+   "ar": "ملف RAW",
+   "es": "Archivo RAW",
+   "fr": "Fichier RAW",
+   "it": "File RAW",
+   "ja": "RAWファイル",
+   "ko": "RAW 파일",
+   "nl": "RAW-bestand",
+   "pl": "Plik RAW",
+   "pt": "Ficheiro RAW",
+   "ro": "Fișier RAW",
+   "ru": "Файл RAW",
+   "tr": "RAW dosyası",
+   "uk": "Файл RAW",
+   "zh": "RAW 文件"
+  },
+  "set_delete_permanently": {
+   "en": "Permanently delete",
+   "de": "Endgültig löschen",
+   "ar": "حذف نهائيًا",
+   "es": "Eliminar definitivamente",
+   "fr": "Supprimer définitivement",
+   "it": "Elimina definitivamente",
+   "ja": "完全に削除",
+   "ko": "영구 삭제",
+   "nl": "Definitief verwijderen",
+   "pl": "Trwale usuwaj",
+   "pt": "Eliminar definitivamente",
+   "ro": "Șterge definitiv",
+   "ru": "Удалять навсегда",
+   "tr": "Kalıcı olarak sil",
+   "uk": "Видаляти назавжди",
+   "zh": "永久删除"
+  },
+  "set_delete_permanently_detail": {
+   "en": "Off: emptying the PhotoMaid trash moves items to the Android trash (restorable for a while). On: deleted for good right away.",
+   "de": "Aus: Leeren legt in den Android-Papierkorb (eine Zeit lang wiederherstellbar). An: sofort endgültig gelöscht.",
+   "ar": "إيقاف: الإفراغ ينقل إلى سلة مهملات Android (قابلة للاستعادة لفترة). تشغيل: حذف نهائي فورًا.",
+   "es": "Desactivado: vaciar mueve a la papelera de Android (recuperable un tiempo). Activado: se elimina definitivamente al instante.",
+   "fr": "Désactivé : vider place dans la corbeille Android (restaurable un temps). Activé : supprimé définitivement tout de suite.",
+   "it": "Disattivato: svuotare sposta nel cestino di Android (recuperabile per un po’). Attivo: eliminato subito per sempre.",
+   "ja": "オフ：空にするとAndroidのゴミ箱へ（しばらく復元可能）。オン：すぐに完全に削除。",
+   "ko": "끄기: 비우면 Android 휴지통으로 이동(한동안 복원 가능). 켜기: 즉시 영구 삭제.",
+   "nl": "Uit: legen verplaatst naar de Android-prullenbak (een tijd terug te halen). Aan: meteen definitief verwijderd.",
+   "pl": "Wyłączone: opróżnienie przenosi do kosza Androida (przez pewien czas można przywrócić). Włączone: od razu trwale usuwa.",
+   "pt": "Desativado: esvaziar move para o lixo do Android (recuperável durante algum tempo). Ativado: eliminado de vez imediatamente.",
+   "ro": "Dezactivat: golirea mută în coșul Android (recuperabil o vreme). Activat: șters definitiv imediat.",
+   "ru": "Выкл.: очистка перемещает в корзину Android (можно восстановить какое-то время). Вкл.: сразу удаляется навсегда.",
+   "tr": "Kapalı: boşaltma Android çöp kutusuna taşır (bir süre geri yüklenebilir). Açık: hemen kalıcı olarak silinir.",
+   "uk": "Вимк.: очищення переміщує до кошика Android (деякий час можна відновити). Увімк.: одразу видаляється назавжди.",
+   "zh": "关闭：清空会移入 Android 回收站（一段时间内可恢复）。开启：立即永久删除。"
+  },
+  "set_delete_permanently_confirm_title": {
+   "en": "Turn on permanent deletion?",
+   "de": "Endgültig löschen einschalten?",
+   "ar": "تشغيل الحذف النهائي؟",
+   "es": "¿Activar la eliminación definitiva?",
+   "fr": "Activer la suppression définitive ?",
+   "it": "Attivare l’eliminazione definitiva?",
+   "ja": "完全に削除をオンにしますか？",
+   "ko": "영구 삭제를 켤까요?",
+   "nl": "Definitief verwijderen inschakelen?",
+   "pl": "Włączyć trwałe usuwanie?",
+   "pt": "Ativar a eliminação definitiva?",
+   "ro": "Activezi ștergerea definitivă?",
+   "ru": "Включить удаление навсегда?",
+   "tr": "Kalıcı silme açılsın mı?",
+   "uk": "Увімкнути видалення назавжди?",
+   "zh": "要开启永久删除吗？"
+  },
+  "set_delete_permanently_confirm_text": {
+   "en": "From now on, emptying the PhotoMaid trash deletes photos and videos for good. They do not go to the Android trash and cannot be restored – also not from backups that have not synced yet. Android still asks each time.",
+   "de": "Ab jetzt löscht Leeren des PhotoMaid-Papierkorbs Fotos und Videos endgültig. Sie kommen nicht in den Android-Papierkorb und lassen sich nicht wiederherstellen – auch nicht aus noch nicht gesicherten Backups. Android fragt trotzdem jedes Mal nach.",
+   "ar": "من الآن فصاعدًا، يؤدي إفراغ سلة PhotoMaid إلى حذف الصور والفيديوهات نهائيًا. لن تذهب إلى سلة مهملات Android ولا يمكن استعادتها – ولا من نسخ احتياطية لم تُزامَن بعد. سيسأل Android في كل مرة.",
+   "es": "A partir de ahora, vaciar la papelera de PhotoMaid elimina fotos y vídeos para siempre. No van a la papelera de Android y no se pueden recuperar, ni desde copias aún no sincronizadas. Android seguirá preguntando cada vez.",
+   "fr": "Désormais, vider la corbeille PhotoMaid supprime définitivement photos et vidéos. Elles ne vont pas dans la corbeille Android et ne peuvent pas être restaurées – pas même depuis des sauvegardes pas encore synchronisées. Android demande quand même à chaque fois.",
+   "it": "Da ora in poi svuotare il cestino di PhotoMaid elimina foto e video per sempre. Non finiscono nel cestino di Android e non si possono recuperare, nemmeno da backup non ancora sincronizzati. Android chiede comunque ogni volta.",
+   "ja": "今後PhotoMaidのゴミ箱を空にすると、写真と動画は完全に削除されます。Androidのゴミ箱には入らず、まだ同期されていないバックアップからも復元できません。Androidは毎回確認します。",
+   "ko": "이제부터 PhotoMaid 휴지통을 비우면 사진과 동영상이 영구 삭제됩니다. Android 휴지통에 들어가지 않으며 아직 동기화되지 않은 백업에서도 복원할 수 없습니다. Android는 매번 확인합니다.",
+   "nl": "Vanaf nu verwijdert het legen van de PhotoMaid-prullenbak foto’s en video’s definitief. Ze gaan niet naar de Android-prullenbak en zijn niet terug te halen – ook niet uit nog niet gesynchroniseerde back-ups. Android vraagt toch elke keer.",
+   "pl": "Od teraz opróżnienie kosza PhotoMaid trwale usuwa zdjęcia i filmy. Nie trafiają do kosza Androida i nie da się ich przywrócić – także z niezsynchronizowanych kopii. Android i tak zapyta za każdym razem.",
+   "pt": "A partir de agora, esvaziar o lixo do PhotoMaid elimina fotos e vídeos de vez. Não vão para o lixo do Android e não podem ser recuperados – nem de cópias ainda não sincronizadas. O Android pergunta sempre.",
+   "ro": "De acum, golirea coșului PhotoMaid șterge definitiv fotografiile și videoclipurile. Nu ajung în coșul Android și nu pot fi recuperate – nici din copii nesincronizate încă. Android întreabă totuși de fiecare dată.",
+   "ru": "Теперь очистка корзины PhotoMaid удаляет фото и видео навсегда. Они не попадают в корзину Android, восстановить их нельзя – даже из ещё не синхронизированных копий. Android всё равно спросит каждый раз.",
+   "tr": "Bundan sonra PhotoMaid çöp kutusunu boşaltmak fotoğraf ve videoları kalıcı olarak siler. Android çöp kutusuna gitmezler ve geri yüklenemezler – henüz eşitlenmemiş yedeklerden de. Android yine her seferinde sorar.",
+   "uk": "Відтепер очищення кошика PhotoMaid видаляє фото й відео назавжди. Вони не потрапляють до кошика Android, відновити їх не можна – навіть із ще не синхронізованих копій. Android однаково питатиме щоразу.",
+   "zh": "此后清空 PhotoMaid 回收站将永久删除照片和视频。它们不会进入 Android 回收站，也无法恢复（包括尚未同步的备份）。Android 仍会每次确认。"
+  },
+  "set_delete_permanently_confirm_action": {
+   "en": "Turn on",
+   "de": "Einschalten",
+   "ar": "تشغيل",
+   "es": "Activar",
+   "fr": "Activer",
+   "it": "Attiva",
+   "ja": "オンにする",
+   "ko": "켜기",
+   "nl": "Inschakelen",
+   "pl": "Włącz",
+   "pt": "Ativar",
+   "ro": "Activează",
+   "ru": "Включить",
+   "tr": "Aç",
+   "uk": "Увімкнути",
+   "zh": "开启"
   }
  },
  "plurals": {
@@ -11514,6 +11856,396 @@
    },
    "zh": {
     "other": "%1$d 个隐藏项"
+   }
+  },
+  "result_media_deleted": {
+   "en": {
+    "one": "%1$d item permanently deleted.",
+    "other": "%1$d items permanently deleted."
+   },
+   "de": {
+    "one": "%1$d Medium endgültig gelöscht.",
+    "other": "%1$d Medien endgültig gelöscht."
+   },
+   "ar": {
+    "zero": "حُذف %1$d عنصر نهائيًا.",
+    "one": "حُذف عنصر واحد نهائيًا.",
+    "two": "حُذف عنصران نهائيًا.",
+    "few": "حُذفت %1$d عناصر نهائيًا.",
+    "many": "حُذف %1$d عنصرًا نهائيًا.",
+    "other": "حُذف %1$d عنصر نهائيًا."
+   },
+   "es": {
+    "one": "%1$d elemento eliminado definitivamente.",
+    "many": "%1$d elementos eliminados definitivamente.",
+    "other": "%1$d elementos eliminados definitivamente."
+   },
+   "fr": {
+    "one": "%1$d élément supprimé définitivement.",
+    "many": "%1$d éléments supprimés définitivement.",
+    "other": "%1$d éléments supprimés définitivement."
+   },
+   "it": {
+    "one": "%1$d elemento eliminato definitivamente.",
+    "many": "%1$d elementi eliminati definitivamente.",
+    "other": "%1$d elementi eliminati definitivamente."
+   },
+   "ja": {
+    "other": "%1$d件を完全に削除しました。"
+   },
+   "ko": {
+    "other": "%1$d개를 영구 삭제했습니다."
+   },
+   "nl": {
+    "one": "%1$d item definitief verwijderd.",
+    "other": "%1$d items definitief verwijderd."
+   },
+   "pl": {
+    "one": "Trwale usunięto %1$d element.",
+    "few": "Trwale usunięto %1$d elementy.",
+    "many": "Trwale usunięto %1$d elementów.",
+    "other": "Trwale usunięto %1$d elementu."
+   },
+   "pt": {
+    "one": "%1$d item eliminado definitivamente.",
+    "many": "%1$d itens eliminados definitivamente.",
+    "other": "%1$d itens eliminados definitivamente."
+   },
+   "ro": {
+    "one": "%1$d element șters definitiv.",
+    "few": "%1$d elemente șterse definitiv.",
+    "other": "%1$d de elemente șterse definitiv."
+   },
+   "ru": {
+    "one": "%1$d файл удалён навсегда.",
+    "few": "%1$d файла удалены навсегда.",
+    "many": "%1$d файлов удалены навсегда.",
+    "other": "%1$d файла удалены навсегда."
+   },
+   "tr": {
+    "one": "%1$d öğe kalıcı olarak silindi.",
+    "other": "%1$d öğe kalıcı olarak silindi."
+   },
+   "uk": {
+    "one": "%1$d файл видалено назавжди.",
+    "few": "%1$d файли видалено назавжди.",
+    "many": "%1$d файлів видалено назавжди.",
+    "other": "%1$d файлу видалено назавжди."
+   },
+   "zh": {
+    "other": "已永久删除 %1$d 项。"
+   }
+  },
+  "basket_confirm_delete_action": {
+   "en": {
+    "one": "Permanently delete %1$d item",
+    "other": "Permanently delete %1$d items"
+   },
+   "de": {
+    "one": "%1$d Medium endgültig löschen",
+    "other": "%1$d Medien endgültig löschen"
+   },
+   "ar": {
+    "zero": "حذف %1$d عنصر نهائيًا",
+    "one": "حذف عنصر واحد نهائيًا",
+    "two": "حذف عنصرين نهائيًا",
+    "few": "حذف %1$d عناصر نهائيًا",
+    "many": "حذف %1$d عنصرًا نهائيًا",
+    "other": "حذف %1$d عنصر نهائيًا"
+   },
+   "es": {
+    "one": "Eliminar %1$d elemento definitivamente",
+    "many": "Eliminar %1$d elementos definitivamente",
+    "other": "Eliminar %1$d elementos definitivamente"
+   },
+   "fr": {
+    "one": "Supprimer %1$d élément définitivement",
+    "many": "Supprimer %1$d éléments définitivement",
+    "other": "Supprimer %1$d éléments définitivement"
+   },
+   "it": {
+    "one": "Elimina %1$d elemento definitivamente",
+    "many": "Elimina %1$d elementi definitivamente",
+    "other": "Elimina %1$d elementi definitivamente"
+   },
+   "ja": {
+    "other": "%1$d件を完全に削除"
+   },
+   "ko": {
+    "other": "%1$d개 영구 삭제"
+   },
+   "nl": {
+    "one": "%1$d item definitief verwijderen",
+    "other": "%1$d items definitief verwijderen"
+   },
+   "pl": {
+    "one": "Trwale usuń %1$d element",
+    "few": "Trwale usuń %1$d elementy",
+    "many": "Trwale usuń %1$d elementów",
+    "other": "Trwale usuń %1$d elementu"
+   },
+   "pt": {
+    "one": "Eliminar %1$d item definitivamente",
+    "many": "Eliminar %1$d itens definitivamente",
+    "other": "Eliminar %1$d itens definitivamente"
+   },
+   "ro": {
+    "one": "Șterge definitiv %1$d element",
+    "few": "Șterge definitiv %1$d elemente",
+    "other": "Șterge definitiv %1$d de elemente"
+   },
+   "ru": {
+    "one": "Удалить %1$d файл навсегда",
+    "few": "Удалить %1$d файла навсегда",
+    "many": "Удалить %1$d файлов навсегда",
+    "other": "Удалить %1$d файла навсегда"
+   },
+   "tr": {
+    "one": "%1$d öğeyi kalıcı olarak sil",
+    "other": "%1$d öğeyi kalıcı olarak sil"
+   },
+   "uk": {
+    "one": "Видалити %1$d файл назавжди",
+    "few": "Видалити %1$d файли назавжди",
+    "many": "Видалити %1$d файлів назавжди",
+    "other": "Видалити %1$d файлу назавжди"
+   },
+   "zh": {
+    "other": "永久删除 %1$d 项"
+   }
+  },
+  "systrash_restore": {
+   "en": {
+    "one": "Restore %1$d item",
+    "other": "Restore %1$d items"
+   },
+   "de": {
+    "one": "%1$d Medium wiederherstellen",
+    "other": "%1$d Medien wiederherstellen"
+   },
+   "ar": {
+    "zero": "استعادة %1$d عنصر",
+    "one": "استعادة عنصر واحد",
+    "two": "استعادة عنصرين",
+    "few": "استعادة %1$d عناصر",
+    "many": "استعادة %1$d عنصرًا",
+    "other": "استعادة %1$d عنصر"
+   },
+   "es": {
+    "one": "Restaurar %1$d elemento",
+    "many": "Restaurar %1$d elementos",
+    "other": "Restaurar %1$d elementos"
+   },
+   "fr": {
+    "one": "Restaurer %1$d élément",
+    "many": "Restaurer %1$d éléments",
+    "other": "Restaurer %1$d éléments"
+   },
+   "it": {
+    "one": "Ripristina %1$d elemento",
+    "many": "Ripristina %1$d elementi",
+    "other": "Ripristina %1$d elementi"
+   },
+   "ja": {
+    "other": "%1$d件を復元"
+   },
+   "ko": {
+    "other": "%1$d개 복원"
+   },
+   "nl": {
+    "one": "%1$d item terugzetten",
+    "other": "%1$d items terugzetten"
+   },
+   "pl": {
+    "one": "Przywróć %1$d element",
+    "few": "Przywróć %1$d elementy",
+    "many": "Przywróć %1$d elementów",
+    "other": "Przywróć %1$d elementu"
+   },
+   "pt": {
+    "one": "Restaurar %1$d item",
+    "many": "Restaurar %1$d itens",
+    "other": "Restaurar %1$d itens"
+   },
+   "ro": {
+    "one": "Restaurează %1$d element",
+    "few": "Restaurează %1$d elemente",
+    "other": "Restaurează %1$d de elemente"
+   },
+   "ru": {
+    "one": "Восстановить %1$d файл",
+    "few": "Восстановить %1$d файла",
+    "many": "Восстановить %1$d файлов",
+    "other": "Восстановить %1$d файла"
+   },
+   "tr": {
+    "one": "%1$d öğeyi geri yükle",
+    "other": "%1$d öğeyi geri yükle"
+   },
+   "uk": {
+    "one": "Відновити %1$d файл",
+    "few": "Відновити %1$d файли",
+    "many": "Відновити %1$d файлів",
+    "other": "Відновити %1$d файлу"
+   },
+   "zh": {
+    "other": "恢复 %1$d 项"
+   }
+  },
+  "systrash_restored": {
+   "en": {
+    "one": "%1$d item restored.",
+    "other": "%1$d items restored."
+   },
+   "de": {
+    "one": "%1$d Medium wiederhergestellt.",
+    "other": "%1$d Medien wiederhergestellt."
+   },
+   "ar": {
+    "zero": "استُعيد %1$d عنصر.",
+    "one": "استُعيد عنصر واحد.",
+    "two": "استُعيد عنصران.",
+    "few": "استُعيدت %1$d عناصر.",
+    "many": "استُعيد %1$d عنصرًا.",
+    "other": "استُعيد %1$d عنصر."
+   },
+   "es": {
+    "one": "%1$d elemento restaurado.",
+    "many": "%1$d elementos restaurados.",
+    "other": "%1$d elementos restaurados."
+   },
+   "fr": {
+    "one": "%1$d élément restauré.",
+    "many": "%1$d éléments restaurés.",
+    "other": "%1$d éléments restaurés."
+   },
+   "it": {
+    "one": "%1$d elemento ripristinato.",
+    "many": "%1$d elementi ripristinati.",
+    "other": "%1$d elementi ripristinati."
+   },
+   "ja": {
+    "other": "%1$d件を復元しました。"
+   },
+   "ko": {
+    "other": "%1$d개를 복원했습니다."
+   },
+   "nl": {
+    "one": "%1$d item teruggezet.",
+    "other": "%1$d items teruggezet."
+   },
+   "pl": {
+    "one": "Przywrócono %1$d element.",
+    "few": "Przywrócono %1$d elementy.",
+    "many": "Przywrócono %1$d elementów.",
+    "other": "Przywrócono %1$d elementu."
+   },
+   "pt": {
+    "one": "%1$d item restaurado.",
+    "many": "%1$d itens restaurados.",
+    "other": "%1$d itens restaurados."
+   },
+   "ro": {
+    "one": "%1$d element restaurat.",
+    "few": "%1$d elemente restaurate.",
+    "other": "%1$d de elemente restaurate."
+   },
+   "ru": {
+    "one": "%1$d файл восстановлен.",
+    "few": "%1$d файла восстановлены.",
+    "many": "%1$d файлов восстановлены.",
+    "other": "%1$d файла восстановлены."
+   },
+   "tr": {
+    "one": "%1$d öğe geri yüklendi.",
+    "other": "%1$d öğe geri yüklendi."
+   },
+   "uk": {
+    "one": "%1$d файл відновлено.",
+    "few": "%1$d файли відновлено.",
+    "many": "%1$d файлів відновлено.",
+    "other": "%1$d файлу відновлено."
+   },
+   "zh": {
+    "other": "已恢复 %1$d 项。"
+   }
+  },
+  "systrash_days_left": {
+   "en": {
+    "one": "%1$d day left",
+    "other": "%1$d days left"
+   },
+   "de": {
+    "one": "noch %1$d Tag",
+    "other": "noch %1$d Tage"
+   },
+   "ar": {
+    "zero": "بقي %1$d يوم",
+    "one": "بقي يوم واحد",
+    "two": "بقي يومان",
+    "few": "بقيت %1$d أيام",
+    "many": "بقي %1$d يومًا",
+    "other": "بقي %1$d يوم"
+   },
+   "es": {
+    "one": "queda %1$d día",
+    "many": "quedan %1$d días",
+    "other": "quedan %1$d días"
+   },
+   "fr": {
+    "one": "%1$d jour restant",
+    "many": "%1$d jours restants",
+    "other": "%1$d jours restants"
+   },
+   "it": {
+    "one": "ancora %1$d giorno",
+    "many": "ancora %1$d giorni",
+    "other": "ancora %1$d giorni"
+   },
+   "ja": {
+    "other": "残り%1$d日"
+   },
+   "ko": {
+    "other": "%1$d일 남음"
+   },
+   "nl": {
+    "one": "nog %1$d dag",
+    "other": "nog %1$d dagen"
+   },
+   "pl": {
+    "one": "jeszcze %1$d dzień",
+    "few": "jeszcze %1$d dni",
+    "many": "jeszcze %1$d dni",
+    "other": "jeszcze %1$d dnia"
+   },
+   "pt": {
+    "one": "falta %1$d dia",
+    "many": "faltam %1$d dias",
+    "other": "faltam %1$d dias"
+   },
+   "ro": {
+    "one": "încă %1$d zi",
+    "few": "încă %1$d zile",
+    "other": "încă %1$d de zile"
+   },
+   "ru": {
+    "one": "ещё %1$d день",
+    "few": "ещё %1$d дня",
+    "many": "ещё %1$d дней",
+    "other": "ещё %1$d дня"
+   },
+   "tr": {
+    "one": "%1$d gün kaldı",
+    "other": "%1$d gün kaldı"
+   },
+   "uk": {
+    "one": "ще %1$d день",
+    "few": "ще %1$d дні",
+    "many": "ще %1$d днів",
+    "other": "ще %1$d дня"
+   },
+   "zh": {
+    "other": "剩 %1$d 天"
    }
   }
  }

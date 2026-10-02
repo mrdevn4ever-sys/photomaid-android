@@ -90,13 +90,16 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
     var searching by rememberSaveable { mutableStateOf(false) }
     var query by rememberSaveable { mutableStateOf("") }
     var all by remember { mutableStateOf<List<MediaAsset>?>(null) }
+    var raw by remember { mutableStateOf(RawIndex.EMPTY) }
     var search by remember { mutableStateOf<LibrarySearch?>(null) }
     var selection by remember { mutableStateOf<Set<String>>(emptySet()) }
     val zone = remember { ZoneId.systemDefault() }
 
     LaunchedEffect(token, access) {
         if (!access.canRead) { all = emptyList(); return@LaunchedEffect }
-        all = withContext(Dispatchers.IO) { app.visiblePhotos.reviewableMedia() }
+        val loaded = withContext(Dispatchers.IO) { app.visiblePhotos.reviewableMedia() }
+        val idx = withContext(Dispatchers.Default) { RawIndex(loaded) }
+        raw = idx; all = idx.visible(loaded)
     }
     // Kamera-Modelle erst lesen, wenn gesucht wird (EXIF, lokal, im Hintergrund).
     LaunchedEffect(all, searching) { val list = all; if (searching && list != null) withContext(Dispatchers.IO) { app.cameras.index(list) } }
@@ -128,7 +131,7 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
         if (i >= 0) grid.scrollToItem((i - 1).coerceAtLeast(0))
         anchor = null
     }
-    fun open(a: MediaAsset) = nav.openViewer(ViewerRequest(UUID.randomUUID().toString(), ordered, ordered.indexOfFirst { it.id == a.id }.coerceAtLeast(0)))
+    fun open(a: MediaAsset) = nav.openViewer(ViewerRequest(UUID.randomUUID().toString(), ordered, ordered.indexOfFirst { it.id == a.id }.coerceAtLeast(0), raw.partner))
     val chosen = ordered.filter { it.id in selection }
     val onLevel: (TimelineLevel, String?) -> Unit = { l, id -> anchor = id; level = l }
 
@@ -187,8 +190,8 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
                     }
                 }
                 else -> Box(Modifier.fillMaxSize()) {
-                    MediaGridPane(cells, level, selection, { selection = it }, ::open, grid = grid, onLevel = onLevel)
-                    SelectionActions(nav, chosen, onClear = { selection = emptySet() }, Modifier.align(Alignment.BottomCenter).padding(bottom = TabBarClearance - 20.dp))
+                    MediaGridPane(cells, level, selection, { selection = it }, ::open, grid = grid, onLevel = onLevel, rawIds = raw.partner.keys)
+                    SelectionActions(nav, chosen, onClear = { selection = emptySet() }, Modifier.align(Alignment.BottomCenter).padding(bottom = TabBarClearance - 20.dp), raw = raw)
                 }
             }
         }

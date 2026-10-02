@@ -412,7 +412,12 @@ fun FolderScreen(target: FolderTarget, nav: Nav, onClose: () -> Unit) {
     var menu by remember { mutableStateOf(false) }
     var hideConfirm by remember { mutableStateOf(false) }
     var groupEdit by remember { mutableStateOf<FolderGroup?>(null) }
-    LaunchedEffect(token) { all = withContext(Dispatchers.IO) { app.visiblePhotos.reviewableMedia() } }
+    var raw by remember { mutableStateOf(RawIndex.EMPTY) }
+    LaunchedEffect(token) {
+        val loaded = withContext(Dispatchers.IO) { app.visiblePhotos.reviewableMedia() }
+        val idx = withContext(Dispatchers.Default) { RawIndex(loaded) }
+        raw = idx; all = idx.visible(loaded)
+    }
     PruneSelection(all, selection) { selection = it }
 
     val group = (target as? FolderTarget.Group)?.let { t -> settings.folderGroups.firstOrNull { it.id == t.id } }
@@ -506,9 +511,9 @@ fun FolderScreen(target: FolderTarget, nav: Nav, onClose: () -> Unit) {
                 }
                 else -> Box(Modifier.fillMaxSize()) {
                     MediaGridPane(cells, level, selection, { selection = it },
-                        onOpen = { a -> nav.openViewer(ViewerRequest(UUID.randomUUID().toString(), ordered, ordered.indexOfFirst { it.id == a.id }.coerceAtLeast(0))) },
-                        grid = grid, onLevel = { l, _ -> level = l }, bottomPadding = 96.dp, tag = "folder.grid")
-                    SelectionActions(nav, chosen, onClear = { selection = emptySet() }, Modifier.align(Alignment.BottomCenter).padding(bottom = AppSpacing.s))
+                        onOpen = { a -> nav.openViewer(ViewerRequest(UUID.randomUUID().toString(), ordered, ordered.indexOfFirst { it.id == a.id }.coerceAtLeast(0), raw.partner)) },
+                        grid = grid, onLevel = { l, _ -> level = l }, bottomPadding = 96.dp, tag = "folder.grid", rawIds = raw.partner.keys)
+                    SelectionActions(nav, chosen, onClear = { selection = emptySet() }, Modifier.align(Alignment.BottomCenter).padding(bottom = AppSpacing.s), raw = raw)
                 }
             }
         }

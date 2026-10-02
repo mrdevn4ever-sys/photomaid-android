@@ -1276,4 +1276,43 @@
     <string name="slideshow_videos">Videos abspielen (stumm)</string>
     <string name="slideshow_loop">Wiederholen</string>
     <string name="slideshow_note">Ansehen ist nie eine Entscheidung. Während der Diashow bleibt der Bildschirm an.</string>
+    <string name="basket_sort_added">Zuletzt hineingelegt</string>
+    <string name="basket_sort_taken">Aufnahmedatum</string>
+    <string name="basket_intro_delete">Noch ist nichts gelöscht. „Endgültig löschen“ ist an: Leeren löscht endgültig, ohne Android-Papierkorb.</string>
+    <string name="basket_confirm_delete_title">Endgültig löschen?</string>
+    <string name="basket_confirm_delete_message">Bestätige anschließend bei Android. Die Fotos und Videos kommen nicht in den Android-Papierkorb und lassen sich nicht wiederherstellen.</string>
+    <string name="done_note_media_deleted">Die Fotos und Videos sind endgültig gelöscht – sie liegen nicht im Android-Papierkorb.</string>
+    <string name="systrash_open">Android-Papierkorb ansehen</string>
+    <string name="systrash_title">Android-Papierkorb</string>
+    <string name="systrash_intro">Alles, was Android im Papierkorb aufbewahrt – aus PhotoMaid und anderen Apps. Nach Ablauf löscht Android es selbst.</string>
+    <string name="systrash_empty_title">Android-Papierkorb ist leer</string>
+    <string name="systrash_empty_text">Entfernte Fotos und Videos erscheinen hier eine Zeit lang und lassen sich zurückholen.</string>
+    <string name="systrash_partial">%1$d von %2$d erledigt. Der Rest bleibt, wie er war.</string>
+    <string name="systrash_delete_text">Bestätige anschließend bei Android. Endgültig gelöschte Fotos und Videos lassen sich nicht wiederherstellen.</string>
+    <string name="lib_info_raw">RAW-Datei</string>
+    <string name="set_delete_permanently">Endgültig löschen</string>
+    <string name="set_delete_permanently_detail">Aus: Leeren legt in den Android-Papierkorb (eine Zeit lang wiederherstellbar). An: sofort endgültig gelöscht.</string>
+    <string name="set_delete_permanently_confirm_title">Endgültig löschen einschalten?</string>
+    <string name="set_delete_permanently_confirm_text">Ab jetzt löscht Leeren des PhotoMaid-Papierkorbs Fotos und Videos endgültig. Sie kommen nicht in den Android-Papierkorb und lassen sich nicht wiederherstellen – auch nicht aus noch nicht gesicherten Backups. Android fragt trotzdem jedes Mal nach.</string>
+    <string name="set_delete_permanently_confirm_action">Einschalten</string>
+    <plurals name="result_media_deleted">
+        <item quantity="one">%1$d Medium endgültig gelöscht.</item>
+        <item quantity="other">%1$d Medien endgültig gelöscht.</item>
+    </plurals>
+    <plurals name="basket_confirm_delete_action">
+        <item quantity="one">%1$d Medium endgültig löschen</item>
+        <item quantity="other">%1$d Medien endgültig löschen</item>
+    </plurals>
+    <plurals name="systrash_restore">
+        <item quantity="one">%1$d Medium wiederherstellen</item>
+        <item quantity="other">%1$d Medien wiederherstellen</item>
+    </plurals>
+    <plurals name="systrash_restored">
+        <item quantity="one">%1$d Medium wiederhergestellt.</item>
+        <item quantity="other">%1$d Medien wiederhergestellt.</item>
+    </plurals>
+    <plurals name="systrash_days_left">
+        <item quantity="one">noch %1$d Tag</item>
+        <item quantity="other">noch %1$d Tage</item>
+    </plurals>
 </resources>
