@@ -35,6 +35,7 @@ import androidx.compose.material.icons.rounded.Dashboard
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
+import androidx.compose.material.icons.rounded.Movie
 import androidx.compose.material.icons.rounded.PlayCircle
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
@@ -91,6 +92,8 @@ import app.photomaid.feature.review.FolderSheet
 import app.photomaid.feature.review.rememberRecentFolder
 import app.photomaid.feature.review.togglePinnedFolder
 import app.photomaid.feature.studio.CollageRequest
+import app.photomaid.feature.studio.MovieRequest
+import app.photomaid.feature.studio.movieFrom
 import app.photomaid.media.MediaAsset
 import app.photomaid.media.MediaWriteResult
 import app.photomaid.navigation.LocalApp
@@ -316,6 +319,10 @@ internal fun SelectionActions(
         if (chosen.count { it.kind != MediaKind.VIDEO } >= 2) GlassIconButton(Icons.Rounded.Dashboard, stringResource(R.string.grid_collage), Modifier.testTag("lib.sel.collage"), quiet = true) {
             val id = UUID.randomUUID().toString()
             nav.openCollage(CollageRequest(id, CollageProject.create(id, chosen.filter { it.kind != MediaKind.VIDEO }.map { it.id }.take(CollageProject.MAX)), fromDraft = false))
+        }
+        // P6: zwei oder mehr Medien → Video zusammenfügen (Reihenfolge wie ausgewählt angezeigt).
+        if (chosen.size >= 2) GlassIconButton(Icons.Rounded.Movie, stringResource(R.string.movie_title), Modifier.testTag("lib.sel.movie"), quiet = true) {
+            nav.openMovie(MovieRequest(UUID.randomUUID().toString(), movieFrom(chosen, false), false))
         }
         GlassIconButton(Icons.Rounded.VisibilityOff, stringResource(R.string.lib_hide), Modifier.testTag("lib.sel.hide"), quiet = true) { confirmHide = true }
         GlassIconButton(Icons.Rounded.Delete, stringResource(R.string.lib_trash_action), Modifier.testTag("lib.sel.trash"), quiet = true) { confirmTrash = true }

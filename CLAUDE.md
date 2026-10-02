@@ -86,6 +86,9 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Ton als M4A. Vorschau = Export (gleiche Media3-Effekte). Nur Anfang/Ende gekürzt → schneller Weg ohne Neukodierung.
   Ausnahme zur Größenregel (Nutzer-Hinweis 2026-10-02): Video-Profile zeigen eine ausdrücklich als „ca.“ beschriftete
   Schätzung. Lange Exporte über `ExportCoordinator` + Vordergrunddienst; nie hochskalieren.
+  P6 Film/Diashow (`feature/studio/MovieScreen.kt`, Kern `core/.../studio/MoviePlan.kt`, Export `media/MovieExporter.kt`):
+  Vorschau = Export (eine Komposition), Übergänge „keiner“/„über Schwarz“, Musik nur aus eigener Datei, Ergebnis in
+  `Movies/PhotoMaid/` = „Behalten“, Quellen ohne Entscheidung, Speichern mit `hasProToolsAccess`.
 
 ## Verbote
 

@@ -197,7 +197,7 @@ fun VideoClip.recipe(): EditRecipe = EditRecipe(adjust = adjust.copy(vignette = 
 fun VideoClip.colorNeutral(): Boolean = PixelPipeline(recipe()).isNeutral
 
 @UnstableApi
-private class ConstantSpeed(private val speed: Float) : SpeedProvider {
+internal class ConstantSpeed(private val speed: Float) : SpeedProvider {
     override fun getSpeed(timeUs: Long): Float = speed
     override fun getNextSpeedChangeTimeUs(timeUs: Long): Long = C.TIME_UNSET
 }

@@ -1,5 +1,10 @@
 package app.photomaid.feature.studio
 
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
+import app.photomaid.core.studio.VideoRules
+import androidx.compose.material.icons.rounded.Slideshow
+import androidx.compose.material.icons.rounded.Movie
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -98,6 +103,21 @@ fun StudioScreen(nav: Nav) {
                 RowGroup {
                     ListRow(Icons.Rounded.Dashboard, stringResource(R.string.studio_collage), Modifier.testTag("studio.collage"), tint = c.accent,
                         tile = c.accent.copy(alpha = 0.13f), subtitle = stringResource(R.string.studio_collage_sub), enabled = access.canRead) { newCollage() }
+                    RowDivider(RowDividerInset)
+                    // P6: Video zusammenfügen (Videos + Fotos) und Diashow als Video (nur Fotos).
+                    ListRow(Icons.Rounded.Movie, stringResource(R.string.movie_title), Modifier.testTag("studio.movie"), tint = c.cleanup,
+                        tile = c.cleanup.copy(alpha = 0.13f), subtitle = stringResource(R.string.movie_studio_sub), enabled = access.canRead) {
+                        nav.openPicker(PickRequest(UUID.randomUUID().toString(), photos = true, videos = true, min = 2, max = VideoRules.MAX_CLIPS, title = R.string.movie_pick, library = true) { ids ->
+                            scope.launch { val a = withContext(Dispatchers.IO) { app.allPhotos.assets(ids) }; nav.openMovie(MovieRequest(UUID.randomUUID().toString(), movieFrom(a, false), false)) }
+                        })
+                    }
+                    RowDivider(RowDividerInset)
+                    ListRow(Icons.Rounded.Slideshow, stringResource(R.string.movie_title_slideshow), Modifier.testTag("studio.slideshow"), tint = c.keep,
+                        tile = c.keep.copy(alpha = 0.13f), subtitle = stringResource(R.string.movie_slideshow_sub), enabled = access.canRead) {
+                        nav.openPicker(PickRequest(UUID.randomUUID().toString(), photos = true, videos = false, min = 2, max = VideoRules.MAX_CLIPS, title = R.string.movie_pick_photos, library = true) { ids ->
+                            scope.launch { val a = withContext(Dispatchers.IO) { app.allPhotos.assets(ids) }; nav.openMovie(MovieRequest(UUID.randomUUID().toString(), movieFrom(a, true), true)) }
+                        })
+                    }
                     RowDivider(RowDividerInset)
                     ListRow(Icons.Outlined.Edit, stringResource(R.string.studio_edit_photo), Modifier.testTag("studio.edit"), tint = c.earth,
                         tile = c.earth.copy(alpha = 0.13f), subtitle = stringResource(R.string.studio_edit_photo_sub), enabled = access.canRead) {

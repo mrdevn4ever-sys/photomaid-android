@@ -198,6 +198,16 @@ class FakeMediaLibrary(
     }
 }
 
+/** P6 ohne Transformer (JVM): schreibt eine kleine MP4-Attrappe, meldet Fortschritt, merkt sich das Projekt. */
+class FakeMovieExporter(private val context: Context) : app.photomaid.media.MovieExporter {
+    val exported = mutableListOf<app.photomaid.core.studio.VideoProject>()
+    override suspend fun export(project: app.photomaid.core.studio.VideoProject, sources: Map<String, app.photomaid.media.MovieSource>, onProgress: (Float) -> Unit): File {
+        exported += project
+        onProgress(0.5f); onProgress(1f)
+        return File(context.cacheDir, "movie_${System.nanoTime()}.mp4").apply { writeBytes(ByteArray(2048)) }
+    }
+}
+
 /** Video kürzen ohne Transformer (JVM): kopiert die Quelle, meldet Fortschritt. */
 class FakeVideoTrimmer(private val context: Context) : app.photomaid.media.VideoTrimmer {
     val calls = mutableListOf<app.photomaid.core.edit.TrimRange>()
@@ -278,6 +288,7 @@ fun makeTestApp(
     val lib = media(context)
     val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib }, adsOverride = ads, feedAdsOverride = feedAds)
     app.videoExporter = FakeVideoEditExporter(context)
+    app.movieExporter = FakeMovieExporter(context)
     app.exports.useService = false
     app.loadBlocking()
     if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false, gestureHintSeen = true, todayTourSeen = true, feedTourSeen = true,
@@ -301,6 +312,8 @@ class RecordingNav : Nav {
     val picks = mutableListOf<app.photomaid.feature.studio.PickRequest>()
     val slideshows = mutableListOf<app.photomaid.feature.library.SlideshowRequest>()
     override fun openSlideshow(request: app.photomaid.feature.library.SlideshowRequest) { events += "slideshow"; slideshows += request }
+    val movies = mutableListOf<app.photomaid.feature.studio.MovieRequest>()
+    override fun openMovie(request: app.photomaid.feature.studio.MovieRequest) { events += "movie"; movies += request }
     override fun openPicker(request: app.photomaid.feature.studio.PickRequest) { events += "picker"; picks += request }
     override fun openSettings() { events += "settings" }
     override fun openPro() { events += "pro" }

@@ -119,6 +119,8 @@ class AppModel(
     val editEngine = app.photomaid.media.ImageEditEngine(context)
     var videoTrimmer: app.photomaid.media.VideoTrimmer = app.photomaid.media.Media3VideoTrimmer(context)
     var videoExporter: app.photomaid.media.VideoEditExporter = app.photomaid.media.Media3VideoEditExporter(context)
+    /** P6: Video zusammenfügen / Diashow als Video. */
+    var movieExporter: app.photomaid.media.MovieExporter = app.photomaid.media.Media3MovieExporter(context)
     /** Lange Exporte (Video) unabhängig vom Bildschirm, mit Vordergrunddienst. */
     val exports = app.photomaid.export.ExportCoordinator(context, scope)
     val edits = app.photomaid.feature.editor.EditStore(store)

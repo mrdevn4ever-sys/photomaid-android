@@ -243,5 +243,6 @@ Perf-Build, Commit, Gerätetest-Prompt. Geräte-Pflicht ab S4: Export-Zeiten 108
 | P4 Perspektive, Farbmischer, Retusche (Kreis/Verlauf/Pinsel), Rote Augen | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) | 7df02f7 |
 | P5 Video-Editor | fertig (JVM-Tests/Screenshots PASS, Media3-Kodierung auf Gerät NOT RUN) | dieser Stand |
 | G1–G4 Mediathek (Tab „Fotos“, Ordnerbaum, Suche, Player, Diashow, Papierkorb, RAW) | geplant, siehe `GALLERY_PLAN_2026-10.md` | – |
-| P6–P7 | offen (nach G1–G4) | – |
+| P6 Video zusammenfügen + Diashow als Video: Clips (Videos + Fotos als Standbild mit sanftem Zoom) in Reihenfolge, je Clip Bereich/Dauer/Ton, Übergang „keiner“ oder „über Schwarz“ (0,3–1,5 s, Gesamtlänge bleibt), Format wie erster Clip · 9:16 · 1:1 · 4:5 · 16:9 einpassen oder füllen (nie verzerrt), Qualität 1080p/ausgewogen/720p, eigene Musik (Systemauswahl, wiederholt, Lautstärke, Ein-/Ausblenden), Originalton entfernen; Vorschau = Export (gleiche Media3-Komposition, `CompositionPlayer`), Export als Vordergrunddienst nach `Movies/PhotoMaid/`, Ergebnis = „Behalten“, Quellen ohne Entscheidung; Einstiege Studio + Auswahl in „Fotos“; Speichern Pro/Test | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN). Echte Überblendung (Kreuzblende) bewusst noch nicht: braucht zwei überlagerte Spuren, ohne Gerät nicht prüfbar |
+| P7 | offen | – |
 

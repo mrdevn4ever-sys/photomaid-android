@@ -770,4 +770,16 @@ class ScreenshotTest {
         rule.waitForIdle(); rule.onRoot().captureRoboImage("build/outputs/roborazzi/t02_system_trash_selected.png")
     }
     @Test fun t03_basket_sort_dark() = expApp(dark = true).also { a -> runBlocking { lib.all.take(3).forEach { m -> a.decide(m.reference, DecisionAction.MarkForCleanup) } } }.let { shot("t03_basket_sort_dark", it, waitTag = "basket.sort") { CleanupBasketScreen(nav, showsDone = false) } }
+
+    // P6: Video zusammenfügen / Diashow als Video.
+    private fun movie(name: String, a: AppModel, slideshow: Boolean = false, after: () -> Unit = {}) {
+        val list = if (slideshow) lib.all.filter { it.kind != app.photomaid.core.model.MediaKind.VIDEO } else lib.all.take(5)
+        shot(name, a, waitTag = "movie.clip") { app.photomaid.feature.studio.MovieScreen(app.photomaid.feature.studio.MovieRequest("m", app.photomaid.feature.studio.movieFrom(list, slideshow), slideshow), nav, onClose = {}) }
+        after(); rule.waitForIdle(); captureScreenRoboImage("build/outputs/roborazzi/$name.png")
+    }
+    @Test fun mv01_movie_clips() = expApp(pro = true).let { movie("mv01_movie_clips", it) }
+    @Test fun mv02_movie_format_dark() = expApp(pro = true, dark = true).let { movie("mv02_movie_format_dark", it) { tap("movie.tab.FORMAT") } }
+    @Test fun mv03_movie_music() = expApp(pro = true).let { movie("mv03_movie_music", it) { tap("movie.tab.MUSIC") } }
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun mv04_slideshow_free_360() = expApp().let { movie("mv04_slideshow_free_360", it, slideshow = true) }
+    @Test fun mv05_studio() = expApp().let { shot("mv05_studio", it) { WithTabBar(AppTab.STUDIO) { app.photomaid.feature.studio.StudioScreen(nav) } } }
 }

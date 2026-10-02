@@ -67,6 +67,8 @@ Keine Bildanalyse, keine automatischen Werte, keine Werbung im Editor; Werbe-Anf
 | „Nur teilen“-Datei | App-Cache `shared/`, beim nächsten Start gelöscht | Teilen ohne Galerie-Kopie | nur an die vom Nutzer gewählte App |
 
 | Ton als M4A | MediaStore `Music/PhotoMaid/` | Ergebnis „Ton als M4A speichern“ | nein |
+| Zusammengefügtes Video / Diashow (neue Datei) | MediaStore `Movies/PhotoMaid/` | Ergebnis (gilt als „Behalten“) | nein |
+| Musikdatei (nur Lesezugriff über die Systemauswahl, dauerhafte Leseberechtigung für den Export) | bleibt am Ort | Tonspur des Films | nein |
 | Standbild aus Video | Ordner des Videos | neues Foto (gilt als „Behalten“) | nein |
 | Export-Fortschritt | Benachrichtigung (Vordergrunddienst, lokal) | Export läuft weiter, wenn der Editor geschlossen wird | nein |
 
