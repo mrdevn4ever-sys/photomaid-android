@@ -1223,4 +1223,85 @@
         <item quantity="many">%1$d éléments sont dans la corbeille PhotoMaid.</item>
         <item quantity="other">%1$d éléments sont dans la corbeille PhotoMaid.</item>
     </plurals>
+    <string name="lib_mode_timeline">Chronologie</string>
+    <string name="lib_mode_folders">Dossiers</string>
+    <string name="lib_folders_search_hint">Rechercher des dossiers…</string>
+    <string name="lib_folders_none_query">Aucun dossier ne correspond à « %1$s ».</string>
+    <string name="lib_folders_sort_recent">Mis à jour récemment</string>
+    <string name="lib_folders_sort_count">Le plus d’éléments</string>
+    <string name="lib_folders_footer">Les dossiers indiquent où se trouvent vos photos et vidéos. Android ne connaît pas les dossiers vides : un nouveau dossier apparaît dès que vous y déplacez quelque chose.</string>
+    <string name="lib_new_folder">Nouveau dossier</string>
+    <string name="lib_new_folder_note">Choisissez ensuite les photos et vidéos à y déplacer. Le dossier est créé dans Pictures.</string>
+    <string name="lib_new_folder_exists">Ce dossier existe déjà. Ce que vous choisirez y sera déplacé.</string>
+    <string name="lib_new_folder_next">Choisir</string>
+    <string name="lib_new_folder_pick">Déplacer vers le nouveau dossier</string>
+    <string name="lib_new_group">Nouveau groupe</string>
+    <string name="lib_groups">Groupes</string>
+    <string name="lib_group_edit">Modifier le groupe</string>
+    <string name="lib_group_delete">Supprimer le groupe</string>
+    <string name="lib_group_name_hint">Nom du groupe, p. ex. Vacances</string>
+    <string name="lib_group_note">Un groupe affiche seulement des dossiers ensemble. Rien n’est déplacé ni copié, et supprimer le groupe ne supprime aucune photo.</string>
+    <string name="lib_expand">Afficher les sous-dossiers</string>
+    <string name="lib_collapse">Masquer les sous-dossiers</string>
+    <string name="lib_folder_excluded">Exclu du nettoyage</string>
+    <string name="lib_folder_exclude">Exclure du nettoyage</string>
+    <string name="lib_folder_include">Inclure à nouveau dans le nettoyage</string>
+    <string name="lib_folder_cleanup">Nettoyer ce dossier</string>
+    <string name="lib_folder_empty">Ce dossier ne contient aucune photo ni vidéo pour l’instant.</string>
+    <string name="lib_folder_only_sub">Tout se trouve dans les sous-dossiers ci-dessus.</string>
+    <string name="lib_folder_no_favs">Aucun favori dans ce dossier pour l’instant. Désactivez « Favoris seulement » pour tout voir.</string>
+    <string name="lib_fav_only">Favoris seulement</string>
+    <string name="lib_fav_by_folder">Par dossier</string>
+    <string name="lib_fav_by_date">Par date</string>
+    <string name="lib_fav_empty_title">Pas encore de favoris</string>
+    <string name="lib_fav_empty_text">Touchez ♡ sur une photo ou une vidéo pour l’ajouter aux favoris. Ce sont les mêmes favoris que dans votre galerie.</string>
+    <string name="lib_sort">Trier</string>
+    <string name="lib_sort_newest">Plus récentes d’abord</string>
+    <string name="lib_sort_oldest">Plus anciennes d’abord</string>
+    <string name="lib_sort_added">Ajoutées récemment</string>
+    <string name="lib_sort_name">Nom</string>
+    <string name="lib_sort_largest">Plus volumineuses d’abord</string>
+    <string name="lib_sort_default">Utiliser pour tous les dossiers</string>
+    <string name="lib_hide">Masquer dans PhotoMaid</string>
+    <string name="lib_hide_text">PhotoMaid ne les affichera plus, ni dans Photos ni pendant le nettoyage. Les fichiers restent inchangés et visibles dans les autres apps. Ce n’est pas un coffre-fort.</string>
+    <string name="lib_hide_folder_title">Masquer « %1$s » dans PhotoMaid ?</string>
+    <string name="lib_hide_folder_text">Le dossier et ses sous-dossiers n’apparaîtront plus dans Photos ni pendant le nettoyage. Rien n’est déplacé ni supprimé ; les autres apps l’affichent toujours. Réafficher via Dossiers › Masqués.</string>
+    <string name="lib_hidden_title">Masqués</string>
+    <string name="lib_hidden_row">Dossiers et médias que PhotoMaid n’affiche pas</string>
+    <string name="lib_hidden_intro">PhotoMaid ne les affiche nulle part. Les fichiers sont inchangés et les autres apps les affichent toujours.</string>
+    <string name="lib_hidden_none_title">Rien de masqué</string>
+    <string name="lib_hidden_none_text">Utilisez « Masquer dans PhotoMaid » sur un dossier, une photo ou une sélection.</string>
+    <string name="lib_hidden_one">Masqué dans PhotoMaid</string>
+    <string name="lib_unhide">Réafficher</string>
+    <string name="lib_info_camera">Appareil photo</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d sous-dossier</item>
+        <item quantity="many">%1$d sous-dossiers</item>
+        <item quantity="other">%1$d sous-dossiers</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d dossier</item>
+        <item quantity="many">%1$d dossiers</item>
+        <item quantity="other">%1$d dossiers</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">Masquer %1$d élément dans PhotoMaid ?</item>
+        <item quantity="many">Masquer %1$d éléments dans PhotoMaid ?</item>
+        <item quantity="other">Masquer %1$d éléments dans PhotoMaid ?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d élément masqué dans PhotoMaid</item>
+        <item quantity="many">%1$d éléments masqués dans PhotoMaid</item>
+        <item quantity="other">%1$d éléments masqués dans PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d élément réaffiché</item>
+        <item quantity="many">%1$d éléments réaffichés</item>
+        <item quantity="other">%1$d éléments réaffichés</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d élément masqué</item>
+        <item quantity="many">%1$d éléments masqués</item>
+        <item quantity="other">%1$d éléments masqués</item>
+    </plurals>
 </resources>

@@ -1223,4 +1223,85 @@
         <item quantity="many">%1$d itens estão no lixo do PhotoMaid.</item>
         <item quantity="other">%1$d itens estão no lixo do PhotoMaid.</item>
     </plurals>
+    <string name="lib_mode_timeline">Cronologia</string>
+    <string name="lib_mode_folders">Pastas</string>
+    <string name="lib_folders_search_hint">Pesquisar pastas…</string>
+    <string name="lib_folders_none_query">Nenhuma pasta corresponde a “%1$s”.</string>
+    <string name="lib_folders_sort_recent">Atualizadas recentemente</string>
+    <string name="lib_folders_sort_count">Mais itens</string>
+    <string name="lib_folders_footer">As pastas mostram onde estão as suas fotos e vídeos. O Android não tem pastas vazias: uma pasta nova aparece quando mover algo para ela.</string>
+    <string name="lib_new_folder">Nova pasta</string>
+    <string name="lib_new_folder_note">Depois escolha as fotos e vídeos a mover. A pasta é criada em Pictures.</string>
+    <string name="lib_new_folder_exists">Esta pasta já existe. O que escolher será movido para ela.</string>
+    <string name="lib_new_folder_next">Escolher</string>
+    <string name="lib_new_folder_pick">Mover para pasta nova</string>
+    <string name="lib_new_group">Novo grupo</string>
+    <string name="lib_groups">Grupos</string>
+    <string name="lib_group_edit">Editar grupo</string>
+    <string name="lib_group_delete">Eliminar grupo</string>
+    <string name="lib_group_name_hint">Nome do grupo, p. ex. Férias</string>
+    <string name="lib_group_note">Um grupo apenas mostra pastas em conjunto. Nada é movido nem copiado, e eliminar o grupo não elimina fotos.</string>
+    <string name="lib_expand">Mostrar subpastas</string>
+    <string name="lib_collapse">Recolher subpastas</string>
+    <string name="lib_folder_excluded">Excluída da limpeza</string>
+    <string name="lib_folder_exclude">Excluir da limpeza</string>
+    <string name="lib_folder_include">Voltar a incluir na limpeza</string>
+    <string name="lib_folder_cleanup">Limpar esta pasta</string>
+    <string name="lib_folder_empty">Esta pasta não tem fotos nem vídeos de momento.</string>
+    <string name="lib_folder_only_sub">Está tudo nas subpastas acima.</string>
+    <string name="lib_folder_no_favs">Ainda não há favoritos nesta pasta. Desative “Só favoritos” para ver tudo.</string>
+    <string name="lib_fav_only">Só favoritos</string>
+    <string name="lib_fav_by_folder">Por pasta</string>
+    <string name="lib_fav_by_date">Por data</string>
+    <string name="lib_fav_empty_title">Ainda sem favoritos</string>
+    <string name="lib_fav_empty_text">Toque em ♡ numa foto ou vídeo para o tornar favorito. São os mesmos favoritos da sua galeria.</string>
+    <string name="lib_sort">Ordenar</string>
+    <string name="lib_sort_newest">Mais recentes primeiro</string>
+    <string name="lib_sort_oldest">Mais antigas primeiro</string>
+    <string name="lib_sort_added">Adicionadas recentemente</string>
+    <string name="lib_sort_name">Nome</string>
+    <string name="lib_sort_largest">Maiores primeiro</string>
+    <string name="lib_sort_default">Usar em todas as pastas</string>
+    <string name="lib_hide">Ocultar no PhotoMaid</string>
+    <string name="lib_hide_text">O PhotoMaid deixa de os mostrar – nem em Fotos nem na limpeza. Os ficheiros ficam inalterados e visíveis noutras apps. Isto não é um cofre.</string>
+    <string name="lib_hide_folder_title">Ocultar “%1$s” no PhotoMaid?</string>
+    <string name="lib_hide_folder_text">A pasta e as subpastas deixam de aparecer em Fotos e na limpeza. Nada é movido nem eliminado; outras apps continuam a mostrá-la. Volte a mostrar em Pastas › Ocultos.</string>
+    <string name="lib_hidden_title">Ocultos</string>
+    <string name="lib_hidden_row">Pastas e multimédia que o PhotoMaid não mostra</string>
+    <string name="lib_hidden_intro">O PhotoMaid não mostra isto em lado nenhum. Os ficheiros estão inalterados e outras apps continuam a mostrá-los.</string>
+    <string name="lib_hidden_none_title">Nada oculto</string>
+    <string name="lib_hidden_none_text">Use “Ocultar no PhotoMaid” numa pasta, numa foto ou numa seleção.</string>
+    <string name="lib_hidden_one">Oculto no PhotoMaid</string>
+    <string name="lib_unhide">Voltar a mostrar</string>
+    <string name="lib_info_camera">Câmara</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d subpasta</item>
+        <item quantity="many">%1$d subpastas</item>
+        <item quantity="other">%1$d subpastas</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d pasta</item>
+        <item quantity="many">%1$d pastas</item>
+        <item quantity="other">%1$d pastas</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">Ocultar %1$d item no PhotoMaid?</item>
+        <item quantity="many">Ocultar %1$d itens no PhotoMaid?</item>
+        <item quantity="other">Ocultar %1$d itens no PhotoMaid?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d item oculto no PhotoMaid</item>
+        <item quantity="many">%1$d itens ocultos no PhotoMaid</item>
+        <item quantity="other">%1$d itens ocultos no PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d item visível novamente</item>
+        <item quantity="many">%1$d itens visíveis novamente</item>
+        <item quantity="other">%1$d itens visíveis novamente</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d item oculto</item>
+        <item quantity="many">%1$d itens ocultos</item>
+        <item quantity="other">%1$d itens ocultos</item>
+    </plurals>
 </resources>

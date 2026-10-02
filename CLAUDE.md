@@ -55,6 +55,10 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   `core/.../library/Timeline.kt`): Zeitachse Tag/Monat/Jahr (zwei Finger), Filter, Suche ohne Akzente (lokal), Auswahl,
   Vollbild-Betrachter (blättern, runter = schließen, Zoom; keine Wisch-Aktion nach oben). Ansehen ist NIE eine
   Entscheidung; nur „In den Papierkorb“ (PhotoMaid-eigen, Favoriten geschützt, Rückgängig) geht über den Ledger.
+  Ansichten Zeitachse · Ordner · Favoriten (G2, `feature/library/FoldersScreen.kt`, Kern `core/.../library/FolderTree.kt`):
+  Ordnerbaum, Sortierung je Ordner, Gruppen (nur Name + Pfade), Neuer Ordner (Medien wählen → verschieben). „In PhotoMaid
+  ausblenden“ (`hiddenMedia`/`hiddenFolders`) gilt für Fotos UND Aufräumen (`AppModel.photos`); der Tab „Fotos“ nutzt
+  `AppModel.visiblePhotos` (vom Aufräumen ausgenommene Ordner bleiben dort sichtbar). Kein Tresor, Dateien unverändert.
   Plan G1–G4: `docs/GALLERY_PLAN_2026-10.md`.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen

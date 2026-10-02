@@ -1267,4 +1267,91 @@
         <item quantity="many">%1$d elementów jest w koszu PhotoMaid.</item>
         <item quantity="other">%1$d elementu jest w koszu PhotoMaid.</item>
     </plurals>
+    <string name="lib_mode_timeline">Oś czasu</string>
+    <string name="lib_mode_folders">Foldery</string>
+    <string name="lib_folders_search_hint">Szukaj folderów…</string>
+    <string name="lib_folders_none_query">Żaden folder nie pasuje do „%1$s”.</string>
+    <string name="lib_folders_sort_recent">Ostatnio zaktualizowane</string>
+    <string name="lib_folders_sort_count">Najwięcej elementów</string>
+    <string name="lib_folders_footer">Foldery pokazują, gdzie są Twoje zdjęcia i filmy. Android nie zna pustych folderów: nowy folder pojawia się, gdy coś do niego przeniesiesz.</string>
+    <string name="lib_new_folder">Nowy folder</string>
+    <string name="lib_new_folder_note">Następnie wybierz zdjęcia i filmy do przeniesienia. Folder powstanie w Pictures.</string>
+    <string name="lib_new_folder_exists">Ten folder już istnieje. To, co wybierzesz, zostanie do niego przeniesione.</string>
+    <string name="lib_new_folder_next">Wybierz</string>
+    <string name="lib_new_folder_pick">Przenieś do nowego folderu</string>
+    <string name="lib_new_group">Nowa grupa</string>
+    <string name="lib_groups">Grupy</string>
+    <string name="lib_group_edit">Edytuj grupę</string>
+    <string name="lib_group_delete">Usuń grupę</string>
+    <string name="lib_group_name_hint">Nazwa grupy, np. Wakacje</string>
+    <string name="lib_group_note">Grupa tylko pokazuje foldery razem. Nic nie jest przenoszone ani kopiowane, a usunięcie grupy nie usuwa zdjęć.</string>
+    <string name="lib_expand">Pokaż podfoldery</string>
+    <string name="lib_collapse">Zwiń podfoldery</string>
+    <string name="lib_folder_excluded">Wykluczony z porządków</string>
+    <string name="lib_folder_exclude">Wyklucz z porządków</string>
+    <string name="lib_folder_include">Ponownie uwzględnij w porządkach</string>
+    <string name="lib_folder_cleanup">Uporządkuj ten folder</string>
+    <string name="lib_folder_empty">W tym folderze nie ma teraz zdjęć ani filmów.</string>
+    <string name="lib_folder_only_sub">Wszystko jest w podfolderach powyżej.</string>
+    <string name="lib_folder_no_favs">W tym folderze nie ma jeszcze ulubionych. Wyłącz „Tylko ulubione”, aby zobaczyć wszystko.</string>
+    <string name="lib_fav_only">Tylko ulubione</string>
+    <string name="lib_fav_by_folder">Według folderu</string>
+    <string name="lib_fav_by_date">Według daty</string>
+    <string name="lib_fav_empty_title">Brak ulubionych</string>
+    <string name="lib_fav_empty_text">Stuknij ♡ przy zdjęciu lub filmie, aby dodać go do ulubionych. To te same ulubione co w galerii.</string>
+    <string name="lib_sort">Sortuj</string>
+    <string name="lib_sort_newest">Najnowsze najpierw</string>
+    <string name="lib_sort_oldest">Najstarsze najpierw</string>
+    <string name="lib_sort_added">Ostatnio dodane</string>
+    <string name="lib_sort_name">Nazwa</string>
+    <string name="lib_sort_largest">Największe najpierw</string>
+    <string name="lib_sort_default">Użyj dla wszystkich folderów</string>
+    <string name="lib_hide">Ukryj w PhotoMaid</string>
+    <string name="lib_hide_text">PhotoMaid przestanie je pokazywać – ani w Zdjęciach, ani podczas porządków. Pliki pozostają bez zmian i są widoczne w innych aplikacjach. To nie jest sejf.</string>
+    <string name="lib_hide_folder_title">Ukryć „%1$s” w PhotoMaid?</string>
+    <string name="lib_hide_folder_text">Folder i jego podfoldery nie będą widoczne w Zdjęciach ani podczas porządków. Nic nie jest przenoszone ani usuwane; inne aplikacje nadal go pokazują. Przywróć w Foldery › Ukryte.</string>
+    <string name="lib_hidden_title">Ukryte</string>
+    <string name="lib_hidden_row">Foldery i multimedia, których PhotoMaid nie pokazuje</string>
+    <string name="lib_hidden_intro">PhotoMaid nigdzie tego nie pokazuje. Pliki są bez zmian, a inne aplikacje nadal je pokazują.</string>
+    <string name="lib_hidden_none_title">Nic nie jest ukryte</string>
+    <string name="lib_hidden_none_text">Użyj „Ukryj w PhotoMaid” przy folderze, zdjęciu lub zaznaczeniu.</string>
+    <string name="lib_hidden_one">Ukryto w PhotoMaid</string>
+    <string name="lib_unhide">Pokaż ponownie</string>
+    <string name="lib_info_camera">Aparat</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d podfolder</item>
+        <item quantity="few">%1$d podfoldery</item>
+        <item quantity="many">%1$d podfolderów</item>
+        <item quantity="other">%1$d podfolderu</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d folder</item>
+        <item quantity="few">%1$d foldery</item>
+        <item quantity="many">%1$d folderów</item>
+        <item quantity="other">%1$d folderu</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">Ukryć %1$d element w PhotoMaid?</item>
+        <item quantity="few">Ukryć %1$d elementy w PhotoMaid?</item>
+        <item quantity="many">Ukryć %1$d elementów w PhotoMaid?</item>
+        <item quantity="other">Ukryć %1$d elementu w PhotoMaid?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">Ukryto %1$d element w PhotoMaid</item>
+        <item quantity="few">Ukryto %1$d elementy w PhotoMaid</item>
+        <item quantity="many">Ukryto %1$d elementów w PhotoMaid</item>
+        <item quantity="other">Ukryto %1$d elementu w PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">Przywrócono %1$d element</item>
+        <item quantity="few">Przywrócono %1$d elementy</item>
+        <item quantity="many">Przywrócono %1$d elementów</item>
+        <item quantity="other">Przywrócono %1$d elementu</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d ukryty element</item>
+        <item quantity="few">%1$d ukryte elementy</item>
+        <item quantity="many">%1$d ukrytych elementów</item>
+        <item quantity="other">%1$d ukrytego elementu</item>
+    </plurals>
 </resources>

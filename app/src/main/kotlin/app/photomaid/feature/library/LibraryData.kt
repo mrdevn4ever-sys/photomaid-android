@@ -3,13 +3,23 @@ package app.photomaid.feature.library
 import android.content.Context
 import android.text.format.DateFormat
 import app.photomaid.AppModel
+import app.photomaid.AppSettingsData
 import app.photomaid.R
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.decisions.Disposition
+import app.photomaid.core.library.FolderEntry
+import app.photomaid.core.library.FolderGroup
+import app.photomaid.core.library.FolderListSort
+import app.photomaid.core.library.FolderNode
+import app.photomaid.core.library.FolderSort
+import app.photomaid.core.library.FolderTree
 import app.photomaid.core.library.SearchText
 import app.photomaid.core.library.TimelineKey
 import app.photomaid.core.library.TimelineLevel
+import app.photomaid.core.model.KnownSize
 import app.photomaid.core.model.MediaKind
+import app.photomaid.core.organize.MediaFolders
+import app.photomaid.media.ExcludingMediaLibrary
 import app.photomaid.media.MediaAsset
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -30,9 +40,10 @@ enum class LibraryFilter(val label: Int) {
 
 /**
  * Suchindex einer Momentaufnahme: je Medium normalisierte Felder (Name, Ordner, Monat/Jahr in der Gerätesprache, Art,
- * Favorit). Nichts verlässt das Gerät, nichts wird gespeichert.
+ * Favorit, Kamera-Modell aus EXIF, sobald gelesen). Nichts verlässt das Gerät, nichts wird gespeichert.
  */
-class LibrarySearch(context: Context, assets: List<MediaAsset>, zone: ZoneId = ZoneId.systemDefault(), locale: Locale = Locale.getDefault()) {
+class LibrarySearch(context: Context, assets: List<MediaAsset>, zone: ZoneId = ZoneId.systemDefault(), locale: Locale = Locale.getDefault(),
+    camera: (String) -> String? = { null }) {
     private val fields: Map<String, List<String>>
 
     init {
@@ -45,7 +56,7 @@ class LibrarySearch(context: Context, assets: List<MediaAsset>, zone: ZoneId = Z
         fields = assets.associate { a ->
             val d = a.creationDate?.atZone(zone)
             a.id to listOfNotNull(a.displayName, a.relativePath, d?.let(month::format), d?.let(monthShort::format), d?.let(day::format),
-                d?.year?.toString(), kinds[a.kind], if (a.isFavorite) fav else null, a.mimeType?.substringAfter('/'))
+                d?.year?.toString(), kinds[a.kind], if (a.isFavorite) fav else null, a.mimeType?.substringAfter('/'), camera(a.id))
                 .map(SearchText::normalize)
         }
     }
@@ -84,4 +95,93 @@ suspend fun undoMark(app: AppModel, before: Map<MediaAsset, Disposition>) {
         Disposition.KEPT -> app.decide(a.reference, DecisionAction.Keep)
         else -> app.decide(a.reference, DecisionAction.Unmark)
     }
+}
+
+// ---- G2: Ordner, Gruppen, Sortierung, Ausblenden -------------------------------------------------------------
+
+/** Ordner der Momentaufnahme für den Baum (eigene Anzahl, jüngstes Aufnahmedatum). Medien ohne Pfad fehlen. */
+fun folderEntries(assets: List<MediaAsset>): List<FolderEntry> =
+    assets.filter { !it.relativePath.isNullOrBlank() }.groupBy { FolderTree.normalize(it.relativePath!!).lowercase() }.map { (_, v) ->
+        FolderEntry(v.first().relativePath!!, v.size, v.mapNotNull { (it.creationDate ?: it.dateAdded)?.toEpochMilli() }.maxOrNull())
+    }
+
+/** Titelbild je Ordnerpfad (klein geschrieben): neuestes Medium im Ordner inkl. Unterordnern. */
+fun folderCovers(roots: List<FolderNode>, assets: List<MediaAsset>): Map<String, MediaAsset> {
+    val newest = assets.filter { it.relativePath != null }.groupBy { FolderTree.normalize(it.relativePath!!).lowercase() }
+        .mapValues { (_, v) -> v.maxBy { (it.creationDate ?: it.dateAdded)?.toEpochMilli() ?: Long.MIN_VALUE } }
+    val out = HashMap<String, MediaAsset>()
+    fun walk(n: FolderNode): MediaAsset? {
+        val candidates = listOfNotNull(newest[n.path.lowercase()]) + n.children.mapNotNull(::walk)
+        val best = candidates.maxByOrNull { (it.creationDate ?: it.dateAdded)?.toEpochMilli() ?: Long.MIN_VALUE }
+        if (best != null) out[n.path.lowercase()] = best
+        return best
+    }
+    roots.forEach { walk(it) }
+    return out
+}
+
+/** Schlüssel für Sortierung/Favoritenfilter: Ordnerpfad klein geschrieben bzw. `group:<id>`. */
+fun folderKey(path: String): String = FolderTree.normalize(path).lowercase()
+fun groupKey(id: String): String = "group:$id"
+
+fun AppSettingsData.sortFor(key: String): FolderSort = folderSorts[key] ?: defaultFolderSort
+
+fun sortMedia(assets: List<MediaAsset>, sort: FolderSort): List<MediaAsset> = sort.sort(assets,
+    date = { (it.creationDate ?: it.dateAdded)?.toEpochMilli() }, added = { it.dateAdded?.toEpochMilli() },
+    name = { it.displayName }, size = { (it.size as? KnownSize.Known)?.bytes })
+
+val FolderSort.label: Int get() = when (this) {
+    FolderSort.NEWEST -> R.string.lib_sort_newest; FolderSort.OLDEST -> R.string.lib_sort_oldest
+    FolderSort.ADDED -> R.string.lib_sort_added; FolderSort.NAME -> R.string.lib_sort_name; FolderSort.LARGEST -> R.string.lib_sort_largest
+}
+
+val FolderListSort.label: Int get() = when (this) {
+    FolderListSort.RECENT -> R.string.lib_folders_sort_recent; FolderListSort.NAME -> R.string.lib_sort_name; FolderListSort.COUNT -> R.string.lib_folders_sort_count
+}
+
+/** Reihenfolge für einen Ordner merken; „Für alle Ordner“ setzt den Standard und entfernt Einzelwerte nicht. */
+suspend fun setFolderSort(app: AppModel, key: String, sort: FolderSort, asDefault: Boolean) = app.updateSettings { s ->
+    if (asDefault) s.copy(defaultFolderSort = sort, folderSorts = s.folderSorts - key)
+    else s.copy(folderSorts = s.folderSorts + (key to sort))
+}
+
+suspend fun setFavoritesOnly(app: AppModel, key: String, on: Boolean) = app.updateSettings { s ->
+    s.copy(folderFavoritesOnly = (s.folderFavoritesOnly - key).let { if (on) it + key else it })
+}
+
+/** Medien in PhotoMaid ausblenden bzw. wieder einblenden (nur lokale Liste; die Datei bleibt unverändert). */
+suspend fun setMediaHidden(app: AppModel, ids: Collection<String>, hidden: Boolean) {
+    if (ids.isEmpty()) return
+    app.updateSettings { s -> s.copy(hiddenMedia = if (hidden) (s.hiddenMedia + ids).distinct() else s.hiddenMedia - ids.toSet()) }
+    app.photos.bumpChangeToken()
+}
+
+suspend fun setFolderHidden(app: AppModel, path: String, hidden: Boolean) {
+    val p = FolderTree.normalize(path)
+    if (p.isEmpty()) return
+    app.updateSettings { s ->
+        val rest = s.hiddenFolders.filterNot { it.equals(p, ignoreCase = true) }
+        s.copy(hiddenFolders = if (hidden) rest + p else rest)
+    }
+    app.photos.bumpChangeToken()
+}
+
+/** Gruppe anlegen oder ändern (gleiche ID). Leere Gruppen sind erlaubt nicht: ohne Ordner wird nichts gespeichert. */
+suspend fun saveGroup(app: AppModel, group: FolderGroup) {
+    if (group.paths.isEmpty() || group.name.isBlank()) return
+    app.updateSettings { s ->
+        val i = s.folderGroups.indexOfFirst { it.id == group.id }
+        s.copy(folderGroups = if (i >= 0) s.folderGroups.toMutableList().also { it[i] = group } else s.folderGroups + group)
+    }
+}
+
+suspend fun deleteGroup(app: AppModel, id: String) = app.updateSettings { s ->
+    s.copy(folderGroups = s.folderGroups.filterNot { it.id == id }, folderSorts = s.folderSorts - groupKey(id),
+        folderFavoritesOnly = s.folderFavoritesOnly - groupKey(id))
+}
+
+/** Für „Aufräumen“ aus der Mediathek: vom Aufräumen ausgenommene Ordner bleiben draußen. */
+fun AppModel.cleanupCandidates(assets: List<MediaAsset>): List<MediaAsset> {
+    val keys = settings.value.excludedFolders.map { MediaFolders.normalize(it).lowercase() }.filter { it.isNotEmpty() }
+    return if (keys.isEmpty()) assets else assets.filterNot { ExcludingMediaLibrary.isExcluded(it, keys) }
 }

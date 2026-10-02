@@ -1135,4 +1135,73 @@
     <plurals name="lib_trashed">
         <item quantity="other">%1$d개가 PhotoMaid 휴지통에 있어요.</item>
     </plurals>
+    <string name="lib_mode_timeline">타임라인</string>
+    <string name="lib_mode_folders">폴더</string>
+    <string name="lib_folders_search_hint">폴더 검색…</string>
+    <string name="lib_folders_none_query">‘%1$s’와(과) 일치하는 폴더가 없습니다.</string>
+    <string name="lib_folders_sort_recent">최근 업데이트</string>
+    <string name="lib_folders_sort_count">항목 많은 순</string>
+    <string name="lib_folders_footer">폴더는 사진과 동영상이 저장된 위치입니다. Android에는 빈 폴더가 없으며, 무언가를 옮기면 새 폴더가 나타납니다.</string>
+    <string name="lib_new_folder">새 폴더</string>
+    <string name="lib_new_folder_note">다음으로 옮길 사진과 동영상을 고르세요. 폴더는 Pictures에 만들어집니다.</string>
+    <string name="lib_new_folder_exists">이미 있는 폴더입니다. 다음에 고르는 항목이 이 폴더로 옮겨집니다.</string>
+    <string name="lib_new_folder_next">미디어 선택</string>
+    <string name="lib_new_folder_pick">새 폴더로 이동</string>
+    <string name="lib_new_group">새 그룹</string>
+    <string name="lib_groups">그룹</string>
+    <string name="lib_group_edit">그룹 편집</string>
+    <string name="lib_group_delete">그룹 삭제</string>
+    <string name="lib_group_name_hint">그룹 이름(예: 휴가)</string>
+    <string name="lib_group_note">그룹은 폴더를 함께 보여 줄 뿐입니다. 아무것도 옮기거나 복사하지 않으며, 그룹을 삭제해도 사진은 삭제되지 않습니다.</string>
+    <string name="lib_expand">하위 폴더 보기</string>
+    <string name="lib_collapse">하위 폴더 접기</string>
+    <string name="lib_folder_excluded">정리에서 제외됨</string>
+    <string name="lib_folder_exclude">정리에서 제외</string>
+    <string name="lib_folder_include">다시 정리에 포함</string>
+    <string name="lib_folder_cleanup">이 폴더 정리</string>
+    <string name="lib_folder_empty">이 폴더에는 지금 사진이나 동영상이 없습니다.</string>
+    <string name="lib_folder_only_sub">모든 항목이 위의 하위 폴더에 있습니다.</string>
+    <string name="lib_folder_no_favs">이 폴더에는 아직 즐겨찾기가 없습니다. ‘즐겨찾기만’을 끄면 모두 보입니다.</string>
+    <string name="lib_fav_only">즐겨찾기만</string>
+    <string name="lib_fav_by_folder">폴더별</string>
+    <string name="lib_fav_by_date">날짜별</string>
+    <string name="lib_fav_empty_title">아직 즐겨찾기가 없습니다</string>
+    <string name="lib_fav_empty_text">사진이나 동영상에서 ♡를 탭하면 즐겨찾기가 됩니다. 갤러리 앱과 같은 즐겨찾기입니다.</string>
+    <string name="lib_sort">정렬</string>
+    <string name="lib_sort_newest">최신순</string>
+    <string name="lib_sort_oldest">오래된순</string>
+    <string name="lib_sort_added">최근 추가순</string>
+    <string name="lib_sort_name">이름</string>
+    <string name="lib_sort_largest">큰 파일순</string>
+    <string name="lib_sort_default">모든 폴더에 사용</string>
+    <string name="lib_hide">PhotoMaid에서 숨기기</string>
+    <string name="lib_hide_text">PhotoMaid에서 더 이상 사진 탭과 정리 중에 표시되지 않습니다. 파일은 그대로이며 다른 앱에서는 계속 보입니다. 금고가 아닙니다.</string>
+    <string name="lib_hide_folder_title">‘%1$s’을(를) PhotoMaid에서 숨길까요?</string>
+    <string name="lib_hide_folder_text">이 폴더와 하위 폴더는 사진 탭과 정리 중에 더 이상 나타나지 않습니다. 아무것도 옮기거나 삭제하지 않으며 다른 앱에서는 계속 보입니다. 폴더 › 숨김에서 다시 표시할 수 있습니다.</string>
+    <string name="lib_hidden_title">숨김</string>
+    <string name="lib_hidden_row">PhotoMaid에서 표시하지 않는 폴더와 미디어</string>
+    <string name="lib_hidden_intro">PhotoMaid는 이 항목을 어디에도 표시하지 않습니다. 파일은 그대로이며 다른 앱에서는 계속 보입니다.</string>
+    <string name="lib_hidden_none_title">숨긴 항목 없음</string>
+    <string name="lib_hidden_none_text">폴더, 사진 또는 선택 항목에서 ‘PhotoMaid에서 숨기기’를 사용하세요.</string>
+    <string name="lib_hidden_one">PhotoMaid에서 숨김</string>
+    <string name="lib_unhide">다시 표시</string>
+    <string name="lib_info_camera">카메라</string>
+    <plurals name="lib_subfolders">
+        <item quantity="other">하위 폴더 %1$d개</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="other">폴더 %1$d개</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="other">%1$d개를 PhotoMaid에서 숨길까요?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="other">%1$d개를 PhotoMaid에서 숨겼습니다</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="other">%1$d개를 다시 표시했습니다</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="other">숨긴 항목 %1$d개</item>
+    </plurals>
 </resources>

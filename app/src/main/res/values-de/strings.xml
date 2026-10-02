@@ -1179,4 +1179,79 @@
         <item quantity="one">%1$d Medium liegt im PhotoMaid-Papierkorb.</item>
         <item quantity="other">%1$d Medien liegen im PhotoMaid-Papierkorb.</item>
     </plurals>
+    <string name="lib_mode_timeline">Zeitachse</string>
+    <string name="lib_mode_folders">Ordner</string>
+    <string name="lib_folders_search_hint">Ordner suchen …</string>
+    <string name="lib_folders_none_query">Kein Ordner passt zu „%1$s“.</string>
+    <string name="lib_folders_sort_recent">Zuletzt aktualisiert</string>
+    <string name="lib_folders_sort_count">Meiste Medien</string>
+    <string name="lib_folders_footer">Ordner zeigen, wo deine Fotos und Videos liegen. Android kennt keine leeren Ordner: Ein neuer Ordner erscheint, sobald du etwas hineinverschiebst.</string>
+    <string name="lib_new_folder">Neuer Ordner</string>
+    <string name="lib_new_folder_note">Danach wählst du Fotos und Videos, die hineinkommen. Der Ordner entsteht unter „Pictures“.</string>
+    <string name="lib_new_folder_exists">Diesen Ordner gibt es schon. Was du gleich wählst, wird hineinverschoben.</string>
+    <string name="lib_new_folder_next">Medien wählen</string>
+    <string name="lib_new_folder_pick">In neuen Ordner verschieben</string>
+    <string name="lib_new_group">Neue Gruppe</string>
+    <string name="lib_groups">Gruppen</string>
+    <string name="lib_group_edit">Gruppe bearbeiten</string>
+    <string name="lib_group_delete">Gruppe löschen</string>
+    <string name="lib_group_name_hint">Name der Gruppe, z. B. Urlaube</string>
+    <string name="lib_group_note">Eine Gruppe zeigt nur Ordner zusammen. Nichts wird verschoben oder kopiert; die Gruppe zu löschen löscht keine Fotos.</string>
+    <string name="lib_expand">Unterordner zeigen</string>
+    <string name="lib_collapse">Unterordner einklappen</string>
+    <string name="lib_folder_excluded">Vom Aufräumen ausgenommen</string>
+    <string name="lib_folder_exclude">Vom Aufräumen ausnehmen</string>
+    <string name="lib_folder_include">Wieder beim Aufräumen zeigen</string>
+    <string name="lib_folder_cleanup">Diesen Ordner aufräumen</string>
+    <string name="lib_folder_empty">In diesem Ordner liegen gerade keine Fotos oder Videos.</string>
+    <string name="lib_folder_only_sub">Alles liegt in den Unterordnern oben.</string>
+    <string name="lib_folder_no_favs">In diesem Ordner gibt es noch keine Favoriten. Schalte „Nur Favoriten“ aus, um alles zu sehen.</string>
+    <string name="lib_fav_only">Nur Favoriten</string>
+    <string name="lib_fav_by_folder">Nach Ordner</string>
+    <string name="lib_fav_by_date">Nach Datum</string>
+    <string name="lib_fav_empty_title">Noch keine Favoriten</string>
+    <string name="lib_fav_empty_text">Tippe bei einem Foto oder Video auf ♡, um es zum Favoriten zu machen. Es sind dieselben Favoriten wie in deiner Galerie-App.</string>
+    <string name="lib_sort">Sortieren</string>
+    <string name="lib_sort_newest">Neueste zuerst</string>
+    <string name="lib_sort_oldest">Älteste zuerst</string>
+    <string name="lib_sort_added">Zuletzt hinzugefügt</string>
+    <string name="lib_sort_name">Name</string>
+    <string name="lib_sort_largest">Größte zuerst</string>
+    <string name="lib_sort_default">Für alle Ordner verwenden</string>
+    <string name="lib_hide">In PhotoMaid ausblenden</string>
+    <string name="lib_hide_text">PhotoMaid zeigt sie nicht mehr – weder unter „Fotos“ noch beim Aufräumen. Die Dateien bleiben unverändert und in anderen Apps sichtbar. Das ist kein Tresor.</string>
+    <string name="lib_hide_folder_title">„%1$s“ in PhotoMaid ausblenden?</string>
+    <string name="lib_hide_folder_text">Der Ordner und seine Unterordner erscheinen nicht mehr unter „Fotos“ und beim Aufräumen. Nichts wird verschoben oder gelöscht; andere Apps zeigen ihn weiter. Wieder einblenden unter Ordner › Ausgeblendet.</string>
+    <string name="lib_hidden_title">Ausgeblendet</string>
+    <string name="lib_hidden_row">Ordner und Medien, die PhotoMaid nicht zeigt</string>
+    <string name="lib_hidden_intro">PhotoMaid zeigt das hier nirgends. Die Dateien sind unverändert, andere Apps zeigen sie weiter.</string>
+    <string name="lib_hidden_none_title">Nichts ausgeblendet</string>
+    <string name="lib_hidden_none_text">Nutze „In PhotoMaid ausblenden“ bei einem Ordner, einem Foto oder einer Auswahl.</string>
+    <string name="lib_hidden_one">In PhotoMaid ausgeblendet</string>
+    <string name="lib_unhide">Wieder einblenden</string>
+    <string name="lib_info_camera">Kamera</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d Unterordner</item>
+        <item quantity="other">%1$d Unterordner</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d Ordner</item>
+        <item quantity="other">%1$d Ordner</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">%1$d Medium in PhotoMaid ausblenden?</item>
+        <item quantity="other">%1$d Medien in PhotoMaid ausblenden?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d Medium in PhotoMaid ausgeblendet</item>
+        <item quantity="other">%1$d Medien in PhotoMaid ausgeblendet</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d Medium wieder eingeblendet</item>
+        <item quantity="other">%1$d Medien wieder eingeblendet</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d ausgeblendetes Medium</item>
+        <item quantity="other">%1$d ausgeblendete Medien</item>
+    </plurals>
 </resources>

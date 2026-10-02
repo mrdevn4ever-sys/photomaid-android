@@ -8639,6 +8639,924 @@
    "tr": "Bu cihazda şu tarihten beri",
    "uk": "На пристрої з",
    "zh": "加入此设备的时间"
+  },
+  "lib_mode_timeline": {
+   "en": "Timeline",
+   "de": "Zeitachse",
+   "ar": "الخط الزمني",
+   "es": "Cronología",
+   "fr": "Chronologie",
+   "it": "Cronologia",
+   "ja": "タイムライン",
+   "ko": "타임라인",
+   "nl": "Tijdlijn",
+   "pl": "Oś czasu",
+   "pt": "Cronologia",
+   "ro": "Cronologie",
+   "ru": "Хронология",
+   "tr": "Zaman çizelgesi",
+   "uk": "Хронологія",
+   "zh": "时间线"
+  },
+  "lib_mode_folders": {
+   "en": "Folders",
+   "de": "Ordner",
+   "ar": "المجلدات",
+   "es": "Carpetas",
+   "fr": "Dossiers",
+   "it": "Cartelle",
+   "ja": "フォルダ",
+   "ko": "폴더",
+   "nl": "Mappen",
+   "pl": "Foldery",
+   "pt": "Pastas",
+   "ro": "Dosare",
+   "ru": "Папки",
+   "tr": "Klasörler",
+   "uk": "Папки",
+   "zh": "文件夹"
+  },
+  "lib_folders_search_hint": {
+   "en": "Search folders …",
+   "de": "Ordner suchen …",
+   "ar": "ابحث في المجلدات …",
+   "es": "Buscar carpetas…",
+   "fr": "Rechercher des dossiers…",
+   "it": "Cerca cartelle…",
+   "ja": "フォルダを検索…",
+   "ko": "폴더 검색…",
+   "nl": "Mappen zoeken …",
+   "pl": "Szukaj folderów…",
+   "pt": "Pesquisar pastas…",
+   "ro": "Caută dosare…",
+   "ru": "Поиск папок…",
+   "tr": "Klasör ara…",
+   "uk": "Пошук папок…",
+   "zh": "搜索文件夹…"
+  },
+  "lib_folders_none_query": {
+   "en": "No folder matches “%1$s”.",
+   "de": "Kein Ordner passt zu „%1$s“.",
+   "ar": "لا يوجد مجلد يطابق «%1$s».",
+   "es": "Ninguna carpeta coincide con «%1$s».",
+   "fr": "Aucun dossier ne correspond à « %1$s ».",
+   "it": "Nessuna cartella corrisponde a “%1$s”.",
+   "ja": "「%1$s」に一致するフォルダはありません。",
+   "ko": "‘%1$s’와(과) 일치하는 폴더가 없습니다.",
+   "nl": "Geen map komt overeen met ‘%1$s’.",
+   "pl": "Żaden folder nie pasuje do „%1$s”.",
+   "pt": "Nenhuma pasta corresponde a “%1$s”.",
+   "ro": "Niciun dosar nu se potrivește cu „%1$s”.",
+   "ru": "Нет папок, подходящих под «%1$s».",
+   "tr": "“%1$s” ile eşleşen klasör yok.",
+   "uk": "Немає папок, що відповідають «%1$s».",
+   "zh": "没有与“%1$s”匹配的文件夹。"
+  },
+  "lib_folders_sort_recent": {
+   "en": "Recently updated",
+   "de": "Zuletzt aktualisiert",
+   "ar": "المحدَّثة مؤخرًا",
+   "es": "Actualizadas recientemente",
+   "fr": "Mis à jour récemment",
+   "it": "Aggiornate di recente",
+   "ja": "最近更新",
+   "ko": "최근 업데이트",
+   "nl": "Recent bijgewerkt",
+   "pl": "Ostatnio zaktualizowane",
+   "pt": "Atualizadas recentemente",
+   "ro": "Actualizate recent",
+   "ru": "Недавно обновлённые",
+   "tr": "Son güncellenenler",
+   "uk": "Нещодавно оновлені",
+   "zh": "最近更新"
+  },
+  "lib_folders_sort_count": {
+   "en": "Most items",
+   "de": "Meiste Medien",
+   "ar": "الأكثر عناصر",
+   "es": "Más elementos",
+   "fr": "Le plus d’éléments",
+   "it": "Più elementi",
+   "ja": "項目数が多い順",
+   "ko": "항목 많은 순",
+   "nl": "Meeste items",
+   "pl": "Najwięcej elementów",
+   "pt": "Mais itens",
+   "ro": "Cele mai multe elemente",
+   "ru": "Больше всего файлов",
+   "tr": "En çok öğe",
+   "uk": "Найбільше файлів",
+   "zh": "项目最多"
+  },
+  "lib_folders_footer": {
+   "en": "Folders come from where your photos and videos are stored. Android has no empty folders: a new folder appears once you move something into it.",
+   "de": "Ordner zeigen, wo deine Fotos und Videos liegen. Android kennt keine leeren Ordner: Ein neuer Ordner erscheint, sobald du etwas hineinverschiebst.",
+   "ar": "تعرض المجلدات مكان حفظ صورك وفيديوهاتك. لا يعرف Android المجلدات الفارغة: يظهر المجلد الجديد عندما تنقل إليه شيئًا.",
+   "es": "Las carpetas muestran dónde están tus fotos y vídeos. Android no tiene carpetas vacías: una carpeta nueva aparece cuando mueves algo a ella.",
+   "fr": "Les dossiers indiquent où se trouvent vos photos et vidéos. Android ne connaît pas les dossiers vides : un nouveau dossier apparaît dès que vous y déplacez quelque chose.",
+   "it": "Le cartelle mostrano dove si trovano foto e video. Android non conosce cartelle vuote: una nuova cartella appare quando ci sposti qualcosa.",
+   "ja": "フォルダは写真や動画の保存場所です。Android には空のフォルダはありません。何かを移動すると新しいフォルダが表示されます。",
+   "ko": "폴더는 사진과 동영상이 저장된 위치입니다. Android에는 빈 폴더가 없으며, 무언가를 옮기면 새 폴더가 나타납니다.",
+   "nl": "Mappen laten zien waar je foto’s en video’s staan. Android kent geen lege mappen: een nieuwe map verschijnt zodra je er iets naartoe verplaatst.",
+   "pl": "Foldery pokazują, gdzie są Twoje zdjęcia i filmy. Android nie zna pustych folderów: nowy folder pojawia się, gdy coś do niego przeniesiesz.",
+   "pt": "As pastas mostram onde estão as suas fotos e vídeos. O Android não tem pastas vazias: uma pasta nova aparece quando mover algo para ela.",
+   "ro": "Dosarele arată unde sunt fotografiile și videoclipurile tale. Android nu are dosare goale: un dosar nou apare după ce muți ceva în el.",
+   "ru": "Папки показывают, где хранятся фото и видео. В Android нет пустых папок: новая папка появится, когда вы переместите в неё файл.",
+   "tr": "Klasörler fotoğraf ve videolarının nerede olduğunu gösterir. Android’de boş klasör olmaz: içine bir şey taşıdığında yeni klasör görünür.",
+   "uk": "Папки показують, де зберігаються фото й відео. В Android немає порожніх папок: нова папка з’явиться, коли ви перемістите в неї файл.",
+   "zh": "文件夹显示照片和视频的存放位置。Android 没有空文件夹：移入内容后新文件夹才会出现。"
+  },
+  "lib_new_folder": {
+   "en": "New folder",
+   "de": "Neuer Ordner",
+   "ar": "مجلد جديد",
+   "es": "Carpeta nueva",
+   "fr": "Nouveau dossier",
+   "it": "Nuova cartella",
+   "ja": "新しいフォルダ",
+   "ko": "새 폴더",
+   "nl": "Nieuwe map",
+   "pl": "Nowy folder",
+   "pt": "Nova pasta",
+   "ro": "Dosar nou",
+   "ru": "Новая папка",
+   "tr": "Yeni klasör",
+   "uk": "Нова папка",
+   "zh": "新建文件夹"
+  },
+  "lib_new_folder_note": {
+   "en": "Next, choose photos and videos to move. The folder is created in Pictures.",
+   "de": "Danach wählst du Fotos und Videos, die hineinkommen. Der Ordner entsteht unter „Pictures“.",
+   "ar": "بعد ذلك اختر الصور والفيديوهات التي ستُنقل إليه. يُنشأ المجلد داخل Pictures.",
+   "es": "Después elige las fotos y vídeos que quieres mover. La carpeta se crea en Pictures.",
+   "fr": "Choisissez ensuite les photos et vidéos à y déplacer. Le dossier est créé dans Pictures.",
+   "it": "Poi scegli le foto e i video da spostare. La cartella viene creata in Pictures.",
+   "ja": "次に移動する写真と動画を選びます。フォルダは Pictures に作成されます。",
+   "ko": "다음으로 옮길 사진과 동영상을 고르세요. 폴더는 Pictures에 만들어집니다.",
+   "nl": "Daarna kies je foto’s en video’s om te verplaatsen. De map komt in Pictures.",
+   "pl": "Następnie wybierz zdjęcia i filmy do przeniesienia. Folder powstanie w Pictures.",
+   "pt": "Depois escolha as fotos e vídeos a mover. A pasta é criada em Pictures.",
+   "ro": "Apoi alegi fotografiile și videoclipurile de mutat. Dosarul se creează în Pictures.",
+   "ru": "Затем выберите фото и видео для перемещения. Папка создаётся в Pictures.",
+   "tr": "Ardından taşınacak fotoğraf ve videoları seç. Klasör Pictures içinde oluşturulur.",
+   "uk": "Потім виберіть фото й відео для переміщення. Папка створюється в Pictures.",
+   "zh": "接下来选择要移入的照片和视频。文件夹将创建在 Pictures 中。"
+  },
+  "lib_new_folder_exists": {
+   "en": "This folder already exists. What you choose next will be moved into it.",
+   "de": "Diesen Ordner gibt es schon. Was du gleich wählst, wird hineinverschoben.",
+   "ar": "هذا المجلد موجود بالفعل. ما تختاره الآن سيُنقل إليه.",
+   "es": "Esta carpeta ya existe. Lo que elijas se moverá a ella.",
+   "fr": "Ce dossier existe déjà. Ce que vous choisirez y sera déplacé.",
+   "it": "Questa cartella esiste già. Ciò che scegli verrà spostato al suo interno.",
+   "ja": "このフォルダは既にあります。次に選んだものがここへ移動します。",
+   "ko": "이미 있는 폴더입니다. 다음에 고르는 항목이 이 폴더로 옮겨집니다.",
+   "nl": "Deze map bestaat al. Wat je nu kiest, wordt erheen verplaatst.",
+   "pl": "Ten folder już istnieje. To, co wybierzesz, zostanie do niego przeniesione.",
+   "pt": "Esta pasta já existe. O que escolher será movido para ela.",
+   "ro": "Acest dosar există deja. Ce alegi va fi mutat în el.",
+   "ru": "Такая папка уже есть. Выбранное будет перемещено в неё.",
+   "tr": "Bu klasör zaten var. Seçtiklerin içine taşınacak.",
+   "uk": "Така папка вже є. Вибране буде переміщено до неї.",
+   "zh": "此文件夹已存在。接下来选择的内容会移入其中。"
+  },
+  "lib_new_folder_next": {
+   "en": "Choose media",
+   "de": "Medien wählen",
+   "ar": "اختيار الوسائط",
+   "es": "Elegir",
+   "fr": "Choisir",
+   "it": "Scegli",
+   "ja": "メディアを選択",
+   "ko": "미디어 선택",
+   "nl": "Media kiezen",
+   "pl": "Wybierz",
+   "pt": "Escolher",
+   "ro": "Alege",
+   "ru": "Выбрать",
+   "tr": "Medya seç",
+   "uk": "Вибрати",
+   "zh": "选择媒体"
+  },
+  "lib_new_folder_pick": {
+   "en": "Move into new folder",
+   "de": "In neuen Ordner verschieben",
+   "ar": "النقل إلى مجلد جديد",
+   "es": "Mover a carpeta nueva",
+   "fr": "Déplacer vers le nouveau dossier",
+   "it": "Sposta nella nuova cartella",
+   "ja": "新しいフォルダへ移動",
+   "ko": "새 폴더로 이동",
+   "nl": "Naar nieuwe map verplaatsen",
+   "pl": "Przenieś do nowego folderu",
+   "pt": "Mover para pasta nova",
+   "ro": "Mută în dosarul nou",
+   "ru": "Переместить в новую папку",
+   "tr": "Yeni klasöre taşı",
+   "uk": "Перемістити в нову папку",
+   "zh": "移入新文件夹"
+  },
+  "lib_new_group": {
+   "en": "New group",
+   "de": "Neue Gruppe",
+   "ar": "مجموعة جديدة",
+   "es": "Grupo nuevo",
+   "fr": "Nouveau groupe",
+   "it": "Nuovo gruppo",
+   "ja": "新しいグループ",
+   "ko": "새 그룹",
+   "nl": "Nieuwe groep",
+   "pl": "Nowa grupa",
+   "pt": "Novo grupo",
+   "ro": "Grup nou",
+   "ru": "Новая группа",
+   "tr": "Yeni grup",
+   "uk": "Нова група",
+   "zh": "新建分组"
+  },
+  "lib_groups": {
+   "en": "Groups",
+   "de": "Gruppen",
+   "ar": "المجموعات",
+   "es": "Grupos",
+   "fr": "Groupes",
+   "it": "Gruppi",
+   "ja": "グループ",
+   "ko": "그룹",
+   "nl": "Groepen",
+   "pl": "Grupy",
+   "pt": "Grupos",
+   "ro": "Grupuri",
+   "ru": "Группы",
+   "tr": "Gruplar",
+   "uk": "Групи",
+   "zh": "分组"
+  },
+  "lib_group_edit": {
+   "en": "Edit group",
+   "de": "Gruppe bearbeiten",
+   "ar": "تعديل المجموعة",
+   "es": "Editar grupo",
+   "fr": "Modifier le groupe",
+   "it": "Modifica gruppo",
+   "ja": "グループを編集",
+   "ko": "그룹 편집",
+   "nl": "Groep bewerken",
+   "pl": "Edytuj grupę",
+   "pt": "Editar grupo",
+   "ro": "Editează grupul",
+   "ru": "Изменить группу",
+   "tr": "Grubu düzenle",
+   "uk": "Змінити групу",
+   "zh": "编辑分组"
+  },
+  "lib_group_delete": {
+   "en": "Delete group",
+   "de": "Gruppe löschen",
+   "ar": "حذف المجموعة",
+   "es": "Eliminar grupo",
+   "fr": "Supprimer le groupe",
+   "it": "Elimina gruppo",
+   "ja": "グループを削除",
+   "ko": "그룹 삭제",
+   "nl": "Groep verwijderen",
+   "pl": "Usuń grupę",
+   "pt": "Eliminar grupo",
+   "ro": "Șterge grupul",
+   "ru": "Удалить группу",
+   "tr": "Grubu sil",
+   "uk": "Видалити групу",
+   "zh": "删除分组"
+  },
+  "lib_group_name_hint": {
+   "en": "Group name, e.g. Holidays",
+   "de": "Name der Gruppe, z. B. Urlaube",
+   "ar": "اسم المجموعة، مثل: العطلات",
+   "es": "Nombre del grupo, p. ej. Vacaciones",
+   "fr": "Nom du groupe, p. ex. Vacances",
+   "it": "Nome del gruppo, es. Vacanze",
+   "ja": "グループ名（例：旅行）",
+   "ko": "그룹 이름(예: 휴가)",
+   "nl": "Groepsnaam, bijv. Vakanties",
+   "pl": "Nazwa grupy, np. Wakacje",
+   "pt": "Nome do grupo, p. ex. Férias",
+   "ro": "Numele grupului, de ex. Vacanțe",
+   "ru": "Название группы, напр. Отпуск",
+   "tr": "Grup adı, ör. Tatiller",
+   "uk": "Назва групи, напр. Відпустки",
+   "zh": "分组名称，例如：旅行"
+  },
+  "lib_group_note": {
+   "en": "A group only shows folders together. Nothing is moved or copied, and deleting the group deletes no photos.",
+   "de": "Eine Gruppe zeigt nur Ordner zusammen. Nichts wird verschoben oder kopiert; die Gruppe zu löschen löscht keine Fotos.",
+   "ar": "المجموعة تعرض المجلدات معًا فقط. لا يُنقل شيء ولا يُنسخ، وحذف المجموعة لا يحذف أي صور.",
+   "es": "Un grupo solo muestra carpetas juntas. No se mueve ni copia nada, y eliminar el grupo no elimina fotos.",
+   "fr": "Un groupe affiche seulement des dossiers ensemble. Rien n’est déplacé ni copié, et supprimer le groupe ne supprime aucune photo.",
+   "it": "Un gruppo mostra solo cartelle insieme. Nulla viene spostato o copiato ed eliminare il gruppo non elimina foto.",
+   "ja": "グループはフォルダをまとめて表示するだけです。移動もコピーもされず、グループを削除しても写真は削除されません。",
+   "ko": "그룹은 폴더를 함께 보여 줄 뿐입니다. 아무것도 옮기거나 복사하지 않으며, 그룹을 삭제해도 사진은 삭제되지 않습니다.",
+   "nl": "Een groep toont alleen mappen samen. Er wordt niets verplaatst of gekopieerd; de groep verwijderen verwijdert geen foto’s.",
+   "pl": "Grupa tylko pokazuje foldery razem. Nic nie jest przenoszone ani kopiowane, a usunięcie grupy nie usuwa zdjęć.",
+   "pt": "Um grupo apenas mostra pastas em conjunto. Nada é movido nem copiado, e eliminar o grupo não elimina fotos.",
+   "ro": "Un grup doar afișează dosare împreună. Nimic nu se mută sau copiază, iar ștergerea grupului nu șterge fotografii.",
+   "ru": "Группа просто показывает папки вместе. Ничего не перемещается и не копируется, а удаление группы не удаляет фото.",
+   "tr": "Grup yalnızca klasörleri birlikte gösterir. Hiçbir şey taşınmaz veya kopyalanmaz; grubu silmek fotoğraf silmez.",
+   "uk": "Група лише показує папки разом. Нічого не переміщується й не копіюється, а видалення групи не видаляє фото.",
+   "zh": "分组只是把文件夹放在一起显示。不会移动或复制任何内容，删除分组也不会删除照片。"
+  },
+  "lib_expand": {
+   "en": "Show subfolders",
+   "de": "Unterordner zeigen",
+   "ar": "عرض المجلدات الفرعية",
+   "es": "Mostrar subcarpetas",
+   "fr": "Afficher les sous-dossiers",
+   "it": "Mostra sottocartelle",
+   "ja": "サブフォルダを表示",
+   "ko": "하위 폴더 보기",
+   "nl": "Submappen tonen",
+   "pl": "Pokaż podfoldery",
+   "pt": "Mostrar subpastas",
+   "ro": "Arată subdosarele",
+   "ru": "Показать вложенные папки",
+   "tr": "Alt klasörleri göster",
+   "uk": "Показати вкладені папки",
+   "zh": "显示子文件夹"
+  },
+  "lib_collapse": {
+   "en": "Hide subfolders",
+   "de": "Unterordner einklappen",
+   "ar": "طيّ المجلدات الفرعية",
+   "es": "Ocultar subcarpetas",
+   "fr": "Masquer les sous-dossiers",
+   "it": "Comprimi sottocartelle",
+   "ja": "サブフォルダを閉じる",
+   "ko": "하위 폴더 접기",
+   "nl": "Submappen inklappen",
+   "pl": "Zwiń podfoldery",
+   "pt": "Recolher subpastas",
+   "ro": "Restrânge subdosarele",
+   "ru": "Свернуть вложенные папки",
+   "tr": "Alt klasörleri daralt",
+   "uk": "Згорнути вкладені папки",
+   "zh": "收起子文件夹"
+  },
+  "lib_folder_excluded": {
+   "en": "Excluded from cleanup",
+   "de": "Vom Aufräumen ausgenommen",
+   "ar": "مستبعد من التنظيف",
+   "es": "Excluida de la limpieza",
+   "fr": "Exclu du nettoyage",
+   "it": "Esclusa dalla pulizia",
+   "ja": "整理から除外",
+   "ko": "정리에서 제외됨",
+   "nl": "Uitgesloten van opruimen",
+   "pl": "Wykluczony z porządków",
+   "pt": "Excluída da limpeza",
+   "ro": "Exclus de la curățare",
+   "ru": "Исключена из уборки",
+   "tr": "Temizlikten hariç",
+   "uk": "Виключено з прибирання",
+   "zh": "已排除在整理之外"
+  },
+  "lib_folder_exclude": {
+   "en": "Exclude from cleanup",
+   "de": "Vom Aufräumen ausnehmen",
+   "ar": "استبعاد من التنظيف",
+   "es": "Excluir de la limpieza",
+   "fr": "Exclure du nettoyage",
+   "it": "Escludi dalla pulizia",
+   "ja": "整理から除外",
+   "ko": "정리에서 제외",
+   "nl": "Uitsluiten van opruimen",
+   "pl": "Wyklucz z porządków",
+   "pt": "Excluir da limpeza",
+   "ro": "Exclude de la curățare",
+   "ru": "Исключить из уборки",
+   "tr": "Temizlikten hariç tut",
+   "uk": "Виключити з прибирання",
+   "zh": "排除在整理之外"
+  },
+  "lib_folder_include": {
+   "en": "Include in cleanup again",
+   "de": "Wieder beim Aufräumen zeigen",
+   "ar": "إظهاره مجددًا عند التنظيف",
+   "es": "Volver a incluir en la limpieza",
+   "fr": "Inclure à nouveau dans le nettoyage",
+   "it": "Includi di nuovo nella pulizia",
+   "ja": "整理の対象に戻す",
+   "ko": "다시 정리에 포함",
+   "nl": "Weer opnemen bij opruimen",
+   "pl": "Ponownie uwzględnij w porządkach",
+   "pt": "Voltar a incluir na limpeza",
+   "ro": "Include din nou la curățare",
+   "ru": "Снова включить в уборку",
+   "tr": "Temizliğe yeniden dahil et",
+   "uk": "Знову включити в прибирання",
+   "zh": "重新加入整理"
+  },
+  "lib_folder_cleanup": {
+   "en": "Clean up this folder",
+   "de": "Diesen Ordner aufräumen",
+   "ar": "تنظيف هذا المجلد",
+   "es": "Limpiar esta carpeta",
+   "fr": "Nettoyer ce dossier",
+   "it": "Pulisci questa cartella",
+   "ja": "このフォルダを整理",
+   "ko": "이 폴더 정리",
+   "nl": "Deze map opruimen",
+   "pl": "Uporządkuj ten folder",
+   "pt": "Limpar esta pasta",
+   "ro": "Curăță acest dosar",
+   "ru": "Разобрать эту папку",
+   "tr": "Bu klasörü temizle",
+   "uk": "Розібрати цю папку",
+   "zh": "整理此文件夹"
+  },
+  "lib_folder_empty": {
+   "en": "This folder has no photos or videos right now.",
+   "de": "In diesem Ordner liegen gerade keine Fotos oder Videos.",
+   "ar": "لا توجد صور أو فيديوهات في هذا المجلد حاليًا.",
+   "es": "Esta carpeta no tiene fotos ni vídeos ahora.",
+   "fr": "Ce dossier ne contient aucune photo ni vidéo pour l’instant.",
+   "it": "Questa cartella al momento non contiene foto o video.",
+   "ja": "このフォルダには現在写真も動画もありません。",
+   "ko": "이 폴더에는 지금 사진이나 동영상이 없습니다.",
+   "nl": "Deze map bevat nu geen foto’s of video’s.",
+   "pl": "W tym folderze nie ma teraz zdjęć ani filmów.",
+   "pt": "Esta pasta não tem fotos nem vídeos de momento.",
+   "ro": "Acest dosar nu are acum fotografii sau videoclipuri.",
+   "ru": "Сейчас в этой папке нет фото и видео.",
+   "tr": "Bu klasörde şu anda fotoğraf veya video yok.",
+   "uk": "Зараз у цій папці немає фото й відео.",
+   "zh": "此文件夹中目前没有照片或视频。"
+  },
+  "lib_folder_only_sub": {
+   "en": "Everything here is in the subfolders above.",
+   "de": "Alles liegt in den Unterordnern oben.",
+   "ar": "كل المحتوى موجود في المجلدات الفرعية أعلاه.",
+   "es": "Todo está en las subcarpetas de arriba.",
+   "fr": "Tout se trouve dans les sous-dossiers ci-dessus.",
+   "it": "Tutto si trova nelle sottocartelle qui sopra.",
+   "ja": "すべて上のサブフォルダにあります。",
+   "ko": "모든 항목이 위의 하위 폴더에 있습니다.",
+   "nl": "Alles staat in de submappen hierboven.",
+   "pl": "Wszystko jest w podfolderach powyżej.",
+   "pt": "Está tudo nas subpastas acima.",
+   "ro": "Totul se află în subdosarele de mai sus.",
+   "ru": "Всё находится во вложенных папках выше.",
+   "tr": "Her şey yukarıdaki alt klasörlerde.",
+   "uk": "Усе міститься у вкладених папках вище.",
+   "zh": "所有内容都在上方的子文件夹中。"
+  },
+  "lib_folder_no_favs": {
+   "en": "No favourites in this folder yet. Turn off “Favourites only” to see everything.",
+   "de": "In diesem Ordner gibt es noch keine Favoriten. Schalte „Nur Favoriten“ aus, um alles zu sehen.",
+   "ar": "لا توجد مفضلة في هذا المجلد بعد. أوقف «المفضلة فقط» لرؤية كل شيء.",
+   "es": "Aún no hay favoritos en esta carpeta. Desactiva «Solo favoritos» para ver todo.",
+   "fr": "Aucun favori dans ce dossier pour l’instant. Désactivez « Favoris seulement » pour tout voir.",
+   "it": "Ancora nessun preferito in questa cartella. Disattiva “Solo preferiti” per vedere tutto.",
+   "ja": "このフォルダにはまだお気に入りがありません。「お気に入りのみ」をオフにするとすべて表示されます。",
+   "ko": "이 폴더에는 아직 즐겨찾기가 없습니다. ‘즐겨찾기만’을 끄면 모두 보입니다.",
+   "nl": "Nog geen favorieten in deze map. Zet ‘Alleen favorieten’ uit om alles te zien.",
+   "pl": "W tym folderze nie ma jeszcze ulubionych. Wyłącz „Tylko ulubione”, aby zobaczyć wszystko.",
+   "pt": "Ainda não há favoritos nesta pasta. Desative “Só favoritos” para ver tudo.",
+   "ro": "Încă nu există favorite în acest dosar. Dezactivează „Doar favorite” ca să vezi tot.",
+   "ru": "В этой папке пока нет избранного. Выключите «Только избранное», чтобы увидеть всё.",
+   "tr": "Bu klasörde henüz favori yok. Hepsini görmek için “Yalnızca favoriler”i kapat.",
+   "uk": "У цій папці ще немає обраного. Вимкніть «Лише обране», щоб побачити все.",
+   "zh": "此文件夹中还没有收藏。关闭“仅收藏”即可查看全部。"
+  },
+  "lib_fav_only": {
+   "en": "Favourites only",
+   "de": "Nur Favoriten",
+   "ar": "المفضلة فقط",
+   "es": "Solo favoritos",
+   "fr": "Favoris seulement",
+   "it": "Solo preferiti",
+   "ja": "お気に入りのみ",
+   "ko": "즐겨찾기만",
+   "nl": "Alleen favorieten",
+   "pl": "Tylko ulubione",
+   "pt": "Só favoritos",
+   "ro": "Doar favorite",
+   "ru": "Только избранное",
+   "tr": "Yalnızca favoriler",
+   "uk": "Лише обране",
+   "zh": "仅收藏"
+  },
+  "lib_fav_by_folder": {
+   "en": "By folder",
+   "de": "Nach Ordner",
+   "ar": "حسب المجلد",
+   "es": "Por carpeta",
+   "fr": "Par dossier",
+   "it": "Per cartella",
+   "ja": "フォルダ別",
+   "ko": "폴더별",
+   "nl": "Per map",
+   "pl": "Według folderu",
+   "pt": "Por pasta",
+   "ro": "După dosar",
+   "ru": "По папкам",
+   "tr": "Klasöre göre",
+   "uk": "За папками",
+   "zh": "按文件夹"
+  },
+  "lib_fav_by_date": {
+   "en": "By date",
+   "de": "Nach Datum",
+   "ar": "حسب التاريخ",
+   "es": "Por fecha",
+   "fr": "Par date",
+   "it": "Per data",
+   "ja": "日付順",
+   "ko": "날짜별",
+   "nl": "Op datum",
+   "pl": "Według daty",
+   "pt": "Por data",
+   "ro": "După dată",
+   "ru": "По дате",
+   "tr": "Tarihe göre",
+   "uk": "За датою",
+   "zh": "按日期"
+  },
+  "lib_fav_empty_title": {
+   "en": "No favourites yet",
+   "de": "Noch keine Favoriten",
+   "ar": "لا توجد مفضلة بعد",
+   "es": "Aún no hay favoritos",
+   "fr": "Pas encore de favoris",
+   "it": "Ancora nessun preferito",
+   "ja": "お気に入りはまだありません",
+   "ko": "아직 즐겨찾기가 없습니다",
+   "nl": "Nog geen favorieten",
+   "pl": "Brak ulubionych",
+   "pt": "Ainda sem favoritos",
+   "ro": "Încă nu ai favorite",
+   "ru": "Избранного пока нет",
+   "tr": "Henüz favori yok",
+   "uk": "Обраного ще немає",
+   "zh": "还没有收藏"
+  },
+  "lib_fav_empty_text": {
+   "en": "Tap ♡ on a photo or video to make it a favourite. Favourites are the same as in your gallery app.",
+   "de": "Tippe bei einem Foto oder Video auf ♡, um es zum Favoriten zu machen. Es sind dieselben Favoriten wie in deiner Galerie-App.",
+   "ar": "اضغط ♡ على صورة أو فيديو لإضافته إلى المفضلة. إنها المفضلة نفسها في تطبيق المعرض.",
+   "es": "Toca ♡ en una foto o vídeo para marcarlo como favorito. Son los mismos favoritos que en tu galería.",
+   "fr": "Touchez ♡ sur une photo ou une vidéo pour l’ajouter aux favoris. Ce sont les mêmes favoris que dans votre galerie.",
+   "it": "Tocca ♡ su una foto o un video per renderlo preferito. Sono gli stessi preferiti della tua galleria.",
+   "ja": "写真や動画で ♡ をタップするとお気に入りになります。ギャラリーアプリと同じお気に入りです。",
+   "ko": "사진이나 동영상에서 ♡를 탭하면 즐겨찾기가 됩니다. 갤러리 앱과 같은 즐겨찾기입니다.",
+   "nl": "Tik op ♡ bij een foto of video om er een favoriet van te maken. Het zijn dezelfde favorieten als in je galerij-app.",
+   "pl": "Stuknij ♡ przy zdjęciu lub filmie, aby dodać go do ulubionych. To te same ulubione co w galerii.",
+   "pt": "Toque em ♡ numa foto ou vídeo para o tornar favorito. São os mesmos favoritos da sua galeria.",
+   "ro": "Atinge ♡ la o fotografie sau un videoclip ca să-l adaugi la favorite. Sunt aceleași favorite ca în galerie.",
+   "ru": "Нажмите ♡ у фото или видео, чтобы добавить в избранное. Это то же избранное, что и в галерее.",
+   "tr": "Bir fotoğraf veya videoda ♡’ye dokunarak favori yap. Galeri uygulamandaki favorilerle aynıdır.",
+   "uk": "Торкніться ♡ біля фото чи відео, щоб додати до обраного. Це те саме обране, що й у галереї.",
+   "zh": "在照片或视频上点按 ♡ 即可收藏。与图库应用中的收藏相同。"
+  },
+  "lib_sort": {
+   "en": "Sort",
+   "de": "Sortieren",
+   "ar": "ترتيب",
+   "es": "Ordenar",
+   "fr": "Trier",
+   "it": "Ordina",
+   "ja": "並べ替え",
+   "ko": "정렬",
+   "nl": "Sorteren",
+   "pl": "Sortuj",
+   "pt": "Ordenar",
+   "ro": "Sortează",
+   "ru": "Сортировка",
+   "tr": "Sırala",
+   "uk": "Сортування",
+   "zh": "排序"
+  },
+  "lib_sort_newest": {
+   "en": "Newest first",
+   "de": "Neueste zuerst",
+   "ar": "الأحدث أولًا",
+   "es": "Más recientes primero",
+   "fr": "Plus récentes d’abord",
+   "it": "Più recenti prima",
+   "ja": "新しい順",
+   "ko": "최신순",
+   "nl": "Nieuwste eerst",
+   "pl": "Najnowsze najpierw",
+   "pt": "Mais recentes primeiro",
+   "ro": "Cele mai noi întâi",
+   "ru": "Сначала новые",
+   "tr": "Önce en yeni",
+   "uk": "Спочатку нові",
+   "zh": "最新优先"
+  },
+  "lib_sort_oldest": {
+   "en": "Oldest first",
+   "de": "Älteste zuerst",
+   "ar": "الأقدم أولًا",
+   "es": "Más antiguas primero",
+   "fr": "Plus anciennes d’abord",
+   "it": "Più vecchie prima",
+   "ja": "古い順",
+   "ko": "오래된순",
+   "nl": "Oudste eerst",
+   "pl": "Najstarsze najpierw",
+   "pt": "Mais antigas primeiro",
+   "ro": "Cele mai vechi întâi",
+   "ru": "Сначала старые",
+   "tr": "Önce en eski",
+   "uk": "Спочатку старі",
+   "zh": "最早优先"
+  },
+  "lib_sort_added": {
+   "en": "Recently added",
+   "de": "Zuletzt hinzugefügt",
+   "ar": "المضافة مؤخرًا",
+   "es": "Añadidas recientemente",
+   "fr": "Ajoutées récemment",
+   "it": "Aggiunte di recente",
+   "ja": "最近追加した順",
+   "ko": "최근 추가순",
+   "nl": "Recent toegevoegd",
+   "pl": "Ostatnio dodane",
+   "pt": "Adicionadas recentemente",
+   "ro": "Adăugate recent",
+   "ru": "Недавно добавленные",
+   "tr": "Son eklenenler",
+   "uk": "Нещодавно додані",
+   "zh": "最近添加"
+  },
+  "lib_sort_name": {
+   "en": "Name",
+   "de": "Name",
+   "ar": "الاسم",
+   "es": "Nombre",
+   "fr": "Nom",
+   "it": "Nome",
+   "ja": "名前",
+   "ko": "이름",
+   "nl": "Naam",
+   "pl": "Nazwa",
+   "pt": "Nome",
+   "ro": "Nume",
+   "ru": "Имя",
+   "tr": "Ad",
+   "uk": "Назва",
+   "zh": "名称"
+  },
+  "lib_sort_largest": {
+   "en": "Largest first",
+   "de": "Größte zuerst",
+   "ar": "الأكبر أولًا",
+   "es": "Más grandes primero",
+   "fr": "Plus volumineuses d’abord",
+   "it": "Più grandi prima",
+   "ja": "サイズの大きい順",
+   "ko": "큰 파일순",
+   "nl": "Grootste eerst",
+   "pl": "Największe najpierw",
+   "pt": "Maiores primeiro",
+   "ro": "Cele mai mari întâi",
+   "ru": "Сначала большие",
+   "tr": "Önce en büyük",
+   "uk": "Спочатку великі",
+   "zh": "最大优先"
+  },
+  "lib_sort_default": {
+   "en": "Use for all folders",
+   "de": "Für alle Ordner verwenden",
+   "ar": "استخدامه لكل المجلدات",
+   "es": "Usar en todas las carpetas",
+   "fr": "Utiliser pour tous les dossiers",
+   "it": "Usa per tutte le cartelle",
+   "ja": "すべてのフォルダに適用",
+   "ko": "모든 폴더에 사용",
+   "nl": "Voor alle mappen gebruiken",
+   "pl": "Użyj dla wszystkich folderów",
+   "pt": "Usar em todas as pastas",
+   "ro": "Folosește pentru toate dosarele",
+   "ru": "Для всех папок",
+   "tr": "Tüm klasörlerde kullan",
+   "uk": "Для всіх папок",
+   "zh": "用于所有文件夹"
+  },
+  "lib_hide": {
+   "en": "Hide in PhotoMaid",
+   "de": "In PhotoMaid ausblenden",
+   "ar": "إخفاء في PhotoMaid",
+   "es": "Ocultar en PhotoMaid",
+   "fr": "Masquer dans PhotoMaid",
+   "it": "Nascondi in PhotoMaid",
+   "ja": "PhotoMaid で非表示",
+   "ko": "PhotoMaid에서 숨기기",
+   "nl": "Verbergen in PhotoMaid",
+   "pl": "Ukryj w PhotoMaid",
+   "pt": "Ocultar no PhotoMaid",
+   "ro": "Ascunde în PhotoMaid",
+   "ru": "Скрыть в PhotoMaid",
+   "tr": "PhotoMaid’de gizle",
+   "uk": "Сховати в PhotoMaid",
+   "zh": "在 PhotoMaid 中隐藏"
+  },
+  "lib_hide_text": {
+   "en": "PhotoMaid will no longer show them – not under Photos and not during cleanup. The files stay unchanged and remain visible in other apps. This is not a safe.",
+   "de": "PhotoMaid zeigt sie nicht mehr – weder unter „Fotos“ noch beim Aufräumen. Die Dateien bleiben unverändert und in anderen Apps sichtbar. Das ist kein Tresor.",
+   "ar": "لن يعرضها PhotoMaid بعد الآن – لا في «الصور» ولا أثناء التنظيف. تبقى الملفات كما هي وتظل مرئية في التطبيقات الأخرى. هذه ليست خزنة.",
+   "es": "PhotoMaid dejará de mostrarlos, ni en Fotos ni al limpiar. Los archivos no cambian y siguen visibles en otras apps. No es una caja fuerte.",
+   "fr": "PhotoMaid ne les affichera plus, ni dans Photos ni pendant le nettoyage. Les fichiers restent inchangés et visibles dans les autres apps. Ce n’est pas un coffre-fort.",
+   "it": "PhotoMaid non li mostrerà più, né in Foto né durante la pulizia. I file restano invariati e visibili nelle altre app. Non è una cassaforte.",
+   "ja": "PhotoMaid では「写真」にも整理中にも表示されなくなります。ファイルはそのままで、他のアプリでは表示されます。金庫ではありません。",
+   "ko": "PhotoMaid에서 더 이상 사진 탭과 정리 중에 표시되지 않습니다. 파일은 그대로이며 다른 앱에서는 계속 보입니다. 금고가 아닙니다.",
+   "nl": "PhotoMaid toont ze niet meer – niet bij Foto’s en niet bij opruimen. De bestanden blijven ongewijzigd en zichtbaar in andere apps. Dit is geen kluis.",
+   "pl": "PhotoMaid przestanie je pokazywać – ani w Zdjęciach, ani podczas porządków. Pliki pozostają bez zmian i są widoczne w innych aplikacjach. To nie jest sejf.",
+   "pt": "O PhotoMaid deixa de os mostrar – nem em Fotos nem na limpeza. Os ficheiros ficam inalterados e visíveis noutras apps. Isto não é um cofre.",
+   "ro": "PhotoMaid nu le va mai afișa – nici la Fotografii, nici la curățare. Fișierele rămân neschimbate și vizibile în alte aplicații. Nu este un seif.",
+   "ru": "PhotoMaid перестанет их показывать – ни в «Фото», ни при уборке. Файлы не меняются и видны в других приложениях. Это не сейф.",
+   "tr": "PhotoMaid bunları artık göstermez – ne Fotoğraflar’da ne de temizlikte. Dosyalar değişmez ve diğer uygulamalarda görünür kalır. Bu bir kasa değildir.",
+   "uk": "PhotoMaid більше не показуватиме їх – ні у «Фото», ні під час прибирання. Файли не змінюються й видимі в інших застосунках. Це не сейф.",
+   "zh": "PhotoMaid 将不再显示它们——无论在“照片”中还是整理时。文件保持不变，在其他应用中仍可见。这不是保险箱。"
+  },
+  "lib_hide_folder_title": {
+   "en": "Hide “%1$s” in PhotoMaid?",
+   "de": "„%1$s“ in PhotoMaid ausblenden?",
+   "ar": "إخفاء «%1$s» في PhotoMaid؟",
+   "es": "¿Ocultar «%1$s» en PhotoMaid?",
+   "fr": "Masquer « %1$s » dans PhotoMaid ?",
+   "it": "Nascondere “%1$s” in PhotoMaid?",
+   "ja": "「%1$s」を PhotoMaid で非表示にしますか？",
+   "ko": "‘%1$s’을(를) PhotoMaid에서 숨길까요?",
+   "nl": "‘%1$s’ verbergen in PhotoMaid?",
+   "pl": "Ukryć „%1$s” w PhotoMaid?",
+   "pt": "Ocultar “%1$s” no PhotoMaid?",
+   "ro": "Ascunzi „%1$s” în PhotoMaid?",
+   "ru": "Скрыть «%1$s» в PhotoMaid?",
+   "tr": "“%1$s” PhotoMaid’de gizlensin mi?",
+   "uk": "Сховати «%1$s» у PhotoMaid?",
+   "zh": "要在 PhotoMaid 中隐藏“%1$s”吗？"
+  },
+  "lib_hide_folder_text": {
+   "en": "The folder and its subfolders will no longer appear under Photos or during cleanup. Nothing is moved or deleted; other apps still show it. Show it again under Folders › Hidden.",
+   "de": "Der Ordner und seine Unterordner erscheinen nicht mehr unter „Fotos“ und beim Aufräumen. Nichts wird verschoben oder gelöscht; andere Apps zeigen ihn weiter. Wieder einblenden unter Ordner › Ausgeblendet.",
+   "ar": "لن يظهر المجلد ومجلداته الفرعية في «الصور» أو أثناء التنظيف. لا يُنقل شيء ولا يُحذف، وتعرضه التطبيقات الأخرى. أظهره مجددًا من المجلدات › المخفية.",
+   "es": "La carpeta y sus subcarpetas dejarán de aparecer en Fotos y al limpiar. No se mueve ni elimina nada; otras apps la siguen mostrando. Vuelve a mostrarla en Carpetas › Ocultas.",
+   "fr": "Le dossier et ses sous-dossiers n’apparaîtront plus dans Photos ni pendant le nettoyage. Rien n’est déplacé ni supprimé ; les autres apps l’affichent toujours. Réafficher via Dossiers › Masqués.",
+   "it": "La cartella e le sottocartelle non appariranno più in Foto né durante la pulizia. Nulla viene spostato o eliminato; le altre app la mostrano ancora. Mostrala di nuovo in Cartelle › Nascosti.",
+   "ja": "このフォルダとサブフォルダは「写真」にも整理中にも表示されなくなります。移動も削除もされず、他のアプリでは表示されます。フォルダ › 非表示 から再表示できます。",
+   "ko": "이 폴더와 하위 폴더는 사진 탭과 정리 중에 더 이상 나타나지 않습니다. 아무것도 옮기거나 삭제하지 않으며 다른 앱에서는 계속 보입니다. 폴더 › 숨김에서 다시 표시할 수 있습니다.",
+   "nl": "De map en submappen verschijnen niet meer bij Foto’s en bij opruimen. Er wordt niets verplaatst of verwijderd; andere apps tonen hem nog. Weer tonen via Mappen › Verborgen.",
+   "pl": "Folder i jego podfoldery nie będą widoczne w Zdjęciach ani podczas porządków. Nic nie jest przenoszone ani usuwane; inne aplikacje nadal go pokazują. Przywróć w Foldery › Ukryte.",
+   "pt": "A pasta e as subpastas deixam de aparecer em Fotos e na limpeza. Nada é movido nem eliminado; outras apps continuam a mostrá-la. Volte a mostrar em Pastas › Ocultos.",
+   "ro": "Dosarul și subdosarele nu mai apar la Fotografii și la curățare. Nimic nu se mută sau șterge; alte aplicații îl afișează în continuare. Reafișează din Dosare › Ascunse.",
+   "ru": "Папка и вложенные папки больше не появятся в «Фото» и при уборке. Ничего не перемещается и не удаляется; другие приложения её показывают. Вернуть: Папки › Скрытые.",
+   "tr": "Klasör ve alt klasörleri artık Fotoğraflar’da ve temizlikte görünmez. Hiçbir şey taşınmaz veya silinmez; diğer uygulamalar göstermeye devam eder. Klasörler › Gizli bölümünden yeniden göster.",
+   "uk": "Папка й вкладені папки більше не з’являтимуться у «Фото» та під час прибирання. Нічого не переміщується й не видаляється; інші застосунки її показують. Повернути: Папки › Приховані.",
+   "zh": "该文件夹及其子文件夹将不再出现在“照片”和整理中。不会移动或删除任何内容，其他应用仍会显示。可在“文件夹 › 已隐藏”中重新显示。"
+  },
+  "lib_hidden_title": {
+   "en": "Hidden",
+   "de": "Ausgeblendet",
+   "ar": "المخفية",
+   "es": "Ocultos",
+   "fr": "Masqués",
+   "it": "Nascosti",
+   "ja": "非表示",
+   "ko": "숨김",
+   "nl": "Verborgen",
+   "pl": "Ukryte",
+   "pt": "Ocultos",
+   "ro": "Ascunse",
+   "ru": "Скрытые",
+   "tr": "Gizli",
+   "uk": "Приховані",
+   "zh": "已隐藏"
+  },
+  "lib_hidden_row": {
+   "en": "Folders and media PhotoMaid doesn’t show",
+   "de": "Ordner und Medien, die PhotoMaid nicht zeigt",
+   "ar": "مجلدات ووسائط لا يعرضها PhotoMaid",
+   "es": "Carpetas y archivos que PhotoMaid no muestra",
+   "fr": "Dossiers et médias que PhotoMaid n’affiche pas",
+   "it": "Cartelle e media che PhotoMaid non mostra",
+   "ja": "PhotoMaid で表示しないフォルダとメディア",
+   "ko": "PhotoMaid에서 표시하지 않는 폴더와 미디어",
+   "nl": "Mappen en media die PhotoMaid niet toont",
+   "pl": "Foldery i multimedia, których PhotoMaid nie pokazuje",
+   "pt": "Pastas e multimédia que o PhotoMaid não mostra",
+   "ro": "Dosare și fișiere pe care PhotoMaid nu le arată",
+   "ru": "Папки и файлы, которые PhotoMaid не показывает",
+   "tr": "PhotoMaid’in göstermediği klasörler ve medya",
+   "uk": "Папки й файли, які PhotoMaid не показує",
+   "zh": "PhotoMaid 不显示的文件夹和媒体"
+  },
+  "lib_hidden_intro": {
+   "en": "PhotoMaid doesn’t show these anywhere. The files are unchanged and other apps still show them.",
+   "de": "PhotoMaid zeigt das hier nirgends. Die Dateien sind unverändert, andere Apps zeigen sie weiter.",
+   "ar": "لا يعرض PhotoMaid هذه العناصر في أي مكان. الملفات لم تتغير وتعرضها التطبيقات الأخرى.",
+   "es": "PhotoMaid no muestra esto en ningún sitio. Los archivos no cambian y otras apps los siguen mostrando.",
+   "fr": "PhotoMaid ne les affiche nulle part. Les fichiers sont inchangés et les autres apps les affichent toujours.",
+   "it": "PhotoMaid non li mostra da nessuna parte. I file sono invariati e le altre app li mostrano ancora.",
+   "ja": "これらは PhotoMaid のどこにも表示されません。ファイルは変更されず、他のアプリでは表示されます。",
+   "ko": "PhotoMaid는 이 항목을 어디에도 표시하지 않습니다. 파일은 그대로이며 다른 앱에서는 계속 보입니다.",
+   "nl": "PhotoMaid toont dit nergens. De bestanden zijn ongewijzigd en andere apps tonen ze nog.",
+   "pl": "PhotoMaid nigdzie tego nie pokazuje. Pliki są bez zmian, a inne aplikacje nadal je pokazują.",
+   "pt": "O PhotoMaid não mostra isto em lado nenhum. Os ficheiros estão inalterados e outras apps continuam a mostrá-los.",
+   "ro": "PhotoMaid nu le afișează nicăieri. Fișierele sunt neschimbate, iar alte aplicații le afișează în continuare.",
+   "ru": "PhotoMaid нигде это не показывает. Файлы не изменены, другие приложения их показывают.",
+   "tr": "PhotoMaid bunları hiçbir yerde göstermez. Dosyalar değişmedi, diğer uygulamalar göstermeye devam eder.",
+   "uk": "PhotoMaid ніде цього не показує. Файли не змінено, інші застосунки їх показують.",
+   "zh": "PhotoMaid 不会在任何地方显示这些内容。文件未改变，其他应用仍会显示。"
+  },
+  "lib_hidden_none_title": {
+   "en": "Nothing hidden",
+   "de": "Nichts ausgeblendet",
+   "ar": "لا شيء مخفي",
+   "es": "Nada oculto",
+   "fr": "Rien de masqué",
+   "it": "Niente di nascosto",
+   "ja": "非表示の項目はありません",
+   "ko": "숨긴 항목 없음",
+   "nl": "Niets verborgen",
+   "pl": "Nic nie jest ukryte",
+   "pt": "Nada oculto",
+   "ro": "Nimic ascuns",
+   "ru": "Ничего не скрыто",
+   "tr": "Gizlenen bir şey yok",
+   "uk": "Нічого не приховано",
+   "zh": "没有隐藏的内容"
+  },
+  "lib_hidden_none_text": {
+   "en": "Use “Hide in PhotoMaid” on a folder, a photo or a selection.",
+   "de": "Nutze „In PhotoMaid ausblenden“ bei einem Ordner, einem Foto oder einer Auswahl.",
+   "ar": "استخدم «إخفاء في PhotoMaid» على مجلد أو صورة أو تحديد.",
+   "es": "Usa «Ocultar en PhotoMaid» en una carpeta, una foto o una selección.",
+   "fr": "Utilisez « Masquer dans PhotoMaid » sur un dossier, une photo ou une sélection.",
+   "it": "Usa “Nascondi in PhotoMaid” su una cartella, una foto o una selezione.",
+   "ja": "フォルダ、写真、選択項目で「PhotoMaid で非表示」を使います。",
+   "ko": "폴더, 사진 또는 선택 항목에서 ‘PhotoMaid에서 숨기기’를 사용하세요.",
+   "nl": "Gebruik ‘Verbergen in PhotoMaid’ bij een map, een foto of een selectie.",
+   "pl": "Użyj „Ukryj w PhotoMaid” przy folderze, zdjęciu lub zaznaczeniu.",
+   "pt": "Use “Ocultar no PhotoMaid” numa pasta, numa foto ou numa seleção.",
+   "ro": "Folosește „Ascunde în PhotoMaid” la un dosar, o fotografie sau o selecție.",
+   "ru": "Используйте «Скрыть в PhotoMaid» для папки, фото или выбора.",
+   "tr": "Bir klasör, fotoğraf veya seçimde “PhotoMaid’de gizle”yi kullan.",
+   "uk": "Скористайтеся «Сховати в PhotoMaid» для папки, фото чи вибору.",
+   "zh": "对文件夹、照片或所选内容使用“在 PhotoMaid 中隐藏”。"
+  },
+  "lib_hidden_one": {
+   "en": "Hidden in PhotoMaid",
+   "de": "In PhotoMaid ausgeblendet",
+   "ar": "مخفي في PhotoMaid",
+   "es": "Oculto en PhotoMaid",
+   "fr": "Masqué dans PhotoMaid",
+   "it": "Nascosto in PhotoMaid",
+   "ja": "PhotoMaid で非表示にしました",
+   "ko": "PhotoMaid에서 숨김",
+   "nl": "Verborgen in PhotoMaid",
+   "pl": "Ukryto w PhotoMaid",
+   "pt": "Oculto no PhotoMaid",
+   "ro": "Ascuns în PhotoMaid",
+   "ru": "Скрыто в PhotoMaid",
+   "tr": "PhotoMaid’de gizlendi",
+   "uk": "Сховано в PhotoMaid",
+   "zh": "已在 PhotoMaid 中隐藏"
+  },
+  "lib_unhide": {
+   "en": "Show again",
+   "de": "Wieder einblenden",
+   "ar": "إظهار مجددًا",
+   "es": "Volver a mostrar",
+   "fr": "Réafficher",
+   "it": "Mostra di nuovo",
+   "ja": "再表示",
+   "ko": "다시 표시",
+   "nl": "Weer tonen",
+   "pl": "Pokaż ponownie",
+   "pt": "Voltar a mostrar",
+   "ro": "Afișează din nou",
+   "ru": "Показать снова",
+   "tr": "Yeniden göster",
+   "uk": "Показати знову",
+   "zh": "重新显示"
+  },
+  "lib_info_camera": {
+   "en": "Camera",
+   "de": "Kamera",
+   "ar": "الكاميرا",
+   "es": "Cámara",
+   "fr": "Appareil photo",
+   "it": "Fotocamera",
+   "ja": "カメラ",
+   "ko": "카메라",
+   "nl": "Camera",
+   "pl": "Aparat",
+   "pt": "Câmara",
+   "ro": "Cameră",
+   "ru": "Камера",
+   "tr": "Kamera",
+   "uk": "Камера",
+   "zh": "相机"
   }
  },
  "plurals": {
@@ -9732,6 +10650,474 @@
    },
    "zh": {
     "other": "%1$d 项已在 PhotoMaid 回收站中。"
+   }
+  },
+  "lib_subfolders": {
+   "en": {
+    "one": "%1$d subfolder",
+    "other": "%1$d subfolders"
+   },
+   "de": {
+    "one": "%1$d Unterordner",
+    "other": "%1$d Unterordner"
+   },
+   "ar": {
+    "zero": "%1$d مجلد فرعي",
+    "one": "مجلد فرعي واحد",
+    "two": "مجلدان فرعيان",
+    "few": "%1$d مجلدات فرعية",
+    "many": "%1$d مجلدًا فرعيًا",
+    "other": "%1$d مجلد فرعي"
+   },
+   "es": {
+    "one": "%1$d subcarpeta",
+    "many": "%1$d subcarpetas",
+    "other": "%1$d subcarpetas"
+   },
+   "fr": {
+    "one": "%1$d sous-dossier",
+    "many": "%1$d sous-dossiers",
+    "other": "%1$d sous-dossiers"
+   },
+   "it": {
+    "one": "%1$d sottocartella",
+    "many": "%1$d sottocartelle",
+    "other": "%1$d sottocartelle"
+   },
+   "ja": {
+    "other": "サブフォルダ %1$d 件"
+   },
+   "ko": {
+    "other": "하위 폴더 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d submap",
+    "other": "%1$d submappen"
+   },
+   "pl": {
+    "one": "%1$d podfolder",
+    "few": "%1$d podfoldery",
+    "many": "%1$d podfolderów",
+    "other": "%1$d podfolderu"
+   },
+   "pt": {
+    "one": "%1$d subpasta",
+    "many": "%1$d subpastas",
+    "other": "%1$d subpastas"
+   },
+   "ro": {
+    "one": "%1$d subdosar",
+    "few": "%1$d subdosare",
+    "other": "%1$d de subdosare"
+   },
+   "ru": {
+    "one": "%1$d вложенная папка",
+    "few": "%1$d вложенные папки",
+    "many": "%1$d вложенных папок",
+    "other": "%1$d вложенной папки"
+   },
+   "tr": {
+    "one": "%1$d alt klasör",
+    "other": "%1$d alt klasör"
+   },
+   "uk": {
+    "one": "%1$d вкладена папка",
+    "few": "%1$d вкладені папки",
+    "many": "%1$d вкладених папок",
+    "other": "%1$d вкладеної папки"
+   },
+   "zh": {
+    "other": "%1$d 个子文件夹"
+   }
+  },
+  "lib_group_folders": {
+   "en": {
+    "one": "%1$d folder",
+    "other": "%1$d folders"
+   },
+   "de": {
+    "one": "%1$d Ordner",
+    "other": "%1$d Ordner"
+   },
+   "ar": {
+    "zero": "%1$d مجلد",
+    "one": "مجلد واحد",
+    "two": "مجلدان",
+    "few": "%1$d مجلدات",
+    "many": "%1$d مجلدًا",
+    "other": "%1$d مجلد"
+   },
+   "es": {
+    "one": "%1$d carpeta",
+    "many": "%1$d carpetas",
+    "other": "%1$d carpetas"
+   },
+   "fr": {
+    "one": "%1$d dossier",
+    "many": "%1$d dossiers",
+    "other": "%1$d dossiers"
+   },
+   "it": {
+    "one": "%1$d cartella",
+    "many": "%1$d cartelle",
+    "other": "%1$d cartelle"
+   },
+   "ja": {
+    "other": "%1$d 個のフォルダ"
+   },
+   "ko": {
+    "other": "폴더 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d map",
+    "other": "%1$d mappen"
+   },
+   "pl": {
+    "one": "%1$d folder",
+    "few": "%1$d foldery",
+    "many": "%1$d folderów",
+    "other": "%1$d folderu"
+   },
+   "pt": {
+    "one": "%1$d pasta",
+    "many": "%1$d pastas",
+    "other": "%1$d pastas"
+   },
+   "ro": {
+    "one": "%1$d dosar",
+    "few": "%1$d dosare",
+    "other": "%1$d de dosare"
+   },
+   "ru": {
+    "one": "%1$d папка",
+    "few": "%1$d папки",
+    "many": "%1$d папок",
+    "other": "%1$d папки"
+   },
+   "tr": {
+    "one": "%1$d klasör",
+    "other": "%1$d klasör"
+   },
+   "uk": {
+    "one": "%1$d папка",
+    "few": "%1$d папки",
+    "many": "%1$d папок",
+    "other": "%1$d папки"
+   },
+   "zh": {
+    "other": "%1$d 个文件夹"
+   }
+  },
+  "lib_hide_title": {
+   "en": {
+    "one": "Hide %1$d item in PhotoMaid?",
+    "other": "Hide %1$d items in PhotoMaid?"
+   },
+   "de": {
+    "one": "%1$d Medium in PhotoMaid ausblenden?",
+    "other": "%1$d Medien in PhotoMaid ausblenden?"
+   },
+   "ar": {
+    "zero": "إخفاء %1$d عنصر في PhotoMaid؟",
+    "one": "إخفاء عنصر واحد في PhotoMaid؟",
+    "two": "إخفاء عنصرين في PhotoMaid؟",
+    "few": "إخفاء %1$d عناصر في PhotoMaid؟",
+    "many": "إخفاء %1$d عنصرًا في PhotoMaid؟",
+    "other": "إخفاء %1$d عنصر في PhotoMaid؟"
+   },
+   "es": {
+    "one": "¿Ocultar %1$d elemento en PhotoMaid?",
+    "many": "¿Ocultar %1$d elementos en PhotoMaid?",
+    "other": "¿Ocultar %1$d elementos en PhotoMaid?"
+   },
+   "fr": {
+    "one": "Masquer %1$d élément dans PhotoMaid ?",
+    "many": "Masquer %1$d éléments dans PhotoMaid ?",
+    "other": "Masquer %1$d éléments dans PhotoMaid ?"
+   },
+   "it": {
+    "one": "Nascondere %1$d elemento in PhotoMaid?",
+    "many": "Nascondere %1$d elementi in PhotoMaid?",
+    "other": "Nascondere %1$d elementi in PhotoMaid?"
+   },
+   "ja": {
+    "other": "%1$d 件を PhotoMaid で非表示にしますか？"
+   },
+   "ko": {
+    "other": "%1$d개를 PhotoMaid에서 숨길까요?"
+   },
+   "nl": {
+    "one": "%1$d item verbergen in PhotoMaid?",
+    "other": "%1$d items verbergen in PhotoMaid?"
+   },
+   "pl": {
+    "one": "Ukryć %1$d element w PhotoMaid?",
+    "few": "Ukryć %1$d elementy w PhotoMaid?",
+    "many": "Ukryć %1$d elementów w PhotoMaid?",
+    "other": "Ukryć %1$d elementu w PhotoMaid?"
+   },
+   "pt": {
+    "one": "Ocultar %1$d item no PhotoMaid?",
+    "many": "Ocultar %1$d itens no PhotoMaid?",
+    "other": "Ocultar %1$d itens no PhotoMaid?"
+   },
+   "ro": {
+    "one": "Ascunzi %1$d element în PhotoMaid?",
+    "few": "Ascunzi %1$d elemente în PhotoMaid?",
+    "other": "Ascunzi %1$d de elemente în PhotoMaid?"
+   },
+   "ru": {
+    "one": "Скрыть %1$d файл в PhotoMaid?",
+    "few": "Скрыть %1$d файла в PhotoMaid?",
+    "many": "Скрыть %1$d файлов в PhotoMaid?",
+    "other": "Скрыть %1$d файла в PhotoMaid?"
+   },
+   "tr": {
+    "one": "%1$d öğe PhotoMaid’de gizlensin mi?",
+    "other": "%1$d öğe PhotoMaid’de gizlensin mi?"
+   },
+   "uk": {
+    "one": "Сховати %1$d файл у PhotoMaid?",
+    "few": "Сховати %1$d файли в PhotoMaid?",
+    "many": "Сховати %1$d файлів у PhotoMaid?",
+    "other": "Сховати %1$d файлу в PhotoMaid?"
+   },
+   "zh": {
+    "other": "要在 PhotoMaid 中隐藏 %1$d 项吗？"
+   }
+  },
+  "lib_hidden_done": {
+   "en": {
+    "one": "%1$d item hidden in PhotoMaid",
+    "other": "%1$d items hidden in PhotoMaid"
+   },
+   "de": {
+    "one": "%1$d Medium in PhotoMaid ausgeblendet",
+    "other": "%1$d Medien in PhotoMaid ausgeblendet"
+   },
+   "ar": {
+    "zero": "تم إخفاء %1$d عنصر في PhotoMaid",
+    "one": "تم إخفاء عنصر واحد في PhotoMaid",
+    "two": "تم إخفاء عنصرين في PhotoMaid",
+    "few": "تم إخفاء %1$d عناصر في PhotoMaid",
+    "many": "تم إخفاء %1$d عنصرًا في PhotoMaid",
+    "other": "تم إخفاء %1$d عنصر في PhotoMaid"
+   },
+   "es": {
+    "one": "%1$d elemento oculto en PhotoMaid",
+    "many": "%1$d elementos ocultos en PhotoMaid",
+    "other": "%1$d elementos ocultos en PhotoMaid"
+   },
+   "fr": {
+    "one": "%1$d élément masqué dans PhotoMaid",
+    "many": "%1$d éléments masqués dans PhotoMaid",
+    "other": "%1$d éléments masqués dans PhotoMaid"
+   },
+   "it": {
+    "one": "%1$d elemento nascosto in PhotoMaid",
+    "many": "%1$d elementi nascosti in PhotoMaid",
+    "other": "%1$d elementi nascosti in PhotoMaid"
+   },
+   "ja": {
+    "other": "%1$d 件を PhotoMaid で非表示にしました"
+   },
+   "ko": {
+    "other": "%1$d개를 PhotoMaid에서 숨겼습니다"
+   },
+   "nl": {
+    "one": "%1$d item verborgen in PhotoMaid",
+    "other": "%1$d items verborgen in PhotoMaid"
+   },
+   "pl": {
+    "one": "Ukryto %1$d element w PhotoMaid",
+    "few": "Ukryto %1$d elementy w PhotoMaid",
+    "many": "Ukryto %1$d elementów w PhotoMaid",
+    "other": "Ukryto %1$d elementu w PhotoMaid"
+   },
+   "pt": {
+    "one": "%1$d item oculto no PhotoMaid",
+    "many": "%1$d itens ocultos no PhotoMaid",
+    "other": "%1$d itens ocultos no PhotoMaid"
+   },
+   "ro": {
+    "one": "%1$d element ascuns în PhotoMaid",
+    "few": "%1$d elemente ascunse în PhotoMaid",
+    "other": "%1$d de elemente ascunse în PhotoMaid"
+   },
+   "ru": {
+    "one": "%1$d файл скрыт в PhotoMaid",
+    "few": "%1$d файла скрыто в PhotoMaid",
+    "many": "%1$d файлов скрыто в PhotoMaid",
+    "other": "%1$d файла скрыто в PhotoMaid"
+   },
+   "tr": {
+    "one": "%1$d öğe PhotoMaid’de gizlendi",
+    "other": "%1$d öğe PhotoMaid’de gizlendi"
+   },
+   "uk": {
+    "one": "%1$d файл сховано в PhotoMaid",
+    "few": "%1$d файли сховано в PhotoMaid",
+    "many": "%1$d файлів сховано в PhotoMaid",
+    "other": "%1$d файлу сховано в PhotoMaid"
+   },
+   "zh": {
+    "other": "已在 PhotoMaid 中隐藏 %1$d 项"
+   }
+  },
+  "lib_unhidden": {
+   "en": {
+    "one": "%1$d item shown again",
+    "other": "%1$d items shown again"
+   },
+   "de": {
+    "one": "%1$d Medium wieder eingeblendet",
+    "other": "%1$d Medien wieder eingeblendet"
+   },
+   "ar": {
+    "zero": "أُظهر %1$d عنصر مجددًا",
+    "one": "أُظهر عنصر واحد مجددًا",
+    "two": "أُظهر عنصران مجددًا",
+    "few": "أُظهرت %1$d عناصر مجددًا",
+    "many": "أُظهر %1$d عنصرًا مجددًا",
+    "other": "أُظهر %1$d عنصر مجددًا"
+   },
+   "es": {
+    "one": "%1$d elemento visible de nuevo",
+    "many": "%1$d elementos visibles de nuevo",
+    "other": "%1$d elementos visibles de nuevo"
+   },
+   "fr": {
+    "one": "%1$d élément réaffiché",
+    "many": "%1$d éléments réaffichés",
+    "other": "%1$d éléments réaffichés"
+   },
+   "it": {
+    "one": "%1$d elemento di nuovo visibile",
+    "many": "%1$d elementi di nuovo visibili",
+    "other": "%1$d elementi di nuovo visibili"
+   },
+   "ja": {
+    "other": "%1$d 件を再表示しました"
+   },
+   "ko": {
+    "other": "%1$d개를 다시 표시했습니다"
+   },
+   "nl": {
+    "one": "%1$d item weer zichtbaar",
+    "other": "%1$d items weer zichtbaar"
+   },
+   "pl": {
+    "one": "Przywrócono %1$d element",
+    "few": "Przywrócono %1$d elementy",
+    "many": "Przywrócono %1$d elementów",
+    "other": "Przywrócono %1$d elementu"
+   },
+   "pt": {
+    "one": "%1$d item visível novamente",
+    "many": "%1$d itens visíveis novamente",
+    "other": "%1$d itens visíveis novamente"
+   },
+   "ro": {
+    "one": "%1$d element afișat din nou",
+    "few": "%1$d elemente afișate din nou",
+    "other": "%1$d de elemente afișate din nou"
+   },
+   "ru": {
+    "one": "%1$d файл снова виден",
+    "few": "%1$d файла снова видны",
+    "many": "%1$d файлов снова видны",
+    "other": "%1$d файла снова видны"
+   },
+   "tr": {
+    "one": "%1$d öğe yeniden gösteriliyor",
+    "other": "%1$d öğe yeniden gösteriliyor"
+   },
+   "uk": {
+    "one": "%1$d файл знову видно",
+    "few": "%1$d файли знову видно",
+    "many": "%1$d файлів знову видно",
+    "other": "%1$d файлу знову видно"
+   },
+   "zh": {
+    "other": "已重新显示 %1$d 项"
+   }
+  },
+  "lib_hidden_media": {
+   "en": {
+    "one": "%1$d hidden item",
+    "other": "%1$d hidden items"
+   },
+   "de": {
+    "one": "%1$d ausgeblendetes Medium",
+    "other": "%1$d ausgeblendete Medien"
+   },
+   "ar": {
+    "zero": "%1$d عنصر مخفي",
+    "one": "عنصر مخفي واحد",
+    "two": "عنصران مخفيان",
+    "few": "%1$d عناصر مخفية",
+    "many": "%1$d عنصرًا مخفيًا",
+    "other": "%1$d عنصر مخفي"
+   },
+   "es": {
+    "one": "%1$d elemento oculto",
+    "many": "%1$d elementos ocultos",
+    "other": "%1$d elementos ocultos"
+   },
+   "fr": {
+    "one": "%1$d élément masqué",
+    "many": "%1$d éléments masqués",
+    "other": "%1$d éléments masqués"
+   },
+   "it": {
+    "one": "%1$d elemento nascosto",
+    "many": "%1$d elementi nascosti",
+    "other": "%1$d elementi nascosti"
+   },
+   "ja": {
+    "other": "非表示 %1$d 件"
+   },
+   "ko": {
+    "other": "숨긴 항목 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d verborgen item",
+    "other": "%1$d verborgen items"
+   },
+   "pl": {
+    "one": "%1$d ukryty element",
+    "few": "%1$d ukryte elementy",
+    "many": "%1$d ukrytych elementów",
+    "other": "%1$d ukrytego elementu"
+   },
+   "pt": {
+    "one": "%1$d item oculto",
+    "many": "%1$d itens ocultos",
+    "other": "%1$d itens ocultos"
+   },
+   "ro": {
+    "one": "%1$d element ascuns",
+    "few": "%1$d elemente ascunse",
+    "other": "%1$d de elemente ascunse"
+   },
+   "ru": {
+    "one": "%1$d скрытый файл",
+    "few": "%1$d скрытых файла",
+    "many": "%1$d скрытых файлов",
+    "other": "%1$d скрытого файла"
+   },
+   "tr": {
+    "one": "%1$d gizli öğe",
+    "other": "%1$d gizli öğe"
+   },
+   "uk": {
+    "one": "%1$d прихований файл",
+    "few": "%1$d приховані файли",
+    "many": "%1$d прихованих файлів",
+    "other": "%1$d прихованого файлу"
+   },
+   "zh": {
+    "other": "%1$d 个隐藏项"
    }
   }
  }

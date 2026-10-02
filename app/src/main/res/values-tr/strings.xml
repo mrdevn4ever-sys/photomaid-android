@@ -1179,4 +1179,79 @@
         <item quantity="one">%1$d öğe PhotoMaid çöp kutusunda.</item>
         <item quantity="other">%1$d öğe PhotoMaid çöp kutusunda.</item>
     </plurals>
+    <string name="lib_mode_timeline">Zaman çizelgesi</string>
+    <string name="lib_mode_folders">Klasörler</string>
+    <string name="lib_folders_search_hint">Klasör ara…</string>
+    <string name="lib_folders_none_query">“%1$s” ile eşleşen klasör yok.</string>
+    <string name="lib_folders_sort_recent">Son güncellenenler</string>
+    <string name="lib_folders_sort_count">En çok öğe</string>
+    <string name="lib_folders_footer">Klasörler fotoğraf ve videolarının nerede olduğunu gösterir. Android’de boş klasör olmaz: içine bir şey taşıdığında yeni klasör görünür.</string>
+    <string name="lib_new_folder">Yeni klasör</string>
+    <string name="lib_new_folder_note">Ardından taşınacak fotoğraf ve videoları seç. Klasör Pictures içinde oluşturulur.</string>
+    <string name="lib_new_folder_exists">Bu klasör zaten var. Seçtiklerin içine taşınacak.</string>
+    <string name="lib_new_folder_next">Medya seç</string>
+    <string name="lib_new_folder_pick">Yeni klasöre taşı</string>
+    <string name="lib_new_group">Yeni grup</string>
+    <string name="lib_groups">Gruplar</string>
+    <string name="lib_group_edit">Grubu düzenle</string>
+    <string name="lib_group_delete">Grubu sil</string>
+    <string name="lib_group_name_hint">Grup adı, ör. Tatiller</string>
+    <string name="lib_group_note">Grup yalnızca klasörleri birlikte gösterir. Hiçbir şey taşınmaz veya kopyalanmaz; grubu silmek fotoğraf silmez.</string>
+    <string name="lib_expand">Alt klasörleri göster</string>
+    <string name="lib_collapse">Alt klasörleri daralt</string>
+    <string name="lib_folder_excluded">Temizlikten hariç</string>
+    <string name="lib_folder_exclude">Temizlikten hariç tut</string>
+    <string name="lib_folder_include">Temizliğe yeniden dahil et</string>
+    <string name="lib_folder_cleanup">Bu klasörü temizle</string>
+    <string name="lib_folder_empty">Bu klasörde şu anda fotoğraf veya video yok.</string>
+    <string name="lib_folder_only_sub">Her şey yukarıdaki alt klasörlerde.</string>
+    <string name="lib_folder_no_favs">Bu klasörde henüz favori yok. Hepsini görmek için “Yalnızca favoriler”i kapat.</string>
+    <string name="lib_fav_only">Yalnızca favoriler</string>
+    <string name="lib_fav_by_folder">Klasöre göre</string>
+    <string name="lib_fav_by_date">Tarihe göre</string>
+    <string name="lib_fav_empty_title">Henüz favori yok</string>
+    <string name="lib_fav_empty_text">Bir fotoğraf veya videoda ♡’ye dokunarak favori yap. Galeri uygulamandaki favorilerle aynıdır.</string>
+    <string name="lib_sort">Sırala</string>
+    <string name="lib_sort_newest">Önce en yeni</string>
+    <string name="lib_sort_oldest">Önce en eski</string>
+    <string name="lib_sort_added">Son eklenenler</string>
+    <string name="lib_sort_name">Ad</string>
+    <string name="lib_sort_largest">Önce en büyük</string>
+    <string name="lib_sort_default">Tüm klasörlerde kullan</string>
+    <string name="lib_hide">PhotoMaid’de gizle</string>
+    <string name="lib_hide_text">PhotoMaid bunları artık göstermez – ne Fotoğraflar’da ne de temizlikte. Dosyalar değişmez ve diğer uygulamalarda görünür kalır. Bu bir kasa değildir.</string>
+    <string name="lib_hide_folder_title">“%1$s” PhotoMaid’de gizlensin mi?</string>
+    <string name="lib_hide_folder_text">Klasör ve alt klasörleri artık Fotoğraflar’da ve temizlikte görünmez. Hiçbir şey taşınmaz veya silinmez; diğer uygulamalar göstermeye devam eder. Klasörler › Gizli bölümünden yeniden göster.</string>
+    <string name="lib_hidden_title">Gizli</string>
+    <string name="lib_hidden_row">PhotoMaid’in göstermediği klasörler ve medya</string>
+    <string name="lib_hidden_intro">PhotoMaid bunları hiçbir yerde göstermez. Dosyalar değişmedi, diğer uygulamalar göstermeye devam eder.</string>
+    <string name="lib_hidden_none_title">Gizlenen bir şey yok</string>
+    <string name="lib_hidden_none_text">Bir klasör, fotoğraf veya seçimde “PhotoMaid’de gizle”yi kullan.</string>
+    <string name="lib_hidden_one">PhotoMaid’de gizlendi</string>
+    <string name="lib_unhide">Yeniden göster</string>
+    <string name="lib_info_camera">Kamera</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d alt klasör</item>
+        <item quantity="other">%1$d alt klasör</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d klasör</item>
+        <item quantity="other">%1$d klasör</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">%1$d öğe PhotoMaid’de gizlensin mi?</item>
+        <item quantity="other">%1$d öğe PhotoMaid’de gizlensin mi?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d öğe PhotoMaid’de gizlendi</item>
+        <item quantity="other">%1$d öğe PhotoMaid’de gizlendi</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d öğe yeniden gösteriliyor</item>
+        <item quantity="other">%1$d öğe yeniden gösteriliyor</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d gizli öğe</item>
+        <item quantity="other">%1$d gizli öğe</item>
+    </plurals>
 </resources>

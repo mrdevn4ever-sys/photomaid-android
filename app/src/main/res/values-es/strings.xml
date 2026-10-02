@@ -1223,4 +1223,85 @@
         <item quantity="many">%1$d elementos están en la papelera de PhotoMaid.</item>
         <item quantity="other">%1$d elementos están en la papelera de PhotoMaid.</item>
     </plurals>
+    <string name="lib_mode_timeline">Cronología</string>
+    <string name="lib_mode_folders">Carpetas</string>
+    <string name="lib_folders_search_hint">Buscar carpetas…</string>
+    <string name="lib_folders_none_query">Ninguna carpeta coincide con «%1$s».</string>
+    <string name="lib_folders_sort_recent">Actualizadas recientemente</string>
+    <string name="lib_folders_sort_count">Más elementos</string>
+    <string name="lib_folders_footer">Las carpetas muestran dónde están tus fotos y vídeos. Android no tiene carpetas vacías: una carpeta nueva aparece cuando mueves algo a ella.</string>
+    <string name="lib_new_folder">Carpeta nueva</string>
+    <string name="lib_new_folder_note">Después elige las fotos y vídeos que quieres mover. La carpeta se crea en Pictures.</string>
+    <string name="lib_new_folder_exists">Esta carpeta ya existe. Lo que elijas se moverá a ella.</string>
+    <string name="lib_new_folder_next">Elegir</string>
+    <string name="lib_new_folder_pick">Mover a carpeta nueva</string>
+    <string name="lib_new_group">Grupo nuevo</string>
+    <string name="lib_groups">Grupos</string>
+    <string name="lib_group_edit">Editar grupo</string>
+    <string name="lib_group_delete">Eliminar grupo</string>
+    <string name="lib_group_name_hint">Nombre del grupo, p. ej. Vacaciones</string>
+    <string name="lib_group_note">Un grupo solo muestra carpetas juntas. No se mueve ni copia nada, y eliminar el grupo no elimina fotos.</string>
+    <string name="lib_expand">Mostrar subcarpetas</string>
+    <string name="lib_collapse">Ocultar subcarpetas</string>
+    <string name="lib_folder_excluded">Excluida de la limpieza</string>
+    <string name="lib_folder_exclude">Excluir de la limpieza</string>
+    <string name="lib_folder_include">Volver a incluir en la limpieza</string>
+    <string name="lib_folder_cleanup">Limpiar esta carpeta</string>
+    <string name="lib_folder_empty">Esta carpeta no tiene fotos ni vídeos ahora.</string>
+    <string name="lib_folder_only_sub">Todo está en las subcarpetas de arriba.</string>
+    <string name="lib_folder_no_favs">Aún no hay favoritos en esta carpeta. Desactiva «Solo favoritos» para ver todo.</string>
+    <string name="lib_fav_only">Solo favoritos</string>
+    <string name="lib_fav_by_folder">Por carpeta</string>
+    <string name="lib_fav_by_date">Por fecha</string>
+    <string name="lib_fav_empty_title">Aún no hay favoritos</string>
+    <string name="lib_fav_empty_text">Toca ♡ en una foto o vídeo para marcarlo como favorito. Son los mismos favoritos que en tu galería.</string>
+    <string name="lib_sort">Ordenar</string>
+    <string name="lib_sort_newest">Más recientes primero</string>
+    <string name="lib_sort_oldest">Más antiguas primero</string>
+    <string name="lib_sort_added">Añadidas recientemente</string>
+    <string name="lib_sort_name">Nombre</string>
+    <string name="lib_sort_largest">Más grandes primero</string>
+    <string name="lib_sort_default">Usar en todas las carpetas</string>
+    <string name="lib_hide">Ocultar en PhotoMaid</string>
+    <string name="lib_hide_text">PhotoMaid dejará de mostrarlos, ni en Fotos ni al limpiar. Los archivos no cambian y siguen visibles en otras apps. No es una caja fuerte.</string>
+    <string name="lib_hide_folder_title">¿Ocultar «%1$s» en PhotoMaid?</string>
+    <string name="lib_hide_folder_text">La carpeta y sus subcarpetas dejarán de aparecer en Fotos y al limpiar. No se mueve ni elimina nada; otras apps la siguen mostrando. Vuelve a mostrarla en Carpetas › Ocultas.</string>
+    <string name="lib_hidden_title">Ocultos</string>
+    <string name="lib_hidden_row">Carpetas y archivos que PhotoMaid no muestra</string>
+    <string name="lib_hidden_intro">PhotoMaid no muestra esto en ningún sitio. Los archivos no cambian y otras apps los siguen mostrando.</string>
+    <string name="lib_hidden_none_title">Nada oculto</string>
+    <string name="lib_hidden_none_text">Usa «Ocultar en PhotoMaid» en una carpeta, una foto o una selección.</string>
+    <string name="lib_hidden_one">Oculto en PhotoMaid</string>
+    <string name="lib_unhide">Volver a mostrar</string>
+    <string name="lib_info_camera">Cámara</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d subcarpeta</item>
+        <item quantity="many">%1$d subcarpetas</item>
+        <item quantity="other">%1$d subcarpetas</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d carpeta</item>
+        <item quantity="many">%1$d carpetas</item>
+        <item quantity="other">%1$d carpetas</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">¿Ocultar %1$d elemento en PhotoMaid?</item>
+        <item quantity="many">¿Ocultar %1$d elementos en PhotoMaid?</item>
+        <item quantity="other">¿Ocultar %1$d elementos en PhotoMaid?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d elemento oculto en PhotoMaid</item>
+        <item quantity="many">%1$d elementos ocultos en PhotoMaid</item>
+        <item quantity="other">%1$d elementos ocultos en PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d elemento visible de nuevo</item>
+        <item quantity="many">%1$d elementos visibles de nuevo</item>
+        <item quantity="other">%1$d elementos visibles de nuevo</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d elemento oculto</item>
+        <item quantity="many">%1$d elementos ocultos</item>
+        <item quantity="other">%1$d elementos ocultos</item>
+    </plurals>
 </resources>

@@ -1135,4 +1135,73 @@
     <plurals name="lib_trashed">
         <item quantity="other">%1$d件がPhotoMaidのゴミ箱にあります。</item>
     </plurals>
+    <string name="lib_mode_timeline">タイムライン</string>
+    <string name="lib_mode_folders">フォルダ</string>
+    <string name="lib_folders_search_hint">フォルダを検索…</string>
+    <string name="lib_folders_none_query">「%1$s」に一致するフォルダはありません。</string>
+    <string name="lib_folders_sort_recent">最近更新</string>
+    <string name="lib_folders_sort_count">項目数が多い順</string>
+    <string name="lib_folders_footer">フォルダは写真や動画の保存場所です。Android には空のフォルダはありません。何かを移動すると新しいフォルダが表示されます。</string>
+    <string name="lib_new_folder">新しいフォルダ</string>
+    <string name="lib_new_folder_note">次に移動する写真と動画を選びます。フォルダは Pictures に作成されます。</string>
+    <string name="lib_new_folder_exists">このフォルダは既にあります。次に選んだものがここへ移動します。</string>
+    <string name="lib_new_folder_next">メディアを選択</string>
+    <string name="lib_new_folder_pick">新しいフォルダへ移動</string>
+    <string name="lib_new_group">新しいグループ</string>
+    <string name="lib_groups">グループ</string>
+    <string name="lib_group_edit">グループを編集</string>
+    <string name="lib_group_delete">グループを削除</string>
+    <string name="lib_group_name_hint">グループ名（例：旅行）</string>
+    <string name="lib_group_note">グループはフォルダをまとめて表示するだけです。移動もコピーもされず、グループを削除しても写真は削除されません。</string>
+    <string name="lib_expand">サブフォルダを表示</string>
+    <string name="lib_collapse">サブフォルダを閉じる</string>
+    <string name="lib_folder_excluded">整理から除外</string>
+    <string name="lib_folder_exclude">整理から除外</string>
+    <string name="lib_folder_include">整理の対象に戻す</string>
+    <string name="lib_folder_cleanup">このフォルダを整理</string>
+    <string name="lib_folder_empty">このフォルダには現在写真も動画もありません。</string>
+    <string name="lib_folder_only_sub">すべて上のサブフォルダにあります。</string>
+    <string name="lib_folder_no_favs">このフォルダにはまだお気に入りがありません。「お気に入りのみ」をオフにするとすべて表示されます。</string>
+    <string name="lib_fav_only">お気に入りのみ</string>
+    <string name="lib_fav_by_folder">フォルダ別</string>
+    <string name="lib_fav_by_date">日付順</string>
+    <string name="lib_fav_empty_title">お気に入りはまだありません</string>
+    <string name="lib_fav_empty_text">写真や動画で ♡ をタップするとお気に入りになります。ギャラリーアプリと同じお気に入りです。</string>
+    <string name="lib_sort">並べ替え</string>
+    <string name="lib_sort_newest">新しい順</string>
+    <string name="lib_sort_oldest">古い順</string>
+    <string name="lib_sort_added">最近追加した順</string>
+    <string name="lib_sort_name">名前</string>
+    <string name="lib_sort_largest">サイズの大きい順</string>
+    <string name="lib_sort_default">すべてのフォルダに適用</string>
+    <string name="lib_hide">PhotoMaid で非表示</string>
+    <string name="lib_hide_text">PhotoMaid では「写真」にも整理中にも表示されなくなります。ファイルはそのままで、他のアプリでは表示されます。金庫ではありません。</string>
+    <string name="lib_hide_folder_title">「%1$s」を PhotoMaid で非表示にしますか？</string>
+    <string name="lib_hide_folder_text">このフォルダとサブフォルダは「写真」にも整理中にも表示されなくなります。移動も削除もされず、他のアプリでは表示されます。フォルダ › 非表示 から再表示できます。</string>
+    <string name="lib_hidden_title">非表示</string>
+    <string name="lib_hidden_row">PhotoMaid で表示しないフォルダとメディア</string>
+    <string name="lib_hidden_intro">これらは PhotoMaid のどこにも表示されません。ファイルは変更されず、他のアプリでは表示されます。</string>
+    <string name="lib_hidden_none_title">非表示の項目はありません</string>
+    <string name="lib_hidden_none_text">フォルダ、写真、選択項目で「PhotoMaid で非表示」を使います。</string>
+    <string name="lib_hidden_one">PhotoMaid で非表示にしました</string>
+    <string name="lib_unhide">再表示</string>
+    <string name="lib_info_camera">カメラ</string>
+    <plurals name="lib_subfolders">
+        <item quantity="other">サブフォルダ %1$d 件</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="other">%1$d 個のフォルダ</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="other">%1$d 件を PhotoMaid で非表示にしますか？</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="other">%1$d 件を PhotoMaid で非表示にしました</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="other">%1$d 件を再表示しました</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="other">非表示 %1$d 件</item>
+    </plurals>
 </resources>

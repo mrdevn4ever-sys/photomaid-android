@@ -111,6 +111,7 @@ Commit. Geräteabnahme bleibt NOT RUN, bis der Test-Agent sie macht.
 
 | Phase | Stand |
 |---|---|
-| G1 Tab „Fotos“: Zeitachse (Tag/Monat/Jahr, zwei Finger, Scroll-Griff mit Datum), Filter, Suche ohne Akzente, Auswahl (Favorit, Verschieben, Collage, PhotoMaid-Papierkorb mit Favoritenschutz), Betrachter (blättern, runter schließen, Zoom, Info, Ab hier aufräumen, Papierkorb mit Rückgängig) | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN). Kamera-Modell noch nicht in der Suche (EXIF-Index folgt mit G2) |
-| G2–G4 | offen |
+| G1 Tab „Fotos“: Zeitachse (Tag/Monat/Jahr, zwei Finger, Scroll-Griff mit Datum), Filter, Suche ohne Akzente, Auswahl (Favorit, Verschieben, Collage, PhotoMaid-Papierkorb mit Favoritenschutz), Betrachter (blättern, runter schließen, Zoom, Info, Ab hier aufräumen, Papierkorb mit Rückgängig) | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN). Kamera-Modell in der Suche seit G2 |
+| G2 Ordnerbaum (Unterordner aufklappbar, leere Zwischenordner zusammengefasst, Suche über alle Ebenen, Liste nach zuletzt aktualisiert/Name/Anzahl), Ordner-Ansicht (Unterordner-Karten, eigene Medien, Sortierung je Ordner + „Für alle Ordner“, „Nur Favoriten“ je Ordner, „Diesen Ordner aufräumen“), eigene Gruppen (nur Name + Pfade), Neuer Ordner (Name → Medien wählen → verschieben nach `Pictures/<Name>/`), Favoriten nach Ordner oder Datum, „In PhotoMaid ausblenden“ (Medien, Auswahl, Ordner) mit Ansicht „Ausgeblendet“ und Rückgängig im Betrachter, Kamera-Modell aus EXIF in Suche und Info | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) |
+| G3–G4 | offen |
 

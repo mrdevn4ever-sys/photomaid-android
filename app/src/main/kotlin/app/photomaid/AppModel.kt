@@ -93,8 +93,14 @@ class AppModel(
     /** Rohe Mediathek (ohne Ausnahmen) – nur für die Ordnerauswahl beim Ausnehmen selbst. */
     val allPhotos: MediaLibrary = mediaOverride?.invoke { _settings.value.mediaPermissionAsked }
         ?: PhotoLibraryService(context) { _settings.value.mediaPermissionAsked }
-    /** Mediathek für alle Feeds und Zahlen: ohne ausgenommene Ordner. */
-    val photos: MediaLibrary = app.photomaid.media.ExcludingMediaLibrary(allPhotos) { _settings.value.excludedFolders }
+    /** Mediathek für alle Feeds und Zahlen: ohne ausgenommene und ohne ausgeblendete Ordner/Medien. */
+    val photos: MediaLibrary = app.photomaid.media.ExcludingMediaLibrary(allPhotos, { _settings.value.hiddenMedia }) {
+        _settings.value.excludedFolders + _settings.value.hiddenFolders
+    }
+    /** Tab „Fotos“: alles außer „In PhotoMaid ausgeblendet“ (vom Aufräumen ausgenommene Ordner bleiben ansehbar). */
+    val visiblePhotos: MediaLibrary = app.photomaid.media.ExcludingMediaLibrary(allPhotos, { _settings.value.hiddenMedia }) { _settings.value.hiddenFolders }
+    /** Kamera-Modelle aus EXIF für Suche/Info (nur im Speicher). */
+    val cameras = app.photomaid.media.CameraIndex { allPhotos.openStream(it) }
     val sources = ConnectedSourceStore(context, store)
     val player = FeedPlayer(context)
     val reminders = ReminderScheduler(context) { _settings.value.notificationsOptIn }

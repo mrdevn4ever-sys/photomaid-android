@@ -63,4 +63,21 @@ data class AppSettingsData(
     /** Zuletzt gewählte Speicherart im Editor (Standard beim ersten Mal: Kopie, Original bleibt). */
     val editSaveMode: app.photomaid.core.edit.SaveMode = app.photomaid.core.edit.SaveMode.COPY,
     val editorTourSeen: Boolean = false,
+    /**
+     * „In PhotoMaid ausblenden“: Ordner (Pfade, inkl. Unterordner) und einzelne Medien (Content-URIs, nur lokal in der
+     * App gespeichert). Ausgeblendetes erscheint weder im Tab „Fotos“ noch beim Aufräumen; die Dateien bleiben
+     * unverändert und in anderen Apps sichtbar. Kein Tresor.
+     */
+    val hiddenFolders: List<String> = emptyList(),
+    val hiddenMedia: List<String> = emptyList(),
+    /** Reihenfolge je Ordner (Schlüssel: Pfad klein geschrieben bzw. `group:<id>`) und Standard für alle übrigen. */
+    val folderSorts: Map<String, app.photomaid.core.library.FolderSort> = emptyMap(),
+    val defaultFolderSort: app.photomaid.core.library.FolderSort = app.photomaid.core.library.FolderSort.NEWEST,
+    val folderListSort: app.photomaid.core.library.FolderListSort = app.photomaid.core.library.FolderListSort.RECENT,
+    /** Ordner, in denen nur Favoriten gezeigt werden (gleiche Schlüssel wie [folderSorts]). */
+    val folderFavoritesOnly: List<String> = emptyList(),
+    /** Eigene Gruppen (nur Name und Ordnerpfade). */
+    val folderGroups: List<app.photomaid.core.library.FolderGroup> = emptyList(),
+    /** Favoriten-Ansicht: nach Ordnern gruppiert (Standard) oder chronologisch. */
+    val favoritesByFolder: Boolean = true,
 )

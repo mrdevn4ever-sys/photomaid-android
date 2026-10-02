@@ -72,6 +72,18 @@ Keine Bildanalyse, keine automatischen Werte, keine Werbung im Editor; Werbe-Anf
 
 Keine Werbung im Studio. Medienauswahl speichert nichts.
 
+## Mediathek (Tab „Fotos“, G1/G2)
+
+| Daten | Ort | Zweck | Verlässt das Gerät? |
+|---|---|---|---|
+| „In PhotoMaid ausgeblendet“: Medien-IDs (Content-URIs) und Ordnerpfade | App-Einstellungen (Room `key_value`) | Ausgeblendetes in PhotoMaid nicht zeigen; Dateien bleiben unverändert und in anderen Apps sichtbar (kein Tresor) | nein |
+| Sortierung je Ordner, „Nur Favoriten“ je Ordner, Ordnerlisten-Reihenfolge | App-Einstellungen (Ordnerpfade, keine Medien-IDs) | Ansicht | nein |
+| Eigene Gruppen (Name + Ordnerpfade) | App-Einstellungen | Ordner zusammen anzeigen; nichts verschoben oder kopiert | nein |
+| Kamera-Modell (EXIF `Make`/`Model`) | nur im Arbeitsspeicher der Sitzung | Suche, Info-Blatt | nein; nie gespeichert |
+| Suchbegriffe | nur im Arbeitsspeicher | Suche (ohne Akzente) | nein |
+
+Keine Werbung in der Mediathek-Verwaltung; Werbe-Anfragen erhalten nie Medien, Namen, Pfade oder IDs.
+
 ## Entwurf „Datensicherheit“ (Play Console) – vom Inhaber zu bestätigen
 
 - Erfasste Daten: **keine** durch den Entwickler (Käufe werden von Google Play verarbeitet).

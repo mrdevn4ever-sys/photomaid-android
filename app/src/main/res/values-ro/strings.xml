@@ -1223,4 +1223,85 @@
         <item quantity="few">%1$d elemente sunt în coșul PhotoMaid.</item>
         <item quantity="other">%1$d de elemente sunt în coșul PhotoMaid.</item>
     </plurals>
+    <string name="lib_mode_timeline">Cronologie</string>
+    <string name="lib_mode_folders">Dosare</string>
+    <string name="lib_folders_search_hint">Caută dosare…</string>
+    <string name="lib_folders_none_query">Niciun dosar nu se potrivește cu „%1$s”.</string>
+    <string name="lib_folders_sort_recent">Actualizate recent</string>
+    <string name="lib_folders_sort_count">Cele mai multe elemente</string>
+    <string name="lib_folders_footer">Dosarele arată unde sunt fotografiile și videoclipurile tale. Android nu are dosare goale: un dosar nou apare după ce muți ceva în el.</string>
+    <string name="lib_new_folder">Dosar nou</string>
+    <string name="lib_new_folder_note">Apoi alegi fotografiile și videoclipurile de mutat. Dosarul se creează în Pictures.</string>
+    <string name="lib_new_folder_exists">Acest dosar există deja. Ce alegi va fi mutat în el.</string>
+    <string name="lib_new_folder_next">Alege</string>
+    <string name="lib_new_folder_pick">Mută în dosarul nou</string>
+    <string name="lib_new_group">Grup nou</string>
+    <string name="lib_groups">Grupuri</string>
+    <string name="lib_group_edit">Editează grupul</string>
+    <string name="lib_group_delete">Șterge grupul</string>
+    <string name="lib_group_name_hint">Numele grupului, de ex. Vacanțe</string>
+    <string name="lib_group_note">Un grup doar afișează dosare împreună. Nimic nu se mută sau copiază, iar ștergerea grupului nu șterge fotografii.</string>
+    <string name="lib_expand">Arată subdosarele</string>
+    <string name="lib_collapse">Restrânge subdosarele</string>
+    <string name="lib_folder_excluded">Exclus de la curățare</string>
+    <string name="lib_folder_exclude">Exclude de la curățare</string>
+    <string name="lib_folder_include">Include din nou la curățare</string>
+    <string name="lib_folder_cleanup">Curăță acest dosar</string>
+    <string name="lib_folder_empty">Acest dosar nu are acum fotografii sau videoclipuri.</string>
+    <string name="lib_folder_only_sub">Totul se află în subdosarele de mai sus.</string>
+    <string name="lib_folder_no_favs">Încă nu există favorite în acest dosar. Dezactivează „Doar favorite” ca să vezi tot.</string>
+    <string name="lib_fav_only">Doar favorite</string>
+    <string name="lib_fav_by_folder">După dosar</string>
+    <string name="lib_fav_by_date">După dată</string>
+    <string name="lib_fav_empty_title">Încă nu ai favorite</string>
+    <string name="lib_fav_empty_text">Atinge ♡ la o fotografie sau un videoclip ca să-l adaugi la favorite. Sunt aceleași favorite ca în galerie.</string>
+    <string name="lib_sort">Sortează</string>
+    <string name="lib_sort_newest">Cele mai noi întâi</string>
+    <string name="lib_sort_oldest">Cele mai vechi întâi</string>
+    <string name="lib_sort_added">Adăugate recent</string>
+    <string name="lib_sort_name">Nume</string>
+    <string name="lib_sort_largest">Cele mai mari întâi</string>
+    <string name="lib_sort_default">Folosește pentru toate dosarele</string>
+    <string name="lib_hide">Ascunde în PhotoMaid</string>
+    <string name="lib_hide_text">PhotoMaid nu le va mai afișa – nici la Fotografii, nici la curățare. Fișierele rămân neschimbate și vizibile în alte aplicații. Nu este un seif.</string>
+    <string name="lib_hide_folder_title">Ascunzi „%1$s” în PhotoMaid?</string>
+    <string name="lib_hide_folder_text">Dosarul și subdosarele nu mai apar la Fotografii și la curățare. Nimic nu se mută sau șterge; alte aplicații îl afișează în continuare. Reafișează din Dosare › Ascunse.</string>
+    <string name="lib_hidden_title">Ascunse</string>
+    <string name="lib_hidden_row">Dosare și fișiere pe care PhotoMaid nu le arată</string>
+    <string name="lib_hidden_intro">PhotoMaid nu le afișează nicăieri. Fișierele sunt neschimbate, iar alte aplicații le afișează în continuare.</string>
+    <string name="lib_hidden_none_title">Nimic ascuns</string>
+    <string name="lib_hidden_none_text">Folosește „Ascunde în PhotoMaid” la un dosar, o fotografie sau o selecție.</string>
+    <string name="lib_hidden_one">Ascuns în PhotoMaid</string>
+    <string name="lib_unhide">Afișează din nou</string>
+    <string name="lib_info_camera">Cameră</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d subdosar</item>
+        <item quantity="few">%1$d subdosare</item>
+        <item quantity="other">%1$d de subdosare</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d dosar</item>
+        <item quantity="few">%1$d dosare</item>
+        <item quantity="other">%1$d de dosare</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">Ascunzi %1$d element în PhotoMaid?</item>
+        <item quantity="few">Ascunzi %1$d elemente în PhotoMaid?</item>
+        <item quantity="other">Ascunzi %1$d de elemente în PhotoMaid?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d element ascuns în PhotoMaid</item>
+        <item quantity="few">%1$d elemente ascunse în PhotoMaid</item>
+        <item quantity="other">%1$d de elemente ascunse în PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d element afișat din nou</item>
+        <item quantity="few">%1$d elemente afișate din nou</item>
+        <item quantity="other">%1$d de elemente afișate din nou</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d element ascuns</item>
+        <item quantity="few">%1$d elemente ascunse</item>
+        <item quantity="other">%1$d de elemente ascunse</item>
+    </plurals>
 </resources>

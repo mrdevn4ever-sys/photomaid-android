@@ -1223,4 +1223,85 @@
         <item quantity="many">%1$d elementi sono nel cestino di PhotoMaid.</item>
         <item quantity="other">%1$d elementi sono nel cestino di PhotoMaid.</item>
     </plurals>
+    <string name="lib_mode_timeline">Cronologia</string>
+    <string name="lib_mode_folders">Cartelle</string>
+    <string name="lib_folders_search_hint">Cerca cartelle…</string>
+    <string name="lib_folders_none_query">Nessuna cartella corrisponde a “%1$s”.</string>
+    <string name="lib_folders_sort_recent">Aggiornate di recente</string>
+    <string name="lib_folders_sort_count">Più elementi</string>
+    <string name="lib_folders_footer">Le cartelle mostrano dove si trovano foto e video. Android non conosce cartelle vuote: una nuova cartella appare quando ci sposti qualcosa.</string>
+    <string name="lib_new_folder">Nuova cartella</string>
+    <string name="lib_new_folder_note">Poi scegli le foto e i video da spostare. La cartella viene creata in Pictures.</string>
+    <string name="lib_new_folder_exists">Questa cartella esiste già. Ciò che scegli verrà spostato al suo interno.</string>
+    <string name="lib_new_folder_next">Scegli</string>
+    <string name="lib_new_folder_pick">Sposta nella nuova cartella</string>
+    <string name="lib_new_group">Nuovo gruppo</string>
+    <string name="lib_groups">Gruppi</string>
+    <string name="lib_group_edit">Modifica gruppo</string>
+    <string name="lib_group_delete">Elimina gruppo</string>
+    <string name="lib_group_name_hint">Nome del gruppo, es. Vacanze</string>
+    <string name="lib_group_note">Un gruppo mostra solo cartelle insieme. Nulla viene spostato o copiato ed eliminare il gruppo non elimina foto.</string>
+    <string name="lib_expand">Mostra sottocartelle</string>
+    <string name="lib_collapse">Comprimi sottocartelle</string>
+    <string name="lib_folder_excluded">Esclusa dalla pulizia</string>
+    <string name="lib_folder_exclude">Escludi dalla pulizia</string>
+    <string name="lib_folder_include">Includi di nuovo nella pulizia</string>
+    <string name="lib_folder_cleanup">Pulisci questa cartella</string>
+    <string name="lib_folder_empty">Questa cartella al momento non contiene foto o video.</string>
+    <string name="lib_folder_only_sub">Tutto si trova nelle sottocartelle qui sopra.</string>
+    <string name="lib_folder_no_favs">Ancora nessun preferito in questa cartella. Disattiva “Solo preferiti” per vedere tutto.</string>
+    <string name="lib_fav_only">Solo preferiti</string>
+    <string name="lib_fav_by_folder">Per cartella</string>
+    <string name="lib_fav_by_date">Per data</string>
+    <string name="lib_fav_empty_title">Ancora nessun preferito</string>
+    <string name="lib_fav_empty_text">Tocca ♡ su una foto o un video per renderlo preferito. Sono gli stessi preferiti della tua galleria.</string>
+    <string name="lib_sort">Ordina</string>
+    <string name="lib_sort_newest">Più recenti prima</string>
+    <string name="lib_sort_oldest">Più vecchie prima</string>
+    <string name="lib_sort_added">Aggiunte di recente</string>
+    <string name="lib_sort_name">Nome</string>
+    <string name="lib_sort_largest">Più grandi prima</string>
+    <string name="lib_sort_default">Usa per tutte le cartelle</string>
+    <string name="lib_hide">Nascondi in PhotoMaid</string>
+    <string name="lib_hide_text">PhotoMaid non li mostrerà più, né in Foto né durante la pulizia. I file restano invariati e visibili nelle altre app. Non è una cassaforte.</string>
+    <string name="lib_hide_folder_title">Nascondere “%1$s” in PhotoMaid?</string>
+    <string name="lib_hide_folder_text">La cartella e le sottocartelle non appariranno più in Foto né durante la pulizia. Nulla viene spostato o eliminato; le altre app la mostrano ancora. Mostrala di nuovo in Cartelle › Nascosti.</string>
+    <string name="lib_hidden_title">Nascosti</string>
+    <string name="lib_hidden_row">Cartelle e media che PhotoMaid non mostra</string>
+    <string name="lib_hidden_intro">PhotoMaid non li mostra da nessuna parte. I file sono invariati e le altre app li mostrano ancora.</string>
+    <string name="lib_hidden_none_title">Niente di nascosto</string>
+    <string name="lib_hidden_none_text">Usa “Nascondi in PhotoMaid” su una cartella, una foto o una selezione.</string>
+    <string name="lib_hidden_one">Nascosto in PhotoMaid</string>
+    <string name="lib_unhide">Mostra di nuovo</string>
+    <string name="lib_info_camera">Fotocamera</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d sottocartella</item>
+        <item quantity="many">%1$d sottocartelle</item>
+        <item quantity="other">%1$d sottocartelle</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d cartella</item>
+        <item quantity="many">%1$d cartelle</item>
+        <item quantity="other">%1$d cartelle</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">Nascondere %1$d elemento in PhotoMaid?</item>
+        <item quantity="many">Nascondere %1$d elementi in PhotoMaid?</item>
+        <item quantity="other">Nascondere %1$d elementi in PhotoMaid?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d elemento nascosto in PhotoMaid</item>
+        <item quantity="many">%1$d elementi nascosti in PhotoMaid</item>
+        <item quantity="other">%1$d elementi nascosti in PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d elemento di nuovo visibile</item>
+        <item quantity="many">%1$d elementi di nuovo visibili</item>
+        <item quantity="other">%1$d elementi di nuovo visibili</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d elemento nascosto</item>
+        <item quantity="many">%1$d elementi nascosti</item>
+        <item quantity="other">%1$d elementi nascosti</item>
+    </plurals>
 </resources>

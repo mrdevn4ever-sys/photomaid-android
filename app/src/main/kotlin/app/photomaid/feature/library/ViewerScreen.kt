@@ -33,6 +33,7 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
@@ -125,7 +126,10 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
     val scope = rememberCoroutineScope()
     val settings by app.settings.collectAsState()
     val overrides = remember { mutableStateMapOf<String, MediaAsset>() }
-    val assets = req.assets.map { overrides[it.id] ?: it }
+    /** Gerade ausgeblendet (Rückgängig); ausgeblendete Medien verschwinden aus dem Blättern. */
+    var hiddenUndo by remember { mutableStateOf<String?>(null) }
+    val hiddenNow = remember { mutableStateMapOf<String, Boolean>() }
+    val assets = req.assets.filter { hiddenNow[it.id] != true }.map { overrides[it.id] ?: it }
     val pager = rememberPagerState(initialPage = req.start.coerceIn(0, (assets.size - 1).coerceAtLeast(0))) { assets.size }
     var chrome by remember { mutableStateOf(true) }
     var zoomed by remember { mutableStateOf(false) }
@@ -141,6 +145,8 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
     DisposableEffect(Unit) { onDispose { app.player.stop() } }
     LaunchedEffect(pager.currentPage) { app.player.stop(); zoomed = false }
     LaunchedEffect(undo) { if (undo != null) { delay(5_000); undo = null } }
+    LaunchedEffect(hiddenUndo) { if (hiddenUndo != null) { delay(5_000); hiddenUndo = null } }
+    LaunchedEffect(assets.isEmpty()) { if (assets.isEmpty() && hiddenUndo == null) onClose() }
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = (1f - abs(dragDown) / 900f).coerceIn(0.2f, 1f))).testTag("viewer")) {
         HorizontalPager(pager, Modifier.fillMaxSize().graphicsLayer { translationY = dragDown }, userScrollEnabled = !zoomed, key = { assets[it].id },
@@ -195,14 +201,19 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
                         DropdownMenuItem(text = { Text(stringResource(R.string.lib_review_from_here)) }, leadingIcon = { Icon(Icons.Rounded.CleaningServices, null) },
                             modifier = Modifier.testTag("viewer.review"), onClick = {
                                 menu = false
-                                val rest = assets.drop(pager.currentPage).map { it.reference }
+                                val rest = app.cleanupCandidates(assets.drop(pager.currentPage)).map { it.reference }
                                 nav.openFeed(FeedRequest(FeedRequest.Source.Items(rest, R.string.lib_feed_title)))
+                            })
+                        DropdownMenuItem(text = { Text(stringResource(R.string.lib_hide)) }, leadingIcon = { Icon(Icons.Rounded.VisibilityOff, null) },
+                            modifier = Modifier.testTag("viewer.hide"), onClick = {
+                                menu = false; undo = null
+                                scope.launch { setMediaHidden(app, listOf(a.id), true); hiddenNow[a.id] = true; hiddenUndo = a.id }
                             })
                         DropdownMenuItem(text = { Text(stringResource(R.string.lib_trash_action)) }, leadingIcon = { Icon(Icons.Rounded.Delete, null) },
                             modifier = Modifier.testTag("viewer.trash"), onClick = {
                                 menu = false
                                 if (settings.protectFavorites && a.isFavorite) message = app.string(R.string.lib_trash_fav_protected)
-                                else scope.launch { undo = markForCleanup(app, listOf(a)) }
+                                else scope.launch { hiddenUndo = null; undo = markForCleanup(app, listOf(a)) }
                             })
                     }
                 }
@@ -214,6 +225,15 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
                 .padding(start = AppSpacing.m, end = AppSpacing.xxs).testTag("viewer.undo"), verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.lib_trashed_one), style = AppTypography.subheadline, color = PM.colors.textPrimary)
                 TextButton({ scope.launch { undoMark(app, before); undo = null } }, Modifier.testTag("viewer.undo.action")) { Text(stringResource(R.string.undo)) }
+            }
+        }
+        // „In PhotoMaid ausgeblendet · Rückgängig“ (Datei unverändert)
+        hiddenUndo?.let { id ->
+            Row(Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 84.dp).glassCapsule(elevation = 6.dp)
+                .padding(start = AppSpacing.m, end = AppSpacing.xxs).testTag("viewer.hidden"), verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.lib_hidden_one), style = AppTypography.subheadline, color = PM.colors.textPrimary)
+                TextButton({ scope.launch { setMediaHidden(app, listOf(id), false); hiddenNow.remove(id); hiddenUndo = null } },
+                    Modifier.testTag("viewer.hidden.undo")) { Text(stringResource(R.string.undo)) }
             }
         }
     }
@@ -304,6 +324,11 @@ private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onZoom
 @Composable
 private fun InfoContent(a: MediaAsset) {
     val c = PM.colors
+    val app = LocalApp.current
+    // Kamera aus EXIF (nur lesen, lokal; fehlt sie, gibt es keine Zeile).
+    val camera by androidx.compose.runtime.produceState<String?>(app.cameras.cached(a.id), a.id) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { app.cameras.model(a) }
+    }
     val rows = listOfNotNull(
         a.displayName?.let { stringResource(R.string.lib_info_name) to it },
         a.creationDate?.let { stringResource(R.string.lib_info_taken) to DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(Date(it.toEpochMilli())) },
@@ -312,6 +337,7 @@ private fun InfoContent(a: MediaAsset) {
         if (a.pixelWidth > 0 && a.pixelHeight > 0) stringResource(R.string.lib_info_resolution) to "${a.pixelWidth} × ${a.pixelHeight} · ${"%.1f".format(a.pixelWidth * a.pixelHeight / 1_000_000.0)} MP" else null,
         if (a.kind == MediaKind.VIDEO) stringResource(R.string.lib_info_duration) to clock((a.duration * 1000).toLong()) else null,
         a.mimeType?.let { stringResource(R.string.lib_info_type) to it.substringAfter('/').uppercase() },
+        camera?.let { stringResource(R.string.lib_info_camera) to it },
         a.dateAdded?.let { stringResource(R.string.lib_info_added) to DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(it.toEpochMilli())) },
     )
     Column(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.xl), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {

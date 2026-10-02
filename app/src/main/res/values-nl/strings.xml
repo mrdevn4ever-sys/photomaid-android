@@ -1179,4 +1179,79 @@
         <item quantity="one">%1$d item staat in de PhotoMaid-prullenbak.</item>
         <item quantity="other">%1$d items staan in de PhotoMaid-prullenbak.</item>
     </plurals>
+    <string name="lib_mode_timeline">Tijdlijn</string>
+    <string name="lib_mode_folders">Mappen</string>
+    <string name="lib_folders_search_hint">Mappen zoeken …</string>
+    <string name="lib_folders_none_query">Geen map komt overeen met ‘%1$s’.</string>
+    <string name="lib_folders_sort_recent">Recent bijgewerkt</string>
+    <string name="lib_folders_sort_count">Meeste items</string>
+    <string name="lib_folders_footer">Mappen laten zien waar je foto’s en video’s staan. Android kent geen lege mappen: een nieuwe map verschijnt zodra je er iets naartoe verplaatst.</string>
+    <string name="lib_new_folder">Nieuwe map</string>
+    <string name="lib_new_folder_note">Daarna kies je foto’s en video’s om te verplaatsen. De map komt in Pictures.</string>
+    <string name="lib_new_folder_exists">Deze map bestaat al. Wat je nu kiest, wordt erheen verplaatst.</string>
+    <string name="lib_new_folder_next">Media kiezen</string>
+    <string name="lib_new_folder_pick">Naar nieuwe map verplaatsen</string>
+    <string name="lib_new_group">Nieuwe groep</string>
+    <string name="lib_groups">Groepen</string>
+    <string name="lib_group_edit">Groep bewerken</string>
+    <string name="lib_group_delete">Groep verwijderen</string>
+    <string name="lib_group_name_hint">Groepsnaam, bijv. Vakanties</string>
+    <string name="lib_group_note">Een groep toont alleen mappen samen. Er wordt niets verplaatst of gekopieerd; de groep verwijderen verwijdert geen foto’s.</string>
+    <string name="lib_expand">Submappen tonen</string>
+    <string name="lib_collapse">Submappen inklappen</string>
+    <string name="lib_folder_excluded">Uitgesloten van opruimen</string>
+    <string name="lib_folder_exclude">Uitsluiten van opruimen</string>
+    <string name="lib_folder_include">Weer opnemen bij opruimen</string>
+    <string name="lib_folder_cleanup">Deze map opruimen</string>
+    <string name="lib_folder_empty">Deze map bevat nu geen foto’s of video’s.</string>
+    <string name="lib_folder_only_sub">Alles staat in de submappen hierboven.</string>
+    <string name="lib_folder_no_favs">Nog geen favorieten in deze map. Zet ‘Alleen favorieten’ uit om alles te zien.</string>
+    <string name="lib_fav_only">Alleen favorieten</string>
+    <string name="lib_fav_by_folder">Per map</string>
+    <string name="lib_fav_by_date">Op datum</string>
+    <string name="lib_fav_empty_title">Nog geen favorieten</string>
+    <string name="lib_fav_empty_text">Tik op ♡ bij een foto of video om er een favoriet van te maken. Het zijn dezelfde favorieten als in je galerij-app.</string>
+    <string name="lib_sort">Sorteren</string>
+    <string name="lib_sort_newest">Nieuwste eerst</string>
+    <string name="lib_sort_oldest">Oudste eerst</string>
+    <string name="lib_sort_added">Recent toegevoegd</string>
+    <string name="lib_sort_name">Naam</string>
+    <string name="lib_sort_largest">Grootste eerst</string>
+    <string name="lib_sort_default">Voor alle mappen gebruiken</string>
+    <string name="lib_hide">Verbergen in PhotoMaid</string>
+    <string name="lib_hide_text">PhotoMaid toont ze niet meer – niet bij Foto’s en niet bij opruimen. De bestanden blijven ongewijzigd en zichtbaar in andere apps. Dit is geen kluis.</string>
+    <string name="lib_hide_folder_title">‘%1$s’ verbergen in PhotoMaid?</string>
+    <string name="lib_hide_folder_text">De map en submappen verschijnen niet meer bij Foto’s en bij opruimen. Er wordt niets verplaatst of verwijderd; andere apps tonen hem nog. Weer tonen via Mappen › Verborgen.</string>
+    <string name="lib_hidden_title">Verborgen</string>
+    <string name="lib_hidden_row">Mappen en media die PhotoMaid niet toont</string>
+    <string name="lib_hidden_intro">PhotoMaid toont dit nergens. De bestanden zijn ongewijzigd en andere apps tonen ze nog.</string>
+    <string name="lib_hidden_none_title">Niets verborgen</string>
+    <string name="lib_hidden_none_text">Gebruik ‘Verbergen in PhotoMaid’ bij een map, een foto of een selectie.</string>
+    <string name="lib_hidden_one">Verborgen in PhotoMaid</string>
+    <string name="lib_unhide">Weer tonen</string>
+    <string name="lib_info_camera">Camera</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d submap</item>
+        <item quantity="other">%1$d submappen</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d map</item>
+        <item quantity="other">%1$d mappen</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">%1$d item verbergen in PhotoMaid?</item>
+        <item quantity="other">%1$d items verbergen in PhotoMaid?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d item verborgen in PhotoMaid</item>
+        <item quantity="other">%1$d items verborgen in PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d item weer zichtbaar</item>
+        <item quantity="other">%1$d items weer zichtbaar</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d verborgen item</item>
+        <item quantity="other">%1$d verborgen items</item>
+    </plurals>
 </resources>

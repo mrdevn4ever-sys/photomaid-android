@@ -1267,4 +1267,91 @@
         <item quantity="many">%1$d елементів у кошику PhotoMaid.</item>
         <item quantity="other">%1$d елемента в кошику PhotoMaid.</item>
     </plurals>
+    <string name="lib_mode_timeline">Хронологія</string>
+    <string name="lib_mode_folders">Папки</string>
+    <string name="lib_folders_search_hint">Пошук папок…</string>
+    <string name="lib_folders_none_query">Немає папок, що відповідають «%1$s».</string>
+    <string name="lib_folders_sort_recent">Нещодавно оновлені</string>
+    <string name="lib_folders_sort_count">Найбільше файлів</string>
+    <string name="lib_folders_footer">Папки показують, де зберігаються фото й відео. В Android немає порожніх папок: нова папка з’явиться, коли ви перемістите в неї файл.</string>
+    <string name="lib_new_folder">Нова папка</string>
+    <string name="lib_new_folder_note">Потім виберіть фото й відео для переміщення. Папка створюється в Pictures.</string>
+    <string name="lib_new_folder_exists">Така папка вже є. Вибране буде переміщено до неї.</string>
+    <string name="lib_new_folder_next">Вибрати</string>
+    <string name="lib_new_folder_pick">Перемістити в нову папку</string>
+    <string name="lib_new_group">Нова група</string>
+    <string name="lib_groups">Групи</string>
+    <string name="lib_group_edit">Змінити групу</string>
+    <string name="lib_group_delete">Видалити групу</string>
+    <string name="lib_group_name_hint">Назва групи, напр. Відпустки</string>
+    <string name="lib_group_note">Група лише показує папки разом. Нічого не переміщується й не копіюється, а видалення групи не видаляє фото.</string>
+    <string name="lib_expand">Показати вкладені папки</string>
+    <string name="lib_collapse">Згорнути вкладені папки</string>
+    <string name="lib_folder_excluded">Виключено з прибирання</string>
+    <string name="lib_folder_exclude">Виключити з прибирання</string>
+    <string name="lib_folder_include">Знову включити в прибирання</string>
+    <string name="lib_folder_cleanup">Розібрати цю папку</string>
+    <string name="lib_folder_empty">Зараз у цій папці немає фото й відео.</string>
+    <string name="lib_folder_only_sub">Усе міститься у вкладених папках вище.</string>
+    <string name="lib_folder_no_favs">У цій папці ще немає обраного. Вимкніть «Лише обране», щоб побачити все.</string>
+    <string name="lib_fav_only">Лише обране</string>
+    <string name="lib_fav_by_folder">За папками</string>
+    <string name="lib_fav_by_date">За датою</string>
+    <string name="lib_fav_empty_title">Обраного ще немає</string>
+    <string name="lib_fav_empty_text">Торкніться ♡ біля фото чи відео, щоб додати до обраного. Це те саме обране, що й у галереї.</string>
+    <string name="lib_sort">Сортування</string>
+    <string name="lib_sort_newest">Спочатку нові</string>
+    <string name="lib_sort_oldest">Спочатку старі</string>
+    <string name="lib_sort_added">Нещодавно додані</string>
+    <string name="lib_sort_name">Назва</string>
+    <string name="lib_sort_largest">Спочатку великі</string>
+    <string name="lib_sort_default">Для всіх папок</string>
+    <string name="lib_hide">Сховати в PhotoMaid</string>
+    <string name="lib_hide_text">PhotoMaid більше не показуватиме їх – ні у «Фото», ні під час прибирання. Файли не змінюються й видимі в інших застосунках. Це не сейф.</string>
+    <string name="lib_hide_folder_title">Сховати «%1$s» у PhotoMaid?</string>
+    <string name="lib_hide_folder_text">Папка й вкладені папки більше не з’являтимуться у «Фото» та під час прибирання. Нічого не переміщується й не видаляється; інші застосунки її показують. Повернути: Папки › Приховані.</string>
+    <string name="lib_hidden_title">Приховані</string>
+    <string name="lib_hidden_row">Папки й файли, які PhotoMaid не показує</string>
+    <string name="lib_hidden_intro">PhotoMaid ніде цього не показує. Файли не змінено, інші застосунки їх показують.</string>
+    <string name="lib_hidden_none_title">Нічого не приховано</string>
+    <string name="lib_hidden_none_text">Скористайтеся «Сховати в PhotoMaid» для папки, фото чи вибору.</string>
+    <string name="lib_hidden_one">Сховано в PhotoMaid</string>
+    <string name="lib_unhide">Показати знову</string>
+    <string name="lib_info_camera">Камера</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d вкладена папка</item>
+        <item quantity="few">%1$d вкладені папки</item>
+        <item quantity="many">%1$d вкладених папок</item>
+        <item quantity="other">%1$d вкладеної папки</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d папка</item>
+        <item quantity="few">%1$d папки</item>
+        <item quantity="many">%1$d папок</item>
+        <item quantity="other">%1$d папки</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">Сховати %1$d файл у PhotoMaid?</item>
+        <item quantity="few">Сховати %1$d файли в PhotoMaid?</item>
+        <item quantity="many">Сховати %1$d файлів у PhotoMaid?</item>
+        <item quantity="other">Сховати %1$d файлу в PhotoMaid?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d файл сховано в PhotoMaid</item>
+        <item quantity="few">%1$d файли сховано в PhotoMaid</item>
+        <item quantity="many">%1$d файлів сховано в PhotoMaid</item>
+        <item quantity="other">%1$d файлу сховано в PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d файл знову видно</item>
+        <item quantity="few">%1$d файли знову видно</item>
+        <item quantity="many">%1$d файлів знову видно</item>
+        <item quantity="other">%1$d файлу знову видно</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d прихований файл</item>
+        <item quantity="few">%1$d приховані файли</item>
+        <item quantity="many">%1$d прихованих файлів</item>
+        <item quantity="other">%1$d прихованого файлу</item>
+    </plurals>
 </resources>

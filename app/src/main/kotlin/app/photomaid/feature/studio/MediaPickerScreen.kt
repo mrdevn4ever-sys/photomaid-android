@@ -81,6 +81,8 @@ data class PickRequest(
     val title: Int,
     /** Hinweis bei Grenze (z. B. „Free: bis 4 Fotos“), sonst `null`. */
     val limitNote: String? = null,
+    /** Mediathek-Auswahl (z. B. „Neuer Ordner“): auch vom Aufräumen ausgenommene Ordner, ohne Ausgeblendetes. */
+    val library: Boolean = false,
     val onDone: (List<String>) -> Unit,
 )
 
@@ -102,11 +104,12 @@ fun MediaPickerScreen(req: PickRequest, onClose: () -> Unit) {
     var folderMenu by remember { mutableStateOf(false) }
     val picked = remember { mutableStateListOf<String>() }
     LaunchedEffect(token) {
+        val lib = if (req.library) app.visiblePhotos else app.photos
         all = withContext(Dispatchers.IO) {
-            (if (req.photos) app.photos.assets(MediaCategory.PHOTOS) else emptyList()) +
-                (if (req.videos) app.photos.assets(MediaCategory.VIDEOS) else emptyList())
+            (if (req.photos) lib.assets(MediaCategory.PHOTOS) else emptyList()) +
+                (if (req.videos) lib.assets(MediaCategory.VIDEOS) else emptyList())
         }.distinctBy { it.id }.sortedByDescending { it.creationDate ?: it.dateAdded }
-        folders = withContext(Dispatchers.IO) { app.photos.folders() }
+        folders = withContext(Dispatchers.IO) { lib.folders() }
     }
     val shown = all?.filter { a ->
         (folder == null || a.relativePath.equals(folder, ignoreCase = true)) &&

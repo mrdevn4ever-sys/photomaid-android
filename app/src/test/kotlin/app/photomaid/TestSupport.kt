@@ -281,6 +281,10 @@ class RecordingNav : Nav {
     val viewers = mutableListOf<app.photomaid.feature.library.ViewerRequest>()
     override fun openViewer(request: app.photomaid.feature.library.ViewerRequest) { events += "viewer"; viewers += request }
     val requests = mutableListOf<FeedRequest>()
+    val folders = mutableListOf<app.photomaid.feature.library.FolderTarget>()
+    override fun openFolder(target: app.photomaid.feature.library.FolderTarget) { events += "folder:${target.encode()}"; folders += target }
+    val picks = mutableListOf<app.photomaid.feature.studio.PickRequest>()
+    override fun openPicker(request: app.photomaid.feature.studio.PickRequest) { events += "picker"; picks += request }
     override fun openSettings() { events += "settings" }
     override fun openPro() { events += "pro" }
     override fun openPrivacy() { events += "privacy" }

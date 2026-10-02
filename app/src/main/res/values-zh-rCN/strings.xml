@@ -1135,4 +1135,73 @@
     <plurals name="lib_trashed">
         <item quantity="other">%1$d 项已在 PhotoMaid 回收站中。</item>
     </plurals>
+    <string name="lib_mode_timeline">时间线</string>
+    <string name="lib_mode_folders">文件夹</string>
+    <string name="lib_folders_search_hint">搜索文件夹…</string>
+    <string name="lib_folders_none_query">没有与“%1$s”匹配的文件夹。</string>
+    <string name="lib_folders_sort_recent">最近更新</string>
+    <string name="lib_folders_sort_count">项目最多</string>
+    <string name="lib_folders_footer">文件夹显示照片和视频的存放位置。Android 没有空文件夹：移入内容后新文件夹才会出现。</string>
+    <string name="lib_new_folder">新建文件夹</string>
+    <string name="lib_new_folder_note">接下来选择要移入的照片和视频。文件夹将创建在 Pictures 中。</string>
+    <string name="lib_new_folder_exists">此文件夹已存在。接下来选择的内容会移入其中。</string>
+    <string name="lib_new_folder_next">选择媒体</string>
+    <string name="lib_new_folder_pick">移入新文件夹</string>
+    <string name="lib_new_group">新建分组</string>
+    <string name="lib_groups">分组</string>
+    <string name="lib_group_edit">编辑分组</string>
+    <string name="lib_group_delete">删除分组</string>
+    <string name="lib_group_name_hint">分组名称，例如：旅行</string>
+    <string name="lib_group_note">分组只是把文件夹放在一起显示。不会移动或复制任何内容，删除分组也不会删除照片。</string>
+    <string name="lib_expand">显示子文件夹</string>
+    <string name="lib_collapse">收起子文件夹</string>
+    <string name="lib_folder_excluded">已排除在整理之外</string>
+    <string name="lib_folder_exclude">排除在整理之外</string>
+    <string name="lib_folder_include">重新加入整理</string>
+    <string name="lib_folder_cleanup">整理此文件夹</string>
+    <string name="lib_folder_empty">此文件夹中目前没有照片或视频。</string>
+    <string name="lib_folder_only_sub">所有内容都在上方的子文件夹中。</string>
+    <string name="lib_folder_no_favs">此文件夹中还没有收藏。关闭“仅收藏”即可查看全部。</string>
+    <string name="lib_fav_only">仅收藏</string>
+    <string name="lib_fav_by_folder">按文件夹</string>
+    <string name="lib_fav_by_date">按日期</string>
+    <string name="lib_fav_empty_title">还没有收藏</string>
+    <string name="lib_fav_empty_text">在照片或视频上点按 ♡ 即可收藏。与图库应用中的收藏相同。</string>
+    <string name="lib_sort">排序</string>
+    <string name="lib_sort_newest">最新优先</string>
+    <string name="lib_sort_oldest">最早优先</string>
+    <string name="lib_sort_added">最近添加</string>
+    <string name="lib_sort_name">名称</string>
+    <string name="lib_sort_largest">最大优先</string>
+    <string name="lib_sort_default">用于所有文件夹</string>
+    <string name="lib_hide">在 PhotoMaid 中隐藏</string>
+    <string name="lib_hide_text">PhotoMaid 将不再显示它们——无论在“照片”中还是整理时。文件保持不变，在其他应用中仍可见。这不是保险箱。</string>
+    <string name="lib_hide_folder_title">要在 PhotoMaid 中隐藏“%1$s”吗？</string>
+    <string name="lib_hide_folder_text">该文件夹及其子文件夹将不再出现在“照片”和整理中。不会移动或删除任何内容，其他应用仍会显示。可在“文件夹 › 已隐藏”中重新显示。</string>
+    <string name="lib_hidden_title">已隐藏</string>
+    <string name="lib_hidden_row">PhotoMaid 不显示的文件夹和媒体</string>
+    <string name="lib_hidden_intro">PhotoMaid 不会在任何地方显示这些内容。文件未改变，其他应用仍会显示。</string>
+    <string name="lib_hidden_none_title">没有隐藏的内容</string>
+    <string name="lib_hidden_none_text">对文件夹、照片或所选内容使用“在 PhotoMaid 中隐藏”。</string>
+    <string name="lib_hidden_one">已在 PhotoMaid 中隐藏</string>
+    <string name="lib_unhide">重新显示</string>
+    <string name="lib_info_camera">相机</string>
+    <plurals name="lib_subfolders">
+        <item quantity="other">%1$d 个子文件夹</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="other">%1$d 个文件夹</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="other">要在 PhotoMaid 中隐藏 %1$d 项吗？</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="other">已在 PhotoMaid 中隐藏 %1$d 项</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="other">已重新显示 %1$d 项</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="other">%1$d 个隐藏项</item>
+    </plurals>
 </resources>

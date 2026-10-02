@@ -1179,4 +1179,79 @@
         <item quantity="one">%1$d item is in the PhotoMaid trash.</item>
         <item quantity="other">%1$d items are in the PhotoMaid trash.</item>
     </plurals>
+    <string name="lib_mode_timeline">Timeline</string>
+    <string name="lib_mode_folders">Folders</string>
+    <string name="lib_folders_search_hint">Search folders …</string>
+    <string name="lib_folders_none_query">No folder matches “%1$s”.</string>
+    <string name="lib_folders_sort_recent">Recently updated</string>
+    <string name="lib_folders_sort_count">Most items</string>
+    <string name="lib_folders_footer">Folders come from where your photos and videos are stored. Android has no empty folders: a new folder appears once you move something into it.</string>
+    <string name="lib_new_folder">New folder</string>
+    <string name="lib_new_folder_note">Next, choose photos and videos to move. The folder is created in Pictures.</string>
+    <string name="lib_new_folder_exists">This folder already exists. What you choose next will be moved into it.</string>
+    <string name="lib_new_folder_next">Choose media</string>
+    <string name="lib_new_folder_pick">Move into new folder</string>
+    <string name="lib_new_group">New group</string>
+    <string name="lib_groups">Groups</string>
+    <string name="lib_group_edit">Edit group</string>
+    <string name="lib_group_delete">Delete group</string>
+    <string name="lib_group_name_hint">Group name, e.g. Holidays</string>
+    <string name="lib_group_note">A group only shows folders together. Nothing is moved or copied, and deleting the group deletes no photos.</string>
+    <string name="lib_expand">Show subfolders</string>
+    <string name="lib_collapse">Hide subfolders</string>
+    <string name="lib_folder_excluded">Excluded from cleanup</string>
+    <string name="lib_folder_exclude">Exclude from cleanup</string>
+    <string name="lib_folder_include">Include in cleanup again</string>
+    <string name="lib_folder_cleanup">Clean up this folder</string>
+    <string name="lib_folder_empty">This folder has no photos or videos right now.</string>
+    <string name="lib_folder_only_sub">Everything here is in the subfolders above.</string>
+    <string name="lib_folder_no_favs">No favourites in this folder yet. Turn off “Favourites only” to see everything.</string>
+    <string name="lib_fav_only">Favourites only</string>
+    <string name="lib_fav_by_folder">By folder</string>
+    <string name="lib_fav_by_date">By date</string>
+    <string name="lib_fav_empty_title">No favourites yet</string>
+    <string name="lib_fav_empty_text">Tap ♡ on a photo or video to make it a favourite. Favourites are the same as in your gallery app.</string>
+    <string name="lib_sort">Sort</string>
+    <string name="lib_sort_newest">Newest first</string>
+    <string name="lib_sort_oldest">Oldest first</string>
+    <string name="lib_sort_added">Recently added</string>
+    <string name="lib_sort_name">Name</string>
+    <string name="lib_sort_largest">Largest first</string>
+    <string name="lib_sort_default">Use for all folders</string>
+    <string name="lib_hide">Hide in PhotoMaid</string>
+    <string name="lib_hide_text">PhotoMaid will no longer show them – not under Photos and not during cleanup. The files stay unchanged and remain visible in other apps. This is not a safe.</string>
+    <string name="lib_hide_folder_title">Hide “%1$s” in PhotoMaid?</string>
+    <string name="lib_hide_folder_text">The folder and its subfolders will no longer appear under Photos or during cleanup. Nothing is moved or deleted; other apps still show it. Show it again under Folders › Hidden.</string>
+    <string name="lib_hidden_title">Hidden</string>
+    <string name="lib_hidden_row">Folders and media PhotoMaid doesn’t show</string>
+    <string name="lib_hidden_intro">PhotoMaid doesn’t show these anywhere. The files are unchanged and other apps still show them.</string>
+    <string name="lib_hidden_none_title">Nothing hidden</string>
+    <string name="lib_hidden_none_text">Use “Hide in PhotoMaid” on a folder, a photo or a selection.</string>
+    <string name="lib_hidden_one">Hidden in PhotoMaid</string>
+    <string name="lib_unhide">Show again</string>
+    <string name="lib_info_camera">Camera</string>
+    <plurals name="lib_subfolders">
+        <item quantity="one">%1$d subfolder</item>
+        <item quantity="other">%1$d subfolders</item>
+    </plurals>
+    <plurals name="lib_group_folders">
+        <item quantity="one">%1$d folder</item>
+        <item quantity="other">%1$d folders</item>
+    </plurals>
+    <plurals name="lib_hide_title">
+        <item quantity="one">Hide %1$d item in PhotoMaid?</item>
+        <item quantity="other">Hide %1$d items in PhotoMaid?</item>
+    </plurals>
+    <plurals name="lib_hidden_done">
+        <item quantity="one">%1$d item hidden in PhotoMaid</item>
+        <item quantity="other">%1$d items hidden in PhotoMaid</item>
+    </plurals>
+    <plurals name="lib_unhidden">
+        <item quantity="one">%1$d item shown again</item>
+        <item quantity="other">%1$d items shown again</item>
+    </plurals>
+    <plurals name="lib_hidden_media">
+        <item quantity="one">%1$d hidden item</item>
+        <item quantity="other">%1$d hidden items</item>
+    </plurals>
 </resources>
