@@ -113,6 +113,7 @@ class AppModel(
     val editEngine = app.photomaid.media.ImageEditEngine(context)
     var videoTrimmer: app.photomaid.media.VideoTrimmer = app.photomaid.media.Media3VideoTrimmer(context)
     val edits = app.photomaid.feature.editor.EditStore(store)
+    val presets = app.photomaid.feature.editor.PresetStore(store)
     val editEvents = kotlinx.coroutines.flow.MutableSharedFlow<app.photomaid.feature.editor.EditOutcome>(extraBufferCapacity = 8)
     val quickAccess = app.photomaid.feature.quickaccess.QuickAccessStore(store)
 
@@ -137,6 +138,7 @@ class AppModel(
         sources.load()
         collections.load()
         edits.load()
+        presets.load()
         quickAccess.load()
         feedAdCounter.load()
         entitlements.load()
@@ -146,6 +148,11 @@ class AppModel(
 
     fun start() {
         scope.launch { ledger.stateFlow.collect { publishRead() } }
+        // Nach Absturz/Abbruch: halbfertige Exporte entfernen, alte Teilen-Dateien löschen (nie als Erfolg zeigen).
+        scope.launch(Dispatchers.IO) {
+            runCatching { allPhotos.cleanupPendingExports() }
+            runCatching { app.photomaid.feature.studio.ShareCache.cleanup(context) }
+        }
     }
 
     val capabilities: Capabilities get() = entitlements.capabilities

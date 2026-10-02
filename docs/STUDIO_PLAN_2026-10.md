@@ -199,9 +199,36 @@ Perf-Build, Commit, Gerätetest-Prompt. Geräte-Pflicht ab S4: Export-Zeiten 108
 
 ---
 
-## 11. Offene Entscheidungen
+## 11. Entscheidungen (2026-10-02)
 
-1. **Studio als vierter Tab?** (Empfehlung: ja; „Bearbeitet“ zieht dorthin.)
-2. **Free/Pro** wie Abschnitt 8?
-3. **On-Device-KI** (Abschnitt 9) erlauben – ja/nein? Und „Auto ohne KI“ (Histogramm) – ja/nein?
-4. **Reihenfolge** S0 → S1 Collage → S2 → … ok?
+1. **Keine KI/ML** – bleibt verboten (Abschnitt 9: Freistellen, Wegradieren, Auto-Verbessern, Untertitel entfallen).
+2. Alles andere aus diesem Plan wird gebaut. Studio als vierter Tab, Free/Pro wie Abschnitt 8, Reihenfolge wie Abschnitt 10.
+3. Kein automatisches „Auto“ (auch nicht per Histogramm). **Histogramm und Warnung für abgeschnittene Lichter/Tiefen**
+   sind erlaubt – sie zeigen nur an, sie entscheiden nichts.
+
+## 12. Ergänzungen aus den Nutzer-Hinweisen (2026-10-02)
+
+- **Eine Pixel-Pipeline für Vorschau und Export** (`core/.../edit/PixelPipeline.kt`, reines Kotlin, JVM-getestet):
+  Belichtung, Lichter, Schatten, Weiß, Schwarz, Helligkeit, Kontrast als **getrennte Tonwertkurve** (Lichter ändern nur
+  helle Bereiche), Wärme/Tönung/Sättigung/Dynamik, selektive Farben (8 Farbbereiche), Filter mit Stärke, Vignette,
+  Körnung, Klarheit, Schärfen (Stärke/Radius/Schwelle). Vorschau rechnet beim Ziehen auf einer kleinen Stellvertreter-
+  Fassung und danach in Vorschaugröße – gleicher Code wie der Export. Für Video wird daraus eine 3D-Farbtabelle (LUT)
+  erzeugt (Media3 `SingleColorLut`) → Video-Farben = Foto-Farben.
+- **100-%-Ansicht**: zwei Finger zoomen, Doppeltipp = 100 %; der sichtbare Ausschnitt wird in voller Auflösung nachgerechnet.
+- **Eigene Vorlagen** (Einstellungen speichern, keine Bilder) und Anwenden auf mehrere Fotos.
+- **Abdecken**: deckend (empfohlen), Verpixeln, Unschärfe – immer in die Pixel gerechnet; geteilte/gespeicherte Datei
+  ohne Standort, Vorschaubilder im Cache werden nach dem Teilen gelöscht.
+- **Video**: abgeschnittene Teile werden wirklich entfernt (Neukodierung des Anfangs, keine MP4-Edit-Lists);
+  „Ton entfernen“ entfernt die Tonspur; Ein-/Ausblenden; „Ausfüllen“ vs. „Ganzes Video zeigen“ ausdrücklich wählbar;
+  Tempo 0,5×/1×/1,5×/2× (+0,25×/4× unter „Weitere“), Vorschau = Export; Standbild in Originalauflösung dekodiert;
+  Exportprofile Hohe Qualität · Ausgewogen · Kleine Datei mit **ausdrücklich als „ca.“ bezeichneter Schätzung** aus
+  Bitrate × Dauer, danach die echte Größe; Encoder-Fähigkeiten (HEVC/4K/HDR) werden je Gerät abgefragt.
+- **HDR**: nur als erhalten anzeigen, wenn der ganze Pfad es kann; sonst SDR-Export mit Hinweis.
+- **Formate**: Qualität nur bei JPEG/WebP; PNG verlustfrei ohne Qualitätsregler; Auflösung, Format, Kompression getrennt.
+- **Exportjournal**: jeder begonnene Export wird notiert; nach Absturz/Abbruch werden halbfertige (IS_PENDING) Einträge
+  beim nächsten Start entfernt – nie als Erfolg gezeigt.
+- **Ehrliche Größen**: „Kopie ist 120 MB kleiner“ – nie „gespart“, solange das Original existiert.
+- **Bearbeiten und teilen**: Export nur in den Cache, Teilen über das System, danach gelöscht – keine Galeriekopie.
+- **Nach dem Speichern**: optional direkt „In Ordner verschieben“ (keine Entscheidung).
+- Eigene Exporte gelten als „Behalten“ und erscheinen nicht erneut als offene Aufgabe.
+- Keine Pille „Behalten · Bearbeiten“ nach dem Wischen (Nutzerentscheidung 2026-10-02 bleibt: nur Stift-Symbol).

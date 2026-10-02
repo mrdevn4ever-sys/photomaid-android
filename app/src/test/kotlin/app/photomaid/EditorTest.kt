@@ -88,7 +88,7 @@ class EditorTest {
         rule.mainClock.autoAdvance = true
     }
 
-    private fun uiEngine() { app.editEngine.io = Dispatchers.Main }
+    private fun uiEngine() { app.editEngine.io = Dispatchers.Main; app.editEngine.parallel = false }
 
     private fun openEditor(i: Int = 0, nav: RecordingNav = RecordingNav(), closed: () -> Unit = {}) {
         uiEngine()

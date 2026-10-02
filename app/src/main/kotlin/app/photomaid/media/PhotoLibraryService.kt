@@ -188,6 +188,9 @@ interface MediaLibrary {
 
     /** Liegt das Medium im Android-Papierkorb? `null` = unbekannt. */
     fun isTrashed(id: String): Boolean? = null
+
+    /** Halbfertige eigene Exporte (Absturz/Abbruch während des Schreibens) entfernen. Liefert die Anzahl. */
+    fun cleanupPendingExports(): Int = 0
 }
 
 /**
@@ -463,6 +466,28 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         return out
     }
 
+    /**
+     * Exportjournal: jede begonnene, noch nicht veröffentlichte Datei (IS_PENDING) wird notiert und nach Erfolg/Fehler
+     * wieder gestrichen. Bleibt nach einem Absturz ein Eintrag übrig, wird die halbe Datei beim nächsten Start gelöscht.
+     */
+    private val journal = context.getSharedPreferences("export_journal", Context.MODE_PRIVATE)
+    private fun journalAdd(uri: Uri) = journal.edit().putLong(uri.toString(), System.currentTimeMillis()).apply()
+    private fun journalRemove(uri: Uri) = journal.edit().remove(uri.toString()).apply()
+
+    override fun cleanupPendingExports(): Int {
+        var removed = 0
+        for (key in journal.all.keys.toList()) {
+            val uri = Uri.parse(key)
+            val args = Bundle().apply { putInt(MediaStore.QUERY_ARG_MATCH_PENDING, MediaStore.MATCH_INCLUDE) }
+            val pending = runCatching {
+                resolver.query(uri, arrayOf(MediaStore.MediaColumns.IS_PENDING), args, null)?.use { c -> if (c.moveToFirst()) c.getInt(0) == 1 else null }
+            }.getOrNull()
+            if (pending == true && runCatching { resolver.delete(uri, null, null) }.getOrDefault(0) > 0) removed++
+            journalRemove(uri)
+        }
+        return removed
+    }
+
     override suspend fun saveEdited(request: EditSaveRequest): EditSaveResult = withContext(Dispatchers.IO) {
         val col = collection(request.video)
         val top = setOf("DCIM", "Pictures") + if (request.video) setOf("Movies") else emptySet()
@@ -476,6 +501,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
             request.dateTakenMs?.let { put(MediaStore.MediaColumns.DATE_TAKEN, it) }
         }
         val uri = runCatching { resolver.insert(col, values) }.getOrNull() ?: return@withContext EditSaveResult.Failed("insert")
+        journalAdd(uri)
         try {
             resolver.openOutputStream(uri, "w")?.use { o -> request.file.inputStream().use { it.copyTo(o) } } ?: throw IllegalStateException("stream")
             val done = ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0); if (request.favorite) put(MediaStore.MediaColumns.IS_FAVORITE, 1) }
@@ -485,9 +511,11 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
             if (bytes <= 0L) throw IllegalStateException("empty")
         } catch (e: Exception) {
             runCatching { resolver.delete(uri, null, null) }
+            journalRemove(uri)
             Log.w("PhotoMaid", "edit save failed: ${e.javaClass.simpleName}")
             return@withContext EditSaveResult.Failed("write")
         }
+        journalRemove(uri)
         val bytes = readColumn(uri, MediaStore.MediaColumns.SIZE)?.toLongOrNull() ?: 0L
         bumpChangeToken()
         if (!request.replace) return@withContext EditSaveResult.Saved(uri.toString(), replaced = false, replaceDeclined = false, bytes = bytes)

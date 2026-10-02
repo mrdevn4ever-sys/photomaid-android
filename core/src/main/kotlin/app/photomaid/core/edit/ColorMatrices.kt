@@ -77,19 +77,26 @@ object Sharpen {
     fun amount(sharpness: Float): Float = 1.4f * (sharpness / 100f).coerceIn(0f, 1f)
     fun radiusFor(longEdge: Int): Int = (longEdge / 1600).coerceIn(1, 4)
 
-    fun apply(px: IntArray, w: Int, h: Int, amount: Float, radius: Int): IntArray {
+    /** [threshold] 0…255: kleinere Unterschiede (Flächen, Rauschen) bleiben ungeschärft. */
+    fun apply(px: IntArray, w: Int, h: Int, amount: Float, radius: Int, threshold: Int = 0): IntArray {
         if (amount <= 0f || w < 3 || h < 3) return px
         val blur = boxBlur(px, w, h, radius)
         val out = IntArray(px.size)
         for (i in px.indices) {
             val p = px[i]; val q = blur[i]
-            fun ch(shift: Int): Int { val c = (p shr shift) and 0xFF; val bl = (q shr shift) and 0xFF; return (c + amount * (c - bl)).toInt().coerceIn(0, 255) }
+            fun ch(shift: Int): Int {
+                val c = (p shr shift) and 0xFF; val bl = (q shr shift) and 0xFF
+                val d = c - bl
+                return if (kotlin.math.abs(d) <= threshold) c else (c + amount * d).toInt().coerceIn(0, 255)
+            }
             out[i] = (p and 0xFF000000.toInt()) or (ch(16) shl 16) or (ch(8) shl 8) or ch(0)
         }
         return out
     }
 
-    private fun boxBlur(px: IntArray, w: Int, h: Int, r: Int): IntArray {
+    fun boxBlur(px: IntArray, w: Int, h: Int, r: Int): IntArray {
+        if (w < 2 || h < 2) return px.copyOf()
+        @Suppress("NAME_SHADOWING") val r = minOf(r, w - 1, h - 1).coerceAtLeast(1)
         val tmp = IntArray(px.size); val out = IntArray(px.size)
         pass(px, tmp, w, h, r, horizontal = true); pass(tmp, out, w, h, r, horizontal = false)
         return out

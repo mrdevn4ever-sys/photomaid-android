@@ -510,7 +510,7 @@ class ScreenshotTest {
     // Video kürzen, Liste „Bearbeitet“, schmale Aktionsleiste (Teilen im ⋯-Menü).
     private fun editor(name: String, a: AppModel, i: Int = 0, after: () -> Unit = {}) {
         val id = lib.all[i].id
-        a.editEngine.io = kotlinx.coroutines.Dispatchers.Main
+        a.editEngine.io = kotlinx.coroutines.Dispatchers.Main; a.editEngine.parallel = false
         rule.setContent { TestHost(a) { app.photomaid.feature.editor.EditorScreen(id, nav, onClose = {}) } }
         rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.stage").fetchSemanticsNodes().isNotEmpty() || rule.onAllNodesWithTag("trim.timeline").fetchSemanticsNodes().isNotEmpty() }
         rule.waitForIdle()
@@ -522,7 +522,7 @@ class ScreenshotTest {
 
     @Test fun e01_editor_crop() = expApp(pro = true).let { editor("e01_editor_crop", it, i = 1) { tap("aspect.R4_5") } }
     @Test fun e02_editor_crop_dark() = expApp(pro = true, dark = true).let { editor("e02_editor_crop_dark", it, i = 1) { tap("editor.rotate") } }
-    @Test fun e03_editor_adjust() = expApp(pro = true).let { editor("e03_editor_adjust", it, i = 1) { tap("tab.ADJUST"); tap("adjust.WARMTH") } }
+    @Test fun e03_editor_adjust() = expApp(pro = true).let { editor("e03_editor_adjust", it, i = 1) { tap("tab.ADJUST"); tap("group.COLOR"); tap("adjust.WARMTH") } }
     @Test fun e04_editor_filter_free() = expApp().let { editor("e04_editor_filter_free", it, i = 1) { tap("tab.FILTER"); tap("filter.MONO") } }
     @Test fun e05_editor_resize() = expApp(pro = true).let { editor("e05_editor_resize", it, i = 1) { tap("tab.RESIZE") } }
     @Test fun e06_editor_save_sheet() = expApp(pro = true).let { editor("e06_editor_save_sheet", it, i = 1) {
@@ -548,5 +548,14 @@ class ScreenshotTest {
     @Test @Config(qualifiers = "w320dp-h640dp-xxhdpi") fun e11_feed_actions_320() = expApp().let { a ->
         shot("e11_feed_actions_320", a, waitTag = "feed.media.ready") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) }
     }
-}
 
+    @Test fun e12_editor_light_histogram() = expApp(pro = true).let { editor("e12_editor_light_histogram", it, i = 1) {
+        tap("tab.ADJUST"); tap("adjust.SHADOWS")
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.histogram.toggle").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNode(androidx.compose.ui.test.hasTestTag("editor.slider") and androidx.compose.ui.test.hasAnyAncestor(androidx.compose.ui.test.hasTestTag("slider.SHADOWS")))
+            .performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { it(60f) }
+        tap("editor.histogram.toggle")
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.histogram").fetchSemanticsNodes().isNotEmpty() }
+    } }
+    @Test fun e13_editor_filters_presets() = expApp(pro = true).let { editor("e13_editor_filters_presets", it, i = 1) { tap("tab.FILTER"); tap("filter.WARM") } }
+}

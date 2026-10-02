@@ -41,6 +41,28 @@ import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.ContentCut
 import androidx.compose.material.icons.rounded.WorkspacePremium
 import androidx.compose.material3.Icon
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Exposure
+import androidx.compose.material.icons.rounded.WbSunny
+import androidx.compose.material.icons.rounded.Brightness3
+import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material.icons.rounded.DarkMode
+import androidx.compose.material.icons.rounded.Gradient
+import androidx.compose.material.icons.rounded.ColorLens
+import androidx.compose.material.icons.rounded.Details
+import androidx.compose.material.icons.rounded.RadioButtonChecked
+import androidx.compose.material.icons.rounded.FilterTiltShift
+import androidx.compose.material.icons.rounded.Vignette
+import androidx.compose.material.icons.rounded.Grain
+import app.photomaid.core.edit.EditPreset
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -87,6 +109,7 @@ import app.photomaid.design.glassCapsule
 import java.text.NumberFormat
 import kotlin.math.abs
 import kotlin.math.roundToInt
+import app.photomaid.navigation.LocalApp
 
 internal val EditorTab.icon: ImageVector get() = when (this) {
     EditorTab.CROP -> Icons.Rounded.Crop; EditorTab.ADJUST -> Icons.Rounded.Tune; EditorTab.FILTER -> Icons.Rounded.AutoAwesome
@@ -102,13 +125,13 @@ internal val EditorTab.label: Int get() = when (this) {
 internal val EditorTab.isPro: Boolean get() = this != EditorTab.CROP
 
 private val AdjustTool.icon: ImageVector get() = when (this) {
-    AdjustTool.BRIGHTNESS -> Icons.Rounded.BrightnessMedium; AdjustTool.CONTRAST -> Icons.Rounded.Contrast
-    AdjustTool.SATURATION -> Icons.Rounded.Palette; AdjustTool.WARMTH -> Icons.Rounded.Thermostat; AdjustTool.SHARPNESS -> Icons.Rounded.Deblur
-}
-
-private val AdjustTool.label: Int get() = when (this) {
-    AdjustTool.BRIGHTNESS -> R.string.edit_adj_brightness; AdjustTool.CONTRAST -> R.string.edit_adj_contrast
-    AdjustTool.SATURATION -> R.string.edit_adj_saturation; AdjustTool.WARMTH -> R.string.edit_adj_warmth; AdjustTool.SHARPNESS -> R.string.edit_adj_sharpness
+    AdjustTool.EXPOSURE -> Icons.Rounded.Exposure; AdjustTool.BRIGHTNESS -> Icons.Rounded.BrightnessMedium
+    AdjustTool.CONTRAST -> Icons.Rounded.Contrast; AdjustTool.HIGHLIGHTS -> Icons.Rounded.WbSunny
+    AdjustTool.SHADOWS -> Icons.Rounded.Brightness3; AdjustTool.WHITES -> Icons.Rounded.LightMode; AdjustTool.BLACKS -> Icons.Rounded.DarkMode
+    AdjustTool.WARMTH -> Icons.Rounded.Thermostat; AdjustTool.TINT -> Icons.Rounded.Gradient; AdjustTool.SATURATION -> Icons.Rounded.Palette
+    AdjustTool.VIBRANCE -> Icons.Rounded.ColorLens; AdjustTool.CLARITY -> Icons.Rounded.Details; AdjustTool.SHARPNESS -> Icons.Rounded.Deblur
+    AdjustTool.SHARPEN_RADIUS -> Icons.Rounded.RadioButtonChecked; AdjustTool.SHARPEN_THRESHOLD -> Icons.Rounded.FilterTiltShift
+    AdjustTool.VIGNETTE -> Icons.Rounded.Vignette; AdjustTool.GRAIN -> Icons.Rounded.Grain
 }
 
 private val FilterId.label: Int get() = when (this) {
@@ -186,11 +209,13 @@ private fun ToolButton(icon: ImageVector, label: String, modifier: Modifier = Mo
 }
 
 @Composable
-private fun Chip(text: String, selected: Boolean, modifier: Modifier = Modifier, icon: ImageVector? = null, dot: Boolean = false, onClick: () -> Unit) {
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
+internal fun Chip(text: String, selected: Boolean, modifier: Modifier = Modifier, icon: ImageVector? = null, dot: Boolean = false,
+                  onLongClick: (() -> Unit)? = null, onClick: () -> Unit) {
     val c = PM.colors
     Row(modifier.heightIn(min = 40.dp).clip(CircleShape)
         .background(if (selected) c.accentFill else c.backgroundTint)
-        .clickable(role = Role.RadioButton, onClick = onClick).semantics { this.selected = selected }
+        .combinedClickable(role = Role.RadioButton, onLongClick = onLongClick, onClick = onClick).semantics { this.selected = selected }
         .padding(horizontal = AppSpacing.s), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         if (icon != null) Icon(icon, null, tint = if (selected) Color.White else c.textPrimary, modifier = Modifier.size(18.dp))
         Text(text, style = AppTypography.subheadline.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
@@ -251,19 +276,44 @@ internal fun CropPanel(vm: EditorViewModel) {
 
 @Composable
 internal fun AdjustPanel(vm: EditorViewModel) {
-    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            for (t in AdjustTool.entries) AdjustToolButton(t, vm.adjustTool == t, vm.valueOf(t) != 0f, Modifier.weight(1f)) { vm.adjustTool = t }
+    val a = vm.recipe.adjust
+    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("adjust.groups"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            for (g in AdjustGroup.entries) Chip(stringResource(g.label), vm.adjustGroup == g, Modifier.testTag("group.${g.name}"),
+                dot = AdjustTool.of(g).any { it.get(a) != 0f }) {
+                vm.adjustGroup = g
+                if (vm.adjustTool.group != g) vm.adjustTool = AdjustTool.of(g).first()
+            }
+        }
+        val tools = AdjustTool.of(vm.adjustGroup).filter { !it.advanced }
+        LazyRow(Modifier.fillMaxWidth().testTag("adjust.tools"), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            items(tools, key = { it.name }) { t -> AdjustToolButton(t, vm.adjustTool == t, t.get(a) != 0f, Modifier.width(68.dp)) { vm.adjustTool = t } }
         }
         val t = vm.adjustTool
-        val range = if (t == AdjustTool.SHARPNESS) 0f..100f else -100f..100f
-        val v = vm.valueOf(t)
-        EditSlider(stringResource(t.label), v, range, if (t == AdjustTool.SHARPNESS) "${v.roundToInt()}" else signed(v)) { nv, commit ->
-            vm.adjust(t, nv.roundToInt().toFloat(), commit)
+        AdjustSlider(vm, t)
+        // Schärfen: Radius und Schwelle nur, wenn geschärft wird.
+        if (t == AdjustTool.SHARPNESS && a.sharpness >= 0.5f) {
+            AdjustSlider(vm, AdjustTool.SHARPEN_RADIUS)
+            AdjustSlider(vm, AdjustTool.SHARPEN_THRESHOLD)
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset_all), Modifier.testTag("editor.reset"), onClick = vm::resetTab)
+            ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset_group, stringResource(vm.adjustGroup.label)), Modifier.testTag("editor.reset")) {
+                vm.resetGroup(vm.adjustGroup)
+            }
         }
+    }
+}
+
+@Composable
+private fun AdjustSlider(vm: EditorViewModel, t: AdjustTool) {
+    val v = vm.valueOf(t)
+    val text = when {
+        t == AdjustTool.SHARPEN_RADIUS && v < 0.5f -> stringResource(R.string.edit_auto_value)
+        t.bipolar -> signed(v)
+        else -> "${v.roundToInt()}"
+    }
+    EditSlider(stringResource(t.label), v, t.min..t.max, text, Modifier.testTag("slider.${t.name}")) { nv, commit ->
+        vm.adjust(t, nv.roundToInt().toFloat(), commit)
     }
 }
 
@@ -289,16 +339,19 @@ private fun AdjustToolButton(t: AdjustTool, selected: Boolean, changed: Boolean,
 @Composable
 internal fun FilterPanel(vm: EditorViewModel) {
     val c = PM.colors
+    val app = LocalApp.current
+    val presets by app.presets.items.collectAsState()
+    var renaming by remember { mutableStateOf<EditPreset?>(null) }
+    var menuFor by remember { mutableStateOf<EditPreset?>(null) }
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
         LazyRow(Modifier.fillMaxWidth().testTag("editor.filters"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
             items(FilterId.entries, key = { it.name }) { f ->
                 val sel = vm.recipe.filter == f
                 val name = stringResource(f.label)
-                Column(Modifier.width(72.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton) { vm.setFilter(f) }
+                Column(Modifier.width(84.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton) { vm.setFilter(f) }
                     .semantics(mergeDescendants = true) { selected = sel; contentDescription = name }.testTag("filter.${f.name}"),
                     horizontalAlignment = Alignment.CenterHorizontally) {
-                    val filter = remember(f) { if (f == FilterId.NONE) null else ColorFilter.colorMatrix(ColorMatrix(ColorMatrices.filter(f))) }
-                    FilterThumb(vm.filterThumb, filter, Modifier.size(64.dp)
+                    FilterThumb(vm.filterThumbs[f] ?: vm.filterThumb, null, Modifier.size(64.dp)
                         .border(BorderStroke(if (sel) 2.dp else 0.dp, if (sel) c.accent else Color.Transparent), RoundedCornerShape(10.dp)))
                     Text(name, style = AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
                         color = if (sel) c.accent else c.textSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 4.dp))
@@ -310,7 +363,39 @@ internal fun FilterPanel(vm: EditorViewModel) {
             EditSlider(stringResource(R.string.edit_filter_strength), vm.recipe.filterIntensity, 0f..1f,
                 NumberFormat.getPercentInstance().format(pct / 100.0), snap = 0f) { v, commit -> vm.filterIntensity(v, commit) }
         }
+        // Eigene Vorlagen: nur Einstellungen (Regler, Filter, Farbmischer).
+        Text(stringResource(R.string.edit_presets), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("editor.presets"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            // Ein Tipp sichert sofort (fortlaufender Name); Umbenennen über langes Drücken.
+            Chip(stringResource(R.string.edit_preset_save), false, Modifier.testTag("preset.save"), icon = Icons.Rounded.Add) { vm.savePreset() }
+            for (p in presets) Box {
+                Chip(p.name, false, Modifier.testTag("preset.${p.name}"), onLongClick = { menuFor = p }) { vm.applyPreset(p) }
+                DropdownMenu(menuFor == p, onDismissRequest = { menuFor = null }) {
+                    DropdownMenuItem(text = { Text(stringResource(R.string.edit_preset_rename)) }, leadingIcon = { Icon(Icons.Rounded.Edit, null) },
+                        onClick = { menuFor = null; renaming = p })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.edit_preset_delete)) }, leadingIcon = { Icon(Icons.Rounded.Delete, null) },
+                        onClick = { menuFor = null; vm.deletePreset(p) })
+                }
+            }
+        }
     }
+    renaming?.let { p -> PresetNameDialog(p.name, onDismiss = { renaming = null }) { name -> renaming = null; vm.renamePreset(p, name) } }
+}
+
+@Composable
+private fun PresetNameDialog(initial: String, onDismiss: () -> Unit, onSave: (String) -> Unit) {
+    var name by remember { mutableStateOf(initial) }
+    AlertDialog(onDismissRequest = onDismiss, modifier = Modifier.testTag("preset.dialog"),
+        title = { Text(stringResource(R.string.edit_preset_save_title)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                Text(stringResource(R.string.edit_preset_save_text), style = AppTypography.subheadline)
+                OutlinedTextField(name, { name = it.take(40) }, singleLine = true, label = { Text(stringResource(R.string.edit_preset_name)) },
+                    modifier = Modifier.testTag("preset.name"))
+            }
+        },
+        confirmButton = { TextButton({ onSave(name) }, Modifier.testTag("preset.confirm")) { Text(stringResource(R.string.save)) } },
+        dismissButton = { TextButton(onDismiss) { Text(stringResource(R.string.cancel)) } })
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

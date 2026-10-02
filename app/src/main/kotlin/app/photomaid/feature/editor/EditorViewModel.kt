@@ -12,6 +12,9 @@ import app.photomaid.R
 import app.photomaid.core.edit.Adjustments
 import app.photomaid.core.edit.AspectPreset
 import app.photomaid.core.edit.FilterId
+import app.photomaid.core.edit.ColorMix
+import app.photomaid.core.edit.Histogram
+import app.photomaid.core.edit.EditPreset
 import app.photomaid.core.edit.CropMath
 import app.photomaid.core.edit.EditGeometry
 import app.photomaid.core.edit.EditRecipe
@@ -31,8 +34,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/** Ausschnitt der 100-%-Ansicht (normiert auf das Ausgabebild) und sein Bild. */
+data class DetailTile(val view: NormRect, val bitmap: Bitmap)
+
 enum class EditorTab { CROP, ADJUST, FILTER, RESIZE, TRIM }
-enum class AdjustTool { BRIGHTNESS, CONTRAST, SATURATION, WARMTH, SHARPNESS }
 
 /**
  * Zustand des Editors. Bearbeitet wird ein Rezept ([EditRecipe]) – nicht destruktiv, mit eigenem Rückgängig/Wiederholen.
@@ -51,16 +56,38 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     var canUndo by mutableStateOf(false); private set
     var canRedo by mutableStateOf(false); private set
 
-    var tab by mutableStateOf(EditorTab.CROP)
-    var adjustTool by mutableStateOf(AdjustTool.BRIGHTNESS)
+    private var tabState by mutableStateOf(EditorTab.CROP)
+    /** Reiterwechsel rechnet die passende Vorschau (Zuschneiden: ganzer Rahmen, sonst Ergebnis). */
+    var tab: EditorTab
+        get() = tabState
+        set(v) { if (v != tabState) { tabState = v; rerender() } }
+    var adjustGroup by mutableStateOf(AdjustGroup.LIGHT)
+    var adjustTool by mutableStateOf(AdjustTool.EXPOSURE)
     var aspect by mutableStateOf(AspectPreset.FREE); private set
     var landscape by mutableStateOf(false); private set
 
-    /** Vorschau ohne Farbe (Farbe kommt live über die GPU): im Zuschneiden der ganze Rahmen, sonst das Ergebnis. */
+    /** Zuschneiden: ganzer (gedrehter) Rahmen mit Tonwerten/Farbe; sonst das fertige Ergebnis (gleiche Pipeline wie Export). */
     var framePreview by mutableStateOf<Bitmap?>(null); private set
     var resultPreview by mutableStateOf<Bitmap?>(null); private set
     var filterThumb by mutableStateOf<Bitmap?>(null); private set
+    /** Vorschaubilder je Filter (aus dem aktuellen Foto, gleiche Pipeline). */
+    var filterThumbs by mutableStateOf<Map<FilterId, Bitmap>>(emptyMap()); private set
+    /** Kleine Stellvertreter-Fassung für flüssiges Ziehen; nach dem Loslassen wird in Vorschaugröße nachgerechnet. */
+    private var proxy: Bitmap? = null
     private var renderJob: Job? = null
+
+    // Anzeige-Hilfen (zeigen nur an, entscheiden nichts)
+    var histogram by mutableStateOf<Histogram?>(null); private set
+    var showHistogram by mutableStateOf(false)
+    private var clipState by mutableStateOf(false)
+    var showClipping: Boolean
+        get() = clipState
+        set(v) { clipState = v; rerender() }
+    var clipOverlay by mutableStateOf<Bitmap?>(null); private set
+
+    // 100-%-Ansicht
+    var detail by mutableStateOf<DetailTile?>(null); private set
+    private var detailJob: Job? = null
 
     // Video
     var trim by mutableStateOf<TrimRange?>(null); private set
@@ -95,8 +122,15 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
                 thumbnails = withContext(Dispatchers.IO) { videoFrames(a) }
             } else {
                 source = runCatching { app.editEngine.loadPreview(a.uri, a.mimeType) }.getOrElse { loadFailed = true; return@launch }
-                filterThumb = withContext(Dispatchers.Default) { source?.preview?.let { scaleDown(it, 220) } }
+                proxy = withContext(Dispatchers.Default) { source?.preview?.let { scaleDown(it, 720) } }
                 rerender()
+                val thumb = withContext(Dispatchers.Default) { source?.preview?.let { scaleDown(it, 220) } }
+                filterThumb = thumb
+                if (thumb != null) filterThumbs = withContext(Dispatchers.Default) {
+                    FilterId.entries.associateWith { f ->
+                        thumb.copy(Bitmap.Config.ARGB_8888, true).also { app.editEngine.applyPixels(it, EditRecipe(filter = f)) }
+                    }
+                }
             }
         }
     }
@@ -125,20 +159,21 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
             redoStack.clear(); committed = next
         }
         canUndo = undoStack.isNotEmpty(); canRedo = redoStack.isNotEmpty()
-        rerender()
+        detail = null
+        rerender(fast = !commit)
     }
 
     fun commit() = update(recipe, commit = true)
 
     fun undo() {
         val prev = undoStack.removeLastOrNull() ?: return
-        redoStack.addLast(committed); committed = prev; recipe = prev
+        redoStack.addLast(committed); committed = prev; recipe = prev; detail = null
         canUndo = undoStack.isNotEmpty(); canRedo = true; rerender()
     }
 
     fun redo() {
         val next = redoStack.removeLastOrNull() ?: return
-        undoStack.addLast(committed); committed = next; recipe = next
+        undoStack.addLast(committed); committed = next; recipe = next; detail = null
         canUndo = true; canRedo = redoStack.isNotEmpty(); rerender()
     }
 
@@ -146,7 +181,7 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
         val r = recipe
         update(when (tab) {
             EditorTab.CROP -> r.copy(quarterTurns = 0, flipH = false, flipV = false, straighten = 0f, crop = NormRect.FULL, resizeWidth = null, resizeHeight = null)
-            EditorTab.ADJUST -> r.copy(adjust = Adjustments())
+            EditorTab.ADJUST -> r.copy(adjust = Adjustments(), colorMix = ColorMix())
             EditorTab.FILTER -> r.copy(filter = FilterId.NONE, filterIntensity = 1f)
             EditorTab.RESIZE -> r.copy(resizeWidth = null, resizeHeight = null)
             EditorTab.TRIM -> r
@@ -196,24 +231,33 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
 
     // Anpassen / Filter / Größe
 
-    fun adjust(tool: AdjustTool, v: Float, commit: Boolean) {
-        val a = recipe.adjust
-        update(recipe.copy(adjust = when (tool) {
-            AdjustTool.BRIGHTNESS -> a.copy(brightness = v); AdjustTool.CONTRAST -> a.copy(contrast = v)
-            AdjustTool.SATURATION -> a.copy(saturation = v); AdjustTool.WARMTH -> a.copy(warmth = v)
-            AdjustTool.SHARPNESS -> a.copy(sharpness = v.coerceIn(0f, 100f))
-        }), commit)
-    }
+    fun adjust(tool: AdjustTool, v: Float, commit: Boolean) = update(recipe.copy(adjust = tool.set(recipe.adjust, v)), commit)
 
-    fun valueOf(tool: AdjustTool): Float = recipe.adjust.let {
-        when (tool) { AdjustTool.BRIGHTNESS -> it.brightness; AdjustTool.CONTRAST -> it.contrast; AdjustTool.SATURATION -> it.saturation
-            AdjustTool.WARMTH -> it.warmth; AdjustTool.SHARPNESS -> it.sharpness }
+    fun valueOf(tool: AdjustTool): Float = tool.get(recipe.adjust)
+
+    /** Gruppe zurücksetzen (z. B. alle Licht-Regler). */
+    fun resetGroup(g: AdjustGroup) = update(recipe.copy(adjust = AdjustTool.of(g).fold(recipe.adjust) { a, t -> t.set(a, 0f) }))
+
+    // Eigene Vorlagen (nur Einstellungen, keine Bilder)
+
+    /** Sofort sichern unter „Mein Look“, „Mein Look 2“, … (umbenennen per langem Drücken). */
+    fun savePreset() = viewModelScope.launch {
+        val base = app.string(R.string.edit_preset_default_name)
+        val names = app.presets.items.value.map { it.name }.toSet()
+        val name = generateSequence(1) { it + 1 }.map { if (it == 1) base else "$base $it" }.first { it !in names }
+        app.presets.add(EditPreset.of(name, recipe))
     }
+    fun renamePreset(p: EditPreset, name: String) = viewModelScope.launch {
+        val n = name.trim(); if (n.isNotEmpty()) app.presets.replace(p.copy(name = n.take(40)))
+    }
+    fun applyPreset(p: EditPreset) = update(p.applyTo(recipe))
+    fun deletePreset(p: EditPreset) = viewModelScope.launch { app.presets.remove(p.id) }
 
     fun setFilter(id: FilterId) = update(recipe.copy(filter = id, filterIntensity = if (id == recipe.filter) recipe.filterIntensity else 1f))
     fun filterIntensity(v: Float, commit: Boolean) = update(recipe.copy(filterIntensity = v.coerceIn(0f, 1f)), commit)
     /** „Nur Zuschnitt speichern“ (ohne Pro): Regler, Filter und Größe zurücknehmen, Geometrie bleibt. */
-    fun dropProTools() = update(recipe.copy(adjust = Adjustments(), filter = FilterId.NONE, filterIntensity = 1f, resizeWidth = null, resizeHeight = null))
+    fun dropProTools() = update(recipe.copy(adjust = Adjustments(), filter = FilterId.NONE, filterIntensity = 1f, resizeWidth = null, resizeHeight = null,
+        colorMix = ColorMix(), locals = emptyList()))
     fun resize(size: PxSize?) = update(recipe.copy(resizeWidth = size?.width, resizeHeight = size?.height))
 
     // Video
@@ -222,22 +266,81 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
 
     // Vorschau
 
-    private fun rerender() {
+    private fun rerender(fast: Boolean = false) {
         val src = source ?: return
         val r = recipe
+        val cropTab = tab == EditorTab.CROP
+        val clip = showClipping
         renderJob?.cancel()
         renderJob = viewModelScope.launch(Dispatchers.Default) {
-            delay(16) // Ziehen bündeln
+            delay(if (fast) 8 else 24) // Ziehen bündeln
+            val base = if (fast) proxy ?: src.preview else src.preview
             val previewRecipe = r.copy(resizeWidth = null, resizeHeight = null)
-            val frame = app.editEngine.render(src.preview, previewRecipe.copy(crop = NormRect.FULL), colorAndSharpen = false)
-            // Ergebnis: Schärfen hier (CPU), Farbe kommt in der Anzeige über die GPU – gleiche Mathematik wie beim Export.
-            val sharpOnly = previewRecipe.copy(adjust = Adjustments(sharpness = r.adjust.sharpness), filter = FilterId.NONE)
-            val res = app.editEngine.render(src.preview, sharpOnly, colorAndSharpen = r.hasSharpen)
-            withContext(Dispatchers.Main) { framePreview = frame; resultPreview = res }
+            if (cropTab) {
+                val frame = app.editEngine.render(base, previewRecipe.copy(crop = NormRect.FULL), colorAndSharpen = false)
+                app.editEngine.applyPixels(frame, previewRecipe, pointOnly = true)
+                withContext(Dispatchers.Main) { framePreview = frame }
+            } else {
+                val res = app.editEngine.render(base, previewRecipe, colorAndSharpen = true)
+                val px = IntArray(res.width * res.height).also { res.getPixels(it, 0, res.width, 0, 0, res.width, res.height) }
+                val hist = Histogram.of(px, step = 2)
+                val overlay = if (clip) clippingOverlay(px, res.width, res.height) else null
+                withContext(Dispatchers.Main) { resultPreview = res; histogram = hist; clipOverlay = overlay }
+            }
         }
     }
 
+    /** Rot = abgeschnittene Lichter, Blau = abgeschnittene Tiefen (reine Anzeige). */
+    private fun clippingOverlay(px: IntArray, w: Int, h: Int): Bitmap {
+        val out = IntArray(px.size)
+        for (i in px.indices) {
+            val p = px[i]; val r = (p shr 16) and 0xFF; val g = (p shr 8) and 0xFF; val b = p and 0xFF
+            out[i] = when {
+                r >= 254 || g >= 254 || b >= 254 -> 0xD0FF3030.toInt()
+                r <= 1 && g <= 1 && b <= 1 -> 0xD03070FF.toInt()
+                else -> 0
+            }
+        }
+        return Bitmap.createBitmap(out, w, h, Bitmap.Config.ARGB_8888)
+    }
+
+    /** 100-%-Ansicht: sichtbaren Ausschnitt in voller Qualität nachrechnen (nach kurzer Ruhe). */
+    fun requestDetail(view: NormRect, tw: Int, th: Int) {
+        val a = asset ?: return; val full = fullSize ?: return
+        val r = recipe
+        detailJob?.cancel()
+        detailJob = viewModelScope.launch {
+            delay(220)
+            val b = app.editEngine.renderDetail(a.uri, r.copy(resizeWidth = null, resizeHeight = null), full, view, tw.coerceIn(16, 2048), th.coerceIn(16, 2048))
+            if (b != null && r == recipe) detail = DetailTile(view, b)
+        }
+    }
+
+    fun clearDetail() { detailJob?.cancel(); detail = null }
+
     // Speichern
+
+    /** Zielordner der Kopie (`null` = wie das Original). Keine Entscheidung, nur Ablage. */
+    var targetFolder by mutableStateOf<String?>(null)
+    /** Fertig exportiert zum Teilen (Bildschirm öffnet den System-Dialog). */
+    var shareUri by mutableStateOf<android.net.Uri?>(null)
+
+    fun share(removeLocation: Boolean) {
+        val a = asset ?: return
+        if (saving || needsPro || isVideo) return
+        saving = true; error = null
+        saveJob = viewModelScope.launch {
+            try {
+                shareUri = EditSaver.sharePhoto(app, a, recipe, source?.full ?: return@launch, removeLocation)
+            } catch (e: EditError.TooLarge) {
+                error = app.string(R.string.edit_err_too_large)
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                error = app.string(R.string.edit_err_save)
+            } finally { saving = false }
+        }
+    }
 
     fun save(mode: SaveMode, removeLocation: Boolean) {
         val a = asset ?: return
@@ -250,7 +353,7 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
                 val now = withContext(Dispatchers.IO) { app.allPhotos.assets(listOf(a.id)).firstOrNull() }
                 if (now == null) { error = app.string(R.string.edit_err_gone); return@launch }
                 result = if (a.kind == MediaKind.VIDEO) EditSaver.saveVideo(app, a, trim ?: return@launch, mode) { p -> progress = p }
-                else EditSaver.savePhoto(app, a, recipe, source?.full ?: return@launch, mode, removeLocation)
+                else EditSaver.savePhoto(app, a, recipe, source?.full ?: return@launch, mode, removeLocation, targetFolder)
             } catch (e: EditError.TooLarge) {
                 error = app.string(R.string.edit_err_too_large)
             } catch (e: kotlinx.coroutines.CancellationException) {

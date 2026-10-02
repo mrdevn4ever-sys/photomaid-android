@@ -35,6 +35,15 @@
         <!-- SDK erst nach Einwilligung und nur mit konfigurierter ID starten (kein Auto-Start ohne ID). -->
         <provider android:name="com.google.android.gms.ads.MobileAdsInitProvider" android:authorities="${applicationId}.mobileadsinitprovider" tools:node="remove" />
 
+        <!-- „Bearbeiten und teilen“: nur cache/shared/ (siehe xml/share_paths.xml). -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.share"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/share_paths" />
+        </provider>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -15,6 +15,7 @@ import app.photomaid.media.EditError
 import app.photomaid.media.EditSaveRequest
 import app.photomaid.media.EditSaveResult
 import app.photomaid.media.MediaAsset
+import app.photomaid.feature.studio.ShareCache
 
 /** Ergebnis einer gespeicherten Bearbeitung (an den Feed und die Liste „Bearbeitet“). */
 sealed interface EditOutcome {
@@ -39,13 +40,16 @@ sealed interface EditOutcome {
  * → Liste „Bearbeitet“ → Meldung an den Feed. Das Original wird nie überschrieben.
  */
 object EditSaver {
-    suspend fun savePhoto(app: AppModel, asset: MediaAsset, recipe: EditRecipe, full: PxSize, mode: SaveMode, removeLocation: Boolean): EditOutcome.Saved {
+    /** [targetPath] = anderer Zielordner für die Kopie („direkt einsortieren“); `null` = Ordner des Originals. */
+    suspend fun savePhoto(app: AppModel, asset: MediaAsset, recipe: EditRecipe, full: PxSize, mode: SaveMode, removeLocation: Boolean,
+                          targetPath: String? = null): EditOutcome.Saved {
         val export = app.editEngine.export(asset.uri, asset.mimeType, recipe, full, removeLocation, SOFTWARE)
         try {
             val r = app.photos.saveEdited(EditSaveRequest(
                 sourceId = asset.id, file = export.file, mime = export.format.mime,
                 displayName = EditNames.copyName(asset.displayName, app.string(R.string.edit_copy_suffix), export.format.extension),
-                relativePath = asset.relativePath, dateTakenMs = asset.creationDate?.toEpochMilli(), video = false,
+                relativePath = if (mode == SaveMode.COPY) targetPath ?: asset.relativePath else asset.relativePath,
+                dateTakenMs = asset.creationDate?.toEpochMilli(), video = false,
                 replace = mode == SaveMode.REPLACE, favorite = mode == SaveMode.REPLACE && asset.isFavorite,
                 replaceName = EditNames.sameName(asset.displayName, export.format.extension),
             ))
@@ -86,6 +90,16 @@ object EditSaver {
         val out = EditOutcome.Saved(asset.id, saved.newId, mode, saved.replaced, saved.replaceDeclined, saved.bytes, video, hdrDropped)
         app.editEvents.tryEmit(out)
         return out
+    }
+
+    /**
+     * „Bearbeiten und teilen“: Export nur in den Cache und als teilbare URI zurück – keine Galeriekopie, kein Ledger-
+     * Eintrag. Standort standardmäßig entfernt (privater Export).
+     */
+    suspend fun sharePhoto(app: AppModel, asset: MediaAsset, recipe: EditRecipe, full: PxSize, removeLocation: Boolean = true): android.net.Uri {
+        val export = app.editEngine.export(asset.uri, asset.mimeType, recipe, full, removeLocation, SOFTWARE)
+        val name = EditNames.copyName(asset.displayName, app.string(R.string.edit_copy_suffix), export.format.extension)
+        return ShareCache.stage(app.context, export.file, name)
     }
 
     const val SOFTWARE = "PhotoMaid"

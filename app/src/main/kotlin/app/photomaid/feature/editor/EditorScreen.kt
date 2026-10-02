@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Redo
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.rounded.Undo
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Info
@@ -87,6 +88,12 @@ import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
+import app.photomaid.core.model.MediaKind
+import app.photomaid.core.organize.MediaFolder
+import app.photomaid.feature.review.FolderSheet
+import app.photomaid.feature.review.rememberRecentFolder
+import app.photomaid.feature.review.togglePinnedFolder
+import app.photomaid.system.MediaIntents
 
 /**
  * Editor (ein Bildschirm): Fotos mit Zuschneiden · Anpassen · Filter · Größe, Videos mit Kürzen. Bearbeitet wird ein
@@ -177,8 +184,31 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
         }
     }
 
-    if (showSave) SaveSheet(vm, initial = settings.editSaveMode, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() },
+    var pickFolder by remember { mutableStateOf(false) }
+    var folders by remember { mutableStateOf<List<MediaFolder>?>(null) }
+    if (showSave && !pickFolder) SaveSheet(vm, initial = settings.editSaveMode, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() },
+        onFolder = {
+            pickFolder = true
+            scope.launch { folders = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { app.allPhotos.folders() } }
+        },
+        onShare = { showSave = false; vm.share(removeLocation = true) },
         onSave = { mode, removeLocation -> showSave = false; vm.save(mode, removeLocation) })
+    if (pickFolder) vm.asset?.let { a ->
+        FolderSheet(a.kind, vm.targetFolder ?: a.relativePath, folders, settings.pinnedFolders, settings.recentFolders,
+            onTogglePin = { p -> scope.launch { togglePinnedFolder(app, p) } },
+            onPick = { p -> vm.targetFolder = p; pickFolder = false; scope.launch { rememberRecentFolder(app, p) } },
+            onDismiss = { pickFolder = false }, title = stringResource(R.string.edit_save_folder))
+    }
+    // Teilen ohne Galeriekopie: System-Dialog öffnen, danach im Editor bleiben.
+    val ctx = androidx.compose.ui.platform.LocalContext.current
+    val shareTitle = stringResource(R.string.share)
+    val shareFailed = stringResource(R.string.edit_err_save)
+    LaunchedEffect(vm.shareUri) {
+        val u = vm.shareUri ?: return@LaunchedEffect
+        vm.shareUri = null
+        runCatching { ctx.startActivity(MediaIntents.share(u, MediaKind.PHOTO, ctx.contentResolver.getType(u), shareTitle)) }
+            .onFailure { vm.error = shareFailed }
+    }
 
     if (confirmDiscard) AlertDialog(onDismissRequest = { confirmDiscard = false }, modifier = Modifier.testTag("editor.discard"),
         title = { Text(stringResource(R.string.edit_discard_title)) }, text = { Text(stringResource(R.string.edit_discard_text)) },
@@ -214,7 +244,8 @@ private fun SavingOverlay(vm: EditorViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> Unit, onPro: () -> Unit, onSave: (SaveMode, Boolean) -> Unit) {
+private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> Unit, onPro: () -> Unit, onFolder: () -> Unit, onShare: () -> Unit,
+                      onSave: (SaveMode, Boolean) -> Unit) {
     val c = PM.colors
     var mode by rememberSaveable { mutableStateOf(initial) }
     var removeLocation by rememberSaveable { mutableStateOf(false) }
@@ -226,6 +257,19 @@ private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> U
             Text(stringResource(R.string.edit_save_title), style = AppTypography.title, color = c.textPrimary)
             SaveOption(SaveMode.COPY, mode, stringResource(R.string.edit_save_copy), stringResource(R.string.edit_save_copy_text)) { mode = it }
             SaveOption(SaveMode.REPLACE, mode, stringResource(R.string.edit_save_replace), stringResource(R.string.edit_save_replace_text)) { mode = it }
+            // Ablage der Kopie: wie das Original oder direkt in einen anderen Ordner (keine Entscheidung im Feed).
+            if (mode == SaveMode.COPY && !vm.isVideo) {
+                val current = vm.targetFolder ?: a?.relativePath
+                Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button, onClick = onFolder)
+                    .padding(horizontal = AppSpacing.xs).testTag("editor.folder"), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text(stringResource(R.string.edit_save_folder), style = AppTypography.body, color = c.textPrimary)
+                        Text(current?.let { MediaFolder(it, 0).name } ?: stringResource(R.string.edit_save_folder_default),
+                            style = AppTypography.footnote, color = c.textSecondary)
+                    }
+                    Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary)
+                }
+            }
             if (!vm.isVideo) {
                 Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clip(RoundedCornerShape(12.dp))
                     .clickable(role = Role.Switch) { removeLocation = !removeLocation }.padding(horizontal = AppSpacing.xs).testTag("editor.location"),
@@ -262,6 +306,9 @@ private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> U
             } else {
                 ProminentButton(stringResource(if (mode == SaveMode.COPY) R.string.edit_save_copy_action else R.string.edit_save_replace_action),
                     Modifier.testTag("editor.sheet.save"), fillWidth = true, large = true) { onSave(mode, removeLocation) }
+                // Nur teilen: Export in den Cache, keine Galeriekopie (Standort standardmäßig entfernt).
+                if (!vm.isVideo) GlassButton(stringResource(R.string.edit_share_only), Modifier.testTag("editor.sheet.share"), fillWidth = true) { onShare() }
+                if (!vm.isVideo) Text(stringResource(R.string.edit_share_only_text), style = AppTypography.footnote, color = c.textSecondary)
             }
         }
     }

@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.BitmapRegionDecoder
 import android.graphics.Canvas
-import android.graphics.ColorMatrixColorFilter
 import android.graphics.ColorSpace
 import android.graphics.ImageDecoder
 import android.graphics.Matrix
@@ -16,13 +15,13 @@ import android.net.Uri
 import android.os.Build
 import androidx.exifinterface.media.ExifInterface
 import app.photomaid.core.edit.Affine
-import app.photomaid.core.edit.ColorMatrices
+import app.photomaid.core.edit.Detail
+import app.photomaid.core.edit.PixelPipeline
 import app.photomaid.core.edit.EditFormat
 import app.photomaid.core.edit.EditGeometry
 import app.photomaid.core.edit.EditRecipe
 import app.photomaid.core.edit.ExifOrientationMath
 import app.photomaid.core.edit.PxSize
-import app.photomaid.core.edit.Sharpen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -53,6 +52,8 @@ class ImageEditEngine(private val context: Context) {
     private val resolver get() = context.contentResolver
     /** Arbeits-Dispatcher (Tests: Robolectric-Native-Grafik ist nicht threadsicher neben laufender Compose-UI). */
     var io: kotlinx.coroutines.CoroutineDispatcher = Dispatchers.IO
+    /** Streifen parallel rechnen (Tests: aus, siehe [io]). */
+    var parallel: Boolean = true
 
     /** MediaStore-URIs über den ContentResolver; `file://` (QA-Medien, Tests) direkt. */
     private fun input(uri: Uri): java.io.InputStream? =
@@ -123,12 +124,67 @@ class ImageEditEngine(private val context: Context) {
         val out = Bitmap.createBitmap(g.output.width, g.output.height, Bitmap.Config.ARGB_8888, src.hasAlpha(), cs)
         val m = Matrix().apply { setValues((g.sourceToOutput * extra).toAndroidValues()) }
         val paint = Paint(Paint.FILTER_BITMAP_FLAG or Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
-        if (colorAndSharpen && recipe.hasColor) paint.colorFilter = ColorMatrixColorFilter(ColorMatrices.forRecipe(recipe))
         Canvas(out).drawBitmap(src, m, paint)
-        if (colorAndSharpen && recipe.hasSharpen) sharpenInStripes(out, recipe.adjust.sharpness)
+        if (colorAndSharpen) {
+            applyPixels(out, recipe)
+            applyDetail(out, recipe.adjust, max(out.width, out.height))
+        }
         // Ultra HDR (Android 14+): Gain-Map bei reiner Geometrie mitführen, damit die HDR-Helligkeit erhalten bleibt.
         if (Build.VERSION.SDK_INT >= 34 && src.hasGainmap() && !recipe.hasColor && !recipe.hasSharpen) carryGainmap(src, out, g.sourceToOutput * extra)
         return out
+    }
+
+    private val cores = max(2, min(6, Runtime.getRuntime().availableProcessors()))
+    private val pool: java.util.concurrent.ExecutorService = java.util.concurrent.Executors.newFixedThreadPool(cores) { r ->
+        Thread(r, "photomaid-pixels").apply { isDaemon = true; priority = Thread.NORM_PRIORITY - 1 }
+    }
+
+    /**
+     * Punktweise Pipeline (Tonwerte, Farbe, Filter, Masken, Vignette, Körnung) auf [b] – parallel in Streifen.
+     * [x0]/[y0]/[outW]/[outH] = Lage von [b] im (gedachten) Ausgabebild, damit Positionen stimmen (Detailansicht).
+     * [pointOnly] = ohne Positionsabhängiges (Zuschneiden-Ansicht zeigt den ganzen Rahmen).
+     */
+    fun applyPixels(b: Bitmap, recipe: EditRecipe, x0: Int = 0, y0: Int = 0, outW: Int = b.width, outH: Int = b.height, pointOnly: Boolean = false) {
+        val r = if (pointOnly) recipe.copy(locals = emptyList(), adjust = recipe.adjust.copy(vignette = 0f, grain = 0f)) else recipe
+        val pipe = PixelPipeline(r)
+        if (pipe.isNeutral) return
+        val w = b.width; val stripe = 96
+        val work = { y: Int ->
+            val rows = min(stripe, b.height - y)
+            val px = IntArray(w * rows)
+            b.getPixels(px, 0, w, 0, y, w, rows)
+            pipe.apply(px, w, rows, x0, y0 + y, outW, outH)
+            synchronized(b) { b.setPixels(px, 0, w, 0, y, w, rows) }
+        }
+        if (!parallel) (0 until b.height step stripe).forEach(work)
+        else (0 until b.height step stripe).map { y -> pool.submit { work(y) } }.forEach { it.get() }
+    }
+
+    /**
+     * Klarheit und Schärfen in Streifen mit wenig Speicher. Jeder Streifen liest die ungeschärften Nachbarzeilen
+     * (die schon geschriebenen werden vorher gesichert) → Ergebnis identisch zur Berechnung am Stück.
+     */
+    fun applyDetail(b: Bitmap, a: app.photomaid.core.edit.Adjustments, longEdge: Int) {
+        if (a.detailNeutral) return
+        val w = b.width; val h = b.height
+        val ov = Detail.overlap(a, longEdge).coerceAtLeast(1)
+        val stripe = max(256, ov * 2)
+        var tail: IntArray? = null // ungeschärfte Zeilen [y - ov, y)
+        var y = 0
+        while (y < h) {
+            val rows = min(stripe, h - y)
+            val top = max(0, y - ov); val bottom = min(h, y + rows + ov)
+            val px = IntArray(w * (bottom - top))
+            val before = y - top
+            if (before > 0) tail!!.copyInto(px, 0, tail.size - before * w, tail.size)
+            b.getPixels(px, before * w, w, 0, y, w, bottom - y)
+            val res = Detail.apply(px, w, bottom - top, a, longEdge)
+            // Ungeschärfte Zeilen am Ende dieses Streifens für den nächsten sichern, bevor sie überschrieben werden.
+            val keepFrom = max(y, y + rows - ov)
+            tail = px.copyOfRange((keepFrom - top) * w, (y + rows - top) * w)
+            b.setPixels(res, before * w, w, 0, y, w, rows)
+            y += rows
+        }
     }
 
     @androidx.annotation.RequiresApi(34)
@@ -150,23 +206,33 @@ class ImageEditEngine(private val context: Context) {
         }
     }
 
-    /** Schärfen in Streifen (wenig Speicher, auch bei großen Fotos); Überlappung = Radius, Ergebnis exakt. */
-    private fun sharpenInStripes(b: Bitmap, sharpness: Float) {
-        val r = Sharpen.radiusFor(max(b.width, b.height)); val amount = Sharpen.amount(sharpness)
-        val stripe = 256
-        // Erst alle Streifen aus dem ungeschärften Bild berechnen, dann schreiben (Nachbarstreifen bleiben unbeeinflusst).
-        val results = ArrayList<Pair<Int, IntArray>>()
-        var y = 0
-        while (y < b.height) {
-            val top = max(0, y - r); val bottom = min(b.height, y + stripe + r); val h = bottom - top
-            val px = IntArray(b.width * h)
-            b.getPixels(px, 0, b.width, 0, top, b.width, h)
-            val sharp = Sharpen.apply(px, b.width, h, amount, r)
-            val rows = min(stripe, b.height - y)
-            results += y to sharp.copyOfRange((y - top) * b.width, (y - top + rows) * b.width)
-            y += stripe
-        }
-        for ((row, data) in results) b.setPixels(data, 0, b.width, 0, row, b.width, data.size / b.width)
+    /**
+     * 100-%-Ansicht: rechnet den Ausschnitt [view] (normiert auf das Ausgabebild) in voller Qualität auf [tw]×[th] Pixel –
+     * nur dieser Bereich wird aus dem Original dekodiert. Gleiche Pipeline wie der Export.
+     */
+    suspend fun renderDetail(uri: Uri, recipe: EditRecipe, full: PxSize, view: app.photomaid.core.edit.NormRect, tw: Int, th: Int): Bitmap? = withContext(io) {
+        runCatching {
+            val g = EditGeometry(full, recipe)
+            val ow = g.output.width.toDouble(); val oh = g.output.height.toDouble()
+            val rl = view.left * ow; val rt = view.top * oh; val rw = max(1.0, view.width * ow); val rh = max(1.0, view.height * oh)
+            val k = tw / rw
+            val toDetail = Affine.scale(k, th / rh) * Affine.translate(-rl, -rt) * g.sourceToOutput
+            val inv = toDetail.inverse()
+            val pts = listOf(0.0 to 0.0, tw.toDouble() to 0.0, 0.0 to th.toDouble(), tw.toDouble() to th.toDouble()).map { inv.map(it.first, it.second) }
+            val l = pts.minOf { it.first }.toInt().coerceIn(0, full.width - 1); val t = pts.minOf { it.second }.toInt().coerceIn(0, full.height - 1)
+            val r = kotlin.math.ceil(pts.maxOf { it.first }).toInt().coerceIn(l + 1, full.width); val b = kotlin.math.ceil(pts.maxOf { it.second }).toInt().coerceIn(t + 1, full.height)
+            val srcScale = min(1.0, kotlin.math.sqrt(kotlin.math.abs(toDetail.a * toDetail.d - toDetail.b * toDetail.c)))
+            val (part, area, _) = decodeRegion(uri, full, intArrayOf(l, t, r, b), srcScale) ?: return@runCatching null
+            val partToSource = Affine.translate(area.left.toDouble(), area.top.toDouble()) * Affine.scale(area.width().toDouble() / part.width, area.height().toDouble() / part.height)
+            val out = Bitmap.createBitmap(tw, th, Bitmap.Config.ARGB_8888)
+            Canvas(out).drawBitmap(part, Matrix().apply { setValues((toDetail * partToSource).toAndroidValues()) }, Paint(Paint.FILTER_BITMAP_FLAG or Paint.ANTI_ALIAS_FLAG))
+            part.recycle()
+            // Positionen (Vignette, Körnung, Masken) im gedachten Ausgabebild dieser Vergrößerung.
+            val vw = (ow * k).roundToInt(); val vh = (oh * th / rh).roundToInt()
+            applyPixels(out, recipe, (rl * k).roundToInt(), (rt * th / rh).roundToInt(), vw, vh)
+            applyDetail(out, recipe.adjust, max(vw, vh))
+            out
+        }.getOrNull()
     }
 
     /**
