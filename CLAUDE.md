@@ -62,6 +62,9 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Gespeicherte Fassung = „Behalten“; Ersetzen zählt nicht zum Tageslimit. Vorauswahl = zuletzt gewählt (`editSaveMode`).
   Free: Zuschneiden/Drehen/Spiegeln/Begradigen; Regler, Filter, Größe, Video kürzen speichern nur mit `hasProToolsAccess`
   (Vorschau frei). Nie hochskalieren, keine Größenschätzung vor dem Speichern, keine Werbung im Editor.
+  P4: Perspektive (`EditRecipe.perspective`, vier Ecken → `Homography`, kostenlos wie Zuschneiden) und Rote Augen
+  (`redEyes`, Farbregel, kostenlos); Farbmischer (helligkeitserhaltend) und Bereiche (`locals`: Kreis/Verlauf/Pinsel,
+  rein manuell) speichern mit Pro. Keine Erkennung von Gesichtern, Augen, Himmel o. Ä.
 
 ## Verbote
 

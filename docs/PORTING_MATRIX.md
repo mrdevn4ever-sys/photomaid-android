@@ -196,4 +196,8 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Speichern | neue Datei, „Behalten“ im Ledger, Eintrag „Bearbeitet“ (Art Collage, Anzahl); Quellen ohne Entscheidung | wie Editor-Kopie |
 | Mehrfachauswahl | Raster: „Collage“ ab 2 Fotos (Wählen bleibt keine Entscheidung) | neu |
 | Bedienungshilfen | Feld-Knoten je Rasterfeld, Aktionen „Nächstes Foto auswählen“/„Tauschen“, Trennlinien mit −/+ | Ziehen nicht nötig |
+| Perspektive | Reiter Zuschneiden › Perspektive: vier Ecken (Lupe, Raster) oder Senkrecht/Waagerecht; projektive Abbildung in Vorschau, 100-%-Ansicht und Export; kostenlos | Plan §8 |
+| Farbmischer | 8 Farbbereiche, Farbton/Sättigung/Helligkeit; Farbton und Sättigung erhalten die Helligkeit (Entsättigen → Grau, nicht Weiß) | Qualität |
+| Retusche | Kreis, Verlauf, Pinsel (bis 8 Bereiche) mit Licht-/Farbreglern, Maske einblendbar, zwei Finger zoomen; Pro wie Regler | Plan §5 |
+| Rote Augen | Tippen setzt Kreis; nur deutlich rote Pixel werden zu dunklem Neutral; kostenlos | Plan §5, keine Erkennung |
 

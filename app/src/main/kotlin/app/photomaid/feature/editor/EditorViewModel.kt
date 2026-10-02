@@ -50,11 +50,18 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import app.photomaid.core.edit.FrameMath
+import app.photomaid.core.edit.ColorBand
+import app.photomaid.core.edit.LocalAdjustment
+import app.photomaid.core.edit.Mask
+import app.photomaid.core.edit.MaskGrid
+import app.photomaid.core.edit.PerspectiveMath
+import app.photomaid.core.edit.Quad
+import app.photomaid.core.edit.RedEyeSpot
 
 /** Ausschnitt der 100-%-Ansicht (normiert auf das Ausgabebild) und sein Bild. */
 data class DetailTile(val view: NormRect, val bitmap: Bitmap)
 
-enum class EditorTab { CROP, ADJUST, FILTER, MARKUP, FRAME, RESIZE, TRIM }
+enum class EditorTab { CROP, ADJUST, FILTER, RETOUCH, MARKUP, FRAME, RESIZE, TRIM }
 
 /** Werkzeug im Reiter „Markieren“. */
 enum class MarkupTool { SELECT, DRAW, SHAPE, REDACT }
@@ -64,6 +71,7 @@ enum class MarkupTool { SELECT, DRAW, SHAPE, REDACT }
  * Das Original wird erst beim Speichern gelesen und nie überschrieben (Kopie oder Ersetzen über den Android-Papierkorb).
  */
 class EditorViewModel(private val app: AppModel, val assetId: String) : ViewModel() {
+    companion object { const val MAX_LOCALS = 8 }
     var asset by mutableStateOf<MediaAsset?>(null); private set
     var source by mutableStateOf<EditSource?>(null); private set
     var loadFailed by mutableStateOf(false); private set
@@ -207,7 +215,9 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     fun resetTab() {
         val r = recipe
         update(when (tab) {
-            EditorTab.CROP -> r.copy(quarterTurns = 0, flipH = false, flipV = false, straighten = 0f, crop = NormRect.FULL, resizeWidth = null, resizeHeight = null)
+            EditorTab.CROP -> r.copy(quarterTurns = 0, flipH = false, flipV = false, straighten = 0f, crop = NormRect.FULL, resizeWidth = null, resizeHeight = null,
+                perspective = null).also { keyV = 0f; keyH = 0f }
+            EditorTab.RETOUCH -> r.copy(locals = emptyList(), redEyes = emptyList()).also { selectedLocal = null }
             EditorTab.ADJUST -> r.copy(adjust = Adjustments(), colorMix = ColorMix())
             EditorTab.FILTER -> r.copy(filter = FilterId.NONE, filterIntensity = 1f)
             EditorTab.RESIZE -> r.copy(resizeWidth = null, resizeHeight = null)
@@ -220,8 +230,40 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     // Zuschneiden
 
     fun rotate() = update(recipe.rotatedClockwise().let { r -> currentRatio(r)?.let { r.copy(crop = CropMath.fitAspect(r.crop, it, frameOf(r))) } ?: r })
-    fun flipHorizontal() = update(recipe.copy(flipH = !recipe.flipH, crop = recipe.crop.flippedH()))
-    fun flipVertical() = update(recipe.copy(flipV = !recipe.flipV, crop = recipe.crop.flippedV()))
+    fun flipHorizontal() = update(recipe.copy(flipH = !recipe.flipH, crop = recipe.crop.flippedH(), perspective = recipe.perspective?.flippedH()))
+    fun flipVertical() = update(recipe.copy(flipV = !recipe.flipV, crop = recipe.crop.flippedV(), perspective = recipe.perspective?.flippedV()))
+
+    // Perspektive (kostenlos, wie Zuschneiden): vier Ecken im Grundrahmen
+
+    private var perspectiveState by mutableStateOf(false)
+    /** Im Reiter „Zuschneiden“: Ecken der Perspektive bearbeiten statt Ausschnitt. */
+    var perspectiveMode: Boolean
+        get() = perspectiveState
+        set(v) { if (v != perspectiveState) { perspectiveState = v; rerender() } }
+    /** Schnellkorrektur (stürzende Linien); Eckenziehen ändert das Viereck danach frei. */
+    var keyV by mutableStateOf(0f); private set
+    var keyH by mutableStateOf(0f); private set
+    val quad: Quad get() = recipe.perspective ?: Quad.FULL
+
+    fun keystone(v: Float, h: Float, commit: Boolean) {
+        keyV = v; keyH = h
+        val q = PerspectiveMath.keystone(v, h)
+        update(recipe.copy(perspective = if (q.isIdentity) null else q), commit)
+    }
+
+    fun moveCorner(i: Int, x: Float, y: Float, commit: Boolean) {
+        val q = PerspectiveMath.moveCorner(quad, i, x, y)
+        update(recipe.copy(perspective = if (q.isIdentity) null else q), commit)
+    }
+
+    /** Bedienungshilfe: Ecke [i] schrittweise nach innen/außen. */
+    fun nudgeCorner(i: Int, inward: Boolean) {
+        val p = quad.corners[i]; val d = if (inward) 0.02f else -0.02f
+        val sx = if (i == 0 || i == 3) d else -d; val sy = if (i <= 1) d else -d
+        moveCorner(i, p.x + sx, p.y + sy, true)
+    }
+
+    fun resetPerspective() { keyV = 0f; keyH = 0f; update(recipe.copy(perspective = null)) }
     /** Beim Begradigen zeigt der Ausschnitt ein feines Raster. */
     var straightening by mutableStateOf(false); private set
     fun straighten(deg: Float, commit: Boolean) {
@@ -265,7 +307,143 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     fun valueOf(tool: AdjustTool): Float = tool.get(recipe.adjust)
 
     /** Gruppe zurücksetzen (z. B. alle Licht-Regler). */
-    fun resetGroup(g: AdjustGroup) = update(recipe.copy(adjust = AdjustTool.of(g).fold(recipe.adjust) { a, t -> t.set(a, 0f) }))
+    fun resetGroup(g: AdjustGroup) = if (g == AdjustGroup.MIX) update(recipe.copy(colorMix = ColorMix()))
+        else update(recipe.copy(adjust = AdjustTool.of(g).fold(recipe.adjust) { a, t -> t.set(a, 0f) }))
+
+    // Farbmischer (selektive Farben)
+    var mixBand by mutableStateOf(ColorBand.RED)
+    fun mixValue(b: ColorBand, f: MixField): Float = recipe.colorMix[b].let { when (f) { MixField.HUE -> it.hue; MixField.SATURATION -> it.saturation; MixField.LUMINANCE -> it.luminance } }
+    fun mix(f: MixField, v: Float, commit: Boolean) {
+        val cur = recipe.colorMix[mixBand]; val x = v.coerceIn(-100f, 100f)
+        val next = when (f) { MixField.HUE -> cur.copy(hue = x); MixField.SATURATION -> cur.copy(saturation = x); MixField.LUMINANCE -> cur.copy(luminance = x) }
+        update(recipe.copy(colorMix = recipe.colorMix.with(mixBand, next)), commit)
+    }
+
+    // Retusche: Bereiche (lokale Anpassungen) und Rote Augen
+
+    var retouchTool by mutableStateOf(RetouchTool.RADIAL)
+    /** Gewählter Bereich (Index in `recipe.locals`). */
+    var selectedLocal by mutableStateOf<Int?>(null)
+    var localTool by mutableStateOf(AdjustTool.EXPOSURE)
+    private var maskState by mutableStateOf(false)
+    /** Maske rot einblenden (zeigt nur an). Ohne Wirkung wird sie automatisch gezeigt. */
+    var showMask: Boolean
+        get() = maskState
+        set(v) { maskState = v; rerender() }
+    var maskOverlay by mutableStateOf<Bitmap?>(null); private set
+    var brushSize by mutableStateOf(0.05f)
+    var brushErase by mutableStateOf(false)
+    var redEyeSize by mutableStateOf(0.025f)
+    val currentLocal: LocalAdjustment? get() = selectedLocal?.let { recipe.locals.getOrNull(it) }
+    /** Maske anzeigen: eingeschaltet oder (noch) ohne Wirkung. */
+    val maskVisible: Boolean get() = currentLocal?.let { showMask || it.adjust.pointNeutral } == true
+
+    private fun setLocals(l: List<LocalAdjustment>, commit: Boolean) = update(recipe.copy(locals = l), commit)
+
+    /** Neuer Bereich an [at] (normiert im Bild); Pinsel startet leer. */
+    fun addLocal(kind: RetouchTool, at: NormPoint = NormPoint(0.5f, 0.5f)): Int? {
+        val mask = when (kind) {
+            RetouchTool.RADIAL -> Mask.Radial(at, 0.22f, 0.22f * aspectOfImage(), feather = 0.5f)
+            RetouchTool.LINEAR -> Mask.Linear(NormPoint(at.x, (at.y - 0.15f).coerceIn(0f, 1f)), NormPoint(at.x, (at.y + 0.15f).coerceIn(0f, 1f)))
+            RetouchTool.BRUSH -> Mask.Brush(emptyList())
+            RetouchTool.RED_EYE -> return null
+        }
+        if (recipe.locals.size >= MAX_LOCALS) return null
+        setLocals(recipe.locals + LocalAdjustment(mask), true)
+        selectedLocal = recipe.locals.lastIndex
+        return selectedLocal
+    }
+
+    /** Kreis rund halten: Höhe relativ zur Höhe = Breite relativ zur Breite × Seitenverhältnis. */
+    private fun aspectOfImage(): Float = imageSize?.let { it.width.toFloat() / it.height } ?: 1f
+
+    fun updateMask(i: Int, m: Mask, commit: Boolean) {
+        val l = recipe.locals.toMutableList(); val cur = l.getOrNull(i) ?: return
+        l[i] = cur.copy(mask = m); setLocals(l, commit)
+    }
+
+    fun localValue(t: AdjustTool): Float = currentLocal?.let { t.get(it.adjust) } ?: 0f
+    fun adjustLocal(t: AdjustTool, v: Float, commit: Boolean) {
+        val i = selectedLocal ?: return
+        val l = recipe.locals.toMutableList(); val cur = l.getOrNull(i) ?: return
+        l[i] = cur.copy(adjust = t.set(cur.adjust, v)); setLocals(l, commit)
+    }
+
+    fun removeLocal() {
+        val i = selectedLocal ?: return
+        setLocals(recipe.locals.filterIndexed { k, _ -> k != i }, true); selectedLocal = null
+    }
+
+    /** Pinselstrich anfangen/fortsetzen ([commit] = Finger losgelassen). */
+    fun brush(points: List<NormPoint>, commit: Boolean) {
+        val i = selectedLocal ?: addLocal(RetouchTool.BRUSH) ?: return
+        val m = recipe.locals.getOrNull(i)?.mask as? Mask.Brush ?: return
+        val stroke = BrushStroke(points, brushSize, 0.5f, brushErase)
+        // Der letzte Strich wird beim Ziehen ersetzt (ein Strich je Fingerbewegung).
+        val base = if (drawingStroke) m.strokes.dropLast(1) else m.strokes
+        drawingStroke = !commit
+        updateMask(i, Mask.Brush(base + stroke), commit)
+    }
+    private var drawingStroke = false
+
+    fun addRedEye(at: NormPoint) {
+        if (recipe.redEyes.size >= 12) return
+        update(recipe.copy(redEyes = recipe.redEyes + RedEyeSpot(at, redEyeSize)))
+    }
+    fun chooseRetouchTool(t: RetouchTool) {
+        retouchTool = t
+        // Gewählter Bereich passt nicht zum Werkzeug → abwählen (Neu legt einen passenden an).
+        if (t == RetouchTool.RED_EYE || currentLocal?.mask?.let { kindOf(it) } != t) selectedLocal = null
+        rerender()
+    }
+
+    fun selectLocal(i: Int) {
+        selectedLocal = i
+        recipe.locals.getOrNull(i)?.mask?.let { retouchTool = kindOf(it) }
+        rerender()
+    }
+
+    private fun kindOf(m: Mask) = when (m) { is Mask.Radial -> RetouchTool.RADIAL; is Mask.Linear -> RetouchTool.LINEAR; is Mask.Brush -> RetouchTool.BRUSH }
+
+    /** Mitte des gewählten Kreises (aktueller Stand beim Ziehen). */
+    fun radialCenter(): NormPoint = (currentLocal?.mask as? Mask.Radial)?.center ?: NormPoint(0.5f, 0.5f)
+
+    /** Bedienungshilfe/Stufen: gewählten Bereich bzw. Pinsel größer/kleiner. */
+    fun resizeSelected(k: Float) {
+        val i = selectedLocal
+        when (val m = currentLocal?.mask) {
+            is Mask.Radial -> updateMask(i!!, m.copy(rx = (m.rx * k).coerceIn(0.02f, 1.5f), ry = (m.ry * k).coerceIn(0.02f, 1.5f)), true)
+            is Mask.Linear -> {
+                val cx = (m.start.x + m.end.x) / 2; val cy = (m.start.y + m.end.y) / 2
+                fun sc(p: NormPoint) = NormPoint(cx + (p.x - cx) * k, cy + (p.y - cy) * k)
+                updateMask(i!!, m.copy(start = sc(m.start), end = sc(m.end)), true)
+            }
+            else -> if (retouchTool == RetouchTool.RED_EYE) redEyeSize = (redEyeSize * k).coerceIn(0.01f, 0.08f) else brushSize = (brushSize * k).coerceIn(0.01f, 0.2f)
+        }
+    }
+
+    /**
+     * Tippen in der Retusche: Rote Augen setzen; sonst einen anderen Bereich wählen (Tipp auf seine Markierung) oder –
+     * wenn keiner gewählt ist – einen neuen Bereich an dieser Stelle anlegen. Tipp ins Leere wählt ab.
+     */
+    fun tapRetouch(at: NormPoint, toScreen: (NormPoint) -> androidx.compose.ui.geometry.Offset, at0: androidx.compose.ui.geometry.Offset, touch: Float) {
+        if (retouchTool == RetouchTool.RED_EYE) { addRedEye(at); return }
+        val hit = recipe.locals.indices.firstOrNull { i ->
+            val p = when (val m = recipe.locals[i].mask) {
+                is Mask.Radial -> m.center
+                is Mask.Linear -> NormPoint((m.start.x + m.end.x) / 2, (m.start.y + m.end.y) / 2)
+                is Mask.Brush -> m.strokes.lastOrNull()?.points?.lastOrNull() ?: return@firstOrNull false
+            }
+            (toScreen(p) - at0).getDistance() <= touch
+        }
+        when {
+            hit != null -> selectLocal(hit)
+            selectedLocal != null -> { selectedLocal = null; rerender() }
+            retouchTool != RetouchTool.BRUSH -> addLocal(retouchTool, at)
+        }
+    }
+
+    fun removeLastRedEye() { if (recipe.redEyes.isNotEmpty()) update(recipe.copy(redEyes = recipe.redEyes.dropLast(1))) }
 
     // Eigene Vorlagen (nur Einstellungen, keine Bilder)
 
@@ -319,7 +497,9 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
             val base = if (fast) proxy ?: src.preview else src.preview
             val previewRecipe = r.copy(resizeWidth = null, resizeHeight = null)
             if (cropTab) {
-                val frame = app.editEngine.render(base, previewRecipe.copy(crop = NormRect.FULL), colorAndSharpen = false)
+                // Perspektive bearbeiten: Grundrahmen ohne Perspektive (Ecken liegen darauf); sonst entzerrter Rahmen.
+                val frameRecipe = if (perspectiveMode) previewRecipe.copy(crop = NormRect.FULL, perspective = null) else previewRecipe.copy(crop = NormRect.FULL)
+                val frame = app.editEngine.render(base, frameRecipe, colorAndSharpen = false)
                 app.editEngine.applyPixels(frame, previewRecipe, pointOnly = true)
                 withContext(Dispatchers.Main) { framePreview = frame }
             } else {
@@ -336,9 +516,22 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
                 val px = IntArray(res.width * res.height).also { res.getPixels(it, 0, res.width, 0, 0, res.width, res.height) }
                 val hist = Histogram.of(px, step = 2)
                 val overlay = if (clip) clippingOverlay(px, res.width, res.height) else null
-                withContext(Dispatchers.Main) { resultPreview = res; baseResult = baseRes; histogram = hist; clipOverlay = overlay }
+                val maskOv = if (tab == EditorTab.RETOUCH && maskVisible) currentLocal?.let { maskOverlayOf(it.mask, baseRes.width, baseRes.height) } else null
+                withContext(Dispatchers.Main) { resultPreview = res; baseResult = baseRes; histogram = hist; clipOverlay = overlay; maskOverlay = maskOv }
             }
         }
+    }
+
+    /** Maske als rote Fläche (Deckkraft = Wirkung), in reduzierter Größe – reine Anzeige. */
+    private fun maskOverlayOf(m: Mask, w: Int, h: Int): Bitmap {
+        val k = maxOf(1, maxOf(w, h) / 360); val ow = maxOf(1, w / k); val oh = maxOf(1, h / k)
+        val grid = MaskGrid.of(m, w, h)
+        val px = IntArray(ow * oh)
+        for (y in 0 until oh) for (x in 0 until ow) {
+            val a = (grid.sample((x + 0.5f) / ow, (y + 0.5f) / oh) * 150f).toInt().coerceIn(0, 150)
+            px[y * ow + x] = (a shl 24) or 0xFF3B30
+        }
+        return Bitmap.createBitmap(px, ow, oh, Bitmap.Config.ARGB_8888)
     }
 
     /** Rot = abgeschnittene Lichter, Blau = abgeschnittene Tiefen (reine Anzeige). */

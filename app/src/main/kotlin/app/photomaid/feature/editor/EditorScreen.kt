@@ -170,13 +170,14 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                             EditorTab.CROP -> CropPanel(vm)
                             EditorTab.ADJUST -> AdjustPanel(vm)
                             EditorTab.FILTER -> FilterPanel(vm)
+                            EditorTab.RETOUCH -> RetouchPanel(vm)
                             EditorTab.MARKUP -> MarkupPanel(vm.markup)
                             EditorTab.FRAME -> FramePanel(vm)
                             EditorTab.RESIZE -> ResizePanel(vm)
                             EditorTab.TRIM -> TrimPanel(vm)
                         }
                     }
-                    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM) else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
+                    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM) else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.RETOUCH, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
                     if (tabs.size > 1) EditorTabs(tabs, vm.tab, locked = !app.capabilities.hasProToolsAccess, onSelect = { vm.tab = it },
                         modifier = Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
                     else Box(Modifier.coachTarget("editor.tabs").size(1.dp))
@@ -287,7 +288,7 @@ private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> U
             val mime = src?.mime ?: a?.mimeType
             if (!vm.isVideo && (mime?.contains("heic", true) == true || mime?.contains("heif", true) == true) && EditFormat.forSource(mime) == EditFormat.JPEG)
                 Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_heic))
-            if (!vm.isVideo && src?.hasGainmap == true && (vm.recipe.hasColor || vm.recipe.hasSharpen))
+            if (!vm.isVideo && src?.hasGainmap == true && (vm.recipe.hasPixelOps || vm.recipe.hasSharpen))
                 Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_hdr))
             if (!vm.isVideo && vm.recipe.isOrientationOnly && EditFormat.forSource(mime) == EditFormat.JPEG)
                 Hint(Icons.Rounded.CheckCircle, stringResource(R.string.edit_hint_lossless))

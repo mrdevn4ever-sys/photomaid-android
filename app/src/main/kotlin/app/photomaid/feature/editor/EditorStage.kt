@@ -100,7 +100,9 @@ internal fun EditorStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
     Box(modifier.background(c.backgroundTint.copy(alpha = 0.5f)).testTag("editor.stage"), contentAlignment = Alignment.Center) {
         when {
             src == null -> CircularProgressIndicator()
+            vm.tab == EditorTab.CROP && vm.perspectiveMode -> PerspectiveStage(vm)
             vm.tab == EditorTab.CROP -> CropStage(vm)
+            vm.tab == EditorTab.RETOUCH -> RetouchStage(vm)
             vm.tab == EditorTab.MARKUP -> MarkupStage(vm.markup, vm.resultPreview, vm.baseResult, vm.recipe.frame, Modifier.fillMaxSize())
             else -> ResultStage(vm, src.preview)
         }

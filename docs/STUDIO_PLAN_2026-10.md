@@ -239,6 +239,7 @@ Perf-Build, Commit, Gerätetest-Prompt. Geräte-Pflicht ab S4: Export-Zeiten 108
 |---|---|---|
 | P1 Fundament | fertig | be0fce4 |
 | P2 Ebenen | fertig | 7799145 |
-| P3 Collage + Studio-Tab + Medienauswahl + Entwürfe | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) | dieser Stand |
-| P4–P7 | offen | – |
+| P3 Collage + Studio-Tab + Medienauswahl + Entwürfe | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) | 3b2695a |
+| P4 Perspektive, Farbmischer, Retusche (Kreis/Verlauf/Pinsel), Rote Augen | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) | dieser Stand |
+| P5–P7 | offen | – |
 

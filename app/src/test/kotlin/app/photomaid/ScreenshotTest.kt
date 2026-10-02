@@ -621,4 +621,29 @@ class ScreenshotTest {
         rule.onAllNodesWithTag("picker.tile")[2].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick)
         rule.waitForIdle(); rule.onRoot().captureRoboImage("build/outputs/roborazzi/c08_picker_selected.png")
     }
+
+    // P4: Perspektive, Farbmischer, Retusche (Kreis, Pinsel, Rote Augen).
+    private fun sliderTo(parent: String, v: Float) = rule.onNode(androidx.compose.ui.test.hasTestTag("editor.slider") and androidx.compose.ui.test.hasAnyAncestor(androidx.compose.ui.test.hasTestTag(parent)))
+        .performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { it(v) }
+    private fun tapAt(tag: String, x: Float, y: Float) { rule.onNodeWithTag(tag).performTouchInput { down(androidx.compose.ui.geometry.Offset(width * x, height * y)); up() }; rule.waitForIdle() }
+    @Test fun r01_perspective() = expApp().let { editor("r01_perspective", it, i = 1) {
+        tap("crop.mode.persp"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("persp.stage").fetchSemanticsNodes().isNotEmpty() }
+        sliderTo("persp.v", 45f) } }
+    @Test fun r02_perspective_result() = expApp().let { editor("r02_perspective_result", it, i = 1) {
+        tap("crop.mode.persp"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("persp.stage").fetchSemanticsNodes().isNotEmpty() }
+        sliderTo("persp.v", 45f); tap("crop.mode.crop") } }
+    @Test fun r03_mixer() = expApp(pro = true).let { editor("r03_mixer", it, i = 1) {
+        tap("tab.ADJUST"); tap("group.MIX"); tap("band.BLUE"); sliderTo("mix.SATURATION", -80f); sliderTo("mix.LUMINANCE", -30f) } }
+    @Test fun r04_retouch_radial() = expApp(pro = true).let { editor("r04_retouch_radial", it, i = 1) {
+        tap("tab.RETOUCH"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("retouch.canvas").fetchSemanticsNodes().isNotEmpty() }
+        tapAt("retouch.canvas", 0.5f, 0.55f)
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("local.0").fetchSemanticsNodes().isNotEmpty() }
+        sliderTo("local.slider", 70f) } }
+    @Test fun r05_retouch_mask_dark() = expApp(pro = true, dark = true).let { editor("r05_retouch_mask_dark", it, i = 1) {
+        tap("tab.RETOUCH"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("retouch.canvas").fetchSemanticsNodes().isNotEmpty() }
+        tap("rtool.LINEAR"); tapAt("retouch.canvas", 0.5f, 0.3f)
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("local.0").fetchSemanticsNodes().isNotEmpty() } } }
+    @Test fun r06_red_eye() = expApp().let { editor("r06_red_eye", it, i = 1) {
+        tap("tab.RETOUCH"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("retouch.canvas").fetchSemanticsNodes().isNotEmpty() }
+        tap("rtool.RED_EYE"); tapAt("retouch.canvas", 0.4f, 0.4f); tapAt("retouch.canvas", 0.6f, 0.4f) } }
 }

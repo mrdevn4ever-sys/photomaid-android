@@ -32,6 +32,71 @@ data class Affine(val a: Double = 1.0, val b: Double = 0.0, val c: Double = 0.0,
     }
 }
 
+/**
+ * Projektive 2D-Abbildung (3 × 3, Zeilen: m0 m1 m2 / m3 m4 m5 / m6 m7 m8) für Perspektive. Gerade Linien bleiben gerade.
+ * Gleiche Schreibweise wie Android `Matrix` (MSCALE_X, MSKEW_X, MTRANS_X, MSKEW_Y, MSCALE_Y, MTRANS_Y, MPERSP_0, MPERSP_1, MPERSP_2).
+ */
+class Homography(val m: DoubleArray = doubleArrayOf(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0)) {
+    init { require(m.size == 9) }
+    val isAffine: Boolean get() = abs(m[6]) < 1e-12 && abs(m[7]) < 1e-12
+
+    /** Erst `o`, dann `this`. */
+    operator fun times(o: Homography): Homography {
+        val r = DoubleArray(9)
+        for (i in 0..2) for (j in 0..2) r[i * 3 + j] = (0..2).sumOf { k -> m[i * 3 + k] * o.m[k * 3 + j] }
+        return Homography(r)
+    }
+    operator fun times(o: Affine): Homography = this * of(o)
+
+    fun map(x: Double, y: Double): Pair<Double, Double> {
+        val w = m[6] * x + m[7] * y + m[8]
+        return ((m[0] * x + m[1] * y + m[2]) / w) to ((m[3] * x + m[4] * y + m[5]) / w)
+    }
+
+    fun inverse(): Homography {
+        val a = m
+        val c00 = a[4] * a[8] - a[5] * a[7]; val c01 = a[5] * a[6] - a[3] * a[8]; val c02 = a[3] * a[7] - a[4] * a[6]
+        val det = a[0] * c00 + a[1] * c01 + a[2] * c02
+        require(abs(det) > 1e-15) { "nicht invertierbar" }
+        val inv = doubleArrayOf(
+            c00, a[2] * a[7] - a[1] * a[8], a[1] * a[5] - a[2] * a[4],
+            c01, a[0] * a[8] - a[2] * a[6], a[2] * a[3] - a[0] * a[5],
+            c02, a[1] * a[6] - a[0] * a[7], a[0] * a[4] - a[1] * a[3])
+        return Homography(DoubleArray(9) { inv[it] / det })
+    }
+
+    fun toAndroidValues(): FloatArray = FloatArray(9) { (m[it] / m[8]).toFloat() }
+
+    companion object {
+        fun of(a: Affine) = Homography(doubleArrayOf(a.a, a.c, a.tx, a.b, a.d, a.ty, 0.0, 0.0, 1.0))
+
+        /** Abbildung, die die vier Punkte [src] auf [dst] legt (Reihenfolge gleich). `null` bei entarteten Punkten. */
+        fun fromPoints(src: List<Pair<Double, Double>>, dst: List<Pair<Double, Double>>): Homography? {
+            require(src.size == 4 && dst.size == 4)
+            // 8 Gleichungen, h8 = 1.
+            val a = Array(8) { DoubleArray(9) }
+            for (i in 0..3) {
+                val (x, y) = src[i]; val (u, v) = dst[i]
+                a[2 * i] = doubleArrayOf(x, y, 1.0, 0.0, 0.0, 0.0, -u * x, -u * y, u)
+                a[2 * i + 1] = doubleArrayOf(0.0, 0.0, 0.0, x, y, 1.0, -v * x, -v * y, v)
+            }
+            for (col in 0..7) {
+                val piv = (col..7).maxBy { abs(a[it][col]) }
+                if (abs(a[piv][col]) < 1e-12) return null
+                val t = a[col]; a[col] = a[piv]; a[piv] = t
+                for (r in 0..7) if (r != col) {
+                    val f = a[r][col] / a[col][col]
+                    if (f != 0.0) for (k in col..8) a[r][k] -= f * a[col][k]
+                }
+            }
+            val h = DoubleArray(9) { if (it == 8) 1.0 else a[it][8] / a[it][it] }
+            return Homography(h)
+        }
+    }
+}
+
+operator fun Affine.times(o: Homography): Homography = Homography.of(this) * o
+
 data class PxSize(val width: Int, val height: Int) {
     val longEdge: Int get() = max(width, height)
     val pixels: Long get() = width.toLong() * height
@@ -42,11 +107,17 @@ data class PxSize(val width: Int, val height: Int) {
  * Liefert den Rahmen nach Vierteldrehung, den Ausschnitt in Pixeln, die Ausgabegröße und die Abbildung Quelle → Ausgabe.
  */
 class EditGeometry(val src: PxSize, val recipe: EditRecipe) {
-    /** Rahmen nach Vierteldrehung (Breite/Höhe tauschen bei 90°/270°). */
-    val frame: PxSize = if (recipe.turns % 2 == 1) PxSize(src.height, src.width) else src
+    /** Rahmen nach Vierteldrehung (Breite/Höhe tauschen bei 90°/270°), vor der Perspektive. */
+    val baseFrame: PxSize = if (recipe.turns % 2 == 1) PxSize(src.height, src.width) else src
 
     /** Vergrößerung beim Begradigen, damit das gedrehte Bild den ganzen Rahmen deckt (keine leeren Ecken). */
-    val straightenScale: Double = coverScale(frame.width.toDouble(), frame.height.toDouble(), recipe.straighten.toDouble())
+    val straightenScale: Double = coverScale(baseFrame.width.toDouble(), baseFrame.height.toDouble(), recipe.straighten.toDouble())
+
+    /** Perspektive: Viereck im Grundrahmen → Rechteck [frame] (Seitenlängen wie gemessen, höchstens so viele Pixel wie vorher). */
+    private val warp: Pair<Homography, PxSize>? = recipe.perspective?.takeIf { !it.isIdentity }?.let { q -> PerspectiveMath.warp(q, baseFrame) }
+
+    /** Rahmen, auf den sich der Ausschnitt bezieht (nach Vierteldrehung und Perspektive). */
+    val frame: PxSize = warp?.second ?: baseFrame
 
     /** Ausschnitt in Rahmen-Pixeln (mindestens 1 × 1). */
     val cropLeft: Double = recipe.crop.left.toDouble() * frame.width
@@ -59,10 +130,10 @@ class EditGeometry(val src: PxSize, val recipe: EditRecipe) {
     /** Endgültige Ausgabegröße: Zielgröße (nie größer als der Ausschnitt) oder Ausschnitt. */
     val output: PxSize = ResizeRules.clampToSource(recipe.resizeWidth, recipe.resizeHeight, cropSize)
 
-    /** Quelle → Rahmen (Vierteldrehung + Spiegeln + Begradigen um die Mitte). */
-    val sourceToFrame: Affine = run {
+    /** Quelle → Grundrahmen (Vierteldrehung + Spiegeln + Begradigen um die Mitte). */
+    val sourceToBase: Affine = run {
         val w = src.width.toDouble(); val h = src.height.toDouble()
-        val fw = frame.width.toDouble(); val fh = frame.height.toDouble()
+        val fw = baseFrame.width.toDouble(); val fh = baseFrame.height.toDouble()
         val turn = Affine.translate(fw / 2, fh / 2) * Affine.rotateDeg(90.0 * recipe.turns) * Affine.translate(-w / 2, -h / 2)
         val flip = Affine.translate(fw / 2, fh / 2) *
             Affine.scale(if (recipe.flipH) -1.0 else 1.0, if (recipe.flipV) -1.0 else 1.0) * Affine.translate(-fw / 2, -fh / 2)
@@ -71,8 +142,11 @@ class EditGeometry(val src: PxSize, val recipe: EditRecipe) {
         straight * flip * turn
     }
 
+    /** Quelle → Rahmen (inkl. Perspektive). */
+    val sourceToFrame: Homography = warp?.let { it.first * sourceToBase } ?: Homography.of(sourceToBase)
+
     /** Quelle → Ausgabe (inkl. Ausschnitt und Skalierung). */
-    val sourceToOutput: Affine = Affine.scale(output.width / cropSize.width.toDouble(), output.height / cropSize.height.toDouble()) *
+    val sourceToOutput: Homography = Affine.scale(output.width / cropSize.width.toDouble(), output.height / cropSize.height.toDouble()) *
         Affine.translate(-cropLeft, -cropTop) * sourceToFrame
 
     /** Benötigter Bereich der Quelle (Pixel, für Ausschnitt-Dekodierung bei sehr großen Fotos), gerundet nach außen. */
@@ -93,6 +167,59 @@ class EditGeometry(val src: PxSize, val recipe: EditRecipe) {
             val r = Math.toRadians(abs(deg)); val c = cos(r); val s = sin(r)
             return max((w * c + h * s) / w, (w * s + h * c) / h)
         }
+    }
+}
+
+/** Perspektive: vier Ecken (normiert im Grundrahmen) werden zum Rechteck. Rein manuell, keine Erkennung. */
+object PerspectiveMath {
+    /** Kleinster Abstand zweier Ecken (Anteil der Rahmenkante), damit das Viereck nicht entartet. */
+    const val MIN_SIDE = 0.12f
+
+    fun warp(q: Quad, base: PxSize): Pair<Homography, PxSize>? {
+        val bw = base.width.toDouble(); val bh = base.height.toDouble()
+        fun px(p: NormPoint) = (p.x * bw) to (p.y * bh)
+        val pts = listOf(px(q.tl), px(q.tr), px(q.br), px(q.bl))
+        fun len(a: Pair<Double, Double>, b: Pair<Double, Double>) = kotlin.math.hypot(a.first - b.first, a.second - b.second)
+        var w = (len(pts[0], pts[1]) + len(pts[3], pts[2])) / 2
+        var h = (len(pts[0], pts[3]) + len(pts[1], pts[2])) / 2
+        if (w < 1 || h < 1) return null
+        val cap = (bw * bh) / (w * h)
+        if (cap < 1.0) { val k = kotlin.math.sqrt(cap); w *= k; h *= k }
+        val size = PxSize(max(1, w.roundToInt()), max(1, h.roundToInt()))
+        val dst = listOf(0.0 to 0.0, size.width.toDouble() to 0.0, size.width.toDouble() to size.height.toDouble(), 0.0 to size.height.toDouble())
+        return Homography.fromPoints(pts, dst)?.let { it to size }
+    }
+
+    /** Ist das Viereck benutzbar (konvex, nicht zu klein)? */
+    fun isValid(q: Quad): Boolean {
+        val p = listOf(q.tl, q.tr, q.br, q.bl)
+        var sign = 0
+        for (i in 0..3) {
+            val a = p[i]; val b = p[(i + 1) % 4]; val c = p[(i + 2) % 4]
+            val cross = (b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x)
+            val s = if (cross > 0) 1 else if (cross < 0) -1 else 0
+            if (s == 0 || (sign != 0 && s != sign)) return false
+            sign = s
+            if (kotlin.math.hypot((b.x - a.x).toDouble(), (b.y - a.y).toDouble()) < MIN_SIDE) return false
+        }
+        return true
+    }
+
+    /** Ecke [i] (0 = oben links, im Uhrzeigersinn) verschieben – nur wenn das Viereck gültig bleibt. */
+    fun moveCorner(q: Quad, i: Int, x: Float, y: Float): Quad {
+        val p = NormPoint(x.coerceIn(0f, 1f), y.coerceIn(0f, 1f))
+        val n = when (i) { 0 -> q.copy(tl = p); 1 -> q.copy(tr = p); 2 -> q.copy(br = p); else -> q.copy(bl = p) }
+        return if (isValid(n)) n else q
+    }
+
+    /**
+     * Schnelle Korrektur (Gebäude): [vertical] > 0 zieht die oberen Ecken zusammen (stürzende Linien gerade), < 0 die
+     * unteren; [horizontal] entsprechend links/rechts. Werte −100…100.
+     */
+    fun keystone(vertical: Float, horizontal: Float): Quad {
+        val v = (vertical / 100f).coerceIn(-1f, 1f) * 0.3f; val h = (horizontal / 100f).coerceIn(-1f, 1f) * 0.3f
+        val tIn = max(0f, v); val bIn = max(0f, -v); val lIn = max(0f, h); val rIn = max(0f, -h)
+        return Quad(NormPoint(tIn, lIn), NormPoint(1f - tIn, rIn), NormPoint(1f - bIn, 1f - rIn), NormPoint(bIn, 1f - lIn))
     }
 }
 

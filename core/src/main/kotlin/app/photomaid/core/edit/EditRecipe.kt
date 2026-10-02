@@ -86,6 +86,22 @@ sealed interface Mask {
 @Serializable
 data class LocalAdjustment(val mask: Mask, val adjust: Adjustments = Adjustments())
 
+/** Viereck (normiert): oben links, oben rechts, unten rechts, unten links. */
+@Serializable
+data class Quad(val tl: NormPoint = NormPoint(0f, 0f), val tr: NormPoint = NormPoint(1f, 0f), val br: NormPoint = NormPoint(1f, 1f), val bl: NormPoint = NormPoint(0f, 1f)) {
+    val isIdentity: Boolean get() = listOf(tl.x, tl.y, tr.x - 1f, tr.y, br.x - 1f, br.y - 1f, bl.x, bl.y - 1f).all { abs(it) < NormRect.EPS }
+    val corners: List<NormPoint> get() = listOf(tl, tr, br, bl)
+    /** Nach Vierteldrehung des Rahmens im Uhrzeigersinn (Ecken wandern mit). */
+    fun rotatedClockwise(): Quad { val r = { p: NormPoint -> NormPoint(1f - p.y, p.x) }; return Quad(r(bl), r(tl), r(tr), r(br)) }
+    fun flippedH(): Quad { val f = { p: NormPoint -> NormPoint(1f - p.x, p.y) }; return Quad(f(tr), f(tl), f(bl), f(br)) }
+    fun flippedV(): Quad { val f = { p: NormPoint -> NormPoint(p.x, 1f - p.y) }; return Quad(f(bl), f(br), f(tr), f(tl)) }
+    companion object { val FULL = Quad() }
+}
+
+/** Rote Augen: Kreis um die Pupille (Ausgabekoordinaten, Radius relativ zur langen Kante). Klassische Farbregel. */
+@Serializable
+data class RedEyeSpot(val center: NormPoint, val radius: Float)
+
 /** Fest eingebaute Filter (reine Farbmatrizen, kein Download, keine KI). */
 @Serializable
 enum class FilterId { NONE, MONO, MONO_CONTRAST, WARM, COOL, SEPIA, FADE, VIVID }
@@ -115,9 +131,15 @@ data class EditRecipe(
     /** Markieren: Text, Sticker, Zeichnungen, Formen, Abdeckungen (in dieser Reihenfolge gezeichnet). */
     val layers: List<Layer> = emptyList(),
     val frame: FrameStyle? = null,
+    /** Perspektive im Grundrahmen (nach Drehen/Begradigen); `null` = keine. Kostenlos wie Zuschneiden. */
+    val perspective: Quad? = null,
+    /** Rote-Augen-Korrektur (kostenlos). */
+    val redEyes: List<RedEyeSpot> = emptyList(),
 ) {
     val turns: Int get() = ((quarterTurns % 4) + 4) % 4
-    val hasGeometry: Boolean get() = turns != 0 || flipH || flipV || abs(straighten) > 0.01f || !crop.isFull
+    val hasPerspective: Boolean get() = perspective != null && !perspective.isIdentity
+    val hasGeometry: Boolean get() = turns != 0 || flipH || flipV || abs(straighten) > 0.01f || !crop.isFull || hasPerspective
+    val hasRedEye: Boolean get() = redEyes.isNotEmpty()
     /** Ändert Pixelwerte (Tonwerte, Farbe, Filter, Vignette, Körnung, Farbmischer, lokale Anpassungen). */
     val hasColor: Boolean get() = !adjust.colorNeutral || (filter != FilterId.NONE && filterIntensity > 0.001f) || !colorMix.isNeutral ||
         locals.any { !it.adjust.pointNeutral }
@@ -126,16 +148,19 @@ data class EditRecipe(
     val hasResize: Boolean get() = resizeWidth != null && resizeHeight != null
     val hasLayers: Boolean get() = layers.isNotEmpty()
     val hasFrame: Boolean get() = frame != null && !frame.isNeutral
-    val isIdentity: Boolean get() = !hasGeometry && !hasColor && !hasSharpen && !hasResize && !hasLayers && !hasFrame
+    val isIdentity: Boolean get() = !hasGeometry && !hasColor && !hasSharpen && !hasResize && !hasLayers && !hasFrame && !hasRedEye
+    /** Pixel ändern sich über die Pipeline (Farbe oder Rote Augen). */
+    val hasPixelOps: Boolean get() = hasColor || hasRedEye
 
     /** Nur Drehen/Spiegeln – bei JPEG verlustfrei über die EXIF-Ausrichtung möglich. */
     val isOrientationOnly: Boolean get() =
-        (turns != 0 || flipH || flipV) && abs(straighten) <= 0.01f && crop.isFull && !hasColor && !hasSharpen && !hasResize && !hasLayers && !hasFrame
+        (turns != 0 || flipH || flipV) && abs(straighten) <= 0.01f && crop.isFull && !hasPerspective && !hasRedEye && !hasColor && !hasSharpen && !hasResize && !hasLayers && !hasFrame
 
     /** Pro-Werkzeuge (Regler, Filter, Größe, Rahmen) – Zuschneiden/Drehen und Markieren sind kostenlos. */
     val usesProTools: Boolean get() = hasColor || hasSharpen || hasResize || hasFrame
 
-    fun rotatedClockwise(): EditRecipe = copy(quarterTurns = (turns + 1) % 4, crop = crop.rotatedClockwise(), resizeWidth = null, resizeHeight = null)
+    fun rotatedClockwise(): EditRecipe = copy(quarterTurns = (turns + 1) % 4, crop = crop.rotatedClockwise(), perspective = perspective?.rotatedClockwise(),
+        resizeWidth = null, resizeHeight = null)
 }
 
 /** Ausschnitt nach einer Vierteldrehung im Uhrzeigersinn (der Rahmen dreht mit). */

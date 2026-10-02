@@ -15,6 +15,8 @@ import android.net.Uri
 import android.os.Build
 import androidx.exifinterface.media.ExifInterface
 import app.photomaid.core.edit.Affine
+import app.photomaid.core.edit.Homography
+import app.photomaid.core.edit.times
 import app.photomaid.core.edit.Detail
 import app.photomaid.core.edit.PixelPipeline
 import app.photomaid.core.edit.EditFormat
@@ -131,7 +133,7 @@ class ImageEditEngine(private val context: Context) {
             LayerRenderer.apply(out, recipe.layers, out.width, out.height)
         }
         // Ultra HDR (Android 14+): Gain-Map bei reiner Geometrie mitführen, damit die HDR-Helligkeit erhalten bleibt.
-        if (Build.VERSION.SDK_INT >= 34 && src.hasGainmap() && !recipe.hasColor && !recipe.hasSharpen && !recipe.hasLayers && !recipe.hasFrame)
+        if (Build.VERSION.SDK_INT >= 34 && src.hasGainmap() && !recipe.hasPixelOps && !recipe.hasSharpen && !recipe.hasLayers && !recipe.hasFrame)
             carryGainmap(src, out, g.sourceToOutput * extra)
         return if (colorAndSharpen && recipe.hasFrame) LayerRenderer.frame(out, recipe.frame).also { if (it !== out) out.recycle() } else out
     }
@@ -147,7 +149,7 @@ class ImageEditEngine(private val context: Context) {
      * [pointOnly] = ohne Positionsabhängiges (Zuschneiden-Ansicht zeigt den ganzen Rahmen).
      */
     fun applyPixels(b: Bitmap, recipe: EditRecipe, x0: Int = 0, y0: Int = 0, outW: Int = b.width, outH: Int = b.height, pointOnly: Boolean = false) {
-        val r = if (pointOnly) recipe.copy(locals = emptyList(), adjust = recipe.adjust.copy(vignette = 0f, grain = 0f)) else recipe
+        val r = if (pointOnly) recipe.copy(locals = emptyList(), redEyes = emptyList(), adjust = recipe.adjust.copy(vignette = 0f, grain = 0f)) else recipe
         val pipe = PixelPipeline(r)
         if (pipe.isNeutral) return
         val w = b.width; val stripe = 96
@@ -190,7 +192,7 @@ class ImageEditEngine(private val context: Context) {
     }
 
     @androidx.annotation.RequiresApi(34)
-    private fun carryGainmap(src: Bitmap, out: Bitmap, m: Affine) {
+    private fun carryGainmap(src: Bitmap, out: Bitmap, m: Homography) {
         runCatching {
             val gm = src.gainmap ?: return
             val c = gm.gainmapContents
@@ -223,7 +225,8 @@ class ImageEditEngine(private val context: Context) {
             val pts = listOf(0.0 to 0.0, tw.toDouble() to 0.0, 0.0 to th.toDouble(), tw.toDouble() to th.toDouble()).map { inv.map(it.first, it.second) }
             val l = pts.minOf { it.first }.toInt().coerceIn(0, full.width - 1); val t = pts.minOf { it.second }.toInt().coerceIn(0, full.height - 1)
             val r = kotlin.math.ceil(pts.maxOf { it.first }).toInt().coerceIn(l + 1, full.width); val b = kotlin.math.ceil(pts.maxOf { it.second }).toInt().coerceIn(t + 1, full.height)
-            val srcScale = min(1.0, kotlin.math.sqrt(kotlin.math.abs(toDetail.a * toDetail.d - toDetail.b * toDetail.c)))
+            // Ausgabepixel je Quellpixel (gilt auch mit Perspektive annähernd) – nie größer dekodieren als nötig.
+            val srcScale = min(1.0, max(tw.toDouble() / (r - l), th.toDouble() / (b - t)))
             val (part, area, _) = decodeRegion(uri, full, intArrayOf(l, t, r, b), srcScale) ?: return@runCatching null
             val partToSource = Affine.translate(area.left.toDouble(), area.top.toDouble()) * Affine.scale(area.width().toDouble() / part.width, area.height().toDouble() / part.height)
             val out = Bitmap.createBitmap(tw, th, Bitmap.Config.ARGB_8888)
@@ -292,7 +295,7 @@ class ImageEditEngine(private val context: Context) {
                 val size = PxSize(rendered.width, rendered.height)
                 rendered.recycle()
                 copyExif(uri, out, size, removeLocation, softwareTag)
-                EditExport(out, format, size, hdrDropped = gain && (recipe.hasColor || recipe.hasSharpen || recipe.hasLayers || recipe.hasFrame), lossless = false)
+                EditExport(out, format, size, hdrDropped = gain && (recipe.hasPixelOps || recipe.hasSharpen || recipe.hasLayers || recipe.hasFrame), lossless = false)
             } catch (e: OutOfMemoryError) {
                 out.delete(); throw EditError.TooLarge()
             } catch (e: EditError) {

@@ -4,7 +4,15 @@ import app.photomaid.R
 import app.photomaid.core.edit.Adjustments
 
 /** Reglergruppen im Reiter „Anpassen“ (zuerst die häufigsten, feinere unter „Detail“ und „Effekte“). */
-enum class AdjustGroup(val label: Int) { LIGHT(R.string.edit_grp_light), COLOR(R.string.edit_grp_color), DETAIL(R.string.edit_grp_detail), EFFECTS(R.string.edit_grp_effects) }
+enum class AdjustGroup(val label: Int) {
+    LIGHT(R.string.edit_grp_light), COLOR(R.string.edit_grp_color), MIX(R.string.edit_grp_mix), DETAIL(R.string.edit_grp_detail), EFFECTS(R.string.edit_grp_effects)
+}
+
+/** Ein Regler des Farbmischers (je Farbbereich). */
+enum class MixField(val label: Int) { HUE(R.string.edit_mix_hue), SATURATION(R.string.edit_mix_saturation), LUMINANCE(R.string.edit_mix_luminance) }
+
+/** Werkzeuge im Reiter „Retusche“: Bereiche (Masken) aufhellen/abdunkeln/färben und Rote Augen. */
+enum class RetouchTool(val label: Int) { RADIAL(R.string.ret_radial), LINEAR(R.string.ret_linear), BRUSH(R.string.ret_brush), RED_EYE(R.string.ret_red_eye) }
 
 /** Ein Regler: Gruppe, Bereich und Abbildung auf [Adjustments]. */
 enum class AdjustTool(val group: AdjustGroup, val label: Int, val min: Float = -100f, val max: Float = 100f, val advanced: Boolean = false) {

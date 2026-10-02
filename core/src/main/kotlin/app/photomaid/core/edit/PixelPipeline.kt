@@ -24,10 +24,11 @@ class PixelPipeline(val recipe: EditRecipe) {
     private val vignette = recipe.adjust.vignette / 100f
     private val grain = (recipe.adjust.grain / 100f).coerceIn(0f, 1f)
     private val maskCache = HashMap<Mask, MaskGrid>()
+    private val redEyes = recipe.redEyes
 
-    val isNeutral: Boolean get() = point.isNeutral && locals.isEmpty() && abs(vignette) < 0.005f && grain < 0.005f
+    val isNeutral: Boolean get() = point.isNeutral && locals.isEmpty() && abs(vignette) < 0.005f && grain < 0.005f && redEyes.isEmpty()
     /** Nur punktweise (ohne Position): darf als Farbtabelle (Video, Filter-Vorschaubilder) genutzt werden. */
-    val isPointOnly: Boolean get() = locals.isEmpty() && abs(vignette) < 0.005f && grain < 0.005f
+    val isPointOnly: Boolean get() = locals.isEmpty() && abs(vignette) < 0.005f && grain < 0.005f && redEyes.isEmpty()
 
     /**
      * Wendet die Pipeline auf eine Kachel an. [x0]/[y0] = Lage der Kachel im Ausgabebild der Größe [outW]×[outH].
@@ -46,6 +47,7 @@ class PixelPipeline(val recipe: EditRecipe) {
                 val i = y * w + x
                 val p = px[i]
                 c[0] = ((p shr 16) and 0xFF) / 255f; c[1] = ((p shr 8) and 0xFF) / 255f; c[2] = (p and 0xFF) / 255f
+                if (redEyes.isNotEmpty()) RedEye.apply(c, x0 + x + 0.5f, gy + 0.5f, outW, outH, redEyes)
                 point.apply(c)
                 if (masks.isNotEmpty()) {
                     val u = (x0 + x + 0.5f) * invW
@@ -190,8 +192,13 @@ internal class PointOps private constructor(
         if (dh == 0f && ds == 0f && dl == 0f) return
         var h2 = (hue + dh) % 360f; if (h2 < 0f) h2 += 360f
         val s2 = (sat * (1f + ds)).coerceIn(0f, 1f)
-        val v2 = (mx * (1f + dl * 0.6f * sat)).coerceIn(0f, 1f)
-        hsvToRgb(h2, s2, v2, c)
+        // Farbton/Sättigung behalten die Helligkeit (Luma) – Entsättigen macht Blau grau, nicht weiß. Nur der
+        // Helligkeits-Regler hellt auf bzw. dunkelt ab.
+        val l0 = PixelPipeline.luma(r, g, b)
+        hsvToRgb(h2, s2, mx, c)
+        val target = (l0 * (1f + dl * 0.6f * sat)).coerceIn(0f, 1f)
+        val shift = target - PixelPipeline.luma(c[0], c[1], c[2])
+        c[0] = (c[0] + shift).coerceIn(0f, 1f); c[1] = (c[1] + shift).coerceIn(0f, 1f); c[2] = (c[2] + shift).coerceIn(0f, 1f)
     }
 
     companion object {
@@ -242,6 +249,33 @@ internal class PointOps private constructor(
 }
 
 /** Tonwertkurve auf der (Gamma-)Helligkeit. Jede Stufe wirkt in ihrem Bereich; Ergebnis monoton und in 0…1. */
+/**
+ * Rote Augen: im Kreis wird nur deutliches Rot (Rot klar über Grün und Blau) durch das Mittel aus Grün und Blau ersetzt –
+ * Haut außerhalb der Pupille bleibt unberührt, weiche Kante am Rand. Klassische Farbregel, keine Erkennung.
+ */
+object RedEye {
+    fun apply(c: FloatArray, x: Float, y: Float, outW: Int, outH: Int, spots: List<RedEyeSpot>) {
+        val long = max(outW, outH).toFloat()
+        for (s in spots) {
+            val rad = s.radius * long
+            if (rad < 0.5f) continue
+            val dx = x - s.center.x * outW; val dy = y - s.center.y * outH
+            val d = sqrt(dx * dx + dy * dy) / rad
+            if (d >= 1f) continue
+            val edge = 1f - PixelPipeline.smooth(0.75f, 1f, d)
+            val r = c[0]; val g = c[1]; val b = c[2]
+            val other = max(g, b)
+            // Wie deutlich ist es Rot? (0 bei Haut/Grau, 1 bei typischem Blitz-Rot)
+            val redness = PixelPipeline.smooth(0.06f, 0.22f, r - other) * PixelPipeline.smooth(1.55f, 2.2f, r / max(0.02f, other))
+            val k = edge * redness
+            if (k <= 0f) continue
+            // Pupille: dunkles Neutral aus Grün/Blau.
+            val target = (g + b) / 2f
+            c[0] = r + (target - r) * k
+        }
+    }
+}
+
 object ToneCurve {
     private fun toLin(v: Float) = if (v <= 0.04045f) v / 12.92f else ((v + 0.055f) / 1.055f).pow(2.4f)
     private fun toGamma(v: Float) = if (v <= 0.0031308f) v * 12.92f else 1.055f * v.pow(1f / 2.4f) - 0.055f

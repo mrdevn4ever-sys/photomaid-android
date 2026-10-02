@@ -26,6 +26,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BrightnessMedium
 import androidx.compose.material.icons.rounded.Contrast
 import androidx.compose.material.icons.rounded.Crop
+import androidx.compose.material.icons.rounded.Healing
 import androidx.compose.material.icons.rounded.Flip
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.LockOpen
@@ -116,20 +117,22 @@ import app.photomaid.navigation.LocalApp
 
 internal val EditorTab.icon: ImageVector get() = when (this) {
     EditorTab.CROP -> Icons.Rounded.Crop; EditorTab.ADJUST -> Icons.Rounded.Tune; EditorTab.FILTER -> Icons.Rounded.AutoAwesome
+    EditorTab.RETOUCH -> Icons.Rounded.Healing
     EditorTab.MARKUP -> Icons.Rounded.Draw; EditorTab.FRAME -> Icons.Rounded.CropFree
     EditorTab.RESIZE -> Icons.Rounded.PhotoSizeSelectLarge; EditorTab.TRIM -> Icons.Rounded.ContentCut
 }
 
 internal val EditorTab.label: Int get() = when (this) {
     EditorTab.CROP -> R.string.edit_tab_crop; EditorTab.ADJUST -> R.string.edit_tab_adjust; EditorTab.FILTER -> R.string.edit_tab_filter
+    EditorTab.RETOUCH -> R.string.edit_tab_retouch
     EditorTab.MARKUP -> R.string.edit_tab_markup; EditorTab.FRAME -> R.string.edit_tab_frame
     EditorTab.RESIZE -> R.string.edit_tab_resize; EditorTab.TRIM -> R.string.edit_tab_trim
 }
 
 /** Reiter, deren Speichern Pro braucht (Vorschau bleibt frei). */
-internal val EditorTab.isPro: Boolean get() = this != EditorTab.CROP && this != EditorTab.MARKUP
+internal val EditorTab.isPro: Boolean get() = this != EditorTab.CROP && this != EditorTab.MARKUP && this != EditorTab.RETOUCH
 
-private val AdjustTool.icon: ImageVector get() = when (this) {
+internal val AdjustTool.icon: ImageVector get() = when (this) {
     AdjustTool.EXPOSURE -> Icons.Rounded.Exposure; AdjustTool.BRIGHTNESS -> Icons.Rounded.BrightnessMedium
     AdjustTool.CONTRAST -> Icons.Rounded.Contrast; AdjustTool.HIGHLIGHTS -> Icons.Rounded.WbSunny
     AdjustTool.SHADOWS -> Icons.Rounded.Brightness3; AdjustTool.WHITES -> Icons.Rounded.LightMode; AdjustTool.BLACKS -> Icons.Rounded.DarkMode
@@ -152,7 +155,7 @@ private fun aspectLabel(p: AspectPreset, swapped: Boolean): String = when (p) {
     else -> if (swapped) "${p.h}:${p.w}" else "${p.w}:${p.h}"
 }
 
-private fun signed(v: Float, digits: Int = 0): String {
+internal fun signed(v: Float, digits: Int = 0): String {
     val nf = NumberFormat.getNumberInstance().apply { maximumFractionDigits = digits; minimumFractionDigits = digits }
     val r = if (digits == 0) v.roundToInt().toFloat() else v
     return (if (r > 0f) "+" else "") + nf.format(r)
@@ -203,7 +206,7 @@ internal fun EditSlider(
 }
 
 @Composable
-private fun ToolButton(icon: ImageVector, label: String, modifier: Modifier = Modifier, iconModifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun ToolButton(icon: ImageVector, label: String, modifier: Modifier = Modifier, iconModifier: Modifier = Modifier, onClick: () -> Unit) {
     val c = PM.colors
     Column(modifier.clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button, onClick = onClick)
         .semantics(mergeDescendants = true) {}.padding(horizontal = AppSpacing.xs, vertical = AppSpacing.xxs).heightIn(min = AppSpacing.minTouch),
@@ -249,6 +252,11 @@ internal fun ProHint(onPro: () -> Unit, modifier: Modifier = Modifier) {
 internal fun CropPanel(vm: EditorViewModel) {
     val haptics = LocalHapticFeedback.current
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            Chip(stringResource(R.string.edit_crop_mode_crop), !vm.perspectiveMode, Modifier.testTag("crop.mode.crop")) { vm.perspectiveMode = false }
+            Chip(stringResource(R.string.edit_crop_mode_perspective), vm.perspectiveMode, Modifier.testTag("crop.mode.persp"), dot = vm.recipe.hasPerspective) { vm.perspectiveMode = true }
+        }
+        if (vm.perspectiveMode) { PerspectivePanel(vm); return@Column }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("editor.aspects"),
             horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalAlignment = Alignment.CenterVertically) {
             for (p in AspectPreset.entries) {
@@ -285,10 +293,18 @@ internal fun AdjustPanel(vm: EditorViewModel) {
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("adjust.groups"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
             for (g in AdjustGroup.entries) Chip(stringResource(g.label), vm.adjustGroup == g, Modifier.testTag("group.${g.name}"),
-                dot = AdjustTool.of(g).any { it.get(a) != 0f }) {
+                dot = if (g == AdjustGroup.MIX) !vm.recipe.colorMix.isNeutral else AdjustTool.of(g).any { it.get(a) != 0f }) {
                 vm.adjustGroup = g
-                if (vm.adjustTool.group != g) vm.adjustTool = AdjustTool.of(g).first()
+                if (g != AdjustGroup.MIX && vm.adjustTool.group != g) vm.adjustTool = AdjustTool.of(g).first()
             }
+        }
+        if (vm.adjustGroup == AdjustGroup.MIX) {
+            MixPanel(vm)
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset_group, stringResource(AdjustGroup.MIX.label)), Modifier.testTag("editor.reset")) {
+                    vm.resetGroup(AdjustGroup.MIX) }
+            }
+            return@Column
         }
         val tools = AdjustTool.of(vm.adjustGroup).filter { !it.advanced }
         LazyRow(Modifier.fillMaxWidth().testTag("adjust.tools"), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -324,7 +340,7 @@ private fun AdjustSlider(vm: EditorViewModel, t: AdjustTool) {
 
 /** Werkzeug als Kreis mit Symbol, darunter der Name; Punkt = Wert ≠ 0. */
 @Composable
-private fun AdjustToolButton(t: AdjustTool, selected: Boolean, changed: Boolean, modifier: Modifier, onClick: () -> Unit) {
+internal fun AdjustToolButton(t: AdjustTool, selected: Boolean, changed: Boolean, modifier: Modifier, onClick: () -> Unit) {
     val c = PM.colors
     Column(modifier.clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
         .semantics(mergeDescendants = true) { this.selected = selected }.testTag("adjust.${t.name}").padding(vertical = 4.dp),
