@@ -146,24 +146,27 @@ Stand der App: Commit 022b86e + Fallback Englisch/„gespart“. Prüfstatus: NO
 |---|---|---|---|---|
 | 0.5 | **Ordner-Dateien in den Papierkorb statt endgültig** (Android 17+) | `DocumentsContract.trashDocument` gibt es ab API 37 (geprüft in `android.jar` 36 vs. 37). Wenn das Dokument `FLAG_SUPPORTS_TRASH` meldet: Papierkorb statt `deleteDocument`, Text „liegt im Papierkorb des Speicherorts“; sonst wie heute endgültig mit deutlicher Warnung. Größen-/„gespart“-Logik unverändert. Tests mit Fake-Provider beider Fälle | hoch (Sicherheit) | Free |
 | 0.6 | **Fertige Sammlung „Fotos älter als 1 Jahr“** (Wiper) | Heute gibt es fertig nur „Videos älter als 1 Jahr“; für Fotos nur als eigene Sammlung (Pro). Fünfte fertige Sammlung `fixed(5)`, PHOTOS + `OlderThan(365)`, kostenlos | mittel | Free |
+| 0.7 | **Link zur Datenschutzerklärung in der App** | Einstellungen › Datenschutz: „Datenschutzerklärung“ öffnet die Seite im Browser (de → /photomaid/privacy/, sonst …/en/). Neue Kennung in allen 16 Sprachen | klein | – |
 | 1.4 | **Monat erneut durchsehen** (Swipewipe) | Durchgesehene Monate zeigen einen Haken (statt durchgestrichen); Menü „Erneut durchsehen“ öffnet alle Medien des Monats inkl. behaltener. Bestehende Entscheidungen bleiben, bis neu gewischt wird (ein Commit je Wisch). Nichts wird zurückgesetzt | mittel | Free |
 | 1.5 | **Später ohne Termin** („Lesezeichen“, Swipewipe) | In „Ändern“ der Später-Pille Option „Ohne Termin – ich hole es selbst“. Kommt nie automatisch zurück, steht in „Später“ unter „Ohne Termin“ mit „Zurück in den Stapel“. Core: `Later` mit `dueDay = null` als eigener Zustand, eigener Test, kein Erinnerungs-Push | mittel | Free |
 | 3.3 | **Reihenfolge im Feed** (Sponge) | Chip im Feed-Kopf: Neueste (Standard) · Älteste · Größte zuerst · Zufällig. Zufall mit festem Startwert je Sitzung, damit „runter“ stabil zurückführt. „Name“ nur in Dateien-Ordnern. Gemerkt je Quelle (ohne Medien-IDs) | mittel (Größte) / gering (Zufall) | Free |
 
-### Braucht deine Entscheidung (Regelkonflikt)
+| 3.4 | **Tasten zum Entscheiden** (Option, entschieden 2026-10-02) | Einstellungen › Bedienung: „Tasten zum Entscheiden“ (Standard **aus**). Wenn an: unter dem Medium eine Leiste ← Papierkorb · ↑ Behalten · → Später, außerhalb der Gestenfläche, über der Aktionsleiste. Gesten bleiben aktiv. Tasten rufen exakt denselben Commit-Pfad wie die Gesten (`FeedGestureMachine` → Ledger, Item-ID/Revision/Command-ID), gesperrt während Commit/Animation (kein Doppel-Entscheid). Werbekarte: Tasten ausgeblendet (Karte ist nie eine Entscheidung). TalkBack-Aktionen unverändert. CLAUDE.md-Regel beim Bau anpassen | mittel (Bedienbarkeit) | Free |
+
+### Entschieden (2026-10-02)
 | Idee | Problem | Empfehlung |
 |---|---|---|
-| Tasten statt/neben Wischen (Swiftly) | Widerspricht der festen Regel „Keine Entscheidungs-Buttons im Feed (nur TalkBack/Schaltersteuerung)“ | **Nur als Bedienungshilfe**: Einstellung „Tasten zum Entscheiden“ (Standard aus) unter Bedienungshilfen, Tasten außerhalb der Gestenfläche, gleicher Commit-Pfad wie Gesten. Sonst weglassen |
+| Tasten statt/neben Wischen (Swiftly) | Widerspricht der bisherigen Regel „Keine Entscheidungs-Buttons im Feed (nur TalkBack/Schaltersteuerung)“ | **Entschieden 2026-10-02: ja, als Option in den Einstellungen** → neuer Punkt 3.4 |
 
 ### Release / Recht (Store-Schritte, kein App-Code)
 | # | Punkt | Was zu tun ist |
 |---|---|---|
-| R1 | Play-Richtlinie Foto-/Video-Berechtigungen | `READ_MEDIA_IMAGES/VIDEO` sind nur für Apps mit Kernfunktion „Medien verwalten“ erlaubt; der Photo Picker passt für einen Aufräumer nicht (ganze Mediathek nötig). In der Play Console die **Berechtigungs-Erklärung** ausfüllen (Begründung: Galerie aufräumen, alles lokal). Text vorbereiten aus `docs/PRIVACY_DATA_MAP.md` |
-| R2 | Datenschutz-URL + Data-Safety-Formular | Öffentliche Seite nötig (weiter offen). Grundlage `docs/PRIVACY_DATA_MAP.md`; Werbe-SDK (AdMob) und Kauf angeben |
-| R3 | Einwilligung EWR/UK/Schweiz | Erledigt im Code (UMP vor AdMob). Im AdMob-Konto die Einwilligungsnachricht (GDPR-Message) veröffentlichen, sonst keine Anzeigen |
-| R4 | Zielgruppe / Families | In der Play Console **keine Altersgruppe unter 13** wählen (Zielgruppe Erwachsene). Dann gilt die Families-Richtlinie nicht, kein Age-Screen nötig. Sollen Kinder Zielgruppe sein: nur zertifizierte Werbung, nicht personalisiert – nicht empfohlen |
+| R1 | (Inhaber) Play-Richtlinie Foto-/Video-Berechtigungen | `READ_MEDIA_IMAGES/VIDEO` sind nur für Apps mit Kernfunktion „Medien verwalten“ erlaubt; der Photo Picker passt für einen Aufräumer nicht (ganze Mediathek nötig). In der Play Console die **Berechtigungs-Erklärung** ausfüllen (Begründung: Galerie aufräumen, alles lokal). Text vorbereiten aus `docs/PRIVACY_DATA_MAP.md` |
+| R2 | Datenschutz-URL + Data-Safety-Formular | **Erledigt (URL):** https://mrdevn4ever-sys.github.io/photomaid/privacy/ (DE) und …/photomaid/privacy/en/ (EN), Repo `mrdevn4ever-sys.github.io`. In der Play Console eintragen; Data-Safety laut `docs/PRIVACY_DATA_MAP.md`. Plan 0.7: Link „Datenschutzerklärung“ zusätzlich in Einstellungen › Datenschutz (16 Sprachen) |
+| R3 | (Inhaber) Einwilligung EWR/UK/Schweiz | Erledigt im Code (UMP vor AdMob). Im AdMob-Konto die Einwilligungsnachricht (GDPR-Message) veröffentlichen, sonst keine Anzeigen |
+| R4 | Zielgruppe / Families | **Entschieden 2026-10-02: Zielgruppe ab 13** (keine Altersgruppe unter 13). Families-Richtlinie gilt nicht, kein Age-Screen. Datenschutzerklärung sagt „nicht an Kinder unter 13 gerichtet“ |
 
 ### Reihenfolge (ergänzt)
-0.5/0.6 kommen zu Phase 0 (klein–mittel), 1.4/1.5 zu Phase 1, 3.3 zu Phase 3; Tutorials (Phase 4) bekommen je einen Schritt
+0.5/0.6/0.7 kommen zu Phase 0 (klein–mittel), 3.4 zu Phase 3, 1.4/1.5 zu Phase 1, 3.3 zu Phase 3; Tutorials (Phase 4) bekommen je einen Schritt
 für „Ohne Termin“ und „Reihenfolge“. Alle neuen Texte in allen 16 Sprachen (Deutsch + Englisch selbst, Rest als
 Übersetzungsliste).

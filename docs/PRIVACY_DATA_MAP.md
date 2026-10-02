@@ -10,7 +10,7 @@ Gegenstück zu `docs/PRIVACY_DATA_MAP.md` der iOS-App.
 | SHA-256-Hashes | nur im Speicher während des Duplikat-Scans | Nein | – | – |
 | Medien, Dateinamen, Pfade, Medien-/Dokument-IDs, Metadaten | nur lokal gelesen | **Nein** | – | – |
 | Kaufdaten | Google Play (Billing Library) | Ja (technisch, durch Google Play) | – | Google |
-| Werbedaten | – (kein Werbe-SDK im Build) | Nein | – | Release-Blocker, sobald ein Anbieter gewählt ist |
+| Werbedaten | Google AdMob + UMP (nur Free, erst nach Einwilligung) | Ja (durch Google: IP, Geräte-/Werbe-ID, Interaktionen, Diagnose) | – | Anfragen ohne Medien, Namen, Pfade, Hashes, IDs |
 
 ## Netzwerk
 
@@ -21,7 +21,7 @@ Gegenstück zu `docs/PRIVACY_DATA_MAP.md` der iOS-App.
   Media3 (lokale Wiedergabe), `RECEIVE_BOOT_COMPLETED`/`FOREGROUND_SERVICE` aus WorkManager (Erinnerungen).
   Die Berechtigungen werden bewusst **nicht** per `tools:node="remove"` entfernt (kein Eingriff in das Billing-SDK).
   Für die Play-„Datensicherheit“ sind die Angaben von Google zur Billing Library zu übernehmen.
-- Keine eigenen Analytics-, Crash- oder Werbe-SDKs.
+- Keine eigenen Analytics- oder Crash-SDKs. Werbung: Google AdMob (Free), gestartet erst nach UMP-Einwilligung.
 
 ## Berechtigungen
 
@@ -52,6 +52,10 @@ Löschen von Dateien: ausschließlich `DocumentsContract.deleteDocument` in vom 
 - Geteilte Daten: keine.
 - Datenverschlüsselung bei Übertragung: nicht zutreffend (keine Übertragung durch die App).
 - Löschanfrage: Deinstallation entfernt alle lokalen Daten; es gibt kein Konto.
-- Sobald ein Werbe-SDK hinzukommt, muss dieser Abschnitt neu bewertet werden (Werbe-ID, Consent/UMP).
+- Werbe-SDK (AdMob) ist enthalten: in der Play Console angeben „Geräte- oder andere IDs“ (Werbe-ID) und
+  „App-Aktivität/Interaktionen“ sowie „Diagnose“ als **vom SDK erfasst und geteilt** (Zweck Werbung, Analyse, Betrugsschutz),
+  nicht optional in Free; Google-Angaben zum Mobile Ads SDK übernehmen.
+- Öffentliche Datenschutzerklärung: https://mrdevn4ever-sys.github.io/photomaid/privacy/ (DE), …/en/ (EN), Stand 2026-10-02.
+- Zielgruppe: ab 13 (keine Altersgruppe unter 13, keine Families-Richtlinie).
 
 Keine rechtliche Freigabe durch diese Arbeit.
