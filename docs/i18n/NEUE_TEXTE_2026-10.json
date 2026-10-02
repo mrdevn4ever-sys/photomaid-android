@@ -1,0 +1,2166 @@
+{
+ "strings": {
+  "basket_confirm_files_trash_title": {
+   "en": "Move to the storage trash?",
+   "de": "In den Papierkorb des Speicherorts?",
+   "ar": "نقل إلى سلة مهملات موقع التخزين؟",
+   "es": "¿Mover a la papelera del almacenamiento?",
+   "fr": "Déplacer vers la corbeille de l’emplacement ?",
+   "it": "Spostare nel cestino della posizione?",
+   "ja": "保存先のゴミ箱に移動しますか？",
+   "ko": "저장 위치의 휴지통으로 옮길까요?",
+   "nl": "Naar de prullenbak van de opslaglocatie?",
+   "pl": "Przenieść do kosza lokalizacji?",
+   "pt": "Mover para o lixo do local de armazenamento?",
+   "ro": "Muți în coșul locației de stocare?",
+   "ru": "Переместить в корзину хранилища?",
+   "tr": "Depolama konumunun çöp kutusuna taşınsın mı?",
+   "uk": "Перемістити в кошик сховища?",
+   "zh": "移到存储位置的回收站？"
+  },
+  "basket_confirm_files_trash_message": {
+   "en": "The files go to the trash of their storage location and can be restored there. Space is freed only when they’re deleted there.",
+   "de": "Die Dateien kommen in den Papierkorb ihres Speicherorts und lassen sich dort wiederherstellen. Speicher wird erst frei, wenn sie dort gelöscht werden.",
+   "ar": "تنتقل الملفات إلى سلة مهملات موقع تخزينها ويمكن استعادتها من هناك. لا تتحرر المساحة إلا بعد حذفها من هناك.",
+   "es": "Los archivos van a la papelera de su ubicación y se pueden restaurar allí. El espacio solo se libera cuando se eliminan allí.",
+   "fr": "Les fichiers vont dans la corbeille de leur emplacement et peuvent y être restaurés. L’espace n’est libéré qu’une fois supprimés là-bas.",
+   "it": "I file finiscono nel cestino della loro posizione e lì si possono ripristinare. Lo spazio si libera solo quando vengono eliminati da lì.",
+   "ja": "ファイルは保存先のゴミ箱に移動し、そこから復元できます。容量はそこで削除したときに空きます。",
+   "ko": "파일은 저장 위치의 휴지통으로 옮겨지며 그곳에서 복원할 수 있어요. 공간은 그곳에서 삭제해야 확보돼요.",
+   "nl": "De bestanden gaan naar de prullenbak van hun opslaglocatie en zijn daar te herstellen. Ruimte komt pas vrij als ze daar worden verwijderd.",
+   "pl": "Pliki trafią do kosza swojej lokalizacji i można je tam przywrócić. Miejsce zwolni się dopiero po usunięciu ich stamtąd.",
+   "pt": "Os ficheiros vão para o lixo do seu local e podem ser restaurados aí. O espaço só fica livre quando forem eliminados aí.",
+   "ro": "Fișierele ajung în coșul locației lor și pot fi restaurate de acolo. Spațiul se eliberează doar după ce sunt șterse acolo.",
+   "ru": "Файлы попадут в корзину своего хранилища, оттуда их можно восстановить. Место освободится, только когда их удалят там.",
+   "tr": "Dosyalar depolama konumlarının çöp kutusuna gider ve oradan geri yüklenebilir. Alan ancak orada silindiklerinde boşalır.",
+   "uk": "Файли потраплять у кошик свого сховища, звідти їх можна відновити. Місце звільниться, лише коли їх видалять там.",
+   "zh": "文件会进入其存储位置的回收站，可在那里恢复。只有在那里删除后才会释放空间。"
+  },
+  "done_note_files_trash": {
+   "en": "The files are now in the trash of their storage location. Space is freed only when they’re permanently deleted there.",
+   "de": "Die Dateien liegen jetzt im Papierkorb ihres Speicherorts. Speicher wird erst frei, wenn sie dort endgültig gelöscht werden.",
+   "ar": "أصبحت الملفات الآن في سلة مهملات موقع تخزينها. لا تتحرر المساحة إلا بعد حذفها نهائيًا من هناك.",
+   "es": "Los archivos están ahora en la papelera de su ubicación. El espacio solo se libera cuando se eliminan definitivamente allí.",
+   "fr": "Les fichiers sont maintenant dans la corbeille de leur emplacement. L’espace n’est libéré qu’après leur suppression définitive là-bas.",
+   "it": "I file ora sono nel cestino della loro posizione. Lo spazio si libera solo quando vengono eliminati definitivamente da lì.",
+   "ja": "ファイルは保存先のゴミ箱にあります。容量はそこで完全に削除したときに空きます。",
+   "ko": "파일이 이제 저장 위치의 휴지통에 있어요. 공간은 그곳에서 영구 삭제해야 확보돼요.",
+   "nl": "De bestanden staan nu in de prullenbak van hun opslaglocatie. Ruimte komt pas vrij als ze daar definitief worden verwijderd.",
+   "pl": "Pliki są teraz w koszu swojej lokalizacji. Miejsce zwolni się dopiero po ich trwałym usunięciu stamtąd.",
+   "pt": "Os ficheiros estão agora no lixo do seu local. O espaço só fica livre quando forem eliminados definitivamente aí.",
+   "ro": "Fișierele sunt acum în coșul locației lor. Spațiul se eliberează doar după ce sunt șterse definitiv acolo.",
+   "ru": "Файлы теперь в корзине своего хранилища. Место освободится, только когда их окончательно удалят там.",
+   "tr": "Dosyalar artık depolama konumlarının çöp kutusunda. Alan ancak orada kalıcı olarak silindiklerinde boşalır.",
+   "uk": "Файли тепер у кошику свого сховища. Місце звільниться, лише коли їх остаточно видалять там.",
+   "zh": "文件现在位于其存储位置的回收站中。只有在那里永久删除后才会释放空间。"
+  },
+  "excl_action": {
+   "en": "Exclude this folder",
+   "de": "Diesen Ordner ausnehmen",
+   "ar": "استبعاد هذا المجلد",
+   "es": "Excluir esta carpeta",
+   "fr": "Exclure ce dossier",
+   "it": "Escludi questa cartella",
+   "ja": "このフォルダを除外",
+   "ko": "이 폴더 제외",
+   "nl": "Deze map uitsluiten",
+   "pl": "Wyklucz ten folder",
+   "pt": "Excluir esta pasta",
+   "ro": "Exclude acest dosar",
+   "ru": "Исключить эту папку",
+   "tr": "Bu klasörü hariç tut",
+   "uk": "Виключити цю папку",
+   "zh": "排除此文件夹"
+  },
+  "excl_add_footer": {
+   "en": "Excluded folders and their subfolders don’t appear in any feed, count or month overview. Decisions you already made are kept.",
+   "de": "Ausgenommene Ordner und ihre Unterordner erscheinen in keinem Feed, keiner Zahl und keiner Monatsübersicht. Bereits getroffene Entscheidungen bleiben erhalten.",
+   "ar": "لا تظهر المجلدات المستبعدة ومجلداتها الفرعية في أي موجز أو عدد أو نظرة شهرية. تبقى القرارات التي اتخذتها محفوظة.",
+   "es": "Las carpetas excluidas y sus subcarpetas no aparecen en ningún feed, recuento ni resumen mensual. Las decisiones ya tomadas se conservan.",
+   "fr": "Les dossiers exclus et leurs sous-dossiers n’apparaissent dans aucun fil, aucun total ni aucun aperçu mensuel. Les décisions déjà prises sont conservées.",
+   "it": "Le cartelle escluse e le loro sottocartelle non compaiono in nessun feed, conteggio o riepilogo mensile. Le decisioni già prese restano.",
+   "ja": "除外したフォルダとそのサブフォルダは、フィード、件数、月別の一覧に表示されません。すでに選んだ内容は保持されます。",
+   "ko": "제외한 폴더와 하위 폴더는 피드, 개수, 월별 보기에 나타나지 않아요. 이미 내린 선택은 유지돼요.",
+   "nl": "Uitgesloten mappen en hun submappen verschijnen in geen enkele feed, telling of maandoverzicht. Al gemaakte keuzes blijven bewaard.",
+   "pl": "Wykluczone foldery i ich podfoldery nie pojawiają się w żadnym przeglądzie, liczniku ani podsumowaniu miesięcy. Podjęte decyzje zostają zachowane.",
+   "pt": "As pastas excluídas e as suas subpastas não aparecem em nenhum feed, contagem ou resumo mensal. As decisões já tomadas mantêm-se.",
+   "ro": "Dosarele excluse și subdosarele lor nu apar în niciun flux, număr sau rezumat lunar. Deciziile deja luate rămân.",
+   "ru": "Исключённые папки и их подпапки не появляются ни в ленте, ни в счётчиках, ни в обзоре по месяцам. Уже принятые решения сохраняются.",
+   "tr": "Hariç tutulan klasörler ve alt klasörleri hiçbir akışta, sayıda veya aylık özette görünmez. Verdiğin kararlar korunur.",
+   "uk": "Виключені папки та їхні підпапки не з’являються ні в стрічці, ні в лічильниках, ні в огляді за місяцями. Уже ухвалені рішення зберігаються.",
+   "zh": "被排除的文件夹及其子文件夹不会出现在任何浏览、数量或按月概览中。已做出的选择会保留。"
+  },
+  "excl_add_header": {
+   "en": "Exclude a folder",
+   "de": "Ordner ausnehmen",
+   "ar": "استبعاد مجلد",
+   "es": "Excluir una carpeta",
+   "fr": "Exclure un dossier",
+   "it": "Escludi una cartella",
+   "ja": "フォルダを除外",
+   "ko": "폴더 제외",
+   "nl": "Map uitsluiten",
+   "pl": "Wyklucz folder",
+   "pt": "Excluir uma pasta",
+   "ro": "Exclude un dosar",
+   "ru": "Исключить папку",
+   "tr": "Klasör hariç tut",
+   "uk": "Виключити папку",
+   "zh": "排除文件夹"
+  },
+  "excl_confirm_action": {
+   "en": "Exclude",
+   "de": "Ausnehmen",
+   "ar": "استبعاد",
+   "es": "Excluir",
+   "fr": "Exclure",
+   "it": "Escludi",
+   "ja": "除外",
+   "ko": "제외",
+   "nl": "Uitsluiten",
+   "pl": "Wyklucz",
+   "pt": "Excluir",
+   "ro": "Exclude",
+   "ru": "Исключить",
+   "tr": "Hariç tut",
+   "uk": "Виключити",
+   "zh": "排除"
+  },
+  "excl_confirm_text": {
+   "en": "Items in this folder and its subfolders will no longer appear while cleaning up. Nothing is deleted or moved. Undo in Settings › Excluded folders.",
+   "de": "Medien aus diesem Ordner und seinen Unterordnern erscheinen nicht mehr beim Aufräumen. Nichts wird gelöscht oder verschoben. Rückgängig in Einstellungen › Ausgenommene Ordner.",
+   "ar": "لن تظهر العناصر في هذا المجلد ومجلداته الفرعية أثناء الترتيب. لن يُحذف أو يُنقل شيء. للتراجع: الإعدادات › المجلدات المستبعدة.",
+   "es": "Los elementos de esta carpeta y sus subcarpetas dejarán de aparecer al ordenar. No se elimina ni se mueve nada. Deshazlo en Ajustes › Carpetas excluidas.",
+   "fr": "Les éléments de ce dossier et de ses sous-dossiers n’apparaîtront plus pendant le tri. Rien n’est supprimé ni déplacé. Annulable dans Paramètres › Dossiers exclus.",
+   "it": "Gli elementi di questa cartella e delle sottocartelle non compariranno più durante il riordino. Nulla viene eliminato o spostato. Annulla in Impostazioni › Cartelle escluse.",
+   "ja": "このフォルダとサブフォルダのアイテムは整理時に表示されなくなります。削除や移動はされません。設定 › 除外したフォルダで元に戻せます。",
+   "ko": "이 폴더와 하위 폴더의 항목이 정리할 때 더 이상 나타나지 않아요. 삭제하거나 옮기지 않아요. 설정 › 제외한 폴더에서 되돌릴 수 있어요.",
+   "nl": "Items in deze map en submappen verschijnen niet meer tijdens het opruimen. Er wordt niets verwijderd of verplaatst. Ongedaan maken via Instellingen › Uitgesloten mappen.",
+   "pl": "Elementy z tego folderu i podfolderów przestaną pojawiać się podczas porządkowania. Nic nie zostanie usunięte ani przeniesione. Cofniesz to w Ustawienia › Wykluczone foldery.",
+   "pt": "Os itens desta pasta e das subpastas deixam de aparecer ao arrumar. Nada é eliminado nem movido. Anula em Definições › Pastas excluídas.",
+   "ro": "Elementele din acest dosar și subdosare nu vor mai apărea la ordonare. Nimic nu se șterge sau se mută. Anulezi din Setări › Dosare excluse.",
+   "ru": "Элементы из этой папки и её подпапок больше не будут появляться при наведении порядка. Ничего не удаляется и не перемещается. Отменить: Настройки › Исключённые папки.",
+   "tr": "Bu klasördeki ve alt klasörlerdeki öğeler düzenlerken artık görünmez. Hiçbir şey silinmez veya taşınmaz. Ayarlar › Hariç tutulan klasörler bölümünden geri alabilirsin.",
+   "uk": "Елементи з цієї папки та її підпапок більше не з’являтимуться під час упорядкування. Нічого не видаляється й не переміщується. Скасувати: Налаштування › Виключені папки.",
+   "zh": "此文件夹及其子文件夹中的内容在整理时将不再出现。不会删除或移动任何内容。可在“设置 › 已排除的文件夹”中撤销。"
+  },
+  "excl_confirm_title": {
+   "en": "Hide “%1$s” while cleaning up?",
+   "de": "„%1$s“ beim Aufräumen ausblenden?",
+   "ar": "إخفاء «%1$s» أثناء الترتيب؟",
+   "es": "¿Ocultar «%1$s» al ordenar?",
+   "fr": "Masquer « %1$s » pendant le tri ?",
+   "it": "Nascondere «%1$s» durante il riordino?",
+   "ja": "整理時に「%1$s」を非表示にしますか？",
+   "ko": "정리할 때 ‘%1$s’을(를) 숨길까요?",
+   "nl": "‘%1$s’ verbergen tijdens het opruimen?",
+   "pl": "Ukryć „%1$s” podczas porządkowania?",
+   "pt": "Ocultar “%1$s” ao arrumar?",
+   "ro": "Ascunzi „%1$s” la ordonare?",
+   "ru": "Скрыть «%1$s» при наведении порядка?",
+   "tr": "Düzenlerken “%1$s” gizlensin mi?",
+   "uk": "Приховати «%1$s» під час упорядкування?",
+   "zh": "整理时隐藏“%1$s”？"
+  },
+  "excl_done": {
+   "en": "“%1$s” will no longer show up while cleaning up",
+   "de": "„%1$s“ wird beim Aufräumen nicht mehr gezeigt",
+   "ar": "لن يظهر «%1$s» أثناء الترتيب بعد الآن",
+   "es": "«%1$s» ya no aparecerá al ordenar",
+   "fr": "« %1$s » n’apparaîtra plus pendant le tri",
+   "it": "«%1$s» non comparirà più durante il riordino",
+   "ja": "「%1$s」は整理時に表示されなくなりました",
+   "ko": "‘%1$s’은(는) 이제 정리할 때 나타나지 않아요",
+   "nl": "‘%1$s’ verschijnt niet meer tijdens het opruimen",
+   "pl": "„%1$s” nie będzie już pokazywany podczas porządkowania",
+   "pt": "“%1$s” deixa de aparecer ao arrumar",
+   "ro": "„%1$s” nu mai apare la ordonare",
+   "ru": "«%1$s» больше не будет показываться при наведении порядка",
+   "tr": "“%1$s” artık düzenlerken gösterilmeyecek",
+   "uk": "«%1$s» більше не показуватиметься під час упорядкування",
+   "zh": "整理时将不再显示“%1$s”"
+  },
+  "excl_header": {
+   "en": "Excluded",
+   "de": "Ausgenommen",
+   "ar": "مستبعدة",
+   "es": "Excluidas",
+   "fr": "Exclus",
+   "it": "Escluse",
+   "ja": "除外中",
+   "ko": "제외됨",
+   "nl": "Uitgesloten",
+   "pl": "Wykluczone",
+   "pt": "Excluídas",
+   "ro": "Excluse",
+   "ru": "Исключены",
+   "tr": "Hariç tutulanlar",
+   "uk": "Виключені",
+   "zh": "已排除"
+  },
+  "excl_intro": {
+   "en": "Folders you don’t want to clean up, for example work documents or family photos.",
+   "de": "Ordner, die du nicht aufräumen möchtest, zum Beispiel Arbeitsdokumente oder Familienfotos.",
+   "ar": "مجلدات لا تريد ترتيبها، مثل مستندات العمل أو صور العائلة.",
+   "es": "Carpetas que no quieres ordenar, por ejemplo documentos de trabajo o fotos familiares.",
+   "fr": "Les dossiers que tu ne veux pas trier, par exemple des documents de travail ou des photos de famille.",
+   "it": "Cartelle che non vuoi riordinare, ad esempio documenti di lavoro o foto di famiglia.",
+   "ja": "整理したくないフォルダ（仕事の書類や家族の写真など）。",
+   "ko": "정리하고 싶지 않은 폴더예요. 예를 들어 업무 문서나 가족 사진이요.",
+   "nl": "Mappen die je niet wilt opruimen, bijvoorbeeld werkdocumenten of familiefoto’s.",
+   "pl": "Foldery, których nie chcesz porządkować, np. dokumenty służbowe albo zdjęcia rodzinne.",
+   "pt": "Pastas que não queres arrumar, por exemplo documentos de trabalho ou fotos de família.",
+   "ro": "Dosare pe care nu vrei să le ordonezi, de exemplu documente de lucru sau fotografii de familie.",
+   "ru": "Папки, которые не нужно разбирать, например рабочие документы или семейные фото.",
+   "tr": "Düzenlemek istemediğin klasörler, örneğin iş belgeleri veya aile fotoğrafları.",
+   "uk": "Папки, які не потрібно упорядковувати, наприклад робочі документи чи сімейні фото.",
+   "zh": "你不想整理的文件夹，例如工作文档或家庭照片。"
+  },
+  "excl_none": {
+   "en": "No folders excluded yet.",
+   "de": "Noch keine Ordner ausgenommen.",
+   "ar": "لم يُستبعد أي مجلد بعد.",
+   "es": "Aún no hay carpetas excluidas.",
+   "fr": "Aucun dossier exclu pour l’instant.",
+   "it": "Nessuna cartella esclusa per ora.",
+   "ja": "除外したフォルダはまだありません。",
+   "ko": "아직 제외한 폴더가 없어요.",
+   "nl": "Nog geen mappen uitgesloten.",
+   "pl": "Nie wykluczono jeszcze żadnych folderów.",
+   "pt": "Ainda não há pastas excluídas.",
+   "ro": "Niciun dosar exclus încă.",
+   "ru": "Исключённых папок пока нет.",
+   "tr": "Henüz hariç tutulan klasör yok.",
+   "uk": "Виключених папок поки немає.",
+   "zh": "还没有排除任何文件夹。"
+  },
+  "excl_show_again": {
+   "en": "Show again",
+   "de": "Wieder anzeigen",
+   "ar": "إظهار مجددًا",
+   "es": "Mostrar de nuevo",
+   "fr": "Afficher à nouveau",
+   "it": "Mostra di nuovo",
+   "ja": "再表示",
+   "ko": "다시 표시",
+   "nl": "Weer tonen",
+   "pl": "Pokaż ponownie",
+   "pt": "Mostrar novamente",
+   "ro": "Afișează din nou",
+   "ru": "Показывать снова",
+   "tr": "Yeniden göster",
+   "uk": "Показувати знову",
+   "zh": "重新显示"
+  },
+  "excl_title": {
+   "en": "Excluded folders",
+   "de": "Ausgenommene Ordner",
+   "ar": "المجلدات المستبعدة",
+   "es": "Carpetas excluidas",
+   "fr": "Dossiers exclus",
+   "it": "Cartelle escluse",
+   "ja": "除外したフォルダ",
+   "ko": "제외한 폴더",
+   "nl": "Uitgesloten mappen",
+   "pl": "Wykluczone foldery",
+   "pt": "Pastas excluídas",
+   "ro": "Dosare excluse",
+   "ru": "Исключённые папки",
+   "tr": "Hariç tutulan klasörler",
+   "uk": "Виключені папки",
+   "zh": "已排除的文件夹"
+  },
+  "feed_title_month": {
+   "en": "Month",
+   "de": "Monat",
+   "ar": "الشهر",
+   "es": "Mes",
+   "fr": "Mois",
+   "it": "Mese",
+   "ja": "月",
+   "ko": "월",
+   "nl": "Maand",
+   "pl": "Miesiąc",
+   "pt": "Mês",
+   "ro": "Lună",
+   "ru": "Месяц",
+   "tr": "Ay",
+   "uk": "Місяць",
+   "zh": "月份"
+  },
+  "feed_title_new": {
+   "en": "Newly added",
+   "de": "Neu hinzugekommen",
+   "ar": "أُضيف حديثًا",
+   "es": "Añadido recientemente",
+   "fr": "Ajouts récents",
+   "it": "Aggiunti di recente",
+   "ja": "新しく追加",
+   "ko": "새로 추가됨",
+   "nl": "Nieuw toegevoegd",
+   "pl": "Nowo dodane",
+   "pt": "Adicionados recentemente",
+   "ro": "Adăugate recent",
+   "ru": "Недавно добавлено",
+   "tr": "Yeni eklenenler",
+   "uk": "Нещодавно додані",
+   "zh": "新添加"
+  },
+  "folder_all": {
+   "en": "All folders",
+   "de": "Alle Ordner",
+   "ar": "كل المجلدات",
+   "es": "Todas las carpetas",
+   "fr": "Tous les dossiers",
+   "it": "Tutte le cartelle",
+   "ja": "すべてのフォルダ",
+   "ko": "모든 폴더",
+   "nl": "Alle mappen",
+   "pl": "Wszystkie foldery",
+   "pt": "Todas as pastas",
+   "ro": "Toate dosarele",
+   "ru": "Все папки",
+   "tr": "Tüm klasörler",
+   "uk": "Усі папки",
+   "zh": "所有文件夹"
+  },
+  "folder_pin": {
+   "en": "Pin folder",
+   "de": "Ordner anpinnen",
+   "ar": "تثبيت المجلد",
+   "es": "Fijar carpeta",
+   "fr": "Épingler le dossier",
+   "it": "Fissa cartella",
+   "ja": "フォルダを固定",
+   "ko": "폴더 고정",
+   "nl": "Map vastzetten",
+   "pl": "Przypnij folder",
+   "pt": "Fixar pasta",
+   "ro": "Fixează dosarul",
+   "ru": "Закрепить папку",
+   "tr": "Klasörü sabitle",
+   "uk": "Закріпити папку",
+   "zh": "固定文件夹"
+  },
+  "folder_pinned": {
+   "en": "Pinned",
+   "de": "Angepinnt",
+   "ar": "مثبتة",
+   "es": "Fijadas",
+   "fr": "Épinglés",
+   "it": "Fissate",
+   "ja": "固定済み",
+   "ko": "고정됨",
+   "nl": "Vastgezet",
+   "pl": "Przypięte",
+   "pt": "Fixadas",
+   "ro": "Fixate",
+   "ru": "Закреплённые",
+   "tr": "Sabitlenenler",
+   "uk": "Закріплені",
+   "zh": "已固定"
+  },
+  "folder_recent": {
+   "en": "Recently used",
+   "de": "Zuletzt verwendet",
+   "ar": "المستخدمة مؤخرًا",
+   "es": "Usadas recientemente",
+   "fr": "Récemment utilisés",
+   "it": "Usate di recente",
+   "ja": "最近使用",
+   "ko": "최근 사용",
+   "nl": "Recent gebruikt",
+   "pl": "Ostatnio używane",
+   "pt": "Usadas recentemente",
+   "ro": "Folosite recent",
+   "ru": "Недавние",
+   "tr": "Son kullanılanlar",
+   "uk": "Нещодавні",
+   "zh": "最近使用"
+  },
+  "folder_unpin": {
+   "en": "Unpin folder",
+   "de": "Nicht mehr anpinnen",
+   "ar": "إلغاء تثبيت المجلد",
+   "es": "Dejar de fijar",
+   "fr": "Ne plus épingler",
+   "it": "Non fissare più",
+   "ja": "固定を解除",
+   "ko": "고정 해제",
+   "nl": "Losmaken",
+   "pl": "Odepnij",
+   "pt": "Deixar de fixar",
+   "ro": "Anulează fixarea",
+   "ru": "Открепить",
+   "tr": "Sabitlemeyi kaldır",
+   "uk": "Відкріпити",
+   "zh": "取消固定"
+  },
+  "grid_empty_text": {
+   "en": "There are no photos or videos here right now.",
+   "de": "Hier gibt es gerade keine Fotos oder Videos.",
+   "ar": "لا توجد صور أو فيديوهات هنا حاليًا.",
+   "es": "Ahora mismo no hay fotos ni vídeos aquí.",
+   "fr": "Il n’y a aucune photo ni vidéo ici pour le moment.",
+   "it": "Al momento qui non ci sono foto né video.",
+   "ja": "現在ここに写真や動画はありません。",
+   "ko": "지금 여기에는 사진이나 동영상이 없어요.",
+   "nl": "Er zijn hier nu geen foto’s of video’s.",
+   "pl": "Obecnie nie ma tu zdjęć ani filmów.",
+   "pt": "De momento não há fotos nem vídeos aqui.",
+   "ro": "Momentan nu există fotografii sau videoclipuri aici.",
+   "ru": "Сейчас здесь нет фото и видео.",
+   "tr": "Şu anda burada fotoğraf veya video yok.",
+   "uk": "Зараз тут немає фото чи відео.",
+   "zh": "这里暂时没有照片或视频。"
+  },
+  "grid_empty_title": {
+   "en": "Nothing to show",
+   "de": "Nichts zu zeigen",
+   "ar": "لا شيء لعرضه",
+   "es": "Nada que mostrar",
+   "fr": "Rien à afficher",
+   "it": "Niente da mostrare",
+   "ja": "表示するものはありません",
+   "ko": "표시할 항목 없음",
+   "nl": "Niets te tonen",
+   "pl": "Nic do pokazania",
+   "pt": "Nada para mostrar",
+   "ro": "Nimic de afișat",
+   "ru": "Нечего показать",
+   "tr": "Gösterilecek bir şey yok",
+   "uk": "Нічого показати",
+   "zh": "没有可显示的内容"
+  },
+  "grid_move": {
+   "en": "Move to folder",
+   "de": "In Ordner verschieben",
+   "ar": "نقل إلى مجلد",
+   "es": "Mover a carpeta",
+   "fr": "Déplacer vers un dossier",
+   "it": "Sposta in cartella",
+   "ja": "フォルダに移動",
+   "ko": "폴더로 이동",
+   "nl": "Naar map verplaatsen",
+   "pl": "Przenieś do folderu",
+   "pt": "Mover para pasta",
+   "ro": "Mută în dosar",
+   "ru": "Переместить в папку",
+   "tr": "Klasöre taşı",
+   "uk": "Перемістити в папку",
+   "zh": "移到文件夹"
+  },
+  "grid_moved_partial": {
+   "en": "Moved %1$d of %2$d to “%3$s”. The others couldn’t be moved.",
+   "de": "%1$d von %2$d nach „%3$s“ verschoben. Die übrigen konnten nicht verschoben werden.",
+   "ar": "نُقل %1$d من %2$d إلى «%3$s». تعذّر نقل الباقي.",
+   "es": "Se movieron %1$d de %2$d a «%3$s». Los demás no se pudieron mover.",
+   "fr": "%1$d sur %2$d déplacés vers « %3$s ». Les autres n’ont pas pu être déplacés.",
+   "it": "%1$d di %2$d spostati in «%3$s». Gli altri non è stato possibile spostarli.",
+   "ja": "%2$d件中%1$d件を「%3$s」に移動しました。残りは移動できませんでした。",
+   "ko": "%2$d개 중 %1$d개를 ‘%3$s’(으)로 옮겼어요. 나머지는 옮기지 못했어요.",
+   "nl": "%1$d van %2$d verplaatst naar ‘%3$s’. De rest kon niet worden verplaatst.",
+   "pl": "Przeniesiono %1$d z %2$d do „%3$s”. Pozostałych nie udało się przenieść.",
+   "pt": "%1$d de %2$d movidos para “%3$s”. Os restantes não puderam ser movidos.",
+   "ro": "Au fost mutate %1$d din %2$d în „%3$s”. Celelalte nu au putut fi mutate.",
+   "ru": "Перемещено %1$d из %2$d в «%3$s». Остальные переместить не удалось.",
+   "tr": "%2$d öğeden %1$d tanesi “%3$s” klasörüne taşındı. Diğerleri taşınamadı.",
+   "uk": "Переміщено %1$d з %2$d у «%3$s». Решту перемістити не вдалося.",
+   "zh": "已将 %2$d 项中的 %1$d 项移到“%3$s”。其余项目无法移动。"
+  },
+  "grid_note": {
+   "en": "Tap to select, long-press and drag to select several. Moving is not a decision.",
+   "de": "Tippen wählt aus, lange drücken und ziehen wählt mehrere. Verschieben ist keine Entscheidung.",
+   "ar": "انقر للتحديد، واضغط مطولًا واسحب لتحديد عدة عناصر. النقل ليس قرارًا.",
+   "es": "Toca para seleccionar; mantén pulsado y arrastra para elegir varios. Mover no es una decisión.",
+   "fr": "Touche pour sélectionner, appuie longuement et fais glisser pour en choisir plusieurs. Déplacer n’est pas une décision.",
+   "it": "Tocca per selezionare, tieni premuto e trascina per sceglierne diversi. Spostare non è una decisione.",
+   "ja": "タップで選択、長押ししてドラッグで複数選択。移動は選択（残す・ゴミ箱・あとで）ではありません。",
+   "ko": "탭하면 선택, 길게 누른 채 드래그하면 여러 개를 선택해요. 이동은 선택에 포함되지 않아요.",
+   "nl": "Tik om te selecteren, houd ingedrukt en sleep om er meerdere te kiezen. Verplaatsen is geen keuze.",
+   "pl": "Dotknij, aby zaznaczyć; przytrzymaj i przeciągnij, aby zaznaczyć kilka. Przeniesienie to nie decyzja.",
+   "pt": "Toca para selecionar; mantém premido e arrasta para escolher vários. Mover não é uma decisão.",
+   "ro": "Atinge pentru a selecta, ține apăsat și trage pentru mai multe. Mutarea nu este o decizie.",
+   "ru": "Нажми, чтобы выбрать; удерживай и веди, чтобы выбрать несколько. Перемещение — не решение.",
+   "tr": "Seçmek için dokun, birden fazlası için basılı tutup sürükle. Taşımak bir karar değildir.",
+   "uk": "Торкнись, щоб вибрати; утримуй і тягни, щоб вибрати кілька. Переміщення — не рішення.",
+   "zh": "点按选择，长按并拖动可选择多个。移动不算作选择。"
+  },
+  "grid_open": {
+   "en": "Overview",
+   "de": "Übersicht",
+   "ar": "نظرة عامة",
+   "es": "Vista general",
+   "fr": "Vue d’ensemble",
+   "it": "Panoramica",
+   "ja": "一覧",
+   "ko": "한눈에 보기",
+   "nl": "Overzicht",
+   "pl": "Przegląd",
+   "pt": "Vista geral",
+   "ro": "Prezentare",
+   "ru": "Обзор",
+   "tr": "Genel bakış",
+   "uk": "Огляд",
+   "zh": "概览"
+  },
+  "grid_select_all": {
+   "en": "All",
+   "de": "Alle",
+   "ar": "الكل",
+   "es": "Todo",
+   "fr": "Tout",
+   "it": "Tutti",
+   "ja": "すべて",
+   "ko": "전체",
+   "nl": "Alles",
+   "pl": "Wszystkie",
+   "pt": "Todos",
+   "ro": "Toate",
+   "ru": "Все",
+   "tr": "Tümü",
+   "uk": "Усі",
+   "zh": "全选"
+  },
+  "grid_select_none": {
+   "en": "None",
+   "de": "Keine",
+   "ar": "لا شيء",
+   "es": "Ninguno",
+   "fr": "Aucun",
+   "it": "Nessuno",
+   "ja": "なし",
+   "ko": "선택 해제",
+   "nl": "Geen",
+   "pl": "Żadne",
+   "pt": "Nenhum",
+   "ro": "Niciunul",
+   "ru": "Снять",
+   "tr": "Hiçbiri",
+   "uk": "Зняти",
+   "zh": "全不选"
+  },
+  "help_tours_again": {
+   "en": "Show tutorials again",
+   "de": "Tutorials erneut zeigen",
+   "ar": "عرض الشروحات مجددًا",
+   "es": "Mostrar de nuevo los tutoriales",
+   "fr": "Afficher à nouveau les tutoriels",
+   "it": "Mostra di nuovo i tutorial",
+   "ja": "チュートリアルをもう一度表示",
+   "ko": "튜토리얼 다시 보기",
+   "nl": "Tutorials opnieuw tonen",
+   "pl": "Pokaż samouczki ponownie",
+   "pt": "Mostrar novamente os tutoriais",
+   "ro": "Afișează din nou tutorialele",
+   "ru": "Показать подсказки снова",
+   "tr": "Öğreticileri yeniden göster",
+   "uk": "Показати підказки знову",
+   "zh": "重新显示教程"
+  },
+  "help_tours_reset": {
+   "en": "The tutorials will appear again the next time you open each screen.",
+   "de": "Die Tutorials erscheinen beim nächsten Öffnen wieder.",
+   "ar": "ستظهر الشروحات مجددًا عند فتح كل شاشة في المرة القادمة.",
+   "es": "Los tutoriales volverán a aparecer la próxima vez que abras cada pantalla.",
+   "fr": "Les tutoriels réapparaîtront à la prochaine ouverture de chaque écran.",
+   "it": "I tutorial ricompariranno alla prossima apertura di ogni schermata.",
+   "ja": "次に各画面を開いたときにチュートリアルが再表示されます。",
+   "ko": "다음에 각 화면을 열면 튜토리얼이 다시 나타나요.",
+   "nl": "De tutorials verschijnen weer als je elk scherm opnieuw opent.",
+   "pl": "Samouczki pojawią się ponownie przy następnym otwarciu ekranów.",
+   "pt": "Os tutoriais voltam a aparecer da próxima vez que abrires cada ecrã.",
+   "ro": "Tutorialele vor apărea din nou la următoarea deschidere a fiecărui ecran.",
+   "ru": "Подсказки снова появятся при следующем открытии экранов.",
+   "tr": "Öğreticiler her ekranı bir sonraki açışında yeniden görünecek.",
+   "uk": "Підказки знову з’являться під час наступного відкриття екранів.",
+   "zh": "下次打开各页面时会再次显示教程。"
+  },
+  "hub_months_sub": {
+   "en": "Get done month by month",
+   "de": "Monat für Monat fertig werden",
+   "ar": "أنهِ الترتيب شهرًا بعد شهر",
+   "es": "Termina mes a mes",
+   "fr": "Termine mois après mois",
+   "it": "Finisci mese dopo mese",
+   "ja": "月ごとに片づける",
+   "ko": "한 달씩 끝내기",
+   "nl": "Maand voor maand klaar",
+   "pl": "Kończ miesiąc po miesiącu",
+   "pt": "Termina mês a mês",
+   "ro": "Termină lună de lună",
+   "ru": "Месяц за месяцем до конца",
+   "tr": "Ay ay bitir",
+   "uk": "Місяць за місяцем до кінця",
+   "zh": "按月逐个完成"
+  },
+  "later_back_to_stack": {
+   "en": "Back to the stack",
+   "de": "Zurück in den Stapel",
+   "ar": "إعادة إلى المجموعة",
+   "es": "Volver a la pila",
+   "fr": "Remettre dans la pile",
+   "it": "Rimetti nella pila",
+   "ja": "スタックに戻す",
+   "ko": "스택으로 되돌리기",
+   "nl": "Terug naar de stapel",
+   "pl": "Wróć do stosu",
+   "pt": "Voltar à pilha",
+   "ro": "Înapoi în teanc",
+   "ru": "Вернуть в стопку",
+   "tr": "Yığına geri koy",
+   "uk": "Повернути в стос",
+   "zh": "放回队列"
+  },
+  "later_bookmarked_row": {
+   "en": "Set aside, no date",
+   "de": "Beiseitegelegt, ohne Termin",
+   "ar": "مؤجَّل بلا موعد",
+   "es": "Apartado, sin fecha",
+   "fr": "Mis de côté, sans date",
+   "it": "Messo da parte, senza data",
+   "ja": "日付なしで保留中",
+   "ko": "날짜 없이 따로 둠",
+   "nl": "Opzijgelegd, zonder datum",
+   "pl": "Odłożone, bez daty",
+   "pt": "Posto de parte, sem data",
+   "ro": "Pus deoparte, fără dată",
+   "ru": "Отложено без даты",
+   "tr": "Tarihsiz ayrıldı",
+   "uk": "Відкладено без дати",
+   "zh": "已搁置，无日期"
+  },
+  "later_group_bookmarked": {
+   "en": "Set aside · %1$d",
+   "de": "Beiseitegelegt · %1$d",
+   "ar": "مؤجَّلة · %1$d",
+   "es": "Apartados · %1$d",
+   "fr": "Mis de côté · %1$d",
+   "it": "Messi da parte · %1$d",
+   "ja": "保留中・%1$d件",
+   "ko": "따로 둠 · %1$d개",
+   "nl": "Opzijgelegd · %1$d",
+   "pl": "Odłożone · %1$d",
+   "pt": "Postos de parte · %1$d",
+   "ro": "Puse deoparte · %1$d",
+   "ru": "Отложено · %1$d",
+   "tr": "Ayrılanlar · %1$d",
+   "uk": "Відкладено · %1$d",
+   "zh": "已搁置 · %1$d 项"
+  },
+  "later_nodate_done": {
+   "en": "Set aside – find it under Later",
+   "de": "Beiseitegelegt – zu finden unter Später",
+   "ar": "تم التأجيل – تجده في «لاحقًا»",
+   "es": "Apartado: lo encontrarás en Después",
+   "fr": "Mis de côté – à retrouver dans Plus tard",
+   "it": "Messo da parte: lo trovi in Più tardi",
+   "ja": "保留しました（「あとで」にあります）",
+   "ko": "따로 뒀어요. ‘나중에’에서 찾을 수 있어요",
+   "nl": "Opzijgelegd – te vinden onder Later",
+   "pl": "Odłożono – znajdziesz w sekcji Później",
+   "pt": "Posto de parte – encontra-o em Mais tarde",
+   "ro": "Pus deoparte – îl găsești la Mai târziu",
+   "ru": "Отложено — ищи в разделе «Позже»",
+   "tr": "Ayrıldı – Sonra bölümünde bulabilirsin",
+   "uk": "Відкладено — шукай у розділі «Пізніше»",
+   "zh": "已搁置，可在“稍后”中找到"
+  },
+  "month_actions": {
+   "en": "Actions for %1$s",
+   "de": "Aktionen für %1$s",
+   "ar": "إجراءات لـ %1$s",
+   "es": "Acciones de %1$s",
+   "fr": "Actions pour %1$s",
+   "it": "Azioni per %1$s",
+   "ja": "%1$sの操作",
+   "ko": "%1$s 작업",
+   "nl": "Acties voor %1$s",
+   "pl": "Działania dla: %1$s",
+   "pt": "Ações para %1$s",
+   "ro": "Acțiuni pentru %1$s",
+   "ru": "Действия: %1$s",
+   "tr": "%1$s için işlemler",
+   "uk": "Дії: %1$s",
+   "zh": "%1$s 的操作"
+  },
+  "month_again": {
+   "en": "Review again",
+   "de": "Erneut durchsehen",
+   "ar": "مراجعة مجددًا",
+   "es": "Revisar de nuevo",
+   "fr": "Revoir",
+   "it": "Rivedi",
+   "ja": "もう一度見直す",
+   "ko": "다시 보기",
+   "nl": "Opnieuw bekijken",
+   "pl": "Przejrzyj ponownie",
+   "pt": "Rever novamente",
+   "ro": "Revizuiește din nou",
+   "ru": "Просмотреть заново",
+   "tr": "Yeniden gözden geçir",
+   "uk": "Переглянути знову",
+   "zh": "重新查看"
+  },
+  "month_done": {
+   "en": "Reviewed",
+   "de": "Durchgesehen",
+   "ar": "تمت المراجعة",
+   "es": "Revisado",
+   "fr": "Passé en revue",
+   "it": "Rivisto",
+   "ja": "見直し済み",
+   "ko": "확인 완료",
+   "nl": "Bekeken",
+   "pl": "Przejrzane",
+   "pt": "Revisto",
+   "ro": "Revizuit",
+   "ru": "Просмотрено",
+   "tr": "Gözden geçirildi",
+   "uk": "Переглянуто",
+   "zh": "已查看"
+  },
+  "months_empty_text": {
+   "en": "Months appear here once photos or videos have a capture date.",
+   "de": "Sobald Fotos oder Videos ein Aufnahmedatum haben, erscheinen hier die Monate.",
+   "ar": "تظهر الأشهر هنا عندما يكون للصور أو الفيديوهات تاريخ التقاط.",
+   "es": "Los meses aparecen aquí cuando las fotos o vídeos tienen fecha de captura.",
+   "fr": "Les mois apparaissent ici dès que les photos ou vidéos ont une date de prise de vue.",
+   "it": "I mesi compaiono qui quando foto o video hanno una data di scatto.",
+   "ja": "写真や動画に撮影日があると、ここに月が表示されます。",
+   "ko": "사진이나 동영상에 촬영 날짜가 있으면 여기에 월이 표시돼요.",
+   "nl": "Maanden verschijnen hier zodra foto’s of video’s een opnamedatum hebben.",
+   "pl": "Miesiące pojawią się tu, gdy zdjęcia lub filmy będą miały datę wykonania.",
+   "pt": "Os meses aparecem aqui quando as fotos ou vídeos têm data de captura.",
+   "ro": "Lunile apar aici când fotografiile sau videoclipurile au o dată de captură.",
+   "ru": "Месяцы появятся здесь, когда у фото или видео будет дата съёмки.",
+   "tr": "Fotoğraf veya videoların çekim tarihi olduğunda aylar burada görünür.",
+   "uk": "Місяці з’являться тут, коли фото чи відео матимуть дату зйомки.",
+   "zh": "照片或视频有拍摄日期后，月份会显示在这里。"
+  },
+  "months_empty_title": {
+   "en": "No months yet",
+   "de": "Noch keine Monate",
+   "ar": "لا توجد أشهر بعد",
+   "es": "Aún no hay meses",
+   "fr": "Pas encore de mois",
+   "it": "Ancora nessun mese",
+   "ja": "まだ月がありません",
+   "ko": "아직 월이 없어요",
+   "nl": "Nog geen maanden",
+   "pl": "Brak miesięcy",
+   "pt": "Ainda não há meses",
+   "ro": "Încă nu există luni",
+   "ru": "Месяцев пока нет",
+   "tr": "Henüz ay yok",
+   "uk": "Місяців поки немає",
+   "zh": "还没有月份"
+  },
+  "months_intro": {
+   "en": "How far you are in each month. Items set aside for later count as reviewed.",
+   "de": "So weit bist du in jedem Monat. Später zurückgestellte Medien zählen als durchgesehen.",
+   "ar": "مدى تقدمك في كل شهر. العناصر المؤجلة لوقت لاحق تُحسب كمراجعة.",
+   "es": "Lo que llevas de cada mes. Lo dejado para después cuenta como revisado.",
+   "fr": "Où tu en es pour chaque mois. Ce qui est remis à plus tard compte comme passé en revue.",
+   "it": "A che punto sei in ogni mese. Ciò che è rimandato conta come rivisto.",
+   "ja": "各月の進み具合です。「あとで」にしたものは見直し済みとして数えます。",
+   "ko": "월별 진행 상황이에요. ‘나중에’로 미룬 항목은 확인한 것으로 세요.",
+   "nl": "Zo ver ben je per maand. Wat voor later is bewaard, telt als bekeken.",
+   "pl": "Postęp w każdym miesiącu. Odłożone na później liczą się jako przejrzane.",
+   "pt": "O teu progresso em cada mês. O que ficou para mais tarde conta como revisto.",
+   "ro": "Cât ai avansat în fiecare lună. Ce ai amânat contează ca revizuit.",
+   "ru": "Твой прогресс по месяцам. Отложенное на потом считается просмотренным.",
+   "tr": "Her ayda ne kadar ilerlediğin. Sonraya bırakılanlar gözden geçirilmiş sayılır.",
+   "uk": "Твій прогрес за місяцями. Відкладене на потім вважається переглянутим.",
+   "zh": "每个月的进度。设为稍后的内容计为已查看。"
+  },
+  "months_title": {
+   "en": "By month",
+   "de": "Nach Monat",
+   "ar": "حسب الشهر",
+   "es": "Por mes",
+   "fr": "Par mois",
+   "it": "Per mese",
+   "ja": "月別",
+   "ko": "월별",
+   "nl": "Per maand",
+   "pl": "Według miesięcy",
+   "pt": "Por mês",
+   "ro": "Pe luni",
+   "ru": "По месяцам",
+   "tr": "Aya göre",
+   "uk": "За місяцями",
+   "zh": "按月份"
+  },
+  "order_largest": {
+   "en": "Largest first",
+   "de": "Größte zuerst",
+   "ar": "الأكبر أولًا",
+   "es": "Más grandes primero",
+   "fr": "Les plus grands d’abord",
+   "it": "Più grandi prima",
+   "ja": "サイズの大きい順",
+   "ko": "큰 순서",
+   "nl": "Grootste eerst",
+   "pl": "Największe najpierw",
+   "pt": "Maiores primeiro",
+   "ro": "Cele mai mari întâi",
+   "ru": "Сначала крупные",
+   "tr": "Önce en büyükler",
+   "uk": "Спочатку великі",
+   "zh": "最大优先"
+  },
+  "order_newest": {
+   "en": "Newest first",
+   "de": "Neueste zuerst",
+   "ar": "الأحدث أولًا",
+   "es": "Más recientes primero",
+   "fr": "Les plus récents d’abord",
+   "it": "Più recenti prima",
+   "ja": "新しい順",
+   "ko": "최신순",
+   "nl": "Nieuwste eerst",
+   "pl": "Najnowsze najpierw",
+   "pt": "Mais recentes primeiro",
+   "ro": "Cele mai noi întâi",
+   "ru": "Сначала новые",
+   "tr": "Önce en yeniler",
+   "uk": "Спочатку нові",
+   "zh": "最新优先"
+  },
+  "order_oldest": {
+   "en": "Oldest first",
+   "de": "Älteste zuerst",
+   "ar": "الأقدم أولًا",
+   "es": "Más antiguos primero",
+   "fr": "Les plus anciens d’abord",
+   "it": "Più vecchi prima",
+   "ja": "古い順",
+   "ko": "오래된 순",
+   "nl": "Oudste eerst",
+   "pl": "Najstarsze najpierw",
+   "pt": "Mais antigos primeiro",
+   "ro": "Cele mai vechi întâi",
+   "ru": "Сначала старые",
+   "tr": "Önce en eskiler",
+   "uk": "Спочатку старі",
+   "zh": "最早优先"
+  },
+  "order_random": {
+   "en": "Shuffle",
+   "de": "Zufällig",
+   "ar": "عشوائي",
+   "es": "Aleatorio",
+   "fr": "Aléatoire",
+   "it": "Casuale",
+   "ja": "ランダム",
+   "ko": "무작위",
+   "nl": "Willekeurig",
+   "pl": "Losowo",
+   "pt": "Aleatório",
+   "ro": "Aleatoriu",
+   "ru": "Вперемешку",
+   "tr": "Rastgele",
+   "uk": "Випадково",
+   "zh": "随机"
+  },
+  "order_title": {
+   "en": "Order",
+   "de": "Reihenfolge",
+   "ar": "الترتيب",
+   "es": "Orden",
+   "fr": "Ordre",
+   "it": "Ordine",
+   "ja": "並び順",
+   "ko": "정렬",
+   "nl": "Volgorde",
+   "pl": "Kolejność",
+   "pt": "Ordem",
+   "ro": "Ordine",
+   "ru": "Порядок",
+   "tr": "Sıralama",
+   "uk": "Порядок",
+   "zh": "顺序"
+  },
+  "picker_no_date": {
+   "en": "Set aside without a date",
+   "de": "Ohne Termin beiseitelegen",
+   "ar": "تأجيل بلا موعد",
+   "es": "Apartar sin fecha",
+   "fr": "Mettre de côté sans date",
+   "it": "Metti da parte senza data",
+   "ja": "日付なしで保留",
+   "ko": "날짜 없이 따로 두기",
+   "nl": "Zonder datum opzijleggen",
+   "pl": "Odłóż bez daty",
+   "pt": "Pôr de parte sem data",
+   "ro": "Pune deoparte fără dată",
+   "ru": "Отложить без даты",
+   "tr": "Tarihsiz ayır",
+   "uk": "Відкласти без дати",
+   "zh": "无日期搁置"
+  },
+  "picker_no_date_hint": {
+   "en": "It won’t come back on its own. You’ll find it under Later › Set aside.",
+   "de": "Kommt nicht von selbst zurück. Du findest es unter Später › Beiseitegelegt.",
+   "ar": "لن يعود تلقائيًا. ستجده في «لاحقًا › مؤجَّلة».",
+   "es": "No volverá por sí solo. Lo encontrarás en Después › Apartados.",
+   "fr": "Ne reviendra pas tout seul. Tu le retrouveras dans Plus tard › Mis de côté.",
+   "it": "Non tornerà da solo. Lo trovi in Più tardi › Messi da parte.",
+   "ja": "自動では戻りません。「あとで › 保留中」にあります。",
+   "ko": "저절로 다시 나타나지 않아요. ‘나중에 › 따로 둠’에서 찾을 수 있어요.",
+   "nl": "Komt niet vanzelf terug. Je vindt het onder Later › Opzijgelegd.",
+   "pl": "Nie wróci samo. Znajdziesz je w Później › Odłożone.",
+   "pt": "Não volta sozinho. Encontra-o em Mais tarde › Postos de parte.",
+   "ro": "Nu revine singur. Îl găsești la Mai târziu › Puse deoparte.",
+   "ru": "Само не вернётся. Найдёшь в «Позже › Отложено».",
+   "tr": "Kendiliğinden geri gelmez. Sonra › Ayrılanlar bölümünde bulursun.",
+   "uk": "Саме не повернеться. Знайдеш у «Пізніше › Відкладено».",
+   "zh": "不会自动回来。可在“稍后 › 已搁置”中找到。"
+  },
+  "series_button": {
+   "en": "Compare series of %1$d photos",
+   "de": "Serie mit %1$d Fotos vergleichen",
+   "ar": "مقارنة سلسلة من %1$d صور",
+   "es": "Comparar serie de %1$d fotos",
+   "fr": "Comparer la série de %1$d photos",
+   "it": "Confronta serie di %1$d foto",
+   "ja": "%1$d枚の連続写真を比較",
+   "ko": "사진 %1$d장 연속 비교",
+   "nl": "Reeks van %1$d foto’s vergelijken",
+   "pl": "Porównaj serię (%1$d zdj.)",
+   "pt": "Comparar série de %1$d fotos",
+   "ro": "Compară seria de %1$d fotografii",
+   "ru": "Сравнить серию: %1$d фото",
+   "tr": "%1$d fotoğraflık seriyi karşılaştır",
+   "uk": "Порівняти серію: %1$d фото",
+   "zh": "比较 %1$d 张连拍照片"
+  },
+  "series_confirm": {
+   "en": "Keep %1$d · Trash %2$d",
+   "de": "%1$d behalten · %2$d in den Papierkorb",
+   "ar": "احتفاظ بـ %1$d · %2$d إلى السلة",
+   "es": "Conservar %1$d · %2$d a la papelera",
+   "fr": "Garder %1$d · %2$d à la corbeille",
+   "it": "Conserva %1$d · %2$d nel cestino",
+   "ja": "%1$d枚を残す・%2$d枚をゴミ箱へ",
+   "ko": "%1$d개 보관 · %2$d개 휴지통으로",
+   "nl": "%1$d bewaren · %2$d naar prullenbak",
+   "pl": "Zachowaj: %1$d · Do kosza: %2$d",
+   "pt": "Manter %1$d · %2$d para o lixo",
+   "ro": "Păstrează %1$d · %2$d la coș",
+   "ru": "Оставить: %1$d · В корзину: %2$d",
+   "tr": "%1$d sakla · %2$d çöp kutusuna",
+   "uk": "Залишити: %1$d · У кошик: %2$d",
+   "zh": "保留 %1$d 张 · %2$d 张移到回收站"
+  },
+  "series_done": {
+   "en": "Kept %1$d · %2$d in the trash",
+   "de": "%1$d behalten · %2$d im Papierkorb",
+   "ar": "تم الاحتفاظ بـ %1$d · %2$d في السلة",
+   "es": "%1$d conservadas · %2$d en la papelera",
+   "fr": "%1$d gardées · %2$d dans la corbeille",
+   "it": "%1$d conservate · %2$d nel cestino",
+   "ja": "%1$d枚を残し、%2$d枚をゴミ箱へ",
+   "ko": "%1$d개 보관 · %2$d개 휴지통",
+   "nl": "%1$d bewaard · %2$d in prullenbak",
+   "pl": "Zachowane: %1$d · W koszu: %2$d",
+   "pt": "%1$d mantidas · %2$d no lixo",
+   "ro": "%1$d păstrate · %2$d în coș",
+   "ru": "Оставлено: %1$d · В корзине: %2$d",
+   "tr": "%1$d saklandı · %2$d çöp kutusunda",
+   "uk": "Залишено: %1$d · У кошику: %2$d",
+   "zh": "已保留 %1$d 张 · %2$d 张在回收站"
+  },
+  "series_footer": {
+   "en": "Nothing is deleted. The trash belongs to PhotoMaid and is only emptied when you confirm it.",
+   "de": "Nichts wird gelöscht. Der Papierkorb gehört zu PhotoMaid und wird erst geleert, wenn du es bestätigst.",
+   "ar": "لا يُحذف أي شيء. السلة تابعة لـ PhotoMaid ولا تُفرغ إلا بعد تأكيدك.",
+   "es": "No se elimina nada. La papelera es de PhotoMaid y solo se vacía cuando lo confirmas.",
+   "fr": "Rien n’est supprimé. La corbeille appartient à PhotoMaid et n’est vidée que lorsque tu le confirmes.",
+   "it": "Nulla viene eliminato. Il cestino è di PhotoMaid e si svuota solo quando lo confermi.",
+   "ja": "何も削除されません。ゴミ箱はPhotoMaid内のもので、確認したときだけ空になります。",
+   "ko": "아무것도 삭제되지 않아요. 휴지통은 PhotoMaid 안에 있고 확인할 때만 비워져요.",
+   "nl": "Er wordt niets verwijderd. De prullenbak is van PhotoMaid en wordt pas geleegd als je dat bevestigt.",
+   "pl": "Nic nie zostanie usunięte. Kosz należy do PhotoMaid i opróżnia się dopiero po potwierdzeniu.",
+   "pt": "Nada é eliminado. O lixo pertence ao PhotoMaid e só é esvaziado quando confirmas.",
+   "ro": "Nimic nu se șterge. Coșul aparține PhotoMaid și se golește doar când confirmi.",
+   "ru": "Ничего не удаляется. Корзина находится в PhotoMaid и очищается только после твоего подтверждения.",
+   "tr": "Hiçbir şey silinmez. Çöp kutusu PhotoMaid’e aittir ve yalnızca onayladığında boşalır.",
+   "uk": "Нічого не видаляється. Кошик належить PhotoMaid і очищується лише після твого підтвердження.",
+   "zh": "不会删除任何内容。回收站属于 PhotoMaid，只有在你确认后才会清空。"
+  },
+  "series_hint": {
+   "en": "Tap a photo to compare it below. The check mark decides what stays.",
+   "de": "Tippe auf ein Bild, um es unten zu vergleichen. Der Haken entscheidet, was bleibt.",
+   "ar": "انقر على صورة لمقارنتها بالأسفل. علامة الاختيار تحدد ما يبقى.",
+   "es": "Toca una foto para compararla abajo. La marca decide qué se queda.",
+   "fr": "Touche une photo pour la comparer en bas. La coche décide de ce qui reste.",
+   "it": "Tocca una foto per confrontarla sotto. La spunta decide cosa resta.",
+   "ja": "写真をタップすると下で比較できます。チェックで残すものを決めます。",
+   "ko": "사진을 탭하면 아래에서 비교해요. 체크 표시로 남길 사진을 정해요.",
+   "nl": "Tik op een foto om hem onderaan te vergelijken. Het vinkje bepaalt wat blijft.",
+   "pl": "Dotknij zdjęcia, aby porównać je poniżej. Znacznik decyduje, co zostaje.",
+   "pt": "Toca numa foto para a comparar em baixo. O visto decide o que fica.",
+   "ro": "Atinge o fotografie ca s-o compari jos. Bifa decide ce rămâne.",
+   "ru": "Нажми на фото, чтобы сравнить его ниже. Галочка решает, что останется.",
+   "tr": "Aşağıda karşılaştırmak için bir fotoğrafa dokun. Onay işareti neyin kalacağını belirler.",
+   "uk": "Торкнись фото, щоб порівняти його нижче. Позначка вирішує, що залишиться.",
+   "zh": "点按照片可在下方比较。勾选决定保留哪些。"
+  },
+  "series_keep_toggle": {
+   "en": "Keep",
+   "de": "Behalten",
+   "ar": "احتفاظ",
+   "es": "Conservar",
+   "fr": "Garder",
+   "it": "Conserva",
+   "ja": "残す",
+   "ko": "보관",
+   "nl": "Bewaren",
+   "pl": "Zachowaj",
+   "pt": "Manter",
+   "ro": "Păstrează",
+   "ru": "Оставить",
+   "tr": "Sakla",
+   "uk": "Залишити",
+   "zh": "保留"
+  },
+  "series_state_keep": {
+   "en": "Keep",
+   "de": "Behalten",
+   "ar": "احتفاظ",
+   "es": "Conservar",
+   "fr": "Garder",
+   "it": "Conserva",
+   "ja": "残す",
+   "ko": "보관",
+   "nl": "Bewaren",
+   "pl": "Zachowaj",
+   "pt": "Manter",
+   "ro": "Păstrează",
+   "ru": "Оставить",
+   "tr": "Sakla",
+   "uk": "Залишити",
+   "zh": "保留"
+  },
+  "series_state_trash": {
+   "en": "Trash",
+   "de": "Papierkorb",
+   "ar": "سلة المهملات",
+   "es": "Papelera",
+   "fr": "Corbeille",
+   "it": "Cestino",
+   "ja": "ゴミ箱",
+   "ko": "휴지통",
+   "nl": "Prullenbak",
+   "pl": "Kosz",
+   "pt": "Lixo",
+   "ro": "Coș",
+   "ru": "Корзина",
+   "tr": "Çöp kutusu",
+   "uk": "Кошик",
+   "zh": "回收站"
+  },
+  "series_subtitle": {
+   "en": "Taken in quick succession · %1$d",
+   "de": "Kurz hintereinander aufgenommen · %1$d",
+   "ar": "التُقطت بشكل متتالٍ سريع · %1$d",
+   "es": "Tomadas seguidas · %1$d",
+   "fr": "Prises coup sur coup · %1$d",
+   "it": "Scattate in rapida successione · %1$d",
+   "ja": "連続して撮影・%1$d枚",
+   "ko": "연속으로 촬영 · %1$d장",
+   "nl": "Kort na elkaar gemaakt · %1$d",
+   "pl": "Zrobione jedno po drugim · %1$d",
+   "pt": "Tiradas em sequência rápida · %1$d",
+   "ro": "Făcute una după alta · %1$d",
+   "ru": "Сняты подряд · %1$d",
+   "tr": "Art arda çekildi · %1$d",
+   "uk": "Зняті поспіль · %1$d",
+   "zh": "连续拍摄 · %1$d 张"
+  },
+  "series_title": {
+   "en": "Compare series",
+   "de": "Serie vergleichen",
+   "ar": "مقارنة السلسلة",
+   "es": "Comparar serie",
+   "fr": "Comparer la série",
+   "it": "Confronta serie",
+   "ja": "連続写真を比較",
+   "ko": "연속 사진 비교",
+   "nl": "Reeks vergelijken",
+   "pl": "Porównaj serię",
+   "pt": "Comparar série",
+   "ro": "Compară seria",
+   "ru": "Сравнить серию",
+   "tr": "Seriyi karşılaştır",
+   "uk": "Порівняти серію",
+   "zh": "比较连拍"
+  },
+  "set_buttons": {
+   "en": "Decision buttons",
+   "de": "Tasten zum Entscheiden",
+   "ar": "أزرار القرار",
+   "es": "Botones para decidir",
+   "fr": "Boutons de décision",
+   "it": "Pulsanti per decidere",
+   "ja": "選択ボタン",
+   "ko": "선택 버튼",
+   "nl": "Keuzeknoppen",
+   "pl": "Przyciski decyzji",
+   "pt": "Botões de decisão",
+   "ro": "Butoane pentru decizie",
+   "ru": "Кнопки решений",
+   "tr": "Karar düğmeleri",
+   "uk": "Кнопки рішень",
+   "zh": "选择按钮"
+  },
+  "set_buttons_detail": {
+   "en": "Shows buttons for trash, keep and later below each item. Swiping still works.",
+   "de": "Zeigt unter dem Medium Tasten für Papierkorb, Behalten und Später. Wischen funktioniert weiterhin.",
+   "ar": "يعرض أزرارًا للسلة والاحتفاظ ولاحقًا أسفل كل عنصر. السحب يظل متاحًا.",
+   "es": "Muestra botones de papelera, conservar y después debajo de cada elemento. Deslizar sigue funcionando.",
+   "fr": "Affiche des boutons Corbeille, Garder et Plus tard sous chaque élément. Le balayage fonctionne toujours.",
+   "it": "Mostra sotto ogni elemento i pulsanti Cestino, Conserva e Più tardi. Lo scorrimento funziona ancora.",
+   "ja": "各アイテムの下に「ゴミ箱」「残す」「あとで」のボタンを表示します。スワイプも引き続き使えます。",
+   "ko": "각 항목 아래에 휴지통, 보관, 나중에 버튼을 표시해요. 스와이프도 계속 쓸 수 있어요.",
+   "nl": "Toont onder elk item knoppen voor prullenbak, bewaren en later. Vegen blijft werken.",
+   "pl": "Pokazuje pod elementem przyciski Kosz, Zachowaj i Później. Przesuwanie nadal działa.",
+   "pt": "Mostra botões de lixo, manter e mais tarde por baixo de cada item. Deslizar continua a funcionar.",
+   "ro": "Afișează sub fiecare element butoane pentru coș, păstrare și mai târziu. Glisarea funcționează în continuare.",
+   "ru": "Показывает под элементом кнопки «Корзина», «Оставить» и «Позже». Свайпы по-прежнему работают.",
+   "tr": "Her öğenin altında çöp kutusu, saklama ve sonra düğmeleri gösterir. Kaydırma çalışmaya devam eder.",
+   "uk": "Показує під елементом кнопки «Кошик», «Залишити» та «Пізніше». Свайпи й далі працюють.",
+   "zh": "在每项内容下方显示回收站、保留和稍后按钮。滑动操作仍然可用。"
+  },
+  "set_excluded_folders": {
+   "en": "Excluded folders",
+   "de": "Ausgenommene Ordner",
+   "ar": "المجلدات المستبعدة",
+   "es": "Carpetas excluidas",
+   "fr": "Dossiers exclus",
+   "it": "Cartelle escluse",
+   "ja": "除外したフォルダ",
+   "ko": "제외한 폴더",
+   "nl": "Uitgesloten mappen",
+   "pl": "Wykluczone foldery",
+   "pt": "Pastas excluídas",
+   "ro": "Dosare excluse",
+   "ru": "Исключённые папки",
+   "tr": "Hariç tutulan klasörler",
+   "uk": "Виключені папки",
+   "zh": "已排除的文件夹"
+  },
+  "today_continue_month": {
+   "en": "Continue: %1$s",
+   "de": "Weitermachen: %1$s",
+   "ar": "متابعة: %1$s",
+   "es": "Continuar: %1$s",
+   "fr": "Continuer : %1$s",
+   "it": "Continua: %1$s",
+   "ja": "続ける：%1$s",
+   "ko": "이어서: %1$s",
+   "nl": "Verder met: %1$s",
+   "pl": "Kontynuuj: %1$s",
+   "pt": "Continuar: %1$s",
+   "ro": "Continuă: %1$s",
+   "ru": "Продолжить: %1$s",
+   "tr": "Devam et: %1$s",
+   "uk": "Продовжити: %1$s",
+   "zh": "继续：%1$s"
+  },
+  "today_new_since_sub": {
+   "en": "since your last cleanup",
+   "de": "seit deinem letzten Aufräumen",
+   "ar": "منذ آخر ترتيب",
+   "es": "desde tu última limpieza",
+   "fr": "depuis ton dernier tri",
+   "it": "dall’ultimo riordino",
+   "ja": "前回の整理以降",
+   "ko": "마지막 정리 이후",
+   "nl": "sinds je laatste opruimbeurt",
+   "pl": "od ostatniego porządkowania",
+   "pt": "desde a tua última arrumação",
+   "ro": "de la ultima ordonare",
+   "ru": "с последней уборки",
+   "tr": "son düzenlemenden beri",
+   "uk": "з останнього впорядкування",
+   "zh": "自上次整理以来"
+  },
+  "tour_grid_note_text": {
+   "en": "Moving or marking favorites doesn’t change keep, trash or later.",
+   "de": "Verschieben oder Favorisieren ändert nichts an Behalten, Papierkorb oder Später.",
+   "ar": "النقل أو الإضافة إلى المفضلة لا يغيّر الاحتفاظ أو السلة أو لاحقًا.",
+   "es": "Mover o marcar favoritos no cambia conservar, papelera ni después.",
+   "fr": "Déplacer ou mettre en favori ne change rien à Garder, Corbeille ou Plus tard.",
+   "it": "Spostare o aggiungere ai preferiti non cambia Conserva, Cestino o Più tardi.",
+   "ja": "移動やお気に入りは「残す」「ゴミ箱」「あとで」に影響しません。",
+   "ko": "이동하거나 즐겨찾기해도 보관, 휴지통, 나중에는 바뀌지 않아요.",
+   "nl": "Verplaatsen of als favoriet markeren verandert niets aan bewaren, prullenbak of later.",
+   "pl": "Przenoszenie i ulubione nie zmieniają decyzji Zachowaj, Kosz ani Później.",
+   "pt": "Mover ou marcar favoritos não altera manter, lixo ou mais tarde.",
+   "ro": "Mutarea sau marcarea ca favorit nu schimbă păstrarea, coșul sau mai târziu.",
+   "ru": "Перемещение и избранное не меняют «Оставить», «Корзину» или «Позже».",
+   "tr": "Taşımak veya favorilere eklemek saklama, çöp kutusu ya da sonra kararını değiştirmez.",
+   "uk": "Переміщення й обране не змінюють «Залишити», «Кошик» чи «Пізніше».",
+   "zh": "移动或收藏不会改变保留、回收站或稍后。"
+  },
+  "tour_grid_note_title": {
+   "en": "Not a decision",
+   "de": "Keine Entscheidung",
+   "ar": "ليس قرارًا",
+   "es": "No es una decisión",
+   "fr": "Pas une décision",
+   "it": "Non è una decisione",
+   "ja": "選択ではありません",
+   "ko": "선택이 아니에요",
+   "nl": "Geen keuze",
+   "pl": "To nie decyzja",
+   "pt": "Não é uma decisão",
+   "ro": "Nu este o decizie",
+   "ru": "Это не решение",
+   "tr": "Bir karar değil",
+   "uk": "Це не рішення",
+   "zh": "不算作选择"
+  },
+  "tour_grid_select_text": {
+   "en": "Tap photos to select them. Long-press and drag to select a whole range.",
+   "de": "Tippe auf Bilder, um sie auszuwählen. Lange drücken und ziehen wählt einen ganzen Bereich.",
+   "ar": "انقر على الصور لتحديدها. اضغط مطولًا واسحب لتحديد نطاق كامل.",
+   "es": "Toca fotos para seleccionarlas. Mantén pulsado y arrastra para elegir un rango.",
+   "fr": "Touche des photos pour les sélectionner. Appuie longuement et fais glisser pour choisir toute une plage.",
+   "it": "Tocca le foto per selezionarle. Tieni premuto e trascina per scegliere un intervallo.",
+   "ja": "写真をタップして選択。長押ししてドラッグすると範囲を選択できます。",
+   "ko": "사진을 탭해 선택해요. 길게 누른 채 드래그하면 범위를 선택해요.",
+   "nl": "Tik op foto’s om ze te selecteren. Houd ingedrukt en sleep om een hele reeks te kiezen.",
+   "pl": "Dotykaj zdjęć, aby je zaznaczyć. Przytrzymaj i przeciągnij, aby zaznaczyć zakres.",
+   "pt": "Toca nas fotos para as selecionar. Mantém premido e arrasta para escolher um intervalo.",
+   "ro": "Atinge fotografiile pentru a le selecta. Ține apăsat și trage pentru un interval.",
+   "ru": "Нажимай на фото, чтобы выбрать. Удерживай и веди, чтобы выбрать диапазон.",
+   "tr": "Seçmek için fotoğraflara dokun. Bir aralık seçmek için basılı tutup sürükle.",
+   "uk": "Торкайся фото, щоб вибрати. Утримуй і тягни, щоб вибрати діапазон.",
+   "zh": "点按照片即可选择。长按并拖动可选择一个范围。"
+  },
+  "tour_grid_select_title": {
+   "en": "Select several",
+   "de": "Mehrere auswählen",
+   "ar": "تحديد عدة عناصر",
+   "es": "Seleccionar varios",
+   "fr": "En sélectionner plusieurs",
+   "it": "Selezionane diversi",
+   "ja": "複数選択",
+   "ko": "여러 개 선택",
+   "nl": "Meerdere selecteren",
+   "pl": "Zaznacz kilka",
+   "pt": "Selecionar vários",
+   "ro": "Selectează mai multe",
+   "ru": "Выбрать несколько",
+   "tr": "Birden fazla seç",
+   "uk": "Вибрати кілька",
+   "zh": "多选"
+  },
+  "tour_months_later_text": {
+   "en": "Items set aside for later count as reviewed – you still see them here.",
+   "de": "Für später Zurückgestelltes zählt als durchgesehen – du siehst es hier trotzdem.",
+   "ar": "العناصر المؤجلة لوقت لاحق تُحسب كمراجعة، لكنك ما زلت تراها هنا.",
+   "es": "Lo dejado para después cuenta como revisado, pero lo sigues viendo aquí.",
+   "fr": "Ce qui est remis à plus tard compte comme passé en revue – tu le vois quand même ici.",
+   "it": "Ciò che è rimandato conta come rivisto, ma lo vedi comunque qui.",
+   "ja": "「あとで」にしたものは見直し済みとして数えますが、ここに表示されます。",
+   "ko": "‘나중에’로 미룬 항목은 확인한 것으로 세지만 여기에서 계속 보여요.",
+   "nl": "Wat voor later is bewaard telt als bekeken – je ziet het hier toch.",
+   "pl": "Odłożone na później liczą się jako przejrzane – nadal widzisz je tutaj.",
+   "pt": "O que ficou para mais tarde conta como revisto, mas continuas a vê-lo aqui.",
+   "ro": "Ce ai amânat contează ca revizuit, dar îl vezi în continuare aici.",
+   "ru": "Отложенное на потом считается просмотренным, но ты всё равно видишь его здесь.",
+   "tr": "Sonraya bırakılanlar gözden geçirilmiş sayılır ama burada yine görünür.",
+   "uk": "Відкладене на потім вважається переглянутим, але ти все одно бачиш його тут.",
+   "zh": "设为稍后的内容计为已查看，但仍会在这里显示。"
+  },
+  "tour_months_later_title": {
+   "en": "Later isn’t open",
+   "de": "Später ist nicht offen",
+   "ar": "«لاحقًا» ليس مفتوحًا",
+   "es": "Después no está pendiente",
+   "fr": "Plus tard n’est pas en attente",
+   "it": "Più tardi non è in sospeso",
+   "ja": "「あとで」は未確認ではありません",
+   "ko": "‘나중에’는 미확인이 아니에요",
+   "nl": "Later is niet open",
+   "pl": "Później to nie zaległość",
+   "pt": "Mais tarde não está pendente",
+   "ro": "Mai târziu nu e în așteptare",
+   "ru": "«Позже» — не непросмотренное",
+   "tr": "Sonra bekleyen değil",
+   "uk": "«Пізніше» — не непереглянуте",
+   "zh": "“稍后”不算未查看"
+  },
+  "tour_months_more_text": {
+   "en": "Open the overview as a grid or review a finished month again.",
+   "de": "Öffne die Übersicht als Raster oder sieh einen fertigen Monat erneut durch.",
+   "ar": "افتح النظرة العامة كشبكة أو راجع شهرًا مكتملًا مجددًا.",
+   "es": "Abre la vista general como cuadrícula o revisa de nuevo un mes terminado.",
+   "fr": "Ouvre la vue d’ensemble en grille ou revois un mois terminé.",
+   "it": "Apri la panoramica a griglia o rivedi un mese completato.",
+   "ja": "一覧をグリッドで開いたり、終わった月をもう一度見直したりできます。",
+   "ko": "한눈에 보기를 격자로 열거나 끝낸 달을 다시 볼 수 있어요.",
+   "nl": "Open het overzicht als raster of bekijk een afgeronde maand opnieuw.",
+   "pl": "Otwórz przegląd jako siatkę albo przejrzyj ukończony miesiąc ponownie.",
+   "pt": "Abre a vista geral em grelha ou revê um mês concluído.",
+   "ro": "Deschide prezentarea ca grilă sau revizuiește din nou o lună terminată.",
+   "ru": "Открой обзор сеткой или пересмотри завершённый месяц.",
+   "tr": "Genel bakışı ızgara olarak aç veya biten bir ayı yeniden gözden geçir.",
+   "uk": "Відкрий огляд сіткою або переглянь завершений місяць знову.",
+   "zh": "以网格打开概览，或重新查看已完成的月份。"
+  },
+  "tour_months_more_title": {
+   "en": "More per month",
+   "de": "Mehr pro Monat",
+   "ar": "المزيد لكل شهر",
+   "es": "Más por mes",
+   "fr": "Plus par mois",
+   "it": "Altro per mese",
+   "ja": "月ごとの操作",
+   "ko": "월별 추가 기능",
+   "nl": "Meer per maand",
+   "pl": "Więcej dla miesiąca",
+   "pt": "Mais por mês",
+   "ro": "Mai multe pe lună",
+   "ru": "Больше для месяца",
+   "tr": "Ay başına daha fazlası",
+   "uk": "Більше для місяця",
+   "zh": "每月更多操作"
+  },
+  "tour_months_row_text": {
+   "en": "Tap a month to review only its open photos and videos.",
+   "de": "Tippe auf einen Monat, um nur dessen offene Fotos und Videos durchzusehen.",
+   "ar": "انقر على شهر لمراجعة صوره وفيديوهاته غير المراجَعة فقط.",
+   "es": "Toca un mes para revisar solo sus fotos y vídeos pendientes.",
+   "fr": "Touche un mois pour ne passer en revue que ses photos et vidéos en attente.",
+   "it": "Tocca un mese per rivedere solo le sue foto e i video in sospeso.",
+   "ja": "月をタップすると、その月の未確認の写真と動画だけを見直せます。",
+   "ko": "월을 탭하면 그 달의 남은 사진과 동영상만 볼 수 있어요.",
+   "nl": "Tik op een maand om alleen de openstaande foto’s en video’s te bekijken.",
+   "pl": "Dotknij miesiąca, aby przejrzeć tylko jego nieprzejrzane zdjęcia i filmy.",
+   "pt": "Toca num mês para rever só as fotos e vídeos pendentes.",
+   "ro": "Atinge o lună ca să revizuiești doar fotografiile și videoclipurile rămase.",
+   "ru": "Нажми на месяц, чтобы просмотреть только его непросмотренные фото и видео.",
+   "tr": "Yalnızca o ayın bekleyen fotoğraf ve videolarını gözden geçirmek için bir aya dokun.",
+   "uk": "Торкнись місяця, щоб переглянути лише його непереглянуті фото й відео.",
+   "zh": "点按月份，只查看该月未查看的照片和视频。"
+  },
+  "tour_months_row_title": {
+   "en": "How far you are",
+   "de": "So weit bist du",
+   "ar": "مدى تقدمك",
+   "es": "Lo que llevas",
+   "fr": "Où tu en es",
+   "it": "A che punto sei",
+   "ja": "進み具合",
+   "ko": "진행 상황",
+   "nl": "Zo ver ben je",
+   "pl": "Twój postęp",
+   "pt": "O teu progresso",
+   "ro": "Cât ai avansat",
+   "ru": "Твой прогресс",
+   "tr": "Ne kadar ilerledin",
+   "uk": "Твій прогрес",
+   "zh": "你的进度"
+  },
+  "tour_series_text": {
+   "en": "Several photos taken in quick succession? Compare them side by side and choose what stays.",
+   "de": "Mehrere Fotos kurz hintereinander? Vergleiche sie nebeneinander und wähle selbst, was bleibt.",
+   "ar": "عدة صور التُقطت بسرعة متتالية؟ قارنها جنبًا إلى جنب واختر ما يبقى.",
+   "es": "¿Varias fotos seguidas? Compáralas una junto a otra y elige cuáles se quedan.",
+   "fr": "Plusieurs photos prises coup sur coup ? Compare-les côte à côte et choisis ce qui reste.",
+   "it": "Più foto scattate di seguito? Confrontale affiancate e scegli cosa resta.",
+   "ja": "連続して撮った写真がありますか？並べて比較し、残すものを選べます。",
+   "ko": "연속으로 찍은 사진이 있나요? 나란히 비교하고 남길 사진을 골라요.",
+   "nl": "Meerdere foto’s kort na elkaar? Vergelijk ze naast elkaar en kies wat blijft.",
+   "pl": "Kilka zdjęć zrobionych jedno po drugim? Porównaj je obok siebie i wybierz, co zostaje.",
+   "pt": "Várias fotos tiradas seguidas? Compara-as lado a lado e escolhe o que fica.",
+   "ro": "Mai multe fotografii făcute una după alta? Compară-le alăturat și alege ce rămâne.",
+   "ru": "Несколько фото подряд? Сравни их рядом и выбери, что оставить.",
+   "tr": "Art arda çekilmiş birkaç fotoğraf mı var? Yan yana karşılaştır ve neyin kalacağını seç.",
+   "uk": "Кілька фото поспіль? Порівняй їх поруч і вибери, що залишити.",
+   "zh": "有几张连续拍摄的照片？并排比较，自己选择保留哪些。"
+  },
+  "tour_series_title": {
+   "en": "Compare series",
+   "de": "Serie vergleichen",
+   "ar": "مقارنة السلسلة",
+   "es": "Comparar serie",
+   "fr": "Comparer la série",
+   "it": "Confronta serie",
+   "ja": "連続写真を比較",
+   "ko": "연속 사진 비교",
+   "nl": "Reeks vergelijken",
+   "pl": "Porównaj serię",
+   "pt": "Comparar série",
+   "ro": "Compară seria",
+   "ru": "Сравнить серию",
+   "tr": "Seriyi karşılaştır",
+   "uk": "Порівняти серію",
+   "zh": "比较连拍"
+  },
+  "pro_f6": {
+   "en": "Compare photo series",
+   "de": "Fotoserien vergleichen",
+   "ar": "مقارنة سلاسل الصور",
+   "es": "Comparar series de fotos",
+   "fr": "Comparer des séries de photos",
+   "it": "Confronta serie di foto",
+   "ja": "連続写真を比較",
+   "ko": "연속 사진 비교",
+   "nl": "Fotoreeksen vergelijken",
+   "pl": "Porównuj serie zdjęć",
+   "pt": "Comparar séries de fotos",
+   "ro": "Compară serii de fotografii",
+   "ru": "Сравнение серий фото",
+   "tr": "Fotoğraf serilerini karşılaştır",
+   "uk": "Порівняння серій фото",
+   "zh": "比较连拍照片"
+  },
+  "pro_f6d": {
+   "en": "Photos taken in quick succession side by side – you choose what stays.",
+   "de": "Kurz hintereinander aufgenommene Fotos nebeneinander – du wählst, was bleibt.",
+   "ar": "صور التُقطت بشكل متتالٍ جنبًا إلى جنب – أنت تختار ما يبقى.",
+   "es": "Fotos tomadas seguidas, una junto a otra: tú eliges cuáles se quedan.",
+   "fr": "Les photos prises coup sur coup côte à côte – tu choisis ce qui reste.",
+   "it": "Foto scattate di seguito affiancate: scegli tu cosa resta.",
+   "ja": "連続して撮った写真を並べて表示。残すものはあなたが選びます。",
+   "ko": "연속으로 찍은 사진을 나란히 보고 남길 사진을 직접 골라요.",
+   "nl": "Kort na elkaar gemaakte foto’s naast elkaar – jij kiest wat blijft.",
+   "pl": "Zdjęcia zrobione jedno po drugim obok siebie – ty wybierasz, co zostaje.",
+   "pt": "Fotos tiradas em sequência lado a lado – tu escolhes o que fica.",
+   "ro": "Fotografii făcute una după alta, alăturate – tu alegi ce rămâne.",
+   "ru": "Фото, снятые подряд, рядом друг с другом — ты выбираешь, что оставить.",
+   "tr": "Art arda çekilen fotoğraflar yan yana – neyin kalacağını sen seçersin.",
+   "uk": "Фото, зняті поспіль, поруч — ти вибираєш, що залишити.",
+   "zh": "并排显示连续拍摄的照片，由你决定保留哪些。"
+  },
+  "offer_pro_text": {
+   "en": "No ads or daily limit. Plus photo series comparison, identical-copy search and custom collections.",
+   "de": "Ohne Werbung und Tageslimit. Dazu Fotoserien vergleichen, identische Kopien finden und eigene Sammlungen.",
+   "ar": "بلا إعلانات ولا حد يومي. بالإضافة إلى مقارنة سلاسل الصور والبحث عن النسخ المتطابقة ومجموعاتك الخاصة.",
+   "es": "Sin anuncios ni límite diario. Además, comparar series de fotos, buscar copias idénticas y tus propias colecciones.",
+   "fr": "Sans pub ni limite quotidienne. Avec la comparaison de séries de photos, la recherche de copies identiques et les collections personnalisées.",
+   "it": "Senza pubblicità né limite giornaliero. In più, confronto delle serie di foto, ricerca di copie identiche e raccolte personalizzate.",
+   "ja": "広告なし、1日の上限なし。連続写真の比較、同じコピーの検索、カスタムコレクションも使えます。",
+   "ko": "광고도 하루 한도도 없어요. 연속 사진 비교, 같은 사본 찾기, 나만의 모음도 이용할 수 있어요.",
+   "nl": "Geen advertenties en geen daglimiet. Inclusief fotoreeksen vergelijken, identieke kopieën zoeken en eigen verzamelingen.",
+   "pl": "Bez reklam i limitu dziennego. Do tego porównywanie serii zdjęć, wyszukiwanie identycznych kopii i własne kolekcje.",
+   "pt": "Sem anúncios nem limite diário. Inclui comparação de séries de fotos, pesquisa de cópias idênticas e coleções personalizadas.",
+   "ro": "Fără reclame și fără limită zilnică. Plus compararea seriilor de fotografii, căutarea copiilor identice și colecții proprii.",
+   "ru": "Без рекламы и дневного лимита. Плюс сравнение серий фото, поиск одинаковых копий и свои подборки.",
+   "tr": "Reklamsız ve günlük sınır yok. Ayrıca fotoğraf serisi karşılaştırma, aynı kopyaları bulma ve özel koleksiyonlar.",
+   "uk": "Без реклами й денного ліміту. А також порівняння серій фото, пошук ідентичних копій і власні добірки.",
+   "zh": "无广告，无每日上限。还能比较连拍照片、查找相同副本、自建合集。"
+  }
+ },
+ "plurals": {
+  "basket_trash_files": {
+   "en": {
+    "one": "Move %1$d file to trash",
+    "other": "Move %1$d files to trash"
+   },
+   "de": {
+    "one": "%1$d Datei in den Papierkorb",
+    "other": "%1$d Dateien in den Papierkorb"
+   },
+   "ar": {
+    "zero": "نقل %1$d ملف إلى السلة",
+    "one": "نقل ملف واحد إلى السلة",
+    "two": "نقل ملفين إلى السلة",
+    "few": "نقل %1$d ملفات إلى السلة",
+    "many": "نقل %1$d ملفًا إلى السلة",
+    "other": "نقل %1$d ملف إلى السلة"
+   },
+   "es": {
+    "one": "Mover %1$d archivo a la papelera",
+    "many": "Mover %1$d archivos a la papelera",
+    "other": "Mover %1$d archivos a la papelera"
+   },
+   "fr": {
+    "one": "Mettre %1$d fichier à la corbeille",
+    "many": "Mettre %1$d fichiers à la corbeille",
+    "other": "Mettre %1$d fichiers à la corbeille"
+   },
+   "it": {
+    "one": "Sposta %1$d file nel cestino",
+    "many": "Sposta %1$d file nel cestino",
+    "other": "Sposta %1$d file nel cestino"
+   },
+   "ja": {
+    "other": "%1$d件のファイルをゴミ箱へ"
+   },
+   "ko": {
+    "other": "파일 %1$d개를 휴지통으로"
+   },
+   "nl": {
+    "one": "%1$d bestand naar prullenbak",
+    "other": "%1$d bestanden naar prullenbak"
+   },
+   "pl": {
+    "one": "Przenieś %1$d plik do kosza",
+    "few": "Przenieś %1$d pliki do kosza",
+    "many": "Przenieś %1$d plików do kosza",
+    "other": "Przenieś %1$d pliku do kosza"
+   },
+   "pt": {
+    "one": "Mover %1$d ficheiro para o lixo",
+    "many": "Mover %1$d ficheiros para o lixo",
+    "other": "Mover %1$d ficheiros para o lixo"
+   },
+   "ro": {
+    "one": "Mută %1$d fișier în coș",
+    "few": "Mută %1$d fișiere în coș",
+    "other": "Mută %1$d de fișiere în coș"
+   },
+   "ru": {
+    "one": "Переместить %1$d файл в корзину",
+    "few": "Переместить %1$d файла в корзину",
+    "many": "Переместить %1$d файлов в корзину",
+    "other": "Переместить %1$d файла в корзину"
+   },
+   "tr": {
+    "one": "%1$d dosyayı çöp kutusuna taşı",
+    "other": "%1$d dosyayı çöp kutusuna taşı"
+   },
+   "uk": {
+    "one": "Перемістити %1$d файл у кошик",
+    "few": "Перемістити %1$d файли в кошик",
+    "many": "Перемістити %1$d файлів у кошик",
+    "other": "Перемістити %1$d файлу в кошик"
+   },
+   "zh": {
+    "other": "将 %1$d 个文件移到回收站"
+   }
+  },
+  "grid_move_title": {
+   "en": {
+    "one": "Move %1$d item",
+    "other": "Move %1$d items"
+   },
+   "de": {
+    "one": "%1$d Element verschieben",
+    "other": "%1$d Elemente verschieben"
+   },
+   "ar": {
+    "zero": "نقل %1$d عنصر",
+    "one": "نقل عنصر واحد",
+    "two": "نقل عنصرين",
+    "few": "نقل %1$d عناصر",
+    "many": "نقل %1$d عنصرًا",
+    "other": "نقل %1$d عنصر"
+   },
+   "es": {
+    "one": "Mover %1$d elemento",
+    "many": "Mover %1$d elementos",
+    "other": "Mover %1$d elementos"
+   },
+   "fr": {
+    "one": "Déplacer %1$d élément",
+    "many": "Déplacer %1$d éléments",
+    "other": "Déplacer %1$d éléments"
+   },
+   "it": {
+    "one": "Sposta %1$d elemento",
+    "many": "Sposta %1$d elementi",
+    "other": "Sposta %1$d elementi"
+   },
+   "ja": {
+    "other": "%1$d件を移動"
+   },
+   "ko": {
+    "other": "%1$d개 이동"
+   },
+   "nl": {
+    "one": "%1$d item verplaatsen",
+    "other": "%1$d items verplaatsen"
+   },
+   "pl": {
+    "one": "Przenieś %1$d element",
+    "few": "Przenieś %1$d elementy",
+    "many": "Przenieś %1$d elementów",
+    "other": "Przenieś %1$d elementu"
+   },
+   "pt": {
+    "one": "Mover %1$d item",
+    "many": "Mover %1$d itens",
+    "other": "Mover %1$d itens"
+   },
+   "ro": {
+    "one": "Mută %1$d element",
+    "few": "Mută %1$d elemente",
+    "other": "Mută %1$d de elemente"
+   },
+   "ru": {
+    "one": "Переместить %1$d элемент",
+    "few": "Переместить %1$d элемента",
+    "many": "Переместить %1$d элементов",
+    "other": "Переместить %1$d элемента"
+   },
+   "tr": {
+    "one": "%1$d öğeyi taşı",
+    "other": "%1$d öğeyi taşı"
+   },
+   "uk": {
+    "one": "Перемістити %1$d елемент",
+    "few": "Перемістити %1$d елементи",
+    "many": "Перемістити %1$d елементів",
+    "other": "Перемістити %1$d елемента"
+   },
+   "zh": {
+    "other": "移动 %1$d 项"
+   }
+  },
+  "grid_moved": {
+   "en": {
+    "one": "Moved %1$d item to “%2$s”",
+    "other": "Moved %1$d items to “%2$s”"
+   },
+   "de": {
+    "one": "%1$d Element nach „%2$s“ verschoben",
+    "other": "%1$d Elemente nach „%2$s“ verschoben"
+   },
+   "ar": {
+    "zero": "نُقل %1$d عنصر إلى «%2$s»",
+    "one": "نُقل عنصر واحد إلى «%2$s»",
+    "two": "نُقل عنصران إلى «%2$s»",
+    "few": "نُقلت %1$d عناصر إلى «%2$s»",
+    "many": "نُقل %1$d عنصرًا إلى «%2$s»",
+    "other": "نُقل %1$d عنصر إلى «%2$s»"
+   },
+   "es": {
+    "one": "%1$d elemento movido a «%2$s»",
+    "many": "%1$d elementos movidos a «%2$s»",
+    "other": "%1$d elementos movidos a «%2$s»"
+   },
+   "fr": {
+    "one": "%1$d élément déplacé vers « %2$s »",
+    "many": "%1$d éléments déplacés vers « %2$s »",
+    "other": "%1$d éléments déplacés vers « %2$s »"
+   },
+   "it": {
+    "one": "%1$d elemento spostato in «%2$s»",
+    "many": "%1$d elementi spostati in «%2$s»",
+    "other": "%1$d elementi spostati in «%2$s»"
+   },
+   "ja": {
+    "other": "%1$d件を「%2$s」に移動しました"
+   },
+   "ko": {
+    "other": "%1$d개를 ‘%2$s’(으)로 옮겼어요"
+   },
+   "nl": {
+    "one": "%1$d item verplaatst naar ‘%2$s’",
+    "other": "%1$d items verplaatst naar ‘%2$s’"
+   },
+   "pl": {
+    "one": "Przeniesiono %1$d element do „%2$s”",
+    "few": "Przeniesiono %1$d elementy do „%2$s”",
+    "many": "Przeniesiono %1$d elementów do „%2$s”",
+    "other": "Przeniesiono %1$d elementu do „%2$s”"
+   },
+   "pt": {
+    "one": "%1$d item movido para “%2$s”",
+    "many": "%1$d itens movidos para “%2$s”",
+    "other": "%1$d itens movidos para “%2$s”"
+   },
+   "ro": {
+    "one": "%1$d element mutat în „%2$s”",
+    "few": "%1$d elemente mutate în „%2$s”",
+    "other": "%1$d de elemente mutate în „%2$s”"
+   },
+   "ru": {
+    "one": "%1$d элемент перемещён в «%2$s»",
+    "few": "%1$d элемента перемещены в «%2$s»",
+    "many": "%1$d элементов перемещено в «%2$s»",
+    "other": "%1$d элемента перемещено в «%2$s»"
+   },
+   "tr": {
+    "one": "%1$d öğe “%2$s” klasörüne taşındı",
+    "other": "%1$d öğe “%2$s” klasörüne taşındı"
+   },
+   "uk": {
+    "one": "%1$d елемент переміщено в «%2$s»",
+    "few": "%1$d елементи переміщено в «%2$s»",
+    "many": "%1$d елементів переміщено в «%2$s»",
+    "other": "%1$d елемента переміщено в «%2$s»"
+   },
+   "zh": {
+    "other": "已将 %1$d 项移到“%2$s”"
+   }
+  },
+  "grid_selected": {
+   "en": {
+    "one": "%1$d selected",
+    "other": "%1$d selected"
+   },
+   "de": {
+    "one": "%1$d ausgewählt",
+    "other": "%1$d ausgewählt"
+   },
+   "ar": {
+    "zero": "%1$d محدد",
+    "one": "عنصر واحد محدد",
+    "two": "عنصران محددان",
+    "few": "%1$d عناصر محددة",
+    "many": "%1$d عنصرًا محددًا",
+    "other": "%1$d عنصر محدد"
+   },
+   "es": {
+    "one": "%1$d seleccionado",
+    "many": "%1$d seleccionados",
+    "other": "%1$d seleccionados"
+   },
+   "fr": {
+    "one": "%1$d sélectionné",
+    "many": "%1$d sélectionnés",
+    "other": "%1$d sélectionnés"
+   },
+   "it": {
+    "one": "%1$d selezionato",
+    "many": "%1$d selezionati",
+    "other": "%1$d selezionati"
+   },
+   "ja": {
+    "other": "%1$d件を選択中"
+   },
+   "ko": {
+    "other": "%1$d개 선택됨"
+   },
+   "nl": {
+    "one": "%1$d geselecteerd",
+    "other": "%1$d geselecteerd"
+   },
+   "pl": {
+    "one": "Zaznaczono %1$d",
+    "few": "Zaznaczono %1$d",
+    "many": "Zaznaczono %1$d",
+    "other": "Zaznaczono %1$d"
+   },
+   "pt": {
+    "one": "%1$d selecionado",
+    "many": "%1$d selecionados",
+    "other": "%1$d selecionados"
+   },
+   "ro": {
+    "one": "%1$d selectat",
+    "few": "%1$d selectate",
+    "other": "%1$d selectate"
+   },
+   "ru": {
+    "one": "Выбран %1$d",
+    "few": "Выбрано %1$d",
+    "many": "Выбрано %1$d",
+    "other": "Выбрано %1$d"
+   },
+   "tr": {
+    "one": "%1$d seçildi",
+    "other": "%1$d seçildi"
+   },
+   "uk": {
+    "one": "Вибрано %1$d",
+    "few": "Вибрано %1$d",
+    "many": "Вибрано %1$d",
+    "other": "Вибрано %1$d"
+   },
+   "zh": {
+    "other": "已选择 %1$d 项"
+   }
+  },
+  "month_later": {
+   "en": {
+    "one": "%1$d for later",
+    "other": "%1$d for later"
+   },
+   "de": {
+    "one": "%1$d für später",
+    "other": "%1$d für später"
+   },
+   "ar": {
+    "zero": "%1$d لوقت لاحق",
+    "one": "واحد لوقت لاحق",
+    "two": "اثنان لوقت لاحق",
+    "few": "%1$d لوقت لاحق",
+    "many": "%1$d لوقت لاحق",
+    "other": "%1$d لوقت لاحق"
+   },
+   "es": {
+    "one": "%1$d para después",
+    "many": "%1$d para después",
+    "other": "%1$d para después"
+   },
+   "fr": {
+    "one": "%1$d pour plus tard",
+    "many": "%1$d pour plus tard",
+    "other": "%1$d pour plus tard"
+   },
+   "it": {
+    "one": "%1$d per più tardi",
+    "many": "%1$d per più tardi",
+    "other": "%1$d per più tardi"
+   },
+   "ja": {
+    "other": "あとで %1$d件"
+   },
+   "ko": {
+    "other": "나중에 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d voor later",
+    "other": "%1$d voor later"
+   },
+   "pl": {
+    "one": "%1$d na później",
+    "few": "%1$d na później",
+    "many": "%1$d na później",
+    "other": "%1$d na później"
+   },
+   "pt": {
+    "one": "%1$d para mais tarde",
+    "many": "%1$d para mais tarde",
+    "other": "%1$d para mais tarde"
+   },
+   "ro": {
+    "one": "%1$d pentru mai târziu",
+    "few": "%1$d pentru mai târziu",
+    "other": "%1$d pentru mai târziu"
+   },
+   "ru": {
+    "one": "%1$d на потом",
+    "few": "%1$d на потом",
+    "many": "%1$d на потом",
+    "other": "%1$d на потом"
+   },
+   "tr": {
+    "one": "Sonra için %1$d",
+    "other": "Sonra için %1$d"
+   },
+   "uk": {
+    "one": "%1$d на потім",
+    "few": "%1$d на потім",
+    "many": "%1$d на потім",
+    "other": "%1$d на потім"
+   },
+   "zh": {
+    "other": "%1$d 项稍后"
+   }
+  },
+  "month_not_started": {
+   "en": {
+    "one": "Not started · %1$d item",
+    "other": "Not started · %1$d items"
+   },
+   "de": {
+    "one": "Noch nicht begonnen · %1$d Element",
+    "other": "Noch nicht begonnen · %1$d Elemente"
+   },
+   "ar": {
+    "zero": "لم يبدأ · %1$d عنصر",
+    "one": "لم يبدأ · عنصر واحد",
+    "two": "لم يبدأ · عنصران",
+    "few": "لم يبدأ · %1$d عناصر",
+    "many": "لم يبدأ · %1$d عنصرًا",
+    "other": "لم يبدأ · %1$d عنصر"
+   },
+   "es": {
+    "one": "Sin empezar · %1$d elemento",
+    "many": "Sin empezar · %1$d elementos",
+    "other": "Sin empezar · %1$d elementos"
+   },
+   "fr": {
+    "one": "Pas commencé · %1$d élément",
+    "many": "Pas commencé · %1$d éléments",
+    "other": "Pas commencé · %1$d éléments"
+   },
+   "it": {
+    "one": "Non iniziato · %1$d elemento",
+    "many": "Non iniziato · %1$d elementi",
+    "other": "Non iniziato · %1$d elementi"
+   },
+   "ja": {
+    "other": "未着手・%1$d件"
+   },
+   "ko": {
+    "other": "시작 전 · %1$d개"
+   },
+   "nl": {
+    "one": "Nog niet begonnen · %1$d item",
+    "other": "Nog niet begonnen · %1$d items"
+   },
+   "pl": {
+    "one": "Nierozpoczęte · %1$d element",
+    "few": "Nierozpoczęte · %1$d elementy",
+    "many": "Nierozpoczęte · %1$d elementów",
+    "other": "Nierozpoczęte · %1$d elementu"
+   },
+   "pt": {
+    "one": "Não iniciado · %1$d item",
+    "many": "Não iniciado · %1$d itens",
+    "other": "Não iniciado · %1$d itens"
+   },
+   "ro": {
+    "one": "Neînceput · %1$d element",
+    "few": "Neînceput · %1$d elemente",
+    "other": "Neînceput · %1$d de elemente"
+   },
+   "ru": {
+    "one": "Не начато · %1$d элемент",
+    "few": "Не начато · %1$d элемента",
+    "many": "Не начато · %1$d элементов",
+    "other": "Не начато · %1$d элемента"
+   },
+   "tr": {
+    "one": "Başlanmadı · %1$d öğe",
+    "other": "Başlanmadı · %1$d öğe"
+   },
+   "uk": {
+    "one": "Не розпочато · %1$d елемент",
+    "few": "Не розпочато · %1$d елементи",
+    "many": "Не розпочато · %1$d елементів",
+    "other": "Не розпочато · %1$d елемента"
+   },
+   "zh": {
+    "other": "未开始 · %1$d 项"
+   }
+  },
+  "month_progress": {
+   "en": {
+    "one": "%1$d of %2$d reviewed",
+    "other": "%1$d of %2$d reviewed"
+   },
+   "de": {
+    "one": "%1$d von %2$d durchgesehen",
+    "other": "%1$d von %2$d durchgesehen"
+   },
+   "ar": {
+    "zero": "تمت مراجعة %1$d من %2$d",
+    "one": "تمت مراجعة %1$d من %2$d",
+    "two": "تمت مراجعة %1$d من %2$d",
+    "few": "تمت مراجعة %1$d من %2$d",
+    "many": "تمت مراجعة %1$d من %2$d",
+    "other": "تمت مراجعة %1$d من %2$d"
+   },
+   "es": {
+    "one": "%1$d de %2$d revisado",
+    "many": "%1$d de %2$d revisados",
+    "other": "%1$d de %2$d revisados"
+   },
+   "fr": {
+    "one": "%1$d sur %2$d passé en revue",
+    "many": "%1$d sur %2$d passés en revue",
+    "other": "%1$d sur %2$d passés en revue"
+   },
+   "it": {
+    "one": "%1$d di %2$d rivisto",
+    "many": "%1$d di %2$d rivisti",
+    "other": "%1$d di %2$d rivisti"
+   },
+   "ja": {
+    "other": "%2$d件中%1$d件を見直し済み"
+   },
+   "ko": {
+    "other": "%2$d개 중 %1$d개 확인"
+   },
+   "nl": {
+    "one": "%1$d van %2$d bekeken",
+    "other": "%1$d van %2$d bekeken"
+   },
+   "pl": {
+    "one": "Przejrzano %1$d z %2$d",
+    "few": "Przejrzano %1$d z %2$d",
+    "many": "Przejrzano %1$d z %2$d",
+    "other": "Przejrzano %1$d z %2$d"
+   },
+   "pt": {
+    "one": "%1$d de %2$d revisto",
+    "many": "%1$d de %2$d revistos",
+    "other": "%1$d de %2$d revistos"
+   },
+   "ro": {
+    "one": "%1$d din %2$d revizuite",
+    "few": "%1$d din %2$d revizuite",
+    "other": "%1$d din %2$d revizuite"
+   },
+   "ru": {
+    "one": "Просмотрено %1$d из %2$d",
+    "few": "Просмотрено %1$d из %2$d",
+    "many": "Просмотрено %1$d из %2$d",
+    "other": "Просмотрено %1$d из %2$d"
+   },
+   "tr": {
+    "one": "%2$d öğeden %1$d tanesi gözden geçirildi",
+    "other": "%2$d öğeden %1$d tanesi gözden geçirildi"
+   },
+   "uk": {
+    "one": "Переглянуто %1$d з %2$d",
+    "few": "Переглянуто %1$d з %2$d",
+    "many": "Переглянуто %1$d з %2$d",
+    "other": "Переглянуто %1$d з %2$d"
+   },
+   "zh": {
+    "other": "已查看 %1$d / %2$d"
+   }
+  },
+  "result_files_trashed": {
+   "en": {
+    "one": "%1$d file is now in the storage trash.",
+    "other": "%1$d files are now in the storage trash."
+   },
+   "de": {
+    "one": "%1$d Datei liegt jetzt im Papierkorb des Speicherorts.",
+    "other": "%1$d Dateien liegen jetzt im Papierkorb des Speicherorts."
+   },
+   "ar": {
+    "zero": "أصبح %1$d ملف في سلة مهملات التخزين.",
+    "one": "أصبح ملف واحد في سلة مهملات التخزين.",
+    "two": "أصبح ملفان في سلة مهملات التخزين.",
+    "few": "أصبحت %1$d ملفات في سلة مهملات التخزين.",
+    "many": "أصبح %1$d ملفًا في سلة مهملات التخزين.",
+    "other": "أصبح %1$d ملف في سلة مهملات التخزين."
+   },
+   "es": {
+    "one": "%1$d archivo está ahora en la papelera del almacenamiento.",
+    "many": "%1$d archivos están ahora en la papelera del almacenamiento.",
+    "other": "%1$d archivos están ahora en la papelera del almacenamiento."
+   },
+   "fr": {
+    "one": "%1$d fichier est maintenant dans la corbeille de l’emplacement.",
+    "many": "%1$d fichiers sont maintenant dans la corbeille de l’emplacement.",
+    "other": "%1$d fichiers sont maintenant dans la corbeille de l’emplacement."
+   },
+   "it": {
+    "one": "%1$d file è ora nel cestino della posizione.",
+    "many": "%1$d file sono ora nel cestino della posizione.",
+    "other": "%1$d file sono ora nel cestino della posizione."
+   },
+   "ja": {
+    "other": "%1$d件のファイルが保存先のゴミ箱に入りました。"
+   },
+   "ko": {
+    "other": "파일 %1$d개가 저장 위치의 휴지통에 있어요."
+   },
+   "nl": {
+    "one": "%1$d bestand staat nu in de prullenbak van de opslaglocatie.",
+    "other": "%1$d bestanden staan nu in de prullenbak van de opslaglocatie."
+   },
+   "pl": {
+    "one": "%1$d plik jest teraz w koszu lokalizacji.",
+    "few": "%1$d pliki są teraz w koszu lokalizacji.",
+    "many": "%1$d plików jest teraz w koszu lokalizacji.",
+    "other": "%1$d pliku jest teraz w koszu lokalizacji."
+   },
+   "pt": {
+    "one": "%1$d ficheiro está agora no lixo do local de armazenamento.",
+    "many": "%1$d ficheiros estão agora no lixo do local de armazenamento.",
+    "other": "%1$d ficheiros estão agora no lixo do local de armazenamento."
+   },
+   "ro": {
+    "one": "%1$d fișier este acum în coșul locației.",
+    "few": "%1$d fișiere sunt acum în coșul locației.",
+    "other": "%1$d de fișiere sunt acum în coșul locației."
+   },
+   "ru": {
+    "one": "%1$d файл теперь в корзине хранилища.",
+    "few": "%1$d файла теперь в корзине хранилища.",
+    "many": "%1$d файлов теперь в корзине хранилища.",
+    "other": "%1$d файла теперь в корзине хранилища."
+   },
+   "tr": {
+    "one": "%1$d dosya artık depolama konumunun çöp kutusunda.",
+    "other": "%1$d dosya artık depolama konumunun çöp kutusunda."
+   },
+   "uk": {
+    "one": "%1$d файл тепер у кошику сховища.",
+    "few": "%1$d файли тепер у кошику сховища.",
+    "many": "%1$d файлів тепер у кошику сховища.",
+    "other": "%1$d файлу тепер у кошику сховища."
+   },
+   "zh": {
+    "other": "%1$d 个文件现在位于存储位置的回收站中。"
+   }
+  },
+  "today_new_since": {
+   "en": {
+    "one": "%1$d new photo or video",
+    "other": "%1$d new photos and videos"
+   },
+   "de": {
+    "one": "%1$d neues Foto oder Video",
+    "other": "%1$d neue Fotos und Videos"
+   },
+   "ar": {
+    "zero": "%1$d صورة أو فيديو جديد",
+    "one": "صورة أو فيديو جديد",
+    "two": "عنصران جديدان",
+    "few": "%1$d صور وفيديوهات جديدة",
+    "many": "%1$d صورة وفيديو جديدًا",
+    "other": "%1$d صورة وفيديو جديد"
+   },
+   "es": {
+    "one": "%1$d foto o vídeo nuevo",
+    "many": "%1$d fotos y vídeos nuevos",
+    "other": "%1$d fotos y vídeos nuevos"
+   },
+   "fr": {
+    "one": "%1$d nouvelle photo ou vidéo",
+    "many": "%1$d nouvelles photos et vidéos",
+    "other": "%1$d nouvelles photos et vidéos"
+   },
+   "it": {
+    "one": "%1$d nuova foto o video",
+    "many": "%1$d nuove foto e video",
+    "other": "%1$d nuove foto e video"
+   },
+   "ja": {
+    "other": "新しい写真・動画 %1$d件"
+   },
+   "ko": {
+    "other": "새 사진과 동영상 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d nieuwe foto of video",
+    "other": "%1$d nieuwe foto’s en video’s"
+   },
+   "pl": {
+    "one": "%1$d nowe zdjęcie lub film",
+    "few": "%1$d nowe zdjęcia i filmy",
+    "many": "%1$d nowych zdjęć i filmów",
+    "other": "%1$d nowego zdjęcia lub filmu"
+   },
+   "pt": {
+    "one": "%1$d nova foto ou vídeo",
+    "many": "%1$d novas fotos e vídeos",
+    "other": "%1$d novas fotos e vídeos"
+   },
+   "ro": {
+    "one": "%1$d fotografie sau videoclip nou",
+    "few": "%1$d fotografii și videoclipuri noi",
+    "other": "%1$d de fotografii și videoclipuri noi"
+   },
+   "ru": {
+    "one": "%1$d новое фото или видео",
+    "few": "%1$d новых фото и видео",
+    "many": "%1$d новых фото и видео",
+    "other": "%1$d нового фото или видео"
+   },
+   "tr": {
+    "one": "%1$d yeni fotoğraf veya video",
+    "other": "%1$d yeni fotoğraf ve video"
+   },
+   "uk": {
+    "one": "%1$d нове фото чи відео",
+    "few": "%1$d нові фото й відео",
+    "many": "%1$d нових фото й відео",
+    "other": "%1$d нового фото чи відео"
+   },
+   "zh": {
+    "other": "%1$d 张新照片和视频"
+   }
+  }
+ }
+}

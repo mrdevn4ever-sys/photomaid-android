@@ -53,12 +53,15 @@ sealed interface LaterStatus {
     data object SessionOnly : LaterStatus
     data class Upcoming(val day: LocalDay) : LaterStatus
     data class Due(val day: LocalDay) : LaterStatus
+    /** Ohne Termin beiseitegelegt: kommt nie von selbst zurück. */
+    data object Bookmarked : LaterStatus
 }
 
 /** Aufbau der Review-Warteschlangen aus Kandidaten und gespeicherten Entscheidungen. */
 object ReviewQueues {
     fun laterStatus(record: ItemRecord, today: LocalDay): LaterStatus? {
         if (record.disposition != Disposition.LATER) return null
+        if (record.bookmarked) return LaterStatus.Bookmarked
         val day = record.dueDay ?: return LaterStatus.SessionOnly
         return if (day <= today) LaterStatus.Due(day) else LaterStatus.Upcoming(day)
     }
@@ -79,7 +82,7 @@ object ReviewQueues {
             // Kandidaten sind nur vorhandene Medien: ein entferntes Item hier wurde zurückgeholt → wieder offen.
             Disposition.REMOVED -> true
             Disposition.KEPT, Disposition.MARKED_FOR_CLEANUP -> false
-            Disposition.LATER -> r.dueDay == null && r.skippedInSession != session
+            Disposition.LATER -> r.dueDay == null && !r.bookmarked && r.skippedInSession != session
         }
     }
 
@@ -95,6 +98,7 @@ object ReviewQueues {
         for (r in records) {
             val key = when (val s = laterStatus(r, today) ?: continue) {
                 LaterStatus.SessionOnly -> LaterGroup.NoDate
+                LaterStatus.Bookmarked -> LaterGroup.Bookmarked
                 is LaterStatus.Due -> LaterGroup.Due
                 is LaterStatus.Upcoming -> {
                     val n = today.daysUntil(s.day)
@@ -113,10 +117,12 @@ sealed interface LaterGroup : Comparable<LaterGroup> {
     data object WithinSevenDays : LaterGroup
     data class Later(val day: LocalDay) : LaterGroup
     data object NoDate : LaterGroup
+    /** „Ohne Termin“ (Lesezeichen): nur hier zu finden. */
+    data object Bookmarked : LaterGroup
 
     private val order: Int
         get() = when (this) {
-            Due -> 0; Tomorrow -> 1; WithinSevenDays -> 2; is Later -> 3; NoDate -> 4
+            Due -> 0; Tomorrow -> 1; WithinSevenDays -> 2; is Later -> 3; NoDate -> 4; Bookmarked -> 5
         }
 
     override fun compareTo(other: LaterGroup): Int {

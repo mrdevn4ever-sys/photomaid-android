@@ -85,11 +85,28 @@ class FeedAdsTest {
         rule.waitUntil(10_000) { rule.onAllNodesWithTag("feed.ad.skip").fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithTag("feed.ad.skip").performClick()
         rule.waitUntil(10_000) { !adVisible() }
+        // Mindestabstand 60 s seit der letzten Karte (zusätzlich zum Takt): Uhr eine Minute weiter.
+        app.wallClockMs = { System.currentTimeMillis() + 61_000 }
         for (i in 2..7) { await("$i von 20"); rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }; rule.waitForIdle(); assertTrue("$i", !adVisible()) }
         await("8 von 20")
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
         waitAd()
         assertEquals(2, ads.taken)
+    }
+
+    /** Schnell gewischt: Takt erreicht, aber noch keine 60 s seit der letzten Karte → keine zweite Karte. */
+    @Test fun noSecondCardWithinSixtySeconds() {
+        val app = app()
+        open(app)
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
+        waitAd(); Thread.sleep(1_700)
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("feed.ad.skip").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("feed.ad.skip").performClick()
+        rule.waitUntil(10_000) { !adVisible() }
+        for (i in 2..8) { await("$i von 20"); rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }; rule.waitForIdle() }
+        await("9 von 20")
+        assertTrue(!adVisible())
+        assertEquals(1, ads.taken)
     }
 
     @Test fun warmupKeepsFirstThirtyDecisionsAdFree() {

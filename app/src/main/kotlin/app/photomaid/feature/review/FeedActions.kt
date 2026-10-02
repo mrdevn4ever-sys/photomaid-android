@@ -20,11 +20,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.CreateNewFolder
+import androidx.compose.material.icons.rounded.GridView
+import androidx.compose.material.icons.rounded.FolderOff
+import androidx.compose.material.icons.rounded.BurstMode
+import androidx.compose.material.icons.rounded.WorkspacePremium
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.outlined.Folder
+import androidx.compose.material.icons.outlined.PushPin
+import androidx.compose.material.icons.rounded.PushPin
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.PanTool
@@ -90,6 +96,12 @@ fun FeedActionBar(
     onHints: () -> Unit,
     openBasket: () -> Unit,
     modifier: Modifier = Modifier,
+    /** Fotoserie des aktuellen Mediums (≥ 3), sonst `null` – Knopf „Serie · n“ (keine Entscheidung). */
+    seriesCount: Int? = null,
+    seriesLocked: Boolean = false,
+    onSeries: () -> Unit = {},
+    onExcludeFolder: (() -> Unit)? = null,
+    onGrid: (() -> Unit)? = null,
 ) {
     val c = PM.colors
     val enabled = asset != null && !busy
@@ -114,7 +126,21 @@ fun FeedActionBar(
                             onClick = { menu = false; onHints() })
                         DropdownMenuItem(text = { Text(stringResource(R.string.feed_view_basket)) }, leadingIcon = { Icon(Icons.Rounded.Delete, null) },
                             onClick = { menu = false; openBasket() })
+                        if (onGrid != null) DropdownMenuItem(text = { Text(stringResource(R.string.grid_open)) }, leadingIcon = { Icon(Icons.Rounded.GridView, null) },
+                            modifier = Modifier.testTag("action.grid"), onClick = { menu = false; onGrid() })
+                        if (onExcludeFolder != null) DropdownMenuItem(text = { Text(stringResource(R.string.excl_action)) }, leadingIcon = { Icon(Icons.Rounded.FolderOff, null) },
+                            modifier = Modifier.testTag("action.exclude"), enabled = asset != null, onClick = { menu = false; onExcludeFolder() })
                     }
+                }
+            }
+            if (seriesCount != null) {
+                val label = stringResource(R.string.series_button, seriesCount)
+                Row(Modifier.heightIn(min = AppSpacing.minTouch).glassCapsule(elevation = 2.dp).clickable(enabled = !busy, role = Role.Button, onClick = onSeries)
+                    .semantics(mergeDescendants = true) { contentDescription = label }.coachTarget("feed.series").testTag("action.series")
+                    .padding(horizontal = AppSpacing.s), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Icon(Icons.Rounded.BurstMode, null, tint = c.accent, modifier = Modifier.size(AppIconSize.regular))
+                    Text("$seriesCount", style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+                    if (seriesLocked) Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(16.dp))
                 }
             }
             Spacer(Modifier.weight(1f))
@@ -158,25 +184,36 @@ fun ProtectedFavoriteDialog(p: ProtectedFavorite, onUnfavorite: () -> Unit, onCa
 }
 
 /**
- * „In Ordner verschieben“: vorhandene erlaubte Ordner (häufigste zuerst, Suche ab 8 Ordnern) und „Neuer Ordner“.
- * Bewusst nicht „Album“: Android verschiebt die Datei in einen Ordner; ob die Galerie ihn als Album zeigt, hängt
- * von der Galerie-App ab.
+ * „In Ordner verschieben“: oben angepinnte (max. 5) und zuletzt verwendete Ziele, Suche, dann alle erlaubten Ordner
+ * (häufigste zuerst) und „Neuer Ordner“. Bewusst nicht „Album“: Android verschiebt die Datei in einen Ordner; ob die
+ * Galerie ihn als Album zeigt, hängt von der Galerie-App ab. [kind] bestimmt die erlaubten Ziele (Fotos/Videos);
+ * [current] (Ordner des Mediums) ist markiert und nicht wählbar.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FolderSheet(asset: MediaAsset, folders: List<MediaFolder>?, onPick: (String) -> Unit, onDismiss: () -> Unit) {
+fun FolderSheet(
+    kind: MediaKind,
+    current: String?,
+    folders: List<MediaFolder>?,
+    pinned: List<String>,
+    recent: List<String>,
+    onTogglePin: (String) -> Unit,
+    onPick: (String) -> Unit,
+    onDismiss: () -> Unit,
+    title: String = stringResource(R.string.folder_action),
+) {
     val c = PM.colors
     var query by remember { mutableStateOf("") }
     var creating by remember { mutableStateOf(false) }
     var name by remember { mutableStateOf("") }
     var invalid by remember { mutableStateOf(false) }
-    val current = asset.relativePath?.let { MediaFolders.normalize(it) }
+    val cur = current?.let { MediaFolders.normalize(it) }
     fun pick(path: String) { onDismiss(); onPick(path) }
 
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = c.background) {
         Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.m).testTag("folder.sheet"),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Text(stringResource(R.string.folder_action), style = AppTypography.headline, color = c.textPrimary)
+            Text(title, style = AppTypography.headline, color = c.textPrimary)
             Text(stringResource(R.string.folder_note), style = AppTypography.caption, color = c.textSecondary)
             val all = folders
             if (all == null) {
@@ -185,17 +222,33 @@ fun FolderSheet(asset: MediaAsset, folders: List<MediaFolder>?, onPick: (String)
                     Text(stringResource(R.string.folder_loading), style = AppTypography.footnote, color = c.textSecondary)
                 }
             } else {
-                val allowed = MediaFolders.choices(all, asset.kind)
-                if (allowed.size > 8) OutlinedTextField(query, { query = it }, Modifier.fillMaxWidth(), singleLine = true,
+                val allowed = MediaFolders.choices(all, kind)
+                if (allowed.size > 5) OutlinedTextField(query, { query = it }, Modifier.fillMaxWidth().testTag("folder.search"), singleLine = true,
                     leadingIcon = { Icon(Icons.Rounded.Search, null) }, placeholder = { Text(stringResource(R.string.folder_search)) })
-                val list = MediaFolders.choices(all, asset.kind, query)
+                val list = MediaFolders.choices(all, kind, query)
+                val byPath = allowed.associateBy { it.relativePath.lowercase() }
+                fun resolve(paths: List<String>) = paths.mapNotNull { byPath[MediaFolders.normalize(it).lowercase()] }
+                    .filter { query.isBlank() || it.name.contains(query.trim(), ignoreCase = true) }
+                val pins = resolve(pinned)
+                val recents = resolve(recent).filter { r -> pins.none { it.relativePath.equals(r.relativePath, ignoreCase = true) } }
                 if (list.isEmpty()) Text(stringResource(R.string.folder_none), style = AppTypography.footnote, color = c.textSecondary)
-                LazyColumn(Modifier.fillMaxWidth().heightIn(max = 360.dp)) {
-                    items(list, key = { it.relativePath }) { f ->
-                        val isCurrent = f.relativePath.equals(current, ignoreCase = true)
-                        FolderRow(f, isCurrent) { pick(f.relativePath) }
-                        RowDivider()
+                LazyColumn(Modifier.fillMaxWidth().heightIn(max = 380.dp)) {
+                    fun section(header: Int, rows: List<MediaFolder>, prefix: String) {
+                        if (rows.isEmpty()) return
+                        item(key = "h$prefix") {
+                            Text(stringResource(header), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary,
+                                modifier = Modifier.padding(top = AppSpacing.xs, bottom = 2.dp))
+                        }
+                        items(rows, key = { prefix + it.relativePath }) { f ->
+                            val isPinned = pinned.any { MediaFolders.normalize(it).equals(f.relativePath, ignoreCase = true) }
+                            FolderRow(f, f.relativePath.equals(cur, ignoreCase = true), isPinned, canPin = isPinned || pinned.size < MAX_PINNED,
+                                onPin = { onTogglePin(f.relativePath) }) { pick(f.relativePath) }
+                            RowDivider()
+                        }
                     }
+                    section(R.string.folder_pinned, pins, "p:")
+                    section(R.string.folder_recent, recents, "r:")
+                    section(R.string.folder_all, list, "a:")
                 }
             }
             if (!creating) {
@@ -220,8 +273,13 @@ fun FolderSheet(asset: MediaAsset, folders: List<MediaFolder>?, onPick: (String)
     }
 }
 
+/** Höchstens so viele angepinnte Ziele. */
+const val MAX_PINNED = 5
+/** So viele zuletzt verwendete Ziele werden gemerkt. */
+const val MAX_RECENT = 5
+
 @Composable
-private fun FolderRow(f: MediaFolder, isCurrent: Boolean, onClick: () -> Unit) {
+private fun FolderRow(f: MediaFolder, isCurrent: Boolean, isPinned: Boolean, canPin: Boolean, onPin: () -> Unit, onClick: () -> Unit) {
     val c = PM.colors
     Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).clickable(enabled = !isCurrent, role = Role.Button, onClick = onClick),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
@@ -233,6 +291,12 @@ private fun FolderRow(f: MediaFolder, isCurrent: Boolean, onClick: () -> Unit) {
                 color = c.textSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         Text(pluralStringResource(R.plurals.items_count, f.count, f.count), style = AppTypography.caption, color = c.textSecondary)
+        val pinLabel = stringResource(if (isPinned) R.string.folder_unpin else R.string.folder_pin)
+        Box(Modifier.size(AppSpacing.minTouch).clickable(enabled = canPin, role = Role.Button, onClick = onPin)
+            .semantics { contentDescription = pinLabel }.testTag("folder.pin"), contentAlignment = Alignment.Center) {
+            Icon(if (isPinned) Icons.Rounded.PushPin else Icons.Outlined.PushPin, null,
+                tint = if (isPinned) c.accent else c.textSecondary.copy(alpha = if (canPin) 1f else 0.38f), modifier = Modifier.size(20.dp))
+        }
     }
 }
 

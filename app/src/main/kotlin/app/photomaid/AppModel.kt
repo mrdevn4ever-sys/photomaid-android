@@ -84,12 +84,17 @@ class AppModel(
     feedAdsOverride: app.photomaid.ads.FeedAdSource? = null,
 ) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    /** Wanduhr in ms (Werbeabstand, Anzeigedauer). Tests können sie verschieben. */
+    var wallClockMs: () -> Long = { System.currentTimeMillis() }
     val store = KeyValueStore(db)
     val ledger = DecisionLedger(persistence, SystemClock)
     private val _settings = MutableStateFlow(AppSettingsData())
     val settings: StateFlow<AppSettingsData> = _settings.asStateFlow()
-    val photos: MediaLibrary = mediaOverride?.invoke { _settings.value.mediaPermissionAsked }
+    /** Rohe Mediathek (ohne Ausnahmen) – nur für die Ordnerauswahl beim Ausnehmen selbst. */
+    val allPhotos: MediaLibrary = mediaOverride?.invoke { _settings.value.mediaPermissionAsked }
         ?: PhotoLibraryService(context) { _settings.value.mediaPermissionAsked }
+    /** Mediathek für alle Feeds und Zahlen: ohne ausgenommene Ordner. */
+    val photos: MediaLibrary = app.photomaid.media.ExcludingMediaLibrary(allPhotos) { _settings.value.excludedFolders }
     val sources = ConnectedSourceStore(context, store)
     val player = FeedPlayer(context)
     val reminders = ReminderScheduler(context) { _settings.value.notificationsOptIn }
@@ -261,8 +266,8 @@ class AppModel(
                 CleanupOperationKind.PHOTO_LIBRARY_DELETE -> photos.trash(items.map { it.localIdentifier })
                     ?: return CleanupRunResult.NeedsReconciliation
                 CleanupOperationKind.FILE_DELETE_PERMANENTLY -> withContext(Dispatchers.IO) { sources.deletePermanently(items) }
-                // Nicht angeboten: kein universeller Datei-Papierkorb (siehe PORTING_MATRIX).
-                CleanupOperationKind.FILE_MOVE_TO_TRASH -> OperationOutcome.Failed("trash-not-supported")
+                // Nur angeboten, wenn der Speicherort einen Papierkorb hat (Android 17+, FLAG_SUPPORTS_TRASH).
+                CleanupOperationKind.FILE_MOVE_TO_TRASH -> withContext(Dispatchers.IO) { sources.moveToTrash(items) }
             }
             return try {
                 val done = ledger.reconcile(intent.id, outcome)

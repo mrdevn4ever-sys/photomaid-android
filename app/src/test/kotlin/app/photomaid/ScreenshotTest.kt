@@ -21,6 +21,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeUp
 
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performSemanticsAction
 
 import androidx.compose.ui.test.onNodeWithTag
 
@@ -460,4 +461,48 @@ class ScreenshotTest {
     @Test @Config(qualifiers = "+pl-w393dp-h852dp-xxhdpi") fun l_pl_story() = onbTo(onbApp(), 0, "l_pl_story")
     @Test @Config(qualifiers = "+pl-w393dp-h852dp-xxhdpi") fun l_pl_done() = doneShot("l_pl_done", false, app.photomaid.core.cleanup.CleanupOperationKind.PHOTO_LIBRARY_DELETE, 2)
     @Test @Config(qualifiers = "+pl-w393dp-h1300dp-xxhdpi") fun l_pl_settings() = seededApp().let { shot("l_pl_settings", it) { SettingsScreen(nav) } }
+
+    // Ausbau 2026-10: Monate, Raster, Serie, Ausnahmen, Heute-Karten, Tasten, Beiseitegelegt.
+    private fun expApp(pro: Boolean = false, dark: Boolean = false) = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l
+            val t = java.time.Instant.parse("2026-09-20T09:00:00Z")
+            (0..2).forEach { i -> l.takenAt[i] = t.minusSeconds(i * 3L) }
+            (3 until l.all.size).forEach { i -> l.takenAt[i] = java.time.Instant.parse("2026-08-10T10:00:00Z").minusSeconds(i * 86_400L * 9) }
+        } }, purchase = if (pro) FakePurchaseGateway(PurchaseState.PURCHASED) else null) { a ->
+        if (dark) a.updateSettings { it.copy(appearance = AppearanceChoice.DARK) }
+        val s = ReviewSessionID()
+        suspend fun act(i: Int, action: DecisionAction) {
+            val ref = ItemReference.photo(lib.all[i].id)
+            a.ledger.apply(DecisionCommand(item = ref, expectedRevision = a.ledger.record(ref).revision, action = action), s)
+        }
+        act(4, DecisionAction.Keep); act(5, DecisionAction.MarkForCleanup)
+        act(6, DecisionAction.Later(s)); act(6, DecisionAction.Bookmark)
+    }
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n01_months() = expApp().let { shot("n01_months", it, waitTag = "months") { app.photomaid.feature.months.MonthsScreen(nav) } }
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n01_months_dark() = expApp(dark = true).let { shot("n01_months_dark", it, waitTag = "months") { app.photomaid.feature.months.MonthsScreen(nav) } }
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n02_grid() = expApp().let { a ->
+        rule.setContent { TestHost(a) { app.photomaid.feature.grid.MediaGridScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, onClose = {}) } }
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("grid.tile").fetchSemanticsNodes().size >= 3 }
+        rule.onAllNodesWithTag("grid.tile")[0].performClick(); rule.onAllNodesWithTag("grid.tile")[1].performClick()
+        rule.mainClock.advanceTimeBy(1_500); shotScreen("n02_grid")
+    }
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n03_series() = expApp(pro = true).let { a ->
+        feedPhotos(a); waitTagX("action.series"); shotScreen("n03a_feed_series_button")
+        rule.onNodeWithTag("action.series").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick)
+        rule.waitForIdle(); rule.mainClock.advanceTimeBy(500); waitTagX("series")
+        rule.onAllNodesWithTag("series.check")[1].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick)
+        rule.mainClock.advanceTimeBy(1_500); shotScreen("n03b_series_view")
+    }
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n04_excluded() = makeTestApp(ctx, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } }) { a ->
+        a.updateSettings { it.copy(excludedFolders = listOf("Pictures/Work/", "DCIM/WhatsApp/")) }
+    }.let { shot("n04_excluded", it) { app.photomaid.feature.settings.ExcludedFoldersScreen(nav) } }
+    @Test @Config(qualifiers = "+w393dp-h1100dp-xxhdpi") fun n05_today_progress() = expApp().let { a ->
+        runBlocking { a.updateSettings { it.copy(continueMonth = "2026-09", lastSessionEndMs = java.time.Instant.parse("2026-01-01T00:00:00Z").toEpochMilli()) } }
+        shot("n05_today_progress", a, waitTag = "today.progress") { TodayScreen(nav) }
+    }
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n06_feed_buttons() = expApp().let { a ->
+        runBlocking { a.updateSettings { it.copy(decisionButtons = true) } }
+        shot("n06_feed_buttons", a, waitTag = "feed.media.ready") { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, {}, {}) }
+    }
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n07_later_bookmarked() = expApp().let { shot("n07_later_bookmarked", it) { LaterScreen(nav) } }
+    @Test @Config(qualifiers = "+w393dp-h852dp-xxhdpi") fun n08_hub_months() = expApp().let { shot("n08_hub", it) { WithTabBar(AppTab.CLEANUP) { CleanUpHubScreen(nav) } } }
 }

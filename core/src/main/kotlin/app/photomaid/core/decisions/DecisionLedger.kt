@@ -42,6 +42,9 @@ object DecisionRules {
             is DecisionAction.Schedule ->
                 if (from != Disposition.LATER) Result.failure(DecisionError.InvalidTransition(from, name(action)))
                 else Result.success(DecisionSnapshot(Disposition.LATER, action.day, record.skippedInSession))
+            DecisionAction.Bookmark ->
+                if (from != Disposition.LATER) Result.failure(DecisionError.InvalidTransition(from, name(action)))
+                else Result.success(DecisionSnapshot(Disposition.LATER, null, record.skippedInSession, bookmarked = true))
             DecisionAction.RemoveDeferral ->
                 if (from != Disposition.LATER) Result.failure(DecisionError.InvalidTransition(from, name(action)))
                 else Result.success(DecisionSnapshot(Disposition.UNDECIDED))
@@ -54,7 +57,7 @@ object DecisionRules {
     fun historyKind(from: DecisionSnapshot, action: DecisionAction): HistoryKind = when (action) {
         DecisionAction.Keep, DecisionAction.MarkForCleanup, is DecisionAction.Later ->
             if (from.disposition == Disposition.UNDECIDED || from.disposition == Disposition.REMOVED) HistoryKind.DECISION else HistoryKind.CORRECTION
-        is DecisionAction.Schedule -> HistoryKind.SCHEDULE_CHANGED
+        is DecisionAction.Schedule, DecisionAction.Bookmark -> HistoryKind.SCHEDULE_CHANGED
         DecisionAction.RemoveDeferral -> HistoryKind.DEFERRAL_REMOVED
         DecisionAction.Unmark -> HistoryKind.UNMARKED
     }
@@ -64,6 +67,7 @@ object DecisionRules {
         DecisionAction.MarkForCleanup -> "markForCleanup"
         is DecisionAction.Later -> "later"
         is DecisionAction.Schedule -> "schedule"
+        DecisionAction.Bookmark -> "bookmark"
         DecisionAction.RemoveDeferral -> "removeDeferral"
         DecisionAction.Unmark -> "unmark"
     }

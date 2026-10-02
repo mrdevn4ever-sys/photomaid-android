@@ -630,7 +630,7 @@
     <string name="offer_limit_title">Curățenie în fiecare zi</string>
     <string name="offer_limit_text">Elimină până la %1$d pe zi. O reclamă video îți permite să elimini cu %2$d mai multe azi.</string>
     <string name="offer_pro_title">Pro: cumperi o singură dată</string>
-    <string name="offer_pro_text">Fără reclame sau limită zilnică. În plus, căutare de copii identice și colecții proprii.</string>
+    <string name="offer_pro_text">Fără reclame și fără limită zilnică. Plus compararea seriilor de fotografii, căutarea copiilor identice și colecții proprii.</string>
     <string name="offer_price_once">%1$s · O singură dată</string>
     <string name="offer_price_store">Prețul în Google Play</string>
     <string name="offer_no_sub">Fără abonament</string>
@@ -673,4 +673,130 @@
     </plurals>
     <string name="done_button">Gata</string>
     <string name="done_partial">Elementele care nu au fost eliminate rămân în coșul PhotoMaid.</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">Muți în coșul locației de stocare?</string>
+    <string name="basket_confirm_files_trash_message">Fișierele ajung în coșul locației lor și pot fi restaurate de acolo. Spațiul se eliberează doar după ce sunt șterse acolo.</string>
+    <string name="done_note_files_trash">Fișierele sunt acum în coșul locației lor. Spațiul se eliberează doar după ce sunt șterse definitiv acolo.</string>
+    <string name="excl_action">Exclude acest dosar</string>
+    <string name="excl_add_footer">Dosarele excluse și subdosarele lor nu apar în niciun flux, număr sau rezumat lunar. Deciziile deja luate rămân.</string>
+    <string name="excl_add_header">Exclude un dosar</string>
+    <string name="excl_confirm_action">Exclude</string>
+    <string name="excl_confirm_text">Elementele din acest dosar și subdosare nu vor mai apărea la ordonare. Nimic nu se șterge sau se mută. Anulezi din Setări › Dosare excluse.</string>
+    <string name="excl_confirm_title">Ascunzi „%1$s” la ordonare?</string>
+    <string name="excl_done">„%1$s” nu mai apare la ordonare</string>
+    <string name="excl_header">Excluse</string>
+    <string name="excl_intro">Dosare pe care nu vrei să le ordonezi, de exemplu documente de lucru sau fotografii de familie.</string>
+    <string name="excl_none">Niciun dosar exclus încă.</string>
+    <string name="excl_show_again">Afișează din nou</string>
+    <string name="excl_title">Dosare excluse</string>
+    <string name="feed_title_month">Lună</string>
+    <string name="feed_title_new">Adăugate recent</string>
+    <string name="folder_all">Toate dosarele</string>
+    <string name="folder_pin">Fixează dosarul</string>
+    <string name="folder_pinned">Fixate</string>
+    <string name="folder_recent">Folosite recent</string>
+    <string name="folder_unpin">Anulează fixarea</string>
+    <string name="grid_empty_text">Momentan nu există fotografii sau videoclipuri aici.</string>
+    <string name="grid_empty_title">Nimic de afișat</string>
+    <string name="grid_move">Mută în dosar</string>
+    <string name="grid_moved_partial">Au fost mutate %1$d din %2$d în „%3$s”. Celelalte nu au putut fi mutate.</string>
+    <string name="grid_note">Atinge pentru a selecta, ține apăsat și trage pentru mai multe. Mutarea nu este o decizie.</string>
+    <string name="grid_open">Prezentare</string>
+    <string name="grid_select_all">Toate</string>
+    <string name="grid_select_none">Niciunul</string>
+    <string name="help_tours_again">Afișează din nou tutorialele</string>
+    <string name="help_tours_reset">Tutorialele vor apărea din nou la următoarea deschidere a fiecărui ecran.</string>
+    <string name="hub_months_sub">Termină lună de lună</string>
+    <string name="later_back_to_stack">Înapoi în teanc</string>
+    <string name="later_bookmarked_row">Pus deoparte, fără dată</string>
+    <string name="later_group_bookmarked">Puse deoparte · %1$d</string>
+    <string name="later_nodate_done">Pus deoparte – îl găsești la Mai târziu</string>
+    <string name="month_actions">Acțiuni pentru %1$s</string>
+    <string name="month_again">Revizuiește din nou</string>
+    <string name="month_done">Revizuit</string>
+    <string name="months_empty_text">Lunile apar aici când fotografiile sau videoclipurile au o dată de captură.</string>
+    <string name="months_empty_title">Încă nu există luni</string>
+    <string name="months_intro">Cât ai avansat în fiecare lună. Ce ai amânat contează ca revizuit.</string>
+    <string name="months_title">Pe luni</string>
+    <string name="order_largest">Cele mai mari întâi</string>
+    <string name="order_newest">Cele mai noi întâi</string>
+    <string name="order_oldest">Cele mai vechi întâi</string>
+    <string name="order_random">Aleatoriu</string>
+    <string name="order_title">Ordine</string>
+    <string name="picker_no_date">Pune deoparte fără dată</string>
+    <string name="picker_no_date_hint">Nu revine singur. Îl găsești la Mai târziu › Puse deoparte.</string>
+    <string name="series_button">Compară seria de %1$d fotografii</string>
+    <string name="series_confirm">Păstrează %1$d · %2$d la coș</string>
+    <string name="series_done">%1$d păstrate · %2$d în coș</string>
+    <string name="series_footer">Nimic nu se șterge. Coșul aparține PhotoMaid și se golește doar când confirmi.</string>
+    <string name="series_hint">Atinge o fotografie ca s-o compari jos. Bifa decide ce rămâne.</string>
+    <string name="series_keep_toggle">Păstrează</string>
+    <string name="series_state_keep">Păstrează</string>
+    <string name="series_state_trash">Coș</string>
+    <string name="series_subtitle">Făcute una după alta · %1$d</string>
+    <string name="series_title">Compară seria</string>
+    <string name="set_buttons">Butoane pentru decizie</string>
+    <string name="set_buttons_detail">Afișează sub fiecare element butoane pentru coș, păstrare și mai târziu. Glisarea funcționează în continuare.</string>
+    <string name="set_excluded_folders">Dosare excluse</string>
+    <string name="today_continue_month">Continuă: %1$s</string>
+    <string name="today_new_since_sub">de la ultima ordonare</string>
+    <string name="tour_grid_note_text">Mutarea sau marcarea ca favorit nu schimbă păstrarea, coșul sau mai târziu.</string>
+    <string name="tour_grid_note_title">Nu este o decizie</string>
+    <string name="tour_grid_select_text">Atinge fotografiile pentru a le selecta. Ține apăsat și trage pentru un interval.</string>
+    <string name="tour_grid_select_title">Selectează mai multe</string>
+    <string name="tour_months_later_text">Ce ai amânat contează ca revizuit, dar îl vezi în continuare aici.</string>
+    <string name="tour_months_later_title">Mai târziu nu e în așteptare</string>
+    <string name="tour_months_more_text">Deschide prezentarea ca grilă sau revizuiește din nou o lună terminată.</string>
+    <string name="tour_months_more_title">Mai multe pe lună</string>
+    <string name="tour_months_row_text">Atinge o lună ca să revizuiești doar fotografiile și videoclipurile rămase.</string>
+    <string name="tour_months_row_title">Cât ai avansat</string>
+    <string name="tour_series_text">Mai multe fotografii făcute una după alta? Compară-le alăturat și alege ce rămâne.</string>
+    <string name="tour_series_title">Compară seria</string>
+    <plurals name="basket_trash_files">
+        <item quantity="one">Mută %1$d fișier în coș</item>
+        <item quantity="few">Mută %1$d fișiere în coș</item>
+        <item quantity="other">Mută %1$d de fișiere în coș</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="one">Mută %1$d element</item>
+        <item quantity="few">Mută %1$d elemente</item>
+        <item quantity="other">Mută %1$d de elemente</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="one">%1$d element mutat în „%2$s”</item>
+        <item quantity="few">%1$d elemente mutate în „%2$s”</item>
+        <item quantity="other">%1$d de elemente mutate în „%2$s”</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="one">%1$d selectat</item>
+        <item quantity="few">%1$d selectate</item>
+        <item quantity="other">%1$d selectate</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="one">%1$d pentru mai târziu</item>
+        <item quantity="few">%1$d pentru mai târziu</item>
+        <item quantity="other">%1$d pentru mai târziu</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="one">Neînceput · %1$d element</item>
+        <item quantity="few">Neînceput · %1$d elemente</item>
+        <item quantity="other">Neînceput · %1$d de elemente</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="one">%1$d din %2$d revizuite</item>
+        <item quantity="few">%1$d din %2$d revizuite</item>
+        <item quantity="other">%1$d din %2$d revizuite</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="one">%1$d fișier este acum în coșul locației.</item>
+        <item quantity="few">%1$d fișiere sunt acum în coșul locației.</item>
+        <item quantity="other">%1$d de fișiere sunt acum în coșul locației.</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="one">%1$d fotografie sau videoclip nou</item>
+        <item quantity="few">%1$d fotografii și videoclipuri noi</item>
+        <item quantity="other">%1$d de fotografii și videoclipuri noi</item>
+    </plurals>
+    <string name="pro_f6">Compară serii de fotografii</string>
+    <string name="pro_f6d">Fotografii făcute una după alta, alăturate – tu alegi ce rămâne.</string>
 </resources>

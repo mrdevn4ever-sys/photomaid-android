@@ -1,5 +1,8 @@
 package app.photomaid.navigation
 
+import app.photomaid.feature.months.MonthsScreen
+import app.photomaid.feature.grid.MediaGridScreen
+import app.photomaid.feature.settings.ExcludedFoldersScreen
 import app.photomaid.design.CoachStep
 import app.photomaid.design.CoachHost
 import app.photomaid.design.coachTarget
@@ -117,6 +120,8 @@ val LocalApp = staticCompositionLocalOf<AppModel> { error("AppModel fehlt") }
 /** Navigationsaktionen für Screens (keine Routing-Logik in einzelnen Screens). */
 interface Nav {
     fun openFeed(request: FeedRequest)
+    /** Raster-Übersicht derselben Quelle (Auswählen, mehrere verschieben). */
+    fun openGrid(request: FeedRequest) {}
     fun openSettings()
     fun openPro()
     fun openPrivacy()
@@ -130,7 +135,9 @@ object Routes {
     const val DUPLICATES = "duplicates"; const val STORAGE = "storage"; const val LATER = "later"
     const val MAIN = "main"; const val FEED = "feed/{id}"; const val SETTINGS = "settings"; const val PRO = "pro"
     const val PRIVACY = "privacy"; const val HELP = "help"; const val BASKET_MODAL = "basketModal"
-    const val SOURCES_MODAL = "sourcesModal"
+    const val SOURCES_MODAL = "sourcesModal"; const val EXCLUDED = "excluded"; const val MONTHS = "months"
+    const val GRID = "grid/{id}"
+    fun grid(id: String) = "grid/$id"
     fun feed(id: String) = "feed/$id"
 }
 
@@ -203,6 +210,7 @@ private fun RootNav(app: AppModel) {
     val nav = remember(root) {
         object : Nav {
             override fun openFeed(request: FeedRequest) { FeedRequests.map[request.id] = request; root.navigate(Routes.feed(request.id)) }
+            override fun openGrid(request: FeedRequest) { FeedRequests.map[request.id] = request; root.navigate(Routes.grid(request.id)) }
             override fun openSettings() = root.navigate(Routes.SETTINGS)
             override fun openPro() = root.navigate(Routes.PRO)
             override fun openPrivacy() = root.navigate(Routes.PRIVACY)
@@ -244,6 +252,12 @@ private fun RootNav(app: AppModel) {
         composable(Routes.SETTINGS) { SettingsScreen(nav) }
         composable(Routes.SOURCES_MODAL) { SourcesScreen(nav) }
         composable(Routes.HELP) { HelpScreen(nav) }
+        composable(Routes.EXCLUDED) { ExcludedFoldersScreen(nav) }
+        composable(Routes.GRID) { entry ->
+            val req = entry.arguments?.getString("id")?.let { FeedRequests.map[it] }
+            if (req == null) LaunchedEffect(entry) { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            else MediaGridScreen(req, nav, onClose = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() })
+        }
         composable(Routes.PRO) { ProScreen(nav) }
         composable(Routes.PRIVACY) { PrivacyAccessScreen(onboarding = false, onDone = { root.popBackStack() }) }
     }
@@ -308,6 +322,7 @@ private fun MainTabs(rootNav: Nav) {
                     composable("${t.name}/${Routes.DUPLICATES}") { DuplicatesScreen(nav) }
                     composable("${t.name}/${Routes.STORAGE}") { StorageInsightsScreen(nav) }
                     composable("${t.name}/${Routes.LATER}") { LaterScreen(nav) }
+                    composable("${t.name}/${Routes.MONTHS}") { MonthsScreen(nav) }
                 }
             }
         }

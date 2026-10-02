@@ -572,7 +572,7 @@
     <string name="offer_limit_title">毎日少しずつ整理</string>
     <string name="offer_limit_text">1日%1$d件まで削除できます。動画広告を見ると、今日はさらに%2$d件削除できます。</string>
     <string name="offer_pro_title">Proは買い切り</string>
-    <string name="offer_pro_text">広告なし、1日の上限なし。同じコピーの検索とカスタムコレクションも使えます。</string>
+    <string name="offer_pro_text">広告なし、1日の上限なし。連続写真の比較、同じコピーの検索、カスタムコレクションも使えます。</string>
     <string name="offer_price_once">%1$s・一度の支払い</string>
     <string name="offer_price_store">Google Playの価格</string>
     <string name="offer_no_sub">サブスクなし</string>
@@ -613,4 +613,112 @@
     </plurals>
     <string name="done_button">完了</string>
     <string name="done_partial">削除できなかったものは、PhotoMaidのゴミ箱に残ります。</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">保存先のゴミ箱に移動しますか？</string>
+    <string name="basket_confirm_files_trash_message">ファイルは保存先のゴミ箱に移動し、そこから復元できます。容量はそこで削除したときに空きます。</string>
+    <string name="done_note_files_trash">ファイルは保存先のゴミ箱にあります。容量はそこで完全に削除したときに空きます。</string>
+    <string name="excl_action">このフォルダを除外</string>
+    <string name="excl_add_footer">除外したフォルダとそのサブフォルダは、フィード、件数、月別の一覧に表示されません。すでに選んだ内容は保持されます。</string>
+    <string name="excl_add_header">フォルダを除外</string>
+    <string name="excl_confirm_action">除外</string>
+    <string name="excl_confirm_text">このフォルダとサブフォルダのアイテムは整理時に表示されなくなります。削除や移動はされません。設定 › 除外したフォルダで元に戻せます。</string>
+    <string name="excl_confirm_title">整理時に「%1$s」を非表示にしますか？</string>
+    <string name="excl_done">「%1$s」は整理時に表示されなくなりました</string>
+    <string name="excl_header">除外中</string>
+    <string name="excl_intro">整理したくないフォルダ（仕事の書類や家族の写真など）。</string>
+    <string name="excl_none">除外したフォルダはまだありません。</string>
+    <string name="excl_show_again">再表示</string>
+    <string name="excl_title">除外したフォルダ</string>
+    <string name="feed_title_month">月</string>
+    <string name="feed_title_new">新しく追加</string>
+    <string name="folder_all">すべてのフォルダ</string>
+    <string name="folder_pin">フォルダを固定</string>
+    <string name="folder_pinned">固定済み</string>
+    <string name="folder_recent">最近使用</string>
+    <string name="folder_unpin">固定を解除</string>
+    <string name="grid_empty_text">現在ここに写真や動画はありません。</string>
+    <string name="grid_empty_title">表示するものはありません</string>
+    <string name="grid_move">フォルダに移動</string>
+    <string name="grid_moved_partial">%2$d件中%1$d件を「%3$s」に移動しました。残りは移動できませんでした。</string>
+    <string name="grid_note">タップで選択、長押ししてドラッグで複数選択。移動は選択（残す・ゴミ箱・あとで）ではありません。</string>
+    <string name="grid_open">一覧</string>
+    <string name="grid_select_all">すべて</string>
+    <string name="grid_select_none">なし</string>
+    <string name="help_tours_again">チュートリアルをもう一度表示</string>
+    <string name="help_tours_reset">次に各画面を開いたときにチュートリアルが再表示されます。</string>
+    <string name="hub_months_sub">月ごとに片づける</string>
+    <string name="later_back_to_stack">スタックに戻す</string>
+    <string name="later_bookmarked_row">日付なしで保留中</string>
+    <string name="later_group_bookmarked">保留中・%1$d件</string>
+    <string name="later_nodate_done">保留しました（「あとで」にあります）</string>
+    <string name="month_actions">%1$sの操作</string>
+    <string name="month_again">もう一度見直す</string>
+    <string name="month_done">見直し済み</string>
+    <string name="months_empty_text">写真や動画に撮影日があると、ここに月が表示されます。</string>
+    <string name="months_empty_title">まだ月がありません</string>
+    <string name="months_intro">各月の進み具合です。「あとで」にしたものは見直し済みとして数えます。</string>
+    <string name="months_title">月別</string>
+    <string name="order_largest">サイズの大きい順</string>
+    <string name="order_newest">新しい順</string>
+    <string name="order_oldest">古い順</string>
+    <string name="order_random">ランダム</string>
+    <string name="order_title">並び順</string>
+    <string name="picker_no_date">日付なしで保留</string>
+    <string name="picker_no_date_hint">自動では戻りません。「あとで › 保留中」にあります。</string>
+    <string name="series_button">%1$d枚の連続写真を比較</string>
+    <string name="series_confirm">%1$d枚を残す・%2$d枚をゴミ箱へ</string>
+    <string name="series_done">%1$d枚を残し、%2$d枚をゴミ箱へ</string>
+    <string name="series_footer">何も削除されません。ゴミ箱はPhotoMaid内のもので、確認したときだけ空になります。</string>
+    <string name="series_hint">写真をタップすると下で比較できます。チェックで残すものを決めます。</string>
+    <string name="series_keep_toggle">残す</string>
+    <string name="series_state_keep">残す</string>
+    <string name="series_state_trash">ゴミ箱</string>
+    <string name="series_subtitle">連続して撮影・%1$d枚</string>
+    <string name="series_title">連続写真を比較</string>
+    <string name="set_buttons">選択ボタン</string>
+    <string name="set_buttons_detail">各アイテムの下に「ゴミ箱」「残す」「あとで」のボタンを表示します。スワイプも引き続き使えます。</string>
+    <string name="set_excluded_folders">除外したフォルダ</string>
+    <string name="today_continue_month">続ける：%1$s</string>
+    <string name="today_new_since_sub">前回の整理以降</string>
+    <string name="tour_grid_note_text">移動やお気に入りは「残す」「ゴミ箱」「あとで」に影響しません。</string>
+    <string name="tour_grid_note_title">選択ではありません</string>
+    <string name="tour_grid_select_text">写真をタップして選択。長押ししてドラッグすると範囲を選択できます。</string>
+    <string name="tour_grid_select_title">複数選択</string>
+    <string name="tour_months_later_text">「あとで」にしたものは見直し済みとして数えますが、ここに表示されます。</string>
+    <string name="tour_months_later_title">「あとで」は未確認ではありません</string>
+    <string name="tour_months_more_text">一覧をグリッドで開いたり、終わった月をもう一度見直したりできます。</string>
+    <string name="tour_months_more_title">月ごとの操作</string>
+    <string name="tour_months_row_text">月をタップすると、その月の未確認の写真と動画だけを見直せます。</string>
+    <string name="tour_months_row_title">進み具合</string>
+    <string name="tour_series_text">連続して撮った写真がありますか？並べて比較し、残すものを選べます。</string>
+    <string name="tour_series_title">連続写真を比較</string>
+    <plurals name="basket_trash_files">
+        <item quantity="other">%1$d件のファイルをゴミ箱へ</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="other">%1$d件を移動</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="other">%1$d件を「%2$s」に移動しました</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="other">%1$d件を選択中</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="other">あとで %1$d件</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="other">未着手・%1$d件</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="other">%2$d件中%1$d件を見直し済み</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="other">%1$d件のファイルが保存先のゴミ箱に入りました。</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="other">新しい写真・動画 %1$d件</item>
+    </plurals>
+    <string name="pro_f6">連続写真を比較</string>
+    <string name="pro_f6d">連続して撮った写真を並べて表示。残すものはあなたが選びます。</string>
 </resources>

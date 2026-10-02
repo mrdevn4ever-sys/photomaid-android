@@ -60,8 +60,12 @@ class FakeMediaLibrary(
     val favorites = mutableMapOf<String, Boolean>()
     val paths = mutableMapOf<String, String>()
     val writes = mutableListOf<String>()
+    /** Aufnahme- bzw. Hinzufügezeit je Index überschreiben (Serien, Monate, „Neu seit“). */
+    val takenAt = mutableMapOf<Int, Instant>()
+    val addedAt = mutableMapOf<Int, Instant>()
     private var base: List<MediaAsset> = emptyList()
-    val all: List<MediaAsset> get() = base.map { a -> a.copy(isFavorite = favorites[a.id] ?: a.isFavorite, relativePath = paths[a.id] ?: a.relativePath ?: "DCIM/Camera/") }
+    val all: List<MediaAsset> get() = base.mapIndexed { i, a -> a.copy(isFavorite = favorites[a.id] ?: a.isFavorite, relativePath = paths[a.id] ?: a.relativePath ?: "DCIM/Camera/",
+        creationDate = takenAt[i] ?: a.creationDate, dateAdded = addedAt[i] ?: a.dateAdded ?: a.creationDate) }
 
     init {
         base = if (visual) VisualTestMedia.create(context) else simple(context, count, videos)
@@ -188,7 +192,8 @@ fun makeTestApp(
     val lib = media(context)
     val app = AppModel(context, db, isQAFixtureMode = true, purchaseOverride = purchase, mediaOverride = { lib }, adsOverride = ads, feedAdsOverride = feedAds)
     app.loadBlocking()
-    if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false, gestureHintSeen = true, todayTourSeen = true, feedTourSeen = true) }
+    if (introSeen) app.updateSettings { it.copy(privacyIntroSeen = true, showGestureHintOnOpen = false, gestureHintSeen = true, todayTourSeen = true, feedTourSeen = true,
+        monthsTourSeen = true, seriesTourSeen = true, gridTourSeen = true) }
     configure(app)
     app.reload()
     app.start()
@@ -197,7 +202,9 @@ fun makeTestApp(
 
 class RecordingNav : Nav {
     val events = mutableListOf<String>()
-    override fun openFeed(request: FeedRequest) { events += "feed:${request.source}" }
+    override fun openFeed(request: FeedRequest) { events += "feed:${request.source}"; requests += request }
+    override fun openGrid(request: FeedRequest) { events += "grid:${request.source}"; requests += request }
+    val requests = mutableListOf<FeedRequest>()
     override fun openSettings() { events += "settings" }
     override fun openPro() { events += "pro" }
     override fun openPrivacy() { events += "privacy" }

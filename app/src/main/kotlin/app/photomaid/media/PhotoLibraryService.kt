@@ -63,6 +63,8 @@ data class MediaAsset(
     val isFavorite: Boolean,
     /** MediaStore `RELATIVE_PATH` (z. B. `DCIM/Camera/`), `null` wenn unbekannt. */
     val relativePath: String? = null,
+    /** MediaStore `DATE_ADDED`: wann das Medium auf dieses Gerät kam (≠ Aufnahmedatum). */
+    val dateAdded: Instant? = null,
 ) {
     val reference: ItemReference get() = ItemReference.photo(id)
     val uri: Uri get() = Uri.parse(id)
@@ -143,6 +145,17 @@ interface MediaLibrary {
      * `Done` nur, wenn der danach gelesene Pfad stimmt.
      */
     suspend fun moveToFolder(id: String, relativePath: String): MediaWriteResult
+
+    /**
+     * Mehrere Medien mit EINER Systembestätigung verschieben. Ergebnis je Medium, `Done` nur nach bestätigtem Pfad.
+     * Standard (z. B. Testattrappen): nacheinander.
+     */
+    suspend fun moveManyToFolder(ids: List<String>, relativePath: String): Map<String, MediaWriteResult> =
+        ids.associateWith { moveToFolder(it, relativePath) }
+
+    /** Mehrere Medien mit EINER Systembestätigung als Favorit markieren/entmarkieren; Ergebnis je Medium nach erneutem Lesen. */
+    suspend fun setFavoriteMany(ids: List<String>, favorite: Boolean): Map<String, MediaWriteResult> =
+        ids.associateWith { setFavorite(it, favorite) }
 }
 
 /**
@@ -251,7 +264,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
                 duration = if (iDur >= 0 && !c.isNull(iDur)) c.getLong(iDur) / 1000.0 else 0.0,
                 pixelWidth = if (rotated) h else w, pixelHeight = if (rotated) w else h, size = size,
                 mimeType = c.getString(iMime), displayName = c.getString(iName), isFavorite = c.getInt(iFav) == 1,
-                relativePath = path,
+                relativePath = path, dateAdded = added,
             )
         }
         return out
@@ -380,6 +393,42 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
             val now = readColumn(uri, MediaStore.MediaColumns.RELATIVE_PATH)?.let { MediaFolders.normalize(it) }
             if (updated == 1 && now == target) MediaWriteResult.Done.also { bumpChangeToken() } else MediaWriteResult.Failed("move-unverified")
         }
+    }
+
+    override suspend fun moveManyToFolder(ids: List<String>, relativePath: String): Map<String, MediaWriteResult> {
+        if (ids.isEmpty()) return emptyMap()
+        val uris = ids.map { Uri.parse(it) }
+        val target = MediaFolders.normalize(relativePath)
+        val request = runCatching { MediaStore.createWriteRequest(resolver, uris) }
+            .getOrElse { e -> return ids.associateWith { failed("write-request", e) } }
+        val code = SystemDialogs.launch(request.intentSender) ?: return ids.associateWith { MediaWriteResult.Failed("no-activity") }
+        if (code != Activity.RESULT_OK) return ids.associateWith { MediaWriteResult.Cancelled }
+        val out = withContext(Dispatchers.IO) {
+            ids.associateWith { id ->
+                val uri = Uri.parse(id)
+                val updated = runCatching { resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.RELATIVE_PATH, target) }, null, null) }.getOrDefault(0)
+                val now = readColumn(uri, MediaStore.MediaColumns.RELATIVE_PATH)?.let { MediaFolders.normalize(it) }
+                if (updated == 1 && now == target) MediaWriteResult.Done else MediaWriteResult.Failed("move-unverified")
+            }
+        }
+        bumpChangeToken()
+        return out
+    }
+
+    override suspend fun setFavoriteMany(ids: List<String>, favorite: Boolean): Map<String, MediaWriteResult> {
+        if (ids.isEmpty()) return emptyMap()
+        val request = runCatching { MediaStore.createFavoriteRequest(resolver, ids.map { Uri.parse(it) }, favorite) }
+            .getOrElse { e -> return ids.associateWith { failed("favorite-request", e) } }
+        val code = SystemDialogs.launch(request.intentSender) ?: return ids.associateWith { MediaWriteResult.Failed("no-activity") }
+        if (code != Activity.RESULT_OK) return ids.associateWith { MediaWriteResult.Cancelled }
+        val out = withContext(Dispatchers.IO) {
+            ids.associateWith { id ->
+                if (readColumn(Uri.parse(id), MediaStore.MediaColumns.IS_FAVORITE) == (if (favorite) "1" else "0")) MediaWriteResult.Done
+                else MediaWriteResult.Failed("favorite-unverified")
+            }
+        }
+        bumpChangeToken()
+        return out
     }
 
     /** Nur Fehlerart loggen – keine URIs, Dateinamen oder Pfade. */

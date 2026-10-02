@@ -18,7 +18,9 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 - Navigation: Zurück und Tabwechsel ohne Animation; Öffnen nur kurzer leichter Fade (150 ms). Predictive-Back-Vorschau aus.
 - Eine einzige Gesture-/Decision-State-Machine: `core/.../feed/FeedGestureMachine.kt`.
 - Nichts tun = keine Entscheidung. Eine Geste = maximal ein Schritt. Commit trägt Item-ID, Revision, Command-ID, Aktion.
-- Keine Entscheidungs-Buttons im Feed (nur bei TalkBack/Schaltersteuerung). Unter dem Medium sitzt die kompakte
+- Keine Entscheidungs-Buttons im Feed – außer bei TalkBack/Schaltersteuerung oder wenn der Nutzer die Bedienungshilfe
+  „Tasten zum Entscheiden“ einschaltet (Einstellungen, Standard aus; Produktentscheidung 2026-10-02). Tasten rufen exakt
+  `FeedViewModel.perform` auf (derselbe Weg wie die Geste). Unter dem Medium sitzt die kompakte
   Aktionsleiste ♡ Favorit · Teilen · In Ordner verschieben · ⋯ – außerhalb der Gestenfläche, nie eine Entscheidung.
 - Favoriten = MediaStore-Systemfavoriten (`createFavoriteRequest`), „Favoriten schützen“ (Standard an): Wisch nach
   links auf einen Favoriten fragt nach. „Album“ gibt es als Systembegriff nicht: nur „In Ordner verschieben“.
@@ -31,10 +33,22 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   vom Pro-Test, nur nach SDK-Reward-Callback (`RewardLedger.grantingBonus`, `Capabilities.cleanupBonus`). Erhöht nur die Zahl des
   laufenden Tages – nie unbegrenzt, nie für Lifetime; nur der Kauf hebt das Limit auf.
 - Werbung nur in Free (`Capabilities.Tier.FREE`): native Werbekarte im Feed alle 7 Entscheidungen (`core/.../ads/FeedAdPolicy.kt`:
-  30 Entscheidungen Aufwärmphase, max. 30/Tag gesamt, 1,5 s Mindestdauer) und eine ruhige Anzeige ganz unten in der
+  30 Entscheidungen Aufwärmphase, max. 30/Tag gesamt, 1,5 s Mindestdauer, zusätzlich mind. 60 s seit der letzten Karte) und eine ruhige Anzeige ganz unten in der
   Sitzungs-Zusammenfassung (nicht neben dem einmaligen deutlichen Pro-Angebot, zählt zur Tagesgrenze). Die Karte ist NIE eine Entscheidung und zählt nicht fürs
   Limit; „runter“ und Rückgängig überspringen sofort. AdMob startet erst nach UMP-Einwilligung; Anfragen enthalten nie Medien,
   Dateinamen, Pfade, Hashes oder IDs. Echte AdMob-IDs nie im Repo (Gradle-Properties), sonst Werbung aus.
+
+- Ausbau 2026-10 (alles ohne Bildanalyse, alles lokal):
+  - Ausgenommene Ordner: `AppModel.photos` ist `ExcludingMediaLibrary` (ohne ausgenommene Ordner inkl. Unterordner);
+    `allPhotos` nur für die Ordnerauswahl selbst. Gespeichert werden nur Pfade.
+  - Monate (`core/.../progress/MonthProgress.kt`) und „Neu seit dem letzten Aufräumen“ (`DATE_ADDED`) sind nur Filter, nichts je
+    Monat gespeichert. „Durchgesehen“ = Behalten, Papierkorb, entfernt oder Später mit Termin/ohne Termin.
+  - „Später ohne Termin“ = `DecisionAction.Bookmark` (`bookmarked`): kommt nie von selbst zurück, nur über Später › Beiseitegelegt.
+  - Fotoserien (Pro, `core/.../organize/PhotoSeries.kt`): gleicher Ordner, ≤ 10 s Abstand, ≥ 3 – nur „kurz hintereinander
+    aufgenommen“, nie „ähnlich“/„bestes Foto“. Erst „n behalten · m in den Papierkorb“ entscheidet (ein Commit je Medium), keine Werbung dabei.
+  - Raster/Mehrfachauswahl und Verschieben sind NIE eine Entscheidung (kein Ledger-Eintrag). Reihenfolge ändert nur die Abfolge.
+  - Ordner-Dateien: ab Android 17 (API 37) mit `FLAG_SUPPORTS_TRASH` per `DocumentsContract.trashDocument` in den Papierkorb
+    des Speicherorts, sonst endgültig mit Warnung.
 
 ## Verbote
 

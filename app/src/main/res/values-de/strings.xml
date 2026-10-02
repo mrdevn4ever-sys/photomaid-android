@@ -601,7 +601,7 @@
     <string name="offer_limit_title">Täglich aufräumen</string>
     <string name="offer_limit_text">Bis zu %1$d pro Tag entfernen. Mit einem Werbevideo sind heute %2$d mehr möglich.</string>
     <string name="offer_pro_title">Pro: einmal kaufen</string>
-    <string name="offer_pro_text">Ohne Werbung und Tageslimit. Dazu die Suche nach identischen Kopien und eigene Sammlungen.</string>
+    <string name="offer_pro_text">Ohne Werbung und Tageslimit. Dazu Fotoserien vergleichen, identische Kopien finden und eigene Sammlungen.</string>
     <string name="offer_price_once">%1$s · einmalig</string>
     <string name="offer_price_store">Preis in Google Play</string>
     <string name="offer_no_sub">Kein Abo</string>
@@ -643,4 +643,121 @@
     </plurals>
     <string name="done_button">Fertig</string>
     <string name="done_partial">Nicht entfernte Elemente bleiben im PhotoMaid-Papierkorb.</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">In den Papierkorb des Speicherorts?</string>
+    <string name="basket_confirm_files_trash_message">Die Dateien kommen in den Papierkorb ihres Speicherorts und lassen sich dort wiederherstellen. Speicher wird erst frei, wenn sie dort gelöscht werden.</string>
+    <string name="done_note_files_trash">Die Dateien liegen jetzt im Papierkorb ihres Speicherorts. Speicher wird erst frei, wenn sie dort endgültig gelöscht werden.</string>
+    <string name="excl_action">Diesen Ordner ausnehmen</string>
+    <string name="excl_add_footer">Ausgenommene Ordner und ihre Unterordner erscheinen in keinem Feed, keiner Zahl und keiner Monatsübersicht. Bereits getroffene Entscheidungen bleiben erhalten.</string>
+    <string name="excl_add_header">Ordner ausnehmen</string>
+    <string name="excl_confirm_action">Ausnehmen</string>
+    <string name="excl_confirm_text">Medien aus diesem Ordner und seinen Unterordnern erscheinen nicht mehr beim Aufräumen. Nichts wird gelöscht oder verschoben. Rückgängig in Einstellungen › Ausgenommene Ordner.</string>
+    <string name="excl_confirm_title">„%1$s“ beim Aufräumen ausblenden?</string>
+    <string name="excl_done">„%1$s“ wird beim Aufräumen nicht mehr gezeigt</string>
+    <string name="excl_header">Ausgenommen</string>
+    <string name="excl_intro">Ordner, die du nicht aufräumen möchtest, zum Beispiel Arbeitsdokumente oder Familienfotos.</string>
+    <string name="excl_none">Noch keine Ordner ausgenommen.</string>
+    <string name="excl_show_again">Wieder anzeigen</string>
+    <string name="excl_title">Ausgenommene Ordner</string>
+    <string name="feed_title_month">Monat</string>
+    <string name="feed_title_new">Neu hinzugekommen</string>
+    <string name="folder_all">Alle Ordner</string>
+    <string name="folder_pin">Ordner anpinnen</string>
+    <string name="folder_pinned">Angepinnt</string>
+    <string name="folder_recent">Zuletzt verwendet</string>
+    <string name="folder_unpin">Nicht mehr anpinnen</string>
+    <string name="grid_empty_text">Hier gibt es gerade keine Fotos oder Videos.</string>
+    <string name="grid_empty_title">Nichts zu zeigen</string>
+    <string name="grid_move">In Ordner verschieben</string>
+    <string name="grid_moved_partial">%1$d von %2$d nach „%3$s“ verschoben. Die übrigen konnten nicht verschoben werden.</string>
+    <string name="grid_note">Tippen wählt aus, lange drücken und ziehen wählt mehrere. Verschieben ist keine Entscheidung.</string>
+    <string name="grid_open">Übersicht</string>
+    <string name="grid_select_all">Alle</string>
+    <string name="grid_select_none">Keine</string>
+    <string name="help_tours_again">Tutorials erneut zeigen</string>
+    <string name="help_tours_reset">Die Tutorials erscheinen beim nächsten Öffnen wieder.</string>
+    <string name="hub_months_sub">Monat für Monat fertig werden</string>
+    <string name="later_back_to_stack">Zurück in den Stapel</string>
+    <string name="later_bookmarked_row">Beiseitegelegt, ohne Termin</string>
+    <string name="later_group_bookmarked">Beiseitegelegt · %1$d</string>
+    <string name="later_nodate_done">Beiseitegelegt – zu finden unter Später</string>
+    <string name="month_actions">Aktionen für %1$s</string>
+    <string name="month_again">Erneut durchsehen</string>
+    <string name="month_done">Durchgesehen</string>
+    <string name="months_empty_text">Sobald Fotos oder Videos ein Aufnahmedatum haben, erscheinen hier die Monate.</string>
+    <string name="months_empty_title">Noch keine Monate</string>
+    <string name="months_intro">So weit bist du in jedem Monat. Später zurückgestellte Medien zählen als durchgesehen.</string>
+    <string name="months_title">Nach Monat</string>
+    <string name="order_largest">Größte zuerst</string>
+    <string name="order_newest">Neueste zuerst</string>
+    <string name="order_oldest">Älteste zuerst</string>
+    <string name="order_random">Zufällig</string>
+    <string name="order_title">Reihenfolge</string>
+    <string name="picker_no_date">Ohne Termin beiseitelegen</string>
+    <string name="picker_no_date_hint">Kommt nicht von selbst zurück. Du findest es unter Später › Beiseitegelegt.</string>
+    <string name="series_button">Serie mit %1$d Fotos vergleichen</string>
+    <string name="series_confirm">%1$d behalten · %2$d in den Papierkorb</string>
+    <string name="series_done">%1$d behalten · %2$d im Papierkorb</string>
+    <string name="series_footer">Nichts wird gelöscht. Der Papierkorb gehört zu PhotoMaid und wird erst geleert, wenn du es bestätigst.</string>
+    <string name="series_hint">Tippe auf ein Bild, um es unten zu vergleichen. Der Haken entscheidet, was bleibt.</string>
+    <string name="series_keep_toggle">Behalten</string>
+    <string name="series_state_keep">Behalten</string>
+    <string name="series_state_trash">Papierkorb</string>
+    <string name="series_subtitle">Kurz hintereinander aufgenommen · %1$d</string>
+    <string name="series_title">Serie vergleichen</string>
+    <string name="set_buttons">Tasten zum Entscheiden</string>
+    <string name="set_buttons_detail">Zeigt unter dem Medium Tasten für Papierkorb, Behalten und Später. Wischen funktioniert weiterhin.</string>
+    <string name="set_excluded_folders">Ausgenommene Ordner</string>
+    <string name="today_continue_month">Weitermachen: %1$s</string>
+    <string name="today_new_since_sub">seit deinem letzten Aufräumen</string>
+    <string name="tour_grid_note_text">Verschieben oder Favorisieren ändert nichts an Behalten, Papierkorb oder Später.</string>
+    <string name="tour_grid_note_title">Keine Entscheidung</string>
+    <string name="tour_grid_select_text">Tippe auf Bilder, um sie auszuwählen. Lange drücken und ziehen wählt einen ganzen Bereich.</string>
+    <string name="tour_grid_select_title">Mehrere auswählen</string>
+    <string name="tour_months_later_text">Für später Zurückgestelltes zählt als durchgesehen – du siehst es hier trotzdem.</string>
+    <string name="tour_months_later_title">Später ist nicht offen</string>
+    <string name="tour_months_more_text">Öffne die Übersicht als Raster oder sieh einen fertigen Monat erneut durch.</string>
+    <string name="tour_months_more_title">Mehr pro Monat</string>
+    <string name="tour_months_row_text">Tippe auf einen Monat, um nur dessen offene Fotos und Videos durchzusehen.</string>
+    <string name="tour_months_row_title">So weit bist du</string>
+    <string name="tour_series_text">Mehrere Fotos kurz hintereinander? Vergleiche sie nebeneinander und wähle selbst, was bleibt.</string>
+    <string name="tour_series_title">Serie vergleichen</string>
+    <plurals name="basket_trash_files">
+        <item quantity="one">%1$d Datei in den Papierkorb</item>
+        <item quantity="other">%1$d Dateien in den Papierkorb</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="one">%1$d Element verschieben</item>
+        <item quantity="other">%1$d Elemente verschieben</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="one">%1$d Element nach „%2$s“ verschoben</item>
+        <item quantity="other">%1$d Elemente nach „%2$s“ verschoben</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="one">%1$d ausgewählt</item>
+        <item quantity="other">%1$d ausgewählt</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="one">%1$d für später</item>
+        <item quantity="other">%1$d für später</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="one">Noch nicht begonnen · %1$d Element</item>
+        <item quantity="other">Noch nicht begonnen · %1$d Elemente</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="one">%1$d von %2$d durchgesehen</item>
+        <item quantity="other">%1$d von %2$d durchgesehen</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="one">%1$d Datei liegt jetzt im Papierkorb des Speicherorts.</item>
+        <item quantity="other">%1$d Dateien liegen jetzt im Papierkorb des Speicherorts.</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="one">%1$d neues Foto oder Video</item>
+        <item quantity="other">%1$d neue Fotos und Videos</item>
+    </plurals>
+    <string name="pro_f6">Fotoserien vergleichen</string>
+    <string name="pro_f6d">Kurz hintereinander aufgenommene Fotos nebeneinander – du wählst, was bleibt.</string>
 </resources>

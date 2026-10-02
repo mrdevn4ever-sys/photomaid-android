@@ -572,7 +572,7 @@
     <string name="offer_limit_title">每天轻松清理</string>
     <string name="offer_limit_text">每天最多移除 %1$d 项。观看视频广告，今天可额外移除 %2$d 项。</string>
     <string name="offer_pro_title">Pro：一次购买</string>
-    <string name="offer_pro_text">无广告，无每日上限，还能查找相同副本、自建合集。</string>
+    <string name="offer_pro_text">无广告，无每日上限。还能比较连拍照片、查找相同副本、自建合集。</string>
     <string name="offer_price_once">%1$s · 一次支付</string>
     <string name="offer_price_store">Google Play 中的价格</string>
     <string name="offer_no_sub">无需订阅</string>
@@ -613,4 +613,112 @@
     </plurals>
     <string name="done_button">完成</string>
     <string name="done_partial">未能移除的内容会留在 PhotoMaid 回收站中。</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">移到存储位置的回收站？</string>
+    <string name="basket_confirm_files_trash_message">文件会进入其存储位置的回收站，可在那里恢复。只有在那里删除后才会释放空间。</string>
+    <string name="done_note_files_trash">文件现在位于其存储位置的回收站中。只有在那里永久删除后才会释放空间。</string>
+    <string name="excl_action">排除此文件夹</string>
+    <string name="excl_add_footer">被排除的文件夹及其子文件夹不会出现在任何浏览、数量或按月概览中。已做出的选择会保留。</string>
+    <string name="excl_add_header">排除文件夹</string>
+    <string name="excl_confirm_action">排除</string>
+    <string name="excl_confirm_text">此文件夹及其子文件夹中的内容在整理时将不再出现。不会删除或移动任何内容。可在“设置 › 已排除的文件夹”中撤销。</string>
+    <string name="excl_confirm_title">整理时隐藏“%1$s”？</string>
+    <string name="excl_done">整理时将不再显示“%1$s”</string>
+    <string name="excl_header">已排除</string>
+    <string name="excl_intro">你不想整理的文件夹，例如工作文档或家庭照片。</string>
+    <string name="excl_none">还没有排除任何文件夹。</string>
+    <string name="excl_show_again">重新显示</string>
+    <string name="excl_title">已排除的文件夹</string>
+    <string name="feed_title_month">月份</string>
+    <string name="feed_title_new">新添加</string>
+    <string name="folder_all">所有文件夹</string>
+    <string name="folder_pin">固定文件夹</string>
+    <string name="folder_pinned">已固定</string>
+    <string name="folder_recent">最近使用</string>
+    <string name="folder_unpin">取消固定</string>
+    <string name="grid_empty_text">这里暂时没有照片或视频。</string>
+    <string name="grid_empty_title">没有可显示的内容</string>
+    <string name="grid_move">移到文件夹</string>
+    <string name="grid_moved_partial">已将 %2$d 项中的 %1$d 项移到“%3$s”。其余项目无法移动。</string>
+    <string name="grid_note">点按选择，长按并拖动可选择多个。移动不算作选择。</string>
+    <string name="grid_open">概览</string>
+    <string name="grid_select_all">全选</string>
+    <string name="grid_select_none">全不选</string>
+    <string name="help_tours_again">重新显示教程</string>
+    <string name="help_tours_reset">下次打开各页面时会再次显示教程。</string>
+    <string name="hub_months_sub">按月逐个完成</string>
+    <string name="later_back_to_stack">放回队列</string>
+    <string name="later_bookmarked_row">已搁置，无日期</string>
+    <string name="later_group_bookmarked">已搁置 · %1$d 项</string>
+    <string name="later_nodate_done">已搁置，可在“稍后”中找到</string>
+    <string name="month_actions">%1$s 的操作</string>
+    <string name="month_again">重新查看</string>
+    <string name="month_done">已查看</string>
+    <string name="months_empty_text">照片或视频有拍摄日期后，月份会显示在这里。</string>
+    <string name="months_empty_title">还没有月份</string>
+    <string name="months_intro">每个月的进度。设为稍后的内容计为已查看。</string>
+    <string name="months_title">按月份</string>
+    <string name="order_largest">最大优先</string>
+    <string name="order_newest">最新优先</string>
+    <string name="order_oldest">最早优先</string>
+    <string name="order_random">随机</string>
+    <string name="order_title">顺序</string>
+    <string name="picker_no_date">无日期搁置</string>
+    <string name="picker_no_date_hint">不会自动回来。可在“稍后 › 已搁置”中找到。</string>
+    <string name="series_button">比较 %1$d 张连拍照片</string>
+    <string name="series_confirm">保留 %1$d 张 · %2$d 张移到回收站</string>
+    <string name="series_done">已保留 %1$d 张 · %2$d 张在回收站</string>
+    <string name="series_footer">不会删除任何内容。回收站属于 PhotoMaid，只有在你确认后才会清空。</string>
+    <string name="series_hint">点按照片可在下方比较。勾选决定保留哪些。</string>
+    <string name="series_keep_toggle">保留</string>
+    <string name="series_state_keep">保留</string>
+    <string name="series_state_trash">回收站</string>
+    <string name="series_subtitle">连续拍摄 · %1$d 张</string>
+    <string name="series_title">比较连拍</string>
+    <string name="set_buttons">选择按钮</string>
+    <string name="set_buttons_detail">在每项内容下方显示回收站、保留和稍后按钮。滑动操作仍然可用。</string>
+    <string name="set_excluded_folders">已排除的文件夹</string>
+    <string name="today_continue_month">继续：%1$s</string>
+    <string name="today_new_since_sub">自上次整理以来</string>
+    <string name="tour_grid_note_text">移动或收藏不会改变保留、回收站或稍后。</string>
+    <string name="tour_grid_note_title">不算作选择</string>
+    <string name="tour_grid_select_text">点按照片即可选择。长按并拖动可选择一个范围。</string>
+    <string name="tour_grid_select_title">多选</string>
+    <string name="tour_months_later_text">设为稍后的内容计为已查看，但仍会在这里显示。</string>
+    <string name="tour_months_later_title">“稍后”不算未查看</string>
+    <string name="tour_months_more_text">以网格打开概览，或重新查看已完成的月份。</string>
+    <string name="tour_months_more_title">每月更多操作</string>
+    <string name="tour_months_row_text">点按月份，只查看该月未查看的照片和视频。</string>
+    <string name="tour_months_row_title">你的进度</string>
+    <string name="tour_series_text">有几张连续拍摄的照片？并排比较，自己选择保留哪些。</string>
+    <string name="tour_series_title">比较连拍</string>
+    <plurals name="basket_trash_files">
+        <item quantity="other">将 %1$d 个文件移到回收站</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="other">移动 %1$d 项</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="other">已将 %1$d 项移到“%2$s”</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="other">已选择 %1$d 项</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="other">%1$d 项稍后</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="other">未开始 · %1$d 项</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="other">已查看 %1$d / %2$d</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="other">%1$d 个文件现在位于存储位置的回收站中。</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="other">%1$d 张新照片和视频</item>
+    </plurals>
+    <string name="pro_f6">比较连拍照片</string>
+    <string name="pro_f6d">并排显示连续拍摄的照片，由你决定保留哪些。</string>
 </resources>

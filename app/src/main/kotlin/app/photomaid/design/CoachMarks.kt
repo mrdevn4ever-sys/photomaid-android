@@ -80,16 +80,22 @@ data class CoachStep(val key: String, val title: String, val text: String)
 @Composable
 fun CoachHost(steps: List<CoachStep>, active: Boolean, onFinish: () -> Unit, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val registry = remember { CoachRegistry() }
-    var index by rememberSaveable { mutableIntStateOf(0) }
+    // Andere Schritte (z. B. nach dem Feed-Tutorial der Serien-Hinweis) beginnen wieder bei 1.
+    var index by rememberSaveable(steps.joinToString("|") { it.key }) { mutableIntStateOf(0) }
     var hostOrigin by remember { androidx.compose.runtime.mutableStateOf(Offset.Zero) }
     Box(modifier.onGloballyPositioned { hostOrigin = it.boundsInRoot().topLeft }) {
         CompositionLocalProvider(LocalCoach provides registry) { content() }
         val show = active && steps.isNotEmpty() && index < steps.size
         if (show) BackHandler { onFinish() }
+        // Beim Ausblenden können die Schritte schon leer sein (z. B. Tutorial erledigt): die zuletzt gezeigten weiterverwenden.
+        var lastSteps by remember { androidx.compose.runtime.mutableStateOf(steps) }
+        if (steps.isNotEmpty()) lastSteps = steps
         AnimatedVisibility(show, Modifier.fillMaxSize(), enter = fadeIn(AppMotion.normal()), exit = fadeOut(AppMotion.fast())) {
-            val step = steps[index.coerceIn(0, steps.lastIndex)]
+            val shown = if (steps.isNotEmpty()) steps else lastSteps
+            if (shown.isEmpty()) return@AnimatedVisibility
+            val step = shown[index.coerceIn(0, shown.lastIndex)]
             val target = registry.bounds[step.key]?.translate(-hostOrigin)
-            CoachOverlay(step, index, steps.size, target,
+            CoachOverlay(step, index.coerceIn(0, shown.lastIndex), shown.size, target,
                 next = { if (index < steps.lastIndex) index++ else onFinish() }, skip = onFinish)
         }
     }

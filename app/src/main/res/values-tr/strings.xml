@@ -601,7 +601,7 @@
     <string name="offer_limit_title">Her gün temizle</string>
     <string name="offer_limit_text">Günde en fazla %1$d öğe kaldır. Bir video reklamla bugün %2$d daha kaldırabilirsin.</string>
     <string name="offer_pro_title">Pro: bir kez satın al</string>
-    <string name="offer_pro_text">Reklam ve günlük sınır yok. Ayrıca aynı kopyaları bulma ve özel koleksiyonlar.</string>
+    <string name="offer_pro_text">Reklamsız ve günlük sınır yok. Ayrıca fotoğraf serisi karşılaştırma, aynı kopyaları bulma ve özel koleksiyonlar.</string>
     <string name="offer_price_once">%1$s · Tek seferlik</string>
     <string name="offer_price_store">Google Play fiyatı</string>
     <string name="offer_no_sub">Abonelik yok</string>
@@ -643,4 +643,121 @@
     </plurals>
     <string name="done_button">Bitti</string>
     <string name="done_partial">Kaldırılmayan öğeler PhotoMaid çöp kutusunda kalır.</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">Depolama konumunun çöp kutusuna taşınsın mı?</string>
+    <string name="basket_confirm_files_trash_message">Dosyalar depolama konumlarının çöp kutusuna gider ve oradan geri yüklenebilir. Alan ancak orada silindiklerinde boşalır.</string>
+    <string name="done_note_files_trash">Dosyalar artık depolama konumlarının çöp kutusunda. Alan ancak orada kalıcı olarak silindiklerinde boşalır.</string>
+    <string name="excl_action">Bu klasörü hariç tut</string>
+    <string name="excl_add_footer">Hariç tutulan klasörler ve alt klasörleri hiçbir akışta, sayıda veya aylık özette görünmez. Verdiğin kararlar korunur.</string>
+    <string name="excl_add_header">Klasör hariç tut</string>
+    <string name="excl_confirm_action">Hariç tut</string>
+    <string name="excl_confirm_text">Bu klasördeki ve alt klasörlerdeki öğeler düzenlerken artık görünmez. Hiçbir şey silinmez veya taşınmaz. Ayarlar › Hariç tutulan klasörler bölümünden geri alabilirsin.</string>
+    <string name="excl_confirm_title">Düzenlerken “%1$s” gizlensin mi?</string>
+    <string name="excl_done">“%1$s” artık düzenlerken gösterilmeyecek</string>
+    <string name="excl_header">Hariç tutulanlar</string>
+    <string name="excl_intro">Düzenlemek istemediğin klasörler, örneğin iş belgeleri veya aile fotoğrafları.</string>
+    <string name="excl_none">Henüz hariç tutulan klasör yok.</string>
+    <string name="excl_show_again">Yeniden göster</string>
+    <string name="excl_title">Hariç tutulan klasörler</string>
+    <string name="feed_title_month">Ay</string>
+    <string name="feed_title_new">Yeni eklenenler</string>
+    <string name="folder_all">Tüm klasörler</string>
+    <string name="folder_pin">Klasörü sabitle</string>
+    <string name="folder_pinned">Sabitlenenler</string>
+    <string name="folder_recent">Son kullanılanlar</string>
+    <string name="folder_unpin">Sabitlemeyi kaldır</string>
+    <string name="grid_empty_text">Şu anda burada fotoğraf veya video yok.</string>
+    <string name="grid_empty_title">Gösterilecek bir şey yok</string>
+    <string name="grid_move">Klasöre taşı</string>
+    <string name="grid_moved_partial">%2$d öğeden %1$d tanesi “%3$s” klasörüne taşındı. Diğerleri taşınamadı.</string>
+    <string name="grid_note">Seçmek için dokun, birden fazlası için basılı tutup sürükle. Taşımak bir karar değildir.</string>
+    <string name="grid_open">Genel bakış</string>
+    <string name="grid_select_all">Tümü</string>
+    <string name="grid_select_none">Hiçbiri</string>
+    <string name="help_tours_again">Öğreticileri yeniden göster</string>
+    <string name="help_tours_reset">Öğreticiler her ekranı bir sonraki açışında yeniden görünecek.</string>
+    <string name="hub_months_sub">Ay ay bitir</string>
+    <string name="later_back_to_stack">Yığına geri koy</string>
+    <string name="later_bookmarked_row">Tarihsiz ayrıldı</string>
+    <string name="later_group_bookmarked">Ayrılanlar · %1$d</string>
+    <string name="later_nodate_done">Ayrıldı – Sonra bölümünde bulabilirsin</string>
+    <string name="month_actions">%1$s için işlemler</string>
+    <string name="month_again">Yeniden gözden geçir</string>
+    <string name="month_done">Gözden geçirildi</string>
+    <string name="months_empty_text">Fotoğraf veya videoların çekim tarihi olduğunda aylar burada görünür.</string>
+    <string name="months_empty_title">Henüz ay yok</string>
+    <string name="months_intro">Her ayda ne kadar ilerlediğin. Sonraya bırakılanlar gözden geçirilmiş sayılır.</string>
+    <string name="months_title">Aya göre</string>
+    <string name="order_largest">Önce en büyükler</string>
+    <string name="order_newest">Önce en yeniler</string>
+    <string name="order_oldest">Önce en eskiler</string>
+    <string name="order_random">Rastgele</string>
+    <string name="order_title">Sıralama</string>
+    <string name="picker_no_date">Tarihsiz ayır</string>
+    <string name="picker_no_date_hint">Kendiliğinden geri gelmez. Sonra › Ayrılanlar bölümünde bulursun.</string>
+    <string name="series_button">%1$d fotoğraflık seriyi karşılaştır</string>
+    <string name="series_confirm">%1$d sakla · %2$d çöp kutusuna</string>
+    <string name="series_done">%1$d saklandı · %2$d çöp kutusunda</string>
+    <string name="series_footer">Hiçbir şey silinmez. Çöp kutusu PhotoMaid’e aittir ve yalnızca onayladığında boşalır.</string>
+    <string name="series_hint">Aşağıda karşılaştırmak için bir fotoğrafa dokun. Onay işareti neyin kalacağını belirler.</string>
+    <string name="series_keep_toggle">Sakla</string>
+    <string name="series_state_keep">Sakla</string>
+    <string name="series_state_trash">Çöp kutusu</string>
+    <string name="series_subtitle">Art arda çekildi · %1$d</string>
+    <string name="series_title">Seriyi karşılaştır</string>
+    <string name="set_buttons">Karar düğmeleri</string>
+    <string name="set_buttons_detail">Her öğenin altında çöp kutusu, saklama ve sonra düğmeleri gösterir. Kaydırma çalışmaya devam eder.</string>
+    <string name="set_excluded_folders">Hariç tutulan klasörler</string>
+    <string name="today_continue_month">Devam et: %1$s</string>
+    <string name="today_new_since_sub">son düzenlemenden beri</string>
+    <string name="tour_grid_note_text">Taşımak veya favorilere eklemek saklama, çöp kutusu ya da sonra kararını değiştirmez.</string>
+    <string name="tour_grid_note_title">Bir karar değil</string>
+    <string name="tour_grid_select_text">Seçmek için fotoğraflara dokun. Bir aralık seçmek için basılı tutup sürükle.</string>
+    <string name="tour_grid_select_title">Birden fazla seç</string>
+    <string name="tour_months_later_text">Sonraya bırakılanlar gözden geçirilmiş sayılır ama burada yine görünür.</string>
+    <string name="tour_months_later_title">Sonra bekleyen değil</string>
+    <string name="tour_months_more_text">Genel bakışı ızgara olarak aç veya biten bir ayı yeniden gözden geçir.</string>
+    <string name="tour_months_more_title">Ay başına daha fazlası</string>
+    <string name="tour_months_row_text">Yalnızca o ayın bekleyen fotoğraf ve videolarını gözden geçirmek için bir aya dokun.</string>
+    <string name="tour_months_row_title">Ne kadar ilerledin</string>
+    <string name="tour_series_text">Art arda çekilmiş birkaç fotoğraf mı var? Yan yana karşılaştır ve neyin kalacağını seç.</string>
+    <string name="tour_series_title">Seriyi karşılaştır</string>
+    <plurals name="basket_trash_files">
+        <item quantity="one">%1$d dosyayı çöp kutusuna taşı</item>
+        <item quantity="other">%1$d dosyayı çöp kutusuna taşı</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="one">%1$d öğeyi taşı</item>
+        <item quantity="other">%1$d öğeyi taşı</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="one">%1$d öğe “%2$s” klasörüne taşındı</item>
+        <item quantity="other">%1$d öğe “%2$s” klasörüne taşındı</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="one">%1$d seçildi</item>
+        <item quantity="other">%1$d seçildi</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="one">Sonra için %1$d</item>
+        <item quantity="other">Sonra için %1$d</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="one">Başlanmadı · %1$d öğe</item>
+        <item quantity="other">Başlanmadı · %1$d öğe</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="one">%2$d öğeden %1$d tanesi gözden geçirildi</item>
+        <item quantity="other">%2$d öğeden %1$d tanesi gözden geçirildi</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="one">%1$d dosya artık depolama konumunun çöp kutusunda.</item>
+        <item quantity="other">%1$d dosya artık depolama konumunun çöp kutusunda.</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="one">%1$d yeni fotoğraf veya video</item>
+        <item quantity="other">%1$d yeni fotoğraf ve video</item>
+    </plurals>
+    <string name="pro_f6">Fotoğraf serilerini karşılaştır</string>
+    <string name="pro_f6d">Art arda çekilen fotoğraflar yan yana – neyin kalacağını sen seçersin.</string>
 </resources>

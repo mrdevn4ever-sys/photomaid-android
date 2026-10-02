@@ -20,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BarChart
+import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Screenshot
 import androidx.compose.material.icons.rounded.FilterNone
 import androidx.compose.material.icons.rounded.InsertDriveFile
@@ -125,6 +126,9 @@ fun CleanUpHubScreen(nav: Nav) {
                         media(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos, c.amber)
                         RowDivider(RowDividerInset)
                         media(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots, c.later)
+                        RowDivider(RowDividerInset)
+                        ListRow(Icons.Rounded.CalendarMonth, stringResource(R.string.months_title), Modifier.testTag("hub.months"), tint = c.earth,
+                            tile = c.earth.copy(alpha = 0.13f), subtitle = stringResource(R.string.hub_months_sub), enabled = access.canRead) { nav.push(Routes.MONTHS) }
                     }
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {

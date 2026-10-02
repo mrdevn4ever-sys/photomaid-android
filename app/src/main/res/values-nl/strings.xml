@@ -601,7 +601,7 @@
     <string name="offer_limit_title">Elke dag opruimen</string>
     <string name="offer_limit_text">Verwijder er maximaal %1$d per dag. Met een videoadvertentie kun je er vandaag %2$d extra verwijderen.</string>
     <string name="offer_pro_title">Pro: één keer kopen</string>
-    <string name="offer_pro_text">Geen advertenties of daglimiet. Inclusief identieke kopieën zoeken en eigen verzamelingen.</string>
+    <string name="offer_pro_text">Geen advertenties en geen daglimiet. Inclusief fotoreeksen vergelijken, identieke kopieën zoeken en eigen verzamelingen.</string>
     <string name="offer_price_once">%1$s · Eenmalig</string>
     <string name="offer_price_store">Prijs op Google Play</string>
     <string name="offer_no_sub">Geen abonnement</string>
@@ -643,4 +643,121 @@
     </plurals>
     <string name="done_button">Klaar</string>
     <string name="done_partial">Niet-verwijderde items blijven in de PhotoMaid-prullenbak.</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">Naar de prullenbak van de opslaglocatie?</string>
+    <string name="basket_confirm_files_trash_message">De bestanden gaan naar de prullenbak van hun opslaglocatie en zijn daar te herstellen. Ruimte komt pas vrij als ze daar worden verwijderd.</string>
+    <string name="done_note_files_trash">De bestanden staan nu in de prullenbak van hun opslaglocatie. Ruimte komt pas vrij als ze daar definitief worden verwijderd.</string>
+    <string name="excl_action">Deze map uitsluiten</string>
+    <string name="excl_add_footer">Uitgesloten mappen en hun submappen verschijnen in geen enkele feed, telling of maandoverzicht. Al gemaakte keuzes blijven bewaard.</string>
+    <string name="excl_add_header">Map uitsluiten</string>
+    <string name="excl_confirm_action">Uitsluiten</string>
+    <string name="excl_confirm_text">Items in deze map en submappen verschijnen niet meer tijdens het opruimen. Er wordt niets verwijderd of verplaatst. Ongedaan maken via Instellingen › Uitgesloten mappen.</string>
+    <string name="excl_confirm_title">‘%1$s’ verbergen tijdens het opruimen?</string>
+    <string name="excl_done">‘%1$s’ verschijnt niet meer tijdens het opruimen</string>
+    <string name="excl_header">Uitgesloten</string>
+    <string name="excl_intro">Mappen die je niet wilt opruimen, bijvoorbeeld werkdocumenten of familiefoto’s.</string>
+    <string name="excl_none">Nog geen mappen uitgesloten.</string>
+    <string name="excl_show_again">Weer tonen</string>
+    <string name="excl_title">Uitgesloten mappen</string>
+    <string name="feed_title_month">Maand</string>
+    <string name="feed_title_new">Nieuw toegevoegd</string>
+    <string name="folder_all">Alle mappen</string>
+    <string name="folder_pin">Map vastzetten</string>
+    <string name="folder_pinned">Vastgezet</string>
+    <string name="folder_recent">Recent gebruikt</string>
+    <string name="folder_unpin">Losmaken</string>
+    <string name="grid_empty_text">Er zijn hier nu geen foto’s of video’s.</string>
+    <string name="grid_empty_title">Niets te tonen</string>
+    <string name="grid_move">Naar map verplaatsen</string>
+    <string name="grid_moved_partial">%1$d van %2$d verplaatst naar ‘%3$s’. De rest kon niet worden verplaatst.</string>
+    <string name="grid_note">Tik om te selecteren, houd ingedrukt en sleep om er meerdere te kiezen. Verplaatsen is geen keuze.</string>
+    <string name="grid_open">Overzicht</string>
+    <string name="grid_select_all">Alles</string>
+    <string name="grid_select_none">Geen</string>
+    <string name="help_tours_again">Tutorials opnieuw tonen</string>
+    <string name="help_tours_reset">De tutorials verschijnen weer als je elk scherm opnieuw opent.</string>
+    <string name="hub_months_sub">Maand voor maand klaar</string>
+    <string name="later_back_to_stack">Terug naar de stapel</string>
+    <string name="later_bookmarked_row">Opzijgelegd, zonder datum</string>
+    <string name="later_group_bookmarked">Opzijgelegd · %1$d</string>
+    <string name="later_nodate_done">Opzijgelegd – te vinden onder Later</string>
+    <string name="month_actions">Acties voor %1$s</string>
+    <string name="month_again">Opnieuw bekijken</string>
+    <string name="month_done">Bekeken</string>
+    <string name="months_empty_text">Maanden verschijnen hier zodra foto’s of video’s een opnamedatum hebben.</string>
+    <string name="months_empty_title">Nog geen maanden</string>
+    <string name="months_intro">Zo ver ben je per maand. Wat voor later is bewaard, telt als bekeken.</string>
+    <string name="months_title">Per maand</string>
+    <string name="order_largest">Grootste eerst</string>
+    <string name="order_newest">Nieuwste eerst</string>
+    <string name="order_oldest">Oudste eerst</string>
+    <string name="order_random">Willekeurig</string>
+    <string name="order_title">Volgorde</string>
+    <string name="picker_no_date">Zonder datum opzijleggen</string>
+    <string name="picker_no_date_hint">Komt niet vanzelf terug. Je vindt het onder Later › Opzijgelegd.</string>
+    <string name="series_button">Reeks van %1$d foto’s vergelijken</string>
+    <string name="series_confirm">%1$d bewaren · %2$d naar prullenbak</string>
+    <string name="series_done">%1$d bewaard · %2$d in prullenbak</string>
+    <string name="series_footer">Er wordt niets verwijderd. De prullenbak is van PhotoMaid en wordt pas geleegd als je dat bevestigt.</string>
+    <string name="series_hint">Tik op een foto om hem onderaan te vergelijken. Het vinkje bepaalt wat blijft.</string>
+    <string name="series_keep_toggle">Bewaren</string>
+    <string name="series_state_keep">Bewaren</string>
+    <string name="series_state_trash">Prullenbak</string>
+    <string name="series_subtitle">Kort na elkaar gemaakt · %1$d</string>
+    <string name="series_title">Reeks vergelijken</string>
+    <string name="set_buttons">Keuzeknoppen</string>
+    <string name="set_buttons_detail">Toont onder elk item knoppen voor prullenbak, bewaren en later. Vegen blijft werken.</string>
+    <string name="set_excluded_folders">Uitgesloten mappen</string>
+    <string name="today_continue_month">Verder met: %1$s</string>
+    <string name="today_new_since_sub">sinds je laatste opruimbeurt</string>
+    <string name="tour_grid_note_text">Verplaatsen of als favoriet markeren verandert niets aan bewaren, prullenbak of later.</string>
+    <string name="tour_grid_note_title">Geen keuze</string>
+    <string name="tour_grid_select_text">Tik op foto’s om ze te selecteren. Houd ingedrukt en sleep om een hele reeks te kiezen.</string>
+    <string name="tour_grid_select_title">Meerdere selecteren</string>
+    <string name="tour_months_later_text">Wat voor later is bewaard telt als bekeken – je ziet het hier toch.</string>
+    <string name="tour_months_later_title">Later is niet open</string>
+    <string name="tour_months_more_text">Open het overzicht als raster of bekijk een afgeronde maand opnieuw.</string>
+    <string name="tour_months_more_title">Meer per maand</string>
+    <string name="tour_months_row_text">Tik op een maand om alleen de openstaande foto’s en video’s te bekijken.</string>
+    <string name="tour_months_row_title">Zo ver ben je</string>
+    <string name="tour_series_text">Meerdere foto’s kort na elkaar? Vergelijk ze naast elkaar en kies wat blijft.</string>
+    <string name="tour_series_title">Reeks vergelijken</string>
+    <plurals name="basket_trash_files">
+        <item quantity="one">%1$d bestand naar prullenbak</item>
+        <item quantity="other">%1$d bestanden naar prullenbak</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="one">%1$d item verplaatsen</item>
+        <item quantity="other">%1$d items verplaatsen</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="one">%1$d item verplaatst naar ‘%2$s’</item>
+        <item quantity="other">%1$d items verplaatst naar ‘%2$s’</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="one">%1$d geselecteerd</item>
+        <item quantity="other">%1$d geselecteerd</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="one">%1$d voor later</item>
+        <item quantity="other">%1$d voor later</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="one">Nog niet begonnen · %1$d item</item>
+        <item quantity="other">Nog niet begonnen · %1$d items</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="one">%1$d van %2$d bekeken</item>
+        <item quantity="other">%1$d van %2$d bekeken</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="one">%1$d bestand staat nu in de prullenbak van de opslaglocatie.</item>
+        <item quantity="other">%1$d bestanden staan nu in de prullenbak van de opslaglocatie.</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="one">%1$d nieuwe foto of video</item>
+        <item quantity="other">%1$d nieuwe foto’s en video’s</item>
+    </plurals>
+    <string name="pro_f6">Fotoreeksen vergelijken</string>
+    <string name="pro_f6d">Kort na elkaar gemaakte foto’s naast elkaar – jij kiest wat blijft.</string>
 </resources>

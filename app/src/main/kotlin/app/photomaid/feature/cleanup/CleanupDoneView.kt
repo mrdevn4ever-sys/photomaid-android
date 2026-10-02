@@ -131,7 +131,11 @@ fun CleanupDoneView(done: CleanupDone, onDone: () -> Unit) {
                     modifier = Modifier.testTag("done.total"))
                 Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(AppRadii.card)).background(c.warm).padding(AppSpacing.m),
                     verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                    Text(stringResource(if (done.kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE) R.string.done_note_media else R.string.done_note_files),
+                    Text(stringResource(when (done.kind) {
+                        CleanupOperationKind.PHOTO_LIBRARY_DELETE -> R.string.done_note_media
+                        CleanupOperationKind.FILE_MOVE_TO_TRASH -> R.string.done_note_files_trash
+                        else -> R.string.done_note_files
+                    }),
                         style = AppTypography.footnote, color = c.textPrimary)
                     if (s.unknownCount > 0) Text(pluralStringResource(R.plurals.done_unknown, s.unknownCount, s.unknownCount),
                         style = AppTypography.footnote, color = c.textSecondary)

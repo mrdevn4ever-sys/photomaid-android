@@ -62,6 +62,7 @@ object SmartCollections {
         SmartCollection(fixed(2), CollectionSource.SCREENSHOTS, CollectionFilter.OlderThan(30), builtIn = true),
         SmartCollection(fixed(3), CollectionSource.PHOTOS, CollectionFilter.LargerThan(10L * MB), builtIn = true),
         SmartCollection(fixed(4), CollectionSource.VIDEOS, CollectionFilter.OlderThan(365), builtIn = true),
+        SmartCollection(fixed(5), CollectionSource.PHOTOS, CollectionFilter.OlderThan(365), builtIn = true),
     )
 
     /** Schnellwahl je Quelle – passend zur Medienart statt eines +/−-Zählers. */

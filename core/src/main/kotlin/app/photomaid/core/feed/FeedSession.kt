@@ -38,7 +38,8 @@ data class SessionSummary(val kept: Int = 0, val marked: Int = 0, val later: Int
 
 /** Eine Review-Session im Feed. Reine Logik, testbar ohne UI. */
 class FeedSession(val id: ReviewSessionID = ReviewSessionID(), items: List<ItemReference>) {
-    val items: List<ItemReference> = items.distinct()
+    var items: List<ItemReference> = items.distinct()
+        private set
     var index: Int = 0
         private set
     var pending: PendingCommit? = null
@@ -130,11 +131,42 @@ class FeedSession(val id: ReviewSessionID = ReviewSessionID(), items: List<ItemR
         index = to.coerceIn(0, items.size)
     }
 
+    /**
+     * Kommende Medien (ab dem aktuellen) aus der Warteschlange nehmen – ausdrücklich OHNE Entscheidung, z. B. nach
+     * „Ordner ausnehmen“ oder nach einer Serienauswahl. Bereits gesehene Medien bleiben (Zurück funktioniert weiter).
+     */
+    fun dropUpcoming(remove: Set<ItemReference>) {
+        if (pending != null || remove.isEmpty()) return
+        items = items.filterIndexed { i, it -> i < index || it !in remove }
+        index = index.coerceAtMost(items.size)
+    }
+
+    /** Kommende Medien neu ordnen (Reihenfolge-Wechsel). Gesehene bleiben vorne, nichts wird entschieden. */
+    fun reorderUpcoming(order: (List<ItemReference>) -> List<ItemReference>) {
+        if (pending != null) return
+        val rest = items.drop(index)
+        val sorted = order(rest)
+        if (sorted.toSet() != rest.toSet()) return
+        items = items.take(index) + sorted
+    }
+
+    /** Außerhalb des Wischens getroffene Entscheidung (Serienauswahl) für die Zusammenfassung zählen. */
+    fun recordDecision(item: ItemReference, intent: FeedIntent) {
+        if (intent.isDecision) decisions[item] = intent
+    }
+
     /** Befehl für einen Termin aus der Terminleiste. `null`, wenn die Leiste veraltet ist. */
     fun scheduleCommand(receiptID: UUID, day: LocalDay): DecisionCommand? {
         val r = receipt ?: return null
         if (r.id != receiptID) return null
         return DecisionCommand(item = r.item, expectedRevision = r.revision, action = DecisionAction.Schedule(day), amends = r.laterCommandID)
+    }
+
+    /** „Ohne Termin“ aus der Terminleiste (gemeinsames Undo mit der Später-Aktion). */
+    fun bookmarkCommand(receiptID: UUID): DecisionCommand? {
+        val r = receipt ?: return null
+        if (r.id != receiptID) return null
+        return DecisionCommand(item = r.item, expectedRevision = r.revision, action = DecisionAction.Bookmark, amends = r.laterCommandID)
     }
 
     /** Nach gespeichertem Termin: Pille bleibt änderbar, jetzt auf der neuen Revision. */

@@ -43,4 +43,21 @@ data class AppSettingsData(
     val savedTotalBytes: Long = 0,
     /** Mindestens eine Größe war unbekannt → Summe ist eine Untergrenze („mind.“). */
     val savedTotalLowerBound: Boolean = false,
+    /** Vom Aufräumen ausgenommene Ordner (MediaStore `RELATIVE_PATH`, normalisiert, inkl. Unterordner). Keine Medien-IDs. */
+    val excludedFolders: List<String> = emptyList(),
+    /** Bedienungshilfe: Tasten zum Entscheiden unter dem Medium (Standard aus; Gesten bleiben aktiv). */
+    val decisionButtons: Boolean = false,
+    /** Reihenfolge im Feed (Neueste zuerst Standard). */
+    val feedOrder: app.photomaid.core.feed.FeedOrder = app.photomaid.core.feed.FeedOrder.NEWEST,
+    /** Ende der letzten Sitzung mit mindestens einer Entscheidung (Epoch-ms) – für „Neu seit dem letzten Aufräumen“. */
+    val lastSessionEndMs: Long = 0,
+    /** Zuletzt benutzter Monat im Feed (yyyy-MM) – für „Weitermachen“. Nur der Monat, keine Medien-IDs. */
+    val continueMonth: String? = null,
+    /** Angepinnte und zuletzt verwendete Zielordner beim Verschieben (Pfade, keine Medien-IDs). */
+    val pinnedFolders: List<String> = emptyList(),
+    val recentFolders: List<String> = emptyList(),
+    /** Weitere Hinweiskarten (je Funktion einmal). */
+    val monthsTourSeen: Boolean = false,
+    val seriesTourSeen: Boolean = false,
+    val gridTourSeen: Boolean = false,
 )

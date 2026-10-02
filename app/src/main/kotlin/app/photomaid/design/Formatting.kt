@@ -71,6 +71,15 @@ object DayText {
     }
 }
 
+object MonthText {
+    /** „September 2026“ – Monatsname in der Form der jeweiligen Sprache (z. B. Russisch: Nominativ). */
+    fun title(m: app.photomaid.core.progress.MonthKey): String {
+        val l = AppLocale
+        val pattern = android.text.format.DateFormat.getBestDateTimePattern(l, "MMMMyyyy")
+        return m.yearMonth.atDay(1).format(DateTimeFormatter.ofPattern(pattern, l)).replaceFirstChar { if (it.isLowerCase()) it.titlecase(l) else it.toString() }
+    }
+}
+
 object DateText {
     private val zone: ZoneId get() = ZoneId.systemDefault()
     fun abbreviated(i: Instant): String = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(AppLocale).format(i.atZone(zone))

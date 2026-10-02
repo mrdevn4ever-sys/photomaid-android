@@ -142,6 +142,10 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     val selectedPhotos = photoItems.map { it.item }.filter { it in selection }
     val selectedFiles = fileItems.map { it.item }.filter { it in selection }
     val available = read.allowance?.available
+    // Ordner-Dateien: Papierkorb des Speicherorts, wenn er für alle gewählten Dateien angeboten wird (Android 17+).
+    var filesTrashable by remember { mutableStateOf(false) }
+    LaunchedEffect(selectedFiles) { filesTrashable = withContext(Dispatchers.IO) { app.sources.supportsTrash(selectedFiles) } }
+    val fileKind = if (filesTrashable) CleanupOperationKind.FILE_MOVE_TO_TRASH else CleanupOperationKind.FILE_DELETE_PERMANENTLY
 
     fun request(items: List<ItemReference>, kind: CleanupOperationKind) {
         if (available != null && items.size > available) limitFor = items to kind
@@ -191,6 +195,8 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
             is CleanupRunResult.Finished -> when (r.intent.state) {
                 OperationState.SUCCEEDED -> if (kind == CleanupOperationKind.PHOTO_LIBRARY_DELETE)
                     res.getQuantityString(R.plurals.result_media_trashed, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
+                else if (kind == CleanupOperationKind.FILE_MOVE_TO_TRASH)
+                    res.getQuantityString(R.plurals.result_files_trashed, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
                 else res.getQuantityString(R.plurals.result_files_deleted, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size)
                 OperationState.PARTIALLY_SUCCEEDED -> res.getQuantityString(R.plurals.result_partial, r.intent.confirmedRemoved.size, r.intent.confirmedRemoved.size, r.intent.items.size)
                 OperationState.CANCELLED -> res.getString(R.string.result_cancelled)
@@ -228,8 +234,9 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
                 if (selectedPhotos.isNotEmpty()) ProminentButton(pluralStringResource(R.plurals.basket_empty_media, selectedPhotos.size, selectedPhotos.size), fillWidth = true, large = true,
                     enabled = !running) { request(selectedPhotos, CleanupOperationKind.PHOTO_LIBRARY_DELETE) }
-                if (selectedFiles.isNotEmpty()) GlassButton(pluralStringResource(R.plurals.basket_delete_files, selectedFiles.size, selectedFiles.size), fillWidth = true, large = true,
-                    tint = c.cleanup, enabled = !running) { request(selectedFiles, CleanupOperationKind.FILE_DELETE_PERMANENTLY) }
+                if (selectedFiles.isNotEmpty()) GlassButton(pluralStringResource(if (filesTrashable) R.plurals.basket_trash_files else R.plurals.basket_delete_files,
+                    selectedFiles.size, selectedFiles.size), fillWidth = true, large = true,
+                    tint = c.cleanup, enabled = !running) { request(selectedFiles, fileKind) }
                 if (running) CircularProgressIndicator(Modifier.size(28.dp))
             }
         },
@@ -283,9 +290,14 @@ fun CleanupBasketScreen(nav: Nav, showsDone: Boolean) {
     confirmPhotos?.let { items -> ConfirmationSheet(stringResource(R.string.basket_confirm_media_title), stringResource(R.string.basket_confirm_media_message),
         stringResource(R.string.basket_confirm_media_action, items.size), onConfirm = { run(items, CleanupOperationKind.PHOTO_LIBRARY_DELETE) },
         onDismiss = { confirmPhotos = null }) }
-    confirmFiles?.let { items -> ConfirmationSheet(stringResource(R.string.basket_confirm_files_title), stringResource(R.string.basket_confirm_files_message),
-        stringResource(R.string.basket_confirm_files_action, items.size), onConfirm = { run(items, CleanupOperationKind.FILE_DELETE_PERMANENTLY) },
-        onDismiss = { confirmFiles = null }) }
+    confirmFiles?.let { items ->
+        if (fileKind == CleanupOperationKind.FILE_MOVE_TO_TRASH) ConfirmationSheet(stringResource(R.string.basket_confirm_files_trash_title),
+            stringResource(R.string.basket_confirm_files_trash_message), pluralStringResource(R.plurals.basket_trash_files, items.size, items.size),
+            onConfirm = { run(items, CleanupOperationKind.FILE_MOVE_TO_TRASH) }, onDismiss = { confirmFiles = null })
+        else ConfirmationSheet(stringResource(R.string.basket_confirm_files_title), stringResource(R.string.basket_confirm_files_message),
+            stringResource(R.string.basket_confirm_files_action, items.size), onConfirm = { run(items, CleanupOperationKind.FILE_DELETE_PERMANENTLY) },
+            onDismiss = { confirmFiles = null })
+    }
     limitFor?.let { (items, kind) ->
         LimitSheet(available ?: 0, read.allowance?.limit ?: 0, items.size,
             bonus = if (app.entitlements.canOfferLimitBonus) ({ watchBonus(items, kind) }) else null,

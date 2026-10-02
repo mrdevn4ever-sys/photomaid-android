@@ -630,7 +630,7 @@
     <string name="offer_limit_title">Limpar todos os dias</string>
     <string name="offer_limit_text">Remove até %1$d por dia. Um anúncio em vídeo permite remover mais %2$d hoje.</string>
     <string name="offer_pro_title">Pro: compra uma vez</string>
-    <string name="offer_pro_text">Sem anúncios nem limite diário. Inclui pesquisa de cópias idênticas e coleções personalizadas.</string>
+    <string name="offer_pro_text">Sem anúncios nem limite diário. Inclui comparação de séries de fotos, pesquisa de cópias idênticas e coleções personalizadas.</string>
     <string name="offer_price_once">%1$s · Pagamento único</string>
     <string name="offer_price_store">Preço no Google Play</string>
     <string name="offer_no_sub">Sem subscrição</string>
@@ -673,4 +673,130 @@
     </plurals>
     <string name="done_button">Concluído</string>
     <string name="done_partial">Os itens que não foram removidos continuam no lixo do PhotoMaid.</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">Mover para o lixo do local de armazenamento?</string>
+    <string name="basket_confirm_files_trash_message">Os ficheiros vão para o lixo do seu local e podem ser restaurados aí. O espaço só fica livre quando forem eliminados aí.</string>
+    <string name="done_note_files_trash">Os ficheiros estão agora no lixo do seu local. O espaço só fica livre quando forem eliminados definitivamente aí.</string>
+    <string name="excl_action">Excluir esta pasta</string>
+    <string name="excl_add_footer">As pastas excluídas e as suas subpastas não aparecem em nenhum feed, contagem ou resumo mensal. As decisões já tomadas mantêm-se.</string>
+    <string name="excl_add_header">Excluir uma pasta</string>
+    <string name="excl_confirm_action">Excluir</string>
+    <string name="excl_confirm_text">Os itens desta pasta e das subpastas deixam de aparecer ao arrumar. Nada é eliminado nem movido. Anula em Definições › Pastas excluídas.</string>
+    <string name="excl_confirm_title">Ocultar “%1$s” ao arrumar?</string>
+    <string name="excl_done">“%1$s” deixa de aparecer ao arrumar</string>
+    <string name="excl_header">Excluídas</string>
+    <string name="excl_intro">Pastas que não queres arrumar, por exemplo documentos de trabalho ou fotos de família.</string>
+    <string name="excl_none">Ainda não há pastas excluídas.</string>
+    <string name="excl_show_again">Mostrar novamente</string>
+    <string name="excl_title">Pastas excluídas</string>
+    <string name="feed_title_month">Mês</string>
+    <string name="feed_title_new">Adicionados recentemente</string>
+    <string name="folder_all">Todas as pastas</string>
+    <string name="folder_pin">Fixar pasta</string>
+    <string name="folder_pinned">Fixadas</string>
+    <string name="folder_recent">Usadas recentemente</string>
+    <string name="folder_unpin">Deixar de fixar</string>
+    <string name="grid_empty_text">De momento não há fotos nem vídeos aqui.</string>
+    <string name="grid_empty_title">Nada para mostrar</string>
+    <string name="grid_move">Mover para pasta</string>
+    <string name="grid_moved_partial">%1$d de %2$d movidos para “%3$s”. Os restantes não puderam ser movidos.</string>
+    <string name="grid_note">Toca para selecionar; mantém premido e arrasta para escolher vários. Mover não é uma decisão.</string>
+    <string name="grid_open">Vista geral</string>
+    <string name="grid_select_all">Todos</string>
+    <string name="grid_select_none">Nenhum</string>
+    <string name="help_tours_again">Mostrar novamente os tutoriais</string>
+    <string name="help_tours_reset">Os tutoriais voltam a aparecer da próxima vez que abrires cada ecrã.</string>
+    <string name="hub_months_sub">Termina mês a mês</string>
+    <string name="later_back_to_stack">Voltar à pilha</string>
+    <string name="later_bookmarked_row">Posto de parte, sem data</string>
+    <string name="later_group_bookmarked">Postos de parte · %1$d</string>
+    <string name="later_nodate_done">Posto de parte – encontra-o em Mais tarde</string>
+    <string name="month_actions">Ações para %1$s</string>
+    <string name="month_again">Rever novamente</string>
+    <string name="month_done">Revisto</string>
+    <string name="months_empty_text">Os meses aparecem aqui quando as fotos ou vídeos têm data de captura.</string>
+    <string name="months_empty_title">Ainda não há meses</string>
+    <string name="months_intro">O teu progresso em cada mês. O que ficou para mais tarde conta como revisto.</string>
+    <string name="months_title">Por mês</string>
+    <string name="order_largest">Maiores primeiro</string>
+    <string name="order_newest">Mais recentes primeiro</string>
+    <string name="order_oldest">Mais antigos primeiro</string>
+    <string name="order_random">Aleatório</string>
+    <string name="order_title">Ordem</string>
+    <string name="picker_no_date">Pôr de parte sem data</string>
+    <string name="picker_no_date_hint">Não volta sozinho. Encontra-o em Mais tarde › Postos de parte.</string>
+    <string name="series_button">Comparar série de %1$d fotos</string>
+    <string name="series_confirm">Manter %1$d · %2$d para o lixo</string>
+    <string name="series_done">%1$d mantidas · %2$d no lixo</string>
+    <string name="series_footer">Nada é eliminado. O lixo pertence ao PhotoMaid e só é esvaziado quando confirmas.</string>
+    <string name="series_hint">Toca numa foto para a comparar em baixo. O visto decide o que fica.</string>
+    <string name="series_keep_toggle">Manter</string>
+    <string name="series_state_keep">Manter</string>
+    <string name="series_state_trash">Lixo</string>
+    <string name="series_subtitle">Tiradas em sequência rápida · %1$d</string>
+    <string name="series_title">Comparar série</string>
+    <string name="set_buttons">Botões de decisão</string>
+    <string name="set_buttons_detail">Mostra botões de lixo, manter e mais tarde por baixo de cada item. Deslizar continua a funcionar.</string>
+    <string name="set_excluded_folders">Pastas excluídas</string>
+    <string name="today_continue_month">Continuar: %1$s</string>
+    <string name="today_new_since_sub">desde a tua última arrumação</string>
+    <string name="tour_grid_note_text">Mover ou marcar favoritos não altera manter, lixo ou mais tarde.</string>
+    <string name="tour_grid_note_title">Não é uma decisão</string>
+    <string name="tour_grid_select_text">Toca nas fotos para as selecionar. Mantém premido e arrasta para escolher um intervalo.</string>
+    <string name="tour_grid_select_title">Selecionar vários</string>
+    <string name="tour_months_later_text">O que ficou para mais tarde conta como revisto, mas continuas a vê-lo aqui.</string>
+    <string name="tour_months_later_title">Mais tarde não está pendente</string>
+    <string name="tour_months_more_text">Abre a vista geral em grelha ou revê um mês concluído.</string>
+    <string name="tour_months_more_title">Mais por mês</string>
+    <string name="tour_months_row_text">Toca num mês para rever só as fotos e vídeos pendentes.</string>
+    <string name="tour_months_row_title">O teu progresso</string>
+    <string name="tour_series_text">Várias fotos tiradas seguidas? Compara-as lado a lado e escolhe o que fica.</string>
+    <string name="tour_series_title">Comparar série</string>
+    <plurals name="basket_trash_files">
+        <item quantity="one">Mover %1$d ficheiro para o lixo</item>
+        <item quantity="many">Mover %1$d ficheiros para o lixo</item>
+        <item quantity="other">Mover %1$d ficheiros para o lixo</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="one">Mover %1$d item</item>
+        <item quantity="many">Mover %1$d itens</item>
+        <item quantity="other">Mover %1$d itens</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="one">%1$d item movido para “%2$s”</item>
+        <item quantity="many">%1$d itens movidos para “%2$s”</item>
+        <item quantity="other">%1$d itens movidos para “%2$s”</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="one">%1$d selecionado</item>
+        <item quantity="many">%1$d selecionados</item>
+        <item quantity="other">%1$d selecionados</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="one">%1$d para mais tarde</item>
+        <item quantity="many">%1$d para mais tarde</item>
+        <item quantity="other">%1$d para mais tarde</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="one">Não iniciado · %1$d item</item>
+        <item quantity="many">Não iniciado · %1$d itens</item>
+        <item quantity="other">Não iniciado · %1$d itens</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="one">%1$d de %2$d revisto</item>
+        <item quantity="many">%1$d de %2$d revistos</item>
+        <item quantity="other">%1$d de %2$d revistos</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="one">%1$d ficheiro está agora no lixo do local de armazenamento.</item>
+        <item quantity="many">%1$d ficheiros estão agora no lixo do local de armazenamento.</item>
+        <item quantity="other">%1$d ficheiros estão agora no lixo do local de armazenamento.</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="one">%1$d nova foto ou vídeo</item>
+        <item quantity="many">%1$d novas fotos e vídeos</item>
+        <item quantity="other">%1$d novas fotos e vídeos</item>
+    </plurals>
+    <string name="pro_f6">Comparar séries de fotos</string>
+    <string name="pro_f6d">Fotos tiradas em sequência lado a lado – tu escolhes o que fica.</string>
 </resources>

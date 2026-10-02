@@ -37,6 +37,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
@@ -87,7 +88,7 @@ private enum class LargeSort { LARGEST, NEWEST, OLDEST }
 
 private val LARGE_CHOICES_MB = listOf(50, 100, 250, 500, 1_000, 2_000)
 
-private data class LargeRow(val id: ItemReference, val title: String, val size: KnownSize, val date: Instant?, val thumb: String?)
+private data class LargeRow(val id: ItemReference, val title: String, val size: KnownSize, val date: Instant?, val thumb: String?, val detail: String? = null)
 
 /**
  * Screen 8 – Große Dateien. 100 MB voreingestellt und änderbar. Bekannte Größen absteigend,
@@ -114,7 +115,12 @@ fun LargeFilesScreen(nav: Nav) {
     val threshold = settings.largeFileThresholdMB.toLong() * 1_000_000
     val videoTitle = stringResource(R.string.video)
     val rows = index.entries.map { LargeRow(it.reference, it.name, it.size, it.modified, null) } +
-        videos.map { LargeRow(it.reference, videoTitle, it.size, it.creationDate, it.id) }
+        videos.map { v ->
+            // Videos besser beurteilen: Dauer · Auflösung (nur bekannte Werte).
+            val detail = listOfNotNull(v.duration.takeIf { it > 0 }?.let { DateText.duration(it) },
+                if (v.pixelWidth > 0 && v.pixelHeight > 0) "${v.pixelWidth} × ${v.pixelHeight}" else null).joinToString(" · ").ifEmpty { null }
+            LargeRow(v.reference, videoTitle, v.size, v.creationDate, v.id, detail)
+        }
     val known = rows.filter { (it.size.bytesOrNull ?: -1) >= threshold }.let { l ->
         when (sort) {
             LargeSort.LARGEST -> l.sortedByDescending { it.size.bytesOrNull ?: 0 }
@@ -173,6 +179,7 @@ private fun LargeRowView(r: LargeRow) {
         Column(Modifier.weight(1f)) {
             Text(r.title, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
             r.date?.let { Text(DateText.abbreviated(it), style = AppTypography.caption, color = c.textSecondary) }
+            r.detail?.let { Text(it, style = AppTypography.caption, color = c.textSecondary, maxLines = 1, modifier = Modifier.testTag("large.detail")) }
         }
         Text(SizeText.size(ctx, r.size), style = AppTypography.subheadline, color = c.textPrimary)
         Box {

@@ -28,6 +28,8 @@ data class DecisionSnapshot(
     val disposition: Disposition,
     val dueDay: LocalDay? = null,
     val skippedInSession: ReviewSessionID? = null,
+    /** „Später ohne Termin“: kommt nie von selbst zurück, nur über die Liste „Ohne Termin“. */
+    val bookmarked: Boolean = false,
 )
 
 /** Aktueller, persistierter Zustand eines Items. */
@@ -41,11 +43,13 @@ data class ItemRecord(
     val dueDay: LocalDay? = null,
     /** Nur in dieser Review-Session übersprungen (Wischen nach rechts ohne neues Datum). */
     val skippedInSession: ReviewSessionID? = null,
+    /** Nur bei [Disposition.LATER]: ohne Termin beiseitegelegt (siehe [DecisionSnapshot.bookmarked]). */
+    val bookmarked: Boolean = false,
 ) {
-    val snapshot: DecisionSnapshot get() = DecisionSnapshot(disposition, dueDay, skippedInSession)
+    val snapshot: DecisionSnapshot get() = DecisionSnapshot(disposition, dueDay, skippedInSession, bookmarked)
 
     fun applying(s: DecisionSnapshot) =
-        copy(disposition = s.disposition, dueDay = s.dueDay, skippedInSession = s.skippedInSession)
+        copy(disposition = s.disposition, dueDay = s.dueDay, skippedInSession = s.skippedInSession, bookmarked = s.bookmarked)
 }
 
 /** Eine ausdrückliche Nutzeraktion auf einem Item. */
@@ -62,6 +66,9 @@ sealed interface DecisionAction {
 
     /** Termin für ein zurückgestelltes Item setzen/ändern. */
     @Serializable data class Schedule(val day: LocalDay) : DecisionAction
+
+    /** Zurückgestelltes Item ohne Termin beiseitelegen („Lesezeichen“): kommt nicht von selbst zurück. */
+    @Serializable data object Bookmark : DecisionAction
 
     /** Zurückstellung entfernen. Löscht nichts; Item wird wieder unentschieden. */
     @Serializable data object RemoveDeferral : DecisionAction

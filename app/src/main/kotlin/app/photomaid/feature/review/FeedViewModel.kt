@@ -1,5 +1,6 @@
 package app.photomaid.feature.review
 
+import app.photomaid.feature.settings.setExcluded
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.runtime.getValue
@@ -47,6 +48,13 @@ import app.photomaid.core.ads.FeedAdPolicy
 import app.photomaid.core.capabilities.Capabilities
 import app.photomaid.core.model.MediaKind
 import app.photomaid.core.organize.MediaFolder
+import app.photomaid.core.organize.MediaFolders
+import app.photomaid.core.organize.PhotoSeries
+import app.photomaid.core.feed.FeedOrder
+import app.photomaid.core.feed.FeedOrdering
+import app.photomaid.core.progress.MonthKey
+import app.photomaid.core.decisions.DecisionAction
+import app.photomaid.core.decisions.DecisionCommand
 import java.util.UUID
 
 enum class PreviewState { LOADING, READY, FAILED }
@@ -131,7 +139,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     var adCard by mutableStateOf<AdCard?>(null)
         private set
     /** Uhr für die Mindestanzeigedauer (Tests können sie ersetzen). */
-    var nowMs: () -> Long = { System.currentTimeMillis() }
+    var nowMs: () -> Long = { app.wallClockMs() }
     val adSkippable: Boolean get() = adCard?.let { nowMs() - it.shownAtMs >= FeedAdPolicy.MIN_VISIBLE_MS } == true
     /** Läuft ein Schreibwunsch (Favorit/Verschieben) für das aktuelle Medium? Dann kein zweiter. */
     var mediaWriteBusy by mutableStateOf(false)
@@ -144,6 +152,14 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
 
     private fun touch() { version++ }
     private fun emit(h: FeedHaptic) { if (app.settings.value.haptics) haptic = (++hapticSeq) to h }
+
+    // Vor `init` angelegt: das Laden startet im init sofort (Main.immediate) und nutzt diese Felder.
+    /** Fester Startwert je Sitzung: „Zufällig“ bleibt beim Zurückwischen stabil. */
+    private val shuffleSeed = System.nanoTime()
+    /** Erkannte Fotoserien je Medium (Snapshot-State: der Knopf „Serie“ erscheint, sobald die Erkennung fertig ist). */
+    private var seriesById by mutableStateOf<Map<String, List<PhotoSeries.Member>>>(emptyMap())
+    var seriesOpen by mutableStateOf<List<MediaAsset>?>(null)
+        private set
 
     init {
         viewModelScope.launch { load() }
@@ -199,15 +215,134 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 FeedRequest.Source.Due -> ReviewQueues.dueQueue(app.ledger.allRecords(), s, today).filter { it.provider == ItemProvider.PhotoLibrary }
                 is FeedRequest.Source.Collection -> app.collections.result(src.collection, app).items.filter { it.provider == ItemProvider.PhotoLibrary }
                 is FeedRequest.Source.Items -> src.items.filter { it.provider == ItemProvider.PhotoLibrary }
+                is FeedRequest.Source.Month -> {
+                    val zone = java.time.ZoneId.systemDefault()
+                    val list = app.photos.reviewableMedia().filter { a -> a.creationDate?.let { MonthKey.of(it, zone) } == src.month }
+                    list.forEach { assets[it.id] = it }
+                    val refs = list.map { it.reference }
+                    // „Erneut durchsehen“: alle noch vorhandenen Medien des Monats; bestehende Entscheidungen bleiben, bis neu gewischt wird.
+                    if (src.again) refs else ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
+                }
+                is FeedRequest.Source.NewSince -> {
+                    val list = app.photos.reviewableMedia().filter { a -> a.dateAdded?.toEpochMilli()?.let { it > src.epochMs } == true }
+                    list.forEach { assets[it.id] = it }
+                    val refs = list.map { it.reference }
+                    ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
+                }
             }
         }
         val missing = candidates.map { it.localIdentifier }.filter { it !in assets }
         withContext(Dispatchers.IO) { app.photos.assets(missing) }.forEach { assets[it.id] = it }
         // Nicht (mehr) zugängliche Medien nicht anzeigen und nicht entscheiden.
-        session = FeedSession(s, candidates.filter { it.localIdentifier in assets })
+        val present = candidates.filter { it.localIdentifier in assets }
+        session = FeedSession(s, if (orderable) ordered(present, app.settings.value.feedOrder) else present)
+        (request.source as? FeedRequest.Source.Month)?.let { m -> app.updateSettings { it.copy(continueMonth = m.month.toString()) } }
+        rebuildSeries()
         isLoaded = true
         refreshWindow()
         touch()
+    }
+
+    // Reihenfolge (nicht für feste Listen wie Papierkorb oder Serien)
+
+    private val orderable: Boolean get() = request.source !is FeedRequest.Source.Items && request.source != FeedRequest.Source.Due
+
+    private fun ordered(refs: List<ItemReference>, order: FeedOrder): List<ItemReference> =
+        FeedOrdering.apply(refs, order, date = { assets[it.localIdentifier]?.creationDate },
+            size = { assets[it.localIdentifier]?.size?.bytesOrNull }, id = { it.localIdentifier }, seed = shuffleSeed)
+
+    val order: FeedOrder get() = app.settings.value.feedOrder
+    val canReorder: Boolean get() = orderable
+
+    /** Reihenfolge wechseln: nur die noch kommenden Medien werden neu geordnet, nichts wird entschieden. */
+    fun setOrder(order: FeedOrder) {
+        if (!orderable || isCommitting) return
+        viewModelScope.launch {
+            app.updateSettings { it.copy(feedOrder = order) }
+            session.reorderUpcoming { ordered(it, order) }
+            app.player.stop()
+            refreshWindow()
+            touch()
+        }
+    }
+
+    // Fotoserien (kurz hintereinander, gleicher Ordner) – nur Erkennung, Auswahl trifft der Nutzer.
+
+
+    private fun rebuildSeries() {
+        val members = session.items.mapNotNull { r -> assets[r.localIdentifier]?.takeIf { it.kind != MediaKind.VIDEO } }
+            .map { PhotoSeries.Member(it.id, it.relativePath, it.creationDate) }
+        seriesById = PhotoSeries.index(members)
+    }
+
+    /** Serie des aktuellen Mediums (nur Mitglieder, die in diesem Feed noch vorhanden sind), sonst `null`. */
+    val currentSeries: List<MediaAsset>?
+        get() {
+            version
+            val id = current?.localIdentifier ?: return null
+            val g = seriesById[id] ?: return null
+            val inFeed = session.items.drop(session.index).map { it.localIdentifier }.toSet() + id
+            return g.filter { it.id in inFeed }.mapNotNull { assets[it.id] }.takeIf { it.size >= PhotoSeries.MIN_SIZE }
+        }
+
+
+    fun openSeries() {
+        if (isCommitting || adCard != null) return
+        seriesOpen = currentSeries
+    }
+
+    fun closeSeries() { seriesOpen = null }
+
+    /**
+     * Auswahl der Serie bestätigen: [keep] werden behalten, alle anderen kommen in den PhotoMaid-Papierkorb (nichts
+     * gelöscht). Ein Ledger-Befehl je Medium (Item-ID, Revision, Command-ID, Aktion); danach verlassen die Mitglieder
+     * ohne weitere Entscheidung die Warteschlange. Keine Werbekarte, kein Werbezähler.
+     */
+    fun confirmSeries(members: List<MediaAsset>, keep: Set<String>) {
+        if (isCommitting) return
+        seriesOpen = null
+        isCommitting = true
+        viewModelScope.launch {
+            var failed = false
+            try {
+                for (a in members) {
+                    val ref = a.reference
+                    val intent = if (a.id in keep) FeedIntent.KEEP else FeedIntent.MARK_FOR_CLEANUP
+                    val action = if (intent == FeedIntent.KEEP) DecisionAction.Keep else DecisionAction.MarkForCleanup
+                    try {
+                        val rev = app.ledger.record(ref).revision
+                        app.apply(DecisionCommand(item = ref, expectedRevision = rev, action = action), session.id)
+                        session.recordDecision(ref, intent)
+                    } catch (e: Exception) { failed = true }
+                }
+                laterPill = null
+                session.dropUpcoming(members.map { it.reference }.toSet())
+                app.player.stop()
+                refreshWindow()
+                touch()
+                emit(FeedHaptic.KEEP)
+                showNotice(app.string(R.string.series_done, keep.size, members.size - keep.size))
+                if (failed) errorMessage = app.string(R.string.error_decision_not_saved)
+            } finally { isCommitting = false }
+        }
+    }
+
+    // Ordner vom Aufräumen ausnehmen (aus dem ⋯-Menü). Keine Entscheidung.
+
+    val currentFolder: String? get() = currentAsset?.relativePath?.let { MediaFolders.normalize(it) }?.takeIf { it.isNotEmpty() }
+
+    fun excludeCurrentFolder() {
+        val folder = currentFolder ?: return
+        if (isCommitting) return
+        viewModelScope.launch {
+            setExcluded(app, folder, true)
+            val gone = session.items.filter { r -> assets[r.localIdentifier]?.relativePath?.let { MediaFolders.normalize(it).lowercase().startsWith(folder.lowercase()) } == true }
+            session.dropUpcoming(gone.toSet())
+            app.player.stop()
+            refreshWindow()
+            touch()
+            showNotice(app.string(R.string.excl_done, MediaFolder(folder, 0).name))
+        }
     }
 
     // Vorschau
@@ -476,6 +611,23 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         }
     }
 
+    /** „Ohne Termin“ im Drehrad aus „Ändern“: beiseitelegen, kommt nicht von selbst zurück. */
+    fun pickerNoDate(receipt: LaterReceipt) {
+        pickerReceipt = null
+        viewModelScope.launch {
+            val cur = session.receipt
+            val cmd = if (cur?.id == receipt.id) session.bookmarkCommand(cur.id) else null
+            if (cmd != null) try {
+                val out = app.apply(cmd)
+                session.receiptScheduled(cur!!.id, out.record.revision)
+                emit(FeedHaptic.DATE)
+                showNotice(app.string(R.string.later_nodate_done))
+            } catch (e: Exception) { errorMessage = app.string(R.string.error_date_not_saved) }
+            laterPill = null
+            touch()
+        }
+    }
+
     /** „Ändern“ in der Pille. */
     fun editLater() {
         val pill = laterPill ?: return
@@ -559,6 +711,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 when (app.photos.moveToFolder(a.id, relativePath)) {
                     MediaWriteResult.Done -> {
                         refreshAsset(a.id)
+                        rememberRecentFolder(app, relativePath)
                         showNotice(app.string(R.string.folder_moved, MediaFolder(relativePath, 0).name))
                     }
                     MediaWriteResult.Cancelled -> Unit
@@ -587,13 +740,13 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         counter.recordDecision()
         if (!app.feedAds.isAvailable) return
         val today = app.today
-        if (counter.isDue(today)) {
+        if (counter.isDue(today, nowMs())) {
             val ad = app.feedAds.take()
             if (ad != null) {
                 app.player.stop()
                 laterPill = null
                 adCard = AdCard(ad = ad, shownAtMs = nowMs())
-                counter.recordShown(today)
+                counter.recordCardShown(today, nowMs())
                 touch()
             } else app.feedAds.preload()
         } else if (counter.almostDue(today) || (session.items.size - session.index <= 2 && counter.summaryAllowed(today))) app.feedAds.preload()
@@ -658,5 +811,24 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         }
     }
 
-    override fun onCleared() { app.player.stop(); adCard?.ad?.destroy(); summaryAd?.destroy() }
+    override fun onCleared() {
+        app.player.stop(); adCard?.ad?.destroy(); summaryAd?.destroy()
+        // „Neu seit dem letzten Aufräumen“: Zeitpunkt nur nach einer Sitzung mit mindestens einer Entscheidung.
+        if (session.summary.reviewed > 0) app.scope.launch { app.updateSettings { it.copy(lastSessionEndMs = System.currentTimeMillis()) } }
+    }
+}
+
+/** Zielordner zuletzt verwendet (max. [MAX_RECENT], neuester zuerst). Nur Pfade. */
+suspend fun rememberRecentFolder(app: AppModel, path: String) {
+    val p = MediaFolders.normalize(path)
+    app.updateSettings { s -> s.copy(recentFolders = (listOf(p) + s.recentFolders.filterNot { it.equals(p, ignoreCase = true) }).take(MAX_RECENT)) }
+}
+
+/** Zielordner an- bzw. abpinnen (max. [MAX_PINNED]). */
+suspend fun togglePinnedFolder(app: AppModel, path: String) {
+    val p = MediaFolders.normalize(path)
+    app.updateSettings { s ->
+        val has = s.pinnedFolders.any { it.equals(p, ignoreCase = true) }
+        s.copy(pinnedFolders = if (has) s.pinnedFolders.filterNot { it.equals(p, ignoreCase = true) } else (s.pinnedFolders + p).take(MAX_PINNED))
+    }
 }

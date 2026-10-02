@@ -114,6 +114,7 @@ fun LaterScreen(nav: Nav) {
                 LaterGroup.WithinSevenDays -> stringResource(R.string.later_group_7, records.size)
                 is LaterGroup.Later -> stringResource(R.string.later_group_from, DayText.string(key.day), records.size)
                 LaterGroup.NoDate -> stringResource(R.string.later_group_nodate, records.size)
+                LaterGroup.Bookmarked -> stringResource(R.string.later_group_bookmarked, records.size)
             }
         }
         val reviewDue = groups.firstOrNull { it.first == LaterGroup.Due }?.second?.size?.let { stringResource(R.string.later_review_now_count, it) }
@@ -171,6 +172,7 @@ private fun LaterRow(r: ItemRecord, fileName: String?, kind: MediaKind?, today: 
     })
     val day = r.dueDay
     val when_ = when {
+        r.bookmarked -> stringResource(R.string.later_bookmarked_row)
         day == null -> stringResource(R.string.later_next_review)
         day == today -> stringResource(R.string.later_due_today)
         day < today -> stringResource(R.string.later_due_since, DayText.string(day))
@@ -193,7 +195,8 @@ private fun LaterRow(r: ItemRecord, fileName: String?, kind: MediaKind?, today: 
             DropdownMenu(menu, { menu = false }) {
                 DropdownMenuItem({ Text(stringResource(R.string.change_date)) }, leadingIcon = { Icon(Icons.Rounded.CalendarMonth, null) }, onClick = { menu = false; onEdit() })
                 if (isPhoto) DropdownMenuItem({ Text(stringResource(R.string.later_review_now)) }, leadingIcon = { Icon(Icons.Rounded.Visibility, null) }, onClick = { menu = false; onReview() })
-                DropdownMenuItem({ Text(stringResource(R.string.later_remove)) }, leadingIcon = { Icon(Icons.Rounded.EventBusy, null) }, onClick = { menu = false; onRemove() })
+                DropdownMenuItem({ Text(stringResource(if (r.bookmarked) R.string.later_back_to_stack else R.string.later_remove)) },
+                    leadingIcon = { Icon(Icons.Rounded.EventBusy, null) }, onClick = { menu = false; onRemove() }, modifier = Modifier.testTag("later.remove"))
             }
         }
     }

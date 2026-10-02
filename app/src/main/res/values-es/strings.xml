@@ -630,7 +630,7 @@
     <string name="offer_limit_title">Limpia cada día</string>
     <string name="offer_limit_text">Quita hasta %1$d al día. Un anuncio en vídeo te permite quitar %2$d más hoy.</string>
     <string name="offer_pro_title">Pro: una sola compra</string>
-    <string name="offer_pro_text">Sin anuncios ni límite diario. Incluye búsqueda de copias idénticas y colecciones propias.</string>
+    <string name="offer_pro_text">Sin anuncios ni límite diario. Además, comparar series de fotos, buscar copias idénticas y tus propias colecciones.</string>
     <string name="offer_price_once">%1$s · Pago único</string>
     <string name="offer_price_store">Precio en Google Play</string>
     <string name="offer_no_sub">Sin suscripción</string>
@@ -673,4 +673,130 @@
     </plurals>
     <string name="done_button">Listo</string>
     <string name="done_partial">Los elementos que no se han quitado siguen en la papelera de PhotoMaid.</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">¿Mover a la papelera del almacenamiento?</string>
+    <string name="basket_confirm_files_trash_message">Los archivos van a la papelera de su ubicación y se pueden restaurar allí. El espacio solo se libera cuando se eliminan allí.</string>
+    <string name="done_note_files_trash">Los archivos están ahora en la papelera de su ubicación. El espacio solo se libera cuando se eliminan definitivamente allí.</string>
+    <string name="excl_action">Excluir esta carpeta</string>
+    <string name="excl_add_footer">Las carpetas excluidas y sus subcarpetas no aparecen en ningún feed, recuento ni resumen mensual. Las decisiones ya tomadas se conservan.</string>
+    <string name="excl_add_header">Excluir una carpeta</string>
+    <string name="excl_confirm_action">Excluir</string>
+    <string name="excl_confirm_text">Los elementos de esta carpeta y sus subcarpetas dejarán de aparecer al ordenar. No se elimina ni se mueve nada. Deshazlo en Ajustes › Carpetas excluidas.</string>
+    <string name="excl_confirm_title">¿Ocultar «%1$s» al ordenar?</string>
+    <string name="excl_done">«%1$s» ya no aparecerá al ordenar</string>
+    <string name="excl_header">Excluidas</string>
+    <string name="excl_intro">Carpetas que no quieres ordenar, por ejemplo documentos de trabajo o fotos familiares.</string>
+    <string name="excl_none">Aún no hay carpetas excluidas.</string>
+    <string name="excl_show_again">Mostrar de nuevo</string>
+    <string name="excl_title">Carpetas excluidas</string>
+    <string name="feed_title_month">Mes</string>
+    <string name="feed_title_new">Añadido recientemente</string>
+    <string name="folder_all">Todas las carpetas</string>
+    <string name="folder_pin">Fijar carpeta</string>
+    <string name="folder_pinned">Fijadas</string>
+    <string name="folder_recent">Usadas recientemente</string>
+    <string name="folder_unpin">Dejar de fijar</string>
+    <string name="grid_empty_text">Ahora mismo no hay fotos ni vídeos aquí.</string>
+    <string name="grid_empty_title">Nada que mostrar</string>
+    <string name="grid_move">Mover a carpeta</string>
+    <string name="grid_moved_partial">Se movieron %1$d de %2$d a «%3$s». Los demás no se pudieron mover.</string>
+    <string name="grid_note">Toca para seleccionar; mantén pulsado y arrastra para elegir varios. Mover no es una decisión.</string>
+    <string name="grid_open">Vista general</string>
+    <string name="grid_select_all">Todo</string>
+    <string name="grid_select_none">Ninguno</string>
+    <string name="help_tours_again">Mostrar de nuevo los tutoriales</string>
+    <string name="help_tours_reset">Los tutoriales volverán a aparecer la próxima vez que abras cada pantalla.</string>
+    <string name="hub_months_sub">Termina mes a mes</string>
+    <string name="later_back_to_stack">Volver a la pila</string>
+    <string name="later_bookmarked_row">Apartado, sin fecha</string>
+    <string name="later_group_bookmarked">Apartados · %1$d</string>
+    <string name="later_nodate_done">Apartado: lo encontrarás en Después</string>
+    <string name="month_actions">Acciones de %1$s</string>
+    <string name="month_again">Revisar de nuevo</string>
+    <string name="month_done">Revisado</string>
+    <string name="months_empty_text">Los meses aparecen aquí cuando las fotos o vídeos tienen fecha de captura.</string>
+    <string name="months_empty_title">Aún no hay meses</string>
+    <string name="months_intro">Lo que llevas de cada mes. Lo dejado para después cuenta como revisado.</string>
+    <string name="months_title">Por mes</string>
+    <string name="order_largest">Más grandes primero</string>
+    <string name="order_newest">Más recientes primero</string>
+    <string name="order_oldest">Más antiguos primero</string>
+    <string name="order_random">Aleatorio</string>
+    <string name="order_title">Orden</string>
+    <string name="picker_no_date">Apartar sin fecha</string>
+    <string name="picker_no_date_hint">No volverá por sí solo. Lo encontrarás en Después › Apartados.</string>
+    <string name="series_button">Comparar serie de %1$d fotos</string>
+    <string name="series_confirm">Conservar %1$d · %2$d a la papelera</string>
+    <string name="series_done">%1$d conservadas · %2$d en la papelera</string>
+    <string name="series_footer">No se elimina nada. La papelera es de PhotoMaid y solo se vacía cuando lo confirmas.</string>
+    <string name="series_hint">Toca una foto para compararla abajo. La marca decide qué se queda.</string>
+    <string name="series_keep_toggle">Conservar</string>
+    <string name="series_state_keep">Conservar</string>
+    <string name="series_state_trash">Papelera</string>
+    <string name="series_subtitle">Tomadas seguidas · %1$d</string>
+    <string name="series_title">Comparar serie</string>
+    <string name="set_buttons">Botones para decidir</string>
+    <string name="set_buttons_detail">Muestra botones de papelera, conservar y después debajo de cada elemento. Deslizar sigue funcionando.</string>
+    <string name="set_excluded_folders">Carpetas excluidas</string>
+    <string name="today_continue_month">Continuar: %1$s</string>
+    <string name="today_new_since_sub">desde tu última limpieza</string>
+    <string name="tour_grid_note_text">Mover o marcar favoritos no cambia conservar, papelera ni después.</string>
+    <string name="tour_grid_note_title">No es una decisión</string>
+    <string name="tour_grid_select_text">Toca fotos para seleccionarlas. Mantén pulsado y arrastra para elegir un rango.</string>
+    <string name="tour_grid_select_title">Seleccionar varios</string>
+    <string name="tour_months_later_text">Lo dejado para después cuenta como revisado, pero lo sigues viendo aquí.</string>
+    <string name="tour_months_later_title">Después no está pendiente</string>
+    <string name="tour_months_more_text">Abre la vista general como cuadrícula o revisa de nuevo un mes terminado.</string>
+    <string name="tour_months_more_title">Más por mes</string>
+    <string name="tour_months_row_text">Toca un mes para revisar solo sus fotos y vídeos pendientes.</string>
+    <string name="tour_months_row_title">Lo que llevas</string>
+    <string name="tour_series_text">¿Varias fotos seguidas? Compáralas una junto a otra y elige cuáles se quedan.</string>
+    <string name="tour_series_title">Comparar serie</string>
+    <plurals name="basket_trash_files">
+        <item quantity="one">Mover %1$d archivo a la papelera</item>
+        <item quantity="many">Mover %1$d archivos a la papelera</item>
+        <item quantity="other">Mover %1$d archivos a la papelera</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="one">Mover %1$d elemento</item>
+        <item quantity="many">Mover %1$d elementos</item>
+        <item quantity="other">Mover %1$d elementos</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="one">%1$d elemento movido a «%2$s»</item>
+        <item quantity="many">%1$d elementos movidos a «%2$s»</item>
+        <item quantity="other">%1$d elementos movidos a «%2$s»</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="one">%1$d seleccionado</item>
+        <item quantity="many">%1$d seleccionados</item>
+        <item quantity="other">%1$d seleccionados</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="one">%1$d para después</item>
+        <item quantity="many">%1$d para después</item>
+        <item quantity="other">%1$d para después</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="one">Sin empezar · %1$d elemento</item>
+        <item quantity="many">Sin empezar · %1$d elementos</item>
+        <item quantity="other">Sin empezar · %1$d elementos</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="one">%1$d de %2$d revisado</item>
+        <item quantity="many">%1$d de %2$d revisados</item>
+        <item quantity="other">%1$d de %2$d revisados</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="one">%1$d archivo está ahora en la papelera del almacenamiento.</item>
+        <item quantity="many">%1$d archivos están ahora en la papelera del almacenamiento.</item>
+        <item quantity="other">%1$d archivos están ahora en la papelera del almacenamiento.</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="one">%1$d foto o vídeo nuevo</item>
+        <item quantity="many">%1$d fotos y vídeos nuevos</item>
+        <item quantity="other">%1$d fotos y vídeos nuevos</item>
+    </plurals>
+    <string name="pro_f6">Comparar series de fotos</string>
+    <string name="pro_f6d">Fotos tomadas seguidas, una junto a otra: tú eliges cuáles se quedan.</string>
 </resources>

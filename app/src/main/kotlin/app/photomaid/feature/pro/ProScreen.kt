@@ -24,6 +24,7 @@ import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.FilterNone
+import androidx.compose.material.icons.rounded.BurstMode
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.background
@@ -142,6 +143,7 @@ fun ProScreen(nav: Nav) {
                     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
                         Feature(Icons.Rounded.Block, R.string.pro_f1, R.string.pro_f1d)
                         Feature(Icons.Rounded.AllInclusive, R.string.pro_f2, R.string.pro_f2d)
+                        Feature(Icons.Rounded.BurstMode, R.string.pro_f6, R.string.pro_f6d)
                         Feature(Icons.Rounded.FilterNone, R.string.pro_f3, R.string.pro_f3d)
                         Feature(Icons.Rounded.SettingsSuggest, R.string.pro_f5, R.string.pro_f5d)
                     }

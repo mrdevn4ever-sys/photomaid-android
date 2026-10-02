@@ -630,7 +630,7 @@
     <string name="offer_limit_title">Riordina ogni giorno</string>
     <string name="offer_limit_text">Rimuovine fino a %1$d al giorno. Con un video pubblicitario puoi rimuoverne %2$d in più oggi.</string>
     <string name="offer_pro_title">Pro: un solo acquisto</string>
-    <string name="offer_pro_text">Nessuna pubblicità o limite giornaliero. In più, ricerca di copie identiche e raccolte personalizzate.</string>
+    <string name="offer_pro_text">Senza pubblicità né limite giornaliero. In più, confronto delle serie di foto, ricerca di copie identiche e raccolte personalizzate.</string>
     <string name="offer_price_once">%1$s · Una sola volta</string>
     <string name="offer_price_store">Prezzo su Google Play</string>
     <string name="offer_no_sub">Nessun abbonamento</string>
@@ -673,4 +673,130 @@
     </plurals>
     <string name="done_button">Fine</string>
     <string name="done_partial">Gli elementi non rimossi restano nel cestino di PhotoMaid.</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">Spostare nel cestino della posizione?</string>
+    <string name="basket_confirm_files_trash_message">I file finiscono nel cestino della loro posizione e lì si possono ripristinare. Lo spazio si libera solo quando vengono eliminati da lì.</string>
+    <string name="done_note_files_trash">I file ora sono nel cestino della loro posizione. Lo spazio si libera solo quando vengono eliminati definitivamente da lì.</string>
+    <string name="excl_action">Escludi questa cartella</string>
+    <string name="excl_add_footer">Le cartelle escluse e le loro sottocartelle non compaiono in nessun feed, conteggio o riepilogo mensile. Le decisioni già prese restano.</string>
+    <string name="excl_add_header">Escludi una cartella</string>
+    <string name="excl_confirm_action">Escludi</string>
+    <string name="excl_confirm_text">Gli elementi di questa cartella e delle sottocartelle non compariranno più durante il riordino. Nulla viene eliminato o spostato. Annulla in Impostazioni › Cartelle escluse.</string>
+    <string name="excl_confirm_title">Nascondere «%1$s» durante il riordino?</string>
+    <string name="excl_done">«%1$s» non comparirà più durante il riordino</string>
+    <string name="excl_header">Escluse</string>
+    <string name="excl_intro">Cartelle che non vuoi riordinare, ad esempio documenti di lavoro o foto di famiglia.</string>
+    <string name="excl_none">Nessuna cartella esclusa per ora.</string>
+    <string name="excl_show_again">Mostra di nuovo</string>
+    <string name="excl_title">Cartelle escluse</string>
+    <string name="feed_title_month">Mese</string>
+    <string name="feed_title_new">Aggiunti di recente</string>
+    <string name="folder_all">Tutte le cartelle</string>
+    <string name="folder_pin">Fissa cartella</string>
+    <string name="folder_pinned">Fissate</string>
+    <string name="folder_recent">Usate di recente</string>
+    <string name="folder_unpin">Non fissare più</string>
+    <string name="grid_empty_text">Al momento qui non ci sono foto né video.</string>
+    <string name="grid_empty_title">Niente da mostrare</string>
+    <string name="grid_move">Sposta in cartella</string>
+    <string name="grid_moved_partial">%1$d di %2$d spostati in «%3$s». Gli altri non è stato possibile spostarli.</string>
+    <string name="grid_note">Tocca per selezionare, tieni premuto e trascina per sceglierne diversi. Spostare non è una decisione.</string>
+    <string name="grid_open">Panoramica</string>
+    <string name="grid_select_all">Tutti</string>
+    <string name="grid_select_none">Nessuno</string>
+    <string name="help_tours_again">Mostra di nuovo i tutorial</string>
+    <string name="help_tours_reset">I tutorial ricompariranno alla prossima apertura di ogni schermata.</string>
+    <string name="hub_months_sub">Finisci mese dopo mese</string>
+    <string name="later_back_to_stack">Rimetti nella pila</string>
+    <string name="later_bookmarked_row">Messo da parte, senza data</string>
+    <string name="later_group_bookmarked">Messi da parte · %1$d</string>
+    <string name="later_nodate_done">Messo da parte: lo trovi in Più tardi</string>
+    <string name="month_actions">Azioni per %1$s</string>
+    <string name="month_again">Rivedi</string>
+    <string name="month_done">Rivisto</string>
+    <string name="months_empty_text">I mesi compaiono qui quando foto o video hanno una data di scatto.</string>
+    <string name="months_empty_title">Ancora nessun mese</string>
+    <string name="months_intro">A che punto sei in ogni mese. Ciò che è rimandato conta come rivisto.</string>
+    <string name="months_title">Per mese</string>
+    <string name="order_largest">Più grandi prima</string>
+    <string name="order_newest">Più recenti prima</string>
+    <string name="order_oldest">Più vecchi prima</string>
+    <string name="order_random">Casuale</string>
+    <string name="order_title">Ordine</string>
+    <string name="picker_no_date">Metti da parte senza data</string>
+    <string name="picker_no_date_hint">Non tornerà da solo. Lo trovi in Più tardi › Messi da parte.</string>
+    <string name="series_button">Confronta serie di %1$d foto</string>
+    <string name="series_confirm">Conserva %1$d · %2$d nel cestino</string>
+    <string name="series_done">%1$d conservate · %2$d nel cestino</string>
+    <string name="series_footer">Nulla viene eliminato. Il cestino è di PhotoMaid e si svuota solo quando lo confermi.</string>
+    <string name="series_hint">Tocca una foto per confrontarla sotto. La spunta decide cosa resta.</string>
+    <string name="series_keep_toggle">Conserva</string>
+    <string name="series_state_keep">Conserva</string>
+    <string name="series_state_trash">Cestino</string>
+    <string name="series_subtitle">Scattate in rapida successione · %1$d</string>
+    <string name="series_title">Confronta serie</string>
+    <string name="set_buttons">Pulsanti per decidere</string>
+    <string name="set_buttons_detail">Mostra sotto ogni elemento i pulsanti Cestino, Conserva e Più tardi. Lo scorrimento funziona ancora.</string>
+    <string name="set_excluded_folders">Cartelle escluse</string>
+    <string name="today_continue_month">Continua: %1$s</string>
+    <string name="today_new_since_sub">dall’ultimo riordino</string>
+    <string name="tour_grid_note_text">Spostare o aggiungere ai preferiti non cambia Conserva, Cestino o Più tardi.</string>
+    <string name="tour_grid_note_title">Non è una decisione</string>
+    <string name="tour_grid_select_text">Tocca le foto per selezionarle. Tieni premuto e trascina per scegliere un intervallo.</string>
+    <string name="tour_grid_select_title">Selezionane diversi</string>
+    <string name="tour_months_later_text">Ciò che è rimandato conta come rivisto, ma lo vedi comunque qui.</string>
+    <string name="tour_months_later_title">Più tardi non è in sospeso</string>
+    <string name="tour_months_more_text">Apri la panoramica a griglia o rivedi un mese completato.</string>
+    <string name="tour_months_more_title">Altro per mese</string>
+    <string name="tour_months_row_text">Tocca un mese per rivedere solo le sue foto e i video in sospeso.</string>
+    <string name="tour_months_row_title">A che punto sei</string>
+    <string name="tour_series_text">Più foto scattate di seguito? Confrontale affiancate e scegli cosa resta.</string>
+    <string name="tour_series_title">Confronta serie</string>
+    <plurals name="basket_trash_files">
+        <item quantity="one">Sposta %1$d file nel cestino</item>
+        <item quantity="many">Sposta %1$d file nel cestino</item>
+        <item quantity="other">Sposta %1$d file nel cestino</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="one">Sposta %1$d elemento</item>
+        <item quantity="many">Sposta %1$d elementi</item>
+        <item quantity="other">Sposta %1$d elementi</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="one">%1$d elemento spostato in «%2$s»</item>
+        <item quantity="many">%1$d elementi spostati in «%2$s»</item>
+        <item quantity="other">%1$d elementi spostati in «%2$s»</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="one">%1$d selezionato</item>
+        <item quantity="many">%1$d selezionati</item>
+        <item quantity="other">%1$d selezionati</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="one">%1$d per più tardi</item>
+        <item quantity="many">%1$d per più tardi</item>
+        <item quantity="other">%1$d per più tardi</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="one">Non iniziato · %1$d elemento</item>
+        <item quantity="many">Non iniziato · %1$d elementi</item>
+        <item quantity="other">Non iniziato · %1$d elementi</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="one">%1$d di %2$d rivisto</item>
+        <item quantity="many">%1$d di %2$d rivisti</item>
+        <item quantity="other">%1$d di %2$d rivisti</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="one">%1$d file è ora nel cestino della posizione.</item>
+        <item quantity="many">%1$d file sono ora nel cestino della posizione.</item>
+        <item quantity="other">%1$d file sono ora nel cestino della posizione.</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="one">%1$d nuova foto o video</item>
+        <item quantity="many">%1$d nuove foto e video</item>
+        <item quantity="other">%1$d nuove foto e video</item>
+    </plurals>
+    <string name="pro_f6">Confronta serie di foto</string>
+    <string name="pro_f6d">Foto scattate di seguito affiancate: scegli tu cosa resta.</string>
 </resources>

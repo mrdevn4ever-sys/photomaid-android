@@ -630,7 +630,7 @@
     <string name="offer_limit_title">Faire le tri chaque jour</string>
     <string name="offer_limit_text">Retire jusqu’à %1$d par jour. Une vidéo publicitaire permet d’en retirer %2$d de plus aujourd’hui.</string>
     <string name="offer_pro_title">Pro : un seul achat</string>
-    <string name="offer_pro_text">Sans publicité ni limite quotidienne. Avec la recherche de copies identiques et les collections personnalisées.</string>
+    <string name="offer_pro_text">Sans pub ni limite quotidienne. Avec la comparaison de séries de photos, la recherche de copies identiques et les collections personnalisées.</string>
     <string name="offer_price_once">%1$s · Une seule fois</string>
     <string name="offer_price_store">Prix sur Google Play</string>
     <string name="offer_no_sub">Sans abonnement</string>
@@ -673,4 +673,130 @@
     </plurals>
     <string name="done_button">Terminé</string>
     <string name="done_partial">Les éléments non retirés restent dans la corbeille PhotoMaid.</string>
+    <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
+    <string name="basket_confirm_files_trash_title">Déplacer vers la corbeille de l’emplacement ?</string>
+    <string name="basket_confirm_files_trash_message">Les fichiers vont dans la corbeille de leur emplacement et peuvent y être restaurés. L’espace n’est libéré qu’une fois supprimés là-bas.</string>
+    <string name="done_note_files_trash">Les fichiers sont maintenant dans la corbeille de leur emplacement. L’espace n’est libéré qu’après leur suppression définitive là-bas.</string>
+    <string name="excl_action">Exclure ce dossier</string>
+    <string name="excl_add_footer">Les dossiers exclus et leurs sous-dossiers n’apparaissent dans aucun fil, aucun total ni aucun aperçu mensuel. Les décisions déjà prises sont conservées.</string>
+    <string name="excl_add_header">Exclure un dossier</string>
+    <string name="excl_confirm_action">Exclure</string>
+    <string name="excl_confirm_text">Les éléments de ce dossier et de ses sous-dossiers n’apparaîtront plus pendant le tri. Rien n’est supprimé ni déplacé. Annulable dans Paramètres › Dossiers exclus.</string>
+    <string name="excl_confirm_title">Masquer « %1$s » pendant le tri ?</string>
+    <string name="excl_done">« %1$s » n’apparaîtra plus pendant le tri</string>
+    <string name="excl_header">Exclus</string>
+    <string name="excl_intro">Les dossiers que tu ne veux pas trier, par exemple des documents de travail ou des photos de famille.</string>
+    <string name="excl_none">Aucun dossier exclu pour l’instant.</string>
+    <string name="excl_show_again">Afficher à nouveau</string>
+    <string name="excl_title">Dossiers exclus</string>
+    <string name="feed_title_month">Mois</string>
+    <string name="feed_title_new">Ajouts récents</string>
+    <string name="folder_all">Tous les dossiers</string>
+    <string name="folder_pin">Épingler le dossier</string>
+    <string name="folder_pinned">Épinglés</string>
+    <string name="folder_recent">Récemment utilisés</string>
+    <string name="folder_unpin">Ne plus épingler</string>
+    <string name="grid_empty_text">Il n’y a aucune photo ni vidéo ici pour le moment.</string>
+    <string name="grid_empty_title">Rien à afficher</string>
+    <string name="grid_move">Déplacer vers un dossier</string>
+    <string name="grid_moved_partial">%1$d sur %2$d déplacés vers « %3$s ». Les autres n’ont pas pu être déplacés.</string>
+    <string name="grid_note">Touche pour sélectionner, appuie longuement et fais glisser pour en choisir plusieurs. Déplacer n’est pas une décision.</string>
+    <string name="grid_open">Vue d’ensemble</string>
+    <string name="grid_select_all">Tout</string>
+    <string name="grid_select_none">Aucun</string>
+    <string name="help_tours_again">Afficher à nouveau les tutoriels</string>
+    <string name="help_tours_reset">Les tutoriels réapparaîtront à la prochaine ouverture de chaque écran.</string>
+    <string name="hub_months_sub">Termine mois après mois</string>
+    <string name="later_back_to_stack">Remettre dans la pile</string>
+    <string name="later_bookmarked_row">Mis de côté, sans date</string>
+    <string name="later_group_bookmarked">Mis de côté · %1$d</string>
+    <string name="later_nodate_done">Mis de côté – à retrouver dans Plus tard</string>
+    <string name="month_actions">Actions pour %1$s</string>
+    <string name="month_again">Revoir</string>
+    <string name="month_done">Passé en revue</string>
+    <string name="months_empty_text">Les mois apparaissent ici dès que les photos ou vidéos ont une date de prise de vue.</string>
+    <string name="months_empty_title">Pas encore de mois</string>
+    <string name="months_intro">Où tu en es pour chaque mois. Ce qui est remis à plus tard compte comme passé en revue.</string>
+    <string name="months_title">Par mois</string>
+    <string name="order_largest">Les plus grands d’abord</string>
+    <string name="order_newest">Les plus récents d’abord</string>
+    <string name="order_oldest">Les plus anciens d’abord</string>
+    <string name="order_random">Aléatoire</string>
+    <string name="order_title">Ordre</string>
+    <string name="picker_no_date">Mettre de côté sans date</string>
+    <string name="picker_no_date_hint">Ne reviendra pas tout seul. Tu le retrouveras dans Plus tard › Mis de côté.</string>
+    <string name="series_button">Comparer la série de %1$d photos</string>
+    <string name="series_confirm">Garder %1$d · %2$d à la corbeille</string>
+    <string name="series_done">%1$d gardées · %2$d dans la corbeille</string>
+    <string name="series_footer">Rien n’est supprimé. La corbeille appartient à PhotoMaid et n’est vidée que lorsque tu le confirmes.</string>
+    <string name="series_hint">Touche une photo pour la comparer en bas. La coche décide de ce qui reste.</string>
+    <string name="series_keep_toggle">Garder</string>
+    <string name="series_state_keep">Garder</string>
+    <string name="series_state_trash">Corbeille</string>
+    <string name="series_subtitle">Prises coup sur coup · %1$d</string>
+    <string name="series_title">Comparer la série</string>
+    <string name="set_buttons">Boutons de décision</string>
+    <string name="set_buttons_detail">Affiche des boutons Corbeille, Garder et Plus tard sous chaque élément. Le balayage fonctionne toujours.</string>
+    <string name="set_excluded_folders">Dossiers exclus</string>
+    <string name="today_continue_month">Continuer : %1$s</string>
+    <string name="today_new_since_sub">depuis ton dernier tri</string>
+    <string name="tour_grid_note_text">Déplacer ou mettre en favori ne change rien à Garder, Corbeille ou Plus tard.</string>
+    <string name="tour_grid_note_title">Pas une décision</string>
+    <string name="tour_grid_select_text">Touche des photos pour les sélectionner. Appuie longuement et fais glisser pour choisir toute une plage.</string>
+    <string name="tour_grid_select_title">En sélectionner plusieurs</string>
+    <string name="tour_months_later_text">Ce qui est remis à plus tard compte comme passé en revue – tu le vois quand même ici.</string>
+    <string name="tour_months_later_title">Plus tard n’est pas en attente</string>
+    <string name="tour_months_more_text">Ouvre la vue d’ensemble en grille ou revois un mois terminé.</string>
+    <string name="tour_months_more_title">Plus par mois</string>
+    <string name="tour_months_row_text">Touche un mois pour ne passer en revue que ses photos et vidéos en attente.</string>
+    <string name="tour_months_row_title">Où tu en es</string>
+    <string name="tour_series_text">Plusieurs photos prises coup sur coup ? Compare-les côte à côte et choisis ce qui reste.</string>
+    <string name="tour_series_title">Comparer la série</string>
+    <plurals name="basket_trash_files">
+        <item quantity="one">Mettre %1$d fichier à la corbeille</item>
+        <item quantity="many">Mettre %1$d fichiers à la corbeille</item>
+        <item quantity="other">Mettre %1$d fichiers à la corbeille</item>
+    </plurals>
+    <plurals name="grid_move_title">
+        <item quantity="one">Déplacer %1$d élément</item>
+        <item quantity="many">Déplacer %1$d éléments</item>
+        <item quantity="other">Déplacer %1$d éléments</item>
+    </plurals>
+    <plurals name="grid_moved">
+        <item quantity="one">%1$d élément déplacé vers « %2$s »</item>
+        <item quantity="many">%1$d éléments déplacés vers « %2$s »</item>
+        <item quantity="other">%1$d éléments déplacés vers « %2$s »</item>
+    </plurals>
+    <plurals name="grid_selected">
+        <item quantity="one">%1$d sélectionné</item>
+        <item quantity="many">%1$d sélectionnés</item>
+        <item quantity="other">%1$d sélectionnés</item>
+    </plurals>
+    <plurals name="month_later">
+        <item quantity="one">%1$d pour plus tard</item>
+        <item quantity="many">%1$d pour plus tard</item>
+        <item quantity="other">%1$d pour plus tard</item>
+    </plurals>
+    <plurals name="month_not_started">
+        <item quantity="one">Pas commencé · %1$d élément</item>
+        <item quantity="many">Pas commencé · %1$d éléments</item>
+        <item quantity="other">Pas commencé · %1$d éléments</item>
+    </plurals>
+    <plurals name="month_progress">
+        <item quantity="one">%1$d sur %2$d passé en revue</item>
+        <item quantity="many">%1$d sur %2$d passés en revue</item>
+        <item quantity="other">%1$d sur %2$d passés en revue</item>
+    </plurals>
+    <plurals name="result_files_trashed">
+        <item quantity="one">%1$d fichier est maintenant dans la corbeille de l’emplacement.</item>
+        <item quantity="many">%1$d fichiers sont maintenant dans la corbeille de l’emplacement.</item>
+        <item quantity="other">%1$d fichiers sont maintenant dans la corbeille de l’emplacement.</item>
+    </plurals>
+    <plurals name="today_new_since">
+        <item quantity="one">%1$d nouvelle photo ou vidéo</item>
+        <item quantity="many">%1$d nouvelles photos et vidéos</item>
+        <item quantity="other">%1$d nouvelles photos et vidéos</item>
+    </plurals>
+    <string name="pro_f6">Comparer des séries de photos</string>
+    <string name="pro_f6d">Les photos prises coup sur coup côte à côte – tu choisis ce qui reste.</string>
 </resources>

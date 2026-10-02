@@ -1,5 +1,7 @@
 package app.photomaid.feature.review
 
+import app.photomaid.core.organize.MediaFolder
+import app.photomaid.design.MonthText
 import app.photomaid.design.GestureIcons
 import kotlinx.coroutines.launch
 import app.photomaid.design.CoachStep
@@ -102,6 +104,9 @@ import app.photomaid.core.cleanup.AllowanceSnapshot
 import app.photomaid.core.capabilities.Capabilities
 import app.photomaid.R
 import app.photomaid.core.feed.FeedIntent
+import app.photomaid.core.feed.FeedOrder
+import androidx.compose.material.icons.automirrored.rounded.Sort
+import androidx.compose.material.icons.rounded.Check
 import app.photomaid.core.feed.SessionSummary
 import app.photomaid.ads.FeedAd
 import app.photomaid.core.model.MediaKind
@@ -160,7 +165,9 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             ?.any { it.id.contains("switchaccess", ignoreCase = true) } == true
     }
     /** Mit TalkBack oder Schaltersteuerung bleiben die Aktions-Buttons sichtbar. */
-    val needsButtons = talkBack || switchAccess
+    val needsButtons = talkBack || switchAccess || settings.decisionButtons
+    var confirmExclude by remember { mutableStateOf(false) }
+    var orderMenu by remember { mutableStateOf(false) }
     var showHints by remember { mutableStateOf(false) }
     var hintToken by remember { mutableIntStateOf(0) }
     var showInfo by remember { mutableStateOf(false) }
@@ -205,9 +212,16 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
         CoachStep("feed.undo", stringResource(R.string.tour_feed_undo_title), stringResource(R.string.tour_feed_undo_text)),
         CoachStep("feed.actions", stringResource(R.string.tour_feed_actions_title), stringResource(R.string.tour_feed_actions_text)),
     )
-    val tourActive = !settings.feedTourSeen && !showHints && model.isLoaded && model.adCard == null && !model.session.isFinished &&
-        model.currentAsset != null && !talkBack
-    CoachHost(feedTour, active = tourActive, onFinish = { tourScope.launch { app.updateSettings { it.copy(feedTourSeen = true) } } }, modifier = Modifier.fillMaxSize()) {
+    val seriesStep = CoachStep("feed.series", stringResource(R.string.tour_series_title), stringResource(R.string.tour_series_text))
+    val canTour = !showHints && model.isLoaded && model.adCard == null && !model.session.isFinished && model.currentAsset != null && !talkBack &&
+        model.seriesOpen == null
+    // Erst das Feed-Tutorial; später einmal der Hinweis auf „Serie“, sobald der Knopf das erste Mal erscheint.
+    val seriesTour = settings.feedTourSeen && !settings.seriesTourSeen && model.currentSeries != null
+    val steps = when { !settings.feedTourSeen -> feedTour; seriesTour -> listOf(seriesStep); else -> emptyList() }
+    CoachHost(steps, active = canTour && steps.isNotEmpty(), onFinish = {
+        val wasFeed = !settings.feedTourSeen
+        tourScope.launch { app.updateSettings { if (wasFeed) it.copy(feedTourSeen = true) else it.copy(seriesTourSeen = true) } }
+    }, modifier = Modifier.fillMaxSize()) {
     AppBackground {
         Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(bottom = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
             model.version // Session-Änderungen beobachten
@@ -216,10 +230,22 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             GlassToolbar(
                 title = (request.source as? FeedRequest.Source.Collection)?.let { collectionTitle(it.collection) }
                     ?: (request.source as? FeedRequest.Source.Quick)?.let { quickTitle(it.item) }
+                    ?: (request.source as? FeedRequest.Source.Month)?.let { MonthText.title(it.month) }
                     ?: stringResource(request.titleRes),
                 subtitle = if (items.isEmpty()) null else stringResource(R.string.feed_position, pos, total),
                 leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), quiet = true, onClick = onClose) },
                 trailing = {
+                    if (model.canReorder && model.isLoaded && items.isNotEmpty()) Box {
+                        GlassIconButton(Icons.AutoMirrored.Rounded.Sort, stringResource(R.string.order_title), Modifier.testTag("feed.order"), quiet = true) { orderMenu = true }
+                        DropdownMenu(orderMenu, onDismissRequest = { orderMenu = false }) {
+                            for ((o, label) in listOf(FeedOrder.NEWEST to R.string.order_newest, FeedOrder.OLDEST to R.string.order_oldest,
+                                FeedOrder.LARGEST to R.string.order_largest, FeedOrder.RANDOM to R.string.order_random)) {
+                                DropdownMenuItem(text = { Text(stringResource(label)) }, modifier = Modifier.testTag("order.${o.name}"),
+                                    leadingIcon = { if (model.order == o) Icon(Icons.Rounded.Check, null) },
+                                    onClick = { orderMenu = false; model.setOrder(o) })
+                            }
+                        }
+                    }
                     GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.coachTarget("feed.undo"), enabled = canUndo, quiet = true, onClick = model::undo)
                 },
             )
@@ -271,7 +297,13 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                         val shareTitle = stringResource(R.string.share_chooser)
                         val shareFailed = stringResource(R.string.share_failed)
                         val openFailed = stringResource(R.string.open_failed)
+                        val series = model.currentSeries
                         FeedActionBar(asset, basketCount, busy = model.mediaWriteBusy || model.isCommitting,
+                            seriesCount = series?.size, onSeries = {
+                                if (app.capabilities.seriesCompare) model.openSeries() else nav.openPro()
+                            }, seriesLocked = !app.capabilities.seriesCompare,
+                            onExcludeFolder = if (model.currentFolder != null) ({ confirmExclude = true }) else null,
+                            onGrid = if (gridSupported(request)) ({ nav.openGrid(request.copy(id = java.util.UUID.randomUUID().toString())) }) else null,
                             onFavorite = model::toggleFavorite,
                             onShare = {
                                 // Teilen ändert nichts am Prüfstand; nach der Rückkehr bleibt dasselbe Medium.
@@ -312,9 +344,21 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             title = { Text(stringResource(R.string.info)) }, text = { Text(text) })
     }
     model.protectedFavorite?.let { p -> ProtectedFavoriteDialog(p, onUnfavorite = model::unfavoriteProtected, onCancel = model::dismissProtected) }
-    model.folderSheetFor?.let { a -> FolderSheet(a, model.folders, onPick = model::moveCurrent, onDismiss = model::closeFolders) }
+    model.folderSheetFor?.let { a ->
+        val fscope = rememberCoroutineScope()
+        FolderSheet(a.kind, a.relativePath, model.folders, settings.pinnedFolders, settings.recentFolders,
+            onTogglePin = { p -> fscope.launch { togglePinnedFolder(app, p) } }, onPick = model::moveCurrent, onDismiss = model::closeFolders)
+    }
+    if (confirmExclude) model.currentFolder?.let { f ->
+        AlertDialog(onDismissRequest = { confirmExclude = false }, modifier = Modifier.testTag("feed.exclude"),
+            title = { Text(stringResource(R.string.excl_confirm_title, MediaFolder(f, 0).name)) },
+            text = { Text(stringResource(R.string.excl_confirm_text)) },
+            confirmButton = { TextButton({ confirmExclude = false; model.excludeCurrentFolder() }, Modifier.testTag("feed.exclude.ok")) { Text(stringResource(R.string.excl_confirm_action)) } },
+            dismissButton = { TextButton({ confirmExclude = false }) { Text(stringResource(R.string.cancel)) } })
+    }
+    model.seriesOpen?.let { members -> SeriesCompareDialog(members, onConfirm = { keep -> model.confirmSeries(members, keep) }, onDismiss = model::closeSeries) }
     model.pickerReceipt?.let { receipt ->
-        LaterPickerSheet(initial = model.defaultLaterInterval, today = model.today) { day -> model.pickerFinished(receipt, day) }
+        LaterPickerSheet(initial = model.defaultLaterInterval, today = model.today, onNoDate = { model.pickerNoDate(receipt) }) { day -> model.pickerFinished(receipt, day) }
     }
     // Schräg rechts oben: Auswahl ist noch keine Entscheidung; Abbrechen lässt alles unverändert.
     model.customLater?.let { req ->
@@ -588,4 +632,10 @@ fun LimitSoon(available: Int, limit: Int, openPro: () -> Unit) {
             color = c.textPrimary, modifier = Modifier.weight(1f))
         PlainButton(stringResource(R.string.limit_soon_pro), onClick = openPro)
     }
+}
+
+/** Raster-Übersicht nur für Quellen mit fester Mitgliedermenge (nicht Papierkorb-/Serienlisten, nicht „wieder fällig“). */
+fun gridSupported(r: FeedRequest): Boolean = when (r.source) {
+    is FeedRequest.Source.Items, FeedRequest.Source.Due -> false
+    else -> true
 }

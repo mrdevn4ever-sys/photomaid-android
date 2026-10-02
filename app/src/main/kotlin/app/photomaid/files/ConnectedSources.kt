@@ -279,6 +279,50 @@ class ConnectedSourceStore(private val context: Context, private val store: KeyV
         return if (removed.size == items.size) OperationOutcome.Succeeded else OperationOutcome.Partial(removed)
     }
 
+    /**
+     * Bietet der Speicherort für ALLE diese Dateien einen Papierkorb an? Erst ab Android 17 (API 37,
+     * `DocumentsContract.trashDocument`) und nur, wenn das Dokument `FLAG_SUPPORTS_TRASH` meldet. Sonst `false`
+     * (dann bleibt es beim endgültigen Löschen mit deutlicher Warnung).
+     */
+    fun supportsTrash(items: List<ItemReference>): Boolean {
+        if (items.isEmpty() || android.os.Build.VERSION.SDK_INT < 37) return false
+        return items.all { item ->
+            val p = item.provider as? ItemProvider.ConnectedSource ?: return@all false
+            if (rootIfAccessible(p.id) == null) return@all false
+            val uri = documentUri(item) ?: return@all false
+            runCatching {
+                resolver.query(uri, arrayOf(DocumentsContract.Document.COLUMN_FLAGS), null, null, null)?.use { c ->
+                    c.moveToFirst() && (c.getInt(0) and trashFlag()) != 0
+                }
+            }.getOrNull() == true
+        }
+    }
+
+    @androidx.annotation.RequiresApi(37)
+    private fun trashFlagApi37(): Int = DocumentsContract.Document.FLAG_SUPPORTS_TRASH
+    private fun trashFlag(): Int = if (android.os.Build.VERSION.SDK_INT >= 37) trashFlagApi37() else 0
+
+    /**
+     * In den Papierkorb des Speicherorts verschieben (`DocumentsContract.trashDocument`, Android 17+). Belegt je Datei:
+     * entfernt gilt nur, was danach am alten Ort nicht mehr existiert. Ohne Unterstützung: nichts passiert.
+     */
+    fun moveToTrash(items: List<ItemReference>): OperationOutcome {
+        if (android.os.Build.VERSION.SDK_INT < 37) return OperationOutcome.Failed("trash-unsupported")
+        val removed = mutableSetOf<ItemReference>()
+        for (item in items) {
+            val p = item.provider as? ItemProvider.ConnectedSource ?: continue
+            if (rootIfAccessible(p.id) == null) continue
+            val uri = documentUri(item) ?: continue
+            val ok = runCatching { trashApi37(uri) != null }.getOrDefault(false)
+            if (ok && probeOne(p.id, uri) == ExistenceProbe.MISSING_WITH_FULL_ACCESS) removed += item
+        }
+        if (removed.isEmpty()) return OperationOutcome.Failed("nothing-trashed")
+        return if (removed.size == items.size) OperationOutcome.Succeeded else OperationOutcome.Partial(removed)
+    }
+
+    @androidx.annotation.RequiresApi(37)
+    private fun trashApi37(uri: Uri): Uri? = DocumentsContract.trashDocument(resolver, uri)
+
     private fun probeOne(id: ConnectedSourceID, uri: Uri): ExistenceProbe {
         if (rootIfAccessible(id) == null) return ExistenceProbe.UNKNOWN
         return try {

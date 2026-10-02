@@ -13,6 +13,10 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material.icons.rounded.NewReleases
+import app.photomaid.core.progress.MonthKey
+import app.photomaid.design.MonthText
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.draw.shadow
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -133,16 +137,26 @@ fun TodayScreen(nav: Nav) {
     var snapshot by remember { mutableStateOf<List<MediaAsset>>(emptyList()) }
     var device by remember { mutableStateOf<DeviceCapacity?>(null) }
 
-    LaunchedEffect(token, access, read.basket.size, read.laterRecords.size, read.events.size) {
+    val settings by app.settings.collectAsState()
+    // „Weitermachen“ (zuletzt benutzter Monat) und „Neu seit dem letzten Aufräumen“ – echte offene Zahlen.
+    var continueOpen by remember { mutableStateOf(0) }
+    var newSince by remember { mutableStateOf(0) }
+    val continueMonth = MonthKey.parse(settings.continueMonth)
+    LaunchedEffect(token, access, read.basket.size, read.laterRecords.size, read.events.size, settings.continueMonth, settings.lastSessionEndMs) {
         withContext(Dispatchers.IO) {
             device = DeviceStorage.read(ctx)
             val all = if (access.canRead) app.photos.reviewableMedia() else emptyList()
             snapshot = all
-            pending = if (!access.canRead) null else app.pendingQueue(all).map { it.localIdentifier }
+            val open = if (!access.canRead) null else app.pendingQueue(all).map { it.localIdentifier }
+            pending = open
+            val openSet = open.orEmpty().toSet()
+            val zone = java.time.ZoneId.systemDefault()
+            continueOpen = if (continueMonth == null) 0 else all.count { a -> a.id in openSet && a.creationDate?.let { MonthKey.of(it, zone) } == continueMonth }
+            val since = settings.lastSessionEndMs
+            newSince = if (since <= 0) 0 else all.count { a -> a.id in openSet && (a.dateAdded?.toEpochMilli() ?: 0) > since }
         }
     }
 
-    val settings by app.settings.collectAsState()
     AppBackground {
         // Rhythmus: 24 dp zwischen Blöcken; Reihenfolge Handlung → Zustand → Einstiege → Info.
         Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
@@ -171,6 +185,19 @@ fun TodayScreen(nav: Nav) {
             }
             if (access.canRead) ReviewHero(pending, hasHistory = read.events.isNotEmpty(), showGestures = !settings.gestureHintSeen) {
                 nav.openFeed(FeedRequest(FeedRequest.Source.AllMedia))
+            }
+            if (access.canRead && ((continueMonth != null && continueOpen > 0) || newSince > 0)) RowGroup(Modifier.testTag("today.progress")) {
+                if (continueMonth != null && continueOpen > 0) {
+                    ListRow(Icons.Rounded.CalendarMonth, stringResource(R.string.today_continue_month, MonthText.title(continueMonth)), Modifier.testTag("today.continue"),
+                        tint = c.earth, tile = c.earth.copy(alpha = 0.13f), subtitle = pluralStringResource(R.plurals.hub_pending, continueOpen, continueOpen)) {
+                        nav.openFeed(FeedRequest(FeedRequest.Source.Month(continueMonth)))
+                    }
+                    if (newSince > 0) RowDivider(RowDividerInset)
+                }
+                if (newSince > 0) ListRow(Icons.Rounded.NewReleases, pluralStringResource(R.plurals.today_new_since, newSince, newSince), Modifier.testTag("today.new"),
+                    tint = c.accent, tile = c.accent.copy(alpha = 0.12f), subtitle = stringResource(R.string.today_new_since_sub)) {
+                    nav.openFeed(FeedRequest(FeedRequest.Source.NewSince(settings.lastSessionEndMs)))
+                }
             }
             if (access == PhotoAccess.LIMITED) {
                 // Nachgeordnet und ruhig: der Feed funktioniert mit den freigegebenen Medien.

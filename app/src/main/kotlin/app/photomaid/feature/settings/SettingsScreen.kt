@@ -31,6 +31,8 @@ import androidx.compose.material.icons.automirrored.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.ArrowDownward
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.Folder
+import androidx.compose.material.icons.rounded.FolderOff
+import androidx.compose.material.icons.rounded.Policy
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Shield
 import androidx.compose.material.icons.rounded.WorkspacePremium
@@ -111,6 +113,18 @@ fun SettingsScreen(nav: Nav) {
                 RowDivider()
                 SourceRow(Icons.Rounded.Folder, c.accent, stringResource(R.string.set_folder_access), Modifier.clickableRow { nav.push(Routes.SOURCES_MODAL) },
                     detail = stringResource(R.string.set_connected_n, sources.size))
+                RowDivider()
+                SourceRow(Icons.Rounded.FolderOff, c.accent, stringResource(R.string.set_excluded_folders), Modifier.clickableRow { nav.push(Routes.EXCLUDED) }.testTag("settings.excluded"),
+                    detail = settings.excludedFolders.size.takeIf { it > 0 }?.toString())
+                if (BuildConfig.PRIVACY_POLICY_URL.isNotBlank()) {
+                    RowDivider()
+                    // Öffentliche Erklärung: Deutsch für de, sonst die englische Fassung.
+                    val lang = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]?.language
+                    val url = BuildConfig.PRIVACY_POLICY_URL.let { if (lang == "de" || !it.endsWith("/privacy/")) it else it + "en/" }
+                    SourceRow(Icons.Rounded.Policy, c.accent, stringResource(R.string.privacy_policy), Modifier.clickableRow {
+                        runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                    }.testTag("settings.policy"))
+                }
             }
             ListSection(header = stringResource(R.string.set_controls)) {
                 ToggleRow(stringResource(R.string.set_protect_favorites), settings.protectFavorites, Modifier.testTag("settings.protectFavorites"),
@@ -119,6 +133,10 @@ fun SettingsScreen(nav: Nav) {
                 ToggleRow(stringResource(R.string.set_haptics), settings.haptics) { v -> scope.launch { app.updateSettings { it.copy(haptics = v) } } }
                 RowDivider()
                 ToggleRow(stringResource(R.string.set_hints), settings.showGestureHintOnOpen) { v -> scope.launch { app.updateSettings { it.copy(showGestureHintOnOpen = v) } } }
+                RowDivider()
+                // Bedienungshilfe: Tasten unter dem Medium, gleicher Weg wie die Gesten (Produktentscheidung 2026-10-02).
+                ToggleRow(stringResource(R.string.set_buttons), settings.decisionButtons, Modifier.testTag("settings.buttons"),
+                    subtitle = stringResource(R.string.set_buttons_detail)) { v -> scope.launch { app.updateSettings { it.copy(decisionButtons = v) } } }
                 RowDivider()
                 MenuRowPicker(stringResource(R.string.set_later_default), LaterInterval.allowedQuickDays.map { d ->
                     d to if (d == 1) stringResource(R.string.set_tomorrow) else pluralStringResource(R.plurals.set_in_days, d, d)
@@ -161,12 +179,6 @@ fun SettingsScreen(nav: Nav) {
                     Text(stringResource(R.string.version), style = AppTypography.body, color = c.textPrimary, modifier = Modifier.weight(1f))
                     Text("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})", style = AppTypography.body, color = c.textSecondary)
                 }
-                if (BuildConfig.PRIVACY_POLICY_URL.isNotBlank()) {
-                    RowDivider()
-                    PlainButton(stringResource(R.string.privacy_policy)) {
-                        runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.PRIVACY_POLICY_URL)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
-                    }
-                }
             }
             Spacer(Modifier.height(AppSpacing.xl))
         }
@@ -195,6 +207,20 @@ fun HelpScreen(nav: Nav) {
     ScreenScaffold(stringResource(R.string.help), onBack = nav::back) { mod ->
         Column(mod.verticalScroll(rememberScrollState()).navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
+            val app = LocalApp.current
+            val scope = rememberCoroutineScope()
+            var reset by remember { mutableStateOf(false) }
+            ListSection {
+                PlainButton(stringResource(R.string.help_tours_again), Modifier.testTag("help.tours")) {
+                    scope.launch {
+                        app.updateSettings { it.copy(todayTourSeen = false, feedTourSeen = false, monthsTourSeen = false, seriesTourSeen = false,
+                            gridTourSeen = false, gestureHintSeen = false) }
+                        reset = true
+                    }
+                }
+                if (reset) Text(stringResource(R.string.help_tours_reset), style = AppTypography.caption, color = c.textSecondary,
+                    modifier = Modifier.padding(bottom = AppSpacing.xs))
+            }
             for ((h, t) in listOf(R.string.help_decide to R.string.help_decide_text, R.string.help_delete to R.string.help_delete_text,
                 R.string.help_cloud to R.string.help_cloud_text, R.string.help_free to R.string.help_free_text)) {
                 ListSection(header = stringResource(h)) {

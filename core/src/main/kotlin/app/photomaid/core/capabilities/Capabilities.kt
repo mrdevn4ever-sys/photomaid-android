@@ -131,6 +131,9 @@ data class Capabilities(
     /** Eigene Sammlungen anlegen und öffnen (fertige Sammlungen sind für alle). */
     val customCollections: Boolean get() = hasProToolsAccess
 
+    /** Fotoserien vergleichen (Pro-Werkzeug, auch im 30-Minuten-Test). */
+    val seriesCompare: Boolean get() = hasProToolsAccess
+
     companion object {
         /** Produktentscheidung 2026-10-04: 20 pro Tag (vorher 15). */
         const val FREE_DAILY_CLEANUP_LIMIT = 20

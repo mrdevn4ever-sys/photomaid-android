@@ -22,10 +22,11 @@ class FeedAdsStore(private val store: KeyValueStore) {
     }
 
     suspend fun recordDecision() = save(FeedAdPolicy.onDecision(state))
-    fun isDue(today: LocalDay) = FeedAdPolicy.isDue(state, today)
+    fun isDue(today: LocalDay, nowMs: Long = System.currentTimeMillis()) = FeedAdPolicy.isDue(state, today, nowMs)
     /** Bald fällig → rechtzeitig vorladen, damit die Karte ohne Wartezeit erscheint. */
     fun almostDue(today: LocalDay) = state.decisionsTotal + 2 >= FeedAdPolicy.WARMUP_DECISIONS && state.sinceLastAd + 2 >= FeedAdPolicy.INTERVAL &&
         FeedAdPolicy.shownToday(state, today) < FeedAdPolicy.DAILY_CAP
     fun summaryAllowed(today: LocalDay) = FeedAdPolicy.summaryAdAllowed(state, today)
     suspend fun recordShown(today: LocalDay) = save(FeedAdPolicy.onShown(state, today))
+    suspend fun recordCardShown(today: LocalDay, nowMs: Long = System.currentTimeMillis()) = save(FeedAdPolicy.onCardShown(state, today, nowMs))
 }

@@ -17,6 +17,10 @@ data class FeedRequest(val source: Source, val id: String = UUID.randomUUID().to
         data class Items(val items: List<ItemReference>, val titleRes: Int) : Source
         /** Schnellzugriff von „Heute“: eine Abfrage; offen/entschieden kommt aus dem globalen Ledger. */
         data class Quick(val item: app.photomaid.core.quickaccess.QuickAccessItem) : Source
+        /** Ein Kalendermonat (Aufnahmedatum). [again] = „Erneut durchsehen“: auch bereits entschiedene Medien. */
+        data class Month(val month: app.photomaid.core.progress.MonthKey, val again: Boolean = false) : Source
+        /** Auf dem Gerät hinzugekommen seit dem Ende der letzten Sitzung (MediaStore `DATE_ADDED`). */
+        data class NewSince(val epochMs: Long) : Source
     }
 
     val titleRes: Int
@@ -31,5 +35,7 @@ data class FeedRequest(val source: Source, val id: String = UUID.randomUUID().to
             is Source.Collection -> R.string.feed_title_collection
             is Source.Items -> s.titleRes
             is Source.Quick -> app.photomaid.feature.quickaccess.quickTitleRes(s.item.kind)
+            is Source.Month -> R.string.feed_title_month
+            is Source.NewSince -> R.string.feed_title_new
         }
 }

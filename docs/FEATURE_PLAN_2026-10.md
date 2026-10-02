@@ -3,7 +3,7 @@
 Ziel: Aus „ich wische durch meine Bilder“ wird ein Aufräumen, das spürbar schneller geht und bei dem man **fertig wird**.
 Umfang: alle Punkte mit Wert „mittel“ oder „hoch“ aus der Produktbewertung + Einstiegs-Tutorials für jede neue Funktion.
 Nicht im Umfang: KI, Tresor, Komprimierung, Kontakt-/Geräte-Cleaner, Punkte/Serien, „An diesem Tag“, Widget.
-Prüfstatus: NOT RUN (nur Plan).
+Prüfstatus: umgesetzt 2026-10-02 (Code + JVM-Tests). Gerätetest: NOT RUN.
 
 Feste Regeln bleiben unverändert: Gesten, eine Gesten-State-Machine, keine automatische Löschung, keine erfundenen Zahlen,
 Verschieben/Vergleichen ist nie automatisch „Behalten“, Werbung nie mitten in Vergleich, Rückgängig oder Papierkorb-Bestätigung.
