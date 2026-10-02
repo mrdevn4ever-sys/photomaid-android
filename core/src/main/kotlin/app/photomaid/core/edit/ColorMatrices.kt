@@ -140,7 +140,14 @@ data class EditRecord(
     val mode: SaveMode,
     val video: Boolean,
     val atMs: Long,
+    /** Art: Bearbeitung eines Mediums oder eigenes Werk (Collage, zusammengefügtes Video, Diashow, GIF). */
+    val kind: EditKind = EditKind.EDIT,
+    /** Anzahl verwendeter Medien bei eigenen Werken. */
+    val count: Int = 0,
 )
+
+@kotlinx.serialization.Serializable
+enum class EditKind { EDIT, COLLAGE, MERGE, SLIDESHOW, GIF, FRAME, COMPRESS, CONVERT }
 
 /** Dateiname der Kopie: „IMG_1234_bearbeitet.jpg“ (Zusatz aus den Texten). */
 object EditNames {

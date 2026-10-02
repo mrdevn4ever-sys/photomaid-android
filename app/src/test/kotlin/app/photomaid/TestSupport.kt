@@ -151,7 +151,9 @@ class FakeMediaLibrary(
     val trashed = mutableSetOf<String>()
     val saved = mutableListOf<app.photomaid.media.EditSaveRequest>()
     override suspend fun saveEdited(request: app.photomaid.media.EditSaveRequest): app.photomaid.media.EditSaveResult {
-        val src = all.firstOrNull { it.id == request.sourceId } ?: return app.photomaid.media.EditSaveResult.Failed("gone")
+        // Eigene Werke (Collage) haben keine Quelle: Vorlage nur für die Felder des Fakes.
+        val src = all.firstOrNull { it.id == request.sourceId } ?: (if (request.sourceId.isEmpty()) all.firstOrNull() else null)
+            ?: return app.photomaid.media.EditSaveResult.Failed("gone")
         val dir = File(context.cacheDir, "qa-edits").apply { mkdirs() }
         val f = File(dir, "${base.size}_${request.displayName}")
         request.file.copyTo(f, overwrite = true)

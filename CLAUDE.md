@@ -51,6 +51,11 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   - Ordner-Dateien: ab Android 17 (API 37) mit `FLAG_SUPPORTS_TRASH` per `DocumentsContract.trashDocument` in den Papierkorb
     des Speicherorts, sonst endgültig mit Warnung.
 
+- Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
+  Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
+  bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3
+  Entwürfe; Pro/30-Minuten-Test: bis 20 Fotos, Frei, A4-Druck, 50 Entwürfe – ausprobieren immer frei, kein Wasserzeichen.
+  Medienauswahl (`MediaPickerScreen`) ist nie eine Entscheidung. Neue String-Kennungen vorher auf Kollision prüfen.
 - Editor (2026-10, `feature/editor/`, Kern `core/.../edit/`): nicht destruktives Rezept (`EditRecipe`), Vorschau = Export
   (gleiche Geometrie/Farbmatrix). Speichern nur als neue Datei: „Original behalten“ (Kopie) oder „Original ersetzen“
   (Original per `createTrashRequest` in den Android-Papierkorb, wiederherstellbar in „Bearbeitet“) – nie überschreiben.

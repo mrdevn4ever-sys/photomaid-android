@@ -170,7 +170,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                             EditorTab.CROP -> CropPanel(vm)
                             EditorTab.ADJUST -> AdjustPanel(vm)
                             EditorTab.FILTER -> FilterPanel(vm)
-                            EditorTab.MARKUP -> MarkupPanel(vm)
+                            EditorTab.MARKUP -> MarkupPanel(vm.markup)
                             EditorTab.FRAME -> FramePanel(vm)
                             EditorTab.RESIZE -> ResizePanel(vm)
                             EditorTab.TRIM -> TrimPanel(vm)

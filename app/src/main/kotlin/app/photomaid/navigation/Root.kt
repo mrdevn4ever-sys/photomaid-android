@@ -53,6 +53,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Layers
+import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.PhotoLibrary
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
@@ -116,6 +117,13 @@ import app.photomaid.feature.storage.StorageInsightsScreen
 import app.photomaid.feature.today.TodayScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import app.photomaid.feature.studio.CollageRequest
+import app.photomaid.feature.studio.CollageRequests
+import app.photomaid.feature.studio.CollageScreen
+import app.photomaid.feature.studio.MediaPickerScreen
+import app.photomaid.feature.studio.PickRequest
+import app.photomaid.feature.studio.PickRequests
+import app.photomaid.feature.studio.StudioScreen
 
 val LocalApp = staticCompositionLocalOf<AppModel> { error("AppModel fehlt") }
 
@@ -126,6 +134,9 @@ interface Nav {
     fun openGrid(request: FeedRequest) {}
     /** Editor für ein Medium (Stift-Symbol in der Aktionsleiste). Nie eine Entscheidung. */
     fun openEditor(assetId: String) {}
+    /** Studio: Medienauswahl (Wählen ist nie eine Entscheidung) und Collage. */
+    fun openPicker(request: PickRequest) {}
+    fun openCollage(request: CollageRequest) {}
     fun openSettings()
     fun openPro()
     fun openPrivacy()
@@ -140,7 +151,8 @@ object Routes {
     const val MAIN = "main"; const val FEED = "feed/{id}"; const val SETTINGS = "settings"; const val PRO = "pro"
     const val PRIVACY = "privacy"; const val HELP = "help"; const val BASKET_MODAL = "basketModal"
     const val SOURCES_MODAL = "sourcesModal"; const val EXCLUDED = "excluded"; const val MONTHS = "months"
-    const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"
+    const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"; const val STUDIO = "studio"
+    const val PICKER = "picker/{id}"; const val COLLAGE = "collage/{id}"
     fun editor(id: String) = "editor/$id"
     fun grid(id: String) = "grid/$id"
     fun feed(id: String) = "feed/$id"
@@ -149,6 +161,7 @@ object Routes {
 enum class AppTab(val route: String, val label: Int, val icon: ImageVector) {
     TODAY(Routes.TODAY, R.string.tab_today, Icons.Rounded.Home),
     CLEANUP(Routes.HUB, R.string.tab_cleanup, Icons.Rounded.Layers),
+    STUDIO(Routes.STUDIO, R.string.tab_studio, Icons.Rounded.Palette),
     HISTORY(Routes.HISTORY, R.string.tab_history, Icons.Rounded.History);
 
     val graph: String get() = "tab_$name"
@@ -224,6 +237,12 @@ private fun RootNav(app: AppModel) {
             override fun openEditor(assetId: String) {
                 val key = java.util.UUID.randomUUID().toString(); EditorRequests.map[key] = assetId; root.navigate(Routes.editor(key))
             }
+            override fun openPicker(request: PickRequest) {
+                PickRequests.map[request.id] = request; root.navigate("picker/${request.id}")
+            }
+            override fun openCollage(request: CollageRequest) {
+                CollageRequests.map[request.id] = request; root.navigate("collage/${request.id}")
+            }
             override fun openSettings() = root.navigate(Routes.SETTINGS)
             override fun openPro() = root.navigate(Routes.PRO)
             override fun openPrivacy() = root.navigate(Routes.PRIVACY)
@@ -282,6 +301,23 @@ private fun RootNav(app: AppModel) {
             if (assetId == null) LaunchedEffect(entry) { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
             else EditorScreen(assetId, nav, onClose = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() })
         }
+        composable(Routes.PICKER) { entry ->
+            val key = entry.arguments?.getString("id")
+            val req = key?.let { PickRequests.map[it] }
+            RemoveOnDestroy(entry) { key?.let { PickRequests.map.remove(it) } }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() }
+            // Erst schließen, dann weiter (z. B. Collage öffnen): die Auswahl liegt nie unter dem nächsten Schritt.
+            else MediaPickerScreen(req.copy(onDone = { ids -> close(); req.onDone(ids) }), onClose = { close() })
+        }
+        composable(Routes.COLLAGE) { entry ->
+            val key = entry.arguments?.getString("id")
+            val req = key?.let { CollageRequests.map[it] }
+            RemoveOnDestroy(entry) { key?.let { CollageRequests.map.remove(it) } }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() }
+            else CollageScreen(req, nav, pick = nav::openPicker, onClose = { close() })
+        }
         composable(Routes.PRO) { ProScreen(nav) }
         composable(Routes.PRIVACY) { PrivacyAccessScreen(onboarding = false, onDone = { root.popBackStack() }) }
     }
@@ -336,6 +372,7 @@ private fun MainTabs(rootNav: Nav) {
                         when (t) {
                             AppTab.TODAY -> TodayScreen(nav)
                             AppTab.CLEANUP -> CleanUpHubScreen(nav)
+                            AppTab.STUDIO -> StudioScreen(nav)
                             AppTab.HISTORY -> HistoryScreen(nav)
                         }
                     }
@@ -368,6 +405,16 @@ private fun MainTabs(rootNav: Nav) {
         }
         }
     }
+    }
+}
+
+/** Anfrage eines Eintrags erst beim endgültigen Verlassen entfernen (nicht schon beim Ausblenden). */
+@Composable
+private fun RemoveOnDestroy(entry: NavBackStackEntry, remove: () -> Unit) {
+    DisposableEffect(entry) {
+        val obs = LifecycleEventObserver { _, e -> if (e == Lifecycle.Event.ON_DESTROY) remove() }
+        entry.lifecycle.addObserver(obs)
+        onDispose { entry.lifecycle.removeObserver(obs) }
     }
 }
 
@@ -414,7 +461,7 @@ private fun TabBarRow(selected: AppTab, onSelect: (AppTab) -> Unit) {
             ) {
                 Icon(t.icon, null, tint = if (isSel) c.accent else c.textPrimary, modifier = Modifier.size(24.dp))
                 Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Medium),
-                    color = if (isSel) c.accent else c.textPrimary)
+                    color = if (isSel) c.accent else c.textPrimary, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
             }
         }
     }

@@ -114,6 +114,9 @@ class AppModel(
     var videoTrimmer: app.photomaid.media.VideoTrimmer = app.photomaid.media.Media3VideoTrimmer(context)
     val edits = app.photomaid.feature.editor.EditStore(store)
     val presets = app.photomaid.feature.editor.PresetStore(store)
+    /** Studio: Collage-Zeichner (Vorschau = Export) und lokale Entwürfe. */
+    val collageRenderer = app.photomaid.feature.studio.CollageRenderer(editEngine)
+    val drafts = app.photomaid.feature.studio.DraftStore(store, context)
     val editEvents = kotlinx.coroutines.flow.MutableSharedFlow<app.photomaid.feature.editor.EditOutcome>(extraBufferCapacity = 8)
     val quickAccess = app.photomaid.feature.quickaccess.QuickAccessStore(store)
 
@@ -139,6 +142,7 @@ class AppModel(
         collections.load()
         edits.load()
         presets.load()
+        drafts.load()
         quickAccess.load()
         feedAdCounter.load()
         entitlements.load()

@@ -57,6 +57,17 @@ Löschen von Dateien: ausschließlich `DocumentsContract.deleteDocument` in vom 
 
 Keine Bildanalyse, keine automatischen Werte, keine Werbung im Editor; Werbe-Anfragen erhalten nie Medien, Namen, Pfade oder IDs.
 
+## Studio (2026-10)
+
+| Daten | Wo | Zweck | Verlässt das Gerät? |
+|---|---|---|---|
+| Collage (neue Datei) | MediaStore `Pictures/PhotoMaid/` (oder gewählter Ordner) | Ergebnis | nein (nur wenn eine Galerie-/Cloud-App sie selbst sichert) |
+| Entwürfe (`studio.drafts.v1`: Projekt mit Medien-IDs und Einstellungen; Free 3, Pro 50) | App-Speicher | später weitermachen | nein |
+| Vorschaubild je Entwurf (`files/drafts/<id>.jpg`, max. 360 px) | App-Speicher | Liste im Studio | nein; wird mit dem Entwurf gelöscht |
+| „Nur teilen“-Datei | App-Cache `shared/`, beim nächsten Start gelöscht | Teilen ohne Galerie-Kopie | nur an die vom Nutzer gewählte App |
+
+Keine Werbung im Studio. Medienauswahl speichert nichts.
+
 ## Entwurf „Datensicherheit“ (Play Console) – vom Inhaber zu bestätigen
 
 - Erfasste Daten: **keine** durch den Entwickler (Käufe werden von Google Play verarbeitet).

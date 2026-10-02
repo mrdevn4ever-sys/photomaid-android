@@ -1,5 +1,8 @@
 package app.photomaid.feature.grid
 
+import app.photomaid.core.studio.CollageProject
+import app.photomaid.feature.studio.CollageRequest
+import androidx.compose.material.icons.rounded.Dashboard
 import app.photomaid.feature.common.NoticeDialog
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.foundation.background
@@ -213,6 +216,12 @@ fun MediaGridScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit) {
                 ProminentButton(stringResource(R.string.grid_move), Modifier.weight(1f).testTag("grid.move"), fillWidth = true, enabled = !busy) {
                     folders = null; folderSheet = true
                     scope.launch { folders = withContext(Dispatchers.IO) { runCatching { app.photos.folders() }.getOrDefault(emptyList()) } }
+                }
+                // Collage aus den gewählten Fotos (ab 2; Videos bleiben außen vor). Wählen bleibt keine Entscheidung.
+                val photoIds = members.orEmpty().filter { it.id in selection && it.kind == MediaKind.PHOTO }.map { it.id }
+                if (photoIds.size >= 2) GlassIconButton(Icons.Rounded.Dashboard, stringResource(R.string.grid_collage), Modifier.testTag("grid.collage"), enabled = !busy) {
+                    val id = java.util.UUID.randomUUID().toString()
+                    nav.openCollage(CollageRequest(id, CollageProject.create(id, photoIds.take(CollageProject.MAX)), fromDraft = false))
                 }
                 val allFav = members.orEmpty().filter { it.id in selection }.all { it.isFavorite }
                 GlassIconButton(if (allFav) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder, stringResource(if (allFav) R.string.fav_remove else R.string.fav_add),

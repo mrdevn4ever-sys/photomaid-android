@@ -211,7 +211,7 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
             EditorTab.ADJUST -> r.copy(adjust = Adjustments(), colorMix = ColorMix())
             EditorTab.FILTER -> r.copy(filter = FilterId.NONE, filterIntensity = 1f)
             EditorTab.RESIZE -> r.copy(resizeWidth = null, resizeHeight = null)
-            EditorTab.MARKUP -> r.copy(layers = emptyList()).also { selectedLayerId = null }
+            EditorTab.MARKUP -> r.copy(layers = emptyList()).also { markup.selectedLayerId = null }
             EditorTab.FRAME -> r.copy(frame = null)
             EditorTab.TRIM -> r
         }.also { if (tab == EditorTab.CROP) aspect = AspectPreset.FREE })
@@ -288,78 +288,13 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     fun dropProTools() = update(recipe.copy(adjust = Adjustments(), filter = FilterId.NONE, filterIntensity = 1f, resizeWidth = null, resizeHeight = null,
         colorMix = ColorMix(), locals = emptyList(), frame = null))
     // Markieren (Ebenen) – kostenlos; nie eine Entscheidung
-
-    var markupTool by mutableStateOf(MarkupTool.SELECT)
-    var selectedLayerId by mutableStateOf<String?>(null)
-    /** Text, der gerade im Blatt bearbeitet wird. */
-    var editingTextId by mutableStateOf<String?>(null)
-    var showStickers by mutableStateOf(false)
-    var brush by mutableStateOf(BrushKind.PEN)
-    var drawWidth by mutableStateOf(0.012f)
-    var drawColor by mutableStateOf(0xFFFF3B30.toInt())
-    var shapeKind by mutableStateOf(ShapeKind.ARROW)
-    var shapeFilled by mutableStateOf(false)
-    var redactMode by mutableStateOf(RedactMode.SOLID)
-    var redactBrush by mutableStateOf(false)
-    var redactStrength by mutableStateOf(0.6f)
-
-    val layers: List<Layer> get() = recipe.layers
-    val selectedLayer: Layer? get() = selectedLayerId?.let { id -> recipe.layers.firstOrNull { it.id == id } }
-
-    private fun newId() = java.util.UUID.randomUUID().toString()
-    private fun setLayers(list: List<Layer>, commit: Boolean = true) = update(recipe.copy(layers = list), commit)
-
-    fun addText() {
-        val l = TextLayer(newId(), app.string(R.string.edit_text_default), color = 0xFFFFFFFF.toInt())
-        setLayers(recipe.layers + l); selectedLayerId = l.id; editingTextId = l.id; markupTool = MarkupTool.SELECT
-    }
-
-    fun addSticker(kind: StickerKind, value: String = "") {
-        val v = if (kind == StickerKind.DATE) value.ifEmpty { stickerDate() } else value
-        val l = StickerLayer(newId(), kind, v, color = if (kind == StickerKind.DATE) 0xFFFF8A00.toInt() else drawColor)
-        setLayers(recipe.layers + l); selectedLayerId = l.id; showStickers = false; markupTool = MarkupTool.SELECT
-    }
+    val markup = MarkupController(layers = { recipe.layers }, setLayers = { l, c -> update(recipe.copy(layers = l), c) },
+        defaultText = { app.string(R.string.edit_text_default) }, dateText = { stickerDate() })
 
     /** Datum des Fotos (Aufnahme), sonst heute – nur lokale Formatierung. */
     fun stickerDate(): String {
         val d = asset?.creationDate?.let { java.util.Date(it.toEpochMilli()) } ?: java.util.Date()
         return java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT).format(d)
-    }
-
-    /** Ebene ändern; [commit] = Schritt fürs Rückgängig (beim Loslassen). */
-    fun updateLayer(l: Layer, commit: Boolean) = setLayers(LayerOps.replace(recipe.layers, l), commit)
-
-    fun deleteSelected() { selectedLayerId?.let { setLayers(LayerOps.remove(recipe.layers, it)) }; selectedLayerId = null }
-    fun duplicateSelected() { selectedLayerId?.let { id -> val n = newId(); setLayers(LayerOps.duplicate(recipe.layers, id, n)); selectedLayerId = n } }
-    fun selectedToFront() { selectedLayerId?.let { setLayers(LayerOps.toFront(recipe.layers, it)) } }
-    fun selectedToBack() { selectedLayerId?.let { setLayers(LayerOps.toBack(recipe.layers, it)) } }
-
-    /** Strich fertig: an die oberste Zeichnung anhängen (der Radierer wirkt nur dort), sonst neue Zeichenebene. */
-    fun addStroke(points: List<NormPoint>) {
-        if (points.isEmpty()) return
-        val st = DrawStroke(points, drawWidth, drawColor, brush)
-        val top = recipe.layers.lastOrNull()
-        val next = if (top is DrawLayer) LayerOps.replace(recipe.layers, top.copy(strokes = top.strokes + st))
-            else if (brush == BrushKind.ERASER) return
-            else recipe.layers + DrawLayer(newId(), listOf(st))
-        setLayers(next)
-    }
-
-    fun addShape(a: NormPoint, b: NormPoint) {
-        if (kotlin.math.hypot(b.x - a.x, b.y - a.y) < 0.01f) return
-        val l = ShapeLayer(newId(), shapeKind, a, b, drawColor, drawWidth, shapeFilled)
-        setLayers(recipe.layers + l); selectedLayerId = l.id
-    }
-
-    fun addRedactRect(a: NormPoint, b: NormPoint) {
-        val r = NormRect(minOf(a.x, b.x).coerceIn(0f, 1f), minOf(a.y, b.y).coerceIn(0f, 1f), maxOf(a.x, b.x).coerceIn(0f, 1f), maxOf(a.y, b.y).coerceIn(0f, 1f))
-        if (r.width < 0.01f || r.height < 0.01f) return
-        setLayers(recipe.layers + RedactLayer(newId(), redactMode, rect = r, strength = redactStrength))
-    }
-
-    fun addRedactStroke(points: List<NormPoint>) {
-        if (points.isEmpty()) return
-        setLayers(recipe.layers + RedactLayer(newId(), redactMode, strokes = listOf(BrushStroke(points, radius = drawWidth * 2f, hardness = 1f)), strength = redactStrength))
     }
 
     // Rahmen (Pro)

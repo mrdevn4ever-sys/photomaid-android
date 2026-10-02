@@ -232,3 +232,13 @@ Perf-Build, Commit, Gerätetest-Prompt. Geräte-Pflicht ab S4: Export-Zeiten 108
 - **Nach dem Speichern**: optional direkt „In Ordner verschieben“ (keine Entscheidung).
 - Eigene Exporte gelten als „Behalten“ und erscheinen nicht erneut als offene Aufgabe.
 - Keine Pille „Behalten · Bearbeiten“ nach dem Wischen (Nutzerentscheidung 2026-10-02 bleibt: nur Stift-Symbol).
+
+## 13. Umsetzungsstand
+
+| Phase | Stand | Commit |
+|---|---|---|
+| P1 Fundament | fertig | be0fce4 |
+| P2 Ebenen | fertig | 7799145 |
+| P3 Collage + Studio-Tab + Medienauswahl + Entwürfe | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN) | dieser Stand |
+| P4–P7 | offen | – |
+

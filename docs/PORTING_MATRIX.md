@@ -187,3 +187,13 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Free/Pro | Zuschneiden/Drehen/Spiegeln/Begradigen + beide Speicherarten frei; Regler, Filter, Größe, Video kürzen speichern mit Pro oder 30-Minuten-Test (Vorschau frei, „Nur Zuschnitt speichern“) | Produktentscheidung 2026-10-02 |
 | Video kürzen | Media3 Transformer mit Trim-Optimierung | — |
 
+## Studio 2026-10 (Android zuerst, iOS noch offen)
+
+| Thema | Android | Grund |
+|---|---|---|
+| Navigation | 4. Tab „Studio“ (Heute · Aufräumen · Studio · Verlauf); „Bearbeitet“ zog vom Aufräumen-Hub ins Studio | Produktentscheidung 2026-10-02 |
+| Collage | Raster (Vorlagen + verschiebbare Trennlinien mit Einrasten), Frei (Sofortbild-Rahmen), Streifen; Feld: Ausschnitt, Zoom, Drehen, Spiegeln, Filter, Ganz zeigen; Hintergrund Farbe/unscharfes Foto; Markieren wie im Editor | „collage ganz wichtig“ |
+| Speichern | neue Datei, „Behalten“ im Ledger, Eintrag „Bearbeitet“ (Art Collage, Anzahl); Quellen ohne Entscheidung | wie Editor-Kopie |
+| Mehrfachauswahl | Raster: „Collage“ ab 2 Fotos (Wählen bleibt keine Entscheidung) | neu |
+| Bedienungshilfen | Feld-Knoten je Rasterfeld, Aktionen „Nächstes Foto auswählen“/„Tauschen“, Trennlinien mit −/+ | Ziehen nicht nötig |
+

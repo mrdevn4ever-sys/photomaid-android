@@ -135,12 +135,12 @@ private fun Int.c() = Color(this)
 
 /** Bildbereich im Reiter „Markieren“: Ebenen auswählen, verschieben, skalieren/drehen, zeichnen, Formen, Abdecken. */
 @Composable
-internal fun MarkupStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
-    val res = vm.resultPreview
-    val base = vm.baseResult
+internal fun MarkupStage(m: MarkupController, image: Bitmap?, baseImage: Bitmap?, frame: FrameStyle?, modifier: Modifier = Modifier) {
+    val res = image
+    val base = baseImage
     val density = LocalDensity.current
     val haptics = LocalHapticFeedback.current
-    val vmNow by rememberUpdatedState(vm)
+    val mNow by rememberUpdatedState(m)
     val live = remember { mutableStateListOf<Offset>() }
     var drag by remember { mutableStateOf<Pair<Offset, Offset>?>(null) }
     var guides by remember { mutableStateOf(false to false) }
@@ -150,7 +150,7 @@ internal fun MarkupStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
         val box = with(density) { Size(maxWidth.toPx(), maxHeight.toPx()) }
         val disp = fitRect(box, res.width.toFloat() / res.height)
         // Mit Rahmen: Lage des eigentlichen Bildes im gerahmten Vorschaubild.
-        val (framed, pos) = FrameMath.layout(PxSize(base.width, base.height), vm.recipe.frame)
+        val (framed, pos) = FrameMath.layout(PxSize(base.width, base.height), frame)
         val inner = Rect(disp.left + pos.first / framed.width.toFloat() * disp.width, disp.top + pos.second / framed.height.toFloat() * disp.height,
             disp.left + (pos.first + base.width) / framed.width.toFloat() * disp.width, disp.top + (pos.second + base.height) / framed.height.toFloat() * disp.height)
         val pw = base.width; val ph = base.height
@@ -160,20 +160,20 @@ internal fun MarkupStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
         Image(img, null, Modifier.fillMaxSize(), contentScale = ContentScale.Fit)
         Canvas(Modifier.fillMaxSize().semantics {
             contentDescription = stageLabel
-            val sel = vmNow.selectedLayer
+            val sel = mNow.selectedLayer
             if (sel != null) customActions = listOf(
-                CustomAccessibilityAction("←") { vmNow.updateLayer(sel.moved(-0.05f, 0f), true); true },
-                CustomAccessibilityAction("→") { vmNow.updateLayer(sel.moved(0.05f, 0f), true); true },
-                CustomAccessibilityAction("↑") { vmNow.updateLayer(sel.moved(0f, -0.05f), true); true },
-                CustomAccessibilityAction("↓") { vmNow.updateLayer(sel.moved(0f, 0.05f), true); true },
+                CustomAccessibilityAction("←") { mNow.updateLayer(sel.moved(-0.05f, 0f), true); true },
+                CustomAccessibilityAction("→") { mNow.updateLayer(sel.moved(0.05f, 0f), true); true },
+                CustomAccessibilityAction("↑") { mNow.updateLayer(sel.moved(0f, -0.05f), true); true },
+                CustomAccessibilityAction("↓") { mNow.updateLayer(sel.moved(0f, 0.05f), true); true },
             )
-        }.testTag("markup.canvas").pointerInput(vm.markupTool, inner, vm.redactBrush) {
+        }.testTag("markup.canvas").pointerInput(m.tool, inner, m.redactBrush) {
             awaitEachGesture {
                 val down = awaitFirstDown()
-                val v = vmNow
-                when (v.markupTool) {
+                val v = mNow
+                when (v.tool) {
                     MarkupTool.DRAW, MarkupTool.REDACT -> {
-                        val brushLike = v.markupTool == MarkupTool.DRAW || v.redactBrush
+                        val brushLike = v.tool == MarkupTool.DRAW || v.redactBrush
                         live.clear(); live.add(down.position); drag = down.position to down.position
                         while (true) {
                             val ev = awaitPointerEvent(); val ch = ev.changes.firstOrNull { it.id == down.id } ?: break
@@ -182,7 +182,7 @@ internal fun MarkupStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
                             ch.consume()
                         }
                         val pts = live.map(::norm)
-                        if (v.markupTool == MarkupTool.DRAW) v.addStroke(pts)
+                        if (v.tool == MarkupTool.DRAW) v.addStroke(pts)
                         else if (v.redactBrush) v.addRedactStroke(pts)
                         else drag?.let { (a, b) -> v.addRedactRect(norm(a), norm(b)) }
                         live.clear(); drag = null
@@ -201,7 +201,7 @@ internal fun MarkupStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
                         // Oberste getroffene Ebene wählen (Abstand 12 dp für kleine Elemente).
                         val px = (down.position.x - inner.left) / k; val py = (down.position.y - inner.top) / k
                         val pad = 12.dp.toPx() / k
-                        val hit = v.layers.asReversed().firstOrNull { LayerRenderer.box(it, pw, ph)?.contains(px, py, pad) == true }
+                        val hit = v.all.asReversed().firstOrNull { LayerRenderer.box(it, pw, ph)?.contains(px, py, pad) == true }
                         v.selectedLayerId = hit?.id
                         val start = hit ?: return@awaitEachGesture
                         var cur: Layer = start
@@ -249,7 +249,7 @@ internal fun MarkupStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
             if (gx) drawLine(guide, Offset(inner.center.x, inner.top), Offset(inner.center.x, inner.bottom), 1.dp.toPx())
             if (gy) drawLine(guide, Offset(inner.left, inner.center.y), Offset(inner.right, inner.center.y), 1.dp.toPx())
             // Auswahlrahmen
-            vm.selectedLayer?.let { l -> LayerRenderer.box(l, pw, ph) }?.let { b ->
+            m.selectedLayer?.let { l -> LayerRenderer.box(l, pw, ph) }?.let { b ->
                 val cx = inner.left + b.cx * k; val cy = inner.top + b.cy * k
                 rotate(b.rotation, Offset(cx, cy)) {
                     val r = Rect(cx - b.w * k / 2 - 6.dp.toPx(), cy - b.h * k / 2 - 6.dp.toPx(), cx + b.w * k / 2 + 6.dp.toPx(), cy + b.h * k / 2 + 6.dp.toPx())
@@ -261,22 +261,22 @@ internal fun MarkupStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
             if (live.size > 1) {
                 val path = Path().apply { moveTo(live[0].x, live[0].y); live.drop(1).forEach { lineTo(it.x, it.y) } }
                 val short = min(pw, ph) * k
-                val w = if (vm.markupTool == MarkupTool.REDACT) vm.drawWidth * 4f * max(pw, ph) * k else vm.drawWidth * short * (if (vm.brush == BrushKind.MARKER) 2.2f else 1f)
+                val w = if (m.tool == MarkupTool.REDACT) m.drawWidth * 4f * max(pw, ph) * k else m.drawWidth * short * (if (m.brush == BrushKind.MARKER) 2.2f else 1f)
                 val col = when {
-                    vm.markupTool == MarkupTool.REDACT -> Color.Black.copy(alpha = 0.6f)
-                    vm.brush == BrushKind.ERASER -> Color.White.copy(alpha = 0.5f)
-                    vm.brush == BrushKind.MARKER -> vm.drawColor.c().copy(alpha = 0.45f)
-                    else -> vm.drawColor.c()
+                    m.tool == MarkupTool.REDACT -> Color.Black.copy(alpha = 0.6f)
+                    m.brush == BrushKind.ERASER -> Color.White.copy(alpha = 0.5f)
+                    m.brush == BrushKind.MARKER -> m.drawColor.c().copy(alpha = 0.45f)
+                    else -> m.drawColor.c()
                 }
                 drawPath(path, col, style = Stroke(w, cap = StrokeCap.Round, join = StrokeJoin.Round))
             }
             drag?.let { (a, b) ->
                 val r = Rect(Offset(min(a.x, b.x), min(a.y, b.y)), Offset(max(a.x, b.x), max(a.y, b.y)))
-                if (vm.markupTool == MarkupTool.REDACT) drawRect(Color.Black.copy(alpha = 0.55f), r.topLeft, r.size)
-                else when (vm.shapeKind) {
-                    ShapeKind.RECT -> drawRect(vm.drawColor.c(), r.topLeft, r.size, style = Stroke(vm.drawWidth * min(pw, ph) * k))
-                    ShapeKind.ELLIPSE -> drawOval(vm.drawColor.c(), r.topLeft, r.size, style = Stroke(vm.drawWidth * min(pw, ph) * k))
-                    else -> drawLine(vm.drawColor.c(), a, b, vm.drawWidth * min(pw, ph) * k, StrokeCap.Round)
+                if (m.tool == MarkupTool.REDACT) drawRect(Color.Black.copy(alpha = 0.55f), r.topLeft, r.size)
+                else when (m.shapeKind) {
+                    ShapeKind.RECT -> drawRect(m.drawColor.c(), r.topLeft, r.size, style = Stroke(m.drawWidth * min(pw, ph) * k))
+                    ShapeKind.ELLIPSE -> drawOval(m.drawColor.c(), r.topLeft, r.size, style = Stroke(m.drawWidth * min(pw, ph) * k))
+                    else -> drawLine(m.drawColor.c(), a, b, m.drawWidth * min(pw, ph) * k, StrokeCap.Round)
                 }
             }
         }
@@ -314,18 +314,18 @@ internal fun ColorSwatches(selected: Int, onPick: (Int) -> Unit, colors: List<In
 }
 
 @Composable
-internal fun MarkupPanel(vm: EditorViewModel) {
+internal fun MarkupPanel(vm: MarkupController) {
     val c = PM.colors
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("markup.tools"), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-            MarkupToolButton(Icons.Rounded.NearMe, stringResource(R.string.edit_mk_select), vm.markupTool == MarkupTool.SELECT, "mk.select") { vm.markupTool = MarkupTool.SELECT }
+            MarkupToolButton(Icons.Rounded.NearMe, stringResource(R.string.edit_mk_select), vm.tool == MarkupTool.SELECT, "mk.select") { vm.tool = MarkupTool.SELECT }
             MarkupToolButton(Icons.Rounded.TextFields, stringResource(R.string.edit_mk_text), false, "mk.text") { vm.addText() }
             MarkupToolButton(Icons.Rounded.EmojiEmotions, stringResource(R.string.edit_mk_sticker), false, "mk.sticker") { vm.showStickers = true }
-            MarkupToolButton(Icons.Rounded.Draw, stringResource(R.string.edit_mk_draw), vm.markupTool == MarkupTool.DRAW, "mk.draw") { vm.markupTool = MarkupTool.DRAW; vm.selectedLayerId = null }
-            MarkupToolButton(Icons.Rounded.Interests, stringResource(R.string.edit_mk_shape), vm.markupTool == MarkupTool.SHAPE, "mk.shape") { vm.markupTool = MarkupTool.SHAPE; vm.selectedLayerId = null }
-            MarkupToolButton(Icons.Rounded.BlurOn, stringResource(R.string.edit_mk_redact), vm.markupTool == MarkupTool.REDACT, "mk.redact") { vm.markupTool = MarkupTool.REDACT; vm.selectedLayerId = null }
+            MarkupToolButton(Icons.Rounded.Draw, stringResource(R.string.edit_mk_draw), vm.tool == MarkupTool.DRAW, "mk.draw") { vm.tool = MarkupTool.DRAW; vm.selectedLayerId = null }
+            MarkupToolButton(Icons.Rounded.Interests, stringResource(R.string.edit_mk_shape), vm.tool == MarkupTool.SHAPE, "mk.shape") { vm.tool = MarkupTool.SHAPE; vm.selectedLayerId = null }
+            MarkupToolButton(Icons.Rounded.BlurOn, stringResource(R.string.edit_mk_redact), vm.tool == MarkupTool.REDACT, "mk.redact") { vm.tool = MarkupTool.REDACT; vm.selectedLayerId = null }
         }
-        when (vm.markupTool) {
+        when (vm.tool) {
             MarkupTool.SELECT -> {
                 val sel = vm.selectedLayer
                 if (sel == null) Text(stringResource(R.string.edit_mk_hint), style = AppTypography.footnote, color = c.textSecondary, modifier = Modifier.testTag("mk.hint"))
@@ -362,7 +362,7 @@ internal fun MarkupPanel(vm: EditorViewModel) {
         }
     }
     if (vm.showStickers) StickerSheet(vm)
-    vm.editingTextId?.let { id -> (vm.layers.firstOrNull { it.id == id } as? TextLayer)?.let { TextSheet(vm, it) } ?: run { vm.editingTextId = null } }
+    vm.editingTextId?.let { id -> (vm.all.firstOrNull { it.id == id } as? TextLayer)?.let { TextSheet(vm, it) } ?: run { vm.editingTextId = null } }
 }
 
 @Composable
@@ -374,7 +374,7 @@ private fun SwitchRow(label: String, on: Boolean, onChange: (Boolean) -> Unit) {
 }
 
 @Composable
-private fun SelectedLayerTools(vm: EditorViewModel, l: Layer) {
+private fun SelectedLayerTools(vm: MarkupController, l: Layer) {
     Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("mk.selected"), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
         if (l is TextLayer) MarkupToolButton(Icons.Rounded.Edit, stringResource(R.string.edit_mk_edit_text), false, "mk.edit") { vm.editingTextId = l.id }
         MarkupToolButton(Icons.Rounded.ContentCopy, stringResource(R.string.edit_mk_duplicate), false, "mk.duplicate") { vm.duplicateSelected() }
@@ -419,7 +419,7 @@ private val FontId.label: Int get() = when (this) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TextSheet(vm: EditorViewModel, l: TextLayer) {
+private fun TextSheet(vm: MarkupController, l: TextLayer) {
     val c = PM.colors
     var text by remember(l.id) { mutableStateOf(l.text) }
     ModalBottomSheet(onDismissRequest = { vm.updateLayer(l.copy(text = text), true); vm.editingTextId = null },
@@ -472,7 +472,7 @@ private fun AlignButton(icon: ImageVector, label: Int, sel: Boolean, onClick: ()
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun StickerSheet(vm: EditorViewModel) {
+private fun StickerSheet(vm: MarkupController) {
     val c = PM.colors
     ModalBottomSheet(onDismissRequest = { vm.showStickers = false }, modifier = Modifier.testTag("sticker.sheet")) {
         Column(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.l), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {

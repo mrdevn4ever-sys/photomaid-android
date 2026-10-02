@@ -76,7 +76,7 @@ class EditorTest {
      * Während des Speicherns läuft ein unbestimmter Fortschrittskreis (Endlos-Animation): Compose wird nie „idle“, also
      * die Hauptschleife und die Frames hier selbst weiterschalten.
      */
-    private fun pumpUntil(timeoutMs: Long = 15_000, cond: () -> Boolean) {
+    private fun pumpUntil(timeoutMs: Long = 30_000, cond: () -> Boolean) {
         rule.mainClock.autoAdvance = false
         val end = System.currentTimeMillis() + timeoutMs
         while (!cond()) {

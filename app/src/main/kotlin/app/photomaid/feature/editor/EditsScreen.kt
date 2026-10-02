@@ -45,6 +45,8 @@ import app.photomaid.R
 import app.photomaid.core.edit.EditRecord
 import app.photomaid.core.edit.SaveMode
 import app.photomaid.core.model.MediaKind
+import app.photomaid.core.edit.EditKind
+import androidx.compose.ui.res.pluralStringResource
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.Badge
@@ -91,10 +93,11 @@ fun EditsScreen(nav: Nav) {
     LaunchedEffect(records, token, reload) {
         rows = withContext(Dispatchers.IO) {
             val assets = app.allPhotos.assets(records.map { it.newId }).associateBy { it.id }
-            val originals = app.allPhotos.assets(records.map { it.sourceId }).associateBy { it.id }
+            val originals = app.allPhotos.assets(records.map { it.sourceId }.filter { it.isNotEmpty() }).associateBy { it.id }
             records.mapNotNull { r ->
                 val a = assets[r.newId] ?: return@mapNotNull null
                 val o = when {
+                    r.sourceId.isEmpty() -> OriginalState.GONE
                     originals.containsKey(r.sourceId) -> OriginalState.PRESENT
                     app.photos.isTrashed(r.sourceId) == true -> OriginalState.TRASHED
                     else -> OriginalState.GONE
@@ -155,11 +158,14 @@ private fun EditRowView(row: EditRow, busy: Boolean, open: () -> Unit, restore: 
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(row.asset.displayName ?: stringResource(if (row.asset.kind == MediaKind.VIDEO) R.string.video else R.string.photo),
                     style = AppTypography.body, color = c.textPrimary, maxLines = 1)
+                val collage = row.record.kind == EditKind.COLLAGE
                 Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalAlignment = Alignment.CenterVertically) {
-                    Badge(stringResource(if (replaced) R.string.edits_badge_replaced else R.string.edits_badge_copy), if (replaced) c.later else c.keep)
+                    if (collage) Badge(stringResource(R.string.edits_badge_collage), c.accent)
+                    else Badge(stringResource(if (replaced) R.string.edits_badge_replaced else R.string.edits_badge_copy), if (replaced) c.later else c.keep)
                     Text(DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(row.record.atMs)), style = AppTypography.footnote, color = c.textSecondary)
                 }
                 val origText = when {
+                    collage -> pluralStringResource(R.plurals.edits_collage_from, row.record.count, row.record.count)
                     replaced && row.original == OriginalState.TRASHED -> stringResource(R.string.edits_orig_trashed)
                     replaced && row.original == OriginalState.PRESENT -> stringResource(R.string.edits_orig_back)
                     !replaced && row.original == OriginalState.PRESENT -> stringResource(R.string.edits_orig_present)

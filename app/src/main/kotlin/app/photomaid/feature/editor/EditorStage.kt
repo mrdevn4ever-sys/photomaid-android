@@ -101,7 +101,7 @@ internal fun EditorStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
         when {
             src == null -> CircularProgressIndicator()
             vm.tab == EditorTab.CROP -> CropStage(vm)
-            vm.tab == EditorTab.MARKUP -> MarkupStage(vm, Modifier.fillMaxSize())
+            vm.tab == EditorTab.MARKUP -> MarkupStage(vm.markup, vm.resultPreview, vm.baseResult, vm.recipe.frame, Modifier.fillMaxSize())
             else -> ResultStage(vm, src.preview)
         }
     }

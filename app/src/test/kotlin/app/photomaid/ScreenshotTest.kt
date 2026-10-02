@@ -586,4 +586,39 @@ class ScreenshotTest {
         rule.onNode(androidx.compose.ui.test.hasTestTag("editor.slider") and androidx.compose.ui.test.hasAnyAncestor(androidx.compose.ui.test.hasTestTag("slider.FRAME")))
             .performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { it(6f) }
     } }
+
+    // Studio P3: Collage (Raster, Frei, Streifen), Speichern-Blatt, Studio-Tab, Medienauswahl.
+    private fun photoIds(n: Int) = lib.all.filter { it.kind == app.photomaid.core.model.MediaKind.PHOTO }.take(n).map { it.id }
+    private fun collage(name: String, a: AppModel, p: app.photomaid.core.studio.CollageProject, after: () -> Unit = {}) {
+        a.editEngine.io = kotlinx.coroutines.Dispatchers.Main; a.editEngine.parallel = false
+        rule.setContent { TestHost(a) { app.photomaid.feature.studio.CollageScreen(app.photomaid.feature.studio.CollageRequest("s", p, false), nav, pick = {}, onClose = {}) } }
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("collage.canvas").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitForIdle(); after(); Thread.sleep(150); rule.waitForIdle()
+        captureScreenRoboImage("build/outputs/roborazzi/$name.png")
+    }
+    @Test fun c01_collage_grid() = expApp().let { a -> collage("c01_collage_grid", a, app.photomaid.core.studio.CollageProject.create("c", photoIds(3))) { rule.onAllNodesWithTag("collage.cell")[1].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick); tap("ctab.PHOTO") } }
+    @Test fun c02_collage_grid_dark_pro() = expApp(pro = true, dark = true).let { a ->
+        collage("c02_collage_grid_dark", a, app.photomaid.core.studio.CollageProject.create("c", photoIds(5)).withTemplate("big:l")) { tap("ctab.SPACING") } }
+    @Test fun c03_collage_free() = expApp(pro = true).let { a ->
+        collage("c03_collage_free", a, app.photomaid.core.studio.CollageProject.create("c", photoIds(4), app.photomaid.core.studio.CollageKind.FREE)) }
+    @Test fun c04_collage_strip() = expApp().let { a ->
+        collage("c04_collage_strip", a, app.photomaid.core.studio.CollageProject.create("c", photoIds(3), app.photomaid.core.studio.CollageKind.STRIP)) }
+    @Test fun c05_collage_free_tier_pro_hint() = expApp().let { a ->
+        collage("c05_collage_pro_hint", a, app.photomaid.core.studio.CollageProject.create("c", photoIds(6))) { tap("ctab.BACKGROUND"); tap("cbg.blur") } }
+    @Test fun c06_collage_save_sheet() = expApp().let { a ->
+        collage("c06_collage_save_sheet", a, app.photomaid.core.studio.CollageProject.create("c", photoIds(2))) {
+            tap("collage.save"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("collage.sheet.save").fetchSemanticsNodes().isNotEmpty() } } }
+    @Test fun c07_studio_tab() = expApp().let { a ->
+        runBlocking { a.drafts.put(app.photomaid.feature.studio.Draft("d1", 1_700_000_000_000L, collage = app.photomaid.core.studio.CollageProject.create("d1", photoIds(3))), null, 3) }
+        shot("c07_studio_tab", a, waitTag = "studio.draft") { WithTabBar(AppTab.STUDIO) { app.photomaid.feature.studio.StudioScreen(nav) } }
+    }
+    @Test fun c08_picker() = expApp().let { a ->
+        shot("c08_picker", a, waitTag = "picker.grid") {
+            app.photomaid.feature.studio.MediaPickerScreen(app.photomaid.feature.studio.PickRequest("p", min = 2, max = 20, title = R.string.studio_pick_collage,
+                limitNote = "Free: bis 4 Fotos · Pro: bis 20 und frei angeordnet") {}, onClose = {})
+        }
+        rule.onAllNodesWithTag("picker.tile")[0].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick)
+        rule.onAllNodesWithTag("picker.tile")[2].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick)
+        rule.waitForIdle(); rule.onRoot().captureRoboImage("build/outputs/roborazzi/c08_picker_selected.png")
+    }
 }
