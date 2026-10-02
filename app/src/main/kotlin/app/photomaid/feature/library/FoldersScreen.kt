@@ -169,7 +169,7 @@ internal fun FoldersPane(nav: Nav, assets: List<MediaAsset>, query: String) {
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xxs),
                 horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalAlignment = Alignment.CenterVertically) {
                 Box {
-                    Chip(stringResource(settings.folderListSort.label), true, Modifier.testTag("lib.folders.sort"), icon = Icons.AutoMirrored.Rounded.Sort) { sortMenu = true }
+                    Chip(stringResource(settings.folderListSort.label), false, Modifier.testTag("lib.folders.sort"), icon = Icons.AutoMirrored.Rounded.Sort) { sortMenu = true }
                     DropdownMenu(sortMenu, onDismissRequest = { sortMenu = false }) {
                         for (s in FolderListSort.entries) DropdownMenuItem(text = { Text(stringResource(s.label)) },
                             leadingIcon = { if (s == settings.folderListSort) Icon(Icons.Rounded.Check, null) },
@@ -576,8 +576,8 @@ fun HiddenScreen(nav: Nav) {
                         }
                     }
                 }
-                if (settings.hiddenMedia.isNotEmpty()) Text(pluralStringResource(R.plurals.lib_hidden_media, ordered.size, ordered.size).uppercase(),
-                    style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+                if (settings.hiddenMedia.isNotEmpty()) Text(pluralStringResource(R.plurals.lib_hidden_media, ordered.size, ordered.size),
+                    style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary, modifier = Modifier.padding(start = AppSpacing.m))
             }
             when {
                 settings.hiddenFolders.isEmpty() && settings.hiddenMedia.isEmpty() -> Box(Modifier.fillMaxSize().padding(AppSpacing.pageMargin).testTag("hidden.empty"), contentAlignment = Alignment.Center) {

@@ -699,29 +699,29 @@ class ScreenshotTest {
         shot(name, a, waitTag = "lib.folder.row") { WithTabBar(AppTab.LIBRARY) { app.photomaid.feature.library.LibraryScreen(nav, app.photomaid.feature.library.LibraryMode.FOLDERS) } }
         after(); rule.waitForIdle(); rule.onRoot().captureRoboImage("build/outputs/roborazzi/$name.png")
     }
-    @Test fun h01_folders() = folderApp().let { folders("h01_folders", it) }
-    @Test fun h02_folders_expanded_dark() = folderApp(dark = true).let { folders("h02_folders_expanded_dark", it) {
+    @Test fun l01_folders() = folderApp().let { folders("l01_folders", it) }
+    @Test fun l02_folders_expanded_dark() = folderApp(dark = true).let { folders("l02_folders_expanded_dark", it) {
         rule.onAllNodesWithTag("lib.folder.expand").fetchSemanticsNodes().indices.reversed().forEach { i ->
             rule.onAllNodesWithTag("lib.folder.expand")[i].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick); rule.waitForIdle() } } }
-    @Test fun h03_folder_screen() = folderApp().let { a ->
-        shot("h03_folder_screen", a, waitTag = "lib.tile") { app.photomaid.feature.library.FolderScreen(app.photomaid.feature.library.FolderTarget.Path("Pictures/Urlaub/"), nav, onClose = {}) }
-        tap("folder.sort"); rule.waitForIdle(); captureScreenRoboImage("build/outputs/roborazzi/h04_folder_sort_menu.png")
+    @Test fun l03_folder_screen() = folderApp().let { a ->
+        shot("l03_folder_screen", a, waitTag = "lib.tile") { app.photomaid.feature.library.FolderScreen(app.photomaid.feature.library.FolderTarget.Path("Pictures/Urlaub/"), nav, onClose = {}) }
+        tap("folder.sort"); rule.waitForIdle(); captureScreenRoboImage("build/outputs/roborazzi/l04_folder_sort_menu.png")
     }
-    @Test fun h05_favorites_by_folder() = folderApp().let { shot("h05_favorites_by_folder", it, waitTag = "lib.tile") {
+    @Test fun l05_favorites_by_folder() = folderApp().let { shot("l05_favorites_by_folder", it, waitTag = "lib.tile") {
         WithTabBar(AppTab.LIBRARY) { app.photomaid.feature.library.LibraryScreen(nav, app.photomaid.feature.library.LibraryMode.FAVORITES) } } }
-    @Test fun h06_group_sheet() = folderApp().let { folders("h06_group_sheet", it) { tap("lib.groups.new")
+    @Test fun l06_group_sheet() = folderApp().let { folders("l06_group_sheet", it) { tap("lib.groups.new")
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("lib.groupsheet").fetchSemanticsNodes().isNotEmpty() }
         rule.onAllNodesWithTag("lib.group.pick")[1].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick); rule.waitForIdle()
-        captureScreenRoboImage("build/outputs/roborazzi/h06_group_sheet.png") } }
-    @Test fun h07_new_folder() = folderApp().let { folders("h07_new_folder", it) { tap("lib.folders.new")
+        captureScreenRoboImage("build/outputs/roborazzi/l06_group_sheet.png") } }
+    @Test fun l07_new_folder() = folderApp().let { folders("l07_new_folder", it) { tap("lib.folders.new")
         rule.waitUntil(5_000) { rule.onAllNodesWithTag("lib.newfolder").fetchSemanticsNodes().isNotEmpty() }
-        captureScreenRoboImage("build/outputs/roborazzi/h07_new_folder.png") } }
-    @Test fun h08_hidden() = folderApp().let { a ->
+        captureScreenRoboImage("build/outputs/roborazzi/l07_new_folder.png") } }
+    @Test fun l08_hidden() = folderApp().let { a ->
         runBlocking { app.photomaid.feature.library.setFolderHidden(a, "Pictures/Screenshots/", true)
             app.photomaid.feature.library.setMediaHidden(a, listOf(lib.all[1].id, lib.all[2].id), true) }
-        shot("h08_hidden", a, waitTag = "lib.tile") { app.photomaid.feature.library.HiddenScreen(nav) }
+        shot("l08_hidden", a, waitTag = "lib.tile") { app.photomaid.feature.library.HiddenScreen(nav) }
     }
-    @Test @Config(qualifiers = "ar-w393dp-h852dp-xxhdpi") fun h09_folders_rtl() = folderApp().let { folders("h09_folders_rtl", it) }
-    @Test @Config(qualifiers = "de-w320dp-h640dp-xxhdpi") fun h10_folders_320() = folderApp().let { folders("h10_folders_320", it) }
-    @Test fun h11_folders_font200() = folderApp().let { RuntimeEnvironment.setFontScale(2.0f); folders("h11_folders_font200", it) }
+    @Test @Config(qualifiers = "ar-w393dp-h852dp-xxhdpi") fun l09_folders_rtl() = folderApp().let { folders("l09_folders_rtl", it) }
+    @Test @Config(qualifiers = "de-w320dp-h640dp-xxhdpi") fun l10_folders_320() = folderApp().let { folders("l10_folders_320", it) }
+    @Test fun l11_folders_font200() = folderApp().let { RuntimeEnvironment.setFontScale(2.0f); folders("l11_folders_font200", it) }
 }
