@@ -1254,4 +1254,26 @@
         <item quantity="one">%1$d hidden item</item>
         <item quantity="other">%1$d hidden items</item>
     </plurals>
+    <string name="slideshow_start">Slideshow</string>
+    <string name="slideshow_from_here">Slideshow from here</string>
+    <string name="slideshow_next">Next</string>
+    <string name="slideshow_prev">Previous</string>
+    <string name="slideshow_pause">Pause</string>
+    <string name="slideshow_settings">Slideshow settings</string>
+    <string name="slideshow_end">End of slideshow</string>
+    <string name="slideshow_again">Play again</string>
+    <string name="slideshow_empty">Nothing to show here.</string>
+    <string name="slideshow_order">Order</string>
+    <string name="slideshow_order_chrono">Oldest first</string>
+    <string name="slideshow_order_random">Shuffle</string>
+    <string name="slideshow_order_albums">Album by album, shuffled</string>
+    <string name="slideshow_shuffle_within">Shuffle inside each album too</string>
+    <string name="slideshow_duration">Time per photo</string>
+    <string name="slideshow_seconds">%1$d s</string>
+    <string name="slideshow_transition">Transition</string>
+    <string name="slideshow_fade">Crossfade</string>
+    <string name="slideshow_cut">None</string>
+    <string name="slideshow_videos">Play videos (muted)</string>
+    <string name="slideshow_loop">Repeat</string>
+    <string name="slideshow_note">Watching is never a decision. The screen stays on during the slideshow.</string>
 </resources>

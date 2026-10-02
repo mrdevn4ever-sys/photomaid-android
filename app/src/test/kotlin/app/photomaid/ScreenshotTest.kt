@@ -66,6 +66,7 @@ import androidx.compose.foundation.layout.padding
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import androidx.compose.foundation.layout.Box
@@ -724,4 +725,29 @@ class ScreenshotTest {
     @Test @Config(qualifiers = "ar-w393dp-h852dp-xxhdpi") fun l09_folders_rtl() = folderApp().let { folders("l09_folders_rtl", it) }
     @Test @Config(qualifiers = "de-w320dp-h640dp-xxhdpi") fun l10_folders_320() = folderApp().let { folders("l10_folders_320", it) }
     @Test fun l11_folders_font200() = folderApp().let { RuntimeEnvironment.setFontScale(2.0f); folders("l11_folders_font200", it) }
+
+    // G3: Diashow und Video-Leiste im Betrachter.
+    @Test fun sl01_slideshow() = folderApp().let { a ->
+        val list = lib.all.filter { it.kind != app.photomaid.core.model.MediaKind.VIDEO }
+        shot("sl01_slideshow", a, waitTag = "slideshow.controls") { app.photomaid.feature.library.SlideshowScreen(app.photomaid.feature.library.SlideshowRequest("s", list), onClose = {}) }
+        rule.mainClock.autoAdvance = false
+        repeat(40) { shadowOf(android.os.Looper.getMainLooper()).idle(); rule.mainClock.advanceTimeByFrame(); Thread.sleep(25) }
+        rule.onRoot().captureRoboImage("build/outputs/roborazzi/sl01_slideshow.png")
+    }
+    @Test fun sl02_slideshow_settings_dark() = folderApp(dark = true).let { a ->
+        runBlocking { a.updateSettings { it.copy(slideshow = app.photomaid.core.library.SlideshowSettings(order = app.photomaid.core.library.SlideshowOrder.ALBUMS_RANDOM)) } }
+        shot("sl02_slideshow_settings_dark", a, waitTag = "slideshow.controls") { app.photomaid.feature.library.SlideshowScreen(app.photomaid.feature.library.SlideshowRequest("s", lib.all), onClose = {}) }
+        tap("slideshow.settings"); rule.waitUntil(5_000) { rule.onAllNodesWithTag("slideshow.sheet").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitForIdle(); captureScreenRoboImage("build/outputs/roborazzi/sl02_slideshow_settings_dark.png")
+    }
+    @Test fun sl03_viewer_video_bar() = expApp().let { a ->
+        val list = lib.all.sortedByDescending { it.creationDate }
+        val vi = list.indexOfFirst { it.kind == app.photomaid.core.model.MediaKind.VIDEO }
+        shot("sl03_viewer_video_bar", a, waitTag = "viewer.video") { app.photomaid.feature.library.ViewerScreen(app.photomaid.feature.library.ViewerRequest("v", list, vi), nav, onClose = {}) }
+    }
+    @Test @Config(qualifiers = "ar-w393dp-h852dp-xxhdpi") fun sl04_viewer_video_bar_rtl() = expApp().let { a ->
+        val list = lib.all.sortedByDescending { it.creationDate }
+        val vi = list.indexOfFirst { it.kind == app.photomaid.core.model.MediaKind.VIDEO }
+        shot("sl04_viewer_video_bar_rtl", a, waitTag = "viewer.video") { app.photomaid.feature.library.ViewerScreen(app.photomaid.feature.library.ViewerRequest("v", list, vi), nav, onClose = {}) }
+    }
 }

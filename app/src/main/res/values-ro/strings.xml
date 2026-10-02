@@ -1304,4 +1304,26 @@
         <item quantity="few">%1$d elemente ascunse</item>
         <item quantity="other">%1$d de elemente ascunse</item>
     </plurals>
+    <string name="slideshow_start">Prezentare</string>
+    <string name="slideshow_from_here">Prezentare de aici</string>
+    <string name="slideshow_next">Următorul</string>
+    <string name="slideshow_prev">Anterior</string>
+    <string name="slideshow_pause">Pauză</string>
+    <string name="slideshow_settings">Setări prezentare</string>
+    <string name="slideshow_end">Sfârșitul prezentării</string>
+    <string name="slideshow_again">Din nou</string>
+    <string name="slideshow_empty">Nu e nimic de afișat aici.</string>
+    <string name="slideshow_order">Ordine</string>
+    <string name="slideshow_order_chrono">Cele mai vechi întâi</string>
+    <string name="slideshow_order_random">Aleatoriu</string>
+    <string name="slideshow_order_albums">Album cu album, aleatoriu</string>
+    <string name="slideshow_shuffle_within">Aleatoriu și în interiorul albumului</string>
+    <string name="slideshow_duration">Durată pe fotografie</string>
+    <string name="slideshow_seconds">%1$d s</string>
+    <string name="slideshow_transition">Tranziție</string>
+    <string name="slideshow_fade">Estompare</string>
+    <string name="slideshow_cut">Fără</string>
+    <string name="slideshow_videos">Redă videoclipurile (fără sunet)</string>
+    <string name="slideshow_loop">Repetă</string>
+    <string name="slideshow_note">Vizionarea nu este niciodată o decizie. Ecranul rămâne aprins în timpul prezentării.</string>
 </resources>

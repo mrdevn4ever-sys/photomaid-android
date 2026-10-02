@@ -81,6 +81,8 @@ Keine Werbung im Studio. Medienauswahl speichert nichts.
 | Eigene Gruppen (Name + Ordnerpfade) | App-Einstellungen | Ordner zusammen anzeigen; nichts verschoben oder kopiert | nein |
 | Kamera-Modell (EXIF `Make`/`Model`) | nur im Arbeitsspeicher der Sitzung | Suche, Info-Blatt | nein; nie gespeichert |
 | Suchbegriffe | nur im Arbeitsspeicher | Suche (ohne Akzente) | nein |
+| Diashow-Einstellungen (Reihenfolge, Dauer, Übergang, Videos, Wiederholen) | App-Einstellungen (keine Medien-IDs) | Diashow | nein |
+| Media-Session (Kopfhörer-Tasten) | nur im Prozess, ohne Titel/Bild/Pfad | Wiedergabe/Pause | nein; kein Hintergrunddienst, keine Sperrbildschirm-Anzeige |
 
 Keine Werbung in der Mediathek-Verwaltung; Werbe-Anfragen erhalten nie Medien, Namen, Pfade oder IDs.
 

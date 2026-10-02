@@ -1354,4 +1354,26 @@
         <item quantity="many">%1$d скрытых файлов</item>
         <item quantity="other">%1$d скрытого файла</item>
     </plurals>
+    <string name="slideshow_start">Слайд-шоу</string>
+    <string name="slideshow_from_here">Слайд-шоу отсюда</string>
+    <string name="slideshow_next">Далее</string>
+    <string name="slideshow_prev">Назад</string>
+    <string name="slideshow_pause">Пауза</string>
+    <string name="slideshow_settings">Настройки слайд-шоу</string>
+    <string name="slideshow_end">Слайд-шоу закончено</string>
+    <string name="slideshow_again">Ещё раз</string>
+    <string name="slideshow_empty">Здесь нечего показать.</string>
+    <string name="slideshow_order">Порядок</string>
+    <string name="slideshow_order_chrono">Сначала старые</string>
+    <string name="slideshow_order_random">Случайно</string>
+    <string name="slideshow_order_albums">Альбом за альбомом случайно</string>
+    <string name="slideshow_shuffle_within">Случайно и внутри альбома</string>
+    <string name="slideshow_duration">Время на фото</string>
+    <string name="slideshow_seconds">%1$d с</string>
+    <string name="slideshow_transition">Переход</string>
+    <string name="slideshow_fade">Растворение</string>
+    <string name="slideshow_cut">Без перехода</string>
+    <string name="slideshow_videos">Воспроизводить видео (без звука)</string>
+    <string name="slideshow_loop">Повторять</string>
+    <string name="slideshow_note">Просмотр никогда не является решением. Во время слайд-шоу экран не гаснет.</string>
 </resources>

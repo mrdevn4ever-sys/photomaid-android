@@ -117,7 +117,7 @@ class LibraryTest {
         rule.setContent { TestHost(app) { ViewerScreen(ViewerRequest("v", list, 0), nav, onClose = { closed = true }) } }
         pumpUntil { count("viewer.index") == 1 }
         rule.onNodeWithTag("viewer").performTouchInput { swipeLeft() }
-        pumpUntil { rule.onAllNodes(androidx.compose.ui.test.hasText("2 / ${list.size}")).fetchSemanticsNodes().isNotEmpty() }
+        pumpUntil { rule.onAllNodes(androidx.compose.ui.test.hasText("2 / ${list.size}", substring = true)).fetchSemanticsNodes().isNotEmpty() }
         assertTrue(records().isEmpty())
         click("viewer.more"); pumpUntil { count("viewer.trash") == 1 }
         click("viewer.trash")

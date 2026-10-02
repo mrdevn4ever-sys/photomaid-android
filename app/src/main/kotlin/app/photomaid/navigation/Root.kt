@@ -8,6 +8,9 @@ import app.photomaid.feature.settings.ExcludedFoldersScreen
 import app.photomaid.feature.library.FolderScreen
 import app.photomaid.feature.library.FolderTarget
 import app.photomaid.feature.library.HiddenScreen
+import app.photomaid.feature.library.SlideshowRequest
+import app.photomaid.feature.library.SlideshowRequests
+import app.photomaid.feature.library.SlideshowScreen
 import app.photomaid.design.CoachStep
 import app.photomaid.design.CoachHost
 import app.photomaid.design.coachTarget
@@ -150,6 +153,8 @@ interface Nav {
     fun openViewer(request: ViewerRequest) {}
     /** Mediathek: Ordner bzw. eigene Gruppe öffnen. */
     fun openFolder(target: FolderTarget) {}
+    /** Diashow (nur Ansehen). */
+    fun openSlideshow(request: SlideshowRequest) {}
     fun openSettings()
     fun openPro()
     fun openPrivacy()
@@ -165,7 +170,7 @@ object Routes {
     const val PRIVACY = "privacy"; const val HELP = "help"; const val BASKET_MODAL = "basketModal"
     const val SOURCES_MODAL = "sourcesModal"; const val EXCLUDED = "excluded"; const val MONTHS = "months"
     const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"; const val STUDIO = "studio"
-    const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"; const val FOLDER = "folder/{target}"; const val HIDDEN = "hidden"
+    const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"; const val FOLDER = "folder/{target}"; const val HIDDEN = "hidden"; const val SLIDESHOW = "slideshow/{id}"
     const val PICKER = "picker/{id}"; const val COLLAGE = "collage/{id}"
     fun editor(id: String) = "editor/$id"
     fun grid(id: String) = "grid/$id"
@@ -258,6 +263,9 @@ private fun RootNav(app: AppModel) {
             override fun openViewer(request: ViewerRequest) {
                 ViewerRequests.map[request.id] = request; root.navigate("viewer/${request.id}")
             }
+            override fun openSlideshow(request: SlideshowRequest) {
+                SlideshowRequests.map[request.id] = request; root.navigate("slideshow/${request.id}")
+            }
             override fun openFolder(target: FolderTarget) {
                 root.navigate("folder/" + android.net.Uri.encode(target.encode()))
             }
@@ -346,6 +354,14 @@ private fun RootNav(app: AppModel) {
             else FolderScreen(target, nav, onClose = { close() })
         }
         composable(Routes.HIDDEN) { HiddenScreen(nav) }
+        composable(Routes.SLIDESHOW) { entry ->
+            val key = entry.arguments?.getString("id")
+            val req = key?.let { SlideshowRequests.map[it] }
+            RemoveOnDestroy(entry) { key?.let { SlideshowRequests.map.remove(it) } }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() }
+            else SlideshowScreen(req, onClose = { close() })
+        }
         composable(Routes.COLLAGE) { entry ->
             val key = entry.arguments?.getString("id")
             val req = key?.let { CollageRequests.map[it] }

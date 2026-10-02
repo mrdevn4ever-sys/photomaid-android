@@ -207,7 +207,7 @@ class FoldersTest {
         pumpUntil { count("viewer.index") == 1 }
         click("viewer.more"); pumpUntil { count("viewer.hide") == 1 }
         click("viewer.hide")
-        pumpUntil { count("viewer.hidden") == 1 && rule.onAllNodes(hasText("1 / ${list.size - 1}")).fetchSemanticsNodes().isNotEmpty() }
+        pumpUntil { count("viewer.hidden") == 1 && rule.onAllNodes(hasText("1 / ${list.size - 1}", substring = true)).fetchSemanticsNodes().isNotEmpty() }
         assertTrue(list[0].id in app.settings.value.hiddenMedia)
         click("viewer.hidden.undo")
         // Wieder da; der Betrachter bleibt beim gerade gezeigten Medium.

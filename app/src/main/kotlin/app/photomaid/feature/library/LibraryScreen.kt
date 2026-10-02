@@ -22,6 +22,7 @@ import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.PhotoLibrary
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Slideshow
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -136,6 +137,8 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
             Column(Modifier.padding(horizontal = AppSpacing.pageMargin)) {
                 if (selection.isEmpty()) LargeTitleHeader(stringResource(R.string.tab_library)) {
                     Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
+                        if (mode != LibraryMode.FOLDERS && ordered.isNotEmpty()) GlassIconButton(Icons.Rounded.Slideshow, stringResource(R.string.slideshow_start),
+                            Modifier.testTag("lib.slideshow")) { nav.openSlideshow(SlideshowRequest(UUID.randomUUID().toString(), ordered)) }
                         GlassIconButton(Icons.Rounded.Search, stringResource(R.string.lib_search), Modifier.testTag("lib.search")) { searching = !searching; if (!searching) query = "" }
                         GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
                     }

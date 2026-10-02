@@ -59,6 +59,9 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Ordnerbaum, Sortierung je Ordner, Gruppen (nur Name + Pfade), Neuer Ordner (Medien wählen → verschieben). „In PhotoMaid
   ausblenden“ (`hiddenMedia`/`hiddenFolders`) gilt für Fotos UND Aufräumen (`AppModel.photos`); der Tab „Fotos“ nutzt
   `AppModel.visiblePhotos` (vom Aufräumen ausgenommene Ordner bleiben dort sichtbar). Kein Tresor, Dateien unverändert.
+  G3: Kopfhörer-Tasten über `MediaSession` auf `FeedPlayer.ButtonsOnly` (nur Play/Pause/Spulen, NIE „Weiter“ – eine
+  Taste ist nie ein Schritt oder eine Entscheidung). Diashow (`feature/library/SlideshowScreen.kt`, Kern
+  `core/.../library/Slideshow.kt`) ist nur Ansehen. Mediensteuerung/Zeitleisten werden in RTL nicht gespiegelt.
   Plan G1–G4: `docs/GALLERY_PLAN_2026-10.md`.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen

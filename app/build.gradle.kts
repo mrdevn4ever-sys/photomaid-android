@@ -131,6 +131,7 @@ dependencies {
     implementation(libs.media3.ui.compose)
     implementation(libs.media3.transformer)
     implementation(libs.media3.effect)
+    implementation(libs.media3.session)
     implementation(libs.androidx.exifinterface)
     implementation(libs.coil.compose)
     implementation(libs.coil.video)

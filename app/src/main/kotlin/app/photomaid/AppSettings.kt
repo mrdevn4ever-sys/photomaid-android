@@ -80,4 +80,6 @@ data class AppSettingsData(
     val folderGroups: List<app.photomaid.core.library.FolderGroup> = emptyList(),
     /** Favoriten-Ansicht: nach Ordnern gruppiert (Standard) oder chronologisch. */
     val favoritesByFolder: Boolean = true,
+    /** Diashow: Reihenfolge, Dauer, Übergang, Videos, Wiederholen (keine Medien-IDs). */
+    val slideshow: app.photomaid.core.library.SlideshowSettings = app.photomaid.core.library.SlideshowSettings(),
 )

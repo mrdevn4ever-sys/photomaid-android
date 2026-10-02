@@ -1204,4 +1204,26 @@
     <plurals name="lib_hidden_media">
         <item quantity="other">%1$d 个隐藏项</item>
     </plurals>
+    <string name="slideshow_start">幻灯片</string>
+    <string name="slideshow_from_here">从此处开始幻灯片</string>
+    <string name="slideshow_next">下一张</string>
+    <string name="slideshow_prev">上一张</string>
+    <string name="slideshow_pause">暂停</string>
+    <string name="slideshow_settings">幻灯片设置</string>
+    <string name="slideshow_end">幻灯片已结束</string>
+    <string name="slideshow_again">再放一遍</string>
+    <string name="slideshow_empty">这里没有可显示的内容。</string>
+    <string name="slideshow_order">顺序</string>
+    <string name="slideshow_order_chrono">最早优先</string>
+    <string name="slideshow_order_random">随机</string>
+    <string name="slideshow_order_albums">按相册随机</string>
+    <string name="slideshow_shuffle_within">相册内也随机</string>
+    <string name="slideshow_duration">每张照片时长</string>
+    <string name="slideshow_seconds">%1$d 秒</string>
+    <string name="slideshow_transition">过渡</string>
+    <string name="slideshow_fade">淡入淡出</string>
+    <string name="slideshow_cut">无</string>
+    <string name="slideshow_videos">播放视频（静音）</string>
+    <string name="slideshow_loop">循环播放</string>
+    <string name="slideshow_note">观看绝不会做出任何决定。幻灯片播放期间屏幕保持常亮。</string>
 </resources>

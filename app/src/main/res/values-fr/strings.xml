@@ -1304,4 +1304,26 @@
         <item quantity="many">%1$d éléments masqués</item>
         <item quantity="other">%1$d éléments masqués</item>
     </plurals>
+    <string name="slideshow_start">Diaporama</string>
+    <string name="slideshow_from_here">Diaporama à partir d’ici</string>
+    <string name="slideshow_next">Suivant</string>
+    <string name="slideshow_prev">Précédent</string>
+    <string name="slideshow_pause">Pause</string>
+    <string name="slideshow_settings">Réglages du diaporama</string>
+    <string name="slideshow_end">Fin du diaporama</string>
+    <string name="slideshow_again">Recommencer</string>
+    <string name="slideshow_empty">Rien à afficher ici.</string>
+    <string name="slideshow_order">Ordre</string>
+    <string name="slideshow_order_chrono">Plus anciennes d’abord</string>
+    <string name="slideshow_order_random">Aléatoire</string>
+    <string name="slideshow_order_albums">Album par album, aléatoire</string>
+    <string name="slideshow_shuffle_within">Aléatoire aussi dans chaque album</string>
+    <string name="slideshow_duration">Durée par photo</string>
+    <string name="slideshow_seconds">%1$d s</string>
+    <string name="slideshow_transition">Transition</string>
+    <string name="slideshow_fade">Fondu</string>
+    <string name="slideshow_cut">Aucune</string>
+    <string name="slideshow_videos">Lire les vidéos (sans son)</string>
+    <string name="slideshow_loop">Répéter</string>
+    <string name="slideshow_note">Regarder n’est jamais une décision. L’écran reste allumé pendant le diaporama.</string>
 </resources>

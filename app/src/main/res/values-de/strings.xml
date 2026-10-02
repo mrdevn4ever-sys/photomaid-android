@@ -1254,4 +1254,26 @@
         <item quantity="one">%1$d ausgeblendetes Medium</item>
         <item quantity="other">%1$d ausgeblendete Medien</item>
     </plurals>
+    <string name="slideshow_start">Diashow</string>
+    <string name="slideshow_from_here">Diashow ab hier</string>
+    <string name="slideshow_next">Weiter</string>
+    <string name="slideshow_prev">Zurück</string>
+    <string name="slideshow_pause">Pause</string>
+    <string name="slideshow_settings">Diashow-Einstellungen</string>
+    <string name="slideshow_end">Diashow zu Ende</string>
+    <string name="slideshow_again">Noch einmal</string>
+    <string name="slideshow_empty">Hier gibt es nichts zu zeigen.</string>
+    <string name="slideshow_order">Reihenfolge</string>
+    <string name="slideshow_order_chrono">Älteste zuerst</string>
+    <string name="slideshow_order_random">Zufällig</string>
+    <string name="slideshow_order_albums">Album für Album zufällig</string>
+    <string name="slideshow_shuffle_within">Auch innerhalb des Albums zufällig</string>
+    <string name="slideshow_duration">Dauer je Foto</string>
+    <string name="slideshow_seconds">%1$d s</string>
+    <string name="slideshow_transition">Übergang</string>
+    <string name="slideshow_fade">Überblenden</string>
+    <string name="slideshow_cut">Keiner</string>
+    <string name="slideshow_videos">Videos abspielen (stumm)</string>
+    <string name="slideshow_loop">Wiederholen</string>
+    <string name="slideshow_note">Ansehen ist nie eine Entscheidung. Während der Diashow bleibt der Bildschirm an.</string>
 </resources>

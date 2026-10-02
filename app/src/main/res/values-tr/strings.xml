@@ -1254,4 +1254,26 @@
         <item quantity="one">%1$d gizli öğe</item>
         <item quantity="other">%1$d gizli öğe</item>
     </plurals>
+    <string name="slideshow_start">Slayt gösterisi</string>
+    <string name="slideshow_from_here">Buradan slayt gösterisi</string>
+    <string name="slideshow_next">Sonraki</string>
+    <string name="slideshow_prev">Önceki</string>
+    <string name="slideshow_pause">Duraklat</string>
+    <string name="slideshow_settings">Slayt gösterisi ayarları</string>
+    <string name="slideshow_end">Slayt gösterisi bitti</string>
+    <string name="slideshow_again">Yeniden oynat</string>
+    <string name="slideshow_empty">Burada gösterilecek bir şey yok.</string>
+    <string name="slideshow_order">Sıra</string>
+    <string name="slideshow_order_chrono">Önce en eski</string>
+    <string name="slideshow_order_random">Karışık</string>
+    <string name="slideshow_order_albums">Albüm albüm karışık</string>
+    <string name="slideshow_shuffle_within">Albüm içinde de karışık</string>
+    <string name="slideshow_duration">Fotoğraf başına süre</string>
+    <string name="slideshow_seconds">%1$d sn</string>
+    <string name="slideshow_transition">Geçiş</string>
+    <string name="slideshow_fade">Çapraz geçiş</string>
+    <string name="slideshow_cut">Yok</string>
+    <string name="slideshow_videos">Videoları oynat (sessiz)</string>
+    <string name="slideshow_loop">Tekrarla</string>
+    <string name="slideshow_note">İzlemek asla bir karar değildir. Slayt gösterisi sırasında ekran açık kalır.</string>
 </resources>

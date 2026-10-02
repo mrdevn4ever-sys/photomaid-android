@@ -1354,4 +1354,26 @@
         <item quantity="many">%1$d ukrytych elementów</item>
         <item quantity="other">%1$d ukrytego elementu</item>
     </plurals>
+    <string name="slideshow_start">Pokaz slajdów</string>
+    <string name="slideshow_from_here">Pokaz slajdów od tego miejsca</string>
+    <string name="slideshow_next">Dalej</string>
+    <string name="slideshow_prev">Wstecz</string>
+    <string name="slideshow_pause">Pauza</string>
+    <string name="slideshow_settings">Ustawienia pokazu</string>
+    <string name="slideshow_end">Koniec pokazu</string>
+    <string name="slideshow_again">Jeszcze raz</string>
+    <string name="slideshow_empty">Nie ma tu nic do pokazania.</string>
+    <string name="slideshow_order">Kolejność</string>
+    <string name="slideshow_order_chrono">Najstarsze najpierw</string>
+    <string name="slideshow_order_random">Losowo</string>
+    <string name="slideshow_order_albums">Album po albumie losowo</string>
+    <string name="slideshow_shuffle_within">Losowo także w albumie</string>
+    <string name="slideshow_duration">Czas na zdjęcie</string>
+    <string name="slideshow_seconds">%1$d s</string>
+    <string name="slideshow_transition">Przejście</string>
+    <string name="slideshow_fade">Przenikanie</string>
+    <string name="slideshow_cut">Brak</string>
+    <string name="slideshow_videos">Odtwarzaj filmy (bez dźwięku)</string>
+    <string name="slideshow_loop">Powtarzaj</string>
+    <string name="slideshow_note">Oglądanie nigdy nie jest decyzją. Podczas pokazu ekran pozostaje włączony.</string>
 </resources>

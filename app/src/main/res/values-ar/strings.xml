@@ -1454,4 +1454,26 @@
         <item quantity="many">%1$d عنصرًا مخفيًا</item>
         <item quantity="other">%1$d عنصر مخفي</item>
     </plurals>
+    <string name="slideshow_start">عرض شرائح</string>
+    <string name="slideshow_from_here">عرض شرائح من هنا</string>
+    <string name="slideshow_next">التالي</string>
+    <string name="slideshow_prev">السابق</string>
+    <string name="slideshow_pause">إيقاف مؤقت</string>
+    <string name="slideshow_settings">إعدادات عرض الشرائح</string>
+    <string name="slideshow_end">انتهى عرض الشرائح</string>
+    <string name="slideshow_again">تشغيل مجددًا</string>
+    <string name="slideshow_empty">لا يوجد ما يُعرض هنا.</string>
+    <string name="slideshow_order">الترتيب</string>
+    <string name="slideshow_order_chrono">الأقدم أولًا</string>
+    <string name="slideshow_order_random">عشوائي</string>
+    <string name="slideshow_order_albums">ألبومًا ألبومًا عشوائيًا</string>
+    <string name="slideshow_shuffle_within">عشوائي داخل كل ألبوم أيضًا</string>
+    <string name="slideshow_duration">المدة لكل صورة</string>
+    <string name="slideshow_seconds">%1$d ث</string>
+    <string name="slideshow_transition">الانتقال</string>
+    <string name="slideshow_fade">تلاشٍ متداخل</string>
+    <string name="slideshow_cut">بلا</string>
+    <string name="slideshow_videos">تشغيل الفيديوهات (بلا صوت)</string>
+    <string name="slideshow_loop">تكرار</string>
+    <string name="slideshow_note">المشاهدة ليست قرارًا أبدًا. تبقى الشاشة مضاءة أثناء عرض الشرائح.</string>
 </resources>

@@ -40,6 +40,7 @@ import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FolderOff
 import androidx.compose.material.icons.rounded.FolderSpecial
 import androidx.compose.material.icons.rounded.MoreHoriz
+import androidx.compose.material.icons.rounded.Slideshow
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Workspaces
@@ -468,6 +469,9 @@ fun FolderScreen(target: FolderTarget, nav: Nav, onClose: () -> Unit) {
                         menu = false
                         nav.openFeed(FeedRequest(FeedRequest.Source.Items(app.cleanupCandidates(ordered).map { it.reference }, R.string.lib_feed_title)))
                     })
+                DropdownMenuItem(text = { Text(stringResource(R.string.slideshow_start)) }, leadingIcon = { Icon(Icons.Rounded.Slideshow, null) },
+                    enabled = ordered.isNotEmpty(), modifier = Modifier.testTag("folder.slideshow"), onClick = {
+                        menu = false; nav.openSlideshow(SlideshowRequest(UUID.randomUUID().toString(), ordered)) })
                 if (group != null) {
                     GroupMenuItems(group, onEdit = { menu = false; groupEdit = group }, onDelete = { menu = false; scope.launch { deleteGroup(app, group.id) } })
                 } else DropdownMenuItem(text = { Text(stringResource(R.string.lib_hide)) }, leadingIcon = { Icon(Icons.Rounded.VisibilityOff, null) },

@@ -38,6 +38,9 @@ import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.Slideshow
+import androidx.compose.material.icons.automirrored.rounded.VolumeOff
+import androidx.compose.material.icons.automirrored.rounded.VolumeUp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -165,14 +168,16 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
                         Text(DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(d.toEpochMilli())), style = AppTypography.footnote, color = Color.White.copy(alpha = 0.8f))
                     }
                 }
-                Text("${pager.currentPage + 1} / ${assets.size}", Modifier.glassCapsule(elevation = 2.dp).padding(horizontal = AppSpacing.s, vertical = 6.dp).testTag("viewer.index"),
+                Text("\u2066${pager.currentPage + 1} / ${assets.size}\u2069", Modifier.glassCapsule(elevation = 2.dp).padding(horizontal = AppSpacing.s, vertical = 6.dp).testTag("viewer.index"),
                     style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = PM.colors.textPrimary)
             }
         }
         // Aktionsleiste (außerhalb der Bildfläche – ein Tipp hier blättert nie)
         AnimatedVisibility(chrome && current != null, Modifier.align(Alignment.BottomCenter), enter = fadeIn(), exit = fadeOut()) {
             val a = current ?: return@AnimatedVisibility
-            Row(Modifier.navigationBarsPadding().padding(AppSpacing.s).glassCapsule(elevation = 4.dp).padding(horizontal = AppSpacing.xxs).testTag("viewer.actions"),
+            Column(Modifier.navigationBarsPadding(), horizontalAlignment = Alignment.CenterHorizontally) {
+            if (a.kind == MediaKind.VIDEO) VideoControls(a)
+            Row(Modifier.padding(AppSpacing.s).glassCapsule(elevation = 4.dp).padding(horizontal = AppSpacing.xxs).testTag("viewer.actions"),
                 verticalAlignment = Alignment.CenterVertically) {
                 GlassIconButton(if (a.isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder, stringResource(if (a.isFavorite) R.string.fav_remove else R.string.fav_add),
                     Modifier.testTag("viewer.fav"), quiet = true) {
@@ -204,6 +209,11 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
                                 val rest = app.cleanupCandidates(assets.drop(pager.currentPage)).map { it.reference }
                                 nav.openFeed(FeedRequest(FeedRequest.Source.Items(rest, R.string.lib_feed_title)))
                             })
+                        DropdownMenuItem(text = { Text(stringResource(R.string.slideshow_from_here)) }, leadingIcon = { Icon(Icons.Rounded.Slideshow, null) },
+                            modifier = Modifier.testTag("viewer.slideshow"), onClick = {
+                                menu = false; app.player.stop()
+                                nav.openSlideshow(SlideshowRequest(java.util.UUID.randomUUID().toString(), assets, a.id))
+                            })
                         DropdownMenuItem(text = { Text(stringResource(R.string.lib_hide)) }, leadingIcon = { Icon(Icons.Rounded.VisibilityOff, null) },
                             modifier = Modifier.testTag("viewer.hide"), onClick = {
                                 menu = false; undo = null
@@ -218,8 +228,10 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
                     }
                 }
             }
+            }
         }
         // „In den Papierkorb gelegt · Rückgängig“ (nichts gelöscht)
+
         undo?.let { before ->
             Row(Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 84.dp).glassCapsule(elevation = 6.dp)
                 .padding(start = AppSpacing.m, end = AppSpacing.xxs).testTag("viewer.undo"), verticalAlignment = Alignment.CenterVertically) {
@@ -254,6 +266,54 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
             }
         }, onDismiss = { folderSheet = false })
     message?.let { m -> NoticeDialog(m) { message = null } }
+}
+
+/**
+ * Video-Leiste im Betrachter: Wiedergabe/Pause, Zeit, Spulen, Ton, Tempo. Ansehen ist nie eine Entscheidung; das
+ * Videoende bleibt beim selben Medium. Kopfhörer-Tasten steuern denselben Player (nur Wiedergabe/Pause).
+ */
+@Composable
+private fun VideoControls(a: MediaAsset) {
+    val app = LocalApp.current
+    val c = PM.colors
+    val state by app.player.state.collectAsState()
+    val mine = state.itemID == a.id
+    var pos by remember(a.id) { mutableStateOf(0L to (a.duration * 1000).toLong()) }
+    var dragging by remember { mutableStateOf<Float?>(null) }
+    LaunchedEffect(mine, state.isPlaying) {
+        while (mine) { app.player.positionMs()?.let { pos = it }; app.player.tick(); if (!state.isPlaying) break; kotlinx.coroutines.delay(250) }
+    }
+    val total = pos.second.coerceAtLeast(1)
+    val frac = dragging ?: if (mine) (pos.first.toFloat() / total).coerceIn(0f, 1f) else 0f
+    fun ensure(play: Boolean) {
+        if (!mine) { app.player.load(a.id, a.uri, autoplay = play, durationSec = a.duration); if (app.player.state.value.isMuted) app.player.toggleMute() }
+        else if (play) app.player.play() else app.player.pause()
+    }
+    // Mediensteuerung und Zeitleiste werden auch in RTL nicht gespiegelt (Material-Richtlinie, wie Videoplayer üblich).
+    androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Ltr) {
+    Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.s).glassCapsule(elevation = 4.dp).padding(horizontal = AppSpacing.xxs).testTag("viewer.video"),
+        verticalAlignment = Alignment.CenterVertically) {
+        val playing = mine && state.isPlaying
+        GlassIconButton(if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow, stringResource(if (playing) R.string.slideshow_pause else R.string.play),
+            Modifier.testTag("viewer.video.play"), quiet = true) { ensure(!playing) }
+        Text(clock(if (dragging != null) (frac * total).toLong() else if (mine) pos.first else 0L), style = AppTypography.caption.copy(fontFeatureSettings = "tnum"), color = c.textPrimary)
+        androidx.compose.material3.Slider(frac, { dragging = it }, Modifier.weight(1f).padding(horizontal = AppSpacing.xxs).testTag("viewer.video.seek"),
+            onValueChangeFinished = { dragging?.let { f -> if (!mine) ensure(false); app.player.seek(f) }; dragging = null },
+            colors = androidx.compose.material3.SliderDefaults.colors(thumbColor = c.accent, activeTrackColor = c.accent,
+                inactiveTrackColor = c.textSecondary.copy(alpha = 0.3f), activeTickColor = Color.Transparent, inactiveTickColor = Color.Transparent))
+        Text(clock(total), style = AppTypography.caption.copy(fontFeatureSettings = "tnum"), color = c.textSecondary)
+        GlassIconButton(if (!mine || state.isMuted) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp,
+            stringResource(if (!mine || state.isMuted) R.string.unmute else R.string.mute), Modifier.testTag("viewer.video.mute"), quiet = true, enabled = mine) {
+            app.player.toggleMute() }
+        val speeds = listOf(1f, 1.5f, 2f, 0.5f)
+        val sp = if (mine) state.speed else 1f
+        val speedText = (if (sp % 1f == 0f) "${sp.toInt()}" else java.text.NumberFormat.getInstance().format(sp)) + "×"
+        TextButton({ if (!mine) ensure(false); app.player.setSpeed(speeds[(speeds.indexOf(sp).coerceAtLeast(0) + 1) % speeds.size]) },
+            Modifier.testTag("viewer.video.speed").semantics { contentDescription = speedText }) {
+            Text(speedText, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+        }
+    }
+    }
 }
 
 /** Eine Seite: Foto mit Zoom bzw. Video mit Abspielen. Runterziehen (ohne Zoom) schließt. */

@@ -1204,4 +1204,26 @@
     <plurals name="lib_hidden_media">
         <item quantity="other">숨긴 항목 %1$d개</item>
     </plurals>
+    <string name="slideshow_start">슬라이드쇼</string>
+    <string name="slideshow_from_here">여기서부터 슬라이드쇼</string>
+    <string name="slideshow_next">다음</string>
+    <string name="slideshow_prev">이전</string>
+    <string name="slideshow_pause">일시정지</string>
+    <string name="slideshow_settings">슬라이드쇼 설정</string>
+    <string name="slideshow_end">슬라이드쇼가 끝났습니다</string>
+    <string name="slideshow_again">다시 보기</string>
+    <string name="slideshow_empty">표시할 항목이 없습니다.</string>
+    <string name="slideshow_order">순서</string>
+    <string name="slideshow_order_chrono">오래된순</string>
+    <string name="slideshow_order_random">무작위</string>
+    <string name="slideshow_order_albums">앨범별 무작위</string>
+    <string name="slideshow_shuffle_within">앨범 안에서도 무작위</string>
+    <string name="slideshow_duration">사진당 시간</string>
+    <string name="slideshow_seconds">%1$d초</string>
+    <string name="slideshow_transition">전환 효과</string>
+    <string name="slideshow_fade">크로스페이드</string>
+    <string name="slideshow_cut">없음</string>
+    <string name="slideshow_videos">동영상 재생(음소거)</string>
+    <string name="slideshow_loop">반복</string>
+    <string name="slideshow_note">보는 것은 결정이 아닙니다. 슬라이드쇼 중에는 화면이 켜져 있습니다.</string>
 </resources>

@@ -1304,4 +1304,26 @@
         <item quantity="many">%1$d elementi nascosti</item>
         <item quantity="other">%1$d elementi nascosti</item>
     </plurals>
+    <string name="slideshow_start">Presentazione</string>
+    <string name="slideshow_from_here">Presentazione da qui</string>
+    <string name="slideshow_next">Avanti</string>
+    <string name="slideshow_prev">Indietro</string>
+    <string name="slideshow_pause">Pausa</string>
+    <string name="slideshow_settings">Impostazioni presentazione</string>
+    <string name="slideshow_end">Fine della presentazione</string>
+    <string name="slideshow_again">Di nuovo</string>
+    <string name="slideshow_empty">Niente da mostrare qui.</string>
+    <string name="slideshow_order">Ordine</string>
+    <string name="slideshow_order_chrono">Più vecchie prima</string>
+    <string name="slideshow_order_random">Casuale</string>
+    <string name="slideshow_order_albums">Album per album, casuale</string>
+    <string name="slideshow_shuffle_within">Casuale anche dentro l’album</string>
+    <string name="slideshow_duration">Durata per foto</string>
+    <string name="slideshow_seconds">%1$d s</string>
+    <string name="slideshow_transition">Transizione</string>
+    <string name="slideshow_fade">Dissolvenza</string>
+    <string name="slideshow_cut">Nessuna</string>
+    <string name="slideshow_videos">Riproduci video (senza audio)</string>
+    <string name="slideshow_loop">Ripeti</string>
+    <string name="slideshow_note">Guardare non è mai una decisione. Lo schermo resta acceso durante la presentazione.</string>
 </resources>

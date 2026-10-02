@@ -1254,4 +1254,26 @@
         <item quantity="one">%1$d verborgen item</item>
         <item quantity="other">%1$d verborgen items</item>
     </plurals>
+    <string name="slideshow_start">Diavoorstelling</string>
+    <string name="slideshow_from_here">Diavoorstelling vanaf hier</string>
+    <string name="slideshow_next">Volgende</string>
+    <string name="slideshow_prev">Vorige</string>
+    <string name="slideshow_pause">Pauze</string>
+    <string name="slideshow_settings">Instellingen diavoorstelling</string>
+    <string name="slideshow_end">Einde van de diavoorstelling</string>
+    <string name="slideshow_again">Opnieuw</string>
+    <string name="slideshow_empty">Hier valt niets te tonen.</string>
+    <string name="slideshow_order">Volgorde</string>
+    <string name="slideshow_order_chrono">Oudste eerst</string>
+    <string name="slideshow_order_random">Willekeurig</string>
+    <string name="slideshow_order_albums">Album voor album willekeurig</string>
+    <string name="slideshow_shuffle_within">Ook binnen het album willekeurig</string>
+    <string name="slideshow_duration">Tijd per foto</string>
+    <string name="slideshow_seconds">%1$d s</string>
+    <string name="slideshow_transition">Overgang</string>
+    <string name="slideshow_fade">Overvloeien</string>
+    <string name="slideshow_cut">Geen</string>
+    <string name="slideshow_videos">Video’s afspelen (zonder geluid)</string>
+    <string name="slideshow_loop">Herhalen</string>
+    <string name="slideshow_note">Bekijken is nooit een beslissing. Het scherm blijft aan tijdens de diavoorstelling.</string>
 </resources>
