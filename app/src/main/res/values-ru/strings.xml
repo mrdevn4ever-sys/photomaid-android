@@ -1224,4 +1224,47 @@
     <string name="vid_estimate">≈ %1$s</string>
     <string name="vid_estimate_hint">Оценка по битрейту × длительности. У сохранённого файла виден реальный размер.</string>
     <string name="vid_hdr_hint">Это HDR-видео сохраняется как SDR, потому что применены изменения цвета.</string>
+    <string name="tab_library">Фото</string>
+    <string name="lib_filter_all">Все</string>
+    <string name="lib_filter_favorites">Избранное</string>
+    <string name="lib_kw_favorite">избранное</string>
+    <string name="lib_no_date">Без даты</string>
+    <string name="lib_search">Поиск</string>
+    <string name="lib_search_hint">Имя, папка, месяц, год…</string>
+    <string name="lib_search_clear">Очистить поиск</string>
+    <string name="lib_search_none_title">Ничего не найдено</string>
+    <string name="lib_search_none_text">Ничего не подходит под «%1$s». Акценты и регистр не важны.</string>
+    <string name="lib_empty_text">Здесь появляются фото и видео с этого устройства.</string>
+    <string name="lib_level_day">Дни</string>
+    <string name="lib_level_month">Месяцы</string>
+    <string name="lib_level_year">Годы</string>
+    <string name="lib_level_finer">Крупнее</string>
+    <string name="lib_level_coarser">Мельче</string>
+    <string name="lib_trash_action">В корзину</string>
+    <string name="lib_trash_text">В корзину PhotoMaid — ничего не удаляется. Решишь там позже.</string>
+    <string name="lib_trash_text_fav">В корзину PhotoMaid — ничего не удаляется. Избранное остаётся (включено «Защищать избранное»).</string>
+    <string name="lib_trash_fav_protected">Это избранное. Включено «Защищать избранное», поэтому оно не попадёт в корзину. Это можно изменить в настройках.</string>
+    <string name="lib_trashed_one">В корзине PhotoMaid</string>
+    <string name="lib_review_from_here">Разобрать отсюда</string>
+    <string name="lib_feed_title">Из медиатеки</string>
+    <string name="lib_info_name">Имя</string>
+    <string name="lib_info_taken">Снято</string>
+    <string name="lib_info_folder">Папка</string>
+    <string name="lib_info_size">Размер</string>
+    <string name="lib_info_resolution">Разрешение</string>
+    <string name="lib_info_duration">Длительность</string>
+    <string name="lib_info_type">Тип файла</string>
+    <string name="lib_info_added">На устройстве с</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">Переместить %1$d элемент в корзину?</item>
+        <item quantity="few">Переместить %1$d элемента в корзину?</item>
+        <item quantity="many">Переместить %1$d элементов в корзину?</item>
+        <item quantity="other">Переместить %1$d элемента в корзину?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d элемент в корзине PhotoMaid.</item>
+        <item quantity="few">%1$d элемента в корзине PhotoMaid.</item>
+        <item quantity="many">%1$d элементов в корзине PhotoMaid.</item>
+        <item quantity="other">%1$d элемента в корзине PhotoMaid.</item>
+    </plurals>
 </resources>

@@ -1224,4 +1224,47 @@
     <string name="vid_estimate">ok. %1$s</string>
     <string name="vid_estimate_hint">Szacunek z przepływności × długości. Zapisany plik pokazuje rzeczywisty rozmiar.</string>
     <string name="vid_hdr_hint">Ten film HDR zostanie zapisany jako SDR, ponieważ zastosowano zmiany kolorów.</string>
+    <string name="tab_library">Zdjęcia</string>
+    <string name="lib_filter_all">Wszystko</string>
+    <string name="lib_filter_favorites">Ulubione</string>
+    <string name="lib_kw_favorite">ulubione</string>
+    <string name="lib_no_date">Bez daty</string>
+    <string name="lib_search">Szukaj</string>
+    <string name="lib_search_hint">Nazwa, folder, miesiąc, rok…</string>
+    <string name="lib_search_clear">Wyczyść wyszukiwanie</string>
+    <string name="lib_search_none_title">Brak wyników</string>
+    <string name="lib_search_none_text">Nic nie pasuje do „%1$s”. Akcenty i wielkie litery nie mają znaczenia.</string>
+    <string name="lib_empty_text">Tutaj pojawiają się zdjęcia i filmy z tego urządzenia.</string>
+    <string name="lib_level_day">Dni</string>
+    <string name="lib_level_month">Miesiące</string>
+    <string name="lib_level_year">Lata</string>
+    <string name="lib_level_finer">Większe kafelki</string>
+    <string name="lib_level_coarser">Mniejsze kafelki</string>
+    <string name="lib_trash_action">Do kosza</string>
+    <string name="lib_trash_text">Do kosza PhotoMaid – nic nie zostanie usunięte. Zdecydujesz tam później.</string>
+    <string name="lib_trash_text_fav">Do kosza PhotoMaid – nic nie zostanie usunięte. Ulubione zostają (włączone „Chroń ulubione”).</string>
+    <string name="lib_trash_fav_protected">To ulubione. „Chroń ulubione” jest włączone, więc nie trafi do kosza. Możesz to zmienić w ustawieniach.</string>
+    <string name="lib_trashed_one">W koszu PhotoMaid</string>
+    <string name="lib_review_from_here">Porządkuj od tego miejsca</string>
+    <string name="lib_feed_title">Z biblioteki</string>
+    <string name="lib_info_name">Nazwa</string>
+    <string name="lib_info_taken">Wykonano</string>
+    <string name="lib_info_folder">Folder</string>
+    <string name="lib_info_size">Rozmiar</string>
+    <string name="lib_info_resolution">Rozdzielczość</string>
+    <string name="lib_info_duration">Długość</string>
+    <string name="lib_info_type">Typ pliku</string>
+    <string name="lib_info_added">Na tym urządzeniu od</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">Przenieść %1$d element do kosza?</item>
+        <item quantity="few">Przenieść %1$d elementy do kosza?</item>
+        <item quantity="many">Przenieść %1$d elementów do kosza?</item>
+        <item quantity="other">Przenieść %1$d elementu do kosza?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d element jest w koszu PhotoMaid.</item>
+        <item quantity="few">%1$d elementy są w koszu PhotoMaid.</item>
+        <item quantity="many">%1$d elementów jest w koszu PhotoMaid.</item>
+        <item quantity="other">%1$d elementu jest w koszu PhotoMaid.</item>
+    </plurals>
 </resources>

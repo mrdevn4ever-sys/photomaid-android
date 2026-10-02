@@ -1182,4 +1182,45 @@
     <string name="vid_estimate">aprox. %1$s</string>
     <string name="vid_estimate_hint">Estimación según tasa de bits × duración. El archivo guardado muestra su tamaño real.</string>
     <string name="vid_hdr_hint">Este vídeo HDR se guarda en SDR porque se aplican cambios de color.</string>
+    <string name="tab_library">Fotos</string>
+    <string name="lib_filter_all">Todo</string>
+    <string name="lib_filter_favorites">Favoritos</string>
+    <string name="lib_kw_favorite">favorito</string>
+    <string name="lib_no_date">Sin fecha</string>
+    <string name="lib_search">Buscar</string>
+    <string name="lib_search_hint">Nombre, carpeta, mes, año…</string>
+    <string name="lib_search_clear">Borrar búsqueda</string>
+    <string name="lib_search_none_title">Sin resultados</string>
+    <string name="lib_search_none_text">Nada coincide con «%1$s». Los acentos y las mayúsculas no importan.</string>
+    <string name="lib_empty_text">Aquí aparecen las fotos y los vídeos de este dispositivo.</string>
+    <string name="lib_level_day">Días</string>
+    <string name="lib_level_month">Meses</string>
+    <string name="lib_level_year">Años</string>
+    <string name="lib_level_finer">Miniaturas más grandes</string>
+    <string name="lib_level_coarser">Miniaturas más pequeñas</string>
+    <string name="lib_trash_action">Mover a la papelera</string>
+    <string name="lib_trash_text">A la papelera de PhotoMaid; no se borra nada. Decides allí más tarde.</string>
+    <string name="lib_trash_text_fav">A la papelera de PhotoMaid; no se borra nada. Los favoritos se quedan («Proteger favoritos» está activado).</string>
+    <string name="lib_trash_fav_protected">Es un favorito. «Proteger favoritos» está activado, así que no va a la papelera. Puedes cambiarlo en Ajustes.</string>
+    <string name="lib_trashed_one">En la papelera de PhotoMaid</string>
+    <string name="lib_review_from_here">Ordenar desde aquí</string>
+    <string name="lib_feed_title">De la biblioteca</string>
+    <string name="lib_info_name">Nombre</string>
+    <string name="lib_info_taken">Tomada</string>
+    <string name="lib_info_folder">Carpeta</string>
+    <string name="lib_info_size">Tamaño</string>
+    <string name="lib_info_resolution">Resolución</string>
+    <string name="lib_info_duration">Duración</string>
+    <string name="lib_info_type">Tipo de archivo</string>
+    <string name="lib_info_added">En este dispositivo desde</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">¿Mover %1$d elemento a la papelera?</item>
+        <item quantity="many">¿Mover %1$d elementos a la papelera?</item>
+        <item quantity="other">¿Mover %1$d elementos a la papelera?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d elemento está en la papelera de PhotoMaid.</item>
+        <item quantity="many">%1$d elementos están en la papelera de PhotoMaid.</item>
+        <item quantity="other">%1$d elementos están en la papelera de PhotoMaid.</item>
+    </plurals>
 </resources>

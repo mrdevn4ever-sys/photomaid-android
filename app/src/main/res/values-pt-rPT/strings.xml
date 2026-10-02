@@ -1182,4 +1182,45 @@
     <string name="vid_estimate">aprox. %1$s</string>
     <string name="vid_estimate_hint">Estimativa a partir de taxa de bits × duração. O ficheiro guardado mostra o tamanho real.</string>
     <string name="vid_hdr_hint">Este vídeo HDR é guardado como SDR porque há alterações de cor.</string>
+    <string name="tab_library">Fotos</string>
+    <string name="lib_filter_all">Tudo</string>
+    <string name="lib_filter_favorites">Favoritos</string>
+    <string name="lib_kw_favorite">favorito</string>
+    <string name="lib_no_date">Sem data</string>
+    <string name="lib_search">Pesquisar</string>
+    <string name="lib_search_hint">Nome, pasta, mês, ano…</string>
+    <string name="lib_search_clear">Limpar pesquisa</string>
+    <string name="lib_search_none_title">Sem resultados</string>
+    <string name="lib_search_none_text">Nada corresponde a «%1$s». Os acentos e as maiúsculas não contam.</string>
+    <string name="lib_empty_text">As fotos e os vídeos deste dispositivo aparecem aqui.</string>
+    <string name="lib_level_day">Dias</string>
+    <string name="lib_level_month">Meses</string>
+    <string name="lib_level_year">Anos</string>
+    <string name="lib_level_finer">Miniaturas maiores</string>
+    <string name="lib_level_coarser">Miniaturas menores</string>
+    <string name="lib_trash_action">Mover para o lixo</string>
+    <string name="lib_trash_text">Para o lixo do PhotoMaid – nada é eliminado. Decides lá mais tarde.</string>
+    <string name="lib_trash_text_fav">Para o lixo do PhotoMaid – nada é eliminado. Os favoritos ficam («Proteger favoritos» está ativo).</string>
+    <string name="lib_trash_fav_protected">É um favorito. «Proteger favoritos» está ativo, por isso não vai para o lixo. Podes mudar isto nas definições.</string>
+    <string name="lib_trashed_one">No lixo do PhotoMaid</string>
+    <string name="lib_review_from_here">Arrumar a partir daqui</string>
+    <string name="lib_feed_title">Da biblioteca</string>
+    <string name="lib_info_name">Nome</string>
+    <string name="lib_info_taken">Captada</string>
+    <string name="lib_info_folder">Pasta</string>
+    <string name="lib_info_size">Tamanho</string>
+    <string name="lib_info_resolution">Resolução</string>
+    <string name="lib_info_duration">Duração</string>
+    <string name="lib_info_type">Tipo de ficheiro</string>
+    <string name="lib_info_added">Neste dispositivo desde</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">Mover %1$d item para o lixo?</item>
+        <item quantity="many">Mover %1$d itens para o lixo?</item>
+        <item quantity="other">Mover %1$d itens para o lixo?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d item está no lixo do PhotoMaid.</item>
+        <item quantity="many">%1$d itens estão no lixo do PhotoMaid.</item>
+        <item quantity="other">%1$d itens estão no lixo do PhotoMaid.</item>
+    </plurals>
 </resources>

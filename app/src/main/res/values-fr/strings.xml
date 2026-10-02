@@ -1182,4 +1182,45 @@
     <string name="vid_estimate">env. %1$s</string>
     <string name="vid_estimate_hint">Estimation : débit × durée. Le fichier enregistré indique sa taille réelle.</string>
     <string name="vid_hdr_hint">Cette vidéo HDR est enregistrée en SDR car des modifications de couleur sont appliquées.</string>
+    <string name="tab_library">Photos</string>
+    <string name="lib_filter_all">Tout</string>
+    <string name="lib_filter_favorites">Favoris</string>
+    <string name="lib_kw_favorite">favori</string>
+    <string name="lib_no_date">Sans date</string>
+    <string name="lib_search">Rechercher</string>
+    <string name="lib_search_hint">Nom, dossier, mois, année…</string>
+    <string name="lib_search_clear">Effacer la recherche</string>
+    <string name="lib_search_none_title">Aucun résultat</string>
+    <string name="lib_search_none_text">Rien ne correspond à « %1$s ». Les accents et les majuscules n’ont pas d’importance.</string>
+    <string name="lib_empty_text">Les photos et vidéos de cet appareil s’affichent ici.</string>
+    <string name="lib_level_day">Jours</string>
+    <string name="lib_level_month">Mois</string>
+    <string name="lib_level_year">Années</string>
+    <string name="lib_level_finer">Vignettes plus grandes</string>
+    <string name="lib_level_coarser">Vignettes plus petites</string>
+    <string name="lib_trash_action">Mettre à la corbeille</string>
+    <string name="lib_trash_text">Dans la corbeille PhotoMaid – rien n’est supprimé. Tu décides plus tard.</string>
+    <string name="lib_trash_text_fav">Dans la corbeille PhotoMaid – rien n’est supprimé. Les favoris restent (« Protéger les favoris » est activé).</string>
+    <string name="lib_trash_fav_protected">C’est un favori. « Protéger les favoris » est activé, il ne va donc pas à la corbeille. Tu peux le modifier dans les réglages.</string>
+    <string name="lib_trashed_one">Dans la corbeille PhotoMaid</string>
+    <string name="lib_review_from_here">Trier à partir d’ici</string>
+    <string name="lib_feed_title">Depuis la photothèque</string>
+    <string name="lib_info_name">Nom</string>
+    <string name="lib_info_taken">Prise le</string>
+    <string name="lib_info_folder">Dossier</string>
+    <string name="lib_info_size">Taille</string>
+    <string name="lib_info_resolution">Résolution</string>
+    <string name="lib_info_duration">Durée</string>
+    <string name="lib_info_type">Type de fichier</string>
+    <string name="lib_info_added">Sur cet appareil depuis</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">Mettre %1$d élément à la corbeille ?</item>
+        <item quantity="many">Mettre %1$d éléments à la corbeille ?</item>
+        <item quantity="other">Mettre %1$d éléments à la corbeille ?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d élément est dans la corbeille PhotoMaid.</item>
+        <item quantity="many">%1$d éléments sont dans la corbeille PhotoMaid.</item>
+        <item quantity="other">%1$d éléments sont dans la corbeille PhotoMaid.</item>
+    </plurals>
 </resources>

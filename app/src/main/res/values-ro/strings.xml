@@ -1182,4 +1182,45 @@
     <string name="vid_estimate">cca %1$s</string>
     <string name="vid_estimate_hint">Estimare din debit × durată. Fișierul salvat arată mărimea reală.</string>
     <string name="vid_hdr_hint">Acest videoclip HDR se salvează ca SDR deoarece sunt aplicate modificări de culoare.</string>
+    <string name="tab_library">Fotografii</string>
+    <string name="lib_filter_all">Toate</string>
+    <string name="lib_filter_favorites">Favorite</string>
+    <string name="lib_kw_favorite">favorit</string>
+    <string name="lib_no_date">Fără dată</string>
+    <string name="lib_search">Caută</string>
+    <string name="lib_search_hint">Nume, dosar, lună, an…</string>
+    <string name="lib_search_clear">Șterge căutarea</string>
+    <string name="lib_search_none_title">Niciun rezultat</string>
+    <string name="lib_search_none_text">Nimic nu se potrivește cu „%1$s”. Diacriticele și majusculele nu contează.</string>
+    <string name="lib_empty_text">Fotografiile și videoclipurile de pe acest dispozitiv apar aici.</string>
+    <string name="lib_level_day">Zile</string>
+    <string name="lib_level_month">Luni</string>
+    <string name="lib_level_year">Ani</string>
+    <string name="lib_level_finer">Miniaturi mai mari</string>
+    <string name="lib_level_coarser">Miniaturi mai mici</string>
+    <string name="lib_trash_action">Mută în coș</string>
+    <string name="lib_trash_text">În coșul PhotoMaid – nu se șterge nimic. Decizi acolo mai târziu.</string>
+    <string name="lib_trash_text_fav">În coșul PhotoMaid – nu se șterge nimic. Favoritele rămân („Protejează favoritele” e activ).</string>
+    <string name="lib_trash_fav_protected">Este un favorit. „Protejează favoritele” e activ, așa că nu ajunge în coș. Poți schimba asta în setări.</string>
+    <string name="lib_trashed_one">În coșul PhotoMaid</string>
+    <string name="lib_review_from_here">Curăță de aici</string>
+    <string name="lib_feed_title">Din bibliotecă</string>
+    <string name="lib_info_name">Nume</string>
+    <string name="lib_info_taken">Realizată</string>
+    <string name="lib_info_folder">Dosar</string>
+    <string name="lib_info_size">Mărime</string>
+    <string name="lib_info_resolution">Rezoluție</string>
+    <string name="lib_info_duration">Durată</string>
+    <string name="lib_info_type">Tip de fișier</string>
+    <string name="lib_info_added">Pe acest dispozitiv din</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">Muți %1$d element în coș?</item>
+        <item quantity="few">Muți %1$d elemente în coș?</item>
+        <item quantity="other">Muți %1$d de elemente în coș?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d element este în coșul PhotoMaid.</item>
+        <item quantity="few">%1$d elemente sunt în coșul PhotoMaid.</item>
+        <item quantity="other">%1$d de elemente sunt în coșul PhotoMaid.</item>
+    </plurals>
 </resources>

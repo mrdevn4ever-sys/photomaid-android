@@ -1140,4 +1140,43 @@
     <string name="vid_estimate">approx. %1$s</string>
     <string name="vid_estimate_hint">Estimate from bitrate × duration. The saved file shows its real size.</string>
     <string name="vid_hdr_hint">This HDR video is saved as SDR because colour changes are applied.</string>
+    <string name="tab_library">Photos</string>
+    <string name="lib_filter_all">All</string>
+    <string name="lib_filter_favorites">Favourites</string>
+    <string name="lib_kw_favorite">favourite favorite</string>
+    <string name="lib_no_date">No date</string>
+    <string name="lib_search">Search</string>
+    <string name="lib_search_hint">Name, folder, month, year …</string>
+    <string name="lib_search_clear">Clear search</string>
+    <string name="lib_search_none_title">No matches</string>
+    <string name="lib_search_none_text">Nothing matches “%1$s”. Accents and capital letters don’t matter.</string>
+    <string name="lib_empty_text">Photos and videos on this device appear here.</string>
+    <string name="lib_level_day">Days</string>
+    <string name="lib_level_month">Months</string>
+    <string name="lib_level_year">Years</string>
+    <string name="lib_level_finer">Larger tiles</string>
+    <string name="lib_level_coarser">Smaller tiles</string>
+    <string name="lib_trash_action">Move to trash</string>
+    <string name="lib_trash_text">Into the PhotoMaid trash – nothing is deleted. You decide there later.</string>
+    <string name="lib_trash_text_fav">Into the PhotoMaid trash – nothing is deleted. Favourites stay (“Protect favourites” is on).</string>
+    <string name="lib_trash_fav_protected">This is a favourite. “Protect favourites” is on, so it stays out of the trash. You can change this in Settings.</string>
+    <string name="lib_trashed_one">In the PhotoMaid trash</string>
+    <string name="lib_review_from_here">Clean up from here</string>
+    <string name="lib_feed_title">From the library</string>
+    <string name="lib_info_name">Name</string>
+    <string name="lib_info_taken">Taken</string>
+    <string name="lib_info_folder">Folder</string>
+    <string name="lib_info_size">Size</string>
+    <string name="lib_info_resolution">Resolution</string>
+    <string name="lib_info_duration">Duration</string>
+    <string name="lib_info_type">File type</string>
+    <string name="lib_info_added">On this device since</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">Move %1$d item to the trash?</item>
+        <item quantity="other">Move %1$d items to the trash?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d item is in the PhotoMaid trash.</item>
+        <item quantity="other">%1$d items are in the PhotoMaid trash.</item>
+    </plurals>
 </resources>

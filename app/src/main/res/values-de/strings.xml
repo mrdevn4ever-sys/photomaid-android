@@ -1140,4 +1140,43 @@
     <string name="vid_estimate">ca. %1$s</string>
     <string name="vid_estimate_hint">Schätzung aus Bitrate × Dauer. Die gespeicherte Datei zeigt ihre echte Größe.</string>
     <string name="vid_hdr_hint">Dieses HDR-Video wird als SDR gespeichert, weil Farbänderungen angewendet werden.</string>
+    <string name="tab_library">Fotos</string>
+    <string name="lib_filter_all">Alle</string>
+    <string name="lib_filter_favorites">Favoriten</string>
+    <string name="lib_kw_favorite">Favorit Favoriten</string>
+    <string name="lib_no_date">Ohne Datum</string>
+    <string name="lib_search">Suchen</string>
+    <string name="lib_search_hint">Name, Ordner, Monat, Jahr …</string>
+    <string name="lib_search_clear">Suche leeren</string>
+    <string name="lib_search_none_title">Keine Treffer</string>
+    <string name="lib_search_none_text">Nichts passt zu „%1$s“. Akzente und Großbuchstaben spielen keine Rolle.</string>
+    <string name="lib_empty_text">Fotos und Videos auf diesem Gerät erscheinen hier.</string>
+    <string name="lib_level_day">Tage</string>
+    <string name="lib_level_month">Monate</string>
+    <string name="lib_level_year">Jahre</string>
+    <string name="lib_level_finer">Größere Kacheln</string>
+    <string name="lib_level_coarser">Kleinere Kacheln</string>
+    <string name="lib_trash_action">In den Papierkorb</string>
+    <string name="lib_trash_text">In den PhotoMaid-Papierkorb – es wird nichts gelöscht. Du entscheidest dort später.</string>
+    <string name="lib_trash_text_fav">In den PhotoMaid-Papierkorb – es wird nichts gelöscht. Favoriten bleiben („Favoriten schützen“ ist an).</string>
+    <string name="lib_trash_fav_protected">Das ist ein Favorit. „Favoriten schützen“ ist an, deshalb kommt er nicht in den Papierkorb. Ändern kannst du das in den Einstellungen.</string>
+    <string name="lib_trashed_one">Im PhotoMaid-Papierkorb</string>
+    <string name="lib_review_from_here">Ab hier aufräumen</string>
+    <string name="lib_feed_title">Aus der Mediathek</string>
+    <string name="lib_info_name">Name</string>
+    <string name="lib_info_taken">Aufgenommen</string>
+    <string name="lib_info_folder">Ordner</string>
+    <string name="lib_info_size">Größe</string>
+    <string name="lib_info_resolution">Auflösung</string>
+    <string name="lib_info_duration">Dauer</string>
+    <string name="lib_info_type">Dateityp</string>
+    <string name="lib_info_added">Auf diesem Gerät seit</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">%1$d Medium in den Papierkorb?</item>
+        <item quantity="other">%1$d Medien in den Papierkorb?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d Medium liegt im PhotoMaid-Papierkorb.</item>
+        <item quantity="other">%1$d Medien liegen im PhotoMaid-Papierkorb.</item>
+    </plurals>
 </resources>

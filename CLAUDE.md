@@ -51,6 +51,11 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   - Ordner-Dateien: ab Android 17 (API 37) mit `FLAG_SUPPORTS_TRASH` per `DocumentsContract.trashDocument` in den Papierkorb
     des Speicherorts, sonst endgültig mit Warnung.
 
+- Mediathek (Tab „Fotos“, 2. Stelle von 5: Heute · Fotos · Aufräumen · Studio · Verlauf; `feature/library/`, Kern
+  `core/.../library/Timeline.kt`): Zeitachse Tag/Monat/Jahr (zwei Finger), Filter, Suche ohne Akzente (lokal), Auswahl,
+  Vollbild-Betrachter (blättern, runter = schließen, Zoom; keine Wisch-Aktion nach oben). Ansehen ist NIE eine
+  Entscheidung; nur „In den Papierkorb“ (PhotoMaid-eigen, Favoriten geschützt, Rückgängig) geht über den Ledger.
+  Plan G1–G4: `docs/GALLERY_PLAN_2026-10.md`.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3

@@ -49,6 +49,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Home
@@ -82,6 +83,7 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -124,6 +126,10 @@ import app.photomaid.feature.studio.MediaPickerScreen
 import app.photomaid.feature.studio.PickRequest
 import app.photomaid.feature.studio.PickRequests
 import app.photomaid.feature.studio.StudioScreen
+import app.photomaid.feature.library.LibraryScreen
+import app.photomaid.feature.library.ViewerRequest
+import app.photomaid.feature.library.ViewerRequests
+import app.photomaid.feature.library.ViewerScreen
 
 val LocalApp = staticCompositionLocalOf<AppModel> { error("AppModel fehlt") }
 
@@ -137,6 +143,8 @@ interface Nav {
     /** Studio: Medienauswahl (Wählen ist nie eine Entscheidung) und Collage. */
     fun openPicker(request: PickRequest) {}
     fun openCollage(request: CollageRequest) {}
+    /** Mediathek: Vollbild-Betrachter (Ansehen ist nie eine Entscheidung). */
+    fun openViewer(request: ViewerRequest) {}
     fun openSettings()
     fun openPro()
     fun openPrivacy()
@@ -152,6 +160,7 @@ object Routes {
     const val PRIVACY = "privacy"; const val HELP = "help"; const val BASKET_MODAL = "basketModal"
     const val SOURCES_MODAL = "sourcesModal"; const val EXCLUDED = "excluded"; const val MONTHS = "months"
     const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"; const val STUDIO = "studio"
+    const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"
     const val PICKER = "picker/{id}"; const val COLLAGE = "collage/{id}"
     fun editor(id: String) = "editor/$id"
     fun grid(id: String) = "grid/$id"
@@ -160,6 +169,7 @@ object Routes {
 
 enum class AppTab(val route: String, val label: Int, val icon: ImageVector) {
     TODAY(Routes.TODAY, R.string.tab_today, Icons.Rounded.Home),
+    LIBRARY(Routes.LIBRARY, R.string.tab_library, Icons.Rounded.PhotoLibrary),
     CLEANUP(Routes.HUB, R.string.tab_cleanup, Icons.Rounded.Layers),
     STUDIO(Routes.STUDIO, R.string.tab_studio, Icons.Rounded.Palette),
     HISTORY(Routes.HISTORY, R.string.tab_history, Icons.Rounded.History);
@@ -240,6 +250,9 @@ private fun RootNav(app: AppModel) {
             override fun openPicker(request: PickRequest) {
                 PickRequests.map[request.id] = request; root.navigate("picker/${request.id}")
             }
+            override fun openViewer(request: ViewerRequest) {
+                ViewerRequests.map[request.id] = request; root.navigate("viewer/${request.id}")
+            }
             override fun openCollage(request: CollageRequest) {
                 CollageRequests.map[request.id] = request; root.navigate("collage/${request.id}")
             }
@@ -310,6 +323,14 @@ private fun RootNav(app: AppModel) {
             // Erst schließen, dann weiter (z. B. Collage öffnen): die Auswahl liegt nie unter dem nächsten Schritt.
             else MediaPickerScreen(req.copy(onDone = { ids -> close(); req.onDone(ids) }), onClose = { close() })
         }
+        composable(Routes.VIEWER) { entry ->
+            val key = entry.arguments?.getString("id")
+            val req = key?.let { ViewerRequests.map[it] }
+            RemoveOnDestroy(entry) { key?.let { ViewerRequests.map.remove(it) } }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() }
+            else ViewerScreen(req, nav, onClose = { close() })
+        }
         composable(Routes.COLLAGE) { entry ->
             val key = entry.arguments?.getString("id")
             val req = key?.let { CollageRequests.map[it] }
@@ -371,6 +392,7 @@ private fun MainTabs(rootNav: Nav) {
                     composable("${t.name}/${t.route}") {
                         when (t) {
                             AppTab.TODAY -> TodayScreen(nav)
+                            AppTab.LIBRARY -> LibraryScreen(nav)
                             AppTab.CLEANUP -> CleanUpHubScreen(nav)
                             AppTab.STUDIO -> StudioScreen(nav)
                             AppTab.HISTORY -> HistoryScreen(nav)
@@ -433,10 +455,12 @@ fun GlassTabBar(selected: AppTab, modifier: Modifier = Modifier, onSelect: (AppT
 @Composable
 private fun TabBarRow(selected: AppTab, onSelect: (AppTab) -> Unit) {
     val c = PM.colors
+    // Fünf Tabs auf schmalen Telefonen (< 360 dp): weniger Rand, etwas kleinere Beschriftung – nichts abgeschnitten.
+    val narrow = androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp < 360
     Row(
         Modifier
             .navigationBarsPadding()
-            .padding(horizontal = AppSpacing.l, vertical = AppSpacing.xs)
+            .padding(horizontal = if (narrow) AppSpacing.xs else AppSpacing.l, vertical = AppSpacing.xs)
             .widthIn(max = 520.dp)
             .fillMaxWidth()
             .glass(c.copy(glass = c.glassBar), CircleShape, elevation = 10.dp)
@@ -449,9 +473,10 @@ private fun TabBarRow(selected: AppTab, onSelect: (AppTab) -> Unit) {
                 Modifier
                     .weight(1f)
                     .heightIn(min = AppControl.tabBarItem)
-                    .clip(CircleShape)
+                    // Abgerundetes Rechteck statt Kreis: bei schmalen Tabs schneidet ein Kreis die Beschriftung an den Enden ab.
+                    .clip(RoundedCornerShape(22.dp))
                     // Auswahl als Akzent-Tönung (im Light Mode war die weiße Kapsel auf weißer Leiste kaum sichtbar).
-                    .then(if (isSel) Modifier.background(c.accent.copy(alpha = 0.12f), CircleShape) else Modifier)
+                    .then(if (isSel) Modifier.background(c.accent.copy(alpha = 0.12f), RoundedCornerShape(22.dp)) else Modifier)
                     .clickable(role = Role.Tab) { onSelect(t) }
                     .coachTarget("tab.${t.name}")
                     .semantics { this.selected = isSel }
@@ -460,8 +485,14 @@ private fun TabBarRow(selected: AppTab, onSelect: (AppTab) -> Unit) {
                 verticalArrangement = Arrangement.Center,
             ) {
                 Icon(t.icon, null, tint = if (isSel) c.accent else c.textPrimary, modifier = Modifier.size(24.dp))
-                Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Medium),
-                    color = if (isSel) c.accent else c.textPrimary, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                // Lange Wörter (z. B. „Прибирання“, „Aujourd’hui“) werden auf schmalen Telefonen kleiner statt abgeschnitten.
+                val label = stringResource(t.label)
+                var fit by remember(label) { mutableStateOf(AppTypography.caption.fontSize) }
+                Text(label, Modifier.fillMaxWidth().padding(horizontal = 3.dp),
+                    style = AppTypography.caption.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Medium, fontSize = fit),
+                    color = if (isSel) c.accent else c.textPrimary, maxLines = 1, softWrap = false,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    onTextLayout = { r -> if (r.hasVisualOverflow && fit.value > 9f) fit = (fit.value - 0.5f).sp })
             }
         }
     }

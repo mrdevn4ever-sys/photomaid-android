@@ -1098,4 +1098,41 @@
     <string name="vid_estimate">约 %1$s</string>
     <string name="vid_estimate_hint">根据码率 × 时长估算，保存后的文件会显示实际大小。</string>
     <string name="vid_hdr_hint">由于应用了颜色调整，此 HDR 视频将保存为 SDR。</string>
+    <string name="tab_library">照片</string>
+    <string name="lib_filter_all">全部</string>
+    <string name="lib_filter_favorites">收藏</string>
+    <string name="lib_kw_favorite">收藏</string>
+    <string name="lib_no_date">无日期</string>
+    <string name="lib_search">搜索</string>
+    <string name="lib_search_hint">名称、文件夹、月份、年份…</string>
+    <string name="lib_search_clear">清除搜索</string>
+    <string name="lib_search_none_title">无匹配结果</string>
+    <string name="lib_search_none_text">没有与“%1$s”匹配的内容。不区分重音和大小写。</string>
+    <string name="lib_empty_text">此设备上的照片和视频会显示在这里。</string>
+    <string name="lib_level_day">日</string>
+    <string name="lib_level_month">月</string>
+    <string name="lib_level_year">年</string>
+    <string name="lib_level_finer">更大的缩略图</string>
+    <string name="lib_level_coarser">更小的缩略图</string>
+    <string name="lib_trash_action">移到回收站</string>
+    <string name="lib_trash_text">移到 PhotoMaid 回收站——不会删除任何内容，稍后在那里决定。</string>
+    <string name="lib_trash_text_fav">移到 PhotoMaid 回收站——不会删除任何内容。收藏会保留（已开启“保护收藏”）。</string>
+    <string name="lib_trash_fav_protected">这是收藏项。已开启“保护收藏”，因此不会移到回收站。可在设置中更改。</string>
+    <string name="lib_trashed_one">已移到 PhotoMaid 回收站</string>
+    <string name="lib_review_from_here">从这里开始整理</string>
+    <string name="lib_feed_title">来自图库</string>
+    <string name="lib_info_name">名称</string>
+    <string name="lib_info_taken">拍摄时间</string>
+    <string name="lib_info_folder">文件夹</string>
+    <string name="lib_info_size">大小</string>
+    <string name="lib_info_resolution">分辨率</string>
+    <string name="lib_info_duration">时长</string>
+    <string name="lib_info_type">文件类型</string>
+    <string name="lib_info_added">加入此设备的时间</string>
+    <plurals name="lib_trash_title">
+        <item quantity="other">将 %1$d 项移到回收站？</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="other">%1$d 项已在 PhotoMaid 回收站中。</item>
+    </plurals>
 </resources>

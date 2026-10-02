@@ -1182,4 +1182,45 @@
     <string name="vid_estimate">circa %1$s</string>
     <string name="vid_estimate_hint">Stima da bitrate × durata. Il file salvato mostra la dimensione reale.</string>
     <string name="vid_hdr_hint">Questo video HDR viene salvato in SDR perché sono applicate modifiche al colore.</string>
+    <string name="tab_library">Foto</string>
+    <string name="lib_filter_all">Tutti</string>
+    <string name="lib_filter_favorites">Preferiti</string>
+    <string name="lib_kw_favorite">preferito</string>
+    <string name="lib_no_date">Senza data</string>
+    <string name="lib_search">Cerca</string>
+    <string name="lib_search_hint">Nome, cartella, mese, anno…</string>
+    <string name="lib_search_clear">Cancella ricerca</string>
+    <string name="lib_search_none_title">Nessun risultato</string>
+    <string name="lib_search_none_text">Nessun risultato per «%1$s». Accenti e maiuscole non contano.</string>
+    <string name="lib_empty_text">Qui compaiono le foto e i video del dispositivo.</string>
+    <string name="lib_level_day">Giorni</string>
+    <string name="lib_level_month">Mesi</string>
+    <string name="lib_level_year">Anni</string>
+    <string name="lib_level_finer">Miniature più grandi</string>
+    <string name="lib_level_coarser">Miniature più piccole</string>
+    <string name="lib_trash_action">Sposta nel cestino</string>
+    <string name="lib_trash_text">Nel cestino di PhotoMaid: non viene eliminato nulla. Decidi lì più tardi.</string>
+    <string name="lib_trash_text_fav">Nel cestino di PhotoMaid: non viene eliminato nulla. I preferiti restano («Proteggi preferiti» è attivo).</string>
+    <string name="lib_trash_fav_protected">È un preferito. «Proteggi preferiti» è attivo, quindi non va nel cestino. Puoi cambiarlo nelle impostazioni.</string>
+    <string name="lib_trashed_one">Nel cestino di PhotoMaid</string>
+    <string name="lib_review_from_here">Riordina da qui</string>
+    <string name="lib_feed_title">Dalla libreria</string>
+    <string name="lib_info_name">Nome</string>
+    <string name="lib_info_taken">Scattata</string>
+    <string name="lib_info_folder">Cartella</string>
+    <string name="lib_info_size">Dimensione</string>
+    <string name="lib_info_resolution">Risoluzione</string>
+    <string name="lib_info_duration">Durata</string>
+    <string name="lib_info_type">Tipo di file</string>
+    <string name="lib_info_added">Su questo dispositivo dal</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">Spostare %1$d elemento nel cestino?</item>
+        <item quantity="many">Spostare %1$d elementi nel cestino?</item>
+        <item quantity="other">Spostare %1$d elementi nel cestino?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d elemento è nel cestino di PhotoMaid.</item>
+        <item quantity="many">%1$d elementi sono nel cestino di PhotoMaid.</item>
+        <item quantity="other">%1$d elementi sono nel cestino di PhotoMaid.</item>
+    </plurals>
 </resources>

@@ -662,4 +662,28 @@ class ScreenshotTest {
     @Test fun v06_video_text() = expApp(pro = true).let { video("v06_video_text", it) { tap("tab.MARKUP")
         rule.waitUntil(10_000) { rule.onAllNodesWithTag("markup.canvas").fetchSemanticsNodes().isNotEmpty() }
         tap("mk.sticker"); rule.waitUntil(10_000) { rule.onAllNodesWithTag("sticker.HEART").fetchSemanticsNodes().isNotEmpty() }; tap("sticker.HEART") } }
+
+    // G1: Tab „Fotos“ (Zeitachse, Filter, Auswahl), Betrachter, Info, Tabbar mit 5 Tabs.
+    @Test fun g01_library_days() = expApp().let { shot("g01_library_days", it, waitTag = "lib.tile") { WithTabBar(AppTab.LIBRARY) { app.photomaid.feature.library.LibraryScreen(nav) } } }
+    @Test fun g02_library_months_dark() = expApp(dark = true).let { a ->
+        shot("g02_library_months_dark", a, waitTag = "lib.tile") { WithTabBar(AppTab.LIBRARY) { app.photomaid.feature.library.LibraryScreen(nav) } }
+        tap("lib.level.MONTH"); rule.waitForIdle(); rule.onRoot().captureRoboImage("build/outputs/roborazzi/g02_library_months_dark.png")
+        tap("lib.level.YEAR"); rule.waitForIdle(); rule.onRoot().captureRoboImage("build/outputs/roborazzi/g03_library_years_dark.png")
+    }
+    @Test fun g04_library_selection() = expApp().let { a ->
+        shot("g04_library_selection", a, waitTag = "lib.tile") { WithTabBar(AppTab.LIBRARY) { app.photomaid.feature.library.LibraryScreen(nav) } }
+        rule.onAllNodesWithTag("lib.tile")[0].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnLongClick)
+        rule.onAllNodesWithTag("lib.tile")[2].performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick)
+        rule.waitForIdle(); rule.onRoot().captureRoboImage("build/outputs/roborazzi/g04_library_selection.png")
+    }
+    @Test fun g05_viewer() = expApp().let { a ->
+        val list = lib.all.sortedByDescending { it.creationDate }
+        shot("g05_viewer", a, waitTag = "viewer.index") { app.photomaid.feature.library.ViewerScreen(app.photomaid.feature.library.ViewerRequest("v", list, 1), nav, onClose = {}) }
+        tap("viewer.more"); rule.waitUntil(5_000) { rule.onAllNodesWithTag("viewer.info").fetchSemanticsNodes().isNotEmpty() }
+        tap("viewer.info"); rule.waitUntil(5_000) { rule.onAllNodesWithTag("viewer.infosheet").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitForIdle(); captureScreenRoboImage("build/outputs/roborazzi/g06_viewer_info.png")
+    }
+    @Test @Config(qualifiers = "de-w320dp-h640dp-xxhdpi") fun g07_tabbar_320() = expApp().let { shot("g07_tabbar_320", it, waitTag = "lib.tile") { WithTabBar(AppTab.LIBRARY) { app.photomaid.feature.library.LibraryScreen(nav) } } }
+    @Test @Config(qualifiers = "fr-w320dp-h640dp-xxhdpi") fun g08_tabbar_320_fr() = expApp().let { shot("g08_tabbar_320_fr", it, waitTag = "lib.tile") { WithTabBar(AppTab.TODAY) { app.photomaid.feature.library.LibraryScreen(nav) } } }
+    @Test @Config(qualifiers = "uk-w320dp-h640dp-xxhdpi") fun g09_tabbar_320_uk() = expApp().let { shot("g09_tabbar_320_uk", it, waitTag = "lib.tile") { WithTabBar(AppTab.CLEANUP) { app.photomaid.feature.library.LibraryScreen(nav) } } }
 }

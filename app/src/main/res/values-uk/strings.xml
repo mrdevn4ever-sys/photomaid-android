@@ -1224,4 +1224,47 @@
     <string name="vid_estimate">≈ %1$s</string>
     <string name="vid_estimate_hint">Оцінка за бітрейтом × тривалістю. У збереженому файлі видно справжній розмір.</string>
     <string name="vid_hdr_hint">Це HDR-відео зберігається як SDR, бо застосовано зміни кольору.</string>
+    <string name="tab_library">Фото</string>
+    <string name="lib_filter_all">Усі</string>
+    <string name="lib_filter_favorites">Обране</string>
+    <string name="lib_kw_favorite">обране</string>
+    <string name="lib_no_date">Без дати</string>
+    <string name="lib_search">Пошук</string>
+    <string name="lib_search_hint">Назва, папка, місяць, рік…</string>
+    <string name="lib_search_clear">Очистити пошук</string>
+    <string name="lib_search_none_title">Нічого не знайдено</string>
+    <string name="lib_search_none_text">Нічого не відповідає «%1$s». Наголоси й регістр не важливі.</string>
+    <string name="lib_empty_text">Тут з’являються фото й відео з цього пристрою.</string>
+    <string name="lib_level_day">Дні</string>
+    <string name="lib_level_month">Місяці</string>
+    <string name="lib_level_year">Роки</string>
+    <string name="lib_level_finer">Більші плитки</string>
+    <string name="lib_level_coarser">Менші плитки</string>
+    <string name="lib_trash_action">У кошик</string>
+    <string name="lib_trash_text">У кошик PhotoMaid — нічого не видаляється. Вирішиш там пізніше.</string>
+    <string name="lib_trash_text_fav">У кошик PhotoMaid — нічого не видаляється. Обране залишається (увімкнено «Захищати обране»).</string>
+    <string name="lib_trash_fav_protected">Це обране. Увімкнено «Захищати обране», тому воно не потрапить у кошик. Змінити це можна в налаштуваннях.</string>
+    <string name="lib_trashed_one">У кошику PhotoMaid</string>
+    <string name="lib_review_from_here">Розібрати звідси</string>
+    <string name="lib_feed_title">З медіатеки</string>
+    <string name="lib_info_name">Назва</string>
+    <string name="lib_info_taken">Знято</string>
+    <string name="lib_info_folder">Папка</string>
+    <string name="lib_info_size">Розмір</string>
+    <string name="lib_info_resolution">Роздільність</string>
+    <string name="lib_info_duration">Тривалість</string>
+    <string name="lib_info_type">Тип файлу</string>
+    <string name="lib_info_added">На пристрої з</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">Перемістити %1$d елемент у кошик?</item>
+        <item quantity="few">Перемістити %1$d елементи в кошик?</item>
+        <item quantity="many">Перемістити %1$d елементів у кошик?</item>
+        <item quantity="other">Перемістити %1$d елемента в кошик?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d елемент у кошику PhotoMaid.</item>
+        <item quantity="few">%1$d елементи в кошику PhotoMaid.</item>
+        <item quantity="many">%1$d елементів у кошику PhotoMaid.</item>
+        <item quantity="other">%1$d елемента в кошику PhotoMaid.</item>
+    </plurals>
 </resources>

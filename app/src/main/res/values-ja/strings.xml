@@ -1098,4 +1098,41 @@
     <string name="vid_estimate">約 %1$s</string>
     <string name="vid_estimate_hint">ビットレート×長さからの見積もりです。保存したファイルに実際のサイズが表示されます。</string>
     <string name="vid_hdr_hint">色の変更があるため、このHDR動画はSDRで保存されます。</string>
+    <string name="tab_library">写真</string>
+    <string name="lib_filter_all">すべて</string>
+    <string name="lib_filter_favorites">お気に入り</string>
+    <string name="lib_kw_favorite">お気に入り</string>
+    <string name="lib_no_date">日付なし</string>
+    <string name="lib_search">検索</string>
+    <string name="lib_search_hint">名前・フォルダ・月・年…</string>
+    <string name="lib_search_clear">検索をクリア</string>
+    <string name="lib_search_none_title">一致なし</string>
+    <string name="lib_search_none_text">「%1$s」に一致するものはありません。アクセントや大文字小文字は区別しません。</string>
+    <string name="lib_empty_text">この端末の写真と動画がここに表示されます。</string>
+    <string name="lib_level_day">日</string>
+    <string name="lib_level_month">月</string>
+    <string name="lib_level_year">年</string>
+    <string name="lib_level_finer">大きいタイル</string>
+    <string name="lib_level_coarser">小さいタイル</string>
+    <string name="lib_trash_action">ゴミ箱へ移動</string>
+    <string name="lib_trash_text">PhotoMaidのゴミ箱へ。何も削除されません。あとでそこで決めます。</string>
+    <string name="lib_trash_text_fav">PhotoMaidのゴミ箱へ。何も削除されません。お気に入りは残ります（「お気に入りを保護」がオン）。</string>
+    <string name="lib_trash_fav_protected">これはお気に入りです。「お気に入りを保護」がオンのため、ゴミ箱には入りません。設定で変更できます。</string>
+    <string name="lib_trashed_one">PhotoMaidのゴミ箱に移動</string>
+    <string name="lib_review_from_here">ここから整理</string>
+    <string name="lib_feed_title">ライブラリから</string>
+    <string name="lib_info_name">名前</string>
+    <string name="lib_info_taken">撮影日時</string>
+    <string name="lib_info_folder">フォルダ</string>
+    <string name="lib_info_size">サイズ</string>
+    <string name="lib_info_resolution">解像度</string>
+    <string name="lib_info_duration">長さ</string>
+    <string name="lib_info_type">ファイル形式</string>
+    <string name="lib_info_added">この端末に追加</string>
+    <plurals name="lib_trash_title">
+        <item quantity="other">%1$d件をゴミ箱へ移動しますか？</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="other">%1$d件がPhotoMaidのゴミ箱にあります。</item>
+    </plurals>
 </resources>

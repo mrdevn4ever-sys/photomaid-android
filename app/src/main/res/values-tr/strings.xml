@@ -1140,4 +1140,43 @@
     <string name="vid_estimate">yakl. %1$s</string>
     <string name="vid_estimate_hint">Bit hızı × süreden tahmin. Kaydedilen dosya gerçek boyutunu gösterir.</string>
     <string name="vid_hdr_hint">Renk değişiklikleri uygulandığı için bu HDR video SDR olarak kaydedilir.</string>
+    <string name="tab_library">Fotoğraflar</string>
+    <string name="lib_filter_all">Tümü</string>
+    <string name="lib_filter_favorites">Favoriler</string>
+    <string name="lib_kw_favorite">favori</string>
+    <string name="lib_no_date">Tarihsiz</string>
+    <string name="lib_search">Ara</string>
+    <string name="lib_search_hint">Ad, klasör, ay, yıl…</string>
+    <string name="lib_search_clear">Aramayı temizle</string>
+    <string name="lib_search_none_title">Sonuç yok</string>
+    <string name="lib_search_none_text">„%1$s” ile eşleşen bir şey yok. Aksanlar ve büyük harfler fark etmez.</string>
+    <string name="lib_empty_text">Bu cihazdaki fotoğraf ve videolar burada görünür.</string>
+    <string name="lib_level_day">Günler</string>
+    <string name="lib_level_month">Aylar</string>
+    <string name="lib_level_year">Yıllar</string>
+    <string name="lib_level_finer">Daha büyük kutucuklar</string>
+    <string name="lib_level_coarser">Daha küçük kutucuklar</string>
+    <string name="lib_trash_action">Çöp kutusuna taşı</string>
+    <string name="lib_trash_text">PhotoMaid çöp kutusuna – hiçbir şey silinmez. Sonra orada karar verirsin.</string>
+    <string name="lib_trash_text_fav">PhotoMaid çöp kutusuna – hiçbir şey silinmez. Favoriler kalır („Favorileri koru” açık).</string>
+    <string name="lib_trash_fav_protected">Bu bir favori. „Favorileri koru” açık olduğu için çöp kutusuna gitmez. Bunu ayarlardan değiştirebilirsin.</string>
+    <string name="lib_trashed_one">PhotoMaid çöp kutusunda</string>
+    <string name="lib_review_from_here">Buradan itibaren temizle</string>
+    <string name="lib_feed_title">Kitaplıktan</string>
+    <string name="lib_info_name">Ad</string>
+    <string name="lib_info_taken">Çekilme</string>
+    <string name="lib_info_folder">Klasör</string>
+    <string name="lib_info_size">Boyut</string>
+    <string name="lib_info_resolution">Çözünürlük</string>
+    <string name="lib_info_duration">Süre</string>
+    <string name="lib_info_type">Dosya türü</string>
+    <string name="lib_info_added">Bu cihazda şu tarihten beri</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">%1$d öğe çöp kutusuna taşınsın mı?</item>
+        <item quantity="other">%1$d öğe çöp kutusuna taşınsın mı?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d öğe PhotoMaid çöp kutusunda.</item>
+        <item quantity="other">%1$d öğe PhotoMaid çöp kutusunda.</item>
+    </plurals>
 </resources>

@@ -106,3 +106,11 @@ Commit. Geräteabnahme bleibt NOT RUN, bis der Test-Agent sie macht.
 3. **Verstecken = „In PhotoMaid ausblenden“**, ehrlich beschriftet; kein Tresor mit Dateiverschiebung.
 4. **Feed-Gesten bleiben fest** (hoch = Behalten ist nicht abschaltbar); der neue Betrachter hat keine Wisch-Aktion nach oben.
 5. **Kein Ortsname/Karte** (Ortsnamen bräuchten Netz); Koordinaten nur im Info-Blatt, wenn vorhanden.
+
+## 6. Umsetzungsstand
+
+| Phase | Stand |
+|---|---|
+| G1 Tab „Fotos“: Zeitachse (Tag/Monat/Jahr, zwei Finger, Scroll-Griff mit Datum), Filter, Suche ohne Akzente, Auswahl (Favorit, Verschieben, Collage, PhotoMaid-Papierkorb mit Favoritenschutz), Betrachter (blättern, runter schließen, Zoom, Info, Ab hier aufräumen, Papierkorb mit Rückgängig) | fertig (JVM-Tests/Screenshots PASS, Gerät NOT RUN). Kamera-Modell noch nicht in der Suche (EXIF-Index folgt mit G2) |
+| G2–G4 | offen |
+

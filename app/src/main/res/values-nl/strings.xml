@@ -1140,4 +1140,43 @@
     <string name="vid_estimate">ca. %1$s</string>
     <string name="vid_estimate_hint">Schatting uit bitrate × duur. Het opgeslagen bestand toont de echte grootte.</string>
     <string name="vid_hdr_hint">Deze HDR-video wordt als SDR opgeslagen omdat er kleurwijzigingen zijn.</string>
+    <string name="tab_library">Foto’s</string>
+    <string name="lib_filter_all">Alles</string>
+    <string name="lib_filter_favorites">Favorieten</string>
+    <string name="lib_kw_favorite">favoriet</string>
+    <string name="lib_no_date">Zonder datum</string>
+    <string name="lib_search">Zoeken</string>
+    <string name="lib_search_hint">Naam, map, maand, jaar…</string>
+    <string name="lib_search_clear">Zoekopdracht wissen</string>
+    <string name="lib_search_none_title">Geen resultaten</string>
+    <string name="lib_search_none_text">Niets komt overeen met ‘%1$s’. Accenten en hoofdletters maken niet uit.</string>
+    <string name="lib_empty_text">Foto’s en video’s op dit apparaat verschijnen hier.</string>
+    <string name="lib_level_day">Dagen</string>
+    <string name="lib_level_month">Maanden</string>
+    <string name="lib_level_year">Jaren</string>
+    <string name="lib_level_finer">Grotere tegels</string>
+    <string name="lib_level_coarser">Kleinere tegels</string>
+    <string name="lib_trash_action">Naar prullenbak</string>
+    <string name="lib_trash_text">Naar de PhotoMaid-prullenbak – er wordt niets verwijderd. Je beslist daar later.</string>
+    <string name="lib_trash_text_fav">Naar de PhotoMaid-prullenbak – er wordt niets verwijderd. Favorieten blijven (‘Favorieten beschermen’ staat aan).</string>
+    <string name="lib_trash_fav_protected">Dit is een favoriet. ‘Favorieten beschermen’ staat aan, dus hij gaat niet naar de prullenbak. Je kunt dit wijzigen in Instellingen.</string>
+    <string name="lib_trashed_one">In de PhotoMaid-prullenbak</string>
+    <string name="lib_review_from_here">Vanaf hier opruimen</string>
+    <string name="lib_feed_title">Uit de bibliotheek</string>
+    <string name="lib_info_name">Naam</string>
+    <string name="lib_info_taken">Gemaakt</string>
+    <string name="lib_info_folder">Map</string>
+    <string name="lib_info_size">Grootte</string>
+    <string name="lib_info_resolution">Resolutie</string>
+    <string name="lib_info_duration">Duur</string>
+    <string name="lib_info_type">Bestandstype</string>
+    <string name="lib_info_added">Op dit apparaat sinds</string>
+    <plurals name="lib_trash_title">
+        <item quantity="one">%1$d item naar de prullenbak?</item>
+        <item quantity="other">%1$d items naar de prullenbak?</item>
+    </plurals>
+    <plurals name="lib_trashed">
+        <item quantity="one">%1$d item staat in de PhotoMaid-prullenbak.</item>
+        <item quantity="other">%1$d items staan in de PhotoMaid-prullenbak.</item>
+    </plurals>
 </resources>

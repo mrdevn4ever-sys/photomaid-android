@@ -278,6 +278,8 @@ class RecordingNav : Nav {
     override fun openFeed(request: FeedRequest) { events += "feed:${request.source}"; requests += request }
     override fun openGrid(request: FeedRequest) { events += "grid:${request.source}"; requests += request }
     override fun openEditor(assetId: String) { events += "editor:$assetId" }
+    val viewers = mutableListOf<app.photomaid.feature.library.ViewerRequest>()
+    override fun openViewer(request: app.photomaid.feature.library.ViewerRequest) { events += "viewer"; viewers += request }
     val requests = mutableListOf<FeedRequest>()
     override fun openSettings() { events += "settings" }
     override fun openPro() { events += "pro" }

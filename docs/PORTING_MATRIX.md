@@ -202,4 +202,5 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Rote Augen | Tippen setzt Kreis; nur deutlich rote Pixel werden zu dunklem Neutral; kostenlos | Plan §5, keine Erkennung |
 | Video-Editor | Kürzen (schneller Weg) · Bereiche entfernen (echte Neukodierung) · Tempo 0,25–4× (Tonhöhe bleibt) · Ton/Blenden/Entfernen · Format Ausfüllen/Einpassen · Farbe (LUT) · Text/Sticker mit Zeitfenster · Standbild · Ton als M4A · Profile mit „ca.“-Schätzung | Plan §6/§12 |
 | Video-Export im Hintergrund | `ExportCoordinator` im App-Bereich + Vordergrunddienst; „Im Hintergrund fortsetzen“, Fertig-Meldung | Android-Plattform (iOS: BGProcessingTask) |
+| Tab „Fotos“ | 5 Tabs (Material-Grenze); Beschriftungen passen sich bei < 360 dp an (kein Abschneiden in 16 Sprachen) | Mediathek-Plan G1 |
 
