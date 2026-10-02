@@ -138,6 +138,7 @@ class FeedPlayer(private val context: Context) {
     }
 
     /** Nur Play/Pause, Stopp und Spulen im selben Video – nie „Weiter/Zurück“ (auch nicht über Kopfhörer). */
+    @androidx.annotation.OptIn(markerClass = [androidx.media3.common.util.UnstableApi::class])
     internal class ButtonsOnly(player: Player) : ForwardingPlayer(player) {
         private val allowed = Player.Commands.Builder().addAll(
             // Bewusst ohne GET_CURRENT_MEDIA_ITEM/GET_METADATA/GET_TIMELINE: verbundene Controller (System, Bluetooth)
