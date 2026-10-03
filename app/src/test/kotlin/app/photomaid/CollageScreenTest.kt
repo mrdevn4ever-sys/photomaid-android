@@ -53,7 +53,7 @@ class CollageScreenTest {
         app.editEngine.io = Dispatchers.Main; app.editEngine.parallel = false
     }
     private fun waitTag(tag: String) = pumpUntil { rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty() }
-    private fun click(tag: String) { rule.onNodeWithTag(tag).performSemanticsAction(SemanticsActions.OnClick); pumpUntil { true } }
+    private fun click(tag: String) { rule.openMoreFor(tag) { pumpUntil { true } }; rule.onNodeWithTag(tag).performSemanticsAction(SemanticsActions.OnClick); pumpUntil { true } }
     private fun pumpUntil(timeoutMs: Long = 30_000, cond: () -> Boolean) {
         rule.mainClock.autoAdvance = false
         val end = System.currentTimeMillis() + timeoutMs

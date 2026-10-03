@@ -58,7 +58,7 @@ class MarkupTest {
     }
     private fun <T> io(block: suspend () -> T): T = runBlocking { kotlinx.coroutines.withContext(Dispatchers.IO) { block() } }
     private fun waitTag(tag: String) = rule.waitUntil(10_000) { rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty() }
-    private fun click(tag: String) { rule.onNodeWithTag(tag).performSemanticsAction(SemanticsActions.OnClick); rule.waitForIdle() }
+    private fun click(tag: String) { rule.openMoreFor(tag) { rule.waitForIdle() }; rule.onNodeWithTag(tag).performSemanticsAction(SemanticsActions.OnClick); rule.waitForIdle() }
     private fun pumpUntil(timeoutMs: Long = 30_000, cond: () -> Boolean) {
         rule.mainClock.autoAdvance = false
         val end = System.currentTimeMillis() + timeoutMs

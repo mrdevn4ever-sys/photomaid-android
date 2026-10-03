@@ -852,12 +852,12 @@
     <string name="edit_pro_unlock">Débloquer Pro</string>
     <string name="edit_save_geometry_only">Enregistrer le recadrage seul</string>
     <string name="edit_save_title">Enregistrer la modification</string>
-    <string name="edit_save_copy">Garder l’original</string>
-    <string name="edit_save_copy_text">Enregistrée en copie à côté de l’original. L’original reste inchangé.</string>
-    <string name="edit_save_replace">Remplacer l’original</string>
-    <string name="edit_save_replace_text">La modification prend la place de l’original. L’original va dans la corbeille Android et peut être restauré pendant 30 jours. L’espace n’est libéré qu’ensuite.</string>
+    <string name="edit_save_copy">Enregistrer une copie</string>
+    <string name="edit_save_copy_text">L’original reste inchangé.</string>
+    <string name="edit_save_replace">Enregistrer une copie et mettre l’original à la corbeille</string>
+    <string name="edit_save_replace_text">L’original va dans la corbeille Android et peut y être restauré tant qu’Android le conserve. L’espace n’est libéré qu’ensuite.</string>
     <string name="edit_save_copy_action">Enregistrer une copie</string>
-    <string name="edit_save_replace_action">Remplacer l’original</string>
+    <string name="edit_save_replace_action">Enregistrer, original à la corbeille</string>
     <string name="edit_remove_location">Retirer la position</string>
     <string name="edit_remove_location_text">La photo enregistrée n’indiquera pas où elle a été prise.</string>
     <string name="edit_hint_heic">Enregistrée en JPEG (le HEIC ne peut pas être écrit de façon fiable sur cet appareil).</string>
@@ -903,7 +903,7 @@
     <string name="tour_editor_compare_title">Avant et après</string>
     <string name="tour_editor_compare_text">Maintiens le doigt sur la photo pour voir l’original.</string>
     <string name="tour_editor_save_title">Tu décides à l’enregistrement</string>
-    <string name="tour_editor_save_text">Garde l’original et enregistre une copie, ou remplace l’original – il reste alors 30 jours dans la corbeille Android.</string>
+    <string name="tour_editor_save_text">Enregistre une copie – l’original reste inchangé. Si tu le souhaites, l’original va dans la corbeille Android.</string>
     <string name="edit_adj_exposure">Exposition</string>
     <string name="edit_adj_highlights">Hautes lumières</string>
     <string name="edit_adj_shadows">Ombres</string>
@@ -1489,4 +1489,10 @@
     <string name="tools_gif_fit">Image entière</string>
     <string name="tools_gif_fill">Remplir</string>
     <string name="edit_changed">modifié</string>
+    <string name="dock_crop">Recadrer</string>
+    <string name="dock_more">Plus</string>
+    <string name="vid_trim_hint_short">Fais glisser les poignées pour définir le début et la fin.</string>
+    <string name="vid_export_info">Infos d’export</string>
+    <string name="vid_export_info_fast">Seuls le début et la fin sont coupés. PhotoMaid essaie de garder la qualité et ne réencode que le début jusqu’à la prochaine image clé. Si la vidéo ne le permet pas, toute la vidéo est réencodée. Durée totale %1$s.</string>
+    <string name="vid_export_info_reencode">En raison de tes autres modifications, toute la vidéo est réencodée à l’enregistrement. Durée totale %1$s.</string>
 </resources>

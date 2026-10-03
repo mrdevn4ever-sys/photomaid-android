@@ -31,6 +31,7 @@ import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.rounded.Undo
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material.icons.rounded.WorkspacePremium
 import androidx.compose.material3.AlertDialog
@@ -76,6 +77,7 @@ import app.photomaid.design.CancelButton
 import app.photomaid.design.DockItem
 import app.photomaid.design.EditorActionButton
 import app.photomaid.design.EditorDock
+import app.photomaid.design.EditorSubTabs
 import app.photomaid.design.EditorHoldButton
 import app.photomaid.design.EditorLayoutPolicy
 import app.photomaid.design.EditorPrimaryButton
@@ -154,10 +156,16 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
         CoachStep("editor.save", stringResource(R.string.tour_editor_save_title), stringResource(R.string.tour_editor_save_text)),
     ).let { s -> if (vm.isVideo) s.filter { it.key != "editor.stage" } else s }
     val ready = vm.asset != null && (vm.isVideo || vm.source != null)
-    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM, EditorTab.SPEED, EditorTab.AUDIO, EditorTab.FORMAT, EditorTab.FILTER, EditorTab.ADJUST, EditorTab.MARKUP)
-        else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.RETOUCH, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
+    // Navigation: vier Hauptwerkzeuge + „Mehr“ – passt bei normaler Schrift vollständig, ohne kleinere Beschriftungen.
+    val mainTabs = if (vm.isVideo) listOf(EditorTab.TRIM, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.MARKUP)
+        else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.MARKUP)
+    val moreTabs = if (vm.isVideo) listOf(EditorTab.SPEED, EditorTab.AUDIO, EditorTab.FORMAT) else listOf(EditorTab.RETOUCH, EditorTab.FRAME, EditorTab.RESIZE)
+    var lastMore by rememberSaveable(vm.isVideo) { mutableStateOf(moreTabs.first()) }
+    LaunchedEffect(vm.tab) { if (vm.tab in moreTabs) lastMore = vm.tab }
     val locked = !app.capabilities.hasProToolsAccess
-    val dockItems = tabs.map { t -> DockItem(t.name, t.icon, stringResource(t.label), "tab.${t.name}", badge = if (locked && t.isPro) Icons.Rounded.WorkspacePremium else null) }
+    val dockItems = mainTabs.map { t -> DockItem(t.name, t.icon, stringResource(if (t == EditorTab.CROP) R.string.dock_crop else t.label), "tab.${t.name}",
+        badge = if (locked && t.isPro) Icons.Rounded.WorkspacePremium else null) } +
+        DockItem(MORE, Icons.Rounded.MoreHoriz, stringResource(R.string.dock_more), "tab.$MORE")
     EditorTheme {
     CoachHost(steps, active = ready && !settings.editorTourSeen,
         onFinish = { scope.launch { app.updateSettings { it.copy(editorTourSeen = true) } } }, modifier = Modifier.fillMaxSize()) {
@@ -210,6 +218,8 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                     }
                 },
                 tool = {
+                    if (vm.tab in moreTabs) EditorSubTabs(moreTabs.map { Triple(it.name, stringResource(it.label), false) }, vm.tab.name,
+                        { vm.tab = EditorTab.valueOf(it) }, Modifier.testTag("editor.more"), tagPrefix = "tab.")
                     if (vm.needsPro && (vm.isVideo || vm.recipe.usesProTools)) ProHint(onPro = nav::openPro)
                     if (!vm.isVideo && vm.showHistogram) vm.histogram?.let { HistogramCard(it, Modifier.fillMaxWidth()) }
                     Box(Modifier.fillMaxWidth().testTag("editor.panel.${vm.tab.name}")) {
@@ -229,7 +239,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                     }
                 },
                 dock = {
-                    EditorDock(dockItems, vm.tab.name, { k -> vm.tab = EditorTab.valueOf(k) }, Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
+                    EditorDock(dockItems, if (vm.tab in moreTabs) MORE else vm.tab.name, { k -> vm.tab = if (k == MORE) lastMore else EditorTab.valueOf(k) }, Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
                 },
             )
             SavingOverlay(vm)
@@ -308,6 +318,8 @@ private fun SavingOverlay(vm: EditorViewModel) {
  * Speichern als eigener Schritt (ganze Ansicht statt Blatt über dem Bild): klar, dass eine neue Datei entsteht und das
  * Original bleibt; vorhandene Optionen (Kopie/Ersetzen, Ordner, Standort, Videoprofil) unverändert.
  */
+private const val MORE = "MORE"
+
 @Composable
 private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> Unit, onPro: () -> Unit, onFolder: () -> Unit, onShare: () -> Unit,
                       onSave: (SaveMode, Boolean) -> Unit) {

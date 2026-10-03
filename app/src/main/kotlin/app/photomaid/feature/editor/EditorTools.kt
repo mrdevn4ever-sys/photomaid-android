@@ -1,5 +1,8 @@
 package app.photomaid.feature.editor
 
+import app.photomaid.design.LocalEditorPalette
+import app.photomaid.design.EditorSubTabs
+import app.photomaid.design.EditorToolButton
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -191,8 +194,9 @@ internal fun EditSlider(
             Text(label, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, modifier = Modifier.weight(1f))
             Box(Modifier.heightIn(min = AppSpacing.minTouch).clip(CircleShape).clickable(role = Role.Button, onClickLabel = resetLabel) {
                 onChange(0f.coerceIn(range), true) }.padding(horizontal = AppSpacing.s), contentAlignment = Alignment.Center) {
-                Text(valueText, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold),
-                    color = if (value == 0f) c.textSecondary else c.accent, modifier = Modifier.testTag("editor.value"))
+                Text(valueText, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    color = if (value == 0f) c.textSecondary else c.accent, textAlign = androidx.compose.ui.text.style.TextAlign.End,
+                    modifier = Modifier.widthIn(min = 48.dp).testTag("editor.value"))
             }
         }
         val bipolar = range.start < 0f
@@ -236,14 +240,17 @@ internal fun ToolButton(icon: ImageVector, label: String, modifier: Modifier = M
 internal fun Chip(text: String, selected: Boolean, modifier: Modifier = Modifier, icon: ImageVector? = null, dot: Boolean = false,
                   onLongClick: (() -> Unit)? = null, onClick: () -> Unit) {
     val c = PM.colors
+    val stroke = LocalEditorPalette.current.stroke
+    // Auswahl einheitlich: aktiv = zarte Akzentfläche + Akzentrand + Akzenttext; ruhig = nur feiner Rand.
     Row(modifier.heightIn(min = 40.dp).clip(CircleShape)
-        .background(if (selected) c.accentFill else c.backgroundTint)
+        .background(if (selected) c.accent.copy(alpha = 0.12f) else Color.Transparent)
+        .border(if (selected) 1.5.dp else 1.dp, if (selected) c.accent else stroke, CircleShape)
         .combinedClickable(role = Role.RadioButton, onLongClick = onLongClick, onClick = onClick).semantics { this.selected = selected }
         .padding(horizontal = AppSpacing.s), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        if (icon != null) Icon(icon, null, tint = if (selected) Color.White else c.textPrimary, modifier = Modifier.size(18.dp))
+        if (icon != null) Icon(icon, null, tint = if (selected) c.accent else c.textPrimary, modifier = Modifier.size(18.dp))
         Text(text, style = AppTypography.subheadline.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
-            color = if (selected) Color.White else c.textPrimary, maxLines = 1)
-        if (dot) Box(Modifier.size(6.dp).clip(CircleShape).background(if (selected) Color.White else c.accent))
+            color = if (selected) c.accent else c.textPrimary, maxLines = 1)
+        if (dot) Box(Modifier.size(6.dp).clip(CircleShape).background(c.accent))
     }
 }
 
@@ -306,14 +313,15 @@ internal fun CropPanel(vm: EditorViewModel) {
 internal fun AdjustPanel(vm: EditorViewModel) {
     val a = vm.recipe.adjust
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("adjust.groups"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-            val groups = if (vm.isVideo) listOf(AdjustGroup.LIGHT, AdjustGroup.COLOR, AdjustGroup.MIX) else AdjustGroup.entries
-            for (g in groups) Chip(stringResource(g.label), vm.adjustGroup == g, Modifier.testTag("group.${g.name}"),
-                dot = if (g == AdjustGroup.MIX) !vm.recipe.colorMix.isNeutral else AdjustTool.of(g).any { it.get(a) != 0f }) {
+        // Gruppen als ruhige Textreiter (Licht · Farbe · Detail …); Punkt = in der Gruppe ist etwas geändert.
+        val groups = if (vm.isVideo) listOf(AdjustGroup.LIGHT, AdjustGroup.COLOR, AdjustGroup.MIX) else AdjustGroup.entries
+        EditorSubTabs(groups.map { g -> Triple(g.name, stringResource(g.label),
+            if (g == AdjustGroup.MIX) !vm.recipe.colorMix.isNeutral else AdjustTool.of(g).any { it.get(a) != 0f }) },
+            vm.adjustGroup.name, { k ->
+                val g = AdjustGroup.valueOf(k)
                 vm.adjustGroup = g
                 if (g != AdjustGroup.MIX && vm.adjustTool.group != g) vm.adjustTool = AdjustTool.of(g).first()
-            }
-        }
+            }, Modifier.testTag("adjust.groups"), tagPrefix = "group.")
         if (vm.adjustGroup == AdjustGroup.MIX) {
             MixPanel(vm)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
@@ -354,21 +362,11 @@ private fun AdjustSlider(vm: EditorViewModel, t: AdjustTool) {
     }
 }
 
-/** Werkzeug als Kreis mit Symbol, darunter der Name; Punkt = Wert ≠ 0. */
+/** Werkzeug im einheitlichen Stil der Editorfamilie; Punkt = Wert ≠ 0. */
 @Composable
 internal fun AdjustToolButton(t: AdjustTool, selected: Boolean, changed: Boolean, modifier: Modifier, onClick: () -> Unit) {
-    val c = PM.colors
-    val changedLabel = stringResource(R.string.edit_changed)
-    Column(modifier.widthIn(min = 64.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
-        .semantics(mergeDescendants = true) { this.selected = selected; if (changed) stateDescription = changedLabel }.testTag("adjust.${t.name}").padding(horizontal = 4.dp, vertical = 4.dp),
-        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Box(Modifier.size(44.dp).clip(CircleShape).background(if (selected) c.accentFill else c.backgroundTint), contentAlignment = Alignment.Center) {
-            Icon(t.icon, null, tint = if (selected) Color.White else c.textPrimary, modifier = Modifier.size(22.dp))
-            if (changed) Box(Modifier.align(Alignment.TopEnd).padding(5.dp).size(7.dp).clip(CircleShape).background(if (selected) Color.White else c.accent))
-        }
-        Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
-            color = if (selected) c.accent else c.textSecondary, maxLines = 1, softWrap = false)
-    }
+    EditorToolButton(t.icon, stringResource(t.label), selected, modifier.testTag("adjust.${t.name}"), changed = changed,
+        changedLabel = stringResource(R.string.edit_changed), onClick = onClick)
 }
 
 // ---------------------------------------------------------------------------------------------------------------------

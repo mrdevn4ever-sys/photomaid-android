@@ -774,12 +774,12 @@
     <string name="edit_pro_unlock">解锁 Pro</string>
     <string name="edit_save_geometry_only">仅保存裁剪</string>
     <string name="edit_save_title">保存编辑</string>
-    <string name="edit_save_copy">保留原图</string>
-    <string name="edit_save_copy_text">另存为副本，放在原图旁边。原图保持不变。</string>
-    <string name="edit_save_replace">替换原图</string>
-    <string name="edit_save_replace_text">编辑后的版本将取代原图。原图会移到 Android 回收站，30 天内可恢复。空间要到那之后才会释放。</string>
+    <string name="edit_save_copy">另存为副本</string>
+    <string name="edit_save_copy_text">原文件保持不变。</string>
+    <string name="edit_save_replace">保存副本并将原文件移到回收站</string>
+    <string name="edit_save_replace_text">原文件会移到 Android 回收站，在 Android 保留期间可以恢复。空间要到那之后才会释放。</string>
     <string name="edit_save_copy_action">保存副本</string>
-    <string name="edit_save_replace_action">替换原图</string>
+    <string name="edit_save_replace_action">保存，原文件移到回收站</string>
     <string name="edit_remove_location">移除位置信息</string>
     <string name="edit_remove_location_text">保存的照片将不包含拍摄地点。</string>
     <string name="edit_hint_heic">将保存为 JPEG（此设备无法可靠写入 HEIC）。</string>
@@ -825,7 +825,7 @@
     <string name="tour_editor_compare_title">前后对比</string>
     <string name="tour_editor_compare_text">长按照片查看原图。</string>
     <string name="tour_editor_save_title">保存时由你决定</string>
-    <string name="tour_editor_save_text">保留原图并保存副本，或替换原图——原图会在 Android 回收站中保留 30 天。</string>
+    <string name="tour_editor_save_text">另存为副本，原文件保持不变。如有需要，可将原文件移到 Android 回收站。</string>
     <string name="edit_adj_exposure">曝光</string>
     <string name="edit_adj_highlights">高光</string>
     <string name="edit_adj_shadows">阴影</string>
@@ -1367,4 +1367,10 @@
     <string name="tools_gif_fit">完整画面</string>
     <string name="tools_gif_fill">填满</string>
     <string name="edit_changed">已更改</string>
+    <string name="dock_crop">裁剪</string>
+    <string name="dock_more">更多</string>
+    <string name="vid_trim_hint_short">拖动手柄来设置开头和结尾。</string>
+    <string name="vid_export_info">导出信息</string>
+    <string name="vid_export_info_fast">只裁剪开头和结尾。PhotoMaid 会尽量保持画质，只重新编码开头到下一个关键帧的部分。如果视频不支持，则重新编码整个视频。总时长 %1$s。</string>
+    <string name="vid_export_info_reencode">由于你的其他更改，保存时会重新编码整个视频。总时长 %1$s。</string>
 </resources>

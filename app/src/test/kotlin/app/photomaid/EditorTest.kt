@@ -66,7 +66,7 @@ class EditorTest {
 
     private fun <T> io(block: suspend () -> T): T = runBlocking { kotlinx.coroutines.withContext(Dispatchers.IO) { block() } }
     private fun waitTag(tag: String) = rule.waitUntil(10_000) { rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty() }
-    private fun click(tag: String) { rule.onNodeWithTag(tag, useUnmergedTree = false).performSemanticsAction(SemanticsActions.OnClick); rule.waitForIdle() }
+    private fun click(tag: String) { rule.openMoreFor(tag) { rule.waitForIdle() }; rule.onNodeWithTag(tag, useUnmergedTree = false).performSemanticsAction(SemanticsActions.OnClick); rule.waitForIdle() }
     private fun sha(f: File) = MessageDigest.getInstance("SHA-256").digest(f.readBytes()).joinToString("") { "%02x".format(it) }
     private fun file(id: String) = File(Uri.parse(id).path!!)
     private fun rec(id: String) = app.ledger.stateFlow.value.records[ItemReference.photo(id)]

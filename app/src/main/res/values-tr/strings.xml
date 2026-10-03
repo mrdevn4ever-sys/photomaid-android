@@ -813,12 +813,12 @@
     <string name="edit_pro_unlock">Pro\'nun kilidini aç</string>
     <string name="edit_save_geometry_only">Yalnızca kırpmayı kaydet</string>
     <string name="edit_save_title">Düzenlemeyi kaydet</string>
-    <string name="edit_save_copy">Orijinali koru</string>
-    <string name="edit_save_copy_text">Orijinalin yanına kopya olarak kaydedilir. Orijinal değişmez.</string>
-    <string name="edit_save_replace">Orijinali değiştir</string>
-    <string name="edit_save_replace_text">Düzenleme orijinalin yerini alır. Orijinal Android çöp kutusuna gider ve 30 gün geri yüklenebilir. Alan ancak sonra boşalır.</string>
+    <string name="edit_save_copy">Kopya olarak kaydet</string>
+    <string name="edit_save_copy_text">Orijinal değişmeden kalır.</string>
+    <string name="edit_save_replace">Kopyayı kaydet, orijinali çöp kutusuna taşı</string>
+    <string name="edit_save_replace_text">Orijinal Android çöp kutusuna gider ve Android sakladığı sürece geri yüklenebilir. Alan ancak sonra boşalır.</string>
     <string name="edit_save_copy_action">Kopyayı kaydet</string>
-    <string name="edit_save_replace_action">Orijinali değiştir</string>
+    <string name="edit_save_replace_action">Kaydet, orijinal çöp kutusuna</string>
     <string name="edit_remove_location">Konumu kaldır</string>
     <string name="edit_remove_location_text">Kaydedilen fotoğrafta çekim yeri olmaz.</string>
     <string name="edit_hint_heic">JPEG olarak kaydedilir (HEIC bu cihazda güvenilir şekilde yazılamaz).</string>
@@ -864,7 +864,7 @@
     <string name="tour_editor_compare_title">Önce ve sonra</string>
     <string name="tour_editor_compare_text">Orijinali görmek için fotoğrafa basılı tut.</string>
     <string name="tour_editor_save_title">Kaydederken sen karar verirsin</string>
-    <string name="tour_editor_save_text">Orijinali koruyup bir kopya kaydet ya da orijinali değiştir – orijinal 30 gün Android çöp kutusunda kalır.</string>
+    <string name="tour_editor_save_text">Kopya olarak kaydet – orijinal değişmez. İstersen orijinal Android çöp kutusuna gider.</string>
     <string name="edit_adj_exposure">Pozlama</string>
     <string name="edit_adj_highlights">Parlak alanlar</string>
     <string name="edit_adj_shadows">Gölgeler</string>
@@ -1428,4 +1428,10 @@
     <string name="tools_gif_fit">Tüm görüntü</string>
     <string name="tools_gif_fill">Doldur</string>
     <string name="edit_changed">değiştirildi</string>
+    <string name="dock_crop">Kırp</string>
+    <string name="dock_more">Diğer</string>
+    <string name="vid_trim_hint_short">Başlangıcı ve bitişi belirlemek için tutamaçları sürükle.</string>
+    <string name="vid_export_info">Dışa aktarma bilgisi</string>
+    <string name="vid_export_info_fast">Yalnızca başlangıç ve bitiş kırpılır. PhotoMaid kaliteyi korumaya çalışır ve yalnızca bir sonraki anahtar kareye kadar olan başlangıcı yeniden kodlar. Video buna izin vermezse tüm video yeniden kodlanır. Toplam süre %1$s.</string>
+    <string name="vid_export_info_reencode">Diğer değişikliklerin nedeniyle kaydederken tüm video yeniden kodlanır. Toplam süre %1$s.</string>
 </resources>

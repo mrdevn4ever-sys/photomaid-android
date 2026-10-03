@@ -813,12 +813,12 @@
     <string name="edit_pro_unlock">Pro ontgrendelen</string>
     <string name="edit_save_geometry_only">Alleen uitsnede opslaan</string>
     <string name="edit_save_title">Bewerking opslaan</string>
-    <string name="edit_save_copy">Origineel behouden</string>
-    <string name="edit_save_copy_text">Opgeslagen als kopie naast het origineel. Het origineel blijft ongewijzigd.</string>
-    <string name="edit_save_replace">Origineel vervangen</string>
-    <string name="edit_save_replace_text">De bewerking komt in de plaats van het origineel. Het origineel gaat naar de Android-prullenbak en is 30 dagen te herstellen. Ruimte komt pas daarna vrij.</string>
+    <string name="edit_save_copy">Opslaan als kopie</string>
+    <string name="edit_save_copy_text">Het origineel blijft ongewijzigd.</string>
+    <string name="edit_save_replace">Kopie opslaan en origineel naar prullenbak</string>
+    <string name="edit_save_replace_text">Het origineel gaat naar de Android-prullenbak en is te herstellen zolang Android het bewaart. Ruimte komt pas daarna vrij.</string>
     <string name="edit_save_copy_action">Kopie opslaan</string>
-    <string name="edit_save_replace_action">Origineel vervangen</string>
+    <string name="edit_save_replace_action">Opslaan, origineel naar prullenbak</string>
     <string name="edit_remove_location">Locatie verwijderen</string>
     <string name="edit_remove_location_text">De opgeslagen foto bevat dan geen opnamelocatie.</string>
     <string name="edit_hint_heic">Wordt als JPEG opgeslagen (HEIC kan op dit apparaat niet betrouwbaar worden geschreven).</string>
@@ -864,7 +864,7 @@
     <string name="tour_editor_compare_title">Voor en na</string>
     <string name="tour_editor_compare_text">Houd je vinger op de foto om het origineel te zien.</string>
     <string name="tour_editor_save_title">Bij opslaan beslis jij</string>
-    <string name="tour_editor_save_text">Behoud het origineel en sla een kopie op, of vervang het origineel – dat staat dan 30 dagen in de Android-prullenbak.</string>
+    <string name="tour_editor_save_text">Sla op als kopie – het origineel blijft ongewijzigd. Als je wilt, gaat het origineel naar de Android-prullenbak.</string>
     <string name="edit_adj_exposure">Belichting</string>
     <string name="edit_adj_highlights">Hooglichten</string>
     <string name="edit_adj_shadows">Schaduwen</string>
@@ -1428,4 +1428,10 @@
     <string name="tools_gif_fit">Hele beeld</string>
     <string name="tools_gif_fill">Vullen</string>
     <string name="edit_changed">gewijzigd</string>
+    <string name="dock_crop">Bijsnijden</string>
+    <string name="dock_more">Meer</string>
+    <string name="vid_trim_hint_short">Sleep de grepen om begin en einde te bepalen.</string>
+    <string name="vid_export_info">Exportinfo</string>
+    <string name="vid_export_info_fast">Alleen begin en einde worden ingekort. PhotoMaid probeert de kwaliteit te behouden en codeert alleen het begin tot het volgende keyframe opnieuw. Laat de video dat niet toe, dan wordt de hele video opnieuw gecodeerd. Totale lengte %1$s.</string>
+    <string name="vid_export_info_reencode">Door je andere wijzigingen wordt bij het opslaan de hele video opnieuw gecodeerd. Totale lengte %1$s.</string>
 </resources>

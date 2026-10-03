@@ -813,12 +813,12 @@
     <string name="edit_pro_unlock">Unlock Pro</string>
     <string name="edit_save_geometry_only">Save crop only</string>
     <string name="edit_save_title">Save edit</string>
-    <string name="edit_save_copy">Keep original</string>
-    <string name="edit_save_copy_text">Saved as a copy next to the original. The original stays unchanged.</string>
-    <string name="edit_save_replace">Replace original</string>
-    <string name="edit_save_replace_text">The edit takes the original’s place. The original goes to the Android trash and can be restored for 30 days. Space is freed only after that.</string>
+    <string name="edit_save_copy">Save as copy</string>
+    <string name="edit_save_copy_text">The original stays unchanged.</string>
+    <string name="edit_save_replace">Save copy and move original to trash</string>
+    <string name="edit_save_replace_text">The original goes to the Android trash and can be restored there for as long as Android keeps it. Space is freed only after that.</string>
     <string name="edit_save_copy_action">Save copy</string>
-    <string name="edit_save_replace_action">Replace original</string>
+    <string name="edit_save_replace_action">Save copy, original to trash</string>
     <string name="edit_remove_location">Remove location</string>
     <string name="edit_remove_location_text">The saved photo won’t include where it was taken.</string>
     <string name="edit_hint_heic">Saved as JPEG (HEIC can’t be written reliably on this device).</string>
@@ -864,7 +864,7 @@
     <string name="tour_editor_compare_title">Before and after</string>
     <string name="tour_editor_compare_text">Touch and hold the photo to see the original.</string>
     <string name="tour_editor_save_title">You decide when saving</string>
-    <string name="tour_editor_save_text">Keep the original and save a copy, or replace the original – it then goes to the Android trash for 30 days.</string>
+    <string name="tour_editor_save_text">Save as a copy – the original stays unchanged. If you choose, the original goes to the Android trash.</string>
     <string name="edit_adj_exposure">Exposure</string>
     <string name="edit_adj_highlights">Highlights</string>
     <string name="edit_adj_shadows">Shadows</string>
@@ -1428,4 +1428,10 @@
     <string name="tools_gif_fit">Whole picture</string>
     <string name="tools_gif_fill">Fill frame</string>
     <string name="edit_changed">changed</string>
+    <string name="dock_crop">Crop</string>
+    <string name="dock_more">More</string>
+    <string name="vid_trim_hint_short">Drag the handles to set the start and end.</string>
+    <string name="vid_export_info">Export info</string>
+    <string name="vid_export_info_fast">Only start and end are trimmed. PhotoMaid tries to keep the quality and re-encodes only the start up to the next keyframe. If the video doesn’t allow that, the whole video is re-encoded. Total length %1$s.</string>
+    <string name="vid_export_info_reencode">Because of your other changes, the whole video is re-encoded when saving. Total length %1$s.</string>
 </resources>

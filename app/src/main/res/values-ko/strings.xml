@@ -774,12 +774,12 @@
     <string name="edit_pro_unlock">Pro 잠금 해제</string>
     <string name="edit_save_geometry_only">자르기만 저장</string>
     <string name="edit_save_title">편집 저장</string>
-    <string name="edit_save_copy">원본 유지</string>
-    <string name="edit_save_copy_text">원본 옆에 사본으로 저장돼요. 원본은 그대로예요.</string>
-    <string name="edit_save_replace">원본 바꾸기</string>
-    <string name="edit_save_replace_text">편집본이 원본 자리에 들어가요. 원본은 Android 휴지통으로 이동하며 30일 동안 복원할 수 있어요. 공간은 그 후에 확보돼요.</string>
+    <string name="edit_save_copy">사본으로 저장</string>
+    <string name="edit_save_copy_text">원본은 그대로 유지돼요.</string>
+    <string name="edit_save_replace">사본 저장 후 원본은 휴지통으로</string>
+    <string name="edit_save_replace_text">원본은 Android 휴지통으로 이동하며 Android가 보관하는 동안 복원할 수 있어요. 공간은 그 후에 확보돼요.</string>
     <string name="edit_save_copy_action">사본 저장</string>
-    <string name="edit_save_replace_action">원본 바꾸기</string>
+    <string name="edit_save_replace_action">저장하고 원본은 휴지통으로</string>
     <string name="edit_remove_location">위치 정보 삭제</string>
     <string name="edit_remove_location_text">저장한 사진에 촬영 위치가 들어가지 않아요.</string>
     <string name="edit_hint_heic">JPEG로 저장돼요(이 기기에서는 HEIC를 안정적으로 쓸 수 없어요).</string>
@@ -825,7 +825,7 @@
     <string name="tour_editor_compare_title">편집 전후</string>
     <string name="tour_editor_compare_text">사진을 길게 누르면 원본이 보여요.</string>
     <string name="tour_editor_save_title">저장할 때 선택해요</string>
-    <string name="tour_editor_save_text">원본을 유지하고 사본을 저장하거나 원본을 바꿀 수 있어요. 바꾼 원본은 30일 동안 Android 휴지통에 있어요.</string>
+    <string name="tour_editor_save_text">사본으로 저장하면 원본은 그대로예요. 원하면 원본을 Android 휴지통으로 옮길 수 있어요.</string>
     <string name="edit_adj_exposure">노출</string>
     <string name="edit_adj_highlights">밝은 영역</string>
     <string name="edit_adj_shadows">어두운 영역</string>
@@ -1367,4 +1367,10 @@
     <string name="tools_gif_fit">전체 보기</string>
     <string name="tools_gif_fill">채우기</string>
     <string name="edit_changed">변경됨</string>
+    <string name="dock_crop">자르기</string>
+    <string name="dock_more">더보기</string>
+    <string name="vid_trim_hint_short">핸들을 끌어 시작과 끝을 정하세요.</string>
+    <string name="vid_export_info">내보내기 정보</string>
+    <string name="vid_export_info_fast">시작과 끝만 잘라요. PhotoMaid는 화질을 유지하려고 다음 키프레임까지의 시작 부분만 다시 인코딩해요. 동영상이 이를 지원하지 않으면 전체를 다시 인코딩해요. 전체 길이 %1$s.</string>
+    <string name="vid_export_info_reencode">다른 변경 사항 때문에 저장할 때 동영상 전체를 다시 인코딩해요. 전체 길이 %1$s.</string>
 </resources>

@@ -852,12 +852,12 @@
     <string name="edit_pro_unlock">Desbloquear Pro</string>
     <string name="edit_save_geometry_only">Guardar solo el recorte</string>
     <string name="edit_save_title">Guardar edición</string>
-    <string name="edit_save_copy">Conservar el original</string>
-    <string name="edit_save_copy_text">Se guarda como copia junto al original. El original no cambia.</string>
-    <string name="edit_save_replace">Sustituir el original</string>
-    <string name="edit_save_replace_text">La edición ocupa el lugar del original. El original va a la papelera de Android y se puede recuperar durante 30 días. El espacio se libera después.</string>
+    <string name="edit_save_copy">Guardar como copia</string>
+    <string name="edit_save_copy_text">El original no cambia.</string>
+    <string name="edit_save_replace">Guardar copia y mover el original a la papelera</string>
+    <string name="edit_save_replace_text">El original va a la papelera de Android y se puede recuperar mientras Android lo conserve. El espacio se libera después.</string>
     <string name="edit_save_copy_action">Guardar copia</string>
-    <string name="edit_save_replace_action">Sustituir original</string>
+    <string name="edit_save_replace_action">Guardar, original a la papelera</string>
     <string name="edit_remove_location">Quitar ubicación</string>
     <string name="edit_remove_location_text">La foto guardada no incluirá dónde se tomó.</string>
     <string name="edit_hint_heic">Se guarda como JPEG (HEIC no se puede escribir de forma fiable en este dispositivo).</string>
@@ -903,7 +903,7 @@
     <string name="tour_editor_compare_title">Antes y después</string>
     <string name="tour_editor_compare_text">Mantén pulsada la foto para ver el original.</string>
     <string name="tour_editor_save_title">Decides al guardar</string>
-    <string name="tour_editor_save_text">Conserva el original y guarda una copia, o sustituye el original: quedará 30 días en la papelera de Android.</string>
+    <string name="tour_editor_save_text">Guarda como copia: el original no cambia. Si quieres, el original va a la papelera de Android.</string>
     <string name="edit_adj_exposure">Exposición</string>
     <string name="edit_adj_highlights">Iluminaciones</string>
     <string name="edit_adj_shadows">Sombras</string>
@@ -1489,4 +1489,10 @@
     <string name="tools_gif_fit">Imagen completa</string>
     <string name="tools_gif_fill">Rellenar</string>
     <string name="edit_changed">modificado</string>
+    <string name="dock_crop">Recortar</string>
+    <string name="dock_more">Más</string>
+    <string name="vid_trim_hint_short">Arrastra los controles para fijar el inicio y el final.</string>
+    <string name="vid_export_info">Info de exportación</string>
+    <string name="vid_export_info_fast">Solo se recortan el inicio y el final. PhotoMaid intenta mantener la calidad y solo recodifica el inicio hasta el siguiente fotograma clave. Si el vídeo no lo permite, se recodifica entero. Duración total %1$s.</string>
+    <string name="vid_export_info_reencode">Por tus otros cambios, al guardar se recodifica el vídeo entero. Duración total %1$s.</string>
 </resources>

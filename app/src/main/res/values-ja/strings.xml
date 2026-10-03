@@ -774,12 +774,12 @@
     <string name="edit_pro_unlock">Proを解除</string>
     <string name="edit_save_geometry_only">切り抜きだけ保存</string>
     <string name="edit_save_title">編集を保存</string>
-    <string name="edit_save_copy">元の写真を残す</string>
-    <string name="edit_save_copy_text">元の写真の隣にコピーとして保存します。元の写真は変わりません。</string>
-    <string name="edit_save_replace">元の写真を置き換える</string>
-    <string name="edit_save_replace_text">編集した写真が元の写真に置き換わります。元の写真はAndroidのゴミ箱に移動し、30日間は復元できます。空き容量が増えるのはその後です。</string>
+    <string name="edit_save_copy">コピーとして保存</string>
+    <string name="edit_save_copy_text">元のファイルは変更されません。</string>
+    <string name="edit_save_replace">コピーを保存し、元のファイルをゴミ箱へ</string>
+    <string name="edit_save_replace_text">元のファイルはAndroidのゴミ箱に移動し、Androidが保管している間は復元できます。空き容量が増えるのはその後です。</string>
     <string name="edit_save_copy_action">コピーを保存</string>
-    <string name="edit_save_replace_action">元の写真を置き換える</string>
+    <string name="edit_save_replace_action">保存して元をゴミ箱へ</string>
     <string name="edit_remove_location">位置情報を削除</string>
     <string name="edit_remove_location_text">保存した写真に撮影場所が含まれなくなります。</string>
     <string name="edit_hint_heic">JPEGで保存されます（この端末ではHEICを確実に書き込めません）。</string>
@@ -825,7 +825,7 @@
     <string name="tour_editor_compare_title">編集前と編集後</string>
     <string name="tour_editor_compare_text">写真を長押しすると元の写真を表示します。</string>
     <string name="tour_editor_save_title">保存時に選べます</string>
-    <string name="tour_editor_save_text">元の写真を残してコピーを保存するか、元の写真を置き換えます（元の写真はAndroidのゴミ箱に30日間残ります）。</string>
+    <string name="tour_editor_save_text">コピーとして保存すると元のファイルは変更されません。必要なら元のファイルをAndroidのゴミ箱に移せます。</string>
     <string name="edit_adj_exposure">露出</string>
     <string name="edit_adj_highlights">ハイライト</string>
     <string name="edit_adj_shadows">シャドウ</string>
@@ -1367,4 +1367,10 @@
     <string name="tools_gif_fit">全体を表示</string>
     <string name="tools_gif_fill">枠いっぱい</string>
     <string name="edit_changed">変更あり</string>
+    <string name="dock_crop">切り抜き</string>
+    <string name="dock_more">その他</string>
+    <string name="vid_trim_hint_short">ハンドルをドラッグして開始と終了を決めます。</string>
+    <string name="vid_export_info">書き出し情報</string>
+    <string name="vid_export_info_fast">開始と終了だけをカットします。PhotoMaidは画質を保つため、次のキーフレームまでの冒頭だけを再エンコードしようとします。動画が対応していない場合は動画全体を再エンコードします。全体の長さ %1$s。</string>
+    <string name="vid_export_info_reencode">ほかの変更があるため、保存時に動画全体を再エンコードします。全体の長さ %1$s。</string>
 </resources>

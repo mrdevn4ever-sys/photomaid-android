@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
@@ -315,6 +316,31 @@ fun EditorDock(items: List<DockItem>, selected: String, onSelect: (String) -> Un
                 }
             }
         }
+    }
+}
+
+/**
+ * Einzelwerkzeug (z. B. Belichtung, Stift): ein einheitlicher Stil für alle Werkzeugreihen. Ruhig = feiner Ring;
+ * aktiv = Akzentring, Akzentsymbol und Akzentbeschriftung (Zustand auch über Semantik, nicht nur Farbe); Punkt = geändert.
+ */
+@Composable
+fun EditorToolButton(icon: ImageVector, label: String, selected: Boolean, modifier: Modifier = Modifier, changed: Boolean = false,
+                     changedLabel: String? = null, iconModifier: Modifier = Modifier, onClick: () -> Unit) {
+    val p = LocalEditorPalette.current
+    val c = PM.colors
+    Column(modifier.widthIn(min = 64.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
+        .semantics(mergeDescendants = true) { this.selected = selected; if (changed && changedLabel != null) stateDescription = changedLabel }
+        .padding(horizontal = 4.dp, vertical = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Box(Modifier.size(44.dp), contentAlignment = Alignment.Center) {
+            Box(Modifier.size(42.dp).clip(CircleShape).background(if (selected) c.accent.copy(alpha = 0.12f) else Color.Transparent)
+                .border(if (selected) 1.5.dp else 1.dp, if (selected) c.accent else p.stroke, CircleShape), contentAlignment = Alignment.Center) {
+                Icon(icon, null, tint = if (selected) c.accent else p.text, modifier = iconModifier.size(22.dp))
+            }
+            if (changed) Box(Modifier.align(Alignment.TopEnd).size(8.dp).clip(CircleShape).background(p.surface).padding(1.dp).clip(CircleShape).background(c.accent))
+        }
+        Text(label, style = AppTypography.caption.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
+            color = if (selected) c.accent else p.textSecondary, maxLines = 1, softWrap = false)
     }
 }
 

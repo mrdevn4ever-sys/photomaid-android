@@ -852,12 +852,12 @@
     <string name="edit_pro_unlock">Deblochează Pro</string>
     <string name="edit_save_geometry_only">Salvează doar decupajul</string>
     <string name="edit_save_title">Salvează editarea</string>
-    <string name="edit_save_copy">Păstrează originalul</string>
-    <string name="edit_save_copy_text">Se salvează ca o copie lângă original. Originalul rămâne neschimbat.</string>
-    <string name="edit_save_replace">Înlocuiește originalul</string>
-    <string name="edit_save_replace_text">Editarea ia locul originalului. Originalul ajunge în coșul Android și poate fi restaurat 30 de zile. Spațiul se eliberează abia după aceea.</string>
+    <string name="edit_save_copy">Salvează ca o copie</string>
+    <string name="edit_save_copy_text">Originalul rămâne neschimbat.</string>
+    <string name="edit_save_replace">Salvează copia și mută originalul în coș</string>
+    <string name="edit_save_replace_text">Originalul ajunge în coșul Android și poate fi restaurat cât timp Android îl păstrează. Spațiul se eliberează abia după aceea.</string>
     <string name="edit_save_copy_action">Salvează copia</string>
-    <string name="edit_save_replace_action">Înlocuiește originalul</string>
+    <string name="edit_save_replace_action">Salvează, originalul în coș</string>
     <string name="edit_remove_location">Elimină locația</string>
     <string name="edit_remove_location_text">Fotografia salvată nu va conține locul fotografierii.</string>
     <string name="edit_hint_heic">Se salvează ca JPEG (HEIC nu poate fi scris fiabil pe acest dispozitiv).</string>
@@ -903,7 +903,7 @@
     <string name="tour_editor_compare_title">Înainte și după</string>
     <string name="tour_editor_compare_text">Ține degetul pe fotografie pentru a vedea originalul.</string>
     <string name="tour_editor_save_title">Decizi la salvare</string>
-    <string name="tour_editor_save_text">Păstrează originalul și salvează o copie sau înlocuiește originalul – va sta 30 de zile în coșul Android.</string>
+    <string name="tour_editor_save_text">Salvează ca o copie – originalul rămâne neschimbat. Dacă vrei, originalul ajunge în coșul Android.</string>
     <string name="edit_adj_exposure">Expunere</string>
     <string name="edit_adj_highlights">Lumini</string>
     <string name="edit_adj_shadows">Umbre</string>
@@ -1489,4 +1489,10 @@
     <string name="tools_gif_fit">Imagine întreagă</string>
     <string name="tools_gif_fill">Umple cadrul</string>
     <string name="edit_changed">modificat</string>
+    <string name="dock_crop">Decupare</string>
+    <string name="dock_more">Mai mult</string>
+    <string name="vid_trim_hint_short">Trage de mânere pentru a stabili începutul și sfârșitul.</string>
+    <string name="vid_export_info">Info export</string>
+    <string name="vid_export_info_fast">Sunt tăiate doar începutul și sfârșitul. PhotoMaid încearcă să păstreze calitatea și recodează doar începutul până la următorul cadru cheie. Dacă videoclipul nu permite asta, este recodat în întregime. Durata totală %1$s.</string>
+    <string name="vid_export_info_reencode">Din cauza celorlalte modificări, la salvare tot videoclipul este recodat. Durata totală %1$s.</string>
 </resources>

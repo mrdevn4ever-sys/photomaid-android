@@ -891,12 +891,12 @@
     <string name="edit_pro_unlock">Odblokuj Pro</string>
     <string name="edit_save_geometry_only">Zapisz tylko kadr</string>
     <string name="edit_save_title">Zapisz edycję</string>
-    <string name="edit_save_copy">Zachowaj oryginał</string>
-    <string name="edit_save_copy_text">Zapisane jako kopia obok oryginału. Oryginał pozostaje bez zmian.</string>
-    <string name="edit_save_replace">Zastąp oryginał</string>
-    <string name="edit_save_replace_text">Edycja zastępuje oryginał. Oryginał trafia do kosza Androida i można go przywrócić przez 30 dni. Miejsce zwalnia się dopiero potem.</string>
+    <string name="edit_save_copy">Zapisz jako kopię</string>
+    <string name="edit_save_copy_text">Oryginał pozostaje bez zmian.</string>
+    <string name="edit_save_replace">Zapisz kopię i przenieś oryginał do kosza</string>
+    <string name="edit_save_replace_text">Oryginał trafia do kosza Androida i można go przywrócić, dopóki Android go przechowuje. Miejsce zwalnia się dopiero potem.</string>
     <string name="edit_save_copy_action">Zapisz kopię</string>
-    <string name="edit_save_replace_action">Zastąp oryginał</string>
+    <string name="edit_save_replace_action">Zapisz, oryginał do kosza</string>
     <string name="edit_remove_location">Usuń lokalizację</string>
     <string name="edit_remove_location_text">Zapisane zdjęcie nie będzie zawierać miejsca wykonania.</string>
     <string name="edit_hint_heic">Zostanie zapisane jako JPEG (HEIC nie da się niezawodnie zapisać na tym urządzeniu).</string>
@@ -942,7 +942,7 @@
     <string name="tour_editor_compare_title">Przed i po</string>
     <string name="tour_editor_compare_text">Przytrzymaj zdjęcie, aby zobaczyć oryginał.</string>
     <string name="tour_editor_save_title">Decydujesz przy zapisie</string>
-    <string name="tour_editor_save_text">Zachowaj oryginał i zapisz kopię albo zastąp oryginał – trafi wtedy na 30 dni do kosza Androida.</string>
+    <string name="tour_editor_save_text">Zapisz jako kopię – oryginał pozostaje bez zmian. Jeśli chcesz, oryginał trafi do kosza Androida.</string>
     <string name="edit_adj_exposure">Ekspozycja</string>
     <string name="edit_adj_highlights">Światła</string>
     <string name="edit_adj_shadows">Cienie</string>
@@ -1550,4 +1550,10 @@
     <string name="tools_gif_fit">Cały obraz</string>
     <string name="tools_gif_fill">Wypełnij</string>
     <string name="edit_changed">zmieniono</string>
+    <string name="dock_crop">Kadruj</string>
+    <string name="dock_more">Więcej</string>
+    <string name="vid_trim_hint_short">Przeciągnij uchwyty, aby ustawić początek i koniec.</string>
+    <string name="vid_export_info">Informacje o eksporcie</string>
+    <string name="vid_export_info_fast">Przycinany jest tylko początek i koniec. PhotoMaid próbuje zachować jakość i koduje ponownie tylko początek do następnej klatki kluczowej. Jeśli wideo na to nie pozwala, kodowane jest całe wideo. Długość całkowita %1$s.</string>
+    <string name="vid_export_info_reencode">Z powodu innych zmian przy zapisie kodowane jest całe wideo. Długość całkowita %1$s.</string>
 </resources>

@@ -1,5 +1,8 @@
 package app.photomaid.feature.studio
 
+import app.photomaid.design.EditorSubTabs
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -180,12 +183,17 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
     LaunchedEffect(vm.savedId) { if (vm.savedId != null) onClose() }
     BackHandler { if (!vm.saving) { if (vm.dirty) askDraft = true else onClose() } }
 
+    // Höchstens fünf Einträge in der Navigation: beim Raster wandern Abstand und Markieren unter „Mehr“.
+    val moreTabs = if (vm.project.kind == CollageKind.GRID) listOf(CollageTab.SPACING, CollageTab.MARKUP) else emptyList()
+    var lastMore by rememberSaveable { mutableStateOf(CollageTab.SPACING) }
+    LaunchedEffect(vm.tab) { if (vm.tab in moreTabs) lastMore = vm.tab }
     val tabs = when (vm.project.kind) {
-        CollageKind.GRID -> CollageTab.entries
+        CollageKind.GRID -> listOf(CollageTab.LAYOUT, CollageTab.FORMAT, CollageTab.BACKGROUND, CollageTab.PHOTO)
         CollageKind.FREE -> listOf(CollageTab.LAYOUT, CollageTab.FORMAT, CollageTab.BACKGROUND, CollageTab.PHOTO, CollageTab.MARKUP)
         CollageKind.STRIP -> listOf(CollageTab.LAYOUT, CollageTab.SPACING, CollageTab.BACKGROUND, CollageTab.PHOTO, CollageTab.MARKUP)
     }
-    val dockItems = tabs.map { t -> DockItem(t.name, t.icon, stringResource(t.label), "ctab.${t.name}") }
+    val dockItems = tabs.map { t -> DockItem(t.name, t.icon, stringResource(t.label), "ctab.${t.name}") } +
+        (if (moreTabs.isEmpty()) emptyList() else listOf(DockItem("MORE", Icons.Rounded.MoreHoriz, stringResource(R.string.dock_more), "ctab.MORE")))
     EditorTheme {
     Box(Modifier.fillMaxSize().testTag("collage")) {
         // Gleiches Gerüst wie Foto-/Video-Editor: Leinwand = feste Bühne, Bedienung darunter (scrollt in der Werkzeugzone).
@@ -210,6 +218,8 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
             },
             tool = {
                 Column(Modifier.fillMaxWidth().testTag("collage.panel.${vm.tab.name}"), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                    if (vm.tab in moreTabs) EditorSubTabs(moreTabs.map { Triple(it.name, stringResource(it.label), false) }, vm.tab.name,
+                        { vm.tab = CollageTab.valueOf(it) }, tagPrefix = "ctab.")
                     if (vm.missing.isNotEmpty()) Text(stringResource(R.string.col_missing), Modifier.fillMaxWidth().testTag("collage.missing"),
                         style = AppTypography.footnote, color = c.warning, textAlign = TextAlign.Center)
                     if (vm.needsPro) ProHintRow(nav::openPro)
@@ -223,7 +233,7 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
                     }
                 }
             },
-            dock = { EditorDock(dockItems, vm.tab.name, { k -> vm.tab = CollageTab.valueOf(k) }) },
+            dock = { EditorDock(dockItems, if (vm.tab in moreTabs) "MORE" else vm.tab.name, { k -> vm.tab = if (k == "MORE") lastMore else CollageTab.valueOf(k) }) },
         )
         AnimatedVisibility(vm.saving, Modifier.fillMaxSize(), enter = fadeIn(), exit = fadeOut()) {
             Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.35f))

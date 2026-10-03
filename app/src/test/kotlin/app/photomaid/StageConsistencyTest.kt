@@ -87,7 +87,7 @@ class StageConsistencyTest {
     }
     private fun nodes(tag: String) = rule.onAllNodesWithTag(tag, useUnmergedTree = true).fetchSemanticsNodes()
     private fun rect(tag: String): Rect { pumpUntil { nodes(tag).isNotEmpty() }; repeat(10) { pumpUntil { true } }; return nodes(tag).first().boundsInRoot }
-    private fun click(tag: String) { rule.onAllNodesWithTag(tag)[0].performSemanticsAction(SemanticsActions.OnClick); pumpUntil { true } }
+    private fun click(tag: String) { rule.openMoreFor(tag) { pumpUntil { true } }; rule.onAllNodesWithTag(tag)[0].performSemanticsAction(SemanticsActions.OnClick); pumpUntil { true } }
     private fun dp(px: Float) = px / rule.density.density
 
     private val photosPortrait get() = lib.all.first { it.displayName == "portrait_lake" }
@@ -170,6 +170,7 @@ class StageConsistencyTest {
         show { CollageScreen(CollageRequest("c", CollageProject.create("c", ids), fromDraft = false), nav, pick = {}, onClose = {}) }
         val rects = linkedMapOf<String, Rect>()
         for (t in listOf("LAYOUT", "FORMAT", "SPACING", "BACKGROUND", "PHOTO", "MARKUP")) {
+            rule.openMoreFor("ctab.$t") { pumpUntil { true } }
             if (nodes("ctab.$t").isEmpty()) continue
             click("ctab.$t"); rects[t] = rect("media.stage")
         }
@@ -256,6 +257,7 @@ class StageConsistencyTest {
         val ref = rect("media.stage")
         val seen = mutableListOf<String>()
         for (t in listOf("ADJUST", "FILTER", "CROP", "MARKUP", "RETOUCH", "FRAME", "RESIZE", "ADJUST")) {
+            rule.openMoreFor("tab.$t") { pumpUntil { true } }
             rule.mainClock.autoAdvance = false
             rule.onAllNodesWithTag("tab.$t")[0].performSemanticsAction(SemanticsActions.OnClick)
             repeat(24) {

@@ -1,5 +1,6 @@
 package app.photomaid.feature.editor
 
+import app.photomaid.design.EditorToolButton
 import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -292,17 +293,8 @@ internal fun MarkupStage(m: MarkupController, image: Bitmap?, baseImage: Bitmap?
 // Werkzeuge
 
 @Composable
-private fun MarkupToolButton(icon: ImageVector, label: String, selected: Boolean, tag: String, onClick: () -> Unit) {
-    val c = PM.colors
-    Column(Modifier.widthIn(min = 66.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
-        .semantics(mergeDescendants = true) { this.selected = selected }.testTag(tag).padding(horizontal = 4.dp, vertical = 4.dp),
-        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Box(Modifier.size(44.dp).clip(CircleShape).background(if (selected) c.accentFill else c.backgroundTint), contentAlignment = Alignment.Center) {
-            Icon(icon, null, tint = if (selected) Color.White else c.textPrimary, modifier = Modifier.size(22.dp))
-        }
-        Text(label, style = AppTypography.caption, color = if (selected) c.accent else c.textSecondary, maxLines = 1, softWrap = false)
-    }
-}
+private fun MarkupToolButton(icon: ImageVector, label: String, selected: Boolean, tag: String, onClick: () -> Unit) =
+    EditorToolButton(icon, label, selected, Modifier.testTag(tag), onClick = onClick)
 
 @Composable
 internal fun ColorSwatches(selected: Int, onPick: (Int) -> Unit, colors: List<Int> = PALETTE, tagPrefix: String = "color") {

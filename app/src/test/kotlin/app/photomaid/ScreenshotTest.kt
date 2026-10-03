@@ -519,7 +519,7 @@ class ScreenshotTest {
         Thread.sleep(200); rule.waitForIdle()
         captureScreenRoboImage("build/outputs/roborazzi/$name.png")
     }
-    private fun tap(tag: String) { rule.onNodeWithTag(tag).performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick); rule.waitForIdle() }
+    private fun tap(tag: String) { rule.openMoreFor(tag) { rule.waitForIdle() }; rule.onNodeWithTag(tag).performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.OnClick); rule.waitForIdle() }
 
     @Test fun e01_editor_crop() = expApp(pro = true).let { editor("e01_editor_crop", it, i = 1) { tap("aspect.R4_5") } }
     @Test fun e02_editor_crop_dark() = expApp(pro = true, dark = true).let { editor("e02_editor_crop_dark", it, i = 1) { tap("editor.rotate") } }

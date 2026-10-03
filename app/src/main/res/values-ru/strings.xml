@@ -891,12 +891,12 @@
     <string name="edit_pro_unlock">Открыть Pro</string>
     <string name="edit_save_geometry_only">Сохранить только обрезку</string>
     <string name="edit_save_title">Сохранить изменения</string>
-    <string name="edit_save_copy">Сохранить оригинал</string>
-    <string name="edit_save_copy_text">Сохраняется копией рядом с оригиналом. Оригинал не меняется.</string>
-    <string name="edit_save_replace">Заменить оригинал</string>
-    <string name="edit_save_replace_text">Изменённая версия займёт место оригинала. Оригинал попадёт в корзину Android, его можно восстановить в течение 30 дней. Место освободится только потом.</string>
+    <string name="edit_save_copy">Сохранить как копию</string>
+    <string name="edit_save_copy_text">Оригинал не изменится.</string>
+    <string name="edit_save_replace">Сохранить копию и переместить оригинал в корзину</string>
+    <string name="edit_save_replace_text">Оригинал попадёт в корзину Android, его можно восстановить, пока Android его хранит. Место освободится только потом.</string>
     <string name="edit_save_copy_action">Сохранить копию</string>
-    <string name="edit_save_replace_action">Заменить оригинал</string>
+    <string name="edit_save_replace_action">Сохранить, оригинал в корзину</string>
     <string name="edit_remove_location">Удалить геоданные</string>
     <string name="edit_remove_location_text">В сохранённом фото не будет места съёмки.</string>
     <string name="edit_hint_heic">Сохранится в JPEG (HEIC нельзя надёжно записать на этом устройстве).</string>
@@ -942,7 +942,7 @@
     <string name="tour_editor_compare_title">До и после</string>
     <string name="tour_editor_compare_text">Удерживай фото, чтобы увидеть оригинал.</string>
     <string name="tour_editor_save_title">Выбор при сохранении</string>
-    <string name="tour_editor_save_text">Сохрани оригинал и запиши копию или замени оригинал — тогда он 30 дней пролежит в корзине Android.</string>
+    <string name="tour_editor_save_text">Сохрани как копию – оригинал не изменится. По желанию оригинал попадёт в корзину Android.</string>
     <string name="edit_adj_exposure">Экспозиция</string>
     <string name="edit_adj_highlights">Светлые тона</string>
     <string name="edit_adj_shadows">Тени</string>
@@ -1550,4 +1550,10 @@
     <string name="tools_gif_fit">Всё изображение</string>
     <string name="tools_gif_fill">Заполнить</string>
     <string name="edit_changed">изменено</string>
+    <string name="dock_crop">Кадр</string>
+    <string name="dock_more">Ещё</string>
+    <string name="vid_trim_hint_short">Перетащи ползунки, чтобы задать начало и конец.</string>
+    <string name="vid_export_info">Об экспорте</string>
+    <string name="vid_export_info_fast">Обрезаются только начало и конец. PhotoMaid старается сохранить качество и перекодирует только начало до следующего ключевого кадра. Если видео этого не позволяет, перекодируется всё видео. Общая длина %1$s.</string>
+    <string name="vid_export_info_reencode">Из‑за других изменений при сохранении перекодируется всё видео. Общая длина %1$s.</string>
 </resources>

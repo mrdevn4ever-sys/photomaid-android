@@ -57,6 +57,7 @@ class EditorShotsTest {
         rule.mainClock.autoAdvance = true
     }
     private fun tap(tag: String) {
+        rule.openMoreFor(tag) { pump(30) }
         val n = rule.onAllNodesWithTag(tag, useUnmergedTree = true)
         if (n.fetchSemanticsNodes().isNotEmpty()) { n[0].performSemanticsAction(SemanticsActions.OnClick); pump(30) }
     }

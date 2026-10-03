@@ -969,12 +969,12 @@
     <string name="edit_pro_unlock">فتح Pro</string>
     <string name="edit_save_geometry_only">حفظ القص فقط</string>
     <string name="edit_save_title">حفظ التعديل</string>
-    <string name="edit_save_copy">الاحتفاظ بالأصل</string>
-    <string name="edit_save_copy_text">تُحفظ كنسخة بجانب الأصل. يبقى الأصل دون تغيير.</string>
-    <string name="edit_save_replace">استبدال الأصل</string>
-    <string name="edit_save_replace_text">يحل التعديل محل الأصل. ينتقل الأصل إلى سلة مهملات Android ويمكن استعادته لمدة 30 يومًا. تتحرر المساحة بعد ذلك فقط.</string>
+    <string name="edit_save_copy">حفظ كنسخة</string>
+    <string name="edit_save_copy_text">يبقى الأصل دون تغيير.</string>
+    <string name="edit_save_replace">حفظ نسخة ونقل الأصل إلى سلة المهملات</string>
+    <string name="edit_save_replace_text">ينتقل الأصل إلى سلة مهملات Android ويمكن استعادته منها ما دام Android يحتفظ به. تتحرر المساحة بعد ذلك فقط.</string>
     <string name="edit_save_copy_action">حفظ نسخة</string>
-    <string name="edit_save_replace_action">استبدال الأصل</string>
+    <string name="edit_save_replace_action">حفظ، والأصل إلى السلة</string>
     <string name="edit_remove_location">إزالة الموقع</string>
     <string name="edit_remove_location_text">لن تتضمن الصورة المحفوظة مكان التقاطها.</string>
     <string name="edit_hint_heic">سيُحفظ بصيغة JPEG (لا يمكن كتابة HEIC بشكل موثوق على هذا الجهاز).</string>
@@ -1020,7 +1020,7 @@
     <string name="tour_editor_compare_title">قبل وبعد</string>
     <string name="tour_editor_compare_text">المس الصورة مع الاستمرار لرؤية الأصل.</string>
     <string name="tour_editor_save_title">تقرر عند الحفظ</string>
-    <string name="tour_editor_save_text">احتفظ بالأصل واحفظ نسخة، أو استبدل الأصل – سيبقى حينها 30 يومًا في سلة مهملات Android.</string>
+    <string name="tour_editor_save_text">احفظ كنسخة – يبقى الأصل دون تغيير. إذا أردت، ينتقل الأصل إلى سلة مهملات Android.</string>
     <string name="edit_adj_exposure">التعريض</string>
     <string name="edit_adj_highlights">الإضاءات</string>
     <string name="edit_adj_shadows">الظلال</string>
@@ -1672,4 +1672,10 @@
     <string name="tools_gif_fit">الصورة كاملة</string>
     <string name="tools_gif_fill">ملء الإطار</string>
     <string name="edit_changed">معدَّل</string>
+    <string name="dock_crop">قص</string>
+    <string name="dock_more">المزيد</string>
+    <string name="vid_trim_hint_short">اسحب المقابض لتحديد البداية والنهاية.</string>
+    <string name="vid_export_info">معلومات التصدير</string>
+    <string name="vid_export_info_fast">تم قص البداية والنهاية فقط. يحاول PhotoMaid الحفاظ على الجودة ويعيد ترميز البداية فقط حتى الإطار الرئيسي التالي. إذا لم يسمح الفيديو بذلك، يُعاد ترميز الفيديو كله. المدة الكاملة %1$s.</string>
+    <string name="vid_export_info_reencode">بسبب تغييراتك الأخرى، يُعاد ترميز الفيديو كله عند الحفظ. المدة الكاملة %1$s.</string>
 </resources>
