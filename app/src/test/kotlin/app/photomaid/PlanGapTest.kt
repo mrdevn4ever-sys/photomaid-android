@@ -95,9 +95,9 @@ class PlanGapTest {
         runBlocking { app.updateSettings { it.copy(largeFileThresholdMB = 20) } }
         show { LargeFilesScreen(nav) }
         pumpUntil { has("Größe unbekannt (1)") }
-        assertTrue(has("video_coast"))           // 48,2 MB ≥ 20 MB
-        assertFalse(has("portrait_lake"))        // 3,4 MB < 20 MB
-        assertFalse(has("0 B"))
+        assertTrue(has("48,2 MB"))               // video_coast ≥ 20 MB, als „Video“ mit Dauer · Auflösung
+        assertTrue(has("1920 × 1080"))
+        assertFalse(has("0 B"))                  // unbekannte Größe nie als 0
     }
 
     /** L1: „Aus Später entfernen“ hebt nur die Wiedervorlage auf, die Datei bleibt. */
