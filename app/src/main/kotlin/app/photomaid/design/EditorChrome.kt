@@ -147,7 +147,7 @@ object EditorLayoutPolicy {
         val dock = if (hasDock && !keyboard) dock(fs) else 0.dp
         val bodyH = avail - head - act - dock
         // Werkzeugzone: fester Anteil je Fenster (scrollt innen), nie abhängig vom Reiter.
-        var tool = (avail * 0.26f).coerceIn(132.dp, 232.dp) + 40.dp * (fs - 1f)
+        var tool = (avail * 0.31f).coerceIn(140.dp, 260.dp) + 40.dp * (fs - 1f)
         if (keyboard) tool = min(tool, 168.dp + 40.dp * (fs - 1f))
         var stage = bodyH - tool
         if (stage < minStage) { tool = max(96.dp, bodyH - minStage); stage = bodyH - tool }
