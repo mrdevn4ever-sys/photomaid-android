@@ -1427,4 +1427,5 @@
     </plurals>
     <string name="tools_gif_fit">Whole picture</string>
     <string name="tools_gif_fill">Fill frame</string>
+    <string name="edit_changed">changed</string>
 </resources>

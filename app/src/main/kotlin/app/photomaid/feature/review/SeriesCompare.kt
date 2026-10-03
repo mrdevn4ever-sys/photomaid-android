@@ -74,7 +74,6 @@ import coil3.request.ImageRequest
  */
 @Composable
 fun SeriesCompareDialog(members: List<MediaAsset>, onConfirm: (Set<String>) -> Unit, onDismiss: () -> Unit) {
-    val c = PM.colors
     var keep by remember(members) { mutableStateOf(members.map { it.id }.toSet()) }
     var left by remember(members) { mutableStateOf(members.first().id) }
     var right by remember(members) { mutableStateOf(members.getOrElse(1) { members.first() }.id) }
@@ -84,6 +83,8 @@ fun SeriesCompareDialog(members: List<MediaAsset>, onConfirm: (Set<String>) -> U
     fun toggle(id: String) { keep = if (id in keep) keep - id else keep + id }
 
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
+        app.photomaid.design.EditorTheme {
+        val c = PM.colors
         Box(Modifier.fillMaxSize().background(c.background).testTag("series")) {
             Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(bottom = AppSpacing.s),
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
@@ -126,7 +127,7 @@ fun SeriesCompareDialog(members: List<MediaAsset>, onConfirm: (Set<String>) -> U
                         val a = byId[id] ?: continue
                         // Bild und Auswahl getrennt: die Behalten/Papierkorb-Taste liegt UNTER dem Bild, nie darauf.
                         Column(Modifier.weight(1f).fillMaxWidth().testTag("series.side$side"), horizontalAlignment = Alignment.CenterHorizontally) {
-                            Box(Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(AppRadii.card)).background(c.backgroundTint).testTag("series.img$side")) {
+                            Box(Modifier.weight(1f).fillMaxWidth().background(app.photomaid.design.LocalEditorPalette.current.stage).testTag("series.img$side")) {
                                 BoxWithConstraints(Modifier.fillMaxSize().graphicsLayer { scaleX = scale; scaleY = scale; translationX = pan.x; translationY = pan.y }) {
                                     val px = with(LocalDensity.current) { maxOf(maxWidth, maxHeight).roundToPx() }
                                     Thumb(a, Modifier.fillMaxSize(), px, fit = true)
@@ -150,6 +151,7 @@ fun SeriesCompareDialog(members: List<MediaAsset>, onConfirm: (Set<String>) -> U
                     modifier = Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin))
             }
         }
+    }
     }
 }
 

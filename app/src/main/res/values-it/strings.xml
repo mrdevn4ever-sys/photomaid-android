@@ -1488,4 +1488,5 @@
     </plurals>
     <string name="tools_gif_fit">Immagine intera</string>
     <string name="tools_gif_fill">Riempi</string>
+    <string name="edit_changed">modificato</string>
 </resources>

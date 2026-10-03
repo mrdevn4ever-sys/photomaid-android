@@ -97,7 +97,7 @@ internal fun fitRect(box: Size, ratio: Float): Rect {
 internal fun EditorStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
     val c = PM.colors
     val src = vm.source
-    Box(modifier.background(c.backgroundTint.copy(alpha = 0.5f)).testTag("editor.stage"), contentAlignment = Alignment.Center) {
+    Box(modifier.testTag("editor.stage"), contentAlignment = Alignment.Center) {
         when {
             src == null -> CircularProgressIndicator()
             vm.tab == EditorTab.CROP && vm.perspectiveMode -> PerspectiveStage(vm)
@@ -115,7 +115,8 @@ internal fun EditorStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
  */
 @Composable
 private fun ResultStage(vm: EditorViewModel, original: Bitmap) {
-    var showOriginal by remember { mutableStateOf(false) }
+    var holding by remember { mutableStateOf(false) }
+    val showOriginal = holding || vm.comparing
     var scale by remember { mutableFloatStateOf(1f) }
     var offset by remember { mutableStateOf(Offset.Zero) }
     var lastTap by remember { mutableStateOf(0L) }
@@ -158,9 +159,9 @@ private fun ResultStage(vm: EditorViewModel, original: Bitmap) {
                 }
                 when {
                     decided == null -> { // gehalten
-                        showOriginal = true
+                        holding = true; vm.comparing = true
                         while (true) { val ev = awaitPointerEvent(); if (ev.changes.all { !it.pressed }) break }
-                        showOriginal = false
+                        holding = false; vm.comparing = false
                     }
                     decided == false -> { // getippt
                         val now = System.currentTimeMillis()
@@ -206,13 +207,8 @@ private fun ResultStage(vm: EditorViewModel, original: Bitmap) {
                     dstSize = androidx.compose.ui.unit.IntSize(r.width.toInt().coerceAtLeast(1), r.height.toInt().coerceAtLeast(1)))
             }
         }
-        if (showOriginal) Text(originalLabel, Modifier.align(Alignment.TopCenter).glassCapsule(elevation = 2.dp)
-            .padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold),
-            color = PM.colors.textPrimary)
-        if (scale > 1.01f) Text("${(scale / scale100 * 100).roundToInt()} %", Modifier.align(Alignment.BottomStart).glassCapsule(elevation = 2.dp)
-            .padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs).testTag("editor.zoom"), style = AppTypography.footnote, color = PM.colors.textPrimary)
-        StageTools(vm, Modifier.align(Alignment.TopEnd))
-        if (vm.showHistogram) vm.histogram?.let { HistogramCard(it, Modifier.align(Alignment.TopStart)) }
+        // Status (Original/Zoom) steht in der Hilfsleiste – auf der Bühne liegt nichts Bedienbares.
+        LaunchedEffect(scale, scale100) { vm.zoomPercent = if (scale > 1.01f) (scale / scale100 * 100).roundToInt() else null }
     }
 }
 
@@ -262,11 +258,11 @@ private fun StageToggle(icon: androidx.compose.ui.graphics.vector.ImageVector, l
 }
 
 @Composable
-private fun HistogramCard(h: Histogram, modifier: Modifier) {
+internal fun HistogramCard(h: Histogram, modifier: Modifier) {
     val c = PM.colors
     val hi = h.clippedHigh * 1000 / maxOf(1, h.total); val lo = h.clippedLow * 1000 / maxOf(1, h.total)
     val label = stringResource(R.string.edit_histogram)
-    Column(modifier.padding(4.dp).glassRect(radius = 12.dp, elevation = 2.dp).padding(8.dp).width(150.dp).testTag("editor.histogram")
+    Column(modifier.clip(RoundedCornerShape(12.dp)).background(c.backgroundTint).padding(8.dp).testTag("editor.histogram")
         .semantics(mergeDescendants = true) { contentDescription = label }) {
         Canvas(Modifier.fillMaxWidth().height(56.dp)) {
             val maxV = (h.luma.maxOrNull() ?: 1).coerceAtLeast(1).toFloat()

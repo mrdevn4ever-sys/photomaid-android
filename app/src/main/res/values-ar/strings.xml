@@ -1671,4 +1671,5 @@
     </plurals>
     <string name="tools_gif_fit">الصورة كاملة</string>
     <string name="tools_gif_fill">ملء الإطار</string>
+    <string name="edit_changed">معدَّل</string>
 </resources>

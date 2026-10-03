@@ -1488,4 +1488,5 @@
     </plurals>
     <string name="tools_gif_fit">Imagine întreagă</string>
     <string name="tools_gif_fill">Umple cadrul</string>
+    <string name="edit_changed">modificat</string>
 </resources>

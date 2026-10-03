@@ -66,6 +66,18 @@ import app.photomaid.core.edit.SaveMode
 import app.photomaid.core.model.ItemReference
 import app.photomaid.core.model.KnownSize
 import app.photomaid.core.model.MediaKind
+import app.photomaid.design.EditorPrimaryButton
+import app.photomaid.design.EditorScaffold
+import app.photomaid.design.EditorTheme
+import app.photomaid.design.LocalEditorPalette
+import app.photomaid.design.EditorLayoutPolicy
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeDrawing
+import app.photomaid.design.EditorTopBar
+import app.photomaid.design.GlassIconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.foundation.layout.windowInsetsPadding
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.PM
@@ -169,28 +181,21 @@ fun ToolsScreen(req: ToolRequest, nav: Nav, onClose: () -> Unit) {
 
     val title = stringResource(when (req.kind) { ToolKind.RESIZE -> R.string.tools_resize; ToolKind.CONVERT -> R.string.tools_convert; ToolKind.STRIP_LOCATION -> R.string.tools_location
         ToolKind.STITCH -> R.string.tools_stitch; ToolKind.GIF -> R.string.tools_gif })
-    ScreenScaffold(title, onBack = { if (!running) onClose() }, modifier = Modifier.testTag("tools"), bottomBar = {
-        Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
+    val canStart = !running && list.isNotEmpty() && !(req.kind == ToolKind.STITCH && list.size < 2) && !(req.kind == ToolKind.GIF && !video && gifPhotos.size < 2)
+    val hasStage = req.kind == ToolKind.STITCH || req.kind == ToolKind.GIF
+    androidx.activity.compose.BackHandler { if (!running) onClose() }
+    val header: @Composable () -> Unit = {
+        EditorTopBar(leading = {
+            GlassIconButton(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.back), Modifier.testTag("tools.back"), quiet = true, enabled = !running) { onClose() }
+        }, trailing = {
+            EditorPrimaryButton(stringResource(if (needsPro) R.string.tools_pro_save else R.string.tools_start), Modifier.testTag("tools.start"), enabled = canStart) { run() }
+        }, title = title)
+    }
+    val options: @Composable () -> Unit = {
             val pr = progress
-            if (running) { if (pr != null && pr > 0f) LinearProgressIndicator(progress = { pr }, modifier = Modifier.fillMaxWidth()) else CircularProgressIndicator(Modifier.size(24.dp)) }
-            ProminentButton(stringResource(if (needsPro) R.string.tools_pro_save else R.string.tools_start), Modifier.testTag("tools.start"),
-                enabled = !running && list.isNotEmpty() && !(req.kind == ToolKind.STITCH && list.size < 2) && !(req.kind == ToolKind.GIF && !video && gifPhotos.size < 2), fillWidth = true, large = true) { run() }
-        }
-    }) { mod ->
-        Column(mod.verticalScroll(rememberScrollState()).padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            if (running) { if (pr != null && pr > 0f) LinearProgressIndicator(progress = { pr }, modifier = Modifier.fillMaxWidth().testTag("tools.progress")) else CircularProgressIndicator(Modifier.size(24.dp)) }
             Text(pluralStringResource(R.plurals.tools_selected, list.size, list.size), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold),
                 color = c.textPrimary, modifier = Modifier.testTag("tools.count"))
-            // Vorschau-Fläche immer gleich groß (feste Höhe, unabhängig von Bildform und Ladezustand); Bild eingepasst.
-            if (req.kind == ToolKind.STITCH || req.kind == ToolKind.GIF) {
-                val stageH = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp * 0.38f).dp
-                Box(Modifier.fillMaxWidth().height(stageH).clip(RoundedCornerShape(12.dp)).background(c.backgroundTint).testTag("media.stage"), contentAlignment = Alignment.Center) {
-                    val b = preview
-                    if (b != null) androidx.compose.foundation.Image(b.asImageBitmap(), null, contentScale = ContentScale.Fit,
-                        modifier = Modifier.fillMaxSize().testTag("tools.preview"))
-                    else if (list.isNotEmpty()) CircularProgressIndicator(Modifier.size(28.dp))
-                }
-            }
             if (overLimit) Text(stringResource(R.string.tools_free_limit, BatchRules.FREE_LIMIT), style = AppTypography.footnote, color = c.textSecondary, modifier = Modifier.testTag("tools.limit"))
             if (overLimit || needsPro) ProHint(onPro = nav::openPro)
             when (req.kind) {
@@ -234,6 +239,24 @@ fun ToolsScreen(req: ToolRequest, nav: Nav, onClose: () -> Unit) {
             if (req.kind in setOf(ToolKind.RESIZE, ToolKind.CONVERT, ToolKind.STRIP_LOCATION)) {
                 Toggle(R.string.tools_trash_originals, trashOriginals, "tools.trash") { trashOriginals = it }
                 Text(stringResource(R.string.tools_trash_note), style = AppTypography.footnote, color = c.textSecondary)
+            }
+    }
+    EditorTheme {
+        Box(Modifier.fillMaxSize().testTag("tools")) {
+            if (hasStage) EditorScaffold(
+                header = header,
+                // Vorschau-Fläche = feste Bühne (gleiche Policy wie im Editor); Ergebnis eingepasst, Ladekreis in derselben Fläche.
+                stage = {
+                    val b = preview
+                    if (b != null) androidx.compose.foundation.Image(b.asImageBitmap(), null, contentScale = ContentScale.Fit,
+                        modifier = Modifier.fillMaxSize().padding(AppSpacing.s).testTag("tools.preview"))
+                    else if (list.isNotEmpty()) CircularProgressIndicator(Modifier.size(28.dp))
+                },
+                tool = options,
+            ) else Column(Modifier.fillMaxSize().background(LocalEditorPalette.current.background)
+                .windowInsetsPadding(WindowInsets.safeDrawing)) {
+                Box(Modifier.fillMaxWidth().height(EditorLayoutPolicy.header(androidx.compose.ui.platform.LocalDensity.current.fontScale))) { header() }
+                Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = AppSpacing.m), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) { options() }
             }
         }
     }

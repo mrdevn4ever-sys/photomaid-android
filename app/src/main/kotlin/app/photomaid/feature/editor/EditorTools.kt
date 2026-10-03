@@ -3,6 +3,7 @@ package app.photomaid.feature.editor
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.ui.draw.shadow
 import androidx.compose.foundation.clickable
@@ -114,7 +115,6 @@ import app.photomaid.design.AppIconSize
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.PM
-import app.photomaid.design.FitLabel
 import app.photomaid.design.glassCapsule
 import java.text.NumberFormat
 import kotlin.math.abs
@@ -223,11 +223,11 @@ internal fun EditSlider(
 @Composable
 internal fun ToolButton(icon: ImageVector, label: String, modifier: Modifier = Modifier, iconModifier: Modifier = Modifier, onClick: () -> Unit) {
     val c = PM.colors
-    Column(modifier.clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button, onClick = onClick)
+    Column(modifier.widthIn(min = 72.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button, onClick = onClick)
         .semantics(mergeDescendants = true) {}.padding(horizontal = AppSpacing.xs, vertical = AppSpacing.xxs).heightIn(min = AppSpacing.minTouch),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Icon(icon, null, tint = c.textPrimary, modifier = iconModifier.size(AppIconSize.regular))
-        FitLabel(label, AppTypography.caption, c.textSecondary)
+        Text(label, style = AppTypography.caption, color = c.textSecondary, maxLines = 1, softWrap = false)
     }
 }
 
@@ -282,17 +282,17 @@ internal fun CropPanel(vm: EditorViewModel) {
                 }
             }
         }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            ToolButton(Icons.Rounded.Rotate90DegreesCw, stringResource(R.string.edit_rotate), Modifier.weight(1f).testTag("editor.rotate")) {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            ToolButton(Icons.Rounded.Rotate90DegreesCw, stringResource(R.string.edit_rotate), Modifier.testTag("editor.rotate")) {
                 vm.rotate(); haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
             }
-            ToolButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_h), Modifier.weight(1f).testTag("editor.flipH"), onClick = vm::flipHorizontal)
-            ToolButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_v), Modifier.weight(1f).testTag("editor.flipV"), Modifier.rotate(90f), onClick = vm::flipVertical)
+            ToolButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_h), Modifier.testTag("editor.flipH"), onClick = vm::flipHorizontal)
+            ToolButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_v), Modifier.testTag("editor.flipV"), Modifier.rotate(90f), onClick = vm::flipVertical)
             val canToggle = vm.aspect != AspectPreset.FREE && vm.aspect != AspectPreset.ORIGINAL && vm.aspect != AspectPreset.SQUARE
             if (canToggle) ToolButton(Icons.Rounded.ScreenRotationAlt,
                 stringResource(if (vm.landscape) R.string.edit_portrait else R.string.edit_landscape), Modifier.weight(1f).testTag("editor.orientation"),
                 onClick = vm::toggleOrientation)
-            ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset), Modifier.weight(1f).testTag("editor.reset"), onClick = vm::resetTab)
+            ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset), Modifier.testTag("editor.reset"), onClick = vm::resetTab)
         }
         EditSlider(stringResource(R.string.edit_straighten), vm.recipe.straighten, -45f..45f, signed(vm.recipe.straighten, 1) + "°",
             snap = 0.4f) { v, commit -> vm.straighten((v * 10).roundToInt() / 10f, commit) }
@@ -324,7 +324,7 @@ internal fun AdjustPanel(vm: EditorViewModel) {
         }
         val tools = AdjustTool.of(vm.adjustGroup).filter { !it.advanced }
         LazyRow(Modifier.fillMaxWidth().testTag("adjust.tools"), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            items(tools, key = { it.name }) { t -> AdjustToolButton(t, vm.adjustTool == t, t.get(a) != 0f, Modifier.width(68.dp)) { vm.adjustTool = t } }
+            items(tools, key = { it.name }) { t -> AdjustToolButton(t, vm.adjustTool == t, t.get(a) != 0f, Modifier) { vm.adjustTool = t } }
         }
         val t = vm.adjustTool
         AdjustSlider(vm, t)
@@ -358,15 +358,16 @@ private fun AdjustSlider(vm: EditorViewModel, t: AdjustTool) {
 @Composable
 internal fun AdjustToolButton(t: AdjustTool, selected: Boolean, changed: Boolean, modifier: Modifier, onClick: () -> Unit) {
     val c = PM.colors
-    Column(modifier.clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
-        .semantics(mergeDescendants = true) { this.selected = selected }.testTag("adjust.${t.name}").padding(vertical = 4.dp),
+    val changedLabel = stringResource(R.string.edit_changed)
+    Column(modifier.widthIn(min = 64.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
+        .semantics(mergeDescendants = true) { this.selected = selected; if (changed) stateDescription = changedLabel }.testTag("adjust.${t.name}").padding(horizontal = 4.dp, vertical = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Box(Modifier.size(44.dp).clip(CircleShape).background(if (selected) c.accentFill else c.backgroundTint), contentAlignment = Alignment.Center) {
             Icon(t.icon, null, tint = if (selected) Color.White else c.textPrimary, modifier = Modifier.size(22.dp))
             if (changed) Box(Modifier.align(Alignment.TopEnd).padding(5.dp).size(7.dp).clip(CircleShape).background(if (selected) Color.White else c.accent))
         }
-        FitLabel(stringResource(t.label), AppTypography.caption.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
-            if (selected) c.accent else c.textSecondary)
+        Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
+            color = if (selected) c.accent else c.textSecondary, maxLines = 1, softWrap = false)
     }
 }
 
@@ -484,34 +485,6 @@ private fun SizeField(label: String, value: Int, modifier: Modifier, onDone: (In
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Reiterleiste
-
-@Composable
-internal fun EditorTabs(tabs: List<EditorTab>, selected: EditorTab, locked: Boolean, onSelect: (EditorTab) -> Unit, modifier: Modifier = Modifier) {
-    val c = PM.colors
-    BoxWithConstraints(modifier.fillMaxWidth().glassCapsule(elevation = 2.dp).padding(4.dp)) {
-        // Passen nicht alle Reiter mit mindestens 64 dp, wird die Leiste waagrecht scrollbar.
-        val fits = maxWidth / tabs.size >= 64.dp
-        val itemW = if (fits) maxWidth / tabs.size else 72.dp
-        Row(if (fits) Modifier.fillMaxWidth() else Modifier.horizontalScroll(rememberScrollState())) {
-            for (t in tabs) {
-                val sel = t == selected
-                Column(Modifier.width(itemW).heightIn(min = 52.dp).clip(RoundedCornerShape(18.dp))
-                    .background(if (sel) c.accent.copy(alpha = 0.14f) else Color.Transparent)
-                    .clickable(role = Role.Tab) { onSelect(t) }.semantics(mergeDescendants = true) { this.selected = sel }.testTag("tab.${t.name}")
-                    .padding(vertical = 4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                    Box {
-                        Icon(t.icon, null, tint = if (sel) c.accent else c.textSecondary, modifier = Modifier.size(22.dp))
-                        if (locked && t.isPro) Icon(Icons.Rounded.WorkspacePremium, stringResource(R.string.pro_badge), tint = c.accent,
-                            modifier = Modifier.align(Alignment.TopEnd).offset(x = 8.dp, y = (-4).dp).size(12.dp))
-                    }
-                    FitLabel(stringResource(t.label), AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
-                        if (sel) c.accent else c.textPrimary)
-                }
-            }
-        }
-    }
-}
 
 /** Ausgabegröße nach dem Ausschnitt, für die Kopfzeile („2048 × 1536“). */
 internal fun PxSize.label(): String = "$width × $height"

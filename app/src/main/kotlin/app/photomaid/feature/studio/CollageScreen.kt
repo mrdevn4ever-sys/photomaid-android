@@ -115,7 +115,15 @@ import app.photomaid.core.studio.BackgroundKind
 import app.photomaid.core.studio.CollageKind
 import app.photomaid.core.studio.CollageLayout
 import app.photomaid.core.studio.CollageProject
-import app.photomaid.design.FitLabel
+import app.photomaid.design.DockItem
+import app.photomaid.design.EditorActionButton
+import app.photomaid.design.EditorDock
+import app.photomaid.design.EditorExportPage
+import app.photomaid.design.EditorPrimaryButton
+import app.photomaid.design.EditorScaffold
+import app.photomaid.design.EditorStatus
+import app.photomaid.design.EditorTheme
+import app.photomaid.design.EditorTopBar
 import app.photomaid.design.CancelButton
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
@@ -172,30 +180,36 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
     LaunchedEffect(vm.savedId) { if (vm.savedId != null) onClose() }
     BackHandler { if (!vm.saving) { if (vm.dirty) askDraft = true else onClose() } }
 
-    AppBackground(Modifier.testTag("collage")) {
-        Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
-            Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
-                CancelButton(stringResource(R.string.cancel), Modifier.padding(horizontal = AppSpacing.xs).testTag("collage.cancel"), enabled = !vm.saving) {
-                    if (vm.dirty) askDraft = true else onClose()
-                }
-                Spacer(Modifier.weight(1f))
-                GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.testTag("collage.undo"), enabled = vm.canUndo, quiet = true, onClick = vm::undo)
-                GlassIconButton(Icons.AutoMirrored.Rounded.Redo, stringResource(R.string.redo), Modifier.testTag("collage.redo"), enabled = vm.canRedo, quiet = true, onClick = vm::redo)
-                Spacer(Modifier.weight(1f))
-                ProminentButton(stringResource(R.string.save), Modifier.testTag("collage.save"), enabled = !vm.saving && vm.preview != null) { showSave = true }
-            }
-            // Leinwand immer gleich groß (feste Höhe wie die Editor-Bühne), unabhängig vom Reiter; Bedienfeld darunter scrollt.
-            androidx.compose.foundation.layout.BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
-            val stageH = maxHeight * 0.56f
-            Column(Modifier.fillMaxSize()) {
-            Box(Modifier.height(stageH).fillMaxWidth().testTag("media.stage")) {
+    val tabs = when (vm.project.kind) {
+        CollageKind.GRID -> CollageTab.entries
+        CollageKind.FREE -> listOf(CollageTab.LAYOUT, CollageTab.FORMAT, CollageTab.BACKGROUND, CollageTab.PHOTO, CollageTab.MARKUP)
+        CollageKind.STRIP -> listOf(CollageTab.LAYOUT, CollageTab.SPACING, CollageTab.BACKGROUND, CollageTab.PHOTO, CollageTab.MARKUP)
+    }
+    val dockItems = tabs.map { t -> DockItem(t.name, t.icon, stringResource(t.label), "ctab.${t.name}") }
+    EditorTheme {
+    Box(Modifier.fillMaxSize().testTag("collage")) {
+        // Gleiches Gerüst wie Foto-/Video-Editor: Leinwand = feste Bühne, Bedienung darunter (scrollt in der Werkzeugzone).
+        EditorScaffold(
+            header = {
+                EditorTopBar(leading = {
+                    CancelButton(stringResource(R.string.cancel), Modifier.testTag("collage.cancel"), enabled = !vm.saving) {
+                        if (vm.dirty) askDraft = true else onClose()
+                    }
+                }, trailing = {
+                    EditorPrimaryButton(stringResource(R.string.save), Modifier.testTag("collage.save"), enabled = !vm.saving && vm.preview != null) { showSave = true }
+                })
+            },
+            stage = {
                 if (vm.tab == CollageTab.MARKUP) MarkupStage(vm.markup, vm.preview, vm.preview, null, Modifier.fillMaxSize())
                 else CollageStage(vm, Modifier.fillMaxSize())
-            }
-            Column(Modifier.weight(1f).fillMaxWidth().widthIn(max = 720.dp).align(Alignment.CenterHorizontally)
-                .padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).testTag("collage.panel.${vm.tab.name}"),
-                    verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            },
+            actions = {
+                EditorActionButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.testTag("collage.undo"), enabled = vm.canUndo, onClick = vm::undo)
+                EditorActionButton(Icons.AutoMirrored.Rounded.Redo, stringResource(R.string.redo), Modifier.testTag("collage.redo"), enabled = vm.canRedo, onClick = vm::redo)
+                EditorStatus(vm.preview?.let { "\u2066${it.width} × ${it.height}\u2069" } ?: "")
+            },
+            tool = {
+                Column(Modifier.fillMaxWidth().testTag("collage.panel.${vm.tab.name}"), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                     if (vm.missing.isNotEmpty()) Text(stringResource(R.string.col_missing), Modifier.fillMaxWidth().testTag("collage.missing"),
                         style = AppTypography.footnote, color = c.warning, textAlign = TextAlign.Center)
                     if (vm.needsPro) ProHintRow(nav::openPro)
@@ -208,16 +222,9 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
                         CollageTab.MARKUP -> MarkupPanel(vm.markup)
                     }
                 }
-                val tabs = when (vm.project.kind) {
-                    CollageKind.GRID -> CollageTab.entries
-                    CollageKind.FREE -> listOf(CollageTab.LAYOUT, CollageTab.FORMAT, CollageTab.BACKGROUND, CollageTab.PHOTO, CollageTab.MARKUP)
-                    CollageKind.STRIP -> listOf(CollageTab.LAYOUT, CollageTab.SPACING, CollageTab.BACKGROUND, CollageTab.PHOTO, CollageTab.MARKUP)
-                }
-                CollageTabs(tabs, vm.tab) { vm.tab = it }
-            }
-            }
-            }
-        }
+            },
+            dock = { EditorDock(dockItems, vm.tab.name, { k -> vm.tab = CollageTab.valueOf(k) }) },
+        )
         AnimatedVisibility(vm.saving, Modifier.fillMaxSize(), enter = fadeIn(), exit = fadeOut()) {
             Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.35f))
                 .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {}.testTag("collage.saving"), contentAlignment = Alignment.Center) {
@@ -229,7 +236,8 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
         }
     }
 
-    if (showSave) CollageSaveSheet(vm, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() })
+    }
+    if (showSave) EditorTheme { CollageSaveSheet(vm, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() }) }
     if (askDraft) AlertDialog(onDismissRequest = { askDraft = false }, modifier = Modifier.testTag("collage.draft"),
         title = { Text(stringResource(R.string.col_draft_title)) }, text = { Text(stringResource(R.string.col_draft_text)) },
         confirmButton = { TextButton({ askDraft = false; vm.saveDraft(onClose) }, Modifier.testTag("collage.draft.keep")) { Text(stringResource(R.string.col_draft_keep)) } },
@@ -258,23 +266,6 @@ private fun ProHintRow(onPro: () -> Unit) {
         Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(18.dp))
         Text(stringResource(R.string.col_pro_hint), style = AppTypography.footnote, color = c.textPrimary, modifier = Modifier.weight(1f))
         Text(stringResource(R.string.edit_pro_more), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.accent)
-    }
-}
-
-@Composable
-private fun CollageTabs(tabs: List<CollageTab>, selected: CollageTab, onSelect: (CollageTab) -> Unit) {
-    val c = PM.colors
-    Row(Modifier.fillMaxWidth().glassCapsule(elevation = 2.dp).padding(4.dp).horizontalScroll(rememberScrollState())) {
-        for (t in tabs) {
-            val sel = t == selected
-            Column(Modifier.width(64.dp).heightIn(min = 52.dp).clip(RoundedCornerShape(18.dp)).background(if (sel) c.accent.copy(alpha = 0.14f) else Color.Transparent)
-                .clickable(role = Role.Tab) { onSelect(t) }.semantics(mergeDescendants = true) { this.selected = sel }.testTag("ctab.${t.name}").padding(vertical = 4.dp),
-                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Icon(t.icon, null, tint = if (sel) c.accent else c.textSecondary, modifier = Modifier.size(22.dp))
-                FitLabel(stringResource(t.label), AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
-                    if (sel) c.accent else c.textPrimary)
-            }
-        }
     }
 }
 
@@ -616,13 +607,11 @@ private fun ToolCircle(icon: ImageVector, label: String, tag: String, onClick: (
 // ---------------------------------------------------------------------------------------------------------------------
 // Speichern
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CollageSaveSheet(vm: CollageViewModel, onDismiss: () -> Unit, onPro: () -> Unit) {
     val c = PM.colors
-    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true), modifier = Modifier.testTag("collage.sheet")) {
-        Column(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.xl), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Text(stringResource(R.string.col_save_title), style = AppTypography.title, color = c.textPrimary)
+    EditorExportPage(stringResource(R.string.col_save_title), onDismiss, Modifier.testTag("collage.sheet")) {
+        run {
             Text(stringResource(R.string.col_size), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                 Chip(stringResource(R.string.col_size_standard), vm.size == CollageSize.STANDARD, Modifier.testTag("csize.STANDARD")) { vm.size = CollageSize.STANDARD }

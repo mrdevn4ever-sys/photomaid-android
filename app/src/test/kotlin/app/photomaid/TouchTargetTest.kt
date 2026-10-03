@@ -104,7 +104,9 @@ class TouchTargetTest {
             // Material-Slider melden 44 dp; Compose erweitert die Trefferfläche von Zeigerelementen unter 48 dp beim Tippen
             // automatisch (minimumTouchTargetSize) – nur deutlich kleinere Regler sind ein Fund.
             val slider = c.getOrNull(SemanticsActions.SetProgress) != null && t.height / d >= 43.5f && t.width / d >= 47.5f
-            actionable && !slider && tag !in setOf("trim.start", "trim.end") && b.top >= 0f && b.bottom <= win && b.width > 0f && (t.width / d < 47.5f || t.height / d < 47.5f) &&
+            // Teilweise aus einem Scrollbereich geschoben (sichtbar beschnitten): erreichbar durch Scrollen, kein Größenfund.
+            val clipped = b.height + 1f < n.size.height || b.width + 1f < n.size.width
+            actionable && !slider && !clipped && tag !in setOf("trim.start", "trim.end") && b.top >= 0f && b.bottom <= win && b.width > 0f && (t.width / d < 47.5f || t.height / d < 47.5f) &&
                 c.getOrNull(SemanticsProperties.Disabled) == null
         }.map { n ->
             val c = n.config
@@ -112,6 +114,25 @@ class TouchTargetTest {
                 ?: c.getOrNull(SemanticsProperties.Text)?.joinToString { it.text } ?: "?"
             "$name ${(n.touchBoundsInRoot.width / d).toInt()}×${(n.touchBoundsInRoot.height / d).toInt()} dp"
         }.distinct()
+    }
+
+    /** Editorfamilie: keine zwei Trefferflächen überdecken sich (außer Eltern/Kind). */
+    private fun overlapping(): List<String> {
+        val all = mutableListOf<SemanticsNode>()
+        fun walk(n: SemanticsNode) { all += n; n.children.forEach(::walk) }
+        rule.onAllNodes(isRoot()).fetchSemanticsNodes().forEach(::walk)
+        val acts = all.filter { n -> n.config.getOrNull(SemanticsActions.OnClick) != null && n.config.getOrNull(SemanticsProperties.Disabled) == null &&
+            n.boundsInRoot.height + 1f >= n.size.height && n.boundsInRoot.width + 1f >= n.size.width && n.size.width > 0 }
+        fun name(n: SemanticsNode) = n.config.getOrNull(SemanticsProperties.TestTag) ?: n.config.getOrNull(SemanticsProperties.ContentDescription)?.joinToString() ?: "?"
+        fun ancestor(a: SemanticsNode, b: SemanticsNode): Boolean { var p = b.parent; while (p != null) { if (p.id == a.id) return true; p = p.parent }; return false }
+        val out = mutableListOf<String>()
+        for (i in acts.indices) for (j in i + 1 until acts.size) {
+            val a = acts[i]; val b = acts[j]
+            if (ancestor(a, b) || ancestor(b, a)) continue
+            val r = a.touchBoundsInRoot.intersect(b.touchBoundsInRoot)
+            if (r.width > 1f && r.height > 1f) out += "${name(a)}↔${name(b)}"
+        }
+        return out.distinct().take(8)
     }
 
     @Test fun everyTouchTargetIsAtLeast48dp() {
@@ -156,6 +177,7 @@ class TouchTargetTest {
             show(screen)
             val small = tooSmall()
             if (small.isNotEmpty()) problems += "B $name: " + small.joinToString(", ")
+            if (name.startsWith("Editor") || name == "Collage" || name == "Film") overlapping().takeIf { it.isNotEmpty() }?.let { problems += "B $name überlappend: $it" }
         }
         assertTrue("Prüflog-Funde (zu kleine Tasten):\n" + problems.joinToString("\n"), problems.isEmpty())
     }

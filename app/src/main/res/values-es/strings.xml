@@ -1488,4 +1488,5 @@
     </plurals>
     <string name="tools_gif_fit">Imagen completa</string>
     <string name="tools_gif_fill">Rellenar</string>
+    <string name="edit_changed">modificado</string>
 </resources>

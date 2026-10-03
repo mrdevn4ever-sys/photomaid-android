@@ -1549,4 +1549,5 @@
     </plurals>
     <string name="tools_gif_fit">Всё изображение</string>
     <string name="tools_gif_fill">Заполнить</string>
+    <string name="edit_changed">изменено</string>
 </resources>

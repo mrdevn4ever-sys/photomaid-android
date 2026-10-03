@@ -11879,6 +11879,24 @@
    "tr": "Doldur",
    "uk": "Заповнити",
    "zh": "填满"
+  },
+  "edit_changed": {
+   "en": "changed",
+   "de": "geändert",
+   "ar": "معدَّل",
+   "es": "modificado",
+   "fr": "modifié",
+   "it": "modificato",
+   "ja": "変更あり",
+   "ko": "변경됨",
+   "nl": "gewijzigd",
+   "pl": "zmieniono",
+   "pt": "alterado",
+   "ro": "modificat",
+   "ru": "изменено",
+   "tr": "değiştirildi",
+   "uk": "змінено",
+   "zh": "已更改"
   }
  },
  "plurals": {

@@ -108,30 +108,36 @@ private val SPEEDS = listOf(0.5f, 1f, 1.5f, 2f, 0.25f, 4f)
 
 private fun speedLabel(s: Float): String = NumberFormat.getNumberInstance().apply { maximumFractionDigits = 2 }.format(s) + "×"
 
+/** Zustand der Video-Vorschau: ein Player für den ganzen Editor (bleibt über Werkzeugwechsel erhalten). */
+@androidx.compose.runtime.Stable
+internal class VideoPreview(val player: ExoPlayer) {
+    var playing by mutableStateOf(false)
+    /** Nur die Vorschau ist stumm – das ändert nichts an der Tonspur der Datei (dafür: Ton › „Ton entfernen“). */
+    var muted by mutableStateOf(true)
+    var outMs by mutableLongStateOf(0L)
+    fun toggle() { if (player.isPlaying) player.pause() else player.play() }
+}
+
 /**
  * Vorschau mit eigenem Player und denselben Media3-Effekten wie der Export (Drehen, Farbe als Farbtabelle, Format);
- * Abschnitte nach Schnitten als Wiedergabeliste, Tempo, Lautstärke mit Blenden. Texte/Sticker liegen darüber
- * (gleiche Zeichnung wie im Export). Tippen = Pause/Play – nie eine Entscheidung.
+ * Abschnitte nach Schnitten als Wiedergabeliste, Tempo, Lautstärke mit Blenden. Einmal je Editor angelegt.
  */
 @OptIn(UnstableApi::class)
 @Composable
-internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
+internal fun rememberVideoPreview(vm: EditorViewModel): VideoPreview? {
     val app = LocalApp.current
     val ctx = LocalContext.current
-    val a = vm.asset ?: return
-    val project = vm.videoProject() ?: return
-    val clip = project.clips.first()
-    val layout = vm.videoLayout
-    val player = remember { ExoPlayer.Builder(ctx).build().apply { volume = 0f; repeatMode = Player.REPEAT_MODE_ALL } }
-    var playing by remember { mutableStateOf(false) }
-    var muted by remember { mutableStateOf(true) }
-    var outMs by remember { mutableLongStateOf(0L) }
+    val pv = remember { VideoPreview(ExoPlayer.Builder(ctx).build().apply { volume = 0f; repeatMode = Player.REPEAT_MODE_ALL }) }
+    val player = pv.player
     DisposableEffect(Unit) {
         app.player.stop()
-        val l = object : Player.Listener { override fun onIsPlayingChanged(isPlaying: Boolean) { playing = isPlaying } }
+        val l = object : Player.Listener { override fun onIsPlayingChanged(isPlaying: Boolean) { pv.playing = isPlaying } }
         player.addListener(l)
         onDispose { player.removeListener(l); player.release() }
     }
+    val a = vm.asset ?: return null
+    val project = vm.videoProject() ?: return null
+    val clip = project.clips.first()
     val segments = remember(clip.trimStartMs, clip.trimEndMs, clip.cuts) { VideoPlan.segments(clip) }
     // Effekte für die Vorschau in kleiner Auflösung (flüssig); gleiche Reihenfolge wie beim Export.
     val effectsKey = listOf(clip.quarterTurns, clip.flipH, clip.adjust, clip.filter, clip.filterIntensity, clip.colorMix, project.aspect, project.fill)
@@ -158,8 +164,10 @@ internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) 
         player.seekTo(i, (ms - (segments.getOrNull(i)?.source?.startMs ?: 0L)).coerceAtLeast(0))
         vm.seekRequest = null
     }
+    // Markieren zeigt ein Standbild: Wiedergabe anhalten, Player bleibt bestehen.
+    LaunchedEffect(vm.tab) { if (vm.tab == EditorTab.MARKUP) player.pause() }
     val clipNow by rememberUpdatedState(clip)
-    val mutedNow by rememberUpdatedState(muted)
+    val projectNow by rememberUpdatedState(project)
     LaunchedEffect(Unit) {
         while (true) {
             delay(80)
@@ -167,41 +175,45 @@ internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) 
             val s = segs.getOrNull(player.currentMediaItemIndex) ?: continue
             val src = s.source.startMs + player.currentPosition
             vm.playheadMs = src
-            outMs = VideoPlan.toOutputMs(clipNow, src) ?: s.outStartMs
-            player.volume = if (mutedNow || project.removeAudio) 0f else VideoPlan.gain(clipNow, outMs).coerceIn(0f, 1f)
+            pv.outMs = VideoPlan.toOutputMs(clipNow, src) ?: s.outStartMs
+            player.volume = if (pv.muted || projectNow.removeAudio) 0f else VideoPlan.gain(clipNow, pv.outMs).coerceIn(0f, 1f)
         }
     }
-    val ratio = layout?.output?.aspect ?: if (a.pixelWidth > 0 && a.pixelHeight > 0) a.aspectRatio else 16f / 9f
-    val playLabel = stringResource(if (playing) R.string.pause else R.string.play)
-    // Bühne: nur das Video (eingepasst, nie verzerrt). Bedienung in einer eigenen Zeile DARUNTER – nie über dem Bild.
-    Box(modifier.padding(horizontal = AppSpacing.xs, vertical = AppSpacing.xxs), contentAlignment = Alignment.Center) {
-        Box(Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = ratio < 1f).clip(RoundedCornerShape(12.dp)).background(Color.Black)
-            .clickable(role = Role.Button, onClickLabel = playLabel) { if (player.isPlaying) player.pause() else player.play() }
+    return pv
+}
+
+/** Bühne: nur das Video, eingepasst (nie verzerrt, keine abgerundete Maske). Tippen = Pause/Play – nie eine Entscheidung. */
+@OptIn(UnstableApi::class)
+@Composable
+internal fun VideoEditStage(vm: EditorViewModel, pv: VideoPreview, modifier: Modifier = Modifier) {
+    val a = vm.asset ?: return
+    val ratio = vm.videoLayout?.output?.aspect ?: if (a.pixelWidth > 0 && a.pixelHeight > 0) a.aspectRatio else 16f / 9f
+    val playLabel = stringResource(if (pv.playing) R.string.pause else R.string.play)
+    Box(modifier.padding(AppSpacing.s), contentAlignment = Alignment.Center) {
+        Box(Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = ratio < 1f).background(Color.Black)
+            .clickable(role = Role.Button, onClickLabel = playLabel) { pv.toggle() }
             .testTag("editor.video")) {
-            FitVideo(player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_TEXTURE_VIEW)
-            LayerPreview(vm, outMs, Modifier.fillMaxSize())
+            FitVideo(pv.player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_TEXTURE_VIEW)
+            LayerPreview(vm, pv.outMs, Modifier.fillMaxSize())
         }
     }
-    // Mediensteuerung wird auch in RTL nicht gespiegelt.
+}
+
+/** Wiedergabe in der Hilfsleiste (außerhalb der Bühne): Play/Pause · Zeit · Vorschau stumm · Standbild. Auch in RTL nicht gespiegelt. */
+@Composable
+internal fun VideoTransport(vm: EditorViewModel, pv: VideoPreview) {
+    val project = vm.videoProject() ?: return
+    val clip = project.clips.first()
     androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Ltr) {
-    Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xxs).testTag("video.transport"),
-        horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalAlignment = Alignment.CenterVertically) {
-        Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape).clickable(role = Role.Button, onClickLabel = playLabel) { if (player.isPlaying) player.pause() else player.play() }
-            .testTag("video.play"), contentAlignment = Alignment.Center) {
-            Icon(if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow, null, tint = PM.colors.textPrimary)
+        Row(Modifier.fillMaxWidth().testTag("video.transport"), verticalAlignment = Alignment.CenterVertically) {
+            app.photomaid.design.EditorActionButton(if (pv.playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
+                stringResource(if (pv.playing) R.string.pause else R.string.play), Modifier.testTag("video.play"), enabled = vm.tab != EditorTab.MARKUP) { pv.toggle() }
+            Text("\u2066${clock(pv.outMs)} / ${clock(clip.outputDurationMs)}\u2069", Modifier.weight(1f).padding(horizontal = AppSpacing.xs).testTag("video.time"),
+                style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"), color = PM.colors.textPrimary)
+            app.photomaid.design.EditorActionButton(if (pv.muted) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp,
+                stringResource(if (pv.muted) R.string.unmute else R.string.mute), Modifier.testTag("video.mute"), active = !pv.muted) { pv.muted = !pv.muted }
+            app.photomaid.design.EditorActionButton(Icons.Rounded.PhotoCamera, stringResource(R.string.vid_frame), Modifier.testTag("video.frame")) { vm.saveFrame() }
         }
-        Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape)
-            .clickable(role = Role.Switch, onClickLabel = stringResource(if (muted) R.string.unmute else R.string.mute)) { muted = !muted }
-            .testTag("video.mute"), contentAlignment = Alignment.Center) {
-            Icon(if (muted) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp, null, tint = PM.colors.textPrimary)
-        }
-        Text("\u2066${clock(outMs)} / ${clock(clip.outputDurationMs)}\u2069", Modifier.weight(1f).testTag("video.time"),
-            style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = PM.colors.textSecondary)
-        // Standbild der aktuellen Stelle (Originalauflösung, wie im Ergebnis).
-        Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape)
-            .clickable(role = Role.Button, onClickLabel = stringResource(R.string.vid_frame)) { vm.saveFrame() }.testTag("video.frame"),
-            contentAlignment = Alignment.Center) { Icon(Icons.Rounded.PhotoCamera, stringResource(R.string.vid_frame), tint = PM.colors.textPrimary) }
-    }
     }
 }
 
@@ -451,10 +463,10 @@ internal fun VideoFormatPanel(vm: EditorViewModel) {
             Chip(stringResource(R.string.vid_fit), !p.fill, Modifier.testTag("vformat.fit")) { vm.setVideoFill(false) }
         }
         if (p.aspect != null) Text(stringResource(if (p.fill) R.string.vid_fill_hint else R.string.vid_fit_hint), style = AppTypography.footnote, color = PM.colors.textSecondary)
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            ToolButton(Icons.Rounded.Rotate90DegreesCw, stringResource(R.string.edit_rotate), Modifier.weight(1f).testTag("vformat.rotate")) { vm.update(vm.recipe.copy(quarterTurns = (vm.recipe.turns + 1) % 4)) }
-            ToolButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_h), Modifier.weight(1f).testTag("vformat.flip")) { vm.update(vm.recipe.copy(flipH = !vm.recipe.flipH)) }
-            ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset), Modifier.weight(1f).testTag("editor.reset"), onClick = vm::resetTab)
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            ToolButton(Icons.Rounded.Rotate90DegreesCw, stringResource(R.string.edit_rotate), Modifier.testTag("vformat.rotate")) { vm.update(vm.recipe.copy(quarterTurns = (vm.recipe.turns + 1) % 4)) }
+            ToolButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_h), Modifier.testTag("vformat.flip")) { vm.update(vm.recipe.copy(flipH = !vm.recipe.flipH)) }
+            ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset), Modifier.testTag("editor.reset"), onClick = vm::resetTab)
         }
         vm.videoLayout?.let { l -> Text("${l.output.width} × ${l.output.height}", style = AppTypography.footnote, color = PM.colors.textSecondary, modifier = Modifier.testTag("vformat.size")) }
     }

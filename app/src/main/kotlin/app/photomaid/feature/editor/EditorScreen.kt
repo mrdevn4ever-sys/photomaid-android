@@ -73,6 +73,22 @@ import app.photomaid.R
 import app.photomaid.core.edit.EditFormat
 import app.photomaid.core.edit.SaveMode
 import app.photomaid.design.CancelButton
+import app.photomaid.design.DockItem
+import app.photomaid.design.EditorActionButton
+import app.photomaid.design.EditorDock
+import app.photomaid.design.EditorHoldButton
+import app.photomaid.design.EditorLayoutPolicy
+import app.photomaid.design.EditorPrimaryButton
+import app.photomaid.design.EditorScaffold
+import app.photomaid.design.EditorStatus
+import app.photomaid.design.EditorTheme
+import app.photomaid.design.EditorTopBar
+import app.photomaid.design.EditorExportPage
+import androidx.compose.material.icons.rounded.Compare
+import androidx.compose.material.icons.rounded.BarChart
+import androidx.compose.material.icons.rounded.WarningAmber
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.foundation.layout.imePadding
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
@@ -138,48 +154,64 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
         CoachStep("editor.save", stringResource(R.string.tour_editor_save_title), stringResource(R.string.tour_editor_save_text)),
     ).let { s -> if (vm.isVideo) s.filter { it.key != "editor.stage" } else s }
     val ready = vm.asset != null && (vm.isVideo || vm.source != null)
+    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM, EditorTab.SPEED, EditorTab.AUDIO, EditorTab.FORMAT, EditorTab.FILTER, EditorTab.ADJUST, EditorTab.MARKUP)
+        else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.RETOUCH, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
+    val locked = !app.capabilities.hasProToolsAccess
+    val dockItems = tabs.map { t -> DockItem(t.name, t.icon, stringResource(t.label), "tab.${t.name}", badge = if (locked && t.isPro) Icons.Rounded.WorkspacePremium else null) }
+    EditorTheme {
     CoachHost(steps, active = ready && !settings.editorTourSeen,
         onFinish = { scope.launch { app.updateSettings { it.copy(editorTourSeen = true) } } }, modifier = Modifier.fillMaxSize()) {
-        AppBackground(Modifier.testTag("editor")) {
-            Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
-                // Kopfzeile: Abbrechen · Rückgängig/Wiederholen · Speichern
-                Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
-                    CancelButton(stringResource(R.string.cancel), Modifier.padding(horizontal = AppSpacing.xs).testTag("editor.cancel"), enabled = !vm.saving) {
-                        if (vm.hasChanges) confirmDiscard = true else onClose()
+        // Ein Player für den ganzen Editor: bleibt über Werkzeugwechsel (auch Markieren) erhalten.
+        val preview = if (vm.isVideo) rememberVideoPreview(vm) else null
+        Box(Modifier.fillMaxSize().testTag("editor")) {
+            EditorScaffold(
+                header = {
+                    EditorTopBar(leading = {
+                        CancelButton(stringResource(R.string.cancel), Modifier.testTag("editor.cancel"), enabled = !vm.saving) {
+                            if (vm.hasChanges) confirmDiscard = true else onClose()
+                        }
+                    }, trailing = {
+                        EditorPrimaryButton(stringResource(R.string.save), Modifier.coachTarget("editor.save").testTag("editor.save"),
+                            enabled = vm.hasChanges && !vm.saving) { showSave = true }
+                    })
+                },
+                stage = {
+                    Box(Modifier.fillMaxSize().coachTarget("editor.stage")) {
+                        when {
+                            vm.isVideo && vm.tab == EditorTab.MARKUP -> VideoPosterStage(vm, Modifier.fillMaxSize())
+                            vm.isVideo -> preview?.let { VideoEditStage(vm, it, Modifier.fillMaxSize()) }
+                            else -> EditorStage(vm, Modifier.fillMaxSize())
+                        }
                     }
-                    Spacer(Modifier.weight(1f))
-                    run {
-                        GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.testTag("editor.undo"),
-                            enabled = vm.canUndo && !vm.saving, quiet = true, onClick = vm::undo)
-                        GlassIconButton(Icons.AutoMirrored.Rounded.Redo, stringResource(R.string.redo), Modifier.testTag("editor.redo"),
-                            enabled = vm.canRedo && !vm.saving, quiet = true, onClick = vm::redo)
+                },
+                actions = {
+                    EditorActionButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.testTag("editor.undo"),
+                        enabled = vm.canUndo && !vm.saving, onClick = vm::undo)
+                    EditorActionButton(Icons.AutoMirrored.Rounded.Redo, stringResource(R.string.redo), Modifier.testTag("editor.redo"),
+                        enabled = vm.canRedo && !vm.saving, onClick = vm::redo)
+                    if (vm.isVideo) {
+                        if (preview != null) Box(Modifier.weight(1f)) { VideoTransport(vm, preview) } else Spacer(Modifier.weight(1f))
+                    } else {
+                        val out = vm.outputSize
+                        val status = when {
+                            vm.comparing -> stringResource(R.string.edit_original)
+                            vm.zoomPercent != null -> "\u2066${vm.zoomPercent} %\u2069"
+                            out != null -> "\u2066" + out.label() + "\u2069"
+                            else -> ""
+                        }
+                        EditorStatus(status, Modifier.testTag(when { vm.comparing -> "editor.status"; vm.zoomPercent != null -> "editor.zoom"; out != null -> "editor.size"; else -> "editor.status" }), emphasized = vm.comparing)
+                        val geometryTab = vm.tab == EditorTab.CROP || vm.tab == EditorTab.MARKUP || vm.tab == EditorTab.RETOUCH
+                        EditorHoldButton(Icons.Rounded.Compare, stringResource(R.string.edit_compare_hint), vm.comparing, { vm.comparing = it },
+                            Modifier.testTag("editor.compare"), enabled = vm.hasChanges && !geometryTab)
+                        EditorActionButton(Icons.Rounded.BarChart, stringResource(R.string.edit_histogram), Modifier.testTag("editor.histogram.toggle"),
+                            active = vm.showHistogram) { vm.showHistogram = !vm.showHistogram }
+                        EditorActionButton(Icons.Rounded.WarningAmber, stringResource(R.string.edit_clipping), Modifier.testTag("editor.clipping.toggle"),
+                            active = vm.showClipping) { vm.showClipping = !vm.showClipping }
                     }
-                    Spacer(Modifier.weight(1f))
-                    ProminentButton(stringResource(R.string.save), Modifier.coachTarget("editor.save").testTag("editor.save"),
-                        enabled = vm.hasChanges && !vm.saving) { showSave = true }
-                }
-                val out = vm.outputSize
-                // Zeile immer da (bei Videos leer), damit die Bühne bei Fotos und Videos gleich hoch ist.
-                Text(if (!vm.isVideo && out != null) "\u2066" + out.label() + "\u2069" else "\u00A0", Modifier.fillMaxWidth().then(if (!vm.isVideo && out != null) Modifier.testTag("editor.size") else Modifier),
-                    style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
-
-                // Vorschau immer gleich groß (Nutzerwunsch Gerätetest): feste Höhe, unabhängig vom Werkzeug. Das Bedienfeld
-                // darunter scrollt, die Werkzeugleiste bleibt unten.
-                androidx.compose.foundation.layout.BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
-                val stageH = maxHeight * 0.56f
-                Column(Modifier.fillMaxSize()) {
-                val stageMod = Modifier.height(stageH).fillMaxWidth().coachTarget("editor.stage")
-                // Video: Bedienzeile unter der Bühne (VideoEditStage), nie über dem Bild – Bühne gleich groß wie bei Fotos.
-                when {
-                    vm.isVideo && vm.tab == EditorTab.MARKUP -> Box(stageMod.testTag("media.stage")) { VideoPosterStage(vm, Modifier.fillMaxSize()) }
-                    vm.isVideo -> VideoEditStage(vm, stageMod.testTag("media.stage"))
-                    else -> Box(stageMod.testTag("media.stage")) { EditorStage(vm, Modifier.fillMaxSize()) }
-                }
-
-                Column(Modifier.weight(1f).fillMaxWidth().widthIn(max = 720.dp).align(Alignment.CenterHorizontally)
-                    .padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                    Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                },
+                tool = {
                     if (vm.needsPro && (vm.isVideo || vm.recipe.usesProTools)) ProHint(onPro = nav::openPro)
+                    if (!vm.isVideo && vm.showHistogram) vm.histogram?.let { HistogramCard(it, Modifier.fillMaxWidth()) }
                     Box(Modifier.fillMaxWidth().testTag("editor.panel.${vm.tab.name}")) {
                         when (vm.tab) {
                             EditorTab.CROP -> CropPanel(vm)
@@ -195,28 +227,25 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                             EditorTab.FORMAT -> VideoFormatPanel(vm)
                         }
                     }
-                    }
-                    val tabs = if (vm.isVideo) listOf(EditorTab.TRIM, EditorTab.SPEED, EditorTab.AUDIO, EditorTab.FORMAT, EditorTab.FILTER, EditorTab.ADJUST, EditorTab.MARKUP) else listOf(EditorTab.CROP, EditorTab.ADJUST, EditorTab.FILTER, EditorTab.RETOUCH, EditorTab.MARKUP, EditorTab.FRAME, EditorTab.RESIZE)
-                    if (tabs.size > 1) EditorTabs(tabs, vm.tab, locked = !app.capabilities.hasProToolsAccess, onSelect = { vm.tab = it },
-                        modifier = Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
-                    else Box(Modifier.coachTarget("editor.tabs").size(1.dp))
-                }
-                }
-                }
-            }
+                },
+                dock = {
+                    EditorDock(dockItems, vm.tab.name, { k -> vm.tab = EditorTab.valueOf(k) }, Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
+                },
+            )
             SavingOverlay(vm)
         }
+    }
     }
 
     var pickFolder by remember { mutableStateOf(false) }
     var folders by remember { mutableStateOf<List<MediaFolder>?>(null) }
-    if (showSave && !pickFolder) SaveSheet(vm, initial = settings.editSaveMode, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() },
+    if (showSave) EditorTheme { SaveSheet(vm, initial = settings.editSaveMode, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() },
         onFolder = {
             pickFolder = true
             scope.launch { folders = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { app.allPhotos.folders() } }
         },
         onShare = { showSave = false; vm.share(removeLocation = true) },
-        onSave = { mode, removeLocation -> showSave = false; vm.save(mode, removeLocation) })
+        onSave = { mode, removeLocation -> showSave = false; vm.save(mode, removeLocation) }) }
     if (pickFolder) vm.asset?.let { a ->
         FolderSheet(a.kind, vm.targetFolder ?: a.relativePath, folders, settings.pinnedFolders, settings.recentFolders,
             onTogglePin = { p -> scope.launch { togglePinnedFolder(app, p) } },
@@ -275,7 +304,10 @@ private fun SavingOverlay(vm: EditorViewModel) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Speichern als eigener Schritt (ganze Ansicht statt Blatt über dem Bild): klar, dass eine neue Datei entsteht und das
+ * Original bleibt; vorhandene Optionen (Kopie/Ersetzen, Ordner, Standort, Videoprofil) unverändert.
+ */
 @Composable
 private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> Unit, onPro: () -> Unit, onFolder: () -> Unit, onShare: () -> Unit,
                       onSave: (SaveMode, Boolean) -> Unit) {
@@ -284,10 +316,8 @@ private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> U
     var removeLocation by rememberSaveable { mutableStateOf(false) }
     val src = vm.source
     val a = vm.asset
-    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true), modifier = Modifier.testTag("editor.sheet")) {
-        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.xl),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Text(stringResource(R.string.edit_save_title), style = AppTypography.title, color = c.textPrimary)
+    EditorExportPage(stringResource(R.string.edit_save_title), onDismiss, Modifier.testTag("editor.sheet")) {
+        run {
             SaveOption(SaveMode.COPY, mode, stringResource(R.string.edit_save_copy), stringResource(R.string.edit_save_copy_text)) { mode = it }
             SaveOption(SaveMode.REPLACE, mode, stringResource(R.string.edit_save_replace), stringResource(R.string.edit_save_replace_text)) { mode = it }
             // Ablage der Kopie: wie das Original oder direkt in einen anderen Ordner (keine Entscheidung im Feed).

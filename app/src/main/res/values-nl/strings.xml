@@ -1427,4 +1427,5 @@
     </plurals>
     <string name="tools_gif_fit">Hele beeld</string>
     <string name="tools_gif_fill">Vullen</string>
+    <string name="edit_changed">gewijzigd</string>
 </resources>

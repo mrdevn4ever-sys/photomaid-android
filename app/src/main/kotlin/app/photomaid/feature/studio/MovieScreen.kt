@@ -91,6 +91,18 @@ import app.photomaid.core.studio.VideoClip
 import app.photomaid.core.studio.VideoProject
 import app.photomaid.core.studio.VideoRules
 import app.photomaid.design.AppBackground
+import app.photomaid.design.CancelButton
+import app.photomaid.design.DockItem
+import app.photomaid.design.EditorActionButton
+import app.photomaid.design.EditorDock
+import app.photomaid.design.EditorPrimaryButton
+import app.photomaid.design.EditorScaffold
+import app.photomaid.design.EditorStatus
+import app.photomaid.design.EditorTheme
+import app.photomaid.design.EditorTopBar
+import androidx.compose.material.icons.rounded.ViewCarousel
+import androidx.compose.material.icons.rounded.Gradient
+import androidx.compose.material.icons.rounded.AspectRatio
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.GlassButton
@@ -236,64 +248,57 @@ fun MovieScreen(req: MovieRequest, nav: Nav, onClose: () -> Unit) {
         }
     }
 
-    AppBackground(Modifier.testTag("movie")) {
-        Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
-            Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
-                PlainButton(stringResource(R.string.cancel), Modifier.testTag("movie.cancel"), enabled = !saving) { if (changed) confirmDiscard = true else onClose() }
-                Text(stringResource(if (req.slideshow) R.string.movie_title_slideshow else R.string.movie_title), Modifier.weight(1f).padding(horizontal = AppSpacing.xs), style = AppTypography.headline,
-                    color = c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
-                ProminentButton(stringResource(R.string.save), Modifier.testTag("movie.save"), enabled = !saving && project.clips.size >= 2) { save() }
-            }
-            BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
-                val stageH = maxHeight * 0.5f; val stageW = maxWidth
-                Column(Modifier.fillMaxSize()) {
-                    // Vorschau immer gleich groß; Video eingepasst, nie verzerrt.
-                    Box(Modifier.height(stageH).fillMaxWidth().padding(horizontal = AppSpacing.xs).testTag("media.stage"), contentAlignment = Alignment.Center) {
-                        val first = project.clips.firstNotNullOfOrNull { sources[it.mediaId]?.display } ?: VSize(16, 9)
-                        val frame = MoviePlan.frame(project.copy(profile = ExportProfile.SMALL), first)
-                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Box(Modifier.aspectRatio(frame.aspect, matchHeightConstraintsFirst = frame.aspect < stageW / stageH).clip(RoundedCornerShape(12.dp)).background(Color.Black).testTag("movie.stage")) {
-                                val p = player
-                                if (p != null) FitVideo(p, Modifier.fillMaxSize(), surfaceType = androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW)
-                                else project.clips.getOrNull(selected)?.let { cl -> assets[cl.mediaId]?.let { a ->
-                                    AsyncImage(ImageRequest.Builder(LocalContext.current).data(a.uri).build(), null, contentScale = if (project.fill) ContentScale.Crop else ContentScale.Fit,
-                                        modifier = Modifier.fillMaxSize())
-                                } }
-                                Row(Modifier.align(Alignment.BottomStart).padding(AppSpacing.xs), verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                                    if (p != null) GlassIconButton(if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
-                                        stringResource(if (playing) R.string.slideshow_pause else R.string.play), Modifier.testTag("movie.play")) {
-                                        if (p.isPlaying) p.pause() else { if (p.playbackState == Player.STATE_ENDED) p.seekTo(0); p.play() } }
-                                    Text("\u2066${clock(posMs)} / ${clock(MoviePlan.totalMs(project))}\u2069", Modifier.glassCapsule(elevation = 2.dp)
-                                        .padding(horizontal = AppSpacing.s, vertical = 6.dp).testTag("movie.time"),
-                                        style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
-                                }
-                            }
-                        }
-                    }
-                    ClipStrip(project, assets, selected, onSelect = { selected = it }, onAdd = ::addMedia)
-                    Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs),
-                        verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                        if (!canSave) ProHint(onPro = nav::openPro)
-                        when (tab) {
-                            MovieTab.CLIPS -> project.clips.getOrNull(selected)?.let { cl -> ClipPanel(project, selected, cl) { update(it) } }
-                            MovieTab.TRANSITION -> TransitionPanel(project) { update(it) }
-                            MovieTab.FORMAT -> FormatPanel(project) { update(it) }
-                            MovieTab.MUSIC -> MusicPanel(project) { update(it) }
-                        }
-                    }
-                    Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs).glassCapsule(elevation = 2.dp).padding(4.dp)
-                        .testTag("movie.tabs"), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                        for (t in MovieTab.entries) Box(Modifier.weight(1f).heightIn(min = 44.dp).clip(CircleShape)
-                            .background(if (tab == t) c.accent.copy(alpha = 0.15f) else Color.Transparent)
-                            .clickable(role = Role.Tab) { tab = t }.semantics { this.selected = tab == t }.testTag("movie.tab.${t.name}"), contentAlignment = Alignment.Center) {
-                            Text(stringResource(t.label), style = AppTypography.footnote.copy(fontWeight = if (tab == t) FontWeight.SemiBold else FontWeight.Normal),
-                                color = if (tab == t) c.accent else c.textPrimary, maxLines = 1)
-                        }
+    val tabIcons = mapOf(MovieTab.CLIPS to Icons.Rounded.ViewCarousel, MovieTab.TRANSITION to Icons.Rounded.Gradient,
+        MovieTab.FORMAT to Icons.Rounded.AspectRatio, MovieTab.MUSIC to Icons.Rounded.MusicNote)
+    val dockItems = MovieTab.entries.map { t -> DockItem(t.name, tabIcons.getValue(t), stringResource(t.label), "movie.tab.${t.name}") }
+    EditorTheme {
+    Box(Modifier.fillMaxSize().testTag("movie")) {
+        EditorScaffold(
+            header = {
+                EditorTopBar(leading = {
+                    CancelButton(stringResource(R.string.cancel), Modifier.testTag("movie.cancel"), enabled = !saving) { if (changed) confirmDiscard = true else onClose() }
+                }, trailing = {
+                    EditorPrimaryButton(stringResource(R.string.save), Modifier.testTag("movie.save"), enabled = !saving && project.clips.size >= 2) { save() }
+                }, title = stringResource(if (req.slideshow) R.string.movie_title_slideshow else R.string.movie_title))
+            },
+            stage = {
+                // Vorschau: eingepasst, nie verzerrt, keine Maske; Wiedergabe und Zeit liegen in der Hilfsleiste darunter.
+                BoxWithConstraints(Modifier.fillMaxSize().padding(AppSpacing.s), contentAlignment = Alignment.Center) {
+                    val first = project.clips.firstNotNullOfOrNull { sources[it.mediaId]?.display } ?: VSize(16, 9)
+                    val frame = MoviePlan.frame(project.copy(profile = ExportProfile.SMALL), first)
+                    Box(Modifier.aspectRatio(frame.aspect, matchHeightConstraintsFirst = frame.aspect < maxWidth / maxHeight).background(Color.Black).testTag("movie.stage")) {
+                        val p = player
+                        if (p != null) FitVideo(p, Modifier.fillMaxSize(), surfaceType = androidx.media3.ui.compose.SURFACE_TYPE_TEXTURE_VIEW)
+                        else project.clips.getOrNull(selected)?.let { cl -> assets[cl.mediaId]?.let { a ->
+                            AsyncImage(ImageRequest.Builder(LocalContext.current).data(a.uri).build(), null, contentScale = if (project.fill) ContentScale.Crop else ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize())
+                        } }
                     }
                 }
-            }
-        }
+            },
+            actions = {
+                androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Ltr) {
+                    Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
+                        val p = player
+                        EditorActionButton(if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
+                            stringResource(if (playing) R.string.slideshow_pause else R.string.play), Modifier.testTag("movie.play"), enabled = p != null) {
+                            p?.let { if (it.isPlaying) it.pause() else { if (it.playbackState == Player.STATE_ENDED) it.seekTo(0); it.play() } } }
+                        EditorStatus("\u2066${clock(posMs)} / ${clock(MoviePlan.totalMs(project))}\u2069", Modifier.testTag("movie.time"), emphasized = true)
+                    }
+                }
+            },
+            tool = {
+                ClipStrip(project, assets, selected, onSelect = { selected = it }, onAdd = ::addMedia)
+                if (!canSave) ProHint(onPro = nav::openPro)
+                when (tab) {
+                    MovieTab.CLIPS -> project.clips.getOrNull(selected)?.let { cl -> ClipPanel(project, selected, cl) { update(it) } }
+                    MovieTab.TRANSITION -> TransitionPanel(project) { update(it) }
+                    MovieTab.FORMAT -> FormatPanel(project) { update(it) }
+                    MovieTab.MUSIC -> MusicPanel(project) { update(it) }
+                }
+            },
+            dock = { EditorDock(dockItems, tab.name, { k -> tab = MovieTab.valueOf(k) }, Modifier.testTag("movie.tabs")) },
+        )
         if (saving) Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.35f)).clickable(enabled = true, onClick = {}).testTag("movie.saving"),
             contentAlignment = Alignment.Center) {
             Column(Modifier.glassRect().padding(AppSpacing.xl).width(280.dp), horizontalAlignment = Alignment.CenterHorizontally,
@@ -307,6 +312,7 @@ fun MovieScreen(req: MovieRequest, nav: Nav, onClose: () -> Unit) {
             }
         }
     }
+    }
     if (confirmDiscard) ConfirmationSheet(stringResource(R.string.movie_discard_title), stringResource(R.string.movie_discard_text), stringResource(R.string.edit_discard),
         onConfirm = { onClose() }, onDismiss = { confirmDiscard = false })
     message?.let { m -> NoticeDialog(m) { val done = m == app.string(R.string.movie_saved); message = null; if (done) onClose() } }
@@ -316,8 +322,7 @@ fun MovieScreen(req: MovieRequest, nav: Nav, onClose: () -> Unit) {
 private fun ClipStrip(project: VideoProject, assets: Map<String, MediaAsset>, selected: Int, onSelect: (Int) -> Unit, onAdd: () -> Unit) {
     val c = PM.colors
     val px = with(LocalDensity.current) { 72.dp.roundToPx() }
-    LazyRow(Modifier.fillMaxWidth().padding(vertical = AppSpacing.xs).testTag("movie.strip"), horizontalArrangement = Arrangement.spacedBy(6.dp),
-        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = AppSpacing.pageMargin)) {
+    LazyRow(Modifier.fillMaxWidth().testTag("movie.strip"), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         itemsIndexed(project.clips, key = { _, cl -> cl.id }) { i, cl ->
             val a = assets[cl.mediaId]
             val label = "${i + 1}, ${stringResource(if (cl.isPhoto) R.string.photo else R.string.video)}, ${clock(cl.outputDurationMs)}"

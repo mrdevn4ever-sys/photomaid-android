@@ -1366,4 +1366,5 @@
     </plurals>
     <string name="tools_gif_fit">전체 보기</string>
     <string name="tools_gif_fill">채우기</string>
+    <string name="edit_changed">변경됨</string>
 </resources>

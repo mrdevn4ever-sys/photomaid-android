@@ -124,6 +124,10 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
     // Anzeige-Hilfen (zeigen nur an, entscheiden nichts)
     var histogram by mutableStateOf<Histogram?>(null); private set
     var showHistogram by mutableStateOf(false)
+    /** Vergleich: Original anzeigen, solange gehalten (Taste in der Hilfsleiste oder Finger auf dem Bild). */
+    var comparing by mutableStateOf(false)
+    /** Aktuelle Zoomstufe der Bühne in % (bezogen auf 1 Bildpunkt = 1 Bildschirmpunkt), `null` = eingepasst. */
+    var zoomPercent by mutableStateOf<Int?>(null)
     private var clipState by mutableStateOf(false)
     var showClipping: Boolean
         get() = clipState

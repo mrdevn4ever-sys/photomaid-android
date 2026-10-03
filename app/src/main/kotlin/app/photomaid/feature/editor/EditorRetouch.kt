@@ -465,7 +465,7 @@ internal fun RetouchPanel(vm: EditorViewModel) {
         }
         val tools = AdjustTool.entries.filter { it.local }
         LazyRow(Modifier.fillMaxWidth().testTag("local.tools"), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            items(tools, key = { it.name }) { t -> AdjustToolButton(t, vm.localTool == t, t.get(cur.adjust) != 0f, Modifier.width(68.dp)) { vm.localTool = t } }
+            items(tools, key = { it.name }) { t -> AdjustToolButton(t, vm.localTool == t, t.get(cur.adjust) != 0f, Modifier) { vm.localTool = t } }
         }
         val lv = vm.localValue(vm.localTool)
         EditSlider(stringResource(vm.localTool.label), lv, -100f..100f, signed(lv), Modifier.testTag("local.slider")) { v, commit -> vm.adjustLocal(vm.localTool, v.roundToInt().toFloat(), commit) }

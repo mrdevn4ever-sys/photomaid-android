@@ -1427,4 +1427,5 @@
     </plurals>
     <string name="tools_gif_fit">Tüm görüntü</string>
     <string name="tools_gif_fill">Doldur</string>
+    <string name="edit_changed">değiştirildi</string>
 </resources>

@@ -63,6 +63,11 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -114,7 +119,6 @@ import app.photomaid.core.edit.StickerLayer
 import app.photomaid.core.edit.TextAlign
 import app.photomaid.core.edit.TextLayer
 import app.photomaid.core.edit.TextStyle
-import app.photomaid.design.FitLabel
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.PM
@@ -290,13 +294,13 @@ internal fun MarkupStage(m: MarkupController, image: Bitmap?, baseImage: Bitmap?
 @Composable
 private fun MarkupToolButton(icon: ImageVector, label: String, selected: Boolean, tag: String, onClick: () -> Unit) {
     val c = PM.colors
-    Column(Modifier.width(66.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
-        .semantics(mergeDescendants = true) { this.selected = selected }.testTag(tag).padding(vertical = 4.dp),
+    Column(Modifier.widthIn(min = 66.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
+        .semantics(mergeDescendants = true) { this.selected = selected }.testTag(tag).padding(horizontal = 4.dp, vertical = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Box(Modifier.size(44.dp).clip(CircleShape).background(if (selected) c.accentFill else c.backgroundTint), contentAlignment = Alignment.Center) {
             Icon(icon, null, tint = if (selected) Color.White else c.textPrimary, modifier = Modifier.size(22.dp))
         }
-        FitLabel(label, AppTypography.caption, if (selected) c.accent else c.textSecondary)
+        Text(label, style = AppTypography.caption, color = if (selected) c.accent else c.textSecondary, maxLines = 1, softWrap = false)
     }
 }
 
@@ -317,8 +321,14 @@ internal fun ColorSwatches(selected: Int, onPick: (Int) -> Unit, colors: List<In
 @Composable
 internal fun MarkupPanel(vm: MarkupController) {
     val c = PM.colors
+    // Text bearbeiten und Sticker wählen liegen in der Werkzeugzone (nie als Blatt über dem Foto).
+    vm.editingTextId?.let { id ->
+        val l = vm.all.firstOrNull { it.id == id } as? TextLayer
+        if (l != null) { TextEditor(vm, l); return } else { LaunchedEffect(id) { vm.editingTextId = null } }
+    }
+    if (vm.showStickers) { StickerPicker(vm); return }
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("markup.tools"), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("markup.tools"), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             MarkupToolButton(Icons.Rounded.NearMe, stringResource(R.string.edit_mk_select), vm.tool == MarkupTool.SELECT, "mk.select") { vm.tool = MarkupTool.SELECT }
             MarkupToolButton(Icons.Rounded.TextFields, stringResource(R.string.edit_mk_text), false, "mk.text") { vm.addText() }
             MarkupToolButton(Icons.Rounded.EmojiEmotions, stringResource(R.string.edit_mk_sticker), false, "mk.sticker") { vm.showStickers = true }
@@ -362,8 +372,6 @@ internal fun MarkupPanel(vm: MarkupController) {
             }
         }
     }
-    if (vm.showStickers) StickerSheet(vm)
-    vm.editingTextId?.let { id -> (vm.all.firstOrNull { it.id == id } as? TextLayer)?.let { TextSheet(vm, it) } ?: run { vm.editingTextId = null } }
 }
 
 @Composable
@@ -418,16 +426,25 @@ private val FontId.label: Int get() = when (this) {
 // ---------------------------------------------------------------------------------------------------------------------
 // Text- und Sticker-Blatt
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TextSheet(vm: MarkupController, l: TextLayer) {
+private fun TextEditor(vm: MarkupController, l: TextLayer) {
     val c = PM.colors
     var text by remember(l.id) { mutableStateOf(l.text) }
-    ModalBottomSheet(onDismissRequest = { vm.updateLayer(l.copy(text = text), true); vm.editingTextId = null },
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true), modifier = Modifier.testTag("text.sheet")) {
-        Column(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.xl), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            OutlinedTextField(text, { t -> text = t.take(300); vm.updateLayer(l.copy(text = text), false) }, Modifier.fillMaxWidth().testTag("text.field"),
-                label = { Text(stringResource(R.string.edit_mk_text)) }, minLines = 1, maxLines = 4)
+    val focus = remember { androidx.compose.ui.focus.FocusRequester() }
+    val keyboard = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
+    fun done() { vm.updateLayer(l.copy(text = text), true); keyboard?.hide(); vm.editingTextId = null }
+    androidx.activity.compose.BackHandler { done() }
+    LaunchedEffect(l.id) { runCatching { focus.requestFocus() } }
+    run {
+        Column(Modifier.fillMaxWidth().testTag("text.sheet"), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.edit_mk_text), Modifier.weight(1f), style = AppTypography.headline, color = c.textPrimary)
+                app.photomaid.design.EditorPrimaryButton(stringResource(R.string.done), Modifier.testTag("text.done")) { done() }
+            }
+            OutlinedTextField(text, { t -> text = t.take(300); vm.updateLayer(l.copy(text = text), false) }, Modifier.fillMaxWidth().focusRequester(focus).testTag("text.field"),
+                label = { Text(stringResource(R.string.edit_mk_text)) }, minLines = 1, maxLines = 3,
+                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(imeAction = androidx.compose.ui.text.input.ImeAction.Done),
+                keyboardActions = androidx.compose.foundation.text.KeyboardActions(onDone = { done() }))
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                 for (st in TextStyle.entries) Chip(stringResource(st.label), l.style == st, Modifier.testTag("ts.${st.name}")) { vm.updateLayer(l.copy(style = st, text = text), true) }
             }
@@ -471,13 +488,16 @@ private fun AlignButton(icon: ImageVector, label: Int, sel: Boolean, onClick: ()
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun StickerSheet(vm: MarkupController) {
+private fun StickerPicker(vm: MarkupController) {
     val c = PM.colors
-    ModalBottomSheet(onDismissRequest = { vm.showStickers = false }, modifier = Modifier.testTag("sticker.sheet")) {
-        Column(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.l), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Text(stringResource(R.string.edit_mk_shapes_stickers), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+    androidx.activity.compose.BackHandler { vm.showStickers = false }
+    run {
+        Column(Modifier.fillMaxWidth().testTag("sticker.sheet"), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.edit_mk_shapes_stickers), Modifier.weight(1f), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+                app.photomaid.design.EditorActionButton(Icons.Rounded.Close, stringResource(R.string.close), Modifier.testTag("sticker.close")) { vm.showStickers = false }
+            }
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                 for (k in StickerKind.entries.filter { it != StickerKind.EMOJI }) {
                     val preview = remember(k) { stickerPreview(k, vm.drawColor, if (k == StickerKind.DATE) vm.stickerDate() else "") }
@@ -489,7 +509,7 @@ private fun StickerSheet(vm: MarkupController) {
                 }
             }
             Text(stringResource(R.string.edit_mk_emoji), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
-            LazyVerticalGrid(GridCells.Adaptive(48.dp), Modifier.fillMaxWidth().heightIn(max = 360.dp).testTag("sticker.emoji")) {
+            LazyVerticalGrid(GridCells.Adaptive(48.dp), Modifier.fillMaxWidth().height(240.dp).testTag("sticker.emoji")) {
                 items(EMOJI) { e ->
                     Box(Modifier.size(48.dp).clip(RoundedCornerShape(10.dp)).clickable(role = Role.Button) { vm.addSticker(StickerKind.EMOJI, e) }
                         .semantics { contentDescription = e }, contentAlignment = Alignment.Center) { Text(e, fontSize = 28.sp) }

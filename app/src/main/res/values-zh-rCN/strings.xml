@@ -1366,4 +1366,5 @@
     </plurals>
     <string name="tools_gif_fit">完整画面</string>
     <string name="tools_gif_fill">填满</string>
+    <string name="edit_changed">已更改</string>
 </resources>

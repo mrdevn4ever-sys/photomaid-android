@@ -18,6 +18,8 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.photomaid.core.capabilities.PurchaseState
 import app.photomaid.core.model.MediaKind
+import app.photomaid.design.LocalEditorImeOverride
+import app.photomaid.design.EditorLayoutPolicy
 import app.photomaid.feature.editor.EditorScreen
 import app.photomaid.feature.library.SlideshowRequest
 import app.photomaid.feature.library.SlideshowScreen
@@ -226,6 +228,71 @@ class StageConsistencyTest {
         repeat(30) { pumpUntil { true } }
         val over2 = controlsOver(ss, ignore = setOf("slideshow"))
         if (over2.isNotEmpty()) problems += "W Diashow (Steuerung aus): $over2"
+        report()
+    }
+
+    /** Redesign: Foto-Editor, Video-Editor, Collage und Film teilen exakt eine Bühnengeometrie (gleiches Gerüst, gleiche Policy). */
+    @Test fun allEditorsShareOneStageGeometry() {
+        start()
+        val photos = lib.all.filter { it.kind != MediaKind.VIDEO }
+        val rects = linkedMapOf<String, Rect>()
+        show { EditorScreen(photosPortrait.id, nav, onClose = {}) }; rects["Foto-Editor"] = rect("media.stage")
+        show { EditorScreen(videoLandscape.id, nav, onClose = {}) }; rects["Video-Editor"] = rect("media.stage")
+        show { CollageScreen(CollageRequest("c", CollageProject.create("c", photos.take(4).map { it.id }), fromDraft = false), nav, pick = {}, onClose = {}) }
+        rects["Collage"] = rect("media.stage")
+        show { MovieScreen(MovieRequest("m", movieFrom(listOf(videoLandscape, photosPortrait), false), false), nav, onClose = {}) }
+        rects["Film"] = rect("media.stage")
+        val ref = rects.values.first()
+        val bad = rects.filterValues { abs(it.left - ref.left) > 1.5f || abs(it.width - ref.width) > 1.5f }
+        if (bad.isNotEmpty()) problems += "M Bühnenbreite: $rects"
+        sameSize("M gemeinsame Bühne", rects)?.let { problems += it }
+        report()
+    }
+
+    /** Die Bühne springt auch WÄHREND eines Werkzeugwechsels nicht (jedes Bild der Animation gemessen). */
+    @Test fun stageNeverJumpsDuringToolSwitches() {
+        start()
+        show { EditorScreen(photoLandscape.id, nav, onClose = {}) }
+        val ref = rect("media.stage")
+        val seen = mutableListOf<String>()
+        for (t in listOf("ADJUST", "FILTER", "CROP", "MARKUP", "RETOUCH", "FRAME", "RESIZE", "ADJUST")) {
+            rule.mainClock.autoAdvance = false
+            rule.onAllNodesWithTag("tab.$t")[0].performSemanticsAction(SemanticsActions.OnClick)
+            repeat(24) {
+                shadowOf(android.os.Looper.getMainLooper()).idle(); rule.mainClock.advanceTimeByFrame()
+                val r = nodes("media.stage").first().boundsInRoot
+                if (abs(r.top - ref.top) > 1f || abs(r.height - ref.height) > 1f || abs(r.width - ref.width) > 1f) seen += "$t Bild $it: $r"
+            }
+            rule.mainClock.autoAdvance = true
+        }
+        if (seen.isNotEmpty()) problems += "M Bühne sprang: " + seen.take(5)
+        report()
+    }
+
+    /** Tastatur im Text-Werkzeug: Eingabefeld und „Fertig“ über der Tastatur, Speichern erreichbar, danach exakt zurück. */
+    @Test fun keyboardKeepsTextFieldAndSaveReachableAndRestores() {
+        start()
+        val ime = mutableStateOf<androidx.compose.ui.unit.Dp?>(null)
+        show { androidx.compose.runtime.CompositionLocalProvider(LocalEditorImeOverride provides ime.value) { EditorScreen(photoLandscape.id, nav, onClose = {}) } }
+        val before = rect("media.stage")
+        rule.onAllNodesWithTag("tab.MARKUP")[0].performSemanticsAction(SemanticsActions.OnClick); pumpUntil { true }
+        rule.onAllNodesWithTag("mk.text")[0].performSemanticsAction(SemanticsActions.OnClick)
+        pumpUntil { nodes("text.field").isNotEmpty() }
+        ime.value = 300f.let { androidx.compose.ui.unit.Dp(it) }
+        repeat(20) { pumpUntil { true } }
+        val h = rule.onRoot().fetchSemanticsNode().boundsInRoot.height
+        val kbTop = h - 300f * rule.density.density
+        for (t in listOf("text.field", "text.done", "editor.save")) {
+            val r = rect(t)
+            if (r.bottom > kbTop + 1f || r.height < 1f) problems += "B Tastatur verdeckt $t (${dp(r.bottom).toInt()} dp > ${dp(kbTop).toInt()} dp)"
+        }
+        val st = rect("media.stage")
+        if (dp(st.height) < EditorLayoutPolicy.minStage.value - 1f) problems += "M Bühne mit Tastatur zu klein: ${dp(st.height)} dp"
+        // Textebene bleibt erhalten (Text-Werkzeug offen, Ebene im Rezept).
+        ime.value = null
+        rule.onAllNodesWithTag("text.done")[0].performSemanticsAction(SemanticsActions.OnClick)
+        repeat(20) { pumpUntil { true } }
+        sameSize("M Bühne nach der Tastatur", mapOf("vorher" to before, "nachher" to rect("media.stage")))?.let { problems += it }
         report()
     }
 

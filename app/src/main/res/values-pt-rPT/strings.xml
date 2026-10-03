@@ -1488,4 +1488,5 @@
     </plurals>
     <string name="tools_gif_fit">Imagem inteira</string>
     <string name="tools_gif_fill">Preencher</string>
+    <string name="edit_changed">alterado</string>
 </resources>
