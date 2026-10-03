@@ -70,7 +70,9 @@ class FakeMediaLibrary(
     val mimes = mutableMapOf<String, String>()
     /** P7: gemeldete Pixelmaße je Medium überschreiben (z. B. echte Dateigröße 300 × 400). */
     val dims = mutableMapOf<String, Pair<Int, Int>>()
-    val all: List<MediaAsset> get() = base.mapIndexed { i, a -> a.copy(pixelWidth = dims[a.id]?.first ?: a.pixelWidth, pixelHeight = dims[a.id]?.second ?: a.pixelHeight,
+    /** Gemeldete Größe je Medium überschreiben (z. B. unbekannt). */
+    val sizes = mutableMapOf<String, KnownSize>()
+    val all: List<MediaAsset> get() = base.mapIndexed { i, a -> a.copy(size = sizes[a.id] ?: a.size, pixelWidth = dims[a.id]?.first ?: a.pixelWidth, pixelHeight = dims[a.id]?.second ?: a.pixelHeight,
         isFavorite = favorites[a.id] ?: a.isFavorite, relativePath = paths[a.id] ?: a.relativePath ?: "DCIM/Camera/",
         displayName = names[a.id] ?: a.displayName, mimeType = mimes[a.id] ?: a.mimeType,
         creationDate = takenAt[i] ?: a.creationDate, dateAdded = addedAt[i] ?: a.dateAdded ?: a.creationDate) }
