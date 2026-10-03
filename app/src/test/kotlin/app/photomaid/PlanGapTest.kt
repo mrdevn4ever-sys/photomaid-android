@@ -15,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.photomaid.core.capabilities.PurchaseState
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.decisions.Disposition
+import app.photomaid.core.edit.EditKind
 import app.photomaid.core.model.ReviewSessionID
 import app.photomaid.core.model.KnownSize
 import app.photomaid.core.model.MediaKind
@@ -139,7 +140,7 @@ class PlanGapTest {
         assertTrue(fake.frames.all { it in 0..3_000 })
         assertEquals("GIF89a", String(File(lib.all.last().id.removePrefix("file://")).readBytes().copyOfRange(0, 6)))
         // Erst das „Behalten“ des neuen GIFs fertig werden lassen (sonst blockiert runBlocking den Hauptthread gegen die App).
-        pumpUntil { app.edits.records.value.any { it.kind == app.photomaid.core.edit.EditKind.GIF } }
+        pumpUntil { app.edits.records.value.any { it.kind == EditKind.GIF } }
         repeat(30) { pumpUntil { true } }
         assertEquals(Disposition.UNDECIDED, runBlocking { app.ledger.record(v.reference) }.disposition)
     }
