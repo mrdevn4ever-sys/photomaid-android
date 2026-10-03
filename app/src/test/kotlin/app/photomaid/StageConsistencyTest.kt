@@ -14,10 +14,15 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.test.performTouchInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.photomaid.core.capabilities.PurchaseState
 import app.photomaid.core.model.MediaKind
 import app.photomaid.feature.editor.EditorScreen
+import app.photomaid.feature.library.SlideshowRequest
+import app.photomaid.feature.library.SlideshowScreen
+import app.photomaid.feature.library.ViewerRequest
+import app.photomaid.feature.library.ViewerScreen
 import app.photomaid.feature.review.ReviewFeedScreen
 import app.photomaid.feature.review.SeriesCompareDialog
 import app.photomaid.feature.studio.CollageRequest
@@ -196,6 +201,31 @@ class StageConsistencyTest {
         sameSize("M Serienvergleich", mapOf("links" to rects.getValue("links Hochformat"), "rechts" to rects.getValue("rechts Panorama").let { Rect(it.left, rects.getValue("links Hochformat").top, it.right, rects.getValue("links Hochformat").top + it.height) }))?.let { problems += it }
         sameSize("M Serienvergleich rechts", mapOf("Panorama" to rects.getValue("rechts Panorama"), "Querformat" to rects.getValue("rechts Querformat")))?.let { problems += it }
         for (side in 0..1) { val over = controlsOver(rect("series.img$side")); if (over.isNotEmpty()) problems += "W Serienvergleich Bild $side: $over" }
+        report()
+    }
+
+    @Test fun viewerAndSlideshowHideEverythingOnTap() {
+        start()
+        val list = listOf(photosPortrait, videoLandscape, photoLandscape)
+        show { ViewerScreen(ViewerRequest("v", list, 1), nav, onClose = {}) }
+        pumpUntil { nodes("viewer.index").isNotEmpty() }
+        val screen = rect("viewer")
+        // Tipp neben die Mitte: Leisten aus → nichts Bedienbares mehr über dem Video.
+        rule.onAllNodesWithTag("viewer")[0].performTouchInput { down(androidx.compose.ui.geometry.Offset(width * 0.3f, height * 0.3f)); up() }
+        repeat(30) { pumpUntil { true } }
+        val over = controlsOver(screen, ignore = setOf("viewer"))
+        if (over.isNotEmpty()) problems += "W Betrachter (Leisten aus): $over"
+        Thread.sleep(400) // kein Doppeltipp (der zoomt)
+        rule.onAllNodesWithTag("viewer")[0].performTouchInput { down(androidx.compose.ui.geometry.Offset(width * 0.3f, height * 0.3f)); up() }
+        pumpUntil { nodes("viewer.actions").isNotEmpty() }
+
+        show { SlideshowScreen(SlideshowRequest("s", list.filter { it.kind != MediaKind.VIDEO }), onClose = {}) }
+        pumpUntil { nodes("slideshow.controls").isNotEmpty() }
+        val ss = rect("slideshow")
+        rule.onAllNodesWithTag("slideshow")[0].performTouchInput { down(androidx.compose.ui.geometry.Offset(width * 0.3f, height * 0.3f)); up() }
+        repeat(30) { pumpUntil { true } }
+        val over2 = controlsOver(ss, ignore = setOf("slideshow"))
+        if (over2.isNotEmpty()) problems += "W Diashow (Steuerung aus): $over2"
         report()
     }
 

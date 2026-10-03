@@ -162,7 +162,7 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
         HorizontalPager(pager, Modifier.fillMaxSize().graphicsLayer { translationY = dragDown }, userScrollEnabled = !zoomed, key = { assets[it].id },
             beyondViewportPageCount = 1) { page ->
             val a = assets[page]
-            ViewerPage(a, active = page == pager.currentPage, onTap = { chrome = !chrome }, onPlay = { chrome = false }, onZoom = { zoomed = it },
+            ViewerPage(a, active = page == pager.currentPage, chrome = chrome, onTap = { chrome = !chrome }, onPlay = { chrome = false }, onZoom = { zoomed = it },
                 onDragDown = { dy, end -> if (end) { if (dragDown > 220f) onClose() else dragDown = 0f } else dragDown = max(0f, dragDown + dy) })
         }
         // Kopfzeile
@@ -326,7 +326,7 @@ private fun VideoControls(a: MediaAsset) {
 /** Eine Seite: Foto mit Zoom bzw. Video mit Abspielen. Runterziehen (ohne Zoom) schließt. */
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onPlay: () -> Unit, onZoom: (Boolean) -> Unit, onDragDown: (Float, Boolean) -> Unit) {
+private fun ViewerPage(a: MediaAsset, active: Boolean, chrome: Boolean, onTap: () -> Unit, onPlay: () -> Unit, onZoom: (Boolean) -> Unit, onDragDown: (Float, Boolean) -> Unit) {
     val app = LocalApp.current
     val state by app.player.state.collectAsState()
     var scale by remember { mutableFloatStateOf(1f) }
@@ -377,9 +377,10 @@ private fun ViewerPage(a: MediaAsset, active: Boolean, onTap: () -> Unit, onPlay
             if (a.kind == MediaKind.VIDEO && active && state.itemID == a.id && app.player.player != null)
                 FitVideo(app.player.player!!, Modifier.fillMaxSize())
         }
-        // Großer Start-Knopf nur, solange das Video nicht läuft; beim Abspielen ist nichts über dem Bild.
+        // Großer Start-Knopf nur, solange das Video nicht läuft und die Leisten sichtbar sind.
         val playing = state.itemID == a.id && state.isPlaying
-        if (a.kind == MediaKind.VIDEO && !playing) Box(Modifier.align(Alignment.Center).size(72.dp).clip(CircleShape).glassCapsule(elevation = 4.dp)
+        // Leisten ausgeblendet (Tipp) = wirklich nichts über dem Bild, auch kein Start-Knopf.
+        if (a.kind == MediaKind.VIDEO && !playing && chrome) Box(Modifier.align(Alignment.Center).size(72.dp).clip(CircleShape).glassCapsule(elevation = 4.dp)
             .clickable(role = androidx.compose.ui.semantics.Role.Button) {
                 if (state.itemID == a.id) app.player.play()
                 else { app.player.load(a.id, a.uri, autoplay = true, durationSec = a.duration); if (app.player.state.value.isMuted) app.player.toggleMute() }
