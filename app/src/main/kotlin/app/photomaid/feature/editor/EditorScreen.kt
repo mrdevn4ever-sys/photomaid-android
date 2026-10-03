@@ -158,8 +158,9 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                         enabled = vm.hasChanges && !vm.saving) { showSave = true }
                 }
                 val out = vm.outputSize
-                if (!vm.isVideo && out != null) Text(out.label(), Modifier.fillMaxWidth().testTag("editor.size"), style = AppTypography.caption,
-                    color = c.textSecondary, textAlign = TextAlign.Center)
+                // Zeile immer da (bei Videos leer), damit die Bühne bei Fotos und Videos gleich hoch ist.
+                Text(if (!vm.isVideo && out != null) out.label() else "\u00A0", Modifier.fillMaxWidth().then(if (!vm.isVideo && out != null) Modifier.testTag("editor.size") else Modifier),
+                    style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
 
                 // Vorschau immer gleich groß (Nutzerwunsch Gerätetest): feste Höhe, unabhängig vom Werkzeug. Das Bedienfeld
                 // darunter scrollt, die Werkzeugleiste bleibt unten.
@@ -167,10 +168,11 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                 val stageH = maxHeight * 0.56f
                 Column(Modifier.fillMaxSize()) {
                 val stageMod = Modifier.height(stageH).fillMaxWidth().coachTarget("editor.stage")
+                // Video: Bedienzeile unter der Bühne (VideoEditStage), nie über dem Bild – Bühne gleich groß wie bei Fotos.
                 when {
-                    vm.isVideo && vm.tab == EditorTab.MARKUP -> VideoPosterStage(vm, stageMod)
-                    vm.isVideo -> VideoEditStage(vm, stageMod)
-                    else -> EditorStage(vm, stageMod)
+                    vm.isVideo && vm.tab == EditorTab.MARKUP -> Box(stageMod.testTag("media.stage")) { VideoPosterStage(vm, Modifier.fillMaxSize()) }
+                    vm.isVideo -> VideoEditStage(vm, stageMod.testTag("media.stage"))
+                    else -> Box(stageMod.testTag("media.stage")) { EditorStage(vm, Modifier.fillMaxSize()) }
                 }
 
                 Column(Modifier.weight(1f).fillMaxWidth().widthIn(max = 720.dp).align(Alignment.CenterHorizontally)

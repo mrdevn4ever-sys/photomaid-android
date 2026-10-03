@@ -173,30 +173,32 @@ internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) 
     }
     val ratio = layout?.output?.aspect ?: if (a.pixelWidth > 0 && a.pixelHeight > 0) a.aspectRatio else 16f / 9f
     val playLabel = stringResource(if (playing) R.string.pause else R.string.play)
+    // Bühne: nur das Video (eingepasst, nie verzerrt). Bedienung in einer eigenen Zeile DARUNTER – nie über dem Bild.
     Box(modifier.padding(horizontal = AppSpacing.xs, vertical = AppSpacing.xxs), contentAlignment = Alignment.Center) {
         Box(Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = ratio < 1f).clip(RoundedCornerShape(12.dp)).background(Color.Black)
             .clickable(role = Role.Button, onClickLabel = playLabel) { if (player.isPlaying) player.pause() else player.play() }
             .testTag("editor.video")) {
             FitVideo(player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_TEXTURE_VIEW)
             LayerPreview(vm, outMs, Modifier.fillMaxSize())
-            Row(Modifier.align(Alignment.BottomStart).padding(AppSpacing.xs), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs),
-                verticalAlignment = Alignment.CenterVertically) {
-                Box(Modifier.size(40.dp).glassCapsule(elevation = 2.dp), contentAlignment = Alignment.Center) {
-                    Icon(if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow, null, tint = PM.colors.textPrimary)
-                }
-                Box(Modifier.size(40.dp).glassCapsule(elevation = 2.dp).clip(CircleShape)
-                    .clickable(role = Role.Switch, onClickLabel = stringResource(if (muted) R.string.unmute else R.string.mute)) { muted = !muted }
-                    .testTag("video.mute"), contentAlignment = Alignment.Center) {
-                    Icon(if (muted) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp, null, tint = PM.colors.textPrimary)
-                }
-                Text("${clock(outMs)} / ${clock(clip.outputDurationMs)}", Modifier.glassCapsule(elevation = 2.dp).padding(horizontal = AppSpacing.s, vertical = 6.dp)
-                    .testTag("video.time"), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = PM.colors.textPrimary)
-            }
-            // Standbild der aktuellen Stelle (Originalauflösung, wie im Ergebnis).
-            Box(Modifier.align(Alignment.TopEnd).padding(AppSpacing.xs).size(40.dp).glassCapsule(elevation = 2.dp).clip(CircleShape)
-                .clickable(role = Role.Button, onClickLabel = stringResource(R.string.vid_frame)) { vm.saveFrame() }.testTag("video.frame"),
-                contentAlignment = Alignment.Center) { Icon(Icons.Rounded.PhotoCamera, stringResource(R.string.vid_frame), tint = PM.colors.textPrimary) }
         }
+    }
+    Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xxs).testTag("video.transport"),
+        horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalAlignment = Alignment.CenterVertically) {
+        Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape).clickable(role = Role.Button, onClickLabel = playLabel) { if (player.isPlaying) player.pause() else player.play() }
+            .testTag("video.play"), contentAlignment = Alignment.Center) {
+            Icon(if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow, null, tint = PM.colors.textPrimary)
+        }
+        Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape)
+            .clickable(role = Role.Switch, onClickLabel = stringResource(if (muted) R.string.unmute else R.string.mute)) { muted = !muted }
+            .testTag("video.mute"), contentAlignment = Alignment.Center) {
+            Icon(if (muted) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp, null, tint = PM.colors.textPrimary)
+        }
+        Text("${clock(outMs)} / ${clock(clip.outputDurationMs)}", Modifier.weight(1f).testTag("video.time"),
+            style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = PM.colors.textSecondary)
+        // Standbild der aktuellen Stelle (Originalauflösung, wie im Ergebnis).
+        Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape)
+            .clickable(role = Role.Button, onClickLabel = stringResource(R.string.vid_frame)) { vm.saveFrame() }.testTag("video.frame"),
+            contentAlignment = Alignment.Center) { Icon(Icons.Rounded.PhotoCamera, stringResource(R.string.vid_frame), tint = PM.colors.textPrimary) }
     }
 }
 

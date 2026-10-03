@@ -248,7 +248,7 @@ fun MovieScreen(req: MovieRequest, nav: Nav, onClose: () -> Unit) {
                 val stageH = maxHeight * 0.5f; val stageW = maxWidth
                 Column(Modifier.fillMaxSize()) {
                     // Vorschau immer gleich groß; Video eingepasst, nie verzerrt.
-                    Box(Modifier.height(stageH).fillMaxWidth().padding(horizontal = AppSpacing.xs), contentAlignment = Alignment.Center) {
+                    Box(Modifier.height(stageH).fillMaxWidth().padding(horizontal = AppSpacing.xs).testTag("media.stage"), contentAlignment = Alignment.Center) {
                         val first = project.clips.firstNotNullOfOrNull { sources[it.mediaId]?.display } ?: VSize(16, 9)
                         val frame = MoviePlan.frame(project.copy(profile = ExportProfile.SMALL), first)
                         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

@@ -207,8 +207,29 @@ fun MediaInfoLine(asset: MediaAsset?, modifier: Modifier = Modifier) {
         asset.size.bytesOrNull?.let { SizeText.bytes(it) },
         if (asset.kind == MediaKind.VIDEO && asset.duration > 0) DateText.duration(asset.duration) else null,
     )
-    Text(parts.joinToString(" · "), style = AppTypography.footnote, color = PM.colors.textSecondary, maxLines = 1,
-        overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = modifier.fillMaxWidth().testTag("feed.info"))
+    val app = LocalApp.current
+    val state by app.player.state.collectAsState()
+    val active = asset != null && asset.kind == MediaKind.VIDEO && state.itemID == asset.id
+    // Feste Höhe für Fotos UND Videos: die Medienfläche darüber bleibt gleich groß. Video-Bedienung (Ton, Zeitleiste)
+    // liegt hier unter dem Bild – nie darüber.
+    Row(modifier.fillMaxWidth().height(AppSpacing.minTouch).testTag("feed.underbar"), verticalAlignment = Alignment.CenterVertically) {
+        if (asset?.kind == MediaKind.VIDEO) {
+            val muteLabel = stringResource(if (state.isMuted || !active) R.string.unmute else R.string.mute)
+            Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape).clickable(enabled = active) { app.player.toggleMute() }
+                .semantics { contentDescription = muteLabel }.testTag("video.mute"), contentAlignment = Alignment.Center) {
+                Icon(if (state.isMuted || !active) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp, null,
+                    tint = PM.colors.textSecondary, modifier = Modifier.size(20.dp))
+            }
+            Column(Modifier.weight(1f)) {
+                Text(parts.joinToString(" · "), style = AppTypography.caption, color = PM.colors.textSecondary, maxLines = 1,
+                    overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth().testTag("feed.info"))
+                SeekBar(progress = if (active) state.progress else 0f, enabled = active, onSeek = app.player::seek)
+            }
+        } else {
+            Text(parts.joinToString(" · "), style = AppTypography.footnote, color = PM.colors.textSecondary, maxLines = 1,
+                overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().testTag("feed.info"))
+        }
+    }
 }
 
 /** Tipp aufs Video (wie TikTok): läuft → Pause, pausiert → weiter, noch nicht geladen → starten (stumm). */
@@ -243,19 +264,6 @@ private fun BoxScope.VideoControls(asset: MediaAsset, skip: () -> Unit, skipLabe
             Icon(Icons.Rounded.PlayArrow, null, tint = Color.White.copy(alpha = 0.92f), modifier = Modifier.size(44.dp))
         }
     }
-    Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth().padding(end = AppSpacing.xxs), horizontalArrangement = Arrangement.End) {
-            val muteLabel = stringResource(if (state.isMuted) R.string.unmute else R.string.mute)
-            Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape).clickable(enabled = active) { app.player.toggleMute() }
-                .semantics { contentDescription = muteLabel }.testTag("video.mute"), contentAlignment = Alignment.Center) {
-                Box(Modifier.size(32.dp).clip(CircleShape).background(Color.Black.copy(alpha = 0.32f)), contentAlignment = Alignment.Center) {
-                    Icon(if (state.isMuted || !active) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp, null,
-                        tint = Color.White, modifier = Modifier.size(18.dp))
-                }
-            }
-        }
-        SeekBar(progress = if (active) state.progress else 0f, enabled = active, onSeek = app.player::seek)
-    }
 }
 
 /** Ruhiger Problemzustand eines Mediums: was passiert ist + „Erneut versuchen“ / „Weiter ohne Entscheidung“. */
@@ -276,6 +284,7 @@ private fun MediaProblem(title: String, hint: String?, onRetry: () -> Unit, skip
 @Composable
 private fun SeekBar(progress: Float, enabled: Boolean, onSeek: (Float) -> Unit) {
     val accent = PM.colors.accent
+    val track = PM.colors.textSecondary.copy(alpha = 0.3f)
     val label = stringResource(R.string.playback_position)
     var dragging by remember { mutableStateOf(false) }
     var dragValue by remember { mutableFloatStateOf(0f) }
@@ -312,7 +321,7 @@ private fun SeekBar(progress: Float, enabled: Boolean, onSeek: (Float) -> Unit) 
         Canvas(Modifier.fillMaxWidth().height(if (dragging) 12.dp else 6.dp)) {
             val h = if (dragging) 5.dp.toPx() else 3.dp.toPx()
             val y = size.height - h
-            drawRect(Color.White.copy(alpha = 0.35f), topLeft = Offset(0f, y), size = androidx.compose.ui.geometry.Size(size.width, h))
+            drawRect(track, topLeft = Offset(0f, y), size = androidx.compose.ui.geometry.Size(size.width, h))
             drawRect(accent, topLeft = Offset(0f, y), size = androidx.compose.ui.geometry.Size(size.width * shown, h))
             if (dragging) drawCircle(accent, radius = 6.dp.toPx(), center = Offset(size.width * shown, y + h / 2))
         }

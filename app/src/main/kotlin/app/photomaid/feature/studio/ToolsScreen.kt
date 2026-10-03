@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -180,6 +181,16 @@ fun ToolsScreen(req: ToolRequest, nav: Nav, onClose: () -> Unit) {
         Column(mod.verticalScroll(rememberScrollState()).padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
             Text(pluralStringResource(R.plurals.tools_selected, list.size, list.size), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold),
                 color = c.textPrimary, modifier = Modifier.testTag("tools.count"))
+            // Vorschau-Fläche immer gleich groß (feste Höhe, unabhängig von Bildform und Ladezustand); Bild eingepasst.
+            if (req.kind == ToolKind.STITCH || req.kind == ToolKind.GIF) {
+                val stageH = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp * 0.38f).dp
+                Box(Modifier.fillMaxWidth().height(stageH).clip(RoundedCornerShape(12.dp)).background(c.backgroundTint).testTag("media.stage"), contentAlignment = Alignment.Center) {
+                    val b = preview
+                    if (b != null) androidx.compose.foundation.Image(b.asImageBitmap(), null, contentScale = ContentScale.Fit,
+                        modifier = Modifier.fillMaxSize().testTag("tools.preview"))
+                    else if (list.isNotEmpty()) CircularProgressIndicator(Modifier.size(28.dp))
+                }
+            }
             if (overLimit) Text(stringResource(R.string.tools_free_limit, BatchRules.FREE_LIMIT), style = AppTypography.footnote, color = c.textSecondary, modifier = Modifier.testTag("tools.limit"))
             if (overLimit || needsPro) ProHint(onPro = nav::openPro)
             when (req.kind) {
@@ -223,11 +234,6 @@ fun ToolsScreen(req: ToolRequest, nav: Nav, onClose: () -> Unit) {
             if (req.kind in setOf(ToolKind.RESIZE, ToolKind.CONVERT, ToolKind.STRIP_LOCATION)) {
                 Toggle(R.string.tools_trash_originals, trashOriginals, "tools.trash") { trashOriginals = it }
                 Text(stringResource(R.string.tools_trash_note), style = AppTypography.footnote, color = c.textSecondary)
-            }
-            preview?.let { b ->
-                Box(Modifier.fillMaxWidth().heightIn(max = 420.dp).clip(RoundedCornerShape(12.dp)).background(c.backgroundTint).testTag("tools.preview"), contentAlignment = Alignment.Center) {
-                    androidx.compose.foundation.Image(b.asImageBitmap(), null, contentScale = ContentScale.Fit, modifier = Modifier.fillMaxWidth())
-                }
             }
         }
     }

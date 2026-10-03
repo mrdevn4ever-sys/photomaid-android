@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -181,16 +182,21 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
                 Spacer(Modifier.weight(1f))
                 ProminentButton(stringResource(R.string.save), Modifier.testTag("collage.save"), enabled = !vm.saving && vm.preview != null) { showSave = true }
             }
-            if (vm.missing.isNotEmpty()) Text(stringResource(R.string.col_missing), Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin).testTag("collage.missing"),
-                style = AppTypography.footnote, color = c.warning, textAlign = TextAlign.Center)
-            Box(Modifier.weight(1f).fillMaxWidth()) {
+            // Leinwand immer gleich groß (feste Höhe wie die Editor-Bühne), unabhängig vom Reiter; Bedienfeld darunter scrollt.
+            androidx.compose.foundation.layout.BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
+            val stageH = maxHeight * 0.56f
+            Column(Modifier.fillMaxSize()) {
+            Box(Modifier.height(stageH).fillMaxWidth().testTag("media.stage")) {
                 if (vm.tab == CollageTab.MARKUP) MarkupStage(vm.markup, vm.preview, vm.preview, null, Modifier.fillMaxSize())
                 else CollageStage(vm, Modifier.fillMaxSize())
             }
-            Column(Modifier.fillMaxWidth().widthIn(max = 720.dp).align(Alignment.CenterHorizontally)
+            Column(Modifier.weight(1f).fillMaxWidth().widthIn(max = 720.dp).align(Alignment.CenterHorizontally)
                 .padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                if (vm.needsPro) ProHintRow(nav::openPro)
-                Box(Modifier.fillMaxWidth().heightIn(max = 280.dp).verticalScroll(rememberScrollState()).testTag("collage.panel.${vm.tab.name}")) {
+                Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).testTag("collage.panel.${vm.tab.name}"),
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                    if (vm.missing.isNotEmpty()) Text(stringResource(R.string.col_missing), Modifier.fillMaxWidth().testTag("collage.missing"),
+                        style = AppTypography.footnote, color = c.warning, textAlign = TextAlign.Center)
+                    if (vm.needsPro) ProHintRow(nav::openPro)
                     when (vm.tab) {
                         CollageTab.LAYOUT -> LayoutPanel(vm)
                         CollageTab.FORMAT -> FormatPanel(vm)
@@ -206,6 +212,8 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
                     CollageKind.STRIP -> listOf(CollageTab.LAYOUT, CollageTab.SPACING, CollageTab.BACKGROUND, CollageTab.PHOTO, CollageTab.MARKUP)
                 }
                 CollageTabs(tabs, vm.tab) { vm.tab = it }
+            }
+            }
             }
         }
         AnimatedVisibility(vm.saving, Modifier.fillMaxSize(), enter = fadeIn(), exit = fadeOut()) {
