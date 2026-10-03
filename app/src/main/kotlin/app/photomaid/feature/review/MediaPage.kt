@@ -210,9 +210,9 @@ fun MediaInfoLine(asset: MediaAsset?, modifier: Modifier = Modifier) {
     val app = LocalApp.current
     val state by app.player.state.collectAsState()
     val active = asset != null && asset.kind == MediaKind.VIDEO && state.itemID == asset.id
-    // Feste Höhe für Fotos UND Videos: die Medienfläche darüber bleibt gleich groß. Video-Bedienung (Ton, Zeitleiste)
+    // Feste Höhe (64 dp) für Fotos UND Videos: die Medienfläche darüber bleibt gleich groß. Video-Bedienung (Ton, Zeitleiste)
     // liegt hier unter dem Bild – nie darüber.
-    Row(modifier.fillMaxWidth().height(AppSpacing.minTouch).testTag("feed.underbar"), verticalAlignment = Alignment.CenterVertically) {
+    Row(modifier.fillMaxWidth().height(64.dp).testTag("feed.underbar"), verticalAlignment = Alignment.CenterVertically) {
         if (asset?.kind == MediaKind.VIDEO) {
             val muteLabel = stringResource(if (state.isMuted || !active) R.string.unmute else R.string.mute)
             Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape).clickable(enabled = active) { app.player.toggleMute() }
@@ -292,7 +292,7 @@ private fun SeekBar(progress: Float, enabled: Boolean, onSeek: (Float) -> Unit) 
     Box(
         Modifier
             .fillMaxWidth()
-            .height(22.dp)
+            .height(AppSpacing.minTouch)
             .testTag("video.seek")
             .semantics {
                 contentDescription = label
@@ -316,7 +316,7 @@ private fun SeekBar(progress: Float, enabled: Boolean, onSeek: (Float) -> Unit) 
                     dragging = false
                 }
             },
-        contentAlignment = Alignment.BottomCenter,
+        contentAlignment = Alignment.Center,
     ) {
         Canvas(Modifier.fillMaxWidth().height(if (dragging) 12.dp else 6.dp)) {
             val h = if (dragging) 5.dp.toPx() else 3.dp.toPx()

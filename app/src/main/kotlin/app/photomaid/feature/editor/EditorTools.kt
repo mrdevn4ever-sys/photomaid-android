@@ -200,7 +200,7 @@ internal fun EditSlider(
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             // Nullpunkt-Markierung (Regler −100…+100 füllen nicht von links, sondern zeigen die Abweichung von 0).
             if (bipolar && trackBrush == null) Box(Modifier.size(width = 2.dp, height = 14.dp).clip(CircleShape).background(c.textSecondary.copy(alpha = 0.6f)))
-            Slider(value = value, valueRange = range, modifier = Modifier.fillMaxWidth().testTag("editor.slider")
+            Slider(value = value, valueRange = range, modifier = Modifier.fillMaxWidth().height(AppSpacing.minTouch).testTag("editor.slider")
                 .semantics { contentDescription = label; stateDescription = valueText },
                 onValueChange = { raw ->
                     val v = if (abs(raw) < snap && bipolar) 0f else raw

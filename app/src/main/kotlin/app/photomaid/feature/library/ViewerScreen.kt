@@ -10,6 +10,8 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculatePan
 import androidx.compose.foundation.gestures.calculateZoom
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -304,7 +306,7 @@ private fun VideoControls(a: MediaAsset) {
         GlassIconButton(if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow, stringResource(if (playing) R.string.slideshow_pause else R.string.play),
             Modifier.testTag("viewer.video.play"), quiet = true) { ensure(!playing) }
         Text(clock(if (dragging != null) (frac * total).toLong() else if (mine) pos.first else 0L), style = AppTypography.caption.copy(fontFeatureSettings = "tnum"), color = c.textPrimary)
-        androidx.compose.material3.Slider(frac, { dragging = it }, Modifier.weight(1f).padding(horizontal = AppSpacing.xxs).testTag("viewer.video.seek"),
+        androidx.compose.material3.Slider(frac, { dragging = it }, Modifier.weight(1f).height(AppSpacing.minTouch).padding(horizontal = AppSpacing.xxs).testTag("viewer.video.seek"),
             onValueChangeFinished = { dragging?.let { f -> if (!mine) ensure(false); app.player.seek(f) }; dragging = null },
             colors = androidx.compose.material3.SliderDefaults.colors(thumbColor = c.accent, activeTrackColor = c.accent,
                 inactiveTrackColor = c.textSecondary.copy(alpha = 0.3f), activeTickColor = Color.Transparent, inactiveTickColor = Color.Transparent))
