@@ -106,4 +106,5 @@ class EditorShotsTest {
     @Test @Config(qualifiers = "de-w393dp-h852dp", fontScale = 2.0f) fun font200() = run("font200")
     @Test @Config(qualifiers = "ar-w393dp-h852dp") fun arabic() = run("arabic")
     @Test @Config(qualifiers = "de-w852dp-h393dp-land") fun landscape() = run("landscape")
+    @Test @Config(qualifiers = "de-w800dp-h360dp-land-night") fun landscapeDark() = run("landscapeDark", dark = true)
 }
