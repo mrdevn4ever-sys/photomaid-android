@@ -242,7 +242,11 @@ class FakeVideoEditExporter(private val context: Context) : app.photomaid.media.
     }
     override suspend fun frame(uri: Uri, sourceMs: Long, maxEdge: Int?): android.graphics.Bitmap? {
         frames += sourceMs
-        return android.graphics.BitmapFactory.decodeFile(uri.path!!)
+        // Wie der echte Exporter: auf maxEdge verkleinert (Seitenverhältnis bleibt).
+        val b = android.graphics.BitmapFactory.decodeFile(uri.path!!) ?: return null
+        val edge = maxEdge ?: return b
+        val f = edge.toFloat() / maxOf(b.width, b.height)
+        return if (f >= 1f) b else android.graphics.Bitmap.createScaledBitmap(b, maxOf(1, (b.width * f).toInt()), maxOf(1, (b.height * f).toInt()), true)
     }
 }
 

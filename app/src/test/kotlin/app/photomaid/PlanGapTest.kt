@@ -138,6 +138,9 @@ class PlanGapTest {
         assertTrue("Bilder aus dem Video: ${fake.frames.size}", fake.frames.size >= 20)
         assertTrue(fake.frames.all { it in 0..3_000 })
         assertEquals("GIF89a", String(File(lib.all.last().id.removePrefix("file://")).readBytes().copyOfRange(0, 6)))
+        // Erst das „Behalten“ des neuen GIFs fertig werden lassen (sonst blockiert runBlocking den Hauptthread gegen die App).
+        pumpUntil { app.edits.records.value.any { it.kind == app.photomaid.core.edit.EditKind.GIF } }
+        repeat(30) { pumpUntil { true } }
         assertEquals(Disposition.UNDECIDED, runBlocking { app.ledger.record(v.reference) }.disposition)
     }
 
