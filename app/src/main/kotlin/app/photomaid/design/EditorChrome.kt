@@ -47,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
@@ -188,7 +189,8 @@ fun EditorScaffold(
             val toolBox: @Composable (Modifier) -> Unit = { m ->
                 Box(m.testTag("editor.toolzone")) {
                     Column(Modifier.fillMaxSize().then(if (toolScrolls) Modifier.verticalScroll(rememberScrollState()) else Modifier)
-                        .padding(horizontal = AppSpacing.m, vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) { tool() }
+                        .padding(start = AppSpacing.m, end = AppSpacing.m, top = AppSpacing.s, bottom = AppSpacing.xl),
+                        verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) { tool() }
                 }
             }
             Column(Modifier.fillMaxSize().padding(bottom = bottomInset)) {
@@ -284,27 +286,71 @@ data class DockItem(val key: String, val icon: ImageVector, val label: String, v
 fun EditorDock(items: List<DockItem>, selected: String, onSelect: (String) -> Unit, modifier: Modifier = Modifier) {
     val p = LocalEditorPalette.current
     val c = PM.colors
-    BoxWithConstraints(modifier.fillMaxWidth().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs)
-        .clip(RoundedCornerShape(22.dp)).background(p.surfaceRaised.copy(alpha = 0.72f)).border(1.dp, p.stroke, RoundedCornerShape(22.dp)).padding(4.dp)) {
-        // Alle Einträge in natürlicher Breite (gleicher Textstil); passt es, verteilt die Leiste sie gleichmäßig, sonst scrollt sie.
-        Row(Modifier.horizontalScroll(rememberScrollState()).widthIn(min = maxWidth), horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically) {
-            for (it in items) {
-                val sel = it.key == selected
-                val bg by animateColorAsState(if (sel) c.accent.copy(alpha = 0.16f) else Color.Transparent, tween(160), label = "dock")
-                Column(Modifier.widthIn(min = 64.dp).heightIn(min = AppSpacing.minTouch).clip(RoundedCornerShape(18.dp))
-                    .background(bg).clickable(role = Role.Tab) { onSelect(it.key) }.semantics(mergeDescendants = true) { this.selected = sel }
-                    .testTag(it.tag).padding(horizontal = AppSpacing.xs, vertical = 4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                    Box {
-                        Icon(it.icon, null, tint = if (sel) c.accent else p.textSecondary, modifier = Modifier.size(22.dp))
-                        if (it.badge != null) Icon(it.badge, null, tint = c.accent, modifier = Modifier.align(Alignment.TopEnd).padding(start = 14.dp).size(11.dp))
+    val scroll = rememberScrollState()
+    Column(modifier.fillMaxWidth()) {
+        Box(Modifier.fillMaxWidth().height(1.dp).background(p.stroke))
+        BoxWithConstraints(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.xs, vertical = AppSpacing.xxs)) {
+            // Natürliche Breiten, gleicher Textstil. Passt alles (Normalfall: höchstens fünf Einträge), verteilt sich die Leiste;
+            // bei großer Schrift scrollt sie – und bringt den aktiven Eintrag immer ganz ins Bild.
+            Row(Modifier.horizontalScroll(scroll).widthIn(min = maxWidth), horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically) {
+                for (it in items) {
+                    val sel = it.key == selected
+                    val bring = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
+                    androidx.compose.runtime.LaunchedEffect(sel) { if (sel) runCatching { bring.bringIntoView() } }
+                    val fg by animateColorAsState(if (sel) c.accent else p.textSecondary, tween(160), label = "dock")
+                    Column(Modifier.bringIntoViewRequester(bring).widthIn(min = 64.dp).heightIn(min = AppSpacing.minTouch).clip(RoundedCornerShape(14.dp))
+                        .clickable(role = Role.Tab) { onSelect(it.key) }.semantics(mergeDescendants = true) { this.selected = sel }
+                        .testTag(it.tag).padding(horizontal = AppSpacing.xs, vertical = 6.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                        Box {
+                            Icon(it.icon, null, tint = fg, modifier = Modifier.size(22.dp))
+                            if (it.badge != null) Icon(it.badge, null, tint = c.accent, modifier = Modifier.align(Alignment.TopEnd).padding(start = 14.dp).size(11.dp))
+                        }
+                        Text(it.label, style = AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Medium),
+                            color = if (sel) c.accent else p.text, maxLines = 1, softWrap = false)
+                        // Aktiv: kleiner Balken (nicht nur Farbe).
+                        Box(Modifier.size(width = 16.dp, height = 2.dp).clip(CircleShape).background(if (sel) c.accent else Color.Transparent))
                     }
-                    Text(it.label, style = AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Medium),
-                        color = if (sel) c.accent else p.text, maxLines = 1, softWrap = false)
                 }
             }
         }
+    }
+}
+
+/** Ruhige Textreiter (Unterebene, z. B. Licht/Farbe/Detail oder die Werkzeuge unter „Mehr“): aktiv = Akzenttext + Unterstrich. */
+@Composable
+fun EditorSubTabs(items: List<Triple<String, String, Boolean>>, selected: String, onSelect: (String) -> Unit, modifier: Modifier = Modifier, tagPrefix: String = "sub.") {
+    val p = LocalEditorPalette.current
+    val c = PM.colors
+    Row(modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
+        for ((key, label, dot) in items) {
+            val sel = key == selected
+            val bring = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
+            androidx.compose.runtime.LaunchedEffect(sel) { if (sel) runCatching { bring.bringIntoView() } }
+            Column(Modifier.bringIntoViewRequester(bring).heightIn(min = AppSpacing.minTouch).clip(RoundedCornerShape(10.dp)).clickable(role = Role.Tab) { onSelect(key) }
+                .semantics(mergeDescendants = true) { this.selected = sel }.testTag(tagPrefix + key).padding(horizontal = AppSpacing.s),
+                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(label, style = AppTypography.subheadline.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
+                        color = if (sel) p.text else p.textSecondary, maxLines = 1, softWrap = false)
+                    if (dot) Box(Modifier.size(5.dp).clip(CircleShape).background(c.accent))
+                }
+                Box(Modifier.padding(top = 4.dp).size(width = 20.dp, height = 2.dp).clip(CircleShape).background(if (sel) c.accent else Color.Transparent))
+            }
+        }
+    }
+}
+
+/** Ganze Breite, flach (kein Verlauf/Glanz): primär = Akzentfläche, sekundär = Akzenttext. */
+@Composable
+fun EditorWideButton(text: String, modifier: Modifier = Modifier, primary: Boolean = true, enabled: Boolean = true, onClick: () -> Unit) {
+    val c = PM.colors
+    Box(modifier.fillMaxWidth().heightIn(min = 52.dp).clip(RoundedCornerShape(14.dp))
+        .background(if (primary) (if (enabled) c.accentFill else c.accentFill.copy(alpha = 0.38f)) else Color.Transparent)
+        .clickable(enabled = enabled, role = Role.Button, onClick = onClick).padding(horizontal = AppSpacing.m, vertical = AppSpacing.xs),
+        contentAlignment = Alignment.Center) {
+        Text(text, style = AppTypography.headline, color = if (primary) Color.White else c.accent, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
     }
 }
 
@@ -322,9 +368,10 @@ fun EditorStatus(text: String, modifier: Modifier = Modifier, emphasized: Boolea
 @Composable
 fun EditorPrimaryButton(text: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit) {
     val c = PM.colors
-    Box(modifier.heightIn(min = AppSpacing.minTouch).clip(CircleShape).background(if (enabled) c.accentFill else c.accentFill.copy(alpha = 0.38f))
+    val p = LocalEditorPalette.current
+    Box(modifier.heightIn(min = AppSpacing.minTouch).clip(CircleShape).background(if (enabled) c.accentFill else p.surfaceRaised)
         .clickable(enabled = enabled, role = Role.Button, onClick = onClick).padding(horizontal = AppSpacing.m), contentAlignment = Alignment.Center) {
-        Text(text, style = AppTypography.headline, color = Color.White, maxLines = 1, softWrap = false)
+        Text(text, style = AppTypography.headline, color = if (enabled) Color.White else p.textSecondary, maxLines = 1, softWrap = false)
     }
 }
 
