@@ -72,6 +72,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import app.photomaid.R
 import app.photomaid.core.edit.EditFormat
 import app.photomaid.core.edit.SaveMode
+import app.photomaid.design.CancelButton
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
@@ -143,7 +144,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
             Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
                 // Kopfzeile: Abbrechen · Rückgängig/Wiederholen · Speichern
                 Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
-                    PlainButton(stringResource(R.string.cancel), Modifier.padding(horizontal = AppSpacing.xs).testTag("editor.cancel"), enabled = !vm.saving) {
+                    CancelButton(stringResource(R.string.cancel), Modifier.padding(horizontal = AppSpacing.xs).testTag("editor.cancel"), enabled = !vm.saving) {
                         if (vm.hasChanges) confirmDiscard = true else onClose()
                     }
                     Spacer(Modifier.weight(1f))
@@ -159,7 +160,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                 }
                 val out = vm.outputSize
                 // Zeile immer da (bei Videos leer), damit die Bühne bei Fotos und Videos gleich hoch ist.
-                Text(if (!vm.isVideo && out != null) out.label() else "\u00A0", Modifier.fillMaxWidth().then(if (!vm.isVideo && out != null) Modifier.testTag("editor.size") else Modifier),
+                Text(if (!vm.isVideo && out != null) "\u2066" + out.label() + "\u2069" else "\u00A0", Modifier.fillMaxWidth().then(if (!vm.isVideo && out != null) Modifier.testTag("editor.size") else Modifier),
                     style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
 
                 // Vorschau immer gleich groß (Nutzerwunsch Gerätetest): feste Höhe, unabhängig vom Werkzeug. Das Bedienfeld

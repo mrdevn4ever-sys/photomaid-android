@@ -114,6 +114,7 @@ import app.photomaid.core.edit.StickerLayer
 import app.photomaid.core.edit.TextAlign
 import app.photomaid.core.edit.TextLayer
 import app.photomaid.core.edit.TextStyle
+import app.photomaid.design.FitLabel
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.PM
@@ -295,7 +296,7 @@ private fun MarkupToolButton(icon: ImageVector, label: String, selected: Boolean
         Box(Modifier.size(44.dp).clip(CircleShape).background(if (selected) c.accentFill else c.backgroundTint), contentAlignment = Alignment.Center) {
             Icon(icon, null, tint = if (selected) Color.White else c.textPrimary, modifier = Modifier.size(22.dp))
         }
-        Text(label, style = AppTypography.caption, color = if (selected) c.accent else c.textSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        FitLabel(label, AppTypography.caption, if (selected) c.accent else c.textSecondary)
     }
 }
 

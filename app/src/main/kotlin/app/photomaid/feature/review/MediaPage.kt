@@ -212,6 +212,9 @@ fun MediaInfoLine(asset: MediaAsset?, modifier: Modifier = Modifier) {
     val active = asset != null && asset.kind == MediaKind.VIDEO && state.itemID == asset.id
     // Feste Höhe (64 dp) für Fotos UND Videos: die Medienfläche darüber bleibt gleich groß. Video-Bedienung (Ton, Zeitleiste)
     // liegt hier unter dem Bild – nie darüber.
+    // Video: Zeile samt Zeitleiste auch in RTL nicht gespiegelt (wie im Betrachter).
+    val dir = if (asset?.kind == MediaKind.VIDEO) androidx.compose.ui.unit.LayoutDirection.Ltr else androidx.compose.ui.platform.LocalLayoutDirection.current
+    androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides dir) {
     Row(modifier.fillMaxWidth().height(64.dp).testTag("feed.underbar"), verticalAlignment = Alignment.CenterVertically) {
         if (asset?.kind == MediaKind.VIDEO) {
             val muteLabel = stringResource(if (state.isMuted || !active) R.string.unmute else R.string.mute)
@@ -229,6 +232,7 @@ fun MediaInfoLine(asset: MediaAsset?, modifier: Modifier = Modifier) {
             Text(parts.joinToString(" · "), style = AppTypography.footnote, color = PM.colors.textSecondary, maxLines = 1,
                 overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().testTag("feed.info"))
         }
+    }
     }
 }
 

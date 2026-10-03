@@ -182,6 +182,8 @@ internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) 
             LayerPreview(vm, outMs, Modifier.fillMaxSize())
         }
     }
+    // Mediensteuerung wird auch in RTL nicht gespiegelt.
+    androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Ltr) {
     Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xxs).testTag("video.transport"),
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape).clickable(role = Role.Button, onClickLabel = playLabel) { if (player.isPlaying) player.pause() else player.play() }
@@ -193,12 +195,13 @@ internal fun VideoEditStage(vm: EditorViewModel, modifier: Modifier = Modifier) 
             .testTag("video.mute"), contentAlignment = Alignment.Center) {
             Icon(if (muted) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp, null, tint = PM.colors.textPrimary)
         }
-        Text("${clock(outMs)} / ${clock(clip.outputDurationMs)}", Modifier.weight(1f).testTag("video.time"),
+        Text("\u2066${clock(outMs)} / ${clock(clip.outputDurationMs)}\u2069", Modifier.weight(1f).testTag("video.time"),
             style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = PM.colors.textSecondary)
         // Standbild der aktuellen Stelle (Originalauflösung, wie im Ergebnis).
         Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape)
             .clickable(role = Role.Button, onClickLabel = stringResource(R.string.vid_frame)) { vm.saveFrame() }.testTag("video.frame"),
             contentAlignment = Alignment.Center) { Icon(Icons.Rounded.PhotoCamera, stringResource(R.string.vid_frame), tint = PM.colors.textPrimary) }
+    }
     }
 }
 

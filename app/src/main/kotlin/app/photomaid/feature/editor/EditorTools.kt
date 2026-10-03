@@ -114,6 +114,7 @@ import app.photomaid.design.AppIconSize
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.PM
+import app.photomaid.design.FitLabel
 import app.photomaid.design.glassCapsule
 import java.text.NumberFormat
 import kotlin.math.abs
@@ -226,7 +227,7 @@ internal fun ToolButton(icon: ImageVector, label: String, modifier: Modifier = M
         .semantics(mergeDescendants = true) {}.padding(horizontal = AppSpacing.xs, vertical = AppSpacing.xxs).heightIn(min = AppSpacing.minTouch),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Icon(icon, null, tint = c.textPrimary, modifier = iconModifier.size(AppIconSize.regular))
-        Text(label, style = AppTypography.caption, color = c.textSecondary, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
+        FitLabel(label, AppTypography.caption, c.textSecondary)
     }
 }
 
@@ -364,8 +365,8 @@ internal fun AdjustToolButton(t: AdjustTool, selected: Boolean, changed: Boolean
             Icon(t.icon, null, tint = if (selected) Color.White else c.textPrimary, modifier = Modifier.size(22.dp))
             if (changed) Box(Modifier.align(Alignment.TopEnd).padding(5.dp).size(7.dp).clip(CircleShape).background(if (selected) Color.White else c.accent))
         }
-        Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
-            color = if (selected) c.accent else c.textSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
+        FitLabel(stringResource(t.label), AppTypography.caption.copy(fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal),
+            if (selected) c.accent else c.textSecondary)
     }
 }
 
@@ -504,8 +505,8 @@ internal fun EditorTabs(tabs: List<EditorTab>, selected: EditorTab, locked: Bool
                         if (locked && t.isPro) Icon(Icons.Rounded.WorkspacePremium, stringResource(R.string.pro_badge), tint = c.accent,
                             modifier = Modifier.align(Alignment.TopEnd).offset(x = 8.dp, y = (-4).dp).size(12.dp))
                     }
-                    Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
-                        color = if (sel) c.accent else c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
+                    FitLabel(stringResource(t.label), AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
+                        if (sel) c.accent else c.textPrimary)
                 }
             }
         }

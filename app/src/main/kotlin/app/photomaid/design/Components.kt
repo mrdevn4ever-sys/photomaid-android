@@ -88,6 +88,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.material.icons.rounded.Close
 import app.photomaid.R
 
 /**
@@ -821,4 +823,24 @@ fun Modifier.readableWidth(): Modifier = widthIn(max = 720.dp)
 object GestureIcons {
     @Suppress("DEPRECATION") val Left: ImageVector = Icons.Rounded.ArrowBack
     @Suppress("DEPRECATION") val Right: ImageVector = Icons.Rounded.ArrowForward
+}
+
+/**
+ * Kurze Beschriftung unter Symbolen/Reitern: passt sich in der Größe an statt mitten im Wort umzubrechen oder abgeschnitten
+ * zu werden (wichtig bei großer Systemschrift). Zeilen = Anzahl Wörter (höchstens 2).
+ */
+@Composable
+fun FitLabel(text: String, style: TextStyle, color: Color, modifier: Modifier = Modifier) {
+    val lines = text.trim().split(Regex("\\s+")).size.coerceIn(1, 2)
+    androidx.compose.foundation.text.BasicText(text, modifier, style.merge(TextStyle(color = color, textAlign = TextAlign.Center)), maxLines = lines,
+        overflow = TextOverflow.Clip,
+        autoSize = androidx.compose.foundation.text.TextAutoSize.StepBased(minFontSize = 6.sp, maxFontSize = style.fontSize, stepSize = 0.5.sp))
+}
+
+/** „Abbrechen“ in Kopfzeilen: Text, bei großer Systemschrift (> 130 %) ein ×-Symbol mit gleicher Beschriftung für TalkBack. */
+@Composable
+fun CancelButton(text: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit) {
+    if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f)
+        GlassIconButton(androidx.compose.material.icons.Icons.Rounded.Close, text, modifier, enabled = enabled, quiet = true, onClick = onClick)
+    else PlainButton(text, modifier, enabled = enabled, onClick = onClick)
 }

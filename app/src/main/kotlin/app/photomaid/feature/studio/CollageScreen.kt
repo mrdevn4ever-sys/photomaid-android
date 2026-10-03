@@ -115,6 +115,8 @@ import app.photomaid.core.studio.BackgroundKind
 import app.photomaid.core.studio.CollageKind
 import app.photomaid.core.studio.CollageLayout
 import app.photomaid.core.studio.CollageProject
+import app.photomaid.design.FitLabel
+import app.photomaid.design.CancelButton
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
@@ -173,7 +175,7 @@ fun CollageScreen(req: CollageRequest, nav: Nav, pick: (PickRequest) -> Unit, on
     AppBackground(Modifier.testTag("collage")) {
         Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
             Row(Modifier.fillMaxWidth().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
-                PlainButton(stringResource(R.string.cancel), Modifier.padding(horizontal = AppSpacing.xs).testTag("collage.cancel"), enabled = !vm.saving) {
+                CancelButton(stringResource(R.string.cancel), Modifier.padding(horizontal = AppSpacing.xs).testTag("collage.cancel"), enabled = !vm.saving) {
                     if (vm.dirty) askDraft = true else onClose()
                 }
                 Spacer(Modifier.weight(1f))
@@ -269,8 +271,8 @@ private fun CollageTabs(tabs: List<CollageTab>, selected: CollageTab, onSelect: 
                 .clickable(role = Role.Tab) { onSelect(t) }.semantics(mergeDescendants = true) { this.selected = sel }.testTag("ctab.${t.name}").padding(vertical = 4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Icon(t.icon, null, tint = if (sel) c.accent else c.textSecondary, modifier = Modifier.size(22.dp))
-                Text(stringResource(t.label), style = AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
-                    color = if (sel) c.accent else c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                FitLabel(stringResource(t.label), AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
+                    if (sel) c.accent else c.textPrimary)
             }
         }
     }
