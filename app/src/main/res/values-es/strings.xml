@@ -927,7 +927,7 @@
     <string name="edit_clipped_info">Recortado: oscuro %1$s %% · claro %2$s %%</string>
     <string name="edit_zoom_100">Zoom al 100 %</string>
     <string name="edit_presets">Mis ajustes</string>
-    <string name="edit_preset_save">Guardar actuales</string>
+    <string name="edit_preset_save">Guardar ajuste</string>
     <string name="edit_preset_save_title">Guardar ajuste</string>
     <string name="edit_preset_save_text">Guarda solo los ajustes (controles, filtro, colores), nunca la foto.</string>
     <string name="edit_preset_name">Nombre</string>

@@ -1044,7 +1044,7 @@
     <string name="edit_clipped_info">مقطوع: داكن %1$s %% · ساطع %2$s %%</string>
     <string name="edit_zoom_100">تكبير إلى 100 %</string>
     <string name="edit_presets">إعداداتي المسبقة</string>
-    <string name="edit_preset_save">حفظ الحالي</string>
+    <string name="edit_preset_save">حفظ كقالب</string>
     <string name="edit_preset_save_title">حفظ الإعداد المسبق</string>
     <string name="edit_preset_save_text">يحفظ الإعدادات فقط (المنزلقات والفلتر والألوان) – وليس الصورة نفسها أبدًا.</string>
     <string name="edit_preset_name">الاسم</string>

@@ -888,7 +888,7 @@
     <string name="edit_clipped_info">Kırpılan: koyu %%%1$s · açık %%%2$s</string>
     <string name="edit_zoom_100">%100 yakınlaştır</string>
     <string name="edit_presets">Hazır ayarlarım</string>
-    <string name="edit_preset_save">Geçerliyi kaydet</string>
+    <string name="edit_preset_save">Ön ayarı kaydet</string>
     <string name="edit_preset_save_title">Hazır ayarı kaydet</string>
     <string name="edit_preset_save_text">Yalnızca ayarları (kaydırıcılar, filtre, renkler) kaydeder, fotoğrafı asla kaydetmez.</string>
     <string name="edit_preset_name">Ad</string>

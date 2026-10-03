@@ -927,7 +927,7 @@
     <string name="edit_clipped_info">Tagliato: scuro %1$s %% · chiaro %2$s %%</string>
     <string name="edit_zoom_100">Zoom al 100 %</string>
     <string name="edit_presets">I miei preset</string>
-    <string name="edit_preset_save">Salva attuali</string>
+    <string name="edit_preset_save">Salva preset</string>
     <string name="edit_preset_save_title">Salva preset</string>
     <string name="edit_preset_save_text">Salva solo le impostazioni (cursori, filtro, colori), mai la foto.</string>
     <string name="edit_preset_name">Nome</string>

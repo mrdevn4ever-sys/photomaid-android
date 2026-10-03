@@ -140,8 +140,10 @@ object EditorLayoutPolicy {
             val bodyH = avail - head
             val dock = if (hasDock) dock(fs) else 0.dp
             val act = if (hasActions) actions else 0.dp
-            val tool = max(0.dp, bodyH - dock - act)
-            return EditorLayout(EditorMode.SIDE, head, act, tool, dock, stageW, max(minStage, bodyH), inspector, false)
+            // Querformat: Hilfsleiste unter der Bühne (linke Spalte), rechts nur Werkzeugzone + Navigation – so bleibt die
+            // zentrale Bedienung auch in niedrigen Fenstern vollständig sichtbar. Bühne fest je Fenster, nie je Werkzeug.
+            val tool = max(0.dp, bodyH - dock)
+            return EditorLayout(EditorMode.SIDE, head, act, tool, dock, stageW, max(minStage, bodyH - act), inspector, false)
         }
         val act = if (hasActions && !keyboard) actions else 0.dp
         val dock = if (hasDock && !keyboard) dock(fs) else 0.dp
@@ -190,17 +192,19 @@ fun EditorScaffold(
             val toolBox: @Composable (Modifier) -> Unit = { m ->
                 Box(m.testTag("editor.toolzone")) {
                     Column(Modifier.fillMaxSize().then(if (toolScrolls) Modifier.verticalScroll(rememberScrollState()) else Modifier)
-                        .padding(start = AppSpacing.m, end = AppSpacing.m, top = AppSpacing.s, bottom = AppSpacing.xl),
-                        verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) { tool() }
+                        .padding(start = AppSpacing.m, end = AppSpacing.m, top = AppSpacing.xs, bottom = AppSpacing.xl),
+                        verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) { tool() }
                 }
             }
             Column(Modifier.fillMaxSize().padding(bottom = bottomInset)) {
                 Box(Modifier.fillMaxWidth().height(layout.header).testTag("editor.header"), contentAlignment = Alignment.Center) { header() }
                 if (layout.mode == EditorMode.SIDE) {
                     Row(Modifier.fillMaxSize()) {
-                        Box(Modifier.width(layout.stageWidth).fillMaxHeight().background(p.stage).testTag(stageTag), contentAlignment = Alignment.Center, content = stage)
+                        Column(Modifier.width(layout.stageWidth).fillMaxHeight()) {
+                            Box(Modifier.fillMaxWidth().height(layout.stageHeight).background(p.stage).testTag(stageTag), contentAlignment = Alignment.Center, content = stage)
+                            if (actions != null) Box(Modifier.fillMaxWidth().background(p.surface)) { EditorActionRow(Modifier.height(layout.actions), actions) }
+                        }
                         Column(Modifier.width(layout.inspectorWidth).fillMaxHeight().background(p.surface).testTag("editor.inspector")) {
-                            if (actions != null) EditorActionRow(Modifier.height(layout.actions), actions)
                             toolBox(Modifier.fillMaxWidth().height(layout.tool))
                             if (dock != null) Box(Modifier.fillMaxWidth().height(layout.dock), contentAlignment = Alignment.Center) { dock() }
                         }
@@ -330,8 +334,8 @@ fun EditorToolButton(icon: ImageVector, label: String, selected: Boolean, modifi
     val c = PM.colors
     Column(modifier.widthIn(min = 64.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.RadioButton, onClick = onClick)
         .semantics(mergeDescendants = true) { this.selected = selected; if (changed && changedLabel != null) stateDescription = changedLabel }
-        .padding(horizontal = 4.dp, vertical = 4.dp),
-        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        .padding(horizontal = 4.dp, vertical = 2.dp),
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp)) {
         Box(Modifier.size(44.dp), contentAlignment = Alignment.Center) {
             Box(Modifier.size(42.dp).clip(CircleShape).background(if (selected) c.accent.copy(alpha = 0.12f) else Color.Transparent)
                 .border(if (selected) 1.5.dp else 1.dp, if (selected) c.accent else p.stroke, CircleShape), contentAlignment = Alignment.Center) {

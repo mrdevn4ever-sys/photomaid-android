@@ -927,7 +927,7 @@
     <string name="edit_clipped_info">Écrêté : sombre %1$s %% · clair %2$s %%</string>
     <string name="edit_zoom_100">Zoomer à 100 %</string>
     <string name="edit_presets">Mes préréglages</string>
-    <string name="edit_preset_save">Enregistrer l’actuel</string>
+    <string name="edit_preset_save">Enregistrer le préréglage</string>
     <string name="edit_preset_save_title">Enregistrer le préréglage</string>
     <string name="edit_preset_save_text">Enregistre uniquement les réglages (curseurs, filtre, couleurs), jamais la photo.</string>
     <string name="edit_preset_name">Nom</string>

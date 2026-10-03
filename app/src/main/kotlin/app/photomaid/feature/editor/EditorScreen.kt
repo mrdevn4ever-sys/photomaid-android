@@ -333,7 +333,7 @@ private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> U
     var removeLocation by rememberSaveable { mutableStateOf(false) }
     val src = vm.source
     val a = vm.asset
-    EditorExportPage(stringResource(R.string.edit_save_title), onDismiss, Modifier.testTag("editor.sheet")) {
+    EditorExportPage(stringResource(R.string.save), onDismiss, Modifier.testTag("editor.sheet")) {
         // 1. Wie speichern: Kopie ist immer vorausgewählt; „Original in den Papierkorb“ nur auf ausdrückliche Wahl.
         Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(c.backgroundTint).selectableGroup()) {
             SaveOption(SaveMode.COPY, mode, stringResource(R.string.edit_save_copy), stringResource(R.string.edit_save_copy_text)) { mode = it }

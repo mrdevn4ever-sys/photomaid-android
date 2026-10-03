@@ -966,7 +966,7 @@
     <string name="edit_clipped_info">Przycięte: ciemne %1$s %% · jasne %2$s %%</string>
     <string name="edit_zoom_100">Powiększ do 100%</string>
     <string name="edit_presets">Moje ustawienia</string>
-    <string name="edit_preset_save">Zapisz bieżące</string>
+    <string name="edit_preset_save">Zapisz ustawienie</string>
     <string name="edit_preset_save_title">Zapisz ustawienie</string>
     <string name="edit_preset_save_text">Zapisuje tylko ustawienia (suwaki, filtr, kolory) – nigdy samego zdjęcia.</string>
     <string name="edit_preset_name">Nazwa</string>

@@ -189,37 +189,40 @@ internal fun EditSlider(
     val haptics = LocalHapticFeedback.current
     var last by remember { mutableStateOf(value) }
     val resetLabel = stringResource(R.string.edit_reset_value)
+    // Kompakt: Name in einer Zeile, darunter Regler + Wert in EINER 48-dp-Zeile (Wert antippen = 0). So bleibt die ganze Gruppe
+    // auch in niedrigen Werkzeugzonen (Querformat) vollständig sichtbar.
     Column(modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(label, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, modifier = Modifier.weight(1f))
-            Box(Modifier.heightIn(min = AppSpacing.minTouch).clip(CircleShape).clickable(role = Role.Button, onClickLabel = resetLabel) {
-                onChange(0f.coerceIn(range), true) }.padding(horizontal = AppSpacing.s), contentAlignment = Alignment.Center) {
-                Text(valueText, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
-                    color = if (value == 0f) c.textSecondary else c.accent, textAlign = androidx.compose.ui.text.style.TextAlign.End,
-                    modifier = Modifier.widthIn(min = 48.dp).testTag("editor.value"))
-            }
-        }
+        Text(label, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary, maxLines = 1,
+            overflow = TextOverflow.Ellipsis)
         val bipolar = range.start < 0f
         val colors = SliderDefaults.colors(thumbColor = c.accent, activeTrackColor = if (bipolar) c.textSecondary.copy(alpha = 0.25f) else c.accent,
             inactiveTrackColor = c.textSecondary.copy(alpha = 0.25f), activeTickColor = Color.Transparent, inactiveTickColor = Color.Transparent)
-        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-            // Nullpunkt-Markierung (Regler −100…+100 füllen nicht von links, sondern zeigen die Abweichung von 0).
-            if (bipolar && trackBrush == null) Box(Modifier.size(width = 2.dp, height = 14.dp).clip(CircleShape).background(c.textSecondary.copy(alpha = 0.6f)))
-            Slider(value = value, valueRange = range, modifier = Modifier.fillMaxWidth().height(AppSpacing.minTouch).testTag("editor.slider")
-                .semantics { contentDescription = label; stateDescription = valueText },
-                onValueChange = { raw ->
-                    val v = if (abs(raw) < snap && bipolar) 0f else raw
-                    if ((v == 0f) != (last == 0f) && v == 0f) haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
-                    last = v
-                    onChange(v, false)
-                },
-                onValueChangeFinished = { onChange(last, true) },
-                colors = colors,
-                thumb = { if (trackBrush != null) Box(Modifier.size(24.dp).shadow(2.dp, CircleShape).clip(CircleShape).background(Color.White)
-                    .border(2.dp, c.textPrimary.copy(alpha = 0.15f), CircleShape)) else SliderDefaults.Thumb(remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, colors = colors) },
-                track = { st ->
-                    if (trackBrush != null) Box(Modifier.fillMaxWidth().height(10.dp).clip(CircleShape).background(trackBrush))
-                    else SliderDefaults.Track(sliderState = st, colors = colors, drawStopIndicator = null, thumbTrackGapSize = 4.dp) })
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                // Nullpunkt-Markierung (Regler −100…+100 füllen nicht von links, sondern zeigen die Abweichung von 0).
+                if (bipolar && trackBrush == null) Box(Modifier.size(width = 2.dp, height = 14.dp).clip(CircleShape).background(c.textSecondary.copy(alpha = 0.6f)))
+                Slider(value = value, valueRange = range, modifier = Modifier.fillMaxWidth().height(AppSpacing.minTouch).testTag("editor.slider")
+                    .semantics { contentDescription = label; stateDescription = valueText },
+                    onValueChange = { raw ->
+                        val v = if (abs(raw) < snap && bipolar) 0f else raw
+                        if ((v == 0f) != (last == 0f) && v == 0f) haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
+                        last = v
+                        onChange(v, false)
+                    },
+                    onValueChangeFinished = { onChange(last, true) },
+                    colors = colors,
+                    thumb = { if (trackBrush != null) Box(Modifier.size(24.dp).shadow(2.dp, CircleShape).clip(CircleShape).background(Color.White)
+                        .border(2.dp, c.textPrimary.copy(alpha = 0.15f), CircleShape)) else SliderDefaults.Thumb(remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, colors = colors) },
+                    track = { st ->
+                        if (trackBrush != null) Box(Modifier.fillMaxWidth().height(10.dp).clip(CircleShape).background(trackBrush))
+                        else SliderDefaults.Track(sliderState = st, colors = colors, drawStopIndicator = null, thumbTrackGapSize = 4.dp) })
+            }
+            Box(Modifier.heightIn(min = AppSpacing.minTouch).widthIn(min = 56.dp).clip(CircleShape).clickable(role = Role.Button, onClickLabel = resetLabel) {
+                onChange(0f.coerceIn(range), true) }.padding(start = AppSpacing.xs), contentAlignment = Alignment.CenterEnd) {
+                Text(valueText, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    color = if (value == 0f) c.textSecondary else c.accent, textAlign = androidx.compose.ui.text.style.TextAlign.End,
+                    maxLines = 1, modifier = Modifier.testTag("editor.value"))
+            }
         }
     }
 }
@@ -273,7 +276,7 @@ internal fun ProHint(onPro: () -> Unit, modifier: Modifier = Modifier) {
 @Composable
 internal fun CropPanel(vm: EditorViewModel) {
     val haptics = LocalHapticFeedback.current
-    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
             Chip(stringResource(R.string.edit_crop_mode_crop), !vm.perspectiveMode, Modifier.testTag("crop.mode.crop")) { vm.perspectiveMode = false }
             Chip(stringResource(R.string.edit_crop_mode_perspective), vm.perspectiveMode, Modifier.testTag("crop.mode.persp"), dot = vm.recipe.hasPerspective) { vm.perspectiveMode = true }
@@ -289,6 +292,9 @@ internal fun CropPanel(vm: EditorViewModel) {
                 }
             }
         }
+        // Zentrales Element zuerst (vollständig sichtbar beim Öffnen); Drehen/Spiegeln folgen in der scrollenden Zone.
+        EditSlider(stringResource(R.string.edit_straighten), vm.recipe.straighten, -45f..45f, signed(vm.recipe.straighten, 1) + "°",
+            Modifier.testTag("slider.STRAIGHTEN"), snap = 0.4f) { v, commit -> vm.straighten((v * 10).roundToInt() / 10f, commit) }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             ToolButton(Icons.Rounded.Rotate90DegreesCw, stringResource(R.string.edit_rotate), Modifier.testTag("editor.rotate")) {
                 vm.rotate(); haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
@@ -301,8 +307,6 @@ internal fun CropPanel(vm: EditorViewModel) {
                 onClick = vm::toggleOrientation)
             ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset), Modifier.testTag("editor.reset"), onClick = vm::resetTab)
         }
-        EditSlider(stringResource(R.string.edit_straighten), vm.recipe.straighten, -45f..45f, signed(vm.recipe.straighten, 1) + "°",
-            snap = 0.4f) { v, commit -> vm.straighten((v * 10).roundToInt() / 10f, commit) }
     }
 }
 
@@ -389,8 +393,10 @@ internal fun FilterPanel(vm: EditorViewModel) {
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     FilterThumb(vm.filterThumbs[f] ?: vm.filterThumb, null, Modifier.size(64.dp)
                         .border(BorderStroke(if (sel) 2.dp else 0.dp, if (sel) c.accent else Color.Transparent), RoundedCornerShape(10.dp)))
+                    // Vollständige Namen: bis zu zwei Zeilen, zentriert (nie abgeschnitten).
                     Text(name, style = AppTypography.caption.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal),
-                        color = if (sel) c.accent else c.textSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 4.dp))
+                        color = if (sel) c.accent else c.textSecondary, maxLines = 2, textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        modifier = Modifier.padding(top = 4.dp))
                 }
             }
         }

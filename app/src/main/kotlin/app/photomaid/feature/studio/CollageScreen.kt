@@ -621,7 +621,7 @@ private fun ToolCircle(icon: ImageVector, label: String, tag: String, onClick: (
 @Composable
 private fun CollageSaveSheet(vm: CollageViewModel, onDismiss: () -> Unit, onPro: () -> Unit) {
     val c = PM.colors
-    EditorExportPage(stringResource(R.string.col_save_title), onDismiss, Modifier.testTag("collage.sheet")) {
+    EditorExportPage(stringResource(R.string.save), onDismiss, Modifier.testTag("collage.sheet")) {
         run {
             Text(stringResource(R.string.col_size), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {

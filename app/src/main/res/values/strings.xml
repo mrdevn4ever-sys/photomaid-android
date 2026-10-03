@@ -888,7 +888,7 @@
     <string name="edit_clipped_info">Clipped: dark %1$s %% · bright %2$s %%</string>
     <string name="edit_zoom_100">Zoom to 100 %</string>
     <string name="edit_presets">My presets</string>
-    <string name="edit_preset_save">Save current</string>
+    <string name="edit_preset_save">Save preset</string>
     <string name="edit_preset_save_title">Save preset</string>
     <string name="edit_preset_save_text">Saves only the settings (sliders, filter, colours) – never the photo itself.</string>
     <string name="edit_preset_name">Name</string>

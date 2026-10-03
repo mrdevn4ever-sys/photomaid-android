@@ -774,7 +774,7 @@
     <string name="edit_adj_sharpness">Schärfe</string>
     <string name="edit_filter_none">Original</string>
     <string name="edit_filter_mono">Schwarzweiß</string>
-    <string name="edit_filter_mono_contrast">SW kontrastreich</string>
+    <string name="edit_filter_mono_contrast">S/W-Kontrast</string>
     <string name="edit_filter_warm">Warm</string>
     <string name="edit_filter_cool">Kühl</string>
     <string name="edit_filter_sepia">Sepia</string>
@@ -888,7 +888,7 @@
     <string name="edit_clipped_info">Abgeschnitten: dunkel %1$s %% · hell %2$s %%</string>
     <string name="edit_zoom_100">Auf 100 % zoomen</string>
     <string name="edit_presets">Meine Vorlagen</string>
-    <string name="edit_preset_save">Aktuelle sichern</string>
+    <string name="edit_preset_save">Vorlage speichern</string>
     <string name="edit_preset_save_title">Vorlage sichern</string>
     <string name="edit_preset_save_text">Speichert nur die Einstellungen (Regler, Filter, Farben) – nie das Foto selbst.</string>
     <string name="edit_preset_name">Name</string>

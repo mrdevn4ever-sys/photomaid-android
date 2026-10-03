@@ -927,7 +927,7 @@
     <string name="edit_clipped_info">Tăiat: întunecat %1$s %% · luminos %2$s %%</string>
     <string name="edit_zoom_100">Mărește la 100 %</string>
     <string name="edit_presets">Presetările mele</string>
-    <string name="edit_preset_save">Salvează actualele</string>
+    <string name="edit_preset_save">Salvează presetarea</string>
     <string name="edit_preset_save_title">Salvează presetarea</string>
     <string name="edit_preset_save_text">Salvează doar setările (glisoare, filtru, culori) – niciodată fotografia.</string>
     <string name="edit_preset_name">Nume</string>

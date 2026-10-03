@@ -36,7 +36,9 @@ class EditorLayoutPolicyTest {
         assertEquals(EditorMode.SIDE, l.mode)
         assertTrue(l.inspectorWidth >= 340.dp)
         assertEquals(852.dp, l.stageWidth + l.inspectorWidth)
-        assertEquals(393.dp - l.header, l.stageHeight)
+        // Hilfsleiste unter der Bühne (links), rechts Werkzeugzone + Navigation über die ganze Höhe.
+        assertEquals(393.dp - l.header - l.actions, l.stageHeight)
+        assertEquals(393.dp - l.header, l.tool + l.dock)
         // Ein normales Hochformat-Fenster bleibt gestapelt.
         assertEquals(EditorMode.STACKED, EditorLayoutPolicy.compute(600.dp, 960.dp, 1f).mode)
     }

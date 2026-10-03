@@ -849,7 +849,7 @@
     <string name="edit_clipped_info">잘림: 어두움 %1$s %% · 밝음 %2$s %%</string>
     <string name="edit_zoom_100">100%로 확대</string>
     <string name="edit_presets">내 프리셋</string>
-    <string name="edit_preset_save">현재 설정 저장</string>
+    <string name="edit_preset_save">프리셋 저장</string>
     <string name="edit_preset_save_title">프리셋 저장</string>
     <string name="edit_preset_save_text">설정(슬라이더, 필터, 색상)만 저장하고 사진은 저장하지 않아요.</string>
     <string name="edit_preset_name">이름</string>

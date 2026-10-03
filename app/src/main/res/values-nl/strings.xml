@@ -888,7 +888,7 @@
     <string name="edit_clipped_info">Afgekapt: donker %1$s %% · licht %2$s %%</string>
     <string name="edit_zoom_100">Inzoomen tot 100 %</string>
     <string name="edit_presets">Mijn voorinstellingen</string>
-    <string name="edit_preset_save">Huidige opslaan</string>
+    <string name="edit_preset_save">Voorinstelling opslaan</string>
     <string name="edit_preset_save_title">Voorinstelling opslaan</string>
     <string name="edit_preset_save_text">Slaat alleen de instellingen op (schuifjes, filter, kleuren) – nooit de foto zelf.</string>
     <string name="edit_preset_name">Naam</string>

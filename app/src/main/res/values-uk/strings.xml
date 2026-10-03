@@ -966,7 +966,7 @@
     <string name="edit_clipped_info">Втрачено: тіні %1$s %% · світло %2$s %%</string>
     <string name="edit_zoom_100">Масштаб 100 %</string>
     <string name="edit_presets">Мої пресети</string>
-    <string name="edit_preset_save">Зберегти поточні</string>
+    <string name="edit_preset_save">Зберегти пресет</string>
     <string name="edit_preset_save_title">Зберегти пресет</string>
     <string name="edit_preset_save_text">Зберігаються лише налаштування (повзунки, фільтр, кольори) — не саме фото.</string>
     <string name="edit_preset_name">Назва</string>

@@ -849,7 +849,7 @@
     <string name="edit_clipped_info">黒つぶれ %1$s %%・白飛び %2$s %%</string>
     <string name="edit_zoom_100">100%に拡大</string>
     <string name="edit_presets">マイプリセット</string>
-    <string name="edit_preset_save">現在の設定を保存</string>
+    <string name="edit_preset_save">プリセットを保存</string>
     <string name="edit_preset_save_title">プリセットを保存</string>
     <string name="edit_preset_save_text">設定（スライダー、フィルタ、色）だけを保存し、写真自体は保存しません。</string>
     <string name="edit_preset_name">名前</string>
