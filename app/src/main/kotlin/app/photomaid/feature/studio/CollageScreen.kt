@@ -1,5 +1,6 @@
 package app.photomaid.feature.studio
 
+import app.photomaid.design.EditorWideButton
 import app.photomaid.design.EditorSubTabs
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material.icons.rounded.MoreHoriz
@@ -640,11 +641,11 @@ private fun CollageSaveSheet(vm: CollageViewModel, onDismiss: () -> Unit, onPro:
                     verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                     Text(stringResource(R.string.edit_pro_title), style = AppTypography.headline, color = c.textPrimary)
                     Text(stringResource(R.string.col_pro_text), style = AppTypography.subheadline, color = c.textSecondary)
-                    ProminentButton(stringResource(R.string.edit_pro_unlock), Modifier.testTag("collage.sheet.unlock"), fillWidth = true, onClick = onPro)
+                    EditorWideButton(stringResource(R.string.edit_pro_unlock), Modifier.testTag("collage.sheet.unlock"), onClick = onPro)
                 }
             } else {
-                ProminentButton(stringResource(R.string.col_save_action), Modifier.testTag("collage.sheet.save"), fillWidth = true, large = true) { onDismiss(); vm.save() }
-                GlassButton(stringResource(R.string.edit_share_only), Modifier.testTag("collage.sheet.share"), fillWidth = true) { onDismiss(); vm.share() }
+                EditorWideButton(stringResource(R.string.col_save_action), Modifier.testTag("collage.sheet.save")) { onDismiss(); vm.save() }
+                EditorWideButton(stringResource(R.string.edit_share_only), Modifier.testTag("collage.sheet.share"), primary = false) { onDismiss(); vm.share() }
                 Text(stringResource(R.string.col_save_where), style = AppTypography.footnote, color = c.textSecondary)
             }
         }

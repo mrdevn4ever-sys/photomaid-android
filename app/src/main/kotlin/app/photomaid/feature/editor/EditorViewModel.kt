@@ -185,7 +185,12 @@ class EditorViewModel(private val app: AppModel, val assetId: String) : ViewMode
                 if (thumb != null) filterThumbs = withContext(Dispatchers.Default) {
                     FilterId.entries.associateWith { f -> thumb.copy(Bitmap.Config.ARGB_8888, true).also { app.editEngine.applyPixels(it, EditRecipe(filter = f)) } }
                 }
-                thumbnails = withContext(Dispatchers.IO) { videoFrames(a) }
+                // Filmstreifen: schnell über MediaMetadataRetriever; liefert der nichts, dieselbe Bildquelle wie der Export.
+                thumbnails = withContext(Dispatchers.IO) { videoFrames(a) }.ifEmpty {
+                    (0 until 8).mapNotNull { i -> app.videoExporter.frame(a.uri, dur * i / 8, 160) }
+                }
+                // Standbild als Untergrund der Bühne, bis der Player das erste Bild zeigt (kein schwarzes Feld beim Öffnen).
+                if (videoPoster == null) loadPoster()
             } else {
                 source = runCatching { app.editEngine.loadPreview(a.uri, a.mimeType) }.getOrElse { loadFailed = true; return@launch }
                 proxy = withContext(Dispatchers.Default) { source?.preview?.let { scaleDown(it, 720) } }

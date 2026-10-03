@@ -1,5 +1,10 @@
 package app.photomaid.feature.editor
 
+import app.photomaid.design.LocalEditorPalette
+import app.photomaid.design.EditorWideButton
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.selection.selectable
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -249,7 +254,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
 
     var pickFolder by remember { mutableStateOf(false) }
     var folders by remember { mutableStateOf<List<MediaFolder>?>(null) }
-    if (showSave) EditorTheme { SaveSheet(vm, initial = settings.editSaveMode, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() },
+    if (showSave) EditorTheme { SaveSheet(vm, initial = SaveMode.COPY, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() },
         onFolder = {
             pickFolder = true
             scope.launch { folders = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { app.allPhotos.folders() } }
@@ -329,14 +334,19 @@ private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> U
     val src = vm.source
     val a = vm.asset
     EditorExportPage(stringResource(R.string.edit_save_title), onDismiss, Modifier.testTag("editor.sheet")) {
-        run {
+        // 1. Wie speichern: Kopie ist immer vorausgewählt; „Original in den Papierkorb“ nur auf ausdrückliche Wahl.
+        Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(c.backgroundTint).selectableGroup()) {
             SaveOption(SaveMode.COPY, mode, stringResource(R.string.edit_save_copy), stringResource(R.string.edit_save_copy_text)) { mode = it }
+            Box(Modifier.fillMaxWidth().padding(start = 52.dp).height(1.dp).background(LocalEditorPalette.current.stroke))
             SaveOption(SaveMode.REPLACE, mode, stringResource(R.string.edit_save_replace), stringResource(R.string.edit_save_replace_text)) { mode = it }
+        }
+        // 2. Ablage und Standort.
+        if (!vm.isVideo) Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(c.backgroundTint)) {
+            val current = vm.targetFolder ?: a?.relativePath
             // Ablage der Kopie: wie das Original oder direkt in einen anderen Ordner (keine Entscheidung im Feed).
-            if (mode == SaveMode.COPY && !vm.isVideo) {
-                val current = vm.targetFolder ?: a?.relativePath
-                Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button, onClick = onFolder)
-                    .padding(horizontal = AppSpacing.xs).testTag("editor.folder"), verticalAlignment = Alignment.CenterVertically) {
+            if (mode == SaveMode.COPY) {
+                Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).clickable(role = Role.Button, onClick = onFolder)
+                    .padding(horizontal = AppSpacing.s).testTag("editor.folder"), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text(stringResource(R.string.edit_save_folder), style = AppTypography.body, color = c.textPrimary)
                         Text(current?.let { MediaFolder(it, 0).name } ?: stringResource(R.string.edit_save_folder_default),
@@ -344,65 +354,67 @@ private fun SaveSheet(vm: EditorViewModel, initial: SaveMode, onDismiss: () -> U
                     }
                     Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary)
                 }
+                Box(Modifier.fillMaxWidth().padding(start = AppSpacing.s).height(1.dp).background(LocalEditorPalette.current.stroke))
             }
-            if (!vm.isVideo) {
-                Row(Modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).clip(RoundedCornerShape(12.dp))
-                    .clickable(role = Role.Switch) { removeLocation = !removeLocation }.padding(horizontal = AppSpacing.xs).testTag("editor.location"),
-                    verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.edit_remove_location), style = AppTypography.body, color = c.textPrimary)
-                        Text(stringResource(R.string.edit_remove_location_text), style = AppTypography.footnote, color = c.textSecondary)
-                    }
-                    Switch(removeLocation, null)
+            Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).toggleable(removeLocation, role = Role.Switch) { removeLocation = it }
+                .padding(horizontal = AppSpacing.s).testTag("editor.location"), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.edit_remove_location), style = AppTypography.body, color = c.textPrimary)
+                    Text(stringResource(R.string.edit_remove_location_text), style = AppTypography.footnote, color = c.textSecondary)
                 }
+                Switch(removeLocation, null)
             }
-            // Ehrliche Hinweise (nur wenn zutreffend).
-            val mime = src?.mime ?: a?.mimeType
-            if (!vm.isVideo && (mime?.contains("heic", true) == true || mime?.contains("heif", true) == true) && EditFormat.forSource(mime) == EditFormat.JPEG)
-                Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_heic))
-            if (!vm.isVideo && src?.hasGainmap == true && (vm.recipe.hasPixelOps || vm.recipe.hasSharpen))
-                Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_hdr))
-            if (!vm.isVideo && vm.recipe.isOrientationOnly && EditFormat.forSource(mime) == EditFormat.JPEG)
-                Hint(Icons.Rounded.CheckCircle, stringResource(R.string.edit_hint_lossless))
-            if (mode == SaveMode.REPLACE) Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_replace_confirm))
-            if (vm.isVideo) VideoProfileRow(vm)
+        }
+        // Ehrliche Hinweise (nur wenn zutreffend).
+        val mime = src?.mime ?: a?.mimeType
+        if (!vm.isVideo && (mime?.contains("heic", true) == true || mime?.contains("heif", true) == true) && EditFormat.forSource(mime) == EditFormat.JPEG)
+            Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_heic))
+        if (!vm.isVideo && src?.hasGainmap == true && (vm.recipe.hasPixelOps || vm.recipe.hasSharpen))
+            Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_hdr))
+        if (!vm.isVideo && vm.recipe.isOrientationOnly && EditFormat.forSource(mime) == EditFormat.JPEG)
+            Hint(Icons.Rounded.CheckCircle, stringResource(R.string.edit_hint_lossless))
+        if (mode == SaveMode.REPLACE) Hint(Icons.Rounded.Info, stringResource(R.string.edit_hint_replace_confirm))
+        if (vm.isVideo) VideoProfileRow(vm)
 
-            if (vm.needsPro) {
-                Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(c.accent.copy(alpha = 0.10f)).padding(AppSpacing.m)
-                    .testTag("editor.sheet.pro"), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                        Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent)
-                        Text(stringResource(R.string.edit_pro_title), style = AppTypography.headline, color = c.textPrimary)
-                    }
-                    Text(stringResource(R.string.edit_pro_text), style = AppTypography.subheadline, color = c.textSecondary)
-                    ProminentButton(stringResource(R.string.edit_pro_unlock), Modifier.testTag("editor.sheet.unlock"), fillWidth = true, onClick = onPro)
-                    if (!vm.isVideo && vm.recipe.hasGeometry) GlassButton(stringResource(R.string.edit_save_geometry_only), Modifier.testTag("editor.sheet.geometry"),
-                        fillWidth = true) { vm.dropProTools(); onSave(mode, removeLocation) }
+        // 3. Aktion passend zur Wahl; „Nur teilen“ untergeordnet.
+        if (vm.needsPro) {
+            Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(c.backgroundTint).padding(AppSpacing.m)
+                .testTag("editor.sheet.pro"), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent)
+                    Text(stringResource(R.string.edit_pro_title), style = AppTypography.headline, color = c.textPrimary)
                 }
-            } else {
-                ProminentButton(stringResource(if (mode == SaveMode.COPY) R.string.edit_save_copy_action else R.string.edit_save_replace_action),
-                    Modifier.testTag("editor.sheet.save"), fillWidth = true, large = true) { onSave(mode, removeLocation) }
-                // Nur teilen: Export in den Cache, keine Galeriekopie (Standort standardmäßig entfernt).
-                if (!vm.isVideo) GlassButton(stringResource(R.string.edit_share_only), Modifier.testTag("editor.sheet.share"), fillWidth = true) { onShare() }
-                if (!vm.isVideo) Text(stringResource(R.string.edit_share_only_text), style = AppTypography.footnote, color = c.textSecondary)
+                Text(stringResource(R.string.edit_pro_text), style = AppTypography.subheadline, color = c.textSecondary)
+            }
+            EditorWideButton(stringResource(R.string.edit_pro_unlock), Modifier.testTag("editor.sheet.unlock"), onClick = onPro)
+            if (!vm.isVideo && vm.recipe.hasGeometry) EditorWideButton(stringResource(R.string.edit_save_geometry_only), Modifier.testTag("editor.sheet.geometry"),
+                primary = false) { vm.dropProTools(); onSave(mode, removeLocation) }
+        } else {
+            EditorWideButton(stringResource(if (mode == SaveMode.COPY) R.string.edit_save_copy_action else R.string.edit_save_replace_action),
+                Modifier.testTag("editor.sheet.save")) { onSave(mode, removeLocation) }
+            // Nur teilen: Export in den Cache, keine Galeriekopie (Standort standardmäßig entfernt).
+            if (!vm.isVideo) {
+                EditorWideButton(stringResource(R.string.edit_share_only), Modifier.testTag("editor.sheet.share"), primary = false) { onShare() }
+                Text(stringResource(R.string.edit_share_only_text), style = AppTypography.footnote, color = c.textSecondary,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.fillMaxWidth())
             }
         }
     }
 }
 
+/** Kompakte Auswahlzeile (Radio): Titel + eine Zeile Erklärung; Auswahl über Symbol, Schrift und Semantik. */
 @Composable
 private fun SaveOption(value: SaveMode, selected: SaveMode, title: String, text: String, onSelect: (SaveMode) -> Unit) {
     val c = PM.colors
     val sel = value == selected
-    val shape = RoundedCornerShape(16.dp)
-    Row(Modifier.fillMaxWidth().clip(shape).background(if (sel) c.accent.copy(alpha = 0.10f) else c.backgroundTint)
-        .border(if (sel) 2.dp else 0.dp, if (sel) c.accent else Color.Transparent, shape)
-        .clickable(role = Role.RadioButton) { onSelect(value) }.semantics(mergeDescendants = true) { this.selected = sel }
-        .padding(AppSpacing.m).testTag("editor.mode.${value.name}"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        Icon(if (sel) Icons.Rounded.CheckCircle else Icons.Rounded.RadioButtonUnchecked, null, tint = if (sel) c.accent else c.textSecondary)
+    Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).selectable(sel, role = Role.RadioButton) { onSelect(value) }
+        .padding(horizontal = AppSpacing.s, vertical = AppSpacing.xs).testTag("editor.mode.${value.name}"),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+        Icon(if (sel) Icons.Rounded.CheckCircle else Icons.Rounded.RadioButtonUnchecked, null, tint = if (sel) c.accent else c.textSecondary,
+            modifier = Modifier.size(24.dp))
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(title, style = AppTypography.headline, color = c.textPrimary)
-            Text(text, style = AppTypography.subheadline, color = c.textSecondary)
+            Text(title, style = AppTypography.body.copy(fontWeight = if (sel) FontWeight.SemiBold else FontWeight.Normal), color = c.textPrimary)
+            Text(text, style = AppTypography.footnote, color = c.textSecondary)
         }
     }
 }

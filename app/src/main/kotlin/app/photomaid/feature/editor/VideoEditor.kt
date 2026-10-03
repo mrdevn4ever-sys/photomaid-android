@@ -1,5 +1,12 @@
 package app.photomaid.feature.editor
 
+import androidx.compose.ui.semantics.expand
+import androidx.compose.ui.semantics.collapse
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material.icons.rounded.ExpandLess
+import androidx.compose.material.icons.rounded.Info
 import android.graphics.Bitmap
 import androidx.annotation.OptIn
 import androidx.compose.foundation.Canvas
@@ -115,6 +122,8 @@ internal class VideoPreview(val player: ExoPlayer) {
     /** Nur die Vorschau ist stumm – das ändert nichts an der Tonspur der Datei (dafür: Ton › „Ton entfernen“). */
     var muted by mutableStateOf(true)
     var outMs by mutableLongStateOf(0L)
+    /** Der Player hat ein Bild gezeigt – bis dahin liegt das Standbild als Untergrund auf der Bühne. */
+    var firstFrame by mutableStateOf(false)
     fun toggle() { if (player.isPlaying) player.pause() else player.play() }
 }
 
@@ -131,7 +140,10 @@ internal fun rememberVideoPreview(vm: EditorViewModel): VideoPreview? {
     val player = pv.player
     DisposableEffect(Unit) {
         app.player.stop()
-        val l = object : Player.Listener { override fun onIsPlayingChanged(isPlaying: Boolean) { pv.playing = isPlaying } }
+        val l = object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) { pv.playing = isPlaying }
+            override fun onRenderedFirstFrame() { pv.firstFrame = true }
+        }
         player.addListener(l)
         onDispose { player.removeListener(l); player.release() }
     }
@@ -194,6 +206,11 @@ internal fun VideoEditStage(vm: EditorViewModel, pv: VideoPreview, modifier: Mod
             .clickable(role = Role.Button, onClickLabel = playLabel) { pv.toggle() }
             .testTag("editor.video")) {
             FitVideo(pv.player, Modifier.fillMaxSize(), surfaceType = SURFACE_TYPE_TEXTURE_VIEW)
+            val poster = vm.videoPoster
+            if (!pv.firstFrame && poster != null) {
+                val img = remember(poster) { poster.asImageBitmap() }
+                Image(img, null, Modifier.fillMaxSize().testTag("editor.video.poster"), contentScale = ContentScale.Fit)
+            }
             LayerPreview(vm, pv.outMs, Modifier.fillMaxSize())
         }
     }
@@ -376,9 +393,20 @@ internal fun TrimPanel(vm: EditorViewModel) {
                         contentDescription = "${clock(cut.startMs)}–${clock(cut.endMs)}"; stateDescription = "" }, icon = Icons.Rounded.Close) { vm.removeCut(i) }
                 }
             }
+            // Kurzer Bedienhinweis; die Technik (wie gespeichert wird) nur auf Wunsch – passend zum tatsächlichen Exportweg.
+            Text(if (clip.cuts.isNotEmpty()) stringResource(R.string.vid_cut_hint_restore, clock(total)) else stringResource(R.string.vid_trim_hint_short),
+                style = AppTypography.footnote, color = c.textSecondary, modifier = Modifier.testTag("trim.hint"))
             val trimOnly = vm.videoProject()?.let { EditSaver.isTrimOnly(it) } == true
-            Text(stringResource(when { clip.cuts.isNotEmpty() -> R.string.vid_cut_hint_restore; trimOnly -> R.string.edit_trim_hint; else -> R.string.vid_trim_hint_reencode }, clock(total)),
-                style = AppTypography.footnote, color = c.textSecondary)
+            var info by rememberSaveable { mutableStateOf(false) }
+            Row(Modifier.heightIn(min = AppSpacing.minTouch).clip(RoundedCornerShape(10.dp)).clickable(role = Role.Button) { info = !info }
+                .semantics { if (info) collapse { info = false; true } else expand { info = true; true } }.testTag("trim.info.toggle").padding(horizontal = AppSpacing.xxs),
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Icon(Icons.Rounded.Info, null, tint = c.textSecondary, modifier = Modifier.size(16.dp))
+                Text(stringResource(R.string.vid_export_info), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+                Icon(if (info) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore, null, tint = c.textSecondary, modifier = Modifier.size(18.dp))
+            }
+            if (info) Text(stringResource(if (trimOnly) R.string.vid_export_info_fast else R.string.vid_export_info_reencode, clock(clip.outputDurationMs)),
+                style = AppTypography.footnote, color = c.textSecondary, modifier = Modifier.testTag("trim.info"))
         } else {
             Text(stringResource(R.string.vid_cut_draft, clock(draft.startMs), clock(draft.endMs)), style = AppTypography.subheadline, color = c.textPrimary,
                 modifier = Modifier.testTag("cut.draft"))

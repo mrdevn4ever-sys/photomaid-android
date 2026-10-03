@@ -235,14 +235,18 @@ class EditorTest {
         assertEquals(SaveMode.COPY, app.settings.value.editSaveMode)
     }
 
-    @Test fun replaceModeIsRememberedForNextTime() {
+    @Test fun replaceModeIsExplicitAndNeverPreselected() {
         start()
+        // Selbst wenn zuletzt „Original in den Papierkorb“ gewählt war: Vorauswahl ist immer die Kopie (Redesign 2026-10).
+        kotlinx.coroutines.runBlocking { app.updateSettings { it.copy(editSaveMode = SaveMode.REPLACE) } }
         var closed = false
         openEditor(closed = { closed = true })
         click("editor.flipH")
         click("editor.save")
         waitTag("editor.sheet")
+        rule.onNodeWithTag("editor.mode.COPY").assertIsSelected()
         click("editor.mode.REPLACE")
+        rule.onNodeWithTag("editor.mode.REPLACE").assertIsSelected()
         rule.onNode(hasText("Android fragt einmal nach, ob das Original in den Android-Papierkorb darf.")).assertExists()
         rule.onNodeWithTag("editor.sheet.save").performSemanticsAction(SemanticsActions.OnClick)
         pumpUntil { closed }

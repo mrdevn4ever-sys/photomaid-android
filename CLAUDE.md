@@ -72,9 +72,9 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Entwürfe; Pro/30-Minuten-Test: bis 20 Fotos, Frei, A4-Druck, 50 Entwürfe – ausprobieren immer frei, kein Wasserzeichen.
   Medienauswahl (`MediaPickerScreen`) ist nie eine Entscheidung. Neue String-Kennungen vorher auf Kollision prüfen.
 - Editor (2026-10, `feature/editor/`, Kern `core/.../edit/`): nicht destruktives Rezept (`EditRecipe`), Vorschau = Export
-  (gleiche Geometrie/Farbmatrix). Speichern nur als neue Datei: „Original behalten“ (Kopie) oder „Original ersetzen“
-  (Original per `createTrashRequest` in den Android-Papierkorb, wiederherstellbar in „Bearbeitet“) – nie überschreiben.
-  Gespeicherte Fassung = „Behalten“; Ersetzen zählt nicht zum Tageslimit. Vorauswahl = zuletzt gewählt (`editSaveMode`).
+  (gleiche Geometrie/Farbmatrix). Speichern nur als neue Datei: „Als Kopie speichern“ oder „Kopie speichern und Original in den Papierkorb“
+  (`SaveMode.REPLACE`, Original per `createTrashRequest` in den Android-Papierkorb, wiederherstellbar in „Bearbeitet“) – nie überschreiben.
+  Gespeicherte Fassung = „Behalten“; Ersetzen zählt nicht zum Tageslimit. Vorauswahl immer „Als Kopie speichern“; „Kopie speichern und Original in den Papierkorb“ nur auf ausdrückliche Wahl (Redesign 2026-10).
   Free: Zuschneiden/Drehen/Spiegeln/Begradigen; Regler, Filter, Größe, Video kürzen speichern nur mit `hasProToolsAccess`
   (Vorschau frei). Nie hochskalieren, keine Größenschätzung vor dem Speichern, keine Werbung im Editor.
   P4: Perspektive (`EditRecipe.perspective`, vier Ecken → `Homography`, kostenlos wie Zuschneiden) und Rote Augen
