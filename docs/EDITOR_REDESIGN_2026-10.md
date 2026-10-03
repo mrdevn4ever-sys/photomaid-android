@@ -13,7 +13,10 @@ Status immer PASS / FAIL / NOT RUN / BLOCKED. JVM-Screenshots und Robolectric-Te
 | `EditorScaffold` | `design/EditorChrome.kt` | Gemeinsames Gerüst (Insets, Bühne ohne Rundung/Schatten, Hilfsleiste, scrollende Werkzeugzone mit fester Höhe, Navigation). |
 | `EditorTopBar`, `EditorPrimaryButton`, `CancelButton` | `design/` | Abbrechen links, optionaler Titel (weicht zuerst), Speichern rechts (eine Zeile). |
 | `EditorActionButton`, `EditorHoldButton`, `EditorStatus` | `design/EditorChrome.kt` | Hilfsleiste außerhalb der Bühne: 22-dp-Symbole, 48×48-dp-Ziele, Zustand über Fläche + Semantik (nicht nur Farbe); Halten = Vergleich, TalkBack: Antippen schaltet um. Zeile scrollt bei großer Schrift statt abzuschneiden. |
-| `EditorDock` | `design/EditorChrome.kt` | Werkzeugnavigation: deckende Fläche mit feinem Rand (kein Blur), Symbol + Beschriftung in einheitlichem Stil; passt es nicht, scrollt die Leiste. |
+| `EditorDock` | `design/EditorChrome.kt` | Werkzeugnavigation: vier Hauptwerkzeuge + „Mehr“ (Runde 2), feine Trennlinie oben, aktiver Eintrag mit Akzent + Balken. Bei normaler Schrift passt alles; bei großer Schrift scrollt die Leiste und holt den aktiven Eintrag automatisch ins Bild. Nie kleinere Schrift je Eintrag, keine zweite Reihe. |
+| `EditorSubTabs` | `design/EditorChrome.kt` | Ruhige Textreiter (Runde 2): Gruppen in Anpassen (Licht · Farbe · Farbmischer · Detail · Effekte) und die Werkzeuge unter „Mehr“; aktiv = Text kräftig + Akzentstrich, Punkt = geändert. |
+| `EditorToolButton` | `design/EditorChrome.kt` | Ein Stil für alle Einzelwerkzeuge (Anpassen, Markieren): feiner Ring, aktiv = Akzentring/-symbol/-beschriftung, Punkt = geändert (TalkBack: „geändert“). Ersetzt die großen gefüllten blauen Kreise. |
+| `EditorWideButton` | `design/EditorChrome.kt` | Flache Haupt-/Nebentaste ohne Verlauf/Glanz (Speichern, Collage speichern, Pro freischalten, Nur teilen). |
 | `EditorExportPage` | `design/EditorChrome.kt` | Speichern als eigener Schritt (ganze Ansicht statt Blatt über dem Bild). |
 | `VideoPreview` / `rememberVideoPreview` / `VideoTransport` | `feature/editor/VideoEditor.kt` | Ein Player je Editor (bleibt über Werkzeugwechsel inkl. Markieren erhalten); Play/Zeit/Vorschau-stumm/Standbild in der Hilfsleiste. |
 
@@ -37,6 +40,19 @@ Entfernt: `FitLabel` (Schriftverkleinerung je Beschriftung), `EditorTabs`, `Coll
 
 Keine Funktion entfernt oder versteckt; keine neue Funktion, keine Änderung an Engine, Export, Codec, HDR, Monetarisierung.
 
+## 2b. Runde 2 (Rückmeldung 03.10.2026)
+
+| Punkt | Umsetzung | Nachweis |
+|---|---|---|
+| 1 Navigation vollständig | Foto: Zuschnitt · Anpassen · Filter · Markieren · Mehr (Retusche, Rahmen, Größe). Video: Kürzen · Anpassen · Filter · Markieren · Mehr (Tempo, Ton, Format). Collage-Raster: Layout · Format · Hintergrund · Foto · Mehr (Abstand, Markieren). „Mehr“ öffnet das zuletzt genutzte Werkzeug der Gruppe; Unterreiter oben in der Werkzeugzone. Neue Texte `dock_crop` („Zuschnitt“), `dock_more` (16 Sprachen). | `runde2_light_a.png`, `runde2_font.png` (150/200 % scrollt, aktiver Eintrag sichtbar) |
+| 2 Anpassen ruhiger | Gruppen als Textreiter, Einzelkorrekturen als einheitliche Ring-Symbole, Name + Wert am Regler (Wert mit fester Breite, Tabellenziffern) | `runde2_light_a.png`, `runde2_dark_a.png` |
+| 3 Trennung | Bühne fest → Werkzeugzone scrollt eigenständig (Abstand unten `xl`, etwas höher: 31 % statt 26 % der freien Höhe, 140–260 dp) → feste Navigation mit Trennlinie. Bühnenhöhe weiter unabhängig vom Werkzeug. | `StageConsistencyTest`, `EditorLayoutPolicyTest` |
+| 4 Video sichtbar | Standbild (gleiche Pipeline wie Export) liegt auf der Bühne, bis der Player das erste Bild zeigt; Filmstreifen fällt auf dieselbe Bildquelle zurück, wenn `MediaMetadataRetriever` nichts liefert. Kürzen-Hinweis: „Ziehe die Griffe, um Anfang und Ende festzulegen.“ Technik hinter „Exportinfo“ (aufklappbar): nur Anfang/Ende → „versucht, nur bis zum nächsten Schlüsselbild neu zu kodieren, sonst ganzes Video“ (Media3 `experimentalSetTrimOptimizationEnabled` kann auf volle Neukodierung zurückfallen); sonst „ganzes Video wird neu kodiert“ – gleiche Bedingung wie der Exportweg (`EditSaver.isTrimOnly`). | `runde2_light_b.png`, `runde2_dark_a.png`, `vorher_nachher_*_video_trim.png` |
+| 5 Speichern kompakt | Zwei Radiozeilen in einer Gruppe: „Als Kopie speichern – Original bleibt unverändert.“ (immer vorausgewählt) und „Kopie speichern und Original in den Papierkorb“ (nur ausdrücklich). Ordner/Standort darunter, Haupttaste passend zur Wahl („Kopie speichern“ / „Speichern, Original in den Papierkorb“), „Nur teilen“ als Nebentaste. „Original ersetzen“ umbenannt (es entsteht immer eine neue Datei). „30 Tage“ entfernt: die Frist legt Android fest (`MediaStore.DATE_EXPIRES`), der Text sagt jetzt „solange Android es aufbewahrt“. | `EditorTest.replaceModeIsExplicitAndNeverPreselected`, `vorher_nachher_*_export.png` |
+| 6 Stile | Auswahl überall gleich (zarte Akzentfläche + Akzentrand + Akzenttext), Werkzeuge im Ringstil, Haupttasten flach. Zustände: aktiv (Akzent), deaktiviert (neutrale Fläche + Nebentext), Export läuft (Speichern deaktiviert, Fortschrittsansicht mit Abbrechen). | alle Aufnahmen |
+
+Unverändert beibehalten: feste Bühne, Werkzeuge außerhalb des Bildes, gemeinsames Gerüst, Letterbox-Fläche.
+
 ## 3. Geschützte Regeln
 
 - **A – feste Bühne:** `EditorLayoutPolicy` hängt nur von Fenster, Schrift, Tastatur ab. Gemessen: Foto-Editor, Video-Editor, Collage und Film haben dieselbe Bühne (`allEditorsShareOneStageGeometry`); die Bühne springt in keinem Bild eines Werkzeugwechsels (`stageNeverJumpsDuringToolSwitches`, 8 Wechsel × 24 Bilder); Tastatur öffnet/schließt → exakt zurück.
@@ -57,7 +73,8 @@ Untersucht: In `ReviewFeedScreen` folgt die Infozeile unmittelbar auf die Medien
 Reproduzierbar mit `./gradlew :app:recordRoborazziDebug --tests '*EditorShotsTest*'` (Robolectric, Testbilder `landscape_sunset` 1200×900 als 4032×3024 gemeldet, `portrait_lake`, `video_coast`; Fenster 393×852 dp, 360×800 dp dunkel, Schrift 150/200 %, Arabisch, 852×393 dp Querformat).
 Vorher = Stand `b27fbf4`, Nachher = Stand dieses Berichts; Kontaktbögen in `docs/screenshots/editor-redesign/`.
 Tastaturfall: Robolectric zeigt keine echte Tastatur – die Aufnahme simuliert 300 dp (Querformat 200 dp) belegte Fläche über `LocalEditorImeOverride`; ein Vorher-Bild des Tastaturfalls gibt es nicht (vorher lag der Text-Editor in einem Blatt).
-Videos zeigen in Robolectric kein Bild (schwarze Fläche) – echte Wiedergabe nur auf dem Gerät.
+Runde 2: Videos zeigen jetzt auch in Robolectric ein Bild (Standbild-Untergrund + Filmstreifen aus der Export-Bildquelle); bewegte Wiedergabe nur auf dem Gerät.
+Runde-2-Kontaktbögen: `runde2_light_*.png`, `runde2_dark_*.png`, `runde2_font.png`, `runde2_land.png`; Vorher/Nachher: `vorher_nachher_{light393,dark360}_{photo_adjust,video_trim,export}.png`.
 
 ## 7. Offen (Gerät)
 
