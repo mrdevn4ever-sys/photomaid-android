@@ -149,7 +149,11 @@ object EditorLayoutPolicy {
         if (keyboard) tool = min(tool, 168.dp + 40.dp * (fs - 1f))
         var stage = bodyH - tool
         if (stage < minStage) { tool = max(96.dp, bodyH - minStage); stage = bodyH - tool }
-        return EditorLayout(EditorMode.STACKED, head, act, tool, dock, width, max(0.dp, stage), width, keyboard)
+        // Sehr wenig Platz (z. B. Querformat mit Tastatur): Eingabe/Werkzeug hat Vorrang, die Bühne weicht vorübergehend.
+        tool = min(tool, max(0.dp, bodyH)); stage = max(0.dp, bodyH - tool)
+        // Tastatur und zu wenig Platz für eine brauchbare Bühne: Eingabe bekommt alles, Bühne kehrt beim Schließen zurück.
+        if (keyboard && stage < minStage) { tool = max(0.dp, bodyH); stage = 0.dp }
+        return EditorLayout(EditorMode.STACKED, head, act, tool, dock, width, stage, width, keyboard)
     }
 }
 
@@ -215,8 +219,11 @@ fun EditorScaffold(
 private fun EditorActionRow(modifier: Modifier, content: @Composable RowScope.() -> Unit) {
     val p = LocalEditorPalette.current
     Column(modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth().weight(1f).padding(horizontal = AppSpacing.xs).testTag("editor.actions"),
-            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(2.dp), content = content)
+        // Natürliche Breiten; passt alles, verteilt sich die Zeile, sonst scrollt sie (bei großer Schrift nichts abgeschnitten).
+        BoxWithConstraints(Modifier.fillMaxWidth().weight(1f).padding(horizontal = AppSpacing.xs), contentAlignment = Alignment.CenterStart) {
+            Row(Modifier.horizontalScroll(rememberScrollState()).widthIn(min = maxWidth).testTag("editor.actions"),
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, content = content)
+        }
         Box(Modifier.fillMaxWidth().height(1.dp).background(p.stroke))
     }
 }
@@ -303,11 +310,11 @@ fun EditorDock(items: List<DockItem>, selected: String, onSelect: (String) -> Un
 
 /** Kurzer Status in der Hilfsleiste (z. B. „1200 × 900“, „Original“, „0:12 / 0:32“) – nimmt den restlichen Platz, Ziffern gleich breit. */
 @Composable
-fun RowScope.EditorStatus(text: String, modifier: Modifier = Modifier, emphasized: Boolean = false) {
+fun EditorStatus(text: String, modifier: Modifier = Modifier, emphasized: Boolean = false) {
     val p = LocalEditorPalette.current
-    Text(text, modifier.weight(1f).padding(horizontal = AppSpacing.xs), style = AppTypography.footnote.copy(
+    Text(text, modifier.padding(horizontal = AppSpacing.xs), style = AppTypography.footnote.copy(
         fontFeatureSettings = "tnum", fontWeight = if (emphasized) FontWeight.SemiBold else FontWeight.Normal),
-        color = if (emphasized) p.text else p.textSecondary, maxLines = 2, overflow = TextOverflow.Ellipsis,
+        color = if (emphasized) p.text else p.textSecondary, maxLines = 1, softWrap = false,
         textAlign = androidx.compose.ui.text.style.TextAlign.Center)
 }
 

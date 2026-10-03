@@ -205,10 +205,10 @@ internal fun VideoTransport(vm: EditorViewModel, pv: VideoPreview) {
     val project = vm.videoProject() ?: return
     val clip = project.clips.first()
     androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Ltr) {
-        Row(Modifier.fillMaxWidth().testTag("video.transport"), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.testTag("video.transport"), verticalAlignment = Alignment.CenterVertically) {
             app.photomaid.design.EditorActionButton(if (pv.playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
                 stringResource(if (pv.playing) R.string.pause else R.string.play), Modifier.testTag("video.play"), enabled = vm.tab != EditorTab.MARKUP) { pv.toggle() }
-            Text("\u2066${clock(pv.outMs)} / ${clock(clip.outputDurationMs)}\u2069", Modifier.weight(1f).padding(horizontal = AppSpacing.xs).testTag("video.time"),
+            Text("\u2066${clock(pv.outMs)} / ${clock(clip.outputDurationMs)}\u2069", Modifier.padding(horizontal = AppSpacing.xs).testTag("video.time"), maxLines = 1, softWrap = false,
                 style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"), color = PM.colors.textPrimary)
             app.photomaid.design.EditorActionButton(if (pv.muted) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp,
                 stringResource(if (pv.muted) R.string.unmute else R.string.mute), Modifier.testTag("video.mute"), active = !pv.muted) { pv.muted = !pv.muted }

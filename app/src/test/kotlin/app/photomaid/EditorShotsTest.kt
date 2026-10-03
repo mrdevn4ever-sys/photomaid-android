@@ -61,7 +61,10 @@ class EditorShotsTest {
         if (n.fetchSemanticsNodes().isNotEmpty()) { n[0].performSemanticsAction(SemanticsActions.OnClick); pump(30) }
     }
 
+    private val ime = mutableStateOf<androidx.compose.ui.unit.Dp?>(null)
+    private var landscapeWindow = false
     private fun run(variant: String, dark: Boolean = false) {
+        landscapeWindow = variant == "landscape"
         app = makeTestApp(rule.activity, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } },
             purchase = FakePurchaseGateway(PurchaseState.PURCHASED)) { a -> a.updateSettings { it.copy(editorTourSeen = true, appearance = if (dark) AppearanceChoice.DARK else AppearanceChoice.LIGHT) } }
         app.editEngine.io = Dispatchers.Main; app.editEngine.parallel = false
@@ -80,7 +83,8 @@ class EditorShotsTest {
             Shot("video_audio", { EditorScreen(video.id, nav, onClose = {}) }) { tap("tab.AUDIO") },
             Shot("export", { EditorScreen(photo.id, nav, onClose = {}) }) { tap("tab.CROP"); tap("editor.rotate"); tap("editor.save") },
             // Tastatur simuliert (Robolectric zeigt keine IME): 300 dp unten belegt, Fläche bleibt im Bild leer.
-            Shot("photo_text_keyboard", { CompositionLocalProvider(LocalEditorImeOverride provides 300.dp) { EditorScreen(photo.id, nav, onClose = {}) } }) { tap("tab.MARKUP"); tap("mk.text") },
+            Shot("photo_text_keyboard", { CompositionLocalProvider(LocalEditorImeOverride provides ime.value) { EditorScreen(tall.id, nav, onClose = {}) } }) {
+                tap("tab.MARKUP"); tap("mk.text"); ime.value = (if (landscapeWindow) 200 else 300).dp },
             Shot("collage", { CollageScreen(CollageRequest("c", CollageProject.create("c", photos.take(4).map { it.id }), fromDraft = false), nav, pick = {}, onClose = {}) }),
             Shot("movie", { MovieScreen(MovieRequest("m", movieFrom(listOf(video, photo, tall), false), false), nav, onClose = {}) }),
             Shot("gif", { ToolsScreen(ToolRequest("g", ToolKind.GIF, photos.take(3).map { it.id }), nav, onClose = {}) }),
@@ -89,6 +93,7 @@ class EditorShotsTest {
         for (s in shots) {
             content.value = s.screen; gen.intValue++
             if (!shown) { shown = true; rule.setContent { TestHost(app) { key(gen.intValue) { content.value?.invoke() } } } }
+            ime.value = null
             pump(); s.after(); pump(40)
             captureScreenRoboImage("build/outputs/roborazzi/ed_${variant}_${s.name}.png")
         }

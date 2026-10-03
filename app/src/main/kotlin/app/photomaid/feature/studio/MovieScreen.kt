@@ -278,7 +278,7 @@ fun MovieScreen(req: MovieRequest, nav: Nav, onClose: () -> Unit) {
             },
             actions = {
                 androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Ltr) {
-                    Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         val p = player
                         EditorActionButton(if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
                             stringResource(if (playing) R.string.slideshow_pause else R.string.play), Modifier.testTag("movie.play"), enabled = p != null) {

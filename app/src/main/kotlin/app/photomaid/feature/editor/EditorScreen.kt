@@ -190,7 +190,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                     EditorActionButton(Icons.AutoMirrored.Rounded.Redo, stringResource(R.string.redo), Modifier.testTag("editor.redo"),
                         enabled = vm.canRedo && !vm.saving, onClick = vm::redo)
                     if (vm.isVideo) {
-                        if (preview != null) Box(Modifier.weight(1f)) { VideoTransport(vm, preview) } else Spacer(Modifier.weight(1f))
+                        if (preview != null) VideoTransport(vm, preview)
                     } else {
                         val out = vm.outputSize
                         val status = when {

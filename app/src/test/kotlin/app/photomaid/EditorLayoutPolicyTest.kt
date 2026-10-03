@@ -50,6 +50,10 @@ class EditorLayoutPolicyTest {
         assertTrue("Bühne mit Tastatur ${kb.stageHeight}", kb.stageHeight >= EditorLayoutPolicy.minStage)
         // Tastatur zu → wieder exakt die vorherige Geometrie.
         assertEquals(before, EditorLayoutPolicy.compute(393.dp, 820.dp, 1f, ime = 0.dp))
-        assertFalse(EditorLayoutPolicy.compute(852.dp, 393.dp, 1f, ime = 200.dp).mode == EditorMode.SIDE)
+        // Querformat mit Tastatur: wenig Platz – Eingabe hat Vorrang, nichts ragt über die Tastatur.
+        val land = EditorLayoutPolicy.compute(852.dp, 393.dp, 1f, ime = 200.dp)
+        assertFalse(land.mode == EditorMode.SIDE)
+        assertEquals(393.dp - 200.dp, land.header + land.stageHeight + land.tool)
+        assertTrue(land.tool >= 96.dp)
     }
 }
