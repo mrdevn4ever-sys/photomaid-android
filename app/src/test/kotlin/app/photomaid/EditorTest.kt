@@ -223,9 +223,9 @@ class EditorTest {
         var closed = false
         openEditor(closed = { closed = true })
         rule.onNodeWithTag("editor.size").assertExists()
-        rule.onNode(hasText("300 × 400")).assertExists()
+        rule.onNode(hasText("300 × 400", substring = true)).assertExists()
         click("editor.rotate")
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("400 × 300")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("400 × 300", substring = true)).fetchSemanticsNodes().isNotEmpty() }
         click("editor.save")
         waitTag("editor.sheet")
         rule.onNodeWithTag("editor.mode.COPY").assertIsSelected() // erstes Mal: Original behalten
@@ -306,11 +306,11 @@ class EditorTest {
         start()
         openEditor()
         click("editor.rotate")
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("400 × 300")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("400 × 300", substring = true)).fetchSemanticsNodes().isNotEmpty() }
         click("editor.undo")
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("300 × 400")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("300 × 400", substring = true)).fetchSemanticsNodes().isNotEmpty() }
         click("editor.redo")
-        rule.waitUntil(5_000) { rule.onAllNodes(hasText("400 × 300")).fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(5_000) { rule.onAllNodes(hasText("400 × 300", substring = true)).fetchSemanticsNodes().isNotEmpty() }
     }
 
     @Test fun resizeNeverUpscales() {

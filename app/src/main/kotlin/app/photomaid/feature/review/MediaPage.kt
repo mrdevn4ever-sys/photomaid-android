@@ -31,6 +31,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -274,13 +276,18 @@ private fun BoxScope.VideoControls(asset: MediaAsset, skip: () -> Unit, skipLabe
 @Composable
 private fun MediaProblem(title: String, hint: String?, onRetry: () -> Unit, skip: () -> Unit, modifier: Modifier, skipLabel: Int = R.string.skip_without_decision) {
     val c = PM.colors
-    Column(modifier.padding(AppSpacing.m).glassRect(AppRadii.card, 0.dp).padding(AppSpacing.l).testTag("feed.media.problem"),
-        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        Icon(Icons.Rounded.BrokenImage, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.large))
-        Text(title, style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
-        if (hint != null) Text(hint, style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
-        ProminentButton(stringResource(R.string.retry), onClick = onRetry)
-        PlainButton(stringResource(skipLabel), onClick = skip)
+    // Auf kleinen Flächen kompakt (ohne Symbol/Hinweis) und notfalls scrollbar – beide Tasten bleiben immer erreichbar.
+    BoxWithConstraints(modifier, contentAlignment = Alignment.Center) {
+        val compact = maxHeight < 300.dp
+        Column(Modifier.padding(AppSpacing.m).glassRect(AppRadii.card, 0.dp).verticalScroll(rememberScrollState())
+            .padding(if (compact) AppSpacing.s else AppSpacing.l).testTag("feed.media.problem"),
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(if (compact) AppSpacing.xs else AppSpacing.s)) {
+            if (!compact) Icon(Icons.Rounded.BrokenImage, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.large))
+            Text(title, style = if (compact) AppTypography.subheadline else AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
+            if (hint != null && !compact) Text(hint, style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
+            ProminentButton(stringResource(R.string.retry), onClick = onRetry)
+            PlainButton(stringResource(skipLabel), onClick = skip)
+        }
     }
 }
 

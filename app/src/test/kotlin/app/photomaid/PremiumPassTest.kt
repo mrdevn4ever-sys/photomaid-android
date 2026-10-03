@@ -79,6 +79,8 @@ class PremiumPassTest {
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), RecordingNav(), {}, {}) } }
         waitText("Dieses Foto oder Video lässt sich gerade nicht anzeigen.")
         rule.onNodeWithText("Erneut versuchen").assertExists()
+        // Prüflog #3: beide Tasten haben echte Höhe (früher auf kleinen Bildschirmen auf 0 dp gequetscht).
+        assertTrue(rule.onNodeWithText("Ohne Auswahl weiter").fetchSemanticsNode().boundsInRoot.height > 0f)
         rule.onNodeWithText("Ohne Auswahl weiter").performClick()
         waitText("2 von 3")
         assertTrue(app.ledger.stateFlow.value.events.isEmpty())
