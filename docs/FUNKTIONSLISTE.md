@@ -4,7 +4,7 @@ Stand 03.10.2026, Branch `claude/product-ux-favorites`. Reine Übersicht, was di
 geprüft wird, steht in `docs/FUNKTIONS_PRUEFPLAN_2026-10.md` (gleiche Kennungen in Klammern).
 
 Grundsätze, die überall gelten:
-- Alles läuft lokal auf dem Gerät: kein Konto, kein Server, kein Upload, keine KI oder Bilderkennung.
+- Die Medienverarbeitung läuft lokal auf dem Gerät: kein PhotoMaid-Konto, kein PhotoMaid-Server, kein Upload von Medien, keine KI oder Bilderkennung. Ausnahmen mit Netzwerk: Käufe über Google Play und – nur in Free, erst nach Einwilligung – Werbung über Google AdMob. Dabei werden technische Daten an Google bzw. Werbeanbieter übertragen, nie Medien, Dateinamen, Pfade, Prüfsummen oder IDs.
 - PhotoMaid löscht nie von selbst. Endgültig entfernt wird nur nach deiner Bestätigung, normalerweise über den Android-Papierkorb.
 - Ansehen, Auswählen, Verschieben und Bearbeiten sind nie eine Aufräum-Entscheidung.
 - Zahlen sind gemessen, nie geschätzt. Ist eine Größe unbekannt, steht „unbekannt“ da, nicht 0. Die einzige Ausnahme sind Video-Exportprofile, deren Größe ausdrücklich als „ca.“ beschriftet ist.
@@ -111,7 +111,7 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
   - Originale auf Wunsch in den Android-Papierkorb (Standard aus) (T10)
   - Screenshots zusammenfügen (T11)
   - GIF aus Fotos und GIF aus Video bis 10 s, beides Pro (T12, T13)
-  - „frei“ wird erst angezeigt, wenn alle Originale im Papierkorb sind und alle Größen bekannt sind
+  - Ersparnis erst, wenn alle Originale im Android-Papierkorb liegen und alle Größen bekannt sind – und ausdrücklich als „noch nicht frei“: Speicher wird erst frei, wenn Android den Papierkorb leert
 - Teilen ohne Speichern (T14)
 
 ## 9. Foto-Editor (✏️ aus Feed, Betrachter oder Studio)
