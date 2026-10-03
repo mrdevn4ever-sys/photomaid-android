@@ -1307,4 +1307,63 @@
     <string name="movie_too_long">合計30分までです。クリップを短くするか減らしてください。</string>
     <string name="movie_discard_title">この動画を破棄しますか？</string>
     <string name="movie_discard_text">編集内容は失われます。写真と動画そのものは変わりません。</string>
+    <string name="tools_header">ツール</string>
+    <string name="tools_resize">縮小</string>
+    <string name="tools_resize_sub">まとめて縮小し、新しいコピーとして保存</string>
+    <string name="tools_convert">変換</string>
+    <string name="tools_convert_sub">例：HEICをJPEGに、新しいコピーとして</string>
+    <string name="tools_location">位置情報を削除</string>
+    <string name="tools_location_sub">GPS情報なしのコピー（共有前などに）</string>
+    <string name="tools_stitch">スクリーンショットをつなげる</string>
+    <string name="tools_stitch_sub">縦に並べて1枚の長い画像に</string>
+    <string name="tools_gif">GIFを作成</string>
+    <string name="tools_gif_sub">写真または動画の短い部分から</string>
+    <string name="tools_pick">写真を選択</string>
+    <string name="tools_pick_gif">写真または動画1本を選択</string>
+    <string name="tools_running">ファイルを処理中…</string>
+    <string name="tools_stitch_saved">新しい画像として Pictures/PhotoMaid に保存しました。</string>
+    <string name="tools_gif_saved">GIFを Pictures/PhotoMaid に保存しました（%1$s）。</string>
+    <string name="tools_failed">うまくいきませんでした。元のファイルは変更されていません。</string>
+    <string name="tools_pro_save">Proで作成</string>
+    <string name="tools_start">開始</string>
+    <string name="tools_free_limit">Free：1回につき%1$dファイルまで。最初の%1$d件だけ処理されます。</string>
+    <string name="tools_long_edge">長辺の上限</string>
+    <string name="tools_quality">画質</string>
+    <string name="tools_q_high">高</string>
+    <string name="tools_q_balanced">標準</string>
+    <string name="tools_q_small">小さいファイル</string>
+    <string name="tools_remove_location">位置情報も削除</string>
+    <string name="tools_target_format">新しい形式</string>
+    <string name="tools_convert_note">JPEGはどこでも開けます。PNGは画素を損ないませんがファイルが大きくなります。すでにこの形式のファイルはスキップします。</string>
+    <string name="tools_location_note">JPEGのコピーは画素をそのまま保ち、GPS情報だけを削除します。位置情報のない写真はスキップします。</string>
+    <string name="tools_stitch_note">選んだ順に並べます。すべて最も狭い画像の幅に合わせ、引き伸ばしや拡大はしません。</string>
+    <string name="tools_gif_size">サイズ</string>
+    <string name="tools_gif_part">動画の範囲（最大10秒）</string>
+    <string name="tools_gif_delay">1枚あたりの時間</string>
+    <string name="tools_gif_note">GIFは最大256色で音声はありません。写真は少し粗く見えることがあります。</string>
+    <string name="tools_trash_originals">完了後に元のファイルをAndroidのゴミ箱へ</string>
+    <string name="tools_trash_note">初期設定はオフ。Androidがすべてのファイルについて1回だけ確認し、約30日間は復元できます。容量が空くのはAndroidがゴミ箱を空にしたときです。</string>
+    <string name="tools_sizes">実測：処理前 %1$s、処理後 %2$s</string>
+    <string name="tools_freed_later">Androidがゴミ箱を空にすると約%1$sが空きます。</string>
+    <string name="tools_originals_kept">元のファイルはそのままです。容量は空いていません。</string>
+    <plurals name="tools_selected">
+        <item quantity="other">%1$dファイルを選択中</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="other">新しいコピーを%1$d件保存しました。</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="other">%1$d件をスキップ（処理不要または動画）。</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="other">%1$d件を処理できませんでした。</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="other">%1$d件はサイズ不明のため合計に含めていません。</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="other">元のファイル%1$d件はAndroidのゴミ箱にあります。</item>
+    </plurals>
+    <string name="tools_gif_fit">全体を表示</string>
+    <string name="tools_gif_fill">枠いっぱい</string>
 </resources>

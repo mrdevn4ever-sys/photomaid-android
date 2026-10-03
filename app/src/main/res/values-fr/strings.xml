@@ -1417,4 +1417,75 @@
     <string name="movie_too_long">30 minutes au maximum au total. Raccourcissez ou retirez des clips.</string>
     <string name="movie_discard_title">Abandonner cette vidéo ?</string>
     <string name="movie_discard_text">Votre montage sera perdu. Les photos et vidéos restent intactes.</string>
+    <string name="tools_header">Outils</string>
+    <string name="tools_resize">Réduire</string>
+    <string name="tools_resize_sub">Plusieurs photos à la fois, en nouvelles copies</string>
+    <string name="tools_convert">Convertir</string>
+    <string name="tools_convert_sub">p. ex. HEIC en JPEG, en nouvelles copies</string>
+    <string name="tools_location">Retirer la position</string>
+    <string name="tools_location_sub">Copies sans données GPS, p. ex. avant de partager</string>
+    <string name="tools_stitch">Assembler des captures</string>
+    <string name="tools_stitch_sub">Les unes sous les autres, en une longue image</string>
+    <string name="tools_gif">Créer un GIF</string>
+    <string name="tools_gif_sub">À partir de photos ou d’un court extrait vidéo</string>
+    <string name="tools_pick">Choisir des photos</string>
+    <string name="tools_pick_gif">Choisir des photos ou une vidéo</string>
+    <string name="tools_running">Traitement de vos fichiers…</string>
+    <string name="tools_stitch_saved">Enregistrée comme nouvelle image dans Pictures/PhotoMaid.</string>
+    <string name="tools_gif_saved">GIF enregistré dans Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_failed">Cela n’a pas fonctionné. Vos originaux sont inchangés.</string>
+    <string name="tools_pro_save">Créer avec Pro</string>
+    <string name="tools_start">Lancer</string>
+    <string name="tools_free_limit">Free : jusqu’à %1$d fichiers par passage – seuls les %1$d premiers seront traités.</string>
+    <string name="tools_long_edge">Plus grand côté au maximum</string>
+    <string name="tools_quality">Qualité</string>
+    <string name="tools_q_high">Haute</string>
+    <string name="tools_q_balanced">Équilibrée</string>
+    <string name="tools_q_small">Fichier plus léger</string>
+    <string name="tools_remove_location">Retirer aussi la position</string>
+    <string name="tools_target_format">Nouveau format</string>
+    <string name="tools_convert_note">Le JPEG s’ouvre partout ; le PNG garde chaque pixel mais les fichiers sont plus lourds. Les fichiers déjà dans ce format sont ignorés.</string>
+    <string name="tools_location_note">Les copies JPEG gardent chaque pixel : seules les données GPS sont retirées. Les photos sans position sont ignorées.</string>
+    <string name="tools_stitch_note">Dans l’ordre choisi. Toutes prennent la largeur de l’image la plus étroite : rien n’est déformé ni agrandi.</string>
+    <string name="tools_gif_size">Taille</string>
+    <string name="tools_gif_part">Partie de la vidéo (10 s max.)</string>
+    <string name="tools_gif_delay">Durée par photo</string>
+    <string name="tools_gif_note">Les GIF ont au plus 256 couleurs et pas de son : les photos peuvent paraître un peu granuleuses.</string>
+    <string name="tools_trash_originals">Placer ensuite les originaux dans la corbeille Android</string>
+    <string name="tools_trash_note">Désactivé par défaut. Android demande une seule fois pour tous les fichiers ; ils restent restaurables environ 30 jours. L’espace n’est libéré que lorsque Android vide la corbeille.</string>
+    <string name="tools_sizes">Mesuré : avant %1$s, après %2$s</string>
+    <string name="tools_freed_later">Environ %1$s seront libérés quand Android videra la corbeille.</string>
+    <string name="tools_originals_kept">Vos originaux sont inchangés : aucun espace libéré.</string>
+    <plurals name="tools_selected">
+        <item quantity="one">%1$d fichier sélectionné</item>
+        <item quantity="many">%1$d fichiers sélectionnés</item>
+        <item quantity="other">%1$d fichiers sélectionnés</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="one">%1$d nouvelle copie enregistrée.</item>
+        <item quantity="many">%1$d nouvelles copies enregistrées.</item>
+        <item quantity="other">%1$d nouvelles copies enregistrées.</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="one">%1$d ignoré (rien à faire ou vidéo).</item>
+        <item quantity="many">%1$d ignorés (rien à faire ou vidéos).</item>
+        <item quantity="other">%1$d ignorés (rien à faire ou vidéos).</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="one">%1$d n’a pas pu être traité.</item>
+        <item quantity="many">%1$d n’ont pas pu être traités.</item>
+        <item quantity="other">%1$d n’ont pas pu être traités.</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="one">%1$d taille inconnue – non comptée.</item>
+        <item quantity="many">%1$d tailles inconnues – non comptées.</item>
+        <item quantity="other">%1$d tailles inconnues – non comptées.</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="one">%1$d original est dans la corbeille Android.</item>
+        <item quantity="many">%1$d originaux sont dans la corbeille Android.</item>
+        <item quantity="other">%1$d originaux sont dans la corbeille Android.</item>
+    </plurals>
+    <string name="tools_gif_fit">Image entière</string>
+    <string name="tools_gif_fill">Remplir</string>
 </resources>

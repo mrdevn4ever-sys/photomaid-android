@@ -1362,4 +1362,69 @@
     <string name="movie_too_long">Insgesamt höchstens 30 Minuten. Kürze Clips oder nimm welche heraus.</string>
     <string name="movie_discard_title">Dieses Video verwerfen?</string>
     <string name="movie_discard_text">Deine Zusammenstellung geht verloren. Die Fotos und Videos selbst bleiben unverändert.</string>
+    <string name="tools_header">Werkzeuge</string>
+    <string name="tools_resize">Verkleinern</string>
+    <string name="tools_resize_sub">Viele Fotos auf einmal, als neue Kopien</string>
+    <string name="tools_convert">Umwandeln</string>
+    <string name="tools_convert_sub">z. B. HEIC in JPEG, als neue Kopien</string>
+    <string name="tools_location">Standort entfernen</string>
+    <string name="tools_location_sub">Kopien ohne GPS-Daten, z. B. vor dem Teilen</string>
+    <string name="tools_stitch">Screenshots zusammenfügen</string>
+    <string name="tools_stitch_sub">Untereinander, als ein langes Bild</string>
+    <string name="tools_gif">GIF erstellen</string>
+    <string name="tools_gif_sub">Aus Fotos oder einem kurzen Videoteil</string>
+    <string name="tools_pick">Fotos wählen</string>
+    <string name="tools_pick_gif">Fotos oder ein Video wählen</string>
+    <string name="tools_running">Dateien werden bearbeitet …</string>
+    <string name="tools_stitch_saved">Als neues Bild in Pictures/PhotoMaid gespeichert.</string>
+    <string name="tools_gif_saved">GIF in Pictures/PhotoMaid gespeichert (%1$s).</string>
+    <string name="tools_failed">Das hat nicht geklappt. Deine Originale sind unverändert.</string>
+    <string name="tools_pro_save">Mit Pro erstellen</string>
+    <string name="tools_start">Starten</string>
+    <string name="tools_free_limit">Free: bis %1$d Dateien je Durchgang – nur die ersten %1$d werden bearbeitet.</string>
+    <string name="tools_long_edge">Längste Seite höchstens</string>
+    <string name="tools_quality">Qualität</string>
+    <string name="tools_q_high">Hoch</string>
+    <string name="tools_q_balanced">Ausgewogen</string>
+    <string name="tools_q_small">Kleinere Datei</string>
+    <string name="tools_remove_location">Standort auch entfernen</string>
+    <string name="tools_target_format">Neues Format</string>
+    <string name="tools_convert_note">JPEG kann jedes Gerät öffnen; PNG behält jedes Pixel, die Dateien werden aber größer. Dateien, die schon dieses Format haben, werden übersprungen.</string>
+    <string name="tools_location_note">JPEG-Kopien behalten jedes Pixel – nur die GPS-Daten werden entfernt. Fotos ohne Standort werden übersprungen.</string>
+    <string name="tools_stitch_note">In der gewählten Reihenfolge. Alle bekommen die Breite des schmalsten Bildes – nichts wird verzerrt oder vergrößert.</string>
+    <string name="tools_gif_size">Größe</string>
+    <string name="tools_gif_part">Teil des Videos (max. 10 s)</string>
+    <string name="tools_gif_delay">Zeit je Foto</string>
+    <string name="tools_gif_note">GIFs haben höchstens 256 Farben und keinen Ton – Fotos können etwas körnig wirken.</string>
+    <string name="tools_trash_originals">Originale danach in den Android-Papierkorb</string>
+    <string name="tools_trash_note">Standard aus. Android fragt einmal für alle Dateien; dort bleiben sie etwa 30 Tage wiederherstellbar. Platz wird erst frei, wenn Android den Papierkorb leert.</string>
+    <string name="tools_sizes">Gemessen: vorher %1$s, nachher %2$s</string>
+    <string name="tools_freed_later">Etwa %1$s werden frei, sobald Android den Papierkorb leert.</string>
+    <string name="tools_originals_kept">Deine Originale sind unverändert – es wurde kein Platz frei.</string>
+    <plurals name="tools_selected">
+        <item quantity="one">%1$d Datei ausgewählt</item>
+        <item quantity="other">%1$d Dateien ausgewählt</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="one">%1$d neue Kopie gespeichert.</item>
+        <item quantity="other">%1$d neue Kopien gespeichert.</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="one">%1$d übersprungen (nichts zu tun oder Video).</item>
+        <item quantity="other">%1$d übersprungen (nichts zu tun oder Videos).</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="one">%1$d konnte nicht bearbeitet werden.</item>
+        <item quantity="other">%1$d konnten nicht bearbeitet werden.</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="one">Bei %1$d Datei ist die Größe unbekannt – nicht mitgezählt.</item>
+        <item quantity="other">Bei %1$d Dateien ist die Größe unbekannt – nicht mitgezählt.</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="one">%1$d Original liegt im Android-Papierkorb.</item>
+        <item quantity="other">%1$d Originale liegen im Android-Papierkorb.</item>
+    </plurals>
+    <string name="tools_gif_fit">Ganzes Bild</string>
+    <string name="tools_gif_fill">Ausfüllen</string>
 </resources>

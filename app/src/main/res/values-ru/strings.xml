@@ -1472,4 +1472,81 @@
     <string name="movie_too_long">Всего не более 30 минут. Сократите или уберите клипы.</string>
     <string name="movie_discard_title">Отказаться от этого видео?</string>
     <string name="movie_discard_text">Ваша подборка будет потеряна. Сами фото и видео не изменятся.</string>
+    <string name="tools_header">Инструменты</string>
+    <string name="tools_resize">Уменьшить</string>
+    <string name="tools_resize_sub">Сразу много фото, как новые копии</string>
+    <string name="tools_convert">Преобразовать</string>
+    <string name="tools_convert_sub">например, HEIC в JPEG, как новые копии</string>
+    <string name="tools_location">Удалить геоданные</string>
+    <string name="tools_location_sub">Копии без GPS, например перед отправкой</string>
+    <string name="tools_stitch">Склеить скриншоты</string>
+    <string name="tools_stitch_sub">Друг под другом, одним длинным изображением</string>
+    <string name="tools_gif">Создать GIF</string>
+    <string name="tools_gif_sub">Из фото или короткого фрагмента видео</string>
+    <string name="tools_pick">Выберите фото</string>
+    <string name="tools_pick_gif">Выберите фото или одно видео</string>
+    <string name="tools_running">Обработка файлов…</string>
+    <string name="tools_stitch_saved">Сохранено как новое изображение в Pictures/PhotoMaid.</string>
+    <string name="tools_gif_saved">GIF сохранён в Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_failed">Не получилось. Оригиналы не изменены.</string>
+    <string name="tools_pro_save">Создать с Pro</string>
+    <string name="tools_start">Начать</string>
+    <string name="tools_free_limit">Free: до %1$d файлов за раз – будут обработаны только первые %1$d.</string>
+    <string name="tools_long_edge">Длинная сторона не более</string>
+    <string name="tools_quality">Качество</string>
+    <string name="tools_q_high">Высокое</string>
+    <string name="tools_q_balanced">Сбалансированное</string>
+    <string name="tools_q_small">Файл меньше</string>
+    <string name="tools_remove_location">Также удалить геоданные</string>
+    <string name="tools_target_format">Новый формат</string>
+    <string name="tools_convert_note">JPEG открывается везде; PNG сохраняет каждый пиксель, но файлы больше. Файлы в этом формате пропускаются.</string>
+    <string name="tools_location_note">Копии JPEG сохраняют каждый пиксель – удаляются только GPS-данные. Фото без геоданных пропускаются.</string>
+    <string name="tools_stitch_note">В выбранном порядке. Все получают ширину самого узкого изображения – ничего не растягивается и не увеличивается.</string>
+    <string name="tools_gif_size">Размер</string>
+    <string name="tools_gif_part">Фрагмент видео (макс. 10 с)</string>
+    <string name="tools_gif_delay">Время на фото</string>
+    <string name="tools_gif_note">В GIF не более 256 цветов и нет звука – фото могут выглядеть немного зернистыми.</string>
+    <string name="tools_trash_originals">Затем переместить оригиналы в корзину Android</string>
+    <string name="tools_trash_note">По умолчанию выключено. Android спросит один раз для всех файлов; их можно восстановить около 30 дней. Место освобождается, только когда Android очистит корзину.</string>
+    <string name="tools_sizes">Измерено: было %1$s, стало %2$s</string>
+    <string name="tools_freed_later">Около %1$s освободится, когда Android очистит корзину.</string>
+    <string name="tools_originals_kept">Оригиналы не изменены – место не освобождено.</string>
+    <plurals name="tools_selected">
+        <item quantity="one">Выбран %1$d файл</item>
+        <item quantity="few">Выбрано %1$d файла</item>
+        <item quantity="many">Выбрано %1$d файлов</item>
+        <item quantity="other">Выбрано %1$d файла</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="one">Сохранена %1$d новая копия.</item>
+        <item quantity="few">Сохранено %1$d новые копии.</item>
+        <item quantity="many">Сохранено %1$d новых копий.</item>
+        <item quantity="other">Сохранено %1$d новой копии.</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="one">Пропущен %1$d (нечего делать или видео).</item>
+        <item quantity="few">Пропущено %1$d (нечего делать или видео).</item>
+        <item quantity="many">Пропущено %1$d (нечего делать или видео).</item>
+        <item quantity="other">Пропущено %1$d (нечего делать или видео).</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="one">Не удалось обработать %1$d файл.</item>
+        <item quantity="few">Не удалось обработать %1$d файла.</item>
+        <item quantity="many">Не удалось обработать %1$d файлов.</item>
+        <item quantity="other">Не удалось обработать %1$d файла.</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="one">Размер %1$d файла неизвестен – не учтён.</item>
+        <item quantity="few">Размер %1$d файлов неизвестен – не учтён.</item>
+        <item quantity="many">Размер %1$d файлов неизвестен – не учтён.</item>
+        <item quantity="other">Размер %1$d файла неизвестен – не учтён.</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="one">%1$d оригинал в корзине Android.</item>
+        <item quantity="few">%1$d оригинала в корзине Android.</item>
+        <item quantity="many">%1$d оригиналов в корзине Android.</item>
+        <item quantity="other">%1$d оригинала в корзине Android.</item>
+    </plurals>
+    <string name="tools_gif_fit">Всё изображение</string>
+    <string name="tools_gif_fill">Заполнить</string>
 </resources>

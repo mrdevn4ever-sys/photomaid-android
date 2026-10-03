@@ -1362,4 +1362,69 @@
     <string name="movie_too_long">At most 30 minutes in total. Shorten clips or remove some.</string>
     <string name="movie_discard_title">Discard this video?</string>
     <string name="movie_discard_text">Your arrangement is lost. The photos and videos themselves stay unchanged.</string>
+    <string name="tools_header">Tools</string>
+    <string name="tools_resize">Make smaller</string>
+    <string name="tools_resize_sub">Many photos at once, as new copies</string>
+    <string name="tools_convert">Convert</string>
+    <string name="tools_convert_sub">e.g. HEIC to JPEG, as new copies</string>
+    <string name="tools_location">Remove location</string>
+    <string name="tools_location_sub">Copies without GPS data, e.g. before sharing</string>
+    <string name="tools_stitch">Join screenshots</string>
+    <string name="tools_stitch_sub">One below the other, as one long image</string>
+    <string name="tools_gif">Create GIF</string>
+    <string name="tools_gif_sub">From photos or a short part of a video</string>
+    <string name="tools_pick">Choose photos</string>
+    <string name="tools_pick_gif">Choose photos or one video</string>
+    <string name="tools_running">Working on your files…</string>
+    <string name="tools_stitch_saved">Saved as a new image in Pictures/PhotoMaid.</string>
+    <string name="tools_gif_saved">GIF saved in Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_failed">That didn’t work. Your originals are unchanged.</string>
+    <string name="tools_pro_save">Create with Pro</string>
+    <string name="tools_start">Start</string>
+    <string name="tools_free_limit">Free: up to %1$d files per run – only the first %1$d will be processed.</string>
+    <string name="tools_long_edge">Longest side at most</string>
+    <string name="tools_quality">Quality</string>
+    <string name="tools_q_high">High</string>
+    <string name="tools_q_balanced">Balanced</string>
+    <string name="tools_q_small">Smaller file</string>
+    <string name="tools_remove_location">Also remove location</string>
+    <string name="tools_target_format">New format</string>
+    <string name="tools_convert_note">JPEG is read everywhere; PNG keeps every pixel but files get bigger. Files already in this format are skipped.</string>
+    <string name="tools_location_note">JPEG copies keep every pixel – only the GPS data is removed. Photos without location are skipped.</string>
+    <string name="tools_stitch_note">In the order you chose. All get the width of the narrowest image – nothing is stretched or enlarged.</string>
+    <string name="tools_gif_size">Size</string>
+    <string name="tools_gif_part">Part of the video (max. 10 s)</string>
+    <string name="tools_gif_delay">Time per photo</string>
+    <string name="tools_gif_note">GIFs have at most 256 colours and no sound – photos can look a little grainy.</string>
+    <string name="tools_trash_originals">Move originals to the Android trash afterwards</string>
+    <string name="tools_trash_note">Off by default. Android asks once for all files; they stay restorable there for about 30 days. Space is only freed when Android empties its trash.</string>
+    <string name="tools_sizes">Measured: %1$s before, %2$s after</string>
+    <string name="tools_freed_later">About %1$s will be freed once Android empties its trash.</string>
+    <string name="tools_originals_kept">Your originals are unchanged – no space was freed.</string>
+    <plurals name="tools_selected">
+        <item quantity="one">%1$d file selected</item>
+        <item quantity="other">%1$d files selected</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="one">%1$d new copy saved.</item>
+        <item quantity="other">%1$d new copies saved.</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="one">%1$d skipped (nothing to do or a video).</item>
+        <item quantity="other">%1$d skipped (nothing to do or videos).</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="one">%1$d couldn’t be processed.</item>
+        <item quantity="other">%1$d couldn’t be processed.</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="one">%1$d size unknown – not included in the total.</item>
+        <item quantity="other">%1$d sizes unknown – not included in the total.</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="one">%1$d original is in the Android trash.</item>
+        <item quantity="other">%1$d originals are in the Android trash.</item>
+    </plurals>
+    <string name="tools_gif_fit">Whole picture</string>
+    <string name="tools_gif_fill">Fill frame</string>
 </resources>

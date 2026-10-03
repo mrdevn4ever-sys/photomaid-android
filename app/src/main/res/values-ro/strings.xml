@@ -1417,4 +1417,75 @@
     <string name="movie_too_long">Cel mult 30 de minute în total. Scurtează sau elimină clipuri.</string>
     <string name="movie_discard_title">Renunți la acest videoclip?</string>
     <string name="movie_discard_text">Compoziția se pierde. Fotografiile și videoclipurile rămân neschimbate.</string>
+    <string name="tools_header">Instrumente</string>
+    <string name="tools_resize">Micșorează</string>
+    <string name="tools_resize_sub">Multe fotografii deodată, ca și copii noi</string>
+    <string name="tools_convert">Convertește</string>
+    <string name="tools_convert_sub">de ex. HEIC în JPEG, ca și copii noi</string>
+    <string name="tools_location">Elimină locația</string>
+    <string name="tools_location_sub">Copii fără date GPS, de ex. înainte de partajare</string>
+    <string name="tools_stitch">Unește capturi de ecran</string>
+    <string name="tools_stitch_sub">Una sub alta, ca o singură imagine lungă</string>
+    <string name="tools_gif">Creează GIF</string>
+    <string name="tools_gif_sub">Din fotografii sau dintr-o parte scurtă de videoclip</string>
+    <string name="tools_pick">Alege fotografii</string>
+    <string name="tools_pick_gif">Alege fotografii sau un videoclip</string>
+    <string name="tools_running">Se procesează fișierele…</string>
+    <string name="tools_stitch_saved">Salvată ca imagine nouă în Pictures/PhotoMaid.</string>
+    <string name="tools_gif_saved">GIF salvat în Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_failed">Nu a funcționat. Originalele sunt neschimbate.</string>
+    <string name="tools_pro_save">Creează cu Pro</string>
+    <string name="tools_start">Pornește</string>
+    <string name="tools_free_limit">Free: până la %1$d fișiere pe rulare – se procesează doar primele %1$d.</string>
+    <string name="tools_long_edge">Latura cea mai lungă maximum</string>
+    <string name="tools_quality">Calitate</string>
+    <string name="tools_q_high">Înaltă</string>
+    <string name="tools_q_balanced">Echilibrată</string>
+    <string name="tools_q_small">Fișier mai mic</string>
+    <string name="tools_remove_location">Elimină și locația</string>
+    <string name="tools_target_format">Format nou</string>
+    <string name="tools_convert_note">JPEG se deschide oriunde; PNG păstrează fiecare pixel, dar fișierele sunt mai mari. Fișierele deja în acest format sunt omise.</string>
+    <string name="tools_location_note">Copiile JPEG păstrează fiecare pixel – se elimină doar datele GPS. Fotografiile fără locație sunt omise.</string>
+    <string name="tools_stitch_note">În ordinea aleasă. Toate primesc lățimea celei mai înguste imagini – nimic nu e deformat sau mărit.</string>
+    <string name="tools_gif_size">Dimensiune</string>
+    <string name="tools_gif_part">Partea din videoclip (max. 10 s)</string>
+    <string name="tools_gif_delay">Timp pe fotografie</string>
+    <string name="tools_gif_note">GIF-urile au cel mult 256 de culori și nu au sunet – fotografiile pot părea puțin granulate.</string>
+    <string name="tools_trash_originals">Mută apoi originalele în coșul Android</string>
+    <string name="tools_trash_note">Dezactivat implicit. Android întreabă o dată pentru toate fișierele; rămân recuperabile acolo circa 30 de zile. Spațiul se eliberează doar când Android golește coșul.</string>
+    <string name="tools_sizes">Măsurat: înainte %1$s, după %2$s</string>
+    <string name="tools_freed_later">Circa %1$s se vor elibera când Android golește coșul.</string>
+    <string name="tools_originals_kept">Originalele sunt neschimbate – nu s-a eliberat spațiu.</string>
+    <plurals name="tools_selected">
+        <item quantity="one">%1$d fișier selectat</item>
+        <item quantity="few">%1$d fișiere selectate</item>
+        <item quantity="other">%1$d de fișiere selectate</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="one">%1$d copie nouă salvată.</item>
+        <item quantity="few">%1$d copii noi salvate.</item>
+        <item quantity="other">%1$d de copii noi salvate.</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="one">%1$d omis (nimic de făcut sau videoclip).</item>
+        <item quantity="few">%1$d omise (nimic de făcut sau videoclipuri).</item>
+        <item quantity="other">%1$d de omise (nimic de făcut sau videoclipuri).</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="one">%1$d nu a putut fi procesat.</item>
+        <item quantity="few">%1$d nu au putut fi procesate.</item>
+        <item quantity="other">%1$d de fișiere nu au putut fi procesate.</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="one">Dimensiune necunoscută pentru %1$d fișier – neinclusă.</item>
+        <item quantity="few">Dimensiune necunoscută pentru %1$d fișiere – neinclusă.</item>
+        <item quantity="other">Dimensiune necunoscută pentru %1$d de fișiere – neinclusă.</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="one">%1$d original este în coșul Android.</item>
+        <item quantity="few">%1$d originale sunt în coșul Android.</item>
+        <item quantity="other">%1$d de originale sunt în coșul Android.</item>
+    </plurals>
+    <string name="tools_gif_fit">Imagine întreagă</string>
+    <string name="tools_gif_fill">Umple cadrul</string>
 </resources>

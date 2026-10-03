@@ -1362,4 +1362,69 @@
     <string name="movie_too_long">Maximaal 30 minuten in totaal. Kort clips in of haal er een paar weg.</string>
     <string name="movie_discard_title">Deze video weggooien?</string>
     <string name="movie_discard_text">Je samenstelling gaat verloren. De foto’s en video’s zelf blijven ongewijzigd.</string>
+    <string name="tools_header">Hulpmiddelen</string>
+    <string name="tools_resize">Verkleinen</string>
+    <string name="tools_resize_sub">Veel foto’s tegelijk, als nieuwe kopieën</string>
+    <string name="tools_convert">Omzetten</string>
+    <string name="tools_convert_sub">bijv. HEIC naar JPEG, als nieuwe kopieën</string>
+    <string name="tools_location">Locatie verwijderen</string>
+    <string name="tools_location_sub">Kopieën zonder gps-gegevens, bijv. vóór het delen</string>
+    <string name="tools_stitch">Schermafbeeldingen samenvoegen</string>
+    <string name="tools_stitch_sub">Onder elkaar, als één lange afbeelding</string>
+    <string name="tools_gif">GIF maken</string>
+    <string name="tools_gif_sub">Van foto’s of een kort stukje video</string>
+    <string name="tools_pick">Foto’s kiezen</string>
+    <string name="tools_pick_gif">Foto’s of één video kiezen</string>
+    <string name="tools_running">Bestanden worden verwerkt…</string>
+    <string name="tools_stitch_saved">Opgeslagen als nieuwe afbeelding in Pictures/PhotoMaid.</string>
+    <string name="tools_gif_saved">GIF opgeslagen in Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_failed">Dat is niet gelukt. Je originelen zijn ongewijzigd.</string>
+    <string name="tools_pro_save">Maken met Pro</string>
+    <string name="tools_start">Starten</string>
+    <string name="tools_free_limit">Free: tot %1$d bestanden per keer – alleen de eerste %1$d worden verwerkt.</string>
+    <string name="tools_long_edge">Langste zijde maximaal</string>
+    <string name="tools_quality">Kwaliteit</string>
+    <string name="tools_q_high">Hoog</string>
+    <string name="tools_q_balanced">Gebalanceerd</string>
+    <string name="tools_q_small">Kleiner bestand</string>
+    <string name="tools_remove_location">Ook locatie verwijderen</string>
+    <string name="tools_target_format">Nieuw formaat</string>
+    <string name="tools_convert_note">JPEG opent overal; PNG behoudt elke pixel, maar bestanden worden groter. Bestanden die al dit formaat hebben, worden overgeslagen.</string>
+    <string name="tools_location_note">JPEG-kopieën behouden elke pixel – alleen de gps-gegevens worden verwijderd. Foto’s zonder locatie worden overgeslagen.</string>
+    <string name="tools_stitch_note">In de gekozen volgorde. Alles krijgt de breedte van de smalste afbeelding – niets wordt vervormd of vergroot.</string>
+    <string name="tools_gif_size">Grootte</string>
+    <string name="tools_gif_part">Deel van de video (max. 10 s)</string>
+    <string name="tools_gif_delay">Tijd per foto</string>
+    <string name="tools_gif_note">GIF’s hebben hoogstens 256 kleuren en geen geluid – foto’s kunnen wat korrelig ogen.</string>
+    <string name="tools_trash_originals">Originelen daarna naar de Android-prullenbak</string>
+    <string name="tools_trash_note">Standaard uit. Android vraagt één keer voor alle bestanden; ze blijven daar ongeveer 30 dagen herstelbaar. Ruimte komt pas vrij als Android de prullenbak leegt.</string>
+    <string name="tools_sizes">Gemeten: vooraf %1$s, achteraf %2$s</string>
+    <string name="tools_freed_later">Ongeveer %1$s komt vrij zodra Android de prullenbak leegt.</string>
+    <string name="tools_originals_kept">Je originelen zijn ongewijzigd – er is geen ruimte vrijgekomen.</string>
+    <plurals name="tools_selected">
+        <item quantity="one">%1$d bestand geselecteerd</item>
+        <item quantity="other">%1$d bestanden geselecteerd</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="one">%1$d nieuwe kopie opgeslagen.</item>
+        <item quantity="other">%1$d nieuwe kopieën opgeslagen.</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="one">%1$d overgeslagen (niets te doen of video).</item>
+        <item quantity="other">%1$d overgeslagen (niets te doen of video’s).</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="one">%1$d kon niet worden verwerkt.</item>
+        <item quantity="other">%1$d konden niet worden verwerkt.</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="one">Bij %1$d bestand is de grootte onbekend – niet meegeteld.</item>
+        <item quantity="other">Bij %1$d bestanden is de grootte onbekend – niet meegeteld.</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="one">%1$d origineel staat in de Android-prullenbak.</item>
+        <item quantity="other">%1$d originelen staan in de Android-prullenbak.</item>
+    </plurals>
+    <string name="tools_gif_fit">Hele beeld</string>
+    <string name="tools_gif_fill">Vullen</string>
 </resources>

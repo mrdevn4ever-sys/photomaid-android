@@ -1362,4 +1362,69 @@
     <string name="movie_too_long">Toplam en fazla 30 dakika. Klipleri kısalt veya çıkar.</string>
     <string name="movie_discard_title">Bu video atılsın mı?</string>
     <string name="movie_discard_text">Düzenlemen kaybolur. Fotoğraflar ve videolar değişmez.</string>
+    <string name="tools_header">Araçlar</string>
+    <string name="tools_resize">Küçült</string>
+    <string name="tools_resize_sub">Birçok fotoğraf tek seferde, yeni kopya olarak</string>
+    <string name="tools_convert">Dönüştür</string>
+    <string name="tools_convert_sub">örn. HEIC’ten JPEG’e, yeni kopya olarak</string>
+    <string name="tools_location">Konumu kaldır</string>
+    <string name="tools_location_sub">GPS verisi olmayan kopyalar, örn. paylaşmadan önce</string>
+    <string name="tools_stitch">Ekran görüntülerini birleştir</string>
+    <string name="tools_stitch_sub">Alt alta, tek uzun bir görsel olarak</string>
+    <string name="tools_gif">GIF oluştur</string>
+    <string name="tools_gif_sub">Fotoğraflardan ya da videonun kısa bir bölümünden</string>
+    <string name="tools_pick">Fotoğraf seç</string>
+    <string name="tools_pick_gif">Fotoğraf ya da bir video seç</string>
+    <string name="tools_running">Dosyalar işleniyor…</string>
+    <string name="tools_stitch_saved">Pictures/PhotoMaid içine yeni görsel olarak kaydedildi.</string>
+    <string name="tools_gif_saved">GIF, Pictures/PhotoMaid içine kaydedildi (%1$s).</string>
+    <string name="tools_failed">Olmadı. Orijinallerin değişmedi.</string>
+    <string name="tools_pro_save">Pro ile oluştur</string>
+    <string name="tools_start">Başlat</string>
+    <string name="tools_free_limit">Free: tek seferde en çok %1$d dosya – yalnızca ilk %1$d dosya işlenir.</string>
+    <string name="tools_long_edge">En uzun kenar en fazla</string>
+    <string name="tools_quality">Kalite</string>
+    <string name="tools_q_high">Yüksek</string>
+    <string name="tools_q_balanced">Dengeli</string>
+    <string name="tools_q_small">Daha küçük dosya</string>
+    <string name="tools_remove_location">Konumu da kaldır</string>
+    <string name="tools_target_format">Yeni biçim</string>
+    <string name="tools_convert_note">JPEG her yerde açılır; PNG her pikseli korur ama dosyalar büyür. Zaten bu biçimdeki dosyalar atlanır.</string>
+    <string name="tools_location_note">JPEG kopyaları her pikseli korur; yalnızca GPS verisi kaldırılır. Konumu olmayan fotoğraflar atlanır.</string>
+    <string name="tools_stitch_note">Seçtiğin sırayla. Hepsi en dar görselin genişliğini alır; hiçbir şey esnetilmez ya da büyütülmez.</string>
+    <string name="tools_gif_size">Boyut</string>
+    <string name="tools_gif_part">Videonun bölümü (en çok 10 sn)</string>
+    <string name="tools_gif_delay">Fotoğraf başına süre</string>
+    <string name="tools_gif_note">GIF’lerde en çok 256 renk vardır ve ses yoktur; fotoğraflar biraz grenli görünebilir.</string>
+    <string name="tools_trash_originals">Sonra orijinalleri Android çöp kutusuna taşı</string>
+    <string name="tools_trash_note">Varsayılan olarak kapalı. Android tüm dosyalar için bir kez sorar; yaklaşık 30 gün geri yüklenebilir. Alan ancak Android çöp kutusunu boşalttığında açılır.</string>
+    <string name="tools_sizes">Ölçülen: önce %1$s, sonra %2$s</string>
+    <string name="tools_freed_later">Android çöp kutusunu boşalttığında yaklaşık %1$s açılacak.</string>
+    <string name="tools_originals_kept">Orijinallerin değişmedi; yer açılmadı.</string>
+    <plurals name="tools_selected">
+        <item quantity="one">%1$d dosya seçildi</item>
+        <item quantity="other">%1$d dosya seçildi</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="one">%1$d yeni kopya kaydedildi.</item>
+        <item quantity="other">%1$d yeni kopya kaydedildi.</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="one">%1$d atlandı (yapılacak bir şey yok ya da video).</item>
+        <item quantity="other">%1$d atlandı (yapılacak bir şey yok ya da video).</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="one">%1$d dosya işlenemedi.</item>
+        <item quantity="other">%1$d dosya işlenemedi.</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="one">%1$d dosyanın boyutu bilinmiyor; toplama katılmadı.</item>
+        <item quantity="other">%1$d dosyanın boyutu bilinmiyor; toplama katılmadı.</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="one">%1$d orijinal Android çöp kutusunda.</item>
+        <item quantity="other">%1$d orijinal Android çöp kutusunda.</item>
+    </plurals>
+    <string name="tools_gif_fit">Tüm görüntü</string>
+    <string name="tools_gif_fill">Doldur</string>
 </resources>

@@ -69,6 +69,7 @@ Keine Bildanalyse, keine automatischen Werte, keine Werbung im Editor; Werbe-Anf
 | Ton als M4A | MediaStore `Music/PhotoMaid/` | Ergebnis „Ton als M4A speichern“ | nein |
 | Zusammengefügtes Video / Diashow (neue Datei) | MediaStore `Movies/PhotoMaid/` | Ergebnis (gilt als „Behalten“) | nein |
 | Musikdatei (nur Lesezugriff über die Systemauswahl, dauerhafte Leseberechtigung für den Export) | bleibt am Ort | Tonspur des Films | nein |
+| Werkzeug-Ergebnisse (verkleinerte/umgewandelte Kopien, Kopien ohne Standort, zusammengefügte Screenshots, GIF) | MediaStore: Ordner des Originals bzw. `Pictures/PhotoMaid/` | neue Dateien (gelten als „Behalten“); Originale nur auf Wunsch in den Android-Papierkorb | nein |
 | Standbild aus Video | Ordner des Videos | neues Foto (gilt als „Behalten“) | nein |
 | Export-Fortschritt | Benachrichtigung (Vordergrunddienst, lokal) | Export läuft weiter, wenn der Editor geschlossen wird | nein |
 

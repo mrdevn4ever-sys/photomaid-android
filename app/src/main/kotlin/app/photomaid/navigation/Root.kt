@@ -10,6 +10,9 @@ import app.photomaid.feature.library.FolderTarget
 import app.photomaid.feature.library.HiddenScreen
 import app.photomaid.feature.studio.MovieRequest
 import app.photomaid.feature.studio.MovieRequests
+import app.photomaid.feature.studio.ToolRequest
+import app.photomaid.feature.studio.ToolRequests
+import app.photomaid.feature.studio.ToolsScreen
 import app.photomaid.feature.studio.MovieScreen
 import app.photomaid.feature.cleanup.SystemTrashScreen
 import app.photomaid.feature.library.SlideshowRequest
@@ -161,6 +164,7 @@ interface Nav {
     fun openSlideshow(request: SlideshowRequest) {}
     /** Studio P6: Video zusammenfügen / Diashow als Video. */
     fun openMovie(request: MovieRequest) {}
+    fun openTool(request: ToolRequest) {}
     fun openSettings()
     fun openPro()
     fun openPrivacy()
@@ -176,7 +180,7 @@ object Routes {
     const val PRIVACY = "privacy"; const val HELP = "help"; const val BASKET_MODAL = "basketModal"
     const val SOURCES_MODAL = "sourcesModal"; const val EXCLUDED = "excluded"; const val MONTHS = "months"
     const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"; const val STUDIO = "studio"
-    const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"; const val FOLDER = "folder/{target}"; const val HIDDEN = "hidden"; const val SLIDESHOW = "slideshow/{id}"; const val SYSTEM_TRASH = "systemTrash"; const val MOVIE = "movie/{id}"
+    const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"; const val FOLDER = "folder/{target}"; const val HIDDEN = "hidden"; const val SLIDESHOW = "slideshow/{id}"; const val SYSTEM_TRASH = "systemTrash"; const val MOVIE = "movie/{id}"; const val TOOLS = "tools/{id}"
     const val PICKER = "picker/{id}"; const val COLLAGE = "collage/{id}"
     fun editor(id: String) = "editor/$id"
     fun grid(id: String) = "grid/$id"
@@ -272,6 +276,7 @@ private fun RootNav(app: AppModel) {
                 ViewerRequests.map[request.id] = request; root.navigate("viewer/${request.id}")
             }
             override fun openMovie(request: MovieRequest) { MovieRequests.map[request.id] = request; root.navigate("movie/${request.id}") }
+            override fun openTool(request: ToolRequest) { ToolRequests.map[request.id] = request; root.navigate("tools/${request.id}") }
             override fun openSlideshow(request: SlideshowRequest) {
                 SlideshowRequests.map[request.id] = request; root.navigate("slideshow/${request.id}")
             }
@@ -370,6 +375,13 @@ private fun RootNav(app: AppModel) {
             val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
             if (req == null) LaunchedEffect(entry) { close() }
             else MovieScreen(req, nav, onClose = { key?.let { MovieRequests.map.remove(it) }; close() })
+        }
+        composable(Routes.TOOLS) { entry ->
+            val key = entry.arguments?.getString("id")
+            val req = key?.let { ToolRequests.map[it] }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() }
+            else ToolsScreen(req, nav, onClose = { key?.let { ToolRequests.map.remove(it) }; close() })
         }
         composable(Routes.SLIDESHOW) { entry ->
             val key = entry.arguments?.getString("id")

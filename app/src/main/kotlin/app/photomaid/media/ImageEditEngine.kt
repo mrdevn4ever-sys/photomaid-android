@@ -247,12 +247,15 @@ class ImageEditEngine(private val context: Context) {
      * 2) normal: in der benötigten Auflösung dekodieren (Verkleinern übernimmt der Decoder), rendern, kodieren,
      * 3) zu wenig Speicher: nur den benötigten Bereich dekodieren (Ausschnitt), sonst [EditError.TooLarge].
      */
-    suspend fun export(uri: Uri, mime: String?, recipe: EditRecipe, full: PxSize, removeLocation: Boolean, softwareTag: String): EditExport =
+    suspend fun export(uri: Uri, mime: String?, recipe: EditRecipe, full: PxSize, removeLocation: Boolean, softwareTag: String,
+                       /** P7: Zielformat (Umwandeln) und Qualität (Komprimieren); `null` = wie bisher. */
+                       formatOverride: EditFormat? = null, quality: Int? = null): EditExport =
         withContext(io) {
-            val format = EditFormat.forSource(mime)
+            val format = formatOverride ?: EditFormat.forSource(mime)
+            val q = (quality ?: EditFormat.JPEG_QUALITY).coerceIn(40, 100)
             val out = File(context.cacheDir, "edit_${System.nanoTime()}.${format.extension}")
             try {
-                if (recipe.isOrientationOnly && mime.equals("image/jpeg", true)) {
+                if (recipe.isOrientationOnly && mime.equals("image/jpeg", true) && format == EditFormat.JPEG && quality == null) {
                     input(uri)?.use { i -> out.outputStream().use { i.copyTo(it) } } ?: throw EditError.Unreadable()
                     val ex = ExifInterface(out)
                     // Eigene Rechnung statt ExifInterface.rotate(): die bricht bei fehlender/0-Ausrichtung ab.
@@ -286,9 +289,9 @@ class ImageEditEngine(private val context: Context) {
                 bitmap.recycle()
                 out.outputStream().use { o ->
                     val ok = when (format) {
-                        EditFormat.JPEG -> rendered.compress(Bitmap.CompressFormat.JPEG, EditFormat.JPEG_QUALITY, o)
+                        EditFormat.JPEG -> rendered.compress(Bitmap.CompressFormat.JPEG, q, o)
                         EditFormat.PNG -> rendered.compress(Bitmap.CompressFormat.PNG, 100, o)
-                        EditFormat.WEBP -> rendered.compress(Bitmap.CompressFormat.WEBP_LOSSY, EditFormat.JPEG_QUALITY, o)
+                        EditFormat.WEBP -> rendered.compress(Bitmap.CompressFormat.WEBP_LOSSY, q, o)
                     }
                     if (!ok) throw EditError.WriteFailed("encode")
                 }
@@ -353,6 +356,13 @@ class ImageEditEngine(private val context: Context) {
         // Bitmap-Pixel → Ziel-Skalierung.
         Triple(oriented, area, scale * area.width() / oriented.width)
     }.getOrNull()
+
+    /** Hat das Foto einen Standort in den EXIF-Daten? `false` auch bei unlesbaren Dateien (keine Vermutung). */
+    /** Verkleinert, passend in [box] (Seitenverhältnis bleibt, nie hochskaliert); `null` = nicht lesbar. */
+    suspend fun decodeScaled(uri: Uri, box: PxSize): Bitmap? =
+        runCatching { loadPreview(uri, null, max(1, max(box.width, box.height))).preview }.getOrNull()
+
+    fun hasLocation(uri: Uri): Boolean = runCatching { input(uri)?.use { ExifInterface(it).latLong != null } }.getOrNull() == true
 
     private fun clearLocation(ex: ExifInterface) {
         for (t in GPS_TAGS) ex.setAttribute(t, null)

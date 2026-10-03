@@ -5,6 +5,12 @@ import kotlinx.coroutines.Dispatchers
 import app.photomaid.core.studio.VideoRules
 import androidx.compose.material.icons.rounded.Slideshow
 import androidx.compose.material.icons.rounded.Movie
+import androidx.compose.material.icons.rounded.PhotoSizeSelectSmall
+import androidx.compose.material.icons.rounded.SwapHoriz
+import androidx.compose.material.icons.rounded.LocationOff
+import androidx.compose.material.icons.rounded.ViewDay
+import androidx.compose.material.icons.rounded.Gif
+import app.photomaid.core.batch.GifPlan
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -124,6 +130,31 @@ fun StudioScreen(nav: Nav) {
                         nav.openPicker(PickRequest(UUID.randomUUID().toString(), photos = true, videos = true, min = 1, max = 1, title = R.string.studio_pick_edit) { ids ->
                             ids.firstOrNull()?.let(nav::openEditor)
                         })
+                    }
+                }
+            }
+            // P7: Werkzeuge – immer neue Dateien, nie eine Entscheidung über die Quellen.
+            Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
+                SectionTitle(stringResource(R.string.tools_header))
+                RowGroup {
+                    val tools = listOf(
+                        Triple(ToolKind.RESIZE, Icons.Rounded.PhotoSizeSelectSmall, R.string.tools_resize to R.string.tools_resize_sub),
+                        Triple(ToolKind.CONVERT, Icons.Rounded.SwapHoriz, R.string.tools_convert to R.string.tools_convert_sub),
+                        Triple(ToolKind.STRIP_LOCATION, Icons.Rounded.LocationOff, R.string.tools_location to R.string.tools_location_sub),
+                        Triple(ToolKind.STITCH, Icons.Rounded.ViewDay, R.string.tools_stitch to R.string.tools_stitch_sub),
+                        Triple(ToolKind.GIF, Icons.Rounded.Gif, R.string.tools_gif to R.string.tools_gif_sub),
+                    )
+                    tools.forEachIndexed { i, (kind, icon, texts) ->
+                        if (i > 0) RowDivider(RowDividerInset)
+                        ListRow(icon, stringResource(texts.first), Modifier.testTag("studio.tool.${kind.name}"), tint = c.accent,
+                            tile = c.accent.copy(alpha = 0.13f), subtitle = stringResource(texts.second), enabled = access.canRead) {
+                            val gif = kind == ToolKind.GIF
+                            nav.openPicker(PickRequest(UUID.randomUUID().toString(), photos = true, videos = gif,
+                                min = if (kind == ToolKind.STITCH) 2 else 1, max = if (gif) GifPlan.MAX_FRAMES else 500,
+                                title = if (gif) R.string.tools_pick_gif else R.string.tools_pick, library = true) { ids ->
+                                nav.openTool(ToolRequest(UUID.randomUUID().toString(), kind, ids))
+                            })
+                        }
                     }
                 }
             }

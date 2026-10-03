@@ -1307,4 +1307,63 @@
     <string name="movie_too_long">总时长最多 30 分钟。请缩短或移除部分片段。</string>
     <string name="movie_discard_title">要放弃此视频吗？</string>
     <string name="movie_discard_text">当前编排将丢失，照片和视频本身保持不变。</string>
+    <string name="tools_header">工具</string>
+    <string name="tools_resize">缩小</string>
+    <string name="tools_resize_sub">一次处理多张照片，另存为新副本</string>
+    <string name="tools_convert">转换</string>
+    <string name="tools_convert_sub">例如 HEIC 转 JPEG，另存为新副本</string>
+    <string name="tools_location">移除位置信息</string>
+    <string name="tools_location_sub">不含 GPS 数据的副本，例如分享前</string>
+    <string name="tools_stitch">拼接截图</string>
+    <string name="tools_stitch_sub">上下拼接为一张长图</string>
+    <string name="tools_gif">制作 GIF</string>
+    <string name="tools_gif_sub">用照片或一段短视频制作</string>
+    <string name="tools_pick">选择照片</string>
+    <string name="tools_pick_gif">选择照片或一个视频</string>
+    <string name="tools_running">正在处理文件…</string>
+    <string name="tools_stitch_saved">已作为新图片保存到 Pictures/PhotoMaid。</string>
+    <string name="tools_gif_saved">GIF 已保存到 Pictures/PhotoMaid（%1$s）。</string>
+    <string name="tools_failed">未成功。原文件未更改。</string>
+    <string name="tools_pro_save">使用 Pro 制作</string>
+    <string name="tools_start">开始</string>
+    <string name="tools_free_limit">Free：每次最多 %1$d 个文件，只处理前 %1$d 个。</string>
+    <string name="tools_long_edge">长边上限</string>
+    <string name="tools_quality">画质</string>
+    <string name="tools_q_high">高</string>
+    <string name="tools_q_balanced">均衡</string>
+    <string name="tools_q_small">更小文件</string>
+    <string name="tools_remove_location">同时移除位置信息</string>
+    <string name="tools_target_format">新格式</string>
+    <string name="tools_convert_note">JPEG 到处都能打开；PNG 保留每个像素，但文件更大。已是此格式的文件会跳过。</string>
+    <string name="tools_location_note">JPEG 副本保留每个像素，只移除 GPS 数据。没有位置信息的照片会跳过。</string>
+    <string name="tools_stitch_note">按所选顺序拼接。全部采用最窄图片的宽度，不拉伸、不放大。</string>
+    <string name="tools_gif_size">尺寸</string>
+    <string name="tools_gif_part">视频片段（最长 10 秒）</string>
+    <string name="tools_gif_delay">每张照片时长</string>
+    <string name="tools_gif_note">GIF 最多 256 色且没有声音，照片可能略显颗粒感。</string>
+    <string name="tools_trash_originals">完成后将原文件移到 Android 回收站</string>
+    <string name="tools_trash_note">默认关闭。Android 会对所有文件确认一次；约 30 天内可恢复。只有在 Android 清空回收站后才会释放空间。</string>
+    <string name="tools_sizes">实测：处理前 %1$s，处理后 %2$s</string>
+    <string name="tools_freed_later">Android 清空回收站后约可释放 %1$s。</string>
+    <string name="tools_originals_kept">原文件未更改，未释放空间。</string>
+    <plurals name="tools_selected">
+        <item quantity="other">已选择 %1$d 个文件</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="other">已保存 %1$d 个新副本。</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="other">已跳过 %1$d 个（无需处理或为视频）。</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="other">%1$d 个无法处理。</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="other">%1$d 个文件大小未知，未计入总数。</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="other">%1$d 个原文件在 Android 回收站中。</item>
+    </plurals>
+    <string name="tools_gif_fit">完整画面</string>
+    <string name="tools_gif_fill">填满</string>
 </resources>

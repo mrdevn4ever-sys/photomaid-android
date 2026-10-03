@@ -68,7 +68,10 @@ class FakeMediaLibrary(
     /** G4: Dateiname/MIME je Medium überschreiben (RAW+JPEG-Paare). */
     val names = mutableMapOf<String, String>()
     val mimes = mutableMapOf<String, String>()
-    val all: List<MediaAsset> get() = base.mapIndexed { i, a -> a.copy(isFavorite = favorites[a.id] ?: a.isFavorite, relativePath = paths[a.id] ?: a.relativePath ?: "DCIM/Camera/",
+    /** P7: gemeldete Pixelmaße je Medium überschreiben (z. B. echte Dateigröße 300 × 400). */
+    val dims = mutableMapOf<String, Pair<Int, Int>>()
+    val all: List<MediaAsset> get() = base.mapIndexed { i, a -> a.copy(pixelWidth = dims[a.id]?.first ?: a.pixelWidth, pixelHeight = dims[a.id]?.second ?: a.pixelHeight,
+        isFavorite = favorites[a.id] ?: a.isFavorite, relativePath = paths[a.id] ?: a.relativePath ?: "DCIM/Camera/",
         displayName = names[a.id] ?: a.displayName, mimeType = mimes[a.id] ?: a.mimeType,
         creationDate = takenAt[i] ?: a.creationDate, dateAdded = addedAt[i] ?: a.dateAdded ?: a.creationDate) }
 
@@ -314,6 +317,8 @@ class RecordingNav : Nav {
     override fun openSlideshow(request: app.photomaid.feature.library.SlideshowRequest) { events += "slideshow"; slideshows += request }
     val movies = mutableListOf<app.photomaid.feature.studio.MovieRequest>()
     override fun openMovie(request: app.photomaid.feature.studio.MovieRequest) { events += "movie"; movies += request }
+    val tools = mutableListOf<app.photomaid.feature.studio.ToolRequest>()
+    override fun openTool(request: app.photomaid.feature.studio.ToolRequest) { events += "tool:${request.kind}"; tools += request }
     override fun openPicker(request: app.photomaid.feature.studio.PickRequest) { events += "picker"; picks += request }
     override fun openSettings() { events += "settings" }
     override fun openPro() { events += "pro" }

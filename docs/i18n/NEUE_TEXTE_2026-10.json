@@ -11141,6 +11141,744 @@
    "tr": "Düzenlemen kaybolur. Fotoğraflar ve videolar değişmez.",
    "uk": "Вашу добірку буде втрачено. Самі фото й відео не зміняться.",
    "zh": "当前编排将丢失，照片和视频本身保持不变。"
+  },
+  "tools_header": {
+   "en": "Tools",
+   "de": "Werkzeuge",
+   "ar": "الأدوات",
+   "es": "Herramientas",
+   "fr": "Outils",
+   "it": "Strumenti",
+   "ja": "ツール",
+   "ko": "도구",
+   "nl": "Hulpmiddelen",
+   "pl": "Narzędzia",
+   "pt": "Ferramentas",
+   "ro": "Instrumente",
+   "ru": "Инструменты",
+   "tr": "Araçlar",
+   "uk": "Інструменти",
+   "zh": "工具"
+  },
+  "tools_resize": {
+   "en": "Make smaller",
+   "de": "Verkleinern",
+   "ar": "تصغير",
+   "es": "Reducir",
+   "fr": "Réduire",
+   "it": "Riduci",
+   "ja": "縮小",
+   "ko": "축소",
+   "nl": "Verkleinen",
+   "pl": "Zmniejsz",
+   "pt": "Reduzir",
+   "ro": "Micșorează",
+   "ru": "Уменьшить",
+   "tr": "Küçült",
+   "uk": "Зменшити",
+   "zh": "缩小"
+  },
+  "tools_resize_sub": {
+   "en": "Many photos at once, as new copies",
+   "de": "Viele Fotos auf einmal, als neue Kopien",
+   "ar": "صور كثيرة دفعة واحدة، كنسخ جديدة",
+   "es": "Muchas fotos a la vez, como copias nuevas",
+   "fr": "Plusieurs photos à la fois, en nouvelles copies",
+   "it": "Molte foto insieme, come nuove copie",
+   "ja": "まとめて縮小し、新しいコピーとして保存",
+   "ko": "여러 사진을 한 번에 새 사본으로",
+   "nl": "Veel foto’s tegelijk, als nieuwe kopieën",
+   "pl": "Wiele zdjęć naraz, jako nowe kopie",
+   "pt": "Muitas fotos de uma vez, como novas cópias",
+   "ro": "Multe fotografii deodată, ca și copii noi",
+   "ru": "Сразу много фото, как новые копии",
+   "tr": "Birçok fotoğraf tek seferde, yeni kopya olarak",
+   "uk": "Багато фото одразу, як нові копії",
+   "zh": "一次处理多张照片，另存为新副本"
+  },
+  "tools_convert": {
+   "en": "Convert",
+   "de": "Umwandeln",
+   "ar": "تحويل",
+   "es": "Convertir",
+   "fr": "Convertir",
+   "it": "Converti",
+   "ja": "変換",
+   "ko": "변환",
+   "nl": "Omzetten",
+   "pl": "Konwertuj",
+   "pt": "Converter",
+   "ro": "Convertește",
+   "ru": "Преобразовать",
+   "tr": "Dönüştür",
+   "uk": "Перетворити",
+   "zh": "转换"
+  },
+  "tools_convert_sub": {
+   "en": "e.g. HEIC to JPEG, as new copies",
+   "de": "z. B. HEIC in JPEG, als neue Kopien",
+   "ar": "مثلًا HEIC إلى JPEG، كنسخ جديدة",
+   "es": "p. ej. HEIC a JPEG, como copias nuevas",
+   "fr": "p. ex. HEIC en JPEG, en nouvelles copies",
+   "it": "ad es. da HEIC a JPEG, come nuove copie",
+   "ja": "例：HEICをJPEGに、新しいコピーとして",
+   "ko": "예: HEIC를 JPEG로, 새 사본으로",
+   "nl": "bijv. HEIC naar JPEG, als nieuwe kopieën",
+   "pl": "np. HEIC na JPEG, jako nowe kopie",
+   "pt": "p. ex. HEIC para JPEG, como novas cópias",
+   "ro": "de ex. HEIC în JPEG, ca și copii noi",
+   "ru": "например, HEIC в JPEG, как новые копии",
+   "tr": "örn. HEIC’ten JPEG’e, yeni kopya olarak",
+   "uk": "наприклад, HEIC у JPEG, як нові копії",
+   "zh": "例如 HEIC 转 JPEG，另存为新副本"
+  },
+  "tools_location": {
+   "en": "Remove location",
+   "de": "Standort entfernen",
+   "ar": "إزالة الموقع",
+   "es": "Quitar ubicación",
+   "fr": "Retirer la position",
+   "it": "Rimuovi posizione",
+   "ja": "位置情報を削除",
+   "ko": "위치 정보 제거",
+   "nl": "Locatie verwijderen",
+   "pl": "Usuń lokalizację",
+   "pt": "Remover localização",
+   "ro": "Elimină locația",
+   "ru": "Удалить геоданные",
+   "tr": "Konumu kaldır",
+   "uk": "Видалити геодані",
+   "zh": "移除位置信息"
+  },
+  "tools_location_sub": {
+   "en": "Copies without GPS data, e.g. before sharing",
+   "de": "Kopien ohne GPS-Daten, z. B. vor dem Teilen",
+   "ar": "نسخ بلا بيانات GPS، مثلًا قبل المشاركة",
+   "es": "Copias sin datos GPS, p. ej. antes de compartir",
+   "fr": "Copies sans données GPS, p. ex. avant de partager",
+   "it": "Copie senza dati GPS, ad es. prima di condividere",
+   "ja": "GPS情報なしのコピー（共有前などに）",
+   "ko": "GPS 정보 없는 사본(공유 전 등)",
+   "nl": "Kopieën zonder gps-gegevens, bijv. vóór het delen",
+   "pl": "Kopie bez danych GPS, np. przed udostępnieniem",
+   "pt": "Cópias sem dados GPS, p. ex. antes de partilhar",
+   "ro": "Copii fără date GPS, de ex. înainte de partajare",
+   "ru": "Копии без GPS, например перед отправкой",
+   "tr": "GPS verisi olmayan kopyalar, örn. paylaşmadan önce",
+   "uk": "Копії без GPS, наприклад перед надсиланням",
+   "zh": "不含 GPS 数据的副本，例如分享前"
+  },
+  "tools_stitch": {
+   "en": "Join screenshots",
+   "de": "Screenshots zusammenfügen",
+   "ar": "دمج لقطات الشاشة",
+   "es": "Unir capturas",
+   "fr": "Assembler des captures",
+   "it": "Unisci screenshot",
+   "ja": "スクリーンショットをつなげる",
+   "ko": "스크린샷 이어 붙이기",
+   "nl": "Schermafbeeldingen samenvoegen",
+   "pl": "Połącz zrzuty ekranu",
+   "pt": "Juntar capturas de ecrã",
+   "ro": "Unește capturi de ecran",
+   "ru": "Склеить скриншоты",
+   "tr": "Ekran görüntülerini birleştir",
+   "uk": "Склеїти знімки екрана",
+   "zh": "拼接截图"
+  },
+  "tools_stitch_sub": {
+   "en": "One below the other, as one long image",
+   "de": "Untereinander, als ein langes Bild",
+   "ar": "واحدة تحت الأخرى، كصورة طويلة واحدة",
+   "es": "Una debajo de otra, como una imagen larga",
+   "fr": "Les unes sous les autres, en une longue image",
+   "it": "Una sotto l’altra, come un’unica immagine lunga",
+   "ja": "縦に並べて1枚の長い画像に",
+   "ko": "위아래로 이어 긴 이미지 하나로",
+   "nl": "Onder elkaar, als één lange afbeelding",
+   "pl": "Jeden pod drugim, jako jeden długi obraz",
+   "pt": "Umas por baixo das outras, numa imagem longa",
+   "ro": "Una sub alta, ca o singură imagine lungă",
+   "ru": "Друг под другом, одним длинным изображением",
+   "tr": "Alt alta, tek uzun bir görsel olarak",
+   "uk": "Одне під одним, одним довгим зображенням",
+   "zh": "上下拼接为一张长图"
+  },
+  "tools_gif": {
+   "en": "Create GIF",
+   "de": "GIF erstellen",
+   "ar": "إنشاء GIF",
+   "es": "Crear GIF",
+   "fr": "Créer un GIF",
+   "it": "Crea GIF",
+   "ja": "GIFを作成",
+   "ko": "GIF 만들기",
+   "nl": "GIF maken",
+   "pl": "Utwórz GIF",
+   "pt": "Criar GIF",
+   "ro": "Creează GIF",
+   "ru": "Создать GIF",
+   "tr": "GIF oluştur",
+   "uk": "Створити GIF",
+   "zh": "制作 GIF"
+  },
+  "tools_gif_sub": {
+   "en": "From photos or a short part of a video",
+   "de": "Aus Fotos oder einem kurzen Videoteil",
+   "ar": "من صور أو جزء قصير من فيديو",
+   "es": "Con fotos o un fragmento corto de vídeo",
+   "fr": "À partir de photos ou d’un court extrait vidéo",
+   "it": "Da foto o da un breve tratto di video",
+   "ja": "写真または動画の短い部分から",
+   "ko": "사진이나 동영상의 짧은 구간으로",
+   "nl": "Van foto’s of een kort stukje video",
+   "pl": "Ze zdjęć lub krótkiego fragmentu filmu",
+   "pt": "A partir de fotos ou de um excerto curto de vídeo",
+   "ro": "Din fotografii sau dintr-o parte scurtă de videoclip",
+   "ru": "Из фото или короткого фрагмента видео",
+   "tr": "Fotoğraflardan ya da videonun kısa bir bölümünden",
+   "uk": "З фото або короткого фрагмента відео",
+   "zh": "用照片或一段短视频制作"
+  },
+  "tools_pick": {
+   "en": "Choose photos",
+   "de": "Fotos wählen",
+   "ar": "اختر صورًا",
+   "es": "Elegir fotos",
+   "fr": "Choisir des photos",
+   "it": "Scegli foto",
+   "ja": "写真を選択",
+   "ko": "사진 선택",
+   "nl": "Foto’s kiezen",
+   "pl": "Wybierz zdjęcia",
+   "pt": "Escolher fotos",
+   "ro": "Alege fotografii",
+   "ru": "Выберите фото",
+   "tr": "Fotoğraf seç",
+   "uk": "Виберіть фото",
+   "zh": "选择照片"
+  },
+  "tools_pick_gif": {
+   "en": "Choose photos or one video",
+   "de": "Fotos oder ein Video wählen",
+   "ar": "اختر صورًا أو فيديو واحدًا",
+   "es": "Elegir fotos o un vídeo",
+   "fr": "Choisir des photos ou une vidéo",
+   "it": "Scegli foto o un video",
+   "ja": "写真または動画1本を選択",
+   "ko": "사진 또는 동영상 1개 선택",
+   "nl": "Foto’s of één video kiezen",
+   "pl": "Wybierz zdjęcia lub jeden film",
+   "pt": "Escolher fotos ou um vídeo",
+   "ro": "Alege fotografii sau un videoclip",
+   "ru": "Выберите фото или одно видео",
+   "tr": "Fotoğraf ya da bir video seç",
+   "uk": "Виберіть фото або одне відео",
+   "zh": "选择照片或一个视频"
+  },
+  "tools_running": {
+   "en": "Working on your files…",
+   "de": "Dateien werden bearbeitet …",
+   "ar": "جارٍ العمل على ملفاتك…",
+   "es": "Procesando tus archivos…",
+   "fr": "Traitement de vos fichiers…",
+   "it": "Elaborazione dei file…",
+   "ja": "ファイルを処理中…",
+   "ko": "파일 처리 중…",
+   "nl": "Bestanden worden verwerkt…",
+   "pl": "Przetwarzanie plików…",
+   "pt": "A processar os ficheiros…",
+   "ro": "Se procesează fișierele…",
+   "ru": "Обработка файлов…",
+   "tr": "Dosyalar işleniyor…",
+   "uk": "Обробка файлів…",
+   "zh": "正在处理文件…"
+  },
+  "tools_stitch_saved": {
+   "en": "Saved as a new image in Pictures/PhotoMaid.",
+   "de": "Als neues Bild in Pictures/PhotoMaid gespeichert.",
+   "ar": "حُفظت كصورة جديدة في Pictures/PhotoMaid.",
+   "es": "Guardada como imagen nueva en Pictures/PhotoMaid.",
+   "fr": "Enregistrée comme nouvelle image dans Pictures/PhotoMaid.",
+   "it": "Salvata come nuova immagine in Pictures/PhotoMaid.",
+   "ja": "新しい画像として Pictures/PhotoMaid に保存しました。",
+   "ko": "Pictures/PhotoMaid에 새 이미지로 저장했습니다.",
+   "nl": "Opgeslagen als nieuwe afbeelding in Pictures/PhotoMaid.",
+   "pl": "Zapisano jako nowy obraz w Pictures/PhotoMaid.",
+   "pt": "Guardada como nova imagem em Pictures/PhotoMaid.",
+   "ro": "Salvată ca imagine nouă în Pictures/PhotoMaid.",
+   "ru": "Сохранено как новое изображение в Pictures/PhotoMaid.",
+   "tr": "Pictures/PhotoMaid içine yeni görsel olarak kaydedildi.",
+   "uk": "Збережено як нове зображення в Pictures/PhotoMaid.",
+   "zh": "已作为新图片保存到 Pictures/PhotoMaid。"
+  },
+  "tools_gif_saved": {
+   "en": "GIF saved in Pictures/PhotoMaid (%1$s).",
+   "de": "GIF in Pictures/PhotoMaid gespeichert (%1$s).",
+   "ar": "حُفظ ملف GIF في Pictures/PhotoMaid ‏(%1$s).",
+   "es": "GIF guardado en Pictures/PhotoMaid (%1$s).",
+   "fr": "GIF enregistré dans Pictures/PhotoMaid (%1$s).",
+   "it": "GIF salvata in Pictures/PhotoMaid (%1$s).",
+   "ja": "GIFを Pictures/PhotoMaid に保存しました（%1$s）。",
+   "ko": "GIF를 Pictures/PhotoMaid에 저장했습니다(%1$s).",
+   "nl": "GIF opgeslagen in Pictures/PhotoMaid (%1$s).",
+   "pl": "GIF zapisano w Pictures/PhotoMaid (%1$s).",
+   "pt": "GIF guardado em Pictures/PhotoMaid (%1$s).",
+   "ro": "GIF salvat în Pictures/PhotoMaid (%1$s).",
+   "ru": "GIF сохранён в Pictures/PhotoMaid (%1$s).",
+   "tr": "GIF, Pictures/PhotoMaid içine kaydedildi (%1$s).",
+   "uk": "GIF збережено в Pictures/PhotoMaid (%1$s).",
+   "zh": "GIF 已保存到 Pictures/PhotoMaid（%1$s）。"
+  },
+  "tools_failed": {
+   "en": "That didn’t work. Your originals are unchanged.",
+   "de": "Das hat nicht geklappt. Deine Originale sind unverändert.",
+   "ar": "لم ينجح ذلك. أصولك لم تتغير.",
+   "es": "No ha funcionado. Tus originales no han cambiado.",
+   "fr": "Cela n’a pas fonctionné. Vos originaux sont inchangés.",
+   "it": "Non ha funzionato. I tuoi originali sono invariati.",
+   "ja": "うまくいきませんでした。元のファイルは変更されていません。",
+   "ko": "실패했습니다. 원본은 그대로입니다.",
+   "nl": "Dat is niet gelukt. Je originelen zijn ongewijzigd.",
+   "pl": "Nie udało się. Oryginały są bez zmian.",
+   "pt": "Não funcionou. Os originais não foram alterados.",
+   "ro": "Nu a funcționat. Originalele sunt neschimbate.",
+   "ru": "Не получилось. Оригиналы не изменены.",
+   "tr": "Olmadı. Orijinallerin değişmedi.",
+   "uk": "Не вдалося. Оригінали не змінено.",
+   "zh": "未成功。原文件未更改。"
+  },
+  "tools_pro_save": {
+   "en": "Create with Pro",
+   "de": "Mit Pro erstellen",
+   "ar": "إنشاء مع Pro",
+   "es": "Crear con Pro",
+   "fr": "Créer avec Pro",
+   "it": "Crea con Pro",
+   "ja": "Proで作成",
+   "ko": "Pro로 만들기",
+   "nl": "Maken met Pro",
+   "pl": "Utwórz z Pro",
+   "pt": "Criar com Pro",
+   "ro": "Creează cu Pro",
+   "ru": "Создать с Pro",
+   "tr": "Pro ile oluştur",
+   "uk": "Створити з Pro",
+   "zh": "使用 Pro 制作"
+  },
+  "tools_start": {
+   "en": "Start",
+   "de": "Starten",
+   "ar": "ابدأ",
+   "es": "Empezar",
+   "fr": "Lancer",
+   "it": "Avvia",
+   "ja": "開始",
+   "ko": "시작",
+   "nl": "Starten",
+   "pl": "Rozpocznij",
+   "pt": "Iniciar",
+   "ro": "Pornește",
+   "ru": "Начать",
+   "tr": "Başlat",
+   "uk": "Почати",
+   "zh": "开始"
+  },
+  "tools_free_limit": {
+   "en": "Free: up to %1$d files per run – only the first %1$d will be processed.",
+   "de": "Free: bis %1$d Dateien je Durchgang – nur die ersten %1$d werden bearbeitet.",
+   "ar": "المجاني: حتى %1$d ملفات في كل مرة – ستُعالَج أول %1$d فقط.",
+   "es": "Free: hasta %1$d archivos por vez; solo se procesarán los %1$d primeros.",
+   "fr": "Free : jusqu’à %1$d fichiers par passage – seuls les %1$d premiers seront traités.",
+   "it": "Free: fino a %1$d file per volta – verranno elaborati solo i primi %1$d.",
+   "ja": "Free：1回につき%1$dファイルまで。最初の%1$d件だけ処理されます。",
+   "ko": "Free: 한 번에 %1$d개까지 – 처음 %1$d개만 처리됩니다.",
+   "nl": "Free: tot %1$d bestanden per keer – alleen de eerste %1$d worden verwerkt.",
+   "pl": "Free: do %1$d plików naraz – zostanie przetworzonych tylko pierwszych %1$d.",
+   "pt": "Free: até %1$d ficheiros de cada vez – só os primeiros %1$d serão processados.",
+   "ro": "Free: până la %1$d fișiere pe rulare – se procesează doar primele %1$d.",
+   "ru": "Free: до %1$d файлов за раз – будут обработаны только первые %1$d.",
+   "tr": "Free: tek seferde en çok %1$d dosya – yalnızca ilk %1$d dosya işlenir.",
+   "uk": "Free: до %1$d файлів за раз – буде оброблено лише перші %1$d.",
+   "zh": "Free：每次最多 %1$d 个文件，只处理前 %1$d 个。"
+  },
+  "tools_long_edge": {
+   "en": "Longest side at most",
+   "de": "Längste Seite höchstens",
+   "ar": "أطول ضلع بحد أقصى",
+   "es": "Lado más largo como máximo",
+   "fr": "Plus grand côté au maximum",
+   "it": "Lato più lungo al massimo",
+   "ja": "長辺の上限",
+   "ko": "긴 변 최대",
+   "nl": "Langste zijde maximaal",
+   "pl": "Najdłuższy bok maksymalnie",
+   "pt": "Lado maior no máximo",
+   "ro": "Latura cea mai lungă maximum",
+   "ru": "Длинная сторона не более",
+   "tr": "En uzun kenar en fazla",
+   "uk": "Довша сторона не більше",
+   "zh": "长边上限"
+  },
+  "tools_quality": {
+   "en": "Quality",
+   "de": "Qualität",
+   "ar": "الجودة",
+   "es": "Calidad",
+   "fr": "Qualité",
+   "it": "Qualità",
+   "ja": "画質",
+   "ko": "화질",
+   "nl": "Kwaliteit",
+   "pl": "Jakość",
+   "pt": "Qualidade",
+   "ro": "Calitate",
+   "ru": "Качество",
+   "tr": "Kalite",
+   "uk": "Якість",
+   "zh": "画质"
+  },
+  "tools_q_high": {
+   "en": "High",
+   "de": "Hoch",
+   "ar": "عالية",
+   "es": "Alta",
+   "fr": "Haute",
+   "it": "Alta",
+   "ja": "高",
+   "ko": "높음",
+   "nl": "Hoog",
+   "pl": "Wysoka",
+   "pt": "Alta",
+   "ro": "Înaltă",
+   "ru": "Высокое",
+   "tr": "Yüksek",
+   "uk": "Висока",
+   "zh": "高"
+  },
+  "tools_q_balanced": {
+   "en": "Balanced",
+   "de": "Ausgewogen",
+   "ar": "متوازنة",
+   "es": "Equilibrada",
+   "fr": "Équilibrée",
+   "it": "Bilanciata",
+   "ja": "標準",
+   "ko": "균형",
+   "nl": "Gebalanceerd",
+   "pl": "Zrównoważona",
+   "pt": "Equilibrada",
+   "ro": "Echilibrată",
+   "ru": "Сбалансированное",
+   "tr": "Dengeli",
+   "uk": "Збалансована",
+   "zh": "均衡"
+  },
+  "tools_q_small": {
+   "en": "Smaller file",
+   "de": "Kleinere Datei",
+   "ar": "ملف أصغر",
+   "es": "Archivo más pequeño",
+   "fr": "Fichier plus léger",
+   "it": "File più piccolo",
+   "ja": "小さいファイル",
+   "ko": "작은 파일",
+   "nl": "Kleiner bestand",
+   "pl": "Mniejszy plik",
+   "pt": "Ficheiro mais pequeno",
+   "ro": "Fișier mai mic",
+   "ru": "Файл меньше",
+   "tr": "Daha küçük dosya",
+   "uk": "Менший файл",
+   "zh": "更小文件"
+  },
+  "tools_remove_location": {
+   "en": "Also remove location",
+   "de": "Standort auch entfernen",
+   "ar": "إزالة الموقع أيضًا",
+   "es": "Quitar también la ubicación",
+   "fr": "Retirer aussi la position",
+   "it": "Rimuovi anche la posizione",
+   "ja": "位置情報も削除",
+   "ko": "위치 정보도 제거",
+   "nl": "Ook locatie verwijderen",
+   "pl": "Usuń też lokalizację",
+   "pt": "Remover também a localização",
+   "ro": "Elimină și locația",
+   "ru": "Также удалить геоданные",
+   "tr": "Konumu da kaldır",
+   "uk": "Також видалити геодані",
+   "zh": "同时移除位置信息"
+  },
+  "tools_target_format": {
+   "en": "New format",
+   "de": "Neues Format",
+   "ar": "التنسيق الجديد",
+   "es": "Formato nuevo",
+   "fr": "Nouveau format",
+   "it": "Nuovo formato",
+   "ja": "新しい形式",
+   "ko": "새 형식",
+   "nl": "Nieuw formaat",
+   "pl": "Nowy format",
+   "pt": "Novo formato",
+   "ro": "Format nou",
+   "ru": "Новый формат",
+   "tr": "Yeni biçim",
+   "uk": "Новий формат",
+   "zh": "新格式"
+  },
+  "tools_convert_note": {
+   "en": "JPEG is read everywhere; PNG keeps every pixel but files get bigger. Files already in this format are skipped.",
+   "de": "JPEG kann jedes Gerät öffnen; PNG behält jedes Pixel, die Dateien werden aber größer. Dateien, die schon dieses Format haben, werden übersprungen.",
+   "ar": "يُفتح JPEG في كل مكان؛ يحتفظ PNG بكل بكسل لكن الملفات أكبر. تُتخطّى الملفات التي بهذا التنسيق أصلًا.",
+   "es": "JPEG se abre en todas partes; PNG conserva cada píxel, pero los archivos ocupan más. Se omiten los que ya tienen este formato.",
+   "fr": "Le JPEG s’ouvre partout ; le PNG garde chaque pixel mais les fichiers sont plus lourds. Les fichiers déjà dans ce format sont ignorés.",
+   "it": "Il JPEG si apre ovunque; il PNG mantiene ogni pixel ma i file sono più grandi. I file già in questo formato vengono saltati.",
+   "ja": "JPEGはどこでも開けます。PNGは画素を損ないませんがファイルが大きくなります。すでにこの形式のファイルはスキップします。",
+   "ko": "JPEG는 어디서나 열립니다. PNG는 모든 픽셀을 보존하지만 파일이 커집니다. 이미 이 형식인 파일은 건너뜁니다.",
+   "nl": "JPEG opent overal; PNG behoudt elke pixel, maar bestanden worden groter. Bestanden die al dit formaat hebben, worden overgeslagen.",
+   "pl": "JPEG otworzy każde urządzenie; PNG zachowuje każdy piksel, ale pliki są większe. Pliki w tym formacie są pomijane.",
+   "pt": "O JPEG abre em qualquer lado; o PNG mantém cada píxel, mas os ficheiros ficam maiores. Os que já têm este formato são ignorados.",
+   "ro": "JPEG se deschide oriunde; PNG păstrează fiecare pixel, dar fișierele sunt mai mari. Fișierele deja în acest format sunt omise.",
+   "ru": "JPEG открывается везде; PNG сохраняет каждый пиксель, но файлы больше. Файлы в этом формате пропускаются.",
+   "tr": "JPEG her yerde açılır; PNG her pikseli korur ama dosyalar büyür. Zaten bu biçimdeki dosyalar atlanır.",
+   "uk": "JPEG відкривається всюди; PNG зберігає кожен піксель, але файли більші. Файли в цьому форматі пропускаються.",
+   "zh": "JPEG 到处都能打开；PNG 保留每个像素，但文件更大。已是此格式的文件会跳过。"
+  },
+  "tools_location_note": {
+   "en": "JPEG copies keep every pixel – only the GPS data is removed. Photos without location are skipped.",
+   "de": "JPEG-Kopien behalten jedes Pixel – nur die GPS-Daten werden entfernt. Fotos ohne Standort werden übersprungen.",
+   "ar": "تحتفظ نسخ JPEG بكل بكسل – تُزال بيانات GPS فقط. تُتخطّى الصور التي لا موقع لها.",
+   "es": "Las copias JPEG conservan cada píxel: solo se quitan los datos GPS. Se omiten las fotos sin ubicación.",
+   "fr": "Les copies JPEG gardent chaque pixel : seules les données GPS sont retirées. Les photos sans position sont ignorées.",
+   "it": "Le copie JPEG mantengono ogni pixel: vengono rimossi solo i dati GPS. Le foto senza posizione vengono saltate.",
+   "ja": "JPEGのコピーは画素をそのまま保ち、GPS情報だけを削除します。位置情報のない写真はスキップします。",
+   "ko": "JPEG 사본은 모든 픽셀을 그대로 두고 GPS 정보만 제거합니다. 위치 정보가 없는 사진은 건너뜁니다.",
+   "nl": "JPEG-kopieën behouden elke pixel – alleen de gps-gegevens worden verwijderd. Foto’s zonder locatie worden overgeslagen.",
+   "pl": "Kopie JPEG zachowują każdy piksel – usuwane są tylko dane GPS. Zdjęcia bez lokalizacji są pomijane.",
+   "pt": "As cópias JPEG mantêm cada píxel – só os dados GPS são removidos. As fotos sem localização são ignoradas.",
+   "ro": "Copiile JPEG păstrează fiecare pixel – se elimină doar datele GPS. Fotografiile fără locație sunt omise.",
+   "ru": "Копии JPEG сохраняют каждый пиксель – удаляются только GPS-данные. Фото без геоданных пропускаются.",
+   "tr": "JPEG kopyaları her pikseli korur; yalnızca GPS verisi kaldırılır. Konumu olmayan fotoğraflar atlanır.",
+   "uk": "Копії JPEG зберігають кожен піксель – видаляються лише GPS-дані. Фото без геоданих пропускаються.",
+   "zh": "JPEG 副本保留每个像素，只移除 GPS 数据。没有位置信息的照片会跳过。"
+  },
+  "tools_stitch_note": {
+   "en": "In the order you chose. All get the width of the narrowest image – nothing is stretched or enlarged.",
+   "de": "In der gewählten Reihenfolge. Alle bekommen die Breite des schmalsten Bildes – nichts wird verzerrt oder vergrößert.",
+   "ar": "بالترتيب الذي اخترته. تأخذ كلها عرض أضيق صورة – لا شيء يُشوَّه أو يُكبَّر.",
+   "es": "En el orden elegido. Todas toman el ancho de la imagen más estrecha: nada se deforma ni se amplía.",
+   "fr": "Dans l’ordre choisi. Toutes prennent la largeur de l’image la plus étroite : rien n’est déformé ni agrandi.",
+   "it": "Nell’ordine scelto. Tutte prendono la larghezza dell’immagine più stretta: niente viene deformato o ingrandito.",
+   "ja": "選んだ順に並べます。すべて最も狭い画像の幅に合わせ、引き伸ばしや拡大はしません。",
+   "ko": "선택한 순서대로 이어 붙입니다. 모두 가장 좁은 이미지 너비에 맞추며, 늘이거나 확대하지 않습니다.",
+   "nl": "In de gekozen volgorde. Alles krijgt de breedte van de smalste afbeelding – niets wordt vervormd of vergroot.",
+   "pl": "W wybranej kolejności. Wszystkie dostają szerokość najwęższego obrazu – nic nie jest zniekształcane ani powiększane.",
+   "pt": "Pela ordem escolhida. Todas ficam com a largura da imagem mais estreita – nada é deformado nem ampliado.",
+   "ro": "În ordinea aleasă. Toate primesc lățimea celei mai înguste imagini – nimic nu e deformat sau mărit.",
+   "ru": "В выбранном порядке. Все получают ширину самого узкого изображения – ничего не растягивается и не увеличивается.",
+   "tr": "Seçtiğin sırayla. Hepsi en dar görselin genişliğini alır; hiçbir şey esnetilmez ya da büyütülmez.",
+   "uk": "У вибраному порядку. Усі отримують ширину найвужчого зображення – нічого не розтягується й не збільшується.",
+   "zh": "按所选顺序拼接。全部采用最窄图片的宽度，不拉伸、不放大。"
+  },
+  "tools_gif_size": {
+   "en": "Size",
+   "de": "Größe",
+   "ar": "الحجم",
+   "es": "Tamaño",
+   "fr": "Taille",
+   "it": "Dimensione",
+   "ja": "サイズ",
+   "ko": "크기",
+   "nl": "Grootte",
+   "pl": "Rozmiar",
+   "pt": "Tamanho",
+   "ro": "Dimensiune",
+   "ru": "Размер",
+   "tr": "Boyut",
+   "uk": "Розмір",
+   "zh": "尺寸"
+  },
+  "tools_gif_part": {
+   "en": "Part of the video (max. 10 s)",
+   "de": "Teil des Videos (max. 10 s)",
+   "ar": "جزء من الفيديو (10 ث كحد أقصى)",
+   "es": "Parte del vídeo (máx. 10 s)",
+   "fr": "Partie de la vidéo (10 s max.)",
+   "it": "Parte del video (max 10 s)",
+   "ja": "動画の範囲（最大10秒）",
+   "ko": "동영상 구간(최대 10초)",
+   "nl": "Deel van de video (max. 10 s)",
+   "pl": "Fragment filmu (maks. 10 s)",
+   "pt": "Parte do vídeo (máx. 10 s)",
+   "ro": "Partea din videoclip (max. 10 s)",
+   "ru": "Фрагмент видео (макс. 10 с)",
+   "tr": "Videonun bölümü (en çok 10 sn)",
+   "uk": "Фрагмент відео (макс. 10 с)",
+   "zh": "视频片段（最长 10 秒）"
+  },
+  "tools_gif_delay": {
+   "en": "Time per photo",
+   "de": "Zeit je Foto",
+   "ar": "المدة لكل صورة",
+   "es": "Tiempo por foto",
+   "fr": "Durée par photo",
+   "it": "Tempo per foto",
+   "ja": "1枚あたりの時間",
+   "ko": "사진당 시간",
+   "nl": "Tijd per foto",
+   "pl": "Czas na zdjęcie",
+   "pt": "Tempo por foto",
+   "ro": "Timp pe fotografie",
+   "ru": "Время на фото",
+   "tr": "Fotoğraf başına süre",
+   "uk": "Час на фото",
+   "zh": "每张照片时长"
+  },
+  "tools_gif_note": {
+   "en": "GIFs have at most 256 colours and no sound – photos can look a little grainy.",
+   "de": "GIFs haben höchstens 256 Farben und keinen Ton – Fotos können etwas körnig wirken.",
+   "ar": "تحتوي ملفات GIF على 256 لونًا كحد أقصى ولا صوت – قد تبدو الصور محببة قليلًا.",
+   "es": "Los GIF tienen como máximo 256 colores y no tienen sonido: las fotos pueden verse algo granuladas.",
+   "fr": "Les GIF ont au plus 256 couleurs et pas de son : les photos peuvent paraître un peu granuleuses.",
+   "it": "Le GIF hanno al massimo 256 colori e niente audio: le foto possono sembrare un po’ sgranate.",
+   "ja": "GIFは最大256色で音声はありません。写真は少し粗く見えることがあります。",
+   "ko": "GIF는 최대 256색이며 소리가 없습니다. 사진이 약간 거칠어 보일 수 있습니다.",
+   "nl": "GIF’s hebben hoogstens 256 kleuren en geen geluid – foto’s kunnen wat korrelig ogen.",
+   "pl": "GIF-y mają najwyżej 256 kolorów i brak dźwięku – zdjęcia mogą wyglądać nieco ziarniście.",
+   "pt": "Os GIF têm no máximo 256 cores e não têm som – as fotos podem parecer um pouco granuladas.",
+   "ro": "GIF-urile au cel mult 256 de culori și nu au sunet – fotografiile pot părea puțin granulate.",
+   "ru": "В GIF не более 256 цветов и нет звука – фото могут выглядеть немного зернистыми.",
+   "tr": "GIF’lerde en çok 256 renk vardır ve ses yoktur; fotoğraflar biraz grenli görünebilir.",
+   "uk": "У GIF щонайбільше 256 кольорів і немає звуку – фото можуть виглядати трохи зернистими.",
+   "zh": "GIF 最多 256 色且没有声音，照片可能略显颗粒感。"
+  },
+  "tools_trash_originals": {
+   "en": "Move originals to the Android trash afterwards",
+   "de": "Originale danach in den Android-Papierkorb",
+   "ar": "نقل الأصول بعدها إلى سلة مهملات Android",
+   "es": "Mover después los originales a la papelera de Android",
+   "fr": "Placer ensuite les originaux dans la corbeille Android",
+   "it": "Sposta poi gli originali nel cestino di Android",
+   "ja": "完了後に元のファイルをAndroidのゴミ箱へ",
+   "ko": "완료 후 원본을 Android 휴지통으로",
+   "nl": "Originelen daarna naar de Android-prullenbak",
+   "pl": "Potem przenieś oryginały do kosza Androida",
+   "pt": "Mover depois os originais para o lixo do Android",
+   "ro": "Mută apoi originalele în coșul Android",
+   "ru": "Затем переместить оригиналы в корзину Android",
+   "tr": "Sonra orijinalleri Android çöp kutusuna taşı",
+   "uk": "Потім перемістити оригінали в кошик Android",
+   "zh": "完成后将原文件移到 Android 回收站"
+  },
+  "tools_trash_note": {
+   "en": "Off by default. Android asks once for all files; they stay restorable there for about 30 days. Space is only freed when Android empties its trash.",
+   "de": "Standard aus. Android fragt einmal für alle Dateien; dort bleiben sie etwa 30 Tage wiederherstellbar. Platz wird erst frei, wenn Android den Papierkorb leert.",
+   "ar": "معطّل افتراضيًا. يسأل Android مرة واحدة لكل الملفات؛ وتبقى قابلة للاستعادة هناك نحو 30 يومًا. لا تتحرر المساحة إلا عندما يفرغ Android السلة.",
+   "es": "Desactivado por defecto. Android pregunta una sola vez por todos; allí se pueden recuperar unos 30 días. El espacio solo se libera cuando Android vacía la papelera.",
+   "fr": "Désactivé par défaut. Android demande une seule fois pour tous les fichiers ; ils restent restaurables environ 30 jours. L’espace n’est libéré que lorsque Android vide la corbeille.",
+   "it": "Disattivato di default. Android chiede una volta per tutti i file; restano ripristinabili per circa 30 giorni. Lo spazio si libera solo quando Android svuota il cestino.",
+   "ja": "初期設定はオフ。Androidがすべてのファイルについて1回だけ確認し、約30日間は復元できます。容量が空くのはAndroidがゴミ箱を空にしたときです。",
+   "ko": "기본값은 꺼짐입니다. Android가 모든 파일에 대해 한 번 확인하며, 약 30일 동안 복원할 수 있습니다. 공간은 Android가 휴지통을 비울 때 확보됩니다.",
+   "nl": "Standaard uit. Android vraagt één keer voor alle bestanden; ze blijven daar ongeveer 30 dagen herstelbaar. Ruimte komt pas vrij als Android de prullenbak leegt.",
+   "pl": "Domyślnie wyłączone. Android zapyta raz o wszystkie pliki; można je przywrócić przez ok. 30 dni. Miejsce zwalnia się dopiero, gdy Android opróżni kosz.",
+   "pt": "Desligado por predefinição. O Android pergunta uma vez para todos; ficam recuperáveis durante cerca de 30 dias. O espaço só é libertado quando o Android esvazia o lixo.",
+   "ro": "Dezactivat implicit. Android întreabă o dată pentru toate fișierele; rămân recuperabile acolo circa 30 de zile. Spațiul se eliberează doar când Android golește coșul.",
+   "ru": "По умолчанию выключено. Android спросит один раз для всех файлов; их можно восстановить около 30 дней. Место освобождается, только когда Android очистит корзину.",
+   "tr": "Varsayılan olarak kapalı. Android tüm dosyalar için bir kez sorar; yaklaşık 30 gün geri yüklenebilir. Alan ancak Android çöp kutusunu boşalttığında açılır.",
+   "uk": "Типово вимкнено. Android запитає один раз для всіх файлів; їх можна відновити близько 30 днів. Місце звільняється, лише коли Android очистить кошик.",
+   "zh": "默认关闭。Android 会对所有文件确认一次；约 30 天内可恢复。只有在 Android 清空回收站后才会释放空间。"
+  },
+  "tools_sizes": {
+   "en": "Measured: %1$s before, %2$s after",
+   "de": "Gemessen: vorher %1$s, nachher %2$s",
+   "ar": "مقيس: قبل %1$s، بعد %2$s",
+   "es": "Medido: antes %1$s, después %2$s",
+   "fr": "Mesuré : avant %1$s, après %2$s",
+   "it": "Misurato: prima %1$s, dopo %2$s",
+   "ja": "実測：処理前 %1$s、処理後 %2$s",
+   "ko": "측정값: 이전 %1$s, 이후 %2$s",
+   "nl": "Gemeten: vooraf %1$s, achteraf %2$s",
+   "pl": "Zmierzono: przed %1$s, po %2$s",
+   "pt": "Medido: antes %1$s, depois %2$s",
+   "ro": "Măsurat: înainte %1$s, după %2$s",
+   "ru": "Измерено: было %1$s, стало %2$s",
+   "tr": "Ölçülen: önce %1$s, sonra %2$s",
+   "uk": "Виміряно: було %1$s, стало %2$s",
+   "zh": "实测：处理前 %1$s，处理后 %2$s"
+  },
+  "tools_freed_later": {
+   "en": "About %1$s will be freed once Android empties its trash.",
+   "de": "Etwa %1$s werden frei, sobald Android den Papierkorb leert.",
+   "ar": "ستتحرر نحو %1$s عندما يفرغ Android السلة.",
+   "es": "Se liberarán unos %1$s cuando Android vacíe la papelera.",
+   "fr": "Environ %1$s seront libérés quand Android videra la corbeille.",
+   "it": "Circa %1$s verranno liberati quando Android svuoterà il cestino.",
+   "ja": "Androidがゴミ箱を空にすると約%1$sが空きます。",
+   "ko": "Android가 휴지통을 비우면 약 %1$s가 확보됩니다.",
+   "nl": "Ongeveer %1$s komt vrij zodra Android de prullenbak leegt.",
+   "pl": "Około %1$s zwolni się, gdy Android opróżni kosz.",
+   "pt": "Cerca de %1$s serão libertados quando o Android esvaziar o lixo.",
+   "ro": "Circa %1$s se vor elibera când Android golește coșul.",
+   "ru": "Около %1$s освободится, когда Android очистит корзину.",
+   "tr": "Android çöp kutusunu boşalttığında yaklaşık %1$s açılacak.",
+   "uk": "Близько %1$s звільниться, коли Android очистить кошик.",
+   "zh": "Android 清空回收站后约可释放 %1$s。"
+  },
+  "tools_originals_kept": {
+   "en": "Your originals are unchanged – no space was freed.",
+   "de": "Deine Originale sind unverändert – es wurde kein Platz frei.",
+   "ar": "أصولك لم تتغير – لم تتحرر أي مساحة.",
+   "es": "Tus originales no han cambiado; no se ha liberado espacio.",
+   "fr": "Vos originaux sont inchangés : aucun espace libéré.",
+   "it": "I tuoi originali sono invariati: nessuno spazio liberato.",
+   "ja": "元のファイルはそのままです。容量は空いていません。",
+   "ko": "원본은 그대로이며 공간은 확보되지 않았습니다.",
+   "nl": "Je originelen zijn ongewijzigd – er is geen ruimte vrijgekomen.",
+   "pl": "Oryginały są bez zmian – nie zwolniono miejsca.",
+   "pt": "Os originais não foram alterados – não foi libertado espaço.",
+   "ro": "Originalele sunt neschimbate – nu s-a eliberat spațiu.",
+   "ru": "Оригиналы не изменены – место не освобождено.",
+   "tr": "Orijinallerin değişmedi; yer açılmadı.",
+   "uk": "Оригінали не змінено – місце не звільнено.",
+   "zh": "原文件未更改，未释放空间。"
+  },
+  "tools_gif_fit": {
+   "en": "Whole picture",
+   "de": "Ganzes Bild",
+   "ar": "الصورة كاملة",
+   "es": "Imagen completa",
+   "fr": "Image entière",
+   "it": "Immagine intera",
+   "ja": "全体を表示",
+   "ko": "전체 보기",
+   "nl": "Hele beeld",
+   "pl": "Cały obraz",
+   "pt": "Imagem inteira",
+   "ro": "Imagine întreagă",
+   "ru": "Всё изображение",
+   "tr": "Tüm görüntü",
+   "uk": "Усе зображення",
+   "zh": "完整画面"
+  },
+  "tools_gif_fill": {
+   "en": "Fill frame",
+   "de": "Ausfüllen",
+   "ar": "ملء الإطار",
+   "es": "Rellenar",
+   "fr": "Remplir",
+   "it": "Riempi",
+   "ja": "枠いっぱい",
+   "ko": "채우기",
+   "nl": "Vullen",
+   "pl": "Wypełnij",
+   "pt": "Preencher",
+   "ro": "Umple cadrul",
+   "ru": "Заполнить",
+   "tr": "Doldur",
+   "uk": "Заповнити",
+   "zh": "填满"
   }
  },
  "plurals": {
@@ -13092,6 +13830,474 @@
    },
    "zh": {
     "other": "剩 %1$d 天"
+   }
+  },
+  "tools_selected": {
+   "en": {
+    "one": "%1$d file selected",
+    "other": "%1$d files selected"
+   },
+   "de": {
+    "one": "%1$d Datei ausgewählt",
+    "other": "%1$d Dateien ausgewählt"
+   },
+   "ar": {
+    "zero": "%1$d ملف محدد",
+    "one": "ملف واحد محدد",
+    "two": "ملفان محددان",
+    "few": "%1$d ملفات محددة",
+    "many": "%1$d ملفًا محددًا",
+    "other": "%1$d ملف محدد"
+   },
+   "es": {
+    "one": "%1$d archivo seleccionado",
+    "many": "%1$d archivos seleccionados",
+    "other": "%1$d archivos seleccionados"
+   },
+   "fr": {
+    "one": "%1$d fichier sélectionné",
+    "many": "%1$d fichiers sélectionnés",
+    "other": "%1$d fichiers sélectionnés"
+   },
+   "it": {
+    "one": "%1$d file selezionato",
+    "many": "%1$d file selezionati",
+    "other": "%1$d file selezionati"
+   },
+   "ja": {
+    "other": "%1$dファイルを選択中"
+   },
+   "ko": {
+    "other": "파일 %1$d개 선택됨"
+   },
+   "nl": {
+    "one": "%1$d bestand geselecteerd",
+    "other": "%1$d bestanden geselecteerd"
+   },
+   "pl": {
+    "one": "Wybrano %1$d plik",
+    "few": "Wybrano %1$d pliki",
+    "many": "Wybrano %1$d plików",
+    "other": "Wybrano %1$d pliku"
+   },
+   "pt": {
+    "one": "%1$d ficheiro selecionado",
+    "many": "%1$d ficheiros selecionados",
+    "other": "%1$d ficheiros selecionados"
+   },
+   "ro": {
+    "one": "%1$d fișier selectat",
+    "few": "%1$d fișiere selectate",
+    "other": "%1$d de fișiere selectate"
+   },
+   "ru": {
+    "one": "Выбран %1$d файл",
+    "few": "Выбрано %1$d файла",
+    "many": "Выбрано %1$d файлов",
+    "other": "Выбрано %1$d файла"
+   },
+   "tr": {
+    "one": "%1$d dosya seçildi",
+    "other": "%1$d dosya seçildi"
+   },
+   "uk": {
+    "one": "Вибрано %1$d файл",
+    "few": "Вибрано %1$d файли",
+    "many": "Вибрано %1$d файлів",
+    "other": "Вибрано %1$d файлу"
+   },
+   "zh": {
+    "other": "已选择 %1$d 个文件"
+   }
+  },
+  "tools_done": {
+   "en": {
+    "one": "%1$d new copy saved.",
+    "other": "%1$d new copies saved."
+   },
+   "de": {
+    "one": "%1$d neue Kopie gespeichert.",
+    "other": "%1$d neue Kopien gespeichert."
+   },
+   "ar": {
+    "zero": "حُفظت %1$d نسخة جديدة.",
+    "one": "حُفظت نسخة جديدة واحدة.",
+    "two": "حُفظت نسختان جديدتان.",
+    "few": "حُفظت %1$d نسخ جديدة.",
+    "many": "حُفظت %1$d نسخة جديدة.",
+    "other": "حُفظت %1$d نسخة جديدة."
+   },
+   "es": {
+    "one": "%1$d copia nueva guardada.",
+    "many": "%1$d copias nuevas guardadas.",
+    "other": "%1$d copias nuevas guardadas."
+   },
+   "fr": {
+    "one": "%1$d nouvelle copie enregistrée.",
+    "many": "%1$d nouvelles copies enregistrées.",
+    "other": "%1$d nouvelles copies enregistrées."
+   },
+   "it": {
+    "one": "%1$d nuova copia salvata.",
+    "many": "%1$d nuove copie salvate.",
+    "other": "%1$d nuove copie salvate."
+   },
+   "ja": {
+    "other": "新しいコピーを%1$d件保存しました。"
+   },
+   "ko": {
+    "other": "새 사본 %1$d개를 저장했습니다."
+   },
+   "nl": {
+    "one": "%1$d nieuwe kopie opgeslagen.",
+    "other": "%1$d nieuwe kopieën opgeslagen."
+   },
+   "pl": {
+    "one": "Zapisano %1$d nową kopię.",
+    "few": "Zapisano %1$d nowe kopie.",
+    "many": "Zapisano %1$d nowych kopii.",
+    "other": "Zapisano %1$d nowej kopii."
+   },
+   "pt": {
+    "one": "%1$d nova cópia guardada.",
+    "many": "%1$d novas cópias guardadas.",
+    "other": "%1$d novas cópias guardadas."
+   },
+   "ro": {
+    "one": "%1$d copie nouă salvată.",
+    "few": "%1$d copii noi salvate.",
+    "other": "%1$d de copii noi salvate."
+   },
+   "ru": {
+    "one": "Сохранена %1$d новая копия.",
+    "few": "Сохранено %1$d новые копии.",
+    "many": "Сохранено %1$d новых копий.",
+    "other": "Сохранено %1$d новой копии."
+   },
+   "tr": {
+    "one": "%1$d yeni kopya kaydedildi.",
+    "other": "%1$d yeni kopya kaydedildi."
+   },
+   "uk": {
+    "one": "Збережено %1$d нову копію.",
+    "few": "Збережено %1$d нові копії.",
+    "many": "Збережено %1$d нових копій.",
+    "other": "Збережено %1$d нової копії."
+   },
+   "zh": {
+    "other": "已保存 %1$d 个新副本。"
+   }
+  },
+  "tools_skipped": {
+   "en": {
+    "one": "%1$d skipped (nothing to do or a video).",
+    "other": "%1$d skipped (nothing to do or videos)."
+   },
+   "de": {
+    "one": "%1$d übersprungen (nichts zu tun oder Video).",
+    "other": "%1$d übersprungen (nichts zu tun oder Videos)."
+   },
+   "ar": {
+    "zero": "تُخطّي %1$d (لا شيء لفعله أو فيديو).",
+    "one": "تُخطّي ملف واحد (لا شيء لفعله أو فيديو).",
+    "two": "تُخطّي ملفان (لا شيء لفعله أو فيديو).",
+    "few": "تُخطّيت %1$d ملفات (لا شيء لفعله أو فيديو).",
+    "many": "تُخطّي %1$d ملفًا (لا شيء لفعله أو فيديو).",
+    "other": "تُخطّي %1$d ملف (لا شيء لفعله أو فيديو)."
+   },
+   "es": {
+    "one": "%1$d omitido (nada que hacer o vídeo).",
+    "many": "%1$d omitidos (nada que hacer o vídeos).",
+    "other": "%1$d omitidos (nada que hacer o vídeos)."
+   },
+   "fr": {
+    "one": "%1$d ignoré (rien à faire ou vidéo).",
+    "many": "%1$d ignorés (rien à faire ou vidéos).",
+    "other": "%1$d ignorés (rien à faire ou vidéos)."
+   },
+   "it": {
+    "one": "%1$d saltato (niente da fare o video).",
+    "many": "%1$d saltati (niente da fare o video).",
+    "other": "%1$d saltati (niente da fare o video)."
+   },
+   "ja": {
+    "other": "%1$d件をスキップ（処理不要または動画）。"
+   },
+   "ko": {
+    "other": "%1$d개 건너뜀(할 일 없음 또는 동영상)."
+   },
+   "nl": {
+    "one": "%1$d overgeslagen (niets te doen of video).",
+    "other": "%1$d overgeslagen (niets te doen of video’s)."
+   },
+   "pl": {
+    "one": "Pominięto %1$d (nic do zrobienia lub film).",
+    "few": "Pominięto %1$d (nic do zrobienia lub filmy).",
+    "many": "Pominięto %1$d (nic do zrobienia lub filmy).",
+    "other": "Pominięto %1$d (nic do zrobienia lub filmy)."
+   },
+   "pt": {
+    "one": "%1$d ignorado (nada a fazer ou vídeo).",
+    "many": "%1$d ignorados (nada a fazer ou vídeos).",
+    "other": "%1$d ignorados (nada a fazer ou vídeos)."
+   },
+   "ro": {
+    "one": "%1$d omis (nimic de făcut sau videoclip).",
+    "few": "%1$d omise (nimic de făcut sau videoclipuri).",
+    "other": "%1$d de omise (nimic de făcut sau videoclipuri)."
+   },
+   "ru": {
+    "one": "Пропущен %1$d (нечего делать или видео).",
+    "few": "Пропущено %1$d (нечего делать или видео).",
+    "many": "Пропущено %1$d (нечего делать или видео).",
+    "other": "Пропущено %1$d (нечего делать или видео)."
+   },
+   "tr": {
+    "one": "%1$d atlandı (yapılacak bir şey yok ya da video).",
+    "other": "%1$d atlandı (yapılacak bir şey yok ya da video)."
+   },
+   "uk": {
+    "one": "Пропущено %1$d (нічого робити або відео).",
+    "few": "Пропущено %1$d (нічого робити або відео).",
+    "many": "Пропущено %1$d (нічого робити або відео).",
+    "other": "Пропущено %1$d (нічого робити або відео)."
+   },
+   "zh": {
+    "other": "已跳过 %1$d 个（无需处理或为视频）。"
+   }
+  },
+  "tools_failed_n": {
+   "en": {
+    "one": "%1$d couldn’t be processed.",
+    "other": "%1$d couldn’t be processed."
+   },
+   "de": {
+    "one": "%1$d konnte nicht bearbeitet werden.",
+    "other": "%1$d konnten nicht bearbeitet werden."
+   },
+   "ar": {
+    "zero": "تعذّرت معالجة %1$d.",
+    "one": "تعذّرت معالجة ملف واحد.",
+    "two": "تعذّرت معالجة ملفين.",
+    "few": "تعذّرت معالجة %1$d ملفات.",
+    "many": "تعذّرت معالجة %1$d ملفًا.",
+    "other": "تعذّرت معالجة %1$d ملف."
+   },
+   "es": {
+    "one": "No se pudo procesar %1$d.",
+    "many": "No se pudieron procesar %1$d.",
+    "other": "No se pudieron procesar %1$d."
+   },
+   "fr": {
+    "one": "%1$d n’a pas pu être traité.",
+    "many": "%1$d n’ont pas pu être traités.",
+    "other": "%1$d n’ont pas pu être traités."
+   },
+   "it": {
+    "one": "%1$d non è stato elaborato.",
+    "many": "%1$d non sono stati elaborati.",
+    "other": "%1$d non sono stati elaborati."
+   },
+   "ja": {
+    "other": "%1$d件を処理できませんでした。"
+   },
+   "ko": {
+    "other": "%1$d개를 처리하지 못했습니다."
+   },
+   "nl": {
+    "one": "%1$d kon niet worden verwerkt.",
+    "other": "%1$d konden niet worden verwerkt."
+   },
+   "pl": {
+    "one": "Nie udało się przetworzyć %1$d pliku.",
+    "few": "Nie udało się przetworzyć %1$d plików.",
+    "many": "Nie udało się przetworzyć %1$d plików.",
+    "other": "Nie udało się przetworzyć %1$d pliku."
+   },
+   "pt": {
+    "one": "Não foi possível processar %1$d.",
+    "many": "Não foi possível processar %1$d.",
+    "other": "Não foi possível processar %1$d."
+   },
+   "ro": {
+    "one": "%1$d nu a putut fi procesat.",
+    "few": "%1$d nu au putut fi procesate.",
+    "other": "%1$d de fișiere nu au putut fi procesate."
+   },
+   "ru": {
+    "one": "Не удалось обработать %1$d файл.",
+    "few": "Не удалось обработать %1$d файла.",
+    "many": "Не удалось обработать %1$d файлов.",
+    "other": "Не удалось обработать %1$d файла."
+   },
+   "tr": {
+    "one": "%1$d dosya işlenemedi.",
+    "other": "%1$d dosya işlenemedi."
+   },
+   "uk": {
+    "one": "Не вдалося обробити %1$d файл.",
+    "few": "Не вдалося обробити %1$d файли.",
+    "many": "Не вдалося обробити %1$d файлів.",
+    "other": "Не вдалося обробити %1$d файлу."
+   },
+   "zh": {
+    "other": "%1$d 个无法处理。"
+   }
+  },
+  "tools_unknown": {
+   "en": {
+    "one": "%1$d size unknown – not included in the total.",
+    "other": "%1$d sizes unknown – not included in the total."
+   },
+   "de": {
+    "one": "Bei %1$d Datei ist die Größe unbekannt – nicht mitgezählt.",
+    "other": "Bei %1$d Dateien ist die Größe unbekannt – nicht mitgezählt."
+   },
+   "ar": {
+    "zero": "حجم %1$d ملف غير معروف – غير محتسب.",
+    "one": "حجم ملف واحد غير معروف – غير محتسب.",
+    "two": "حجم ملفين غير معروف – غير محتسب.",
+    "few": "حجم %1$d ملفات غير معروف – غير محتسب.",
+    "many": "حجم %1$d ملفًا غير معروف – غير محتسب.",
+    "other": "حجم %1$d ملف غير معروف – غير محتسب."
+   },
+   "es": {
+    "one": "%1$d tamaño desconocido: no se incluye en el total.",
+    "many": "%1$d tamaños desconocidos: no se incluyen en el total.",
+    "other": "%1$d tamaños desconocidos: no se incluyen en el total."
+   },
+   "fr": {
+    "one": "%1$d taille inconnue – non comptée.",
+    "many": "%1$d tailles inconnues – non comptées.",
+    "other": "%1$d tailles inconnues – non comptées."
+   },
+   "it": {
+    "one": "%1$d dimensione sconosciuta – non conteggiata.",
+    "many": "%1$d dimensioni sconosciute – non conteggiate.",
+    "other": "%1$d dimensioni sconosciute – non conteggiate."
+   },
+   "ja": {
+    "other": "%1$d件はサイズ不明のため合計に含めていません。"
+   },
+   "ko": {
+    "other": "%1$d개는 크기를 알 수 없어 합계에서 제외했습니다."
+   },
+   "nl": {
+    "one": "Bij %1$d bestand is de grootte onbekend – niet meegeteld.",
+    "other": "Bij %1$d bestanden is de grootte onbekend – niet meegeteld."
+   },
+   "pl": {
+    "one": "Nieznany rozmiar %1$d pliku – nie wliczono.",
+    "few": "Nieznany rozmiar %1$d plików – nie wliczono.",
+    "many": "Nieznany rozmiar %1$d plików – nie wliczono.",
+    "other": "Nieznany rozmiar %1$d pliku – nie wliczono."
+   },
+   "pt": {
+    "one": "%1$d tamanho desconhecido – não incluído no total.",
+    "many": "%1$d tamanhos desconhecidos – não incluídos no total.",
+    "other": "%1$d tamanhos desconhecidos – não incluídos no total."
+   },
+   "ro": {
+    "one": "Dimensiune necunoscută pentru %1$d fișier – neinclusă.",
+    "few": "Dimensiune necunoscută pentru %1$d fișiere – neinclusă.",
+    "other": "Dimensiune necunoscută pentru %1$d de fișiere – neinclusă."
+   },
+   "ru": {
+    "one": "Размер %1$d файла неизвестен – не учтён.",
+    "few": "Размер %1$d файлов неизвестен – не учтён.",
+    "many": "Размер %1$d файлов неизвестен – не учтён.",
+    "other": "Размер %1$d файла неизвестен – не учтён."
+   },
+   "tr": {
+    "one": "%1$d dosyanın boyutu bilinmiyor; toplama katılmadı.",
+    "other": "%1$d dosyanın boyutu bilinmiyor; toplama katılmadı."
+   },
+   "uk": {
+    "one": "Розмір %1$d файлу невідомий – не враховано.",
+    "few": "Розмір %1$d файлів невідомий – не враховано.",
+    "many": "Розмір %1$d файлів невідомий – не враховано.",
+    "other": "Розмір %1$d файлу невідомий – не враховано."
+   },
+   "zh": {
+    "other": "%1$d 个文件大小未知，未计入总数。"
+   }
+  },
+  "tools_originals_trashed": {
+   "en": {
+    "one": "%1$d original is in the Android trash.",
+    "other": "%1$d originals are in the Android trash."
+   },
+   "de": {
+    "one": "%1$d Original liegt im Android-Papierkorb.",
+    "other": "%1$d Originale liegen im Android-Papierkorb."
+   },
+   "ar": {
+    "zero": "%1$d أصل في سلة مهملات Android.",
+    "one": "أصل واحد في سلة مهملات Android.",
+    "two": "أصلان في سلة مهملات Android.",
+    "few": "%1$d أصول في سلة مهملات Android.",
+    "many": "%1$d أصلًا في سلة مهملات Android.",
+    "other": "%1$d أصل في سلة مهملات Android."
+   },
+   "es": {
+    "one": "%1$d original está en la papelera de Android.",
+    "many": "%1$d originales están en la papelera de Android.",
+    "other": "%1$d originales están en la papelera de Android."
+   },
+   "fr": {
+    "one": "%1$d original est dans la corbeille Android.",
+    "many": "%1$d originaux sont dans la corbeille Android.",
+    "other": "%1$d originaux sont dans la corbeille Android."
+   },
+   "it": {
+    "one": "%1$d originale è nel cestino di Android.",
+    "many": "%1$d originali sono nel cestino di Android.",
+    "other": "%1$d originali sono nel cestino di Android."
+   },
+   "ja": {
+    "other": "元のファイル%1$d件はAndroidのゴミ箱にあります。"
+   },
+   "ko": {
+    "other": "원본 %1$d개가 Android 휴지통에 있습니다."
+   },
+   "nl": {
+    "one": "%1$d origineel staat in de Android-prullenbak.",
+    "other": "%1$d originelen staan in de Android-prullenbak."
+   },
+   "pl": {
+    "one": "%1$d oryginał jest w koszu Androida.",
+    "few": "%1$d oryginały są w koszu Androida.",
+    "many": "%1$d oryginałów jest w koszu Androida.",
+    "other": "%1$d oryginału jest w koszu Androida."
+   },
+   "pt": {
+    "one": "%1$d original está no lixo do Android.",
+    "many": "%1$d originais estão no lixo do Android.",
+    "other": "%1$d originais estão no lixo do Android."
+   },
+   "ro": {
+    "one": "%1$d original este în coșul Android.",
+    "few": "%1$d originale sunt în coșul Android.",
+    "other": "%1$d de originale sunt în coșul Android."
+   },
+   "ru": {
+    "one": "%1$d оригинал в корзине Android.",
+    "few": "%1$d оригинала в корзине Android.",
+    "many": "%1$d оригиналов в корзине Android.",
+    "other": "%1$d оригинала в корзине Android."
+   },
+   "tr": {
+    "one": "%1$d orijinal Android çöp kutusunda.",
+    "other": "%1$d orijinal Android çöp kutusunda."
+   },
+   "uk": {
+    "one": "%1$d оригінал у кошику Android.",
+    "few": "%1$d оригінали в кошику Android.",
+    "many": "%1$d оригіналів у кошику Android.",
+    "other": "%1$d оригіналу в кошику Android."
+   },
+   "zh": {
+    "other": "%1$d 个原文件在 Android 回收站中。"
    }
   }
  }

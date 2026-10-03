@@ -782,4 +782,18 @@ class ScreenshotTest {
     @Test fun mv03_movie_music() = expApp(pro = true).let { movie("mv03_movie_music", it) { tap("movie.tab.MUSIC") } }
     @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun mv04_slideshow_free_360() = expApp().let { movie("mv04_slideshow_free_360", it, slideshow = true) }
     @Test fun mv05_studio() = expApp().let { shot("mv05_studio", it) { WithTabBar(AppTab.STUDIO) { app.photomaid.feature.studio.StudioScreen(nav) } } }
+
+    // P7: Werkzeuge.
+    private fun tool(name: String, a: AppModel, kind: app.photomaid.feature.studio.ToolKind, ids: List<String>, wait: String = "tools.count") {
+        shot(name, a, waitTag = wait) { app.photomaid.feature.studio.ToolsScreen(app.photomaid.feature.studio.ToolRequest("t", kind, ids), nav, onClose = {}) }
+    }
+    @Test fun tl01_resize() = expApp().let { tool("tl01_resize", it, app.photomaid.feature.studio.ToolKind.RESIZE, lib.all.filter { m -> m.kind != app.photomaid.core.model.MediaKind.VIDEO }.map { m -> m.id }) }
+    @Test fun tl02_stitch_preview() = expApp(pro = true).let { tool("tl02_stitch_preview", it, app.photomaid.feature.studio.ToolKind.STITCH, lib.all.filter { m -> m.kind != app.photomaid.core.model.MediaKind.VIDEO }.take(2).map { m -> m.id }, wait = "tools.preview") }
+    @Test fun tl03_gif_free_dark() = expApp(dark = true).let { tool("tl03_gif_free_dark", it, app.photomaid.feature.studio.ToolKind.GIF, lib.all.filter { m -> m.kind != app.photomaid.core.model.MediaKind.VIDEO }.take(4).map { m -> m.id }, wait = "tools.preview") }
+    @Test @Config(qualifiers = "de-w360dp-h800dp-xhdpi") fun tl04_convert_360() = expApp().let { tool("tl04_convert_360", it, app.photomaid.feature.studio.ToolKind.CONVERT, lib.all.take(3).map { m -> m.id }) }
+    @Test fun tl05_studio_tools() = expApp().let { a ->
+        shot("tl05_studio_tools_top", a) { WithTabBar(AppTab.STUDIO) { app.photomaid.feature.studio.StudioScreen(nav) } }
+        rule.onNodeWithTag("studio.tool.GIF").performScrollTo(); rule.waitForIdle()
+        rule.onRoot().captureRoboImage("build/outputs/roborazzi/tl05_studio_tools.png")
+    }
 }

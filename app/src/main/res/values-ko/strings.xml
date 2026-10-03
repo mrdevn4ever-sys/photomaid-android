@@ -1307,4 +1307,63 @@
     <string name="movie_too_long">전체 최대 30분입니다. 클립을 줄이거나 빼세요.</string>
     <string name="movie_discard_title">이 동영상을 버릴까요?</string>
     <string name="movie_discard_text">구성한 내용이 사라집니다. 사진과 동영상 자체는 그대로입니다.</string>
+    <string name="tools_header">도구</string>
+    <string name="tools_resize">축소</string>
+    <string name="tools_resize_sub">여러 사진을 한 번에 새 사본으로</string>
+    <string name="tools_convert">변환</string>
+    <string name="tools_convert_sub">예: HEIC를 JPEG로, 새 사본으로</string>
+    <string name="tools_location">위치 정보 제거</string>
+    <string name="tools_location_sub">GPS 정보 없는 사본(공유 전 등)</string>
+    <string name="tools_stitch">스크린샷 이어 붙이기</string>
+    <string name="tools_stitch_sub">위아래로 이어 긴 이미지 하나로</string>
+    <string name="tools_gif">GIF 만들기</string>
+    <string name="tools_gif_sub">사진이나 동영상의 짧은 구간으로</string>
+    <string name="tools_pick">사진 선택</string>
+    <string name="tools_pick_gif">사진 또는 동영상 1개 선택</string>
+    <string name="tools_running">파일 처리 중…</string>
+    <string name="tools_stitch_saved">Pictures/PhotoMaid에 새 이미지로 저장했습니다.</string>
+    <string name="tools_gif_saved">GIF를 Pictures/PhotoMaid에 저장했습니다(%1$s).</string>
+    <string name="tools_failed">실패했습니다. 원본은 그대로입니다.</string>
+    <string name="tools_pro_save">Pro로 만들기</string>
+    <string name="tools_start">시작</string>
+    <string name="tools_free_limit">Free: 한 번에 %1$d개까지 – 처음 %1$d개만 처리됩니다.</string>
+    <string name="tools_long_edge">긴 변 최대</string>
+    <string name="tools_quality">화질</string>
+    <string name="tools_q_high">높음</string>
+    <string name="tools_q_balanced">균형</string>
+    <string name="tools_q_small">작은 파일</string>
+    <string name="tools_remove_location">위치 정보도 제거</string>
+    <string name="tools_target_format">새 형식</string>
+    <string name="tools_convert_note">JPEG는 어디서나 열립니다. PNG는 모든 픽셀을 보존하지만 파일이 커집니다. 이미 이 형식인 파일은 건너뜁니다.</string>
+    <string name="tools_location_note">JPEG 사본은 모든 픽셀을 그대로 두고 GPS 정보만 제거합니다. 위치 정보가 없는 사진은 건너뜁니다.</string>
+    <string name="tools_stitch_note">선택한 순서대로 이어 붙입니다. 모두 가장 좁은 이미지 너비에 맞추며, 늘이거나 확대하지 않습니다.</string>
+    <string name="tools_gif_size">크기</string>
+    <string name="tools_gif_part">동영상 구간(최대 10초)</string>
+    <string name="tools_gif_delay">사진당 시간</string>
+    <string name="tools_gif_note">GIF는 최대 256색이며 소리가 없습니다. 사진이 약간 거칠어 보일 수 있습니다.</string>
+    <string name="tools_trash_originals">완료 후 원본을 Android 휴지통으로</string>
+    <string name="tools_trash_note">기본값은 꺼짐입니다. Android가 모든 파일에 대해 한 번 확인하며, 약 30일 동안 복원할 수 있습니다. 공간은 Android가 휴지통을 비울 때 확보됩니다.</string>
+    <string name="tools_sizes">측정값: 이전 %1$s, 이후 %2$s</string>
+    <string name="tools_freed_later">Android가 휴지통을 비우면 약 %1$s가 확보됩니다.</string>
+    <string name="tools_originals_kept">원본은 그대로이며 공간은 확보되지 않았습니다.</string>
+    <plurals name="tools_selected">
+        <item quantity="other">파일 %1$d개 선택됨</item>
+    </plurals>
+    <plurals name="tools_done">
+        <item quantity="other">새 사본 %1$d개를 저장했습니다.</item>
+    </plurals>
+    <plurals name="tools_skipped">
+        <item quantity="other">%1$d개 건너뜀(할 일 없음 또는 동영상).</item>
+    </plurals>
+    <plurals name="tools_failed_n">
+        <item quantity="other">%1$d개를 처리하지 못했습니다.</item>
+    </plurals>
+    <plurals name="tools_unknown">
+        <item quantity="other">%1$d개는 크기를 알 수 없어 합계에서 제외했습니다.</item>
+    </plurals>
+    <plurals name="tools_originals_trashed">
+        <item quantity="other">원본 %1$d개가 Android 휴지통에 있습니다.</item>
+    </plurals>
+    <string name="tools_gif_fit">전체 보기</string>
+    <string name="tools_gif_fill">채우기</string>
 </resources>

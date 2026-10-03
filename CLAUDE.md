@@ -89,6 +89,10 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   P6 Film/Diashow (`feature/studio/MovieScreen.kt`, Kern `core/.../studio/MoviePlan.kt`, Export `media/MovieExporter.kt`):
   Vorschau = Export (eine Komposition), Übergänge „keiner“/„über Schwarz“, Musik nur aus eigener Datei, Ergebnis in
   `Movies/PhotoMaid/` = „Behalten“, Quellen ohne Entscheidung, Speichern mit `hasProToolsAccess`.
+  P7 Werkzeuge (`feature/studio/ToolsScreen.kt`, Kern `core/.../batch/`): Verkleinern, Umwandeln, Standort entfernen
+  (Stapel, Free bis 10 Dateien), Screenshots zusammenfügen, GIF (`GifEncoder`, Pro). Immer neue Dateien = „Behalten“,
+  Quellen ohne Entscheidung; Originale nur auf Wunsch in den Android-Papierkorb (Standard aus). Größen nur gemessen,
+  „frei“ erst, wenn alle Originale im Papierkorb liegen und alle Größen bekannt sind (`BatchSummary.freedLaterBytes`).
 
 ## Verbote
 
