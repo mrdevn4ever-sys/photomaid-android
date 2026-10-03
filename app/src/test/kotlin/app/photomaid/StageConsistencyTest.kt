@@ -19,6 +19,7 @@ import app.photomaid.core.capabilities.PurchaseState
 import app.photomaid.core.model.MediaKind
 import app.photomaid.feature.editor.EditorScreen
 import app.photomaid.feature.review.ReviewFeedScreen
+import app.photomaid.feature.review.SeriesCompareDialog
 import app.photomaid.feature.studio.CollageRequest
 import app.photomaid.feature.studio.CollageScreen
 import app.photomaid.feature.studio.MovieRequest
@@ -100,7 +101,7 @@ class StageConsistencyTest {
     private fun controlsOver(media: Rect, ignore: Set<String> = emptySet()): List<String> {
         val all = mutableListOf<SemanticsNode>()
         fun walk(n: SemanticsNode) { all += n; n.children.forEach(::walk) }
-        walk(rule.onRoot(useUnmergedTree = true).fetchSemanticsNode())
+        rule.onAllNodes(androidx.compose.ui.test.isRoot(), useUnmergedTree = true).fetchSemanticsNodes().forEach(::walk)
         return all.filter { n ->
             val actionable = n.config.getOrNull(SemanticsActions.OnClick) != null || n.config.getOrNull(SemanticsActions.SetProgress) != null
             val b = n.boundsInRoot
@@ -181,6 +182,20 @@ class StageConsistencyTest {
         pumpUntil { nodes("tools.preview").isNotEmpty() }
         rects["GIF Panorama"] = rect("media.stage")
         sameSize("M Werkzeug-Vorschau", rects)?.let { problems += it }
+        report()
+    }
+
+    @Test fun seriesCompareShowsBothImagesEquallyAndNothingOnThem() {
+        start()
+        val members = listOf(photosPortrait, panorama, photoLandscape)
+        show { SeriesCompareDialog(members, onConfirm = {}, onDismiss = {}) }
+        val rects = linkedMapOf<String, Rect>()
+        rects["links Hochformat"] = rect("series.img0"); rects["rechts Panorama"] = rect("series.img1")
+        rule.onAllNodesWithTag("series.tile")[2].performSemanticsAction(SemanticsActions.OnClick); pumpUntil { true }
+        rects["rechts Querformat"] = rect("series.img1")
+        sameSize("M Serienvergleich", mapOf("links" to rects.getValue("links Hochformat"), "rechts" to rects.getValue("rechts Panorama").let { Rect(it.left, rects.getValue("links Hochformat").top, it.right, rects.getValue("links Hochformat").top + it.height) }))?.let { problems += it }
+        sameSize("M Serienvergleich rechts", mapOf("Panorama" to rects.getValue("rechts Panorama"), "Querformat" to rects.getValue("rechts Querformat")))?.let { problems += it }
+        for (side in 0..1) { val over = controlsOver(rect("series.img$side")); if (over.isNotEmpty()) problems += "W Serienvergleich Bild $side: $over" }
         report()
     }
 

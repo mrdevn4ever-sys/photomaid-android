@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -123,14 +124,17 @@ fun SeriesCompareDialog(members: List<MediaAsset>, onConfirm: (Set<String>) -> U
                     }, verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                     for ((id, side) in listOf(left to 0, right to 1)) {
                         val a = byId[id] ?: continue
-                        Box(Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(AppRadii.card)).background(c.backgroundTint).testTag("series.side$side")) {
-                            BoxWithConstraints(Modifier.fillMaxSize().graphicsLayer { scaleX = scale; scaleY = scale; translationX = pan.x; translationY = pan.y }) {
-                                val px = with(LocalDensity.current) { maxOf(maxWidth, maxHeight).roundToPx() }
-                                Thumb(a, Modifier.fillMaxSize(), px, fit = true)
+                        // Bild und Auswahl getrennt: die Behalten/Papierkorb-Taste liegt UNTER dem Bild, nie darauf.
+                        Column(Modifier.weight(1f).fillMaxWidth().testTag("series.side$side"), horizontalAlignment = Alignment.CenterHorizontally) {
+                            Box(Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(AppRadii.card)).background(c.backgroundTint).testTag("series.img$side")) {
+                                BoxWithConstraints(Modifier.fillMaxSize().graphicsLayer { scaleX = scale; scaleY = scale; translationX = pan.x; translationY = pan.y }) {
+                                    val px = with(LocalDensity.current) { maxOf(maxWidth, maxHeight).roundToPx() }
+                                    Thumb(a, Modifier.fillMaxSize(), px, fit = true)
+                                }
                             }
                             val kept = a.id in keep
-                            Row(Modifier.align(Alignment.BottomCenter).padding(AppSpacing.xs).clip(CircleShape).background(c.surface.copy(alpha = 0.92f))
-                                .clickable(role = Role.Checkbox) { toggle(a.id) }.padding(horizontal = AppSpacing.s, vertical = 6.dp),
+                            Row(Modifier.padding(top = AppSpacing.xxs).heightIn(min = AppSpacing.minTouch).clip(CircleShape)
+                                .clickable(role = Role.Checkbox) { toggle(a.id) }.padding(horizontal = AppSpacing.s).testTag("series.keep$side"),
                                 verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Icon(if (kept) Icons.Rounded.CheckCircle else Icons.Outlined.Circle, null, tint = if (kept) c.keep else c.textSecondary, modifier = Modifier.size(20.dp))
                                 Text(stringResource(if (kept) R.string.series_state_keep else R.string.series_state_trash) +
