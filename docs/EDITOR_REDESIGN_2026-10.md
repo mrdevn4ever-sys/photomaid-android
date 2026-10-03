@@ -53,6 +53,19 @@ Keine Funktion entfernt oder versteckt; keine neue Funktion, keine Änderung an 
 
 Unverändert beibehalten: feste Bühne, Werkzeuge außerhalb des Bildes, gemeinsames Gerüst, Letterbox-Fläche.
 
+## 2c. Abschluss (Designrichtung freigegeben 03.10.2026)
+
+| Befund | Korrektur | Nachweis |
+|---|---|---|
+| Belichtungs-/Begradigungsregler unten abgeschnitten (hoch, quer, hell, dunkel) | Reglergruppe kompakt: Name in einer Zeile, darunter Regler + Wert in einer 48-dp-Zeile (Wert antippen = 0 bleibt). Zuschnitt: Begradigen direkt unter den Seitenverhältnissen, Drehen/Spiegeln folgen scrollend. Werkzeugzone mit weniger Leerraum (oben/zwischen 8 dp). Querformat: Hilfsleiste unter der Bühne (linke Spalte), rechts Werkzeugzone + Navigation über die ganze Höhe. Die Bühne bleibt je Fenster fest und hängt nicht vom Werkzeug ab. | `ToolZoneVisibilityTest.centralSliderVisible{PortraitLight,PortraitDark,LandscapeLight,LandscapeDark}` misst die UNGEKÜRZTEN Grenzen von Gruppe, Regler und Wert innerhalb der Werkzeugzone nach frischem Öffnen und nach einem Werkzeugwechsel (vor der Korrektur rot im 800×360-Querformat); `abschluss_portrait.png`, `abschluss_land.png` |
+| Große Schrift: Erreichbarkeit nicht belegt | Test: Bei 200 % lässt sich jedes bedienbare Element jedes Fotowerkzeugs vollständig ins Sichtfeld scrollen (waagrechte Reihen und senkrechte Zone) | `everythingReachableByScrollingAtLargeFont` |
+| Gewählter Navigationseintrag | Test: Jeder gewählte Eintrag (inkl. „Mehr“ und der Unterreiter) liegt vollständig im sichtbaren Bereich und meldet „ausgewählt“ (Semantik für TalkBack), bei 200 %, Arabisch 150 % und 360×640 dp | `selectedDockEntryVisible{LargeFont,Arabic,SmallWindow}` |
+| Titel „Bearbeitung speic…“ | Titel der Export-Seite = „Speichern“ (Foto-Editor und Collage) | `abschluss_font.png` |
+| „SW kontrastre…“ | „S/W-Kontrast“; Filternamen bis zu zwei zentrierte Zeilen, nie abgeschnitten | `abschluss_portrait.png` |
+| „Aktuelle sichern“ | „Vorlage speichern“ (16 Sprachen) | `abschluss_portrait.png` |
+
+Geräteprüfung (echte Videowiedergabe, geöffnete Tastatur im Textwerkzeug, TalkBack-Bedienung): **NOT RUN / BLOCKED** – in dieser Umgebung gibt es kein Gerät. Robolectric zeigt Standbild/Filmstreifen, aber keine laufende Wiedergabe; die Tastatur ist nur simuliert.
+
 ## 3. Geschützte Regeln
 
 - **A – feste Bühne:** `EditorLayoutPolicy` hängt nur von Fenster, Schrift, Tastatur ab. Gemessen: Foto-Editor, Video-Editor, Collage und Film haben dieselbe Bühne (`allEditorsShareOneStageGeometry`); die Bühne springt in keinem Bild eines Werkzeugwechsels (`stageNeverJumpsDuringToolSwitches`, 8 Wechsel × 24 Bilder); Tastatur öffnet/schließt → exakt zurück.
