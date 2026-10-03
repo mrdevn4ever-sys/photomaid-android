@@ -1397,9 +1397,9 @@
     <string name="tools_gif_delay">Time per photo</string>
     <string name="tools_gif_note">GIFs have at most 256 colours and no sound – photos can look a little grainy.</string>
     <string name="tools_trash_originals">Move originals to the Android trash afterwards</string>
-    <string name="tools_trash_note">Off by default. Android asks once for all files; they stay restorable there for about 30 days. Space is only freed when Android empties its trash.</string>
+    <string name="tools_trash_note">Off by default. Android asks once for all files; they stay restorable there for as long as Android keeps them. Space is only freed when Android empties its trash.</string>
     <string name="tools_sizes">Measured: %1$s before, %2$s after</string>
-    <string name="tools_freed_later">About %1$s will be freed once Android empties its trash.</string>
+    <string name="tools_freed_later">In the Android trash, not freed yet: once Android empties it, these files take up %1$s less.</string>
     <string name="tools_originals_kept">Your originals are unchanged – no space was freed.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d file selected</item>

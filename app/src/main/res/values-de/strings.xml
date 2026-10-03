@@ -1397,9 +1397,9 @@
     <string name="tools_gif_delay">Zeit je Foto</string>
     <string name="tools_gif_note">GIFs haben höchstens 256 Farben und keinen Ton – Fotos können etwas körnig wirken.</string>
     <string name="tools_trash_originals">Originale danach in den Android-Papierkorb</string>
-    <string name="tools_trash_note">Standard aus. Android fragt einmal für alle Dateien; dort bleiben sie etwa 30 Tage wiederherstellbar. Platz wird erst frei, wenn Android den Papierkorb leert.</string>
+    <string name="tools_trash_note">Standard aus. Android fragt einmal für alle Dateien; dort bleiben sie wiederherstellbar, solange Android sie aufbewahrt. Platz wird erst frei, wenn Android den Papierkorb leert.</string>
     <string name="tools_sizes">Gemessen: vorher %1$s, nachher %2$s</string>
-    <string name="tools_freed_later">Etwa %1$s werden frei, sobald Android den Papierkorb leert.</string>
+    <string name="tools_freed_later">Im Android-Papierkorb, noch nicht frei: Sobald Android ihn leert, belegen die Dateien %1$s weniger.</string>
     <string name="tools_originals_kept">Deine Originale sind unverändert – es wurde kein Platz frei.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d Datei ausgewählt</item>

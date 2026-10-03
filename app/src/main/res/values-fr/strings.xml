@@ -1452,9 +1452,9 @@
     <string name="tools_gif_delay">Durée par photo</string>
     <string name="tools_gif_note">Les GIF ont au plus 256 couleurs et pas de son : les photos peuvent paraître un peu granuleuses.</string>
     <string name="tools_trash_originals">Placer ensuite les originaux dans la corbeille Android</string>
-    <string name="tools_trash_note">Désactivé par défaut. Android demande une seule fois pour tous les fichiers ; ils restent restaurables environ 30 jours. L’espace n’est libéré que lorsque Android vide la corbeille.</string>
+    <string name="tools_trash_note">Désactivé par défaut. Android demande une seule fois pour tous les fichiers ; ils restent restaurables tant qu’Android les conserve. L’espace n’est libéré que lorsque Android vide la corbeille.</string>
     <string name="tools_sizes">Mesuré : avant %1$s, après %2$s</string>
-    <string name="tools_freed_later">Environ %1$s seront libérés quand Android videra la corbeille.</string>
+    <string name="tools_freed_later">Dans la corbeille Android, pas encore libéré : quand Android la videra, les fichiers occuperont %1$s de moins.</string>
     <string name="tools_originals_kept">Vos originaux sont inchangés : aucun espace libéré.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d fichier sélectionné</item>

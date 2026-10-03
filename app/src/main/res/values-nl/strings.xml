@@ -1397,9 +1397,9 @@
     <string name="tools_gif_delay">Tijd per foto</string>
     <string name="tools_gif_note">GIF’s hebben hoogstens 256 kleuren en geen geluid – foto’s kunnen wat korrelig ogen.</string>
     <string name="tools_trash_originals">Originelen daarna naar de Android-prullenbak</string>
-    <string name="tools_trash_note">Standaard uit. Android vraagt één keer voor alle bestanden; ze blijven daar ongeveer 30 dagen herstelbaar. Ruimte komt pas vrij als Android de prullenbak leegt.</string>
+    <string name="tools_trash_note">Standaard uit. Android vraagt één keer voor alle bestanden; ze blijven herstelbaar zolang Android ze bewaart. Ruimte komt pas vrij als Android de prullenbak leegt.</string>
     <string name="tools_sizes">Gemeten: vooraf %1$s, achteraf %2$s</string>
-    <string name="tools_freed_later">Ongeveer %1$s komt vrij zodra Android de prullenbak leegt.</string>
+    <string name="tools_freed_later">In de Android-prullenbak, nog niet vrij: zodra Android die leegt, nemen de bestanden %1$s minder in.</string>
     <string name="tools_originals_kept">Je originelen zijn ongewijzigd – er is geen ruimte vrijgekomen.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d bestand geselecteerd</item>

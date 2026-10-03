@@ -1452,9 +1452,9 @@
     <string name="tools_gif_delay">Tiempo por foto</string>
     <string name="tools_gif_note">Los GIF tienen como máximo 256 colores y no tienen sonido: las fotos pueden verse algo granuladas.</string>
     <string name="tools_trash_originals">Mover después los originales a la papelera de Android</string>
-    <string name="tools_trash_note">Desactivado por defecto. Android pregunta una sola vez por todos; allí se pueden recuperar unos 30 días. El espacio solo se libera cuando Android vacía la papelera.</string>
+    <string name="tools_trash_note">Desactivado por defecto. Android pregunta una sola vez por todos; allí se pueden recuperar mientras Android los conserve. El espacio solo se libera cuando Android vacía la papelera.</string>
     <string name="tools_sizes">Medido: antes %1$s, después %2$s</string>
-    <string name="tools_freed_later">Se liberarán unos %1$s cuando Android vacíe la papelera.</string>
+    <string name="tools_freed_later">En la papelera de Android, aún no liberado: cuando Android la vacíe, los archivos ocuparán %1$s menos.</string>
     <string name="tools_originals_kept">Tus originales no han cambiado; no se ha liberado espacio.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d archivo seleccionado</item>

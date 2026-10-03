@@ -1342,9 +1342,9 @@
     <string name="tools_gif_delay">1枚あたりの時間</string>
     <string name="tools_gif_note">GIFは最大256色で音声はありません。写真は少し粗く見えることがあります。</string>
     <string name="tools_trash_originals">完了後に元のファイルをAndroidのゴミ箱へ</string>
-    <string name="tools_trash_note">初期設定はオフ。Androidがすべてのファイルについて1回だけ確認し、約30日間は復元できます。容量が空くのはAndroidがゴミ箱を空にしたときです。</string>
+    <string name="tools_trash_note">初期設定はオフ。Androidがすべてのファイルについて1回だけ確認し、Androidが保管している間は復元できます。容量が空くのはAndroidがゴミ箱を空にしたときです。</string>
     <string name="tools_sizes">実測：処理前 %1$s、処理後 %2$s</string>
-    <string name="tools_freed_later">Androidがゴミ箱を空にすると約%1$sが空きます。</string>
+    <string name="tools_freed_later">Androidのゴミ箱にあり、まだ空いていません。Androidがゴミ箱を空にすると、ファイルの使用量が%1$s減ります。</string>
     <string name="tools_originals_kept">元のファイルはそのままです。容量は空いていません。</string>
     <plurals name="tools_selected">
         <item quantity="other">%1$dファイルを選択中</item>

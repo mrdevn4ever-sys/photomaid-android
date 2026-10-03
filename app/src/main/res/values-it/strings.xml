@@ -1452,9 +1452,9 @@
     <string name="tools_gif_delay">Tempo per foto</string>
     <string name="tools_gif_note">Le GIF hanno al massimo 256 colori e niente audio: le foto possono sembrare un po’ sgranate.</string>
     <string name="tools_trash_originals">Sposta poi gli originali nel cestino di Android</string>
-    <string name="tools_trash_note">Disattivato di default. Android chiede una volta per tutti i file; restano ripristinabili per circa 30 giorni. Lo spazio si libera solo quando Android svuota il cestino.</string>
+    <string name="tools_trash_note">Disattivato di default. Android chiede una volta per tutti i file; restano ripristinabili finché Android li conserva. Lo spazio si libera solo quando Android svuota il cestino.</string>
     <string name="tools_sizes">Misurato: prima %1$s, dopo %2$s</string>
-    <string name="tools_freed_later">Circa %1$s verranno liberati quando Android svuoterà il cestino.</string>
+    <string name="tools_freed_later">Nel cestino di Android, non ancora liberato: quando Android lo svuota, i file occuperanno %1$s in meno.</string>
     <string name="tools_originals_kept">I tuoi originali sono invariati: nessuno spazio liberato.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d file selezionato</item>

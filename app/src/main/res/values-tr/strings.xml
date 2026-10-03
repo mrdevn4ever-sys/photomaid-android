@@ -1397,9 +1397,9 @@
     <string name="tools_gif_delay">Fotoğraf başına süre</string>
     <string name="tools_gif_note">GIF’lerde en çok 256 renk vardır ve ses yoktur; fotoğraflar biraz grenli görünebilir.</string>
     <string name="tools_trash_originals">Sonra orijinalleri Android çöp kutusuna taşı</string>
-    <string name="tools_trash_note">Varsayılan olarak kapalı. Android tüm dosyalar için bir kez sorar; yaklaşık 30 gün geri yüklenebilir. Alan ancak Android çöp kutusunu boşalttığında açılır.</string>
+    <string name="tools_trash_note">Varsayılan olarak kapalı. Android tüm dosyalar için bir kez sorar; Android sakladığı sürece geri yüklenebilir. Alan ancak Android çöp kutusunu boşalttığında açılır.</string>
     <string name="tools_sizes">Ölçülen: önce %1$s, sonra %2$s</string>
-    <string name="tools_freed_later">Android çöp kutusunu boşalttığında yaklaşık %1$s açılacak.</string>
+    <string name="tools_freed_later">Android çöp kutusunda, henüz boşalmadı: Android çöp kutusunu boşalttığında dosyalar %1$s daha az yer kaplar.</string>
     <string name="tools_originals_kept">Orijinallerin değişmedi; yer açılmadı.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d dosya seçildi</item>

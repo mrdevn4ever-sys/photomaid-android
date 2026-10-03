@@ -1452,9 +1452,9 @@
     <string name="tools_gif_delay">Tempo por foto</string>
     <string name="tools_gif_note">Os GIF têm no máximo 256 cores e não têm som – as fotos podem parecer um pouco granuladas.</string>
     <string name="tools_trash_originals">Mover depois os originais para o lixo do Android</string>
-    <string name="tools_trash_note">Desligado por predefinição. O Android pergunta uma vez para todos; ficam recuperáveis durante cerca de 30 dias. O espaço só é libertado quando o Android esvazia o lixo.</string>
+    <string name="tools_trash_note">Desligado por predefinição. O Android pergunta uma vez para todos; ficam recuperáveis enquanto o Android os guardar. O espaço só é libertado quando o Android esvazia o lixo.</string>
     <string name="tools_sizes">Medido: antes %1$s, depois %2$s</string>
-    <string name="tools_freed_later">Cerca de %1$s serão libertados quando o Android esvaziar o lixo.</string>
+    <string name="tools_freed_later">No lixo do Android, ainda não libertado: quando o Android o esvaziar, os ficheiros ocupam menos %1$s.</string>
     <string name="tools_originals_kept">Os originais não foram alterados – não foi libertado espaço.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d ficheiro selecionado</item>

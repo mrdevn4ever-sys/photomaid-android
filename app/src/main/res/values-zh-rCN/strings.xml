@@ -1342,9 +1342,9 @@
     <string name="tools_gif_delay">每张照片时长</string>
     <string name="tools_gif_note">GIF 最多 256 色且没有声音，照片可能略显颗粒感。</string>
     <string name="tools_trash_originals">完成后将原文件移到 Android 回收站</string>
-    <string name="tools_trash_note">默认关闭。Android 会对所有文件确认一次；约 30 天内可恢复。只有在 Android 清空回收站后才会释放空间。</string>
+    <string name="tools_trash_note">默认关闭。Android 会对所有文件确认一次；在 Android 保留期间可以恢复。只有在 Android 清空回收站后才会释放空间。</string>
     <string name="tools_sizes">实测：处理前 %1$s，处理后 %2$s</string>
-    <string name="tools_freed_later">Android 清空回收站后约可释放 %1$s。</string>
+    <string name="tools_freed_later">在 Android 回收站中，尚未释放：Android 清空回收站后，这些文件将少占用 %1$s。</string>
     <string name="tools_originals_kept">原文件未更改，未释放空间。</string>
     <plurals name="tools_selected">
         <item quantity="other">已选择 %1$d 个文件</item>

@@ -1507,9 +1507,9 @@
     <string name="tools_gif_delay">Czas na zdjęcie</string>
     <string name="tools_gif_note">GIF-y mają najwyżej 256 kolorów i brak dźwięku – zdjęcia mogą wyglądać nieco ziarniście.</string>
     <string name="tools_trash_originals">Potem przenieś oryginały do kosza Androida</string>
-    <string name="tools_trash_note">Domyślnie wyłączone. Android zapyta raz o wszystkie pliki; można je przywrócić przez ok. 30 dni. Miejsce zwalnia się dopiero, gdy Android opróżni kosz.</string>
+    <string name="tools_trash_note">Domyślnie wyłączone. Android zapyta raz o wszystkie pliki; można je przywrócić, dopóki Android je przechowuje. Miejsce zwalnia się dopiero, gdy Android opróżni kosz.</string>
     <string name="tools_sizes">Zmierzono: przed %1$s, po %2$s</string>
-    <string name="tools_freed_later">Około %1$s zwolni się, gdy Android opróżni kosz.</string>
+    <string name="tools_freed_later">W koszu Androida, jeszcze nie zwolnione: gdy Android opróżni kosz, pliki zajmą o %1$s mniej.</string>
     <string name="tools_originals_kept">Oryginały są bez zmian – nie zwolniono miejsca.</string>
     <plurals name="tools_selected">
         <item quantity="one">Wybrano %1$d plik</item>

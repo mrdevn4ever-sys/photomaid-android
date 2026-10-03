@@ -1617,9 +1617,9 @@
     <string name="tools_gif_delay">المدة لكل صورة</string>
     <string name="tools_gif_note">تحتوي ملفات GIF على 256 لونًا كحد أقصى ولا صوت – قد تبدو الصور محببة قليلًا.</string>
     <string name="tools_trash_originals">نقل الأصول بعدها إلى سلة مهملات Android</string>
-    <string name="tools_trash_note">معطّل افتراضيًا. يسأل Android مرة واحدة لكل الملفات؛ وتبقى قابلة للاستعادة هناك نحو 30 يومًا. لا تتحرر المساحة إلا عندما يفرغ Android السلة.</string>
+    <string name="tools_trash_note">معطّل افتراضيًا. يسأل Android مرة واحدة لكل الملفات؛ وتبقى قابلة للاستعادة هناك ما دام Android يحتفظ بها. لا تتحرر المساحة إلا عندما يفرغ Android السلة.</string>
     <string name="tools_sizes">مقيس: قبل %1$s، بعد %2$s</string>
-    <string name="tools_freed_later">ستتحرر نحو %1$s عندما يفرغ Android السلة.</string>
+    <string name="tools_freed_later">في سلة مهملات Android، ولم تتحرر بعد: عندما يفرغها Android ستشغل الملفات مساحة أقل بمقدار %1$s.</string>
     <string name="tools_originals_kept">أصولك لم تتغير – لم تتحرر أي مساحة.</string>
     <plurals name="tools_selected">
         <item quantity="zero">%1$d ملف محدد</item>

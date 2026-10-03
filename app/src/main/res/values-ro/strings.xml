@@ -1452,9 +1452,9 @@
     <string name="tools_gif_delay">Timp pe fotografie</string>
     <string name="tools_gif_note">GIF-urile au cel mult 256 de culori și nu au sunet – fotografiile pot părea puțin granulate.</string>
     <string name="tools_trash_originals">Mută apoi originalele în coșul Android</string>
-    <string name="tools_trash_note">Dezactivat implicit. Android întreabă o dată pentru toate fișierele; rămân recuperabile acolo circa 30 de zile. Spațiul se eliberează doar când Android golește coșul.</string>
+    <string name="tools_trash_note">Dezactivat implicit. Android întreabă o dată pentru toate fișierele; rămân recuperabile cât timp Android le păstrează. Spațiul se eliberează doar când Android golește coșul.</string>
     <string name="tools_sizes">Măsurat: înainte %1$s, după %2$s</string>
-    <string name="tools_freed_later">Circa %1$s se vor elibera când Android golește coșul.</string>
+    <string name="tools_freed_later">În coșul Android, încă neeliberat: când Android îl golește, fișierele vor ocupa cu %1$s mai puțin.</string>
     <string name="tools_originals_kept">Originalele sunt neschimbate – nu s-a eliberat spațiu.</string>
     <plurals name="tools_selected">
         <item quantity="one">%1$d fișier selectat</item>

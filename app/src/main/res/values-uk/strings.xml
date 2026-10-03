@@ -1507,9 +1507,9 @@
     <string name="tools_gif_delay">Час на фото</string>
     <string name="tools_gif_note">У GIF щонайбільше 256 кольорів і немає звуку – фото можуть виглядати трохи зернистими.</string>
     <string name="tools_trash_originals">Потім перемістити оригінали в кошик Android</string>
-    <string name="tools_trash_note">Типово вимкнено. Android запитає один раз для всіх файлів; їх можна відновити близько 30 днів. Місце звільняється, лише коли Android очистить кошик.</string>
+    <string name="tools_trash_note">Типово вимкнено. Android запитає один раз для всіх файлів; їх можна відновити, доки Android їх зберігає. Місце звільняється, лише коли Android очистить кошик.</string>
     <string name="tools_sizes">Виміряно: було %1$s, стало %2$s</string>
-    <string name="tools_freed_later">Близько %1$s звільниться, коли Android очистить кошик.</string>
+    <string name="tools_freed_later">У кошику Android, ще не звільнено: коли Android його очистить, файли займатимуть на %1$s менше.</string>
     <string name="tools_originals_kept">Оригінали не змінено – місце не звільнено.</string>
     <plurals name="tools_selected">
         <item quantity="one">Вибрано %1$d файл</item>

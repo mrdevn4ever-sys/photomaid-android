@@ -92,7 +92,8 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   P7 Werkzeuge (`feature/studio/ToolsScreen.kt`, Kern `core/.../batch/`): Verkleinern, Umwandeln, Standort entfernen
   (Stapel, Free bis 10 Dateien), Screenshots zusammenfügen, GIF (`GifEncoder`, Pro). Immer neue Dateien = „Behalten“,
   Quellen ohne Entscheidung; Originale nur auf Wunsch in den Android-Papierkorb (Standard aus). Größen nur gemessen,
-  „frei“ erst, wenn alle Originale im Papierkorb liegen und alle Größen bekannt sind (`BatchSummary.freedLaterBytes`).
+  Ersparnis erst, wenn alle Originale im Papierkorb liegen und alle Größen bekannt sind (`BatchSummary.freedLaterBytes`), und
+  immer als „noch nicht frei“ (frei erst, wenn Android den Papierkorb leert); keine feste Papierkorb-Frist behaupten.
 
 ## Verbote
 
