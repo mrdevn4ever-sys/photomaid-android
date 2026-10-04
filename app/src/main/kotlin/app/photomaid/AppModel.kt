@@ -130,6 +130,8 @@ class AppModel(
     val drafts = app.photomaid.feature.studio.DraftStore(store, context)
     val editEvents = kotlinx.coroutines.flow.MutableSharedFlow<app.photomaid.feature.editor.EditOutcome>(extraBufferCapacity = 8)
     val quickAccess = app.photomaid.feature.quickaccess.QuickAccessStore(store)
+    /** Organisieren: Alben, Schlagwörter, Notizen, Auswahlkorb (nur Verwaltungsdaten, nie eine Entscheidung). */
+    val organize = app.photomaid.feature.organize.OrganizeStore(db)
 
     private val _read = MutableStateFlow(LedgerReadModel())
     val read: StateFlow<LedgerReadModel> = _read.asStateFlow()
@@ -155,6 +157,7 @@ class AppModel(
         presets.load()
         drafts.load()
         quickAccess.load()
+        organize.load()
         feedAdCounter.load()
         entitlements.load()
         (purchases as? PlayBillingGateway)?.loadCache()
