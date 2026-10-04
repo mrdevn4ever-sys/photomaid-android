@@ -1,5 +1,7 @@
 package app.photomaid.feature.studio
 
+import app.photomaid.feature.workflow.WorkflowRequest
+import androidx.compose.material.icons.rounded.AutoMode
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers
 import app.photomaid.core.studio.VideoRules
@@ -137,6 +139,12 @@ fun StudioScreen(nav: Nav) {
             Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
                 SectionTitle(stringResource(R.string.tools_header))
                 RowGroup {
+                    // Paket 2: gespeicherte Arbeitsabläufe aus mehreren Schritten.
+                    ListRow(Icons.Rounded.AutoMode, stringResource(R.string.wf_title), Modifier.testTag("studio.workflows"), tint = c.accent,
+                        tile = c.accent.copy(alpha = 0.13f), subtitle = stringResource(R.string.wf_studio_sub), enabled = access.canRead) {
+                        nav.openWorkflows(WorkflowRequest(UUID.randomUUID().toString(), null))
+                    }
+                    RowDivider(RowDividerInset)
                     val tools = listOf(
                         Triple(ToolKind.RESIZE, Icons.Rounded.PhotoSizeSelectSmall, R.string.tools_resize to R.string.tools_resize_sub),
                         Triple(ToolKind.CONVERT, Icons.Rounded.SwapHoriz, R.string.tools_convert to R.string.tools_convert_sub),

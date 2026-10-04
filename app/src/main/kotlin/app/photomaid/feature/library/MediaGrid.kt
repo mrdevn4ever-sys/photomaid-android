@@ -1,5 +1,7 @@
 package app.photomaid.feature.library
 
+import app.photomaid.feature.workflow.WorkflowRequest
+import androidx.compose.material.icons.rounded.AutoMode
 import app.photomaid.system.MediaIntents
 import app.photomaid.feature.organize.TagSheet
 import app.photomaid.feature.organize.AlbumPickerSheet
@@ -349,6 +351,10 @@ internal fun SelectionActions(
             GlassIconButton(Icons.Rounded.MoreHoriz, stringResource(R.string.more_actions), Modifier.testTag("lib.sel.more"), quiet = true) { more = true }
             DropdownMenu(more, onDismissRequest = { more = false }) {
                 OrganizeMenuItems(chosen, close = { more = false }, onAlbum = { albumSheet = true }, onTags = { tagSheet = true }) { message = it }
+                DropdownMenuItem(text = { Text(stringResource(R.string.wf_apply)) }, leadingIcon = { Icon(Icons.Rounded.AutoMode, null) },
+                    modifier = Modifier.testTag("lib.sel.workflow"), onClick = {
+                        more = false; nav.openWorkflows(WorkflowRequest(UUID.randomUUID().toString(), chosen.map { it.id }))
+                    })
                 DropdownMenuItem(text = { Text(stringResource(R.string.share)) }, leadingIcon = { Icon(Icons.Rounded.Share, null) },
                     modifier = Modifier.testTag("lib.sel.share"), onClick = {
                         more = false

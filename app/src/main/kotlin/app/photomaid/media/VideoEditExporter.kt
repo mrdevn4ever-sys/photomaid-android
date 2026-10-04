@@ -127,7 +127,7 @@ class Media3VideoEditExporter(private val context: Context) : VideoEditExporter 
             .setHdrMode(if (info.hdr && !clip.colorNeutral()) Composition.HDR_MODE_TONE_MAP_HDR_TO_SDR_USING_OPEN_GL else Composition.HDR_MODE_KEEP_HDR)
             .build()
         val encoder = DefaultEncoderFactory.Builder(context)
-            .setRequestedVideoEncoderSettings(VideoEncoderSettings.Builder().setBitrate(VideoPlan.videoBitrate(layout, info.fps, project.profile)).build())
+            .setRequestedVideoEncoderSettings(VideoEncoderSettings.Builder().setBitrate(project.targetBitrate ?: VideoPlan.videoBitrate(layout, info.fps, project.profile)).build())
             .build()
         if (audioOnly && removeAudio) throw EditError.WriteFailed("no-audio")
         coroutineScope {

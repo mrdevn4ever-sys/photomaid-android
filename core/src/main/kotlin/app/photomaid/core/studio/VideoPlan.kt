@@ -86,7 +86,7 @@ object VideoPlan {
             // Einpassen: Rahmen umschließt den Ausschnitt (Ränder mit Hintergrund).
             if (cropped.aspect > aspect) VSize(cropped.width, (cropped.width / aspect).roundToInt()) else VSize((cropped.height * aspect).roundToInt(), cropped.height)
         }
-        val (w, h) = VideoRules.targetSize(max(2, frame.width), max(2, frame.height), project.profile)
+        val (w, h) = VideoRules.targetSize(max(2, frame.width), max(2, frame.height), project.profile, project.targetShortSide)
         return VideoLayout(rotated, cropped, VSize(max(2, w), max(2, h)), project.fill)
     }
 

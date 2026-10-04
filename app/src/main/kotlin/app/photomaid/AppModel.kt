@@ -132,6 +132,8 @@ class AppModel(
     val quickAccess = app.photomaid.feature.quickaccess.QuickAccessStore(store)
     /** Organisieren: Alben, Schlagwörter, Notizen, Auswahlkorb (nur Verwaltungsdaten, nie eine Entscheidung). */
     val organize = app.photomaid.feature.organize.OrganizeStore(db)
+    /** Gespeicherte Arbeitsabläufe (Paket 2). */
+    val workflows = app.photomaid.feature.workflow.WorkflowStore(store)
 
     private val _read = MutableStateFlow(LedgerReadModel())
     val read: StateFlow<LedgerReadModel> = _read.asStateFlow()
@@ -158,6 +160,7 @@ class AppModel(
         drafts.load()
         quickAccess.load()
         organize.load()
+        workflows.load()
         feedAdCounter.load()
         entitlements.load()
         (purchases as? PlayBillingGateway)?.loadCache()

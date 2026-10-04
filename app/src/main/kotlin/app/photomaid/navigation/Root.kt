@@ -1,5 +1,11 @@
 package app.photomaid.navigation
 
+import app.photomaid.feature.workflow.WorkflowRunScreen
+import app.photomaid.feature.workflow.WorkflowEditorScreen
+import app.photomaid.feature.workflow.WorkflowsScreen
+import app.photomaid.feature.workflow.WorkflowRequests
+import app.photomaid.feature.workflow.WorkflowRunRequest
+import app.photomaid.feature.workflow.WorkflowRequest
 import app.photomaid.feature.organize.OrganizeScreen
 import app.photomaid.feature.organize.OrganizeTarget
 import app.photomaid.feature.months.MonthsScreen
@@ -164,6 +170,9 @@ interface Nav {
     fun openFolder(target: FolderTarget) {}
     /** Organisieren: Album, Schlagwort oder Auswahlkorb (nie eine Entscheidung). */
     fun openOrganize(target: OrganizeTarget) {}
+    /** Arbeitsabläufe: Liste (optional mit Auswahl) und Ausführen. Nie eine Entscheidung über die Quellen. */
+    fun openWorkflows(request: WorkflowRequest) {}
+    fun openWorkflowRun(request: WorkflowRunRequest) {}
     /** Diashow (nur Ansehen). */
     fun openSlideshow(request: SlideshowRequest) {}
     /** Studio P6: Video zusammenfügen / Diashow als Video. */
@@ -284,6 +293,8 @@ private fun RootNav(app: AppModel) {
             override fun openSlideshow(request: SlideshowRequest) {
                 SlideshowRequests.map[request.id] = request; root.navigate("slideshow/${request.id}")
             }
+            override fun openWorkflows(request: WorkflowRequest) { WorkflowRequests.lists[request.id] = request; root.navigate("workflows/${request.id}") }
+            override fun openWorkflowRun(request: WorkflowRunRequest) { WorkflowRequests.runs[request.id] = request; root.navigate("workflow/run/${request.id}") }
             override fun openOrganize(target: OrganizeTarget) {
                 root.navigate("organize/" + android.net.Uri.encode(target.encode()))
             }
@@ -373,6 +384,21 @@ private fun RootNav(app: AppModel) {
             val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
             if (target == null) LaunchedEffect(entry) { close() }
             else FolderScreen(target, nav, onClose = { close() })
+        }
+        composable("workflows/{id}") { entry ->
+            val key = entry.arguments?.getString("id"); val req = key?.let { WorkflowRequests.lists[it] }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() } else WorkflowsScreen(req, nav, onClose = { close() })
+        }
+        composable("workflow/edit/{id}") { entry ->
+            val id = entry.arguments?.getString("id")
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (id == null) LaunchedEffect(entry) { close() } else WorkflowEditorScreen(id, nav, onClose = { close() })
+        }
+        composable("workflow/run/{id}") { entry ->
+            val key = entry.arguments?.getString("id"); val req = key?.let { WorkflowRequests.runs[it] }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() } else WorkflowRunScreen(req, nav, onClose = { key?.let { WorkflowRequests.runs.remove(it) }; close() })
         }
         composable("organize/{target}") { entry ->
             val target = entry.arguments?.getString("target")?.let(OrganizeTarget::decode)

@@ -98,6 +98,9 @@ data class VideoProject(
     val removeAudio: Boolean = false,
     val layers: List<TimedLayer> = emptyList(),
     val profile: ExportProfile = ExportProfile.HIGH,
+    /** Zielgröße (Arbeitsabläufe): feste Video-Bitrate und höchstens diese kurze Seite; `null` = aus dem Profil. */
+    val targetBitrate: Int? = null,
+    val targetShortSide: Int? = null,
 ) {
     val durationMs: Long get() = clips.sumOf { it.outputDurationMs }
 
@@ -127,9 +130,10 @@ object VideoRules {
     }
 
     /** Zielgröße für ein Profil (nie hochskalieren, gerade Werte für Encoder). */
-    fun targetSize(srcW: Int, srcH: Int, profile: ExportProfile): Pair<Int, Int> {
+    fun targetSize(srcW: Int, srcH: Int, profile: ExportProfile, maxShortSide: Int? = null): Pair<Int, Int> {
         val short = min(srcW, srcH)
-        val h = if (profile.height == 0 || profile.height >= short) short else profile.height
+        val byProfile = if (profile.height == 0 || profile.height >= short) short else profile.height
+        val h = min(byProfile, maxShortSide ?: byProfile)
         val scale = h.toDouble() / short
         fun even(v: Double) = (v.roundToLong().toInt() / 2) * 2
         return if (srcW <= srcH) even(srcW * scale) to even(srcH * scale) else even(srcW * scale) to even(srcH * scale)
