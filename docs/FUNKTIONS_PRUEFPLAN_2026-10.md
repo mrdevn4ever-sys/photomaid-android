@@ -122,6 +122,16 @@ Spalte „Regeln“: welche der drei harten Regeln hier besonders zählt.
 | G11 | Diashow | starten, Pause, Tempo | Bilder gleich groß, Steuerung ausblendbar | M, W |
 | G12 | Kopfhörer-Tasten | Play/Pause/Spulen | nie „Weiter“ | – |
 
+### 2.7a Organisieren (Paket 1)
+| ID | Funktion | Prüfen | Erwartet | Regeln |
+|---|---|---|---|---|
+| O1 | Alben: anlegen aus Auswahl, hinzufügen, entfernen, umbenennen, löschen | je Aktion, danach Datei in Galerie-App prüfen | Dateien unverändert, keine Entscheidung (`OrganizeUiTest`) | B |
+| O2 | Schlagwörter: vergeben (bei allen/einigen), Seite je Schlagwort, überall entfernen, Suche | „#Rechnung“ vergeben, „rechnung“ suchen | Treffer, keine Erkennung | B |
+| O3 | Notiz im Betrachter › Info | Notiz speichern, App neu starten | Notiz bleibt, Datei unverändert | – |
+| O4 | Auswahlkorb: hinzufügen aus verschiedenen Monaten, Neustart, Album aus Korb, Korb leeren | je Aktion | bleibt nach Neustart; Leeren ändert keine Datei | B |
+| O5 | Wiederfinden / Fehlende | Medium außerhalb löschen, Album öffnen | „n nicht gefunden“, erst „Aus der Liste entfernen“ entfernt | – |
+| O6 | Update von Version 1 (bestehende Installation) | APK über alte Version installieren | Entscheidungen/Einstellungen erhalten (Migration 1→2, `OrganizeStoreTest`) | – |
+
 ### 2.8 Studio (Tab 4)
 | ID | Funktion | Prüfen | Erwartet | Regeln |
 |---|---|---|---|---|

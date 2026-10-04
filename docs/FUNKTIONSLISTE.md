@@ -93,6 +93,15 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Diashow: Start, Pause, Tempo (G11)
 - Kopfhörer-Tasten: nur Play/Pause/Spulen, nie „Weiter“ (G12)
 
+## 7a. Organisieren (Ausbau Paket 1)
+- **Alben** (Ansicht „Alben“ im Tab „Fotos“): bewusst zusammengestellte Fotos/Videos aus beliebigen Ordnern, ohne Kopieren oder Verschieben; ein Medium kann in mehreren Alben sein. Neues Album, Umbenennen, Diashow, Album löschen (nur die Zusammenstellung). Auswahl › ⋯ › Zu Album hinzufügen (vorhandenes oder neues). „Aus Album entfernen“ löscht nie eine Datei (O1)
+- **Schlagwörter** (eigene Begriffe wie „Rechnung“, „Ferien“): für eine Auswahl vergeben/entfernen (bei allen · bei einigen), Übersicht mit Anzahl, Seite je Schlagwort, überall entfernen; die Suche findet sie ohne Akzente/Groß-klein. Keine Erkennung von Inhalten (O2)
+- **Notiz** je Medium im Betrachter › Info (nur PhotoMaid, Datei unverändert) – zusammen mit Schlagwörtern und den Alben des Mediums (O3)
+- **Auswahlkorb**: dauerhafter Arbeitsvorrat über Monate und Ordner hinweg (bleibt nach Neustart), Symbol im Kopf von „Fotos“; Aktionen der Auswahl (Collage, Film, Teilen, …), Album aus dem Korb erstellen, Korb leeren. Hat nichts mit dem Papierkorb zu tun (O4)
+- **Teilen** mehrerer ausgewählter Medien über Android (Auswahl › ⋯ › Teilen)
+- Wiederfinden: Bezug über Medien-ID, bei neu indizierten Medien über einen eindeutigen Fingerabdruck (Name, Größe, Aufnahmezeit); nicht mehr Auffindbares wird gezählt und nur auf Wunsch aus der Liste entfernt (O5)
+- Nichts davon ist eine Aufräum-Entscheidung, nichts verändert Dateien; Free, ohne Werbung
+
 ## 8. Studio (Tab 4)
 - Übersicht: Erstellen, Werkzeuge, Entwürfe, „Bearbeitet“ (T1)
 - Medienauswahl, nie eine Entscheidung (T2)

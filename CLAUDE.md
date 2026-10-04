@@ -24,7 +24,8 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Aktionsleiste ♡ Favorit · Teilen · In Ordner verschieben · ✏️ Bearbeiten · ⋯ – außerhalb der Gestenfläche, nie eine
   Entscheidung (unter 360 dp wandert „Teilen“ ins ⋯-Menü).
 - Favoriten = MediaStore-Systemfavoriten (`createFavoriteRequest`), „Favoriten schützen“ (Standard an): Wisch nach
-  links auf einen Favoriten fragt nach. „Album“ gibt es als Systembegriff nicht: nur „In Ordner verschieben“.
+  links auf einen Favoriten fragt nach. „Album“ gibt es als Systembegriff nicht: nur „In Ordner verschieben“
+  (PhotoMaid-eigene Alben siehe „Organisieren“ – nie eine Datei-Aktion).
 - Schnellzugriffe auf „Heute“ (max. 6, Standard Fotos + Videos) sind nur Abfragen (`QuickAccessItem`, gespeichert ohne
   Medien-IDs). Entscheidungen hängen am Medium im Ledger; Zähler immer über `AppModel.pendingQueue` – nie je Quelle speichern.
 - Pro-Test (Rewarded, 30 min, 1× pro lokalem Tag) schaltet Pro-Werkzeuge frei, hebt das Papierkorb-Limit NIE auf
@@ -66,6 +67,13 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Systembestätigung); Android-Papierkorb-Ansicht (`SystemTrashScreen`) nur auf ausdrückliche Auswahl. RAW+JPEG-Paare
   (`core/.../library/RawPairs.kt`, `RawIndex`): RAW hinter dem JPEG, geht bei Papierkorb/Ausblenden/Verschieben mit.
   Plan G1–G4: `docs/GALLERY_PLAN_2026-10.md`.
+- Organisieren (Ausbau Paket 1, 2026-10, `feature/organize/`, Kern `core/.../organize/Organize.kt`, Room v2 per AutoMigration):
+  PhotoMaid-eigene Alben (bewusst zusammengestellt, Mehrfachzuordnung, Ansicht „Alben“ im Tab „Fotos“), eigene
+  Schlagwörter + Notizen (Betrachter › Info, Suche findet sie), dauerhafter Auswahlkorb (keine Aufräum-Bedeutung, ≠ Papierkorb).
+  Ordner = Speicherort · Sammlung = Suchbedingung · Album = Nutzerauswahl. Alles nur Verwaltungsdaten: „Aus Album entfernen“,
+  „Album löschen“, „Schlagwort entfernen“, „Korb leeren“ ändern nie eine Datei und sind nie eine Entscheidung (kein Ledger).
+  Bezüge über Medien-ID + Fingerabdruck (Name, Größe, Aufnahmezeit, nur eindeutig, `Rematch`); nicht Auffindbares wird
+  sichtbar gezählt und nur auf Wunsch entfernt. Keine Erkennung – nur, was der Nutzer selbst einträgt. Free, ohne Werbung.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3

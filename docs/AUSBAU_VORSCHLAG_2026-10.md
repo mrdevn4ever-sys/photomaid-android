@@ -1,8 +1,8 @@
-# Nächste Ausbaustufe – Vorschlag 03.10.2026 (noch nicht beauftragt)
+# Nächste Ausbaustufe – Vorschlag 03.10.2026
 
 Grundlage: Rückmeldung zur `docs/FUNKTIONSLISTE.md`. Richtung: keine weiteren Filter, sondern ein zusammenhängender
 Ablauf **auswählen → ordnen → verbessern → ausgeben → kontrolliert archivieren**. Den Aufräum-Feed ergänzen, nicht überladen.
-Status aller Punkte: **NOT RUN** (nichts davon ist umgesetzt).
+Status: **Paket 1 (Organisieren) umgesetzt** am 04.10.2026 (JVM-Tests PASS, Gerät NOT RUN); alle übrigen Punkte NOT RUN (nicht beauftragt).
 
 Spalte „Regeln“: Prüfung gegen `CLAUDE.md` (lokal, keine KI, nie automatisch löschen, keine erfundenen Zahlen, Ansehen ≠ Entscheidung).
 
