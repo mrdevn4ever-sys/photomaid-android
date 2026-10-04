@@ -1,5 +1,8 @@
 package app.photomaid.design
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.semantics.text
 import androidx.compose.material.icons.rounded.Check
@@ -488,15 +491,20 @@ fun ErrorState(message: String, modifier: Modifier = Modifier, retry: (() -> Uni
 @Composable
 fun <T> SegmentedPicker(options: List<Pair<T, String>>, selected: T, modifier: Modifier = Modifier, onSelect: (T) -> Unit) {
     val c = PM.colors
+    // Große Schrift: natürliche Breiten und waagrechtes Scrollen statt abgeschnittener Beschriftungen.
+    val large = androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f
     Row(
-        modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(c.backgroundTint.copy(alpha = 0.9f)).padding(3.dp),
+        modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(c.backgroundTint.copy(alpha = 0.9f))
+            .then(if (large) Modifier.horizontalScroll(androidx.compose.foundation.rememberScrollState()) else Modifier).padding(3.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         for ((value, label) in options) {
             val isSel = value == selected
+            val bring = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
+            if (large) LaunchedEffect(isSel) { if (isSel) { androidx.compose.runtime.withFrameNanos { }; runCatching { bring.bringIntoView() } } }
             Box(
                 Modifier
-                    .weight(1f)
+                    .then(if (large) Modifier.widthIn(min = 72.dp).bringIntoViewRequester(bring) else Modifier.weight(1f))
                     .heightIn(min = 36.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .then(if (isSel) Modifier.background(c.surface.copy(alpha = 1f)).border(0.5.dp, c.surfaceStroke, RoundedCornerShape(8.dp)) else Modifier)
@@ -507,7 +515,7 @@ fun <T> SegmentedPicker(options: List<Pair<T, String>>, selected: T, modifier: M
             ) {
                 Text(
                     label, style = AppTypography.footnote.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Normal),
-                    color = c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                    color = c.textPrimary, maxLines = 1, overflow = if (large) TextOverflow.Clip else TextOverflow.Ellipsis, softWrap = !large,
                 )
             }
         }
