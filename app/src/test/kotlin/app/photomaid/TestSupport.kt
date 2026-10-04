@@ -326,6 +326,8 @@ class RecordingNav : Nav {
     val tools = mutableListOf<app.photomaid.feature.studio.ToolRequest>()
     override fun openTool(request: app.photomaid.feature.studio.ToolRequest) { events += "tool:${request.kind}"; tools += request }
     override fun openPicker(request: app.photomaid.feature.studio.PickRequest) { events += "picker"; picks += request }
+    val organize = mutableListOf<app.photomaid.feature.organize.OrganizeTarget>()
+    override fun openOrganize(target: app.photomaid.feature.organize.OrganizeTarget) { events += "organize:${target.encode()}"; organize += target }
     override fun openSettings() { events += "settings" }
     override fun openPro() { events += "pro" }
     override fun openPrivacy() { events += "privacy" }

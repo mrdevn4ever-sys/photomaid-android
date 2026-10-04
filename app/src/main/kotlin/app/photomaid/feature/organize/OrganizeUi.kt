@@ -400,7 +400,7 @@ internal fun OrganizeMenuItems(chosen: List<MediaAsset>, close: () -> Unit, onAl
         })
 }
 
-/** Zu einem Album hinzufügen: vorhandene Alben oder ein neues. */
+/** Zu einem Album hinzufügen: vorhandene Alben oder ein neues (Name direkt im Blatt – keine zweite Ebene). */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AlbumPickerSheet(chosen: List<MediaAsset>, onDismiss: () -> Unit, onDone: (String) -> Unit) {
@@ -408,14 +408,28 @@ internal fun AlbumPickerSheet(chosen: List<MediaAsset>, onDismiss: () -> Unit, o
     val c = PM.colors
     val org by app.organize.state.collectAsState()
     val scope = rememberCoroutineScope()
-    var naming by remember { mutableStateOf(false) }
-    fun added(name: String, n: Int) = if (n == 0) app.string(R.string.org_already_in_album, name)
-        else app.context.resources.getQuantityString(R.plurals.org_added_to_album, n, n, name)
+    var naming by rememberSaveable { mutableStateOf(false) }
+    var name by rememberSaveable { mutableStateOf("") }
+    val nameOk = AlbumRules.normalizeName(name) != null
+    fun added(albumName: String, n: Int) = if (n == 0) app.string(R.string.org_already_in_album, albumName)
+        else app.context.resources.getQuantityString(R.plurals.org_added_to_album, n, n, albumName)
+    fun create() {
+        if (!nameOk) return
+        scope.launch {
+            val id = app.organize.createAlbum(name, chosen) ?: return@launch
+            onDone(added(app.organize.state.value.album(id)?.name ?: name, chosen.size))
+        }
+    }
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true), modifier = Modifier.testTag("album.picker")) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = AppSpacing.pageMargin).padding(bottom = AppSpacing.xl),
             verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
             Text(stringResource(R.string.org_add_to_album), style = AppTypography.title, color = c.textPrimary, modifier = Modifier.semantics { heading() })
-            Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button) { naming = true }
+            if (naming) {
+                OutlinedTextField(name, { name = it.take(AlbumRules.MAX_NAME) }, Modifier.fillMaxWidth().testTag("org.name.input"), singleLine = true,
+                    label = { Text(stringResource(R.string.org_album_name)) }, shape = RoundedCornerShape(14.dp),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done), keyboardActions = KeyboardActions(onDone = { create() }))
+                ProminentButton(stringResource(R.string.org_create), Modifier.testTag("org.name.ok"), fillWidth = true, enabled = nameOk) { create() }
+            } else Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).clip(RoundedCornerShape(12.dp)).clickable(role = Role.Button) { naming = true }
                 .padding(horizontal = AppSpacing.s).testTag("album.picker.new"), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                 Icon(Icons.Rounded.Add, null, tint = c.accent)
                 Text(stringResource(R.string.org_new_album), style = AppTypography.body, color = c.accent)
@@ -434,13 +448,6 @@ internal fun AlbumPickerSheet(chosen: List<MediaAsset>, onDismiss: () -> Unit, o
                     if (all) Icon(Icons.Rounded.Check, null, tint = c.accent)
                 }
             }
-        }
-    }
-    if (naming) NameDialog(stringResource(R.string.org_new_album), "", stringResource(R.string.org_create), onDismiss = { naming = false }) { name ->
-        naming = false
-        scope.launch {
-            val id = app.organize.createAlbum(name, chosen) ?: return@launch
-            onDone(added(app.organize.state.value.album(id)?.name ?: name, chosen.size))
         }
     }
 }
