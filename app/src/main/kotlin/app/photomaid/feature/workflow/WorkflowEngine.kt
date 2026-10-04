@@ -115,7 +115,7 @@ object WorkflowRunner {
             val r = try {
                 if (a.kind == MediaKind.VIDEO) video(app, w, a, stem, shares[a], shared) else photo(app, w, a, stem, shares[a], shared)
             } catch (e: kotlinx.coroutines.CancellationException) { throw e }
-            catch (e: Exception) { WorkflowItemResult(a, WorkflowItemResult.Status.FAILED, beforeBytes = a.size.bytesOrNull, reason = WorkflowItemResult.Reason.ERROR) }
+            catch (e: Exception) { android.util.Log.w("PhotoMaid", "Arbeitsablauf: Datei fehlgeschlagen", e); WorkflowItemResult(a, WorkflowItemResult.Status.FAILED, beforeBytes = a.size.bytesOrNull, reason = WorkflowItemResult.Reason.ERROR) }
             out += r
         }
         onProgress(1f)

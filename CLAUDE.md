@@ -74,6 +74,12 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   „Album löschen“, „Schlagwort entfernen“, „Korb leeren“ ändern nie eine Datei und sind nie eine Entscheidung (kein Ledger).
   Bezüge über Medien-ID + Fingerabdruck (Name, Größe, Aufnahmezeit, nur eindeutig, `Rematch`); nicht Auffindbares wird
   sichtbar gezählt und nur auf Wunsch entfernt. Keine Erkennung – nur, was der Nutzer selbst einträgt. Free, ohne Werbung.
+- Arbeitsabläufe (Ausbau Paket 2, 2026-10, `feature/workflow/`, Kern `core/.../batch/Workflow.kt`): benannte Abläufe aus vorhandenen
+  Schritten (Format, längste Seite, Qualität, Zielgröße je Foto/Video oder gemeinsames Budget, Standort, Namensschema
+  „Basis_001“, Ordner, Speichern/Nur teilen). Vorschau „Das passiert“ vor dem Start, Ergebnisliste (fertig/übersprungen/
+  Ziel nicht erreicht/fehlgeschlagen). Zielgröße = Vorgabe: jedes Ergebnis wird gemessen (`TargetSize`, Video `VideoTarget` +
+  ein Nachkodieren); nicht erreichbar → KEINE Datei, Grund mit kleinster gemessener Größe. Abläufe löschen nie, legen nichts
+  in einen Papierkorb, entscheiden nie über Quellen; gespeicherte Ergebnisse = „Behalten“. Free bis 10 Dateien je Durchgang.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3

@@ -132,6 +132,15 @@ Spalte „Regeln“: welche der drei harten Regeln hier besonders zählt.
 | O5 | Wiederfinden / Fehlende | Medium außerhalb löschen, Album öffnen | „n nicht gefunden“, erst „Aus der Liste entfernen“ entfernt | – |
 | O6 | Update von Version 1 (bestehende Installation) | APK über alte Version installieren | Entscheidungen/Einstellungen erhalten (Migration 1→2, `OrganizeStoreTest`) | – |
 
+### 2.7b Arbeitsabläufe (Paket 2)
+| ID | Funktion | Prüfen | Erwartet | Regeln |
+|---|---|---|---|---|
+| W1 | Einstiege Studio / Auswahl › ⋯ | beide öffnen | Liste, Vorlagen, Tippen = Ausführen | B |
+| W2 | Editor | Ablauf anlegen, ändern, löschen | gespeichert, nur gültige Kombinationen | B |
+| W3 | Vorschau + Budget | Schritte lesen, „Zusammen höchstens“ | Text passt zum Ergebnis | B |
+| W4 | Zielgröße Foto/Video | 2 MB / 20 MB, echte Galerie-Dateien prüfen | keine Datei über dem Ziel; sonst Grund (`WorkflowRunTest`) | – |
+| W5 | Nur teilen | an echte App teilen | nichts in der Galerie gespeichert | – |
+
 ### 2.8 Studio (Tab 4)
 | ID | Funktion | Prüfen | Erwartet | Regeln |
 |---|---|---|---|---|

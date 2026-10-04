@@ -123,6 +123,13 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
   - Ersparnis erst, wenn alle Originale im Android-Papierkorb liegen und alle Größen bekannt sind – und ausdrücklich als „noch nicht frei“: Speicher wird erst frei, wenn Android den Papierkorb leert
 - Teilen ohne Speichern (T14)
 
+## 8a. Arbeitsabläufe (Ausbau Paket 2)
+- Studio › Werkzeuge › Arbeitsabläufe oder Auswahl › ⋯ › Arbeitsablauf anwenden (W1)
+- Eigene Abläufe und Vorlagen („Für Kleinanzeigen“, „Verschicken (unter 2 MB)“, „Familienbilder“): Format, längste Seite (nie vergrößert), Qualität, Zielgröße je Foto mit Untergrenzen, Videos mit Zielgröße oder überspringen, Standort entfernen, Dateiname „Basis_001“, Ordner, Speichern / Nur teilen / beides (W2)
+- Vor dem Start „Das passiert“ (Schritte in Worten), gemeinsames Budget für die ganze Auswahl wählbar (W3)
+- Ergebnisliste je Datei: fertig (vorher → nachher gemessen), übersprungen, Ziel nicht erreicht (keine Datei, kleinste gemessene Größe als Grund), fehlgeschlagen; „Erneut teilen“ (W4)
+- Nie löschen, nie Papierkorb, keine Entscheidung über Quellen; Free bis 10 Dateien je Durchgang
+
 ## 9. Foto-Editor (✏️ aus Feed, Betrachter oder Studio)
 - Gemeinsames Editor-Gerüst (Redesign 2026-10):
   - feste Bühne, die nicht vom Medium oder Werkzeug abhängt
