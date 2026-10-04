@@ -1434,4 +1434,68 @@
     <string name="vid_export_info">Exportinfo</string>
     <string name="vid_export_info_fast">Alleen begin en einde worden ingekort. PhotoMaid probeert de kwaliteit te behouden en codeert alleen het begin tot het volgende keyframe opnieuw. Laat de video dat niet toe, dan wordt de hele video opnieuw gecodeerd. Totale lengte %1$s.</string>
     <string name="vid_export_info_reencode">Door je andere wijzigingen wordt bij het opslaan de hele video opnieuw gecodeerd. Totale lengte %1$s.</string>
+    <string name="lib_mode_albums">Albums</string>
+    <string name="org_new_album">Nieuw album</string>
+    <string name="org_album_name">Albumnaam</string>
+    <string name="org_create">Maken</string>
+    <string name="org_rename">Naam wijzigen</string>
+    <string name="org_album_delete">Album verwijderen</string>
+    <string name="org_album_delete_title">‘%1$s’ verwijderen?</string>
+    <string name="org_album_delete_text">Alleen het album wordt verwijderd. De foto’s en video’s blijven ongewijzigd in je bibliotheek.</string>
+    <string name="org_album_remove">Uit album halen</string>
+    <string name="org_add_to_album">Aan album toevoegen</string>
+    <string name="org_already_in_album">Al allemaal in ‘%1$s’.</string>
+    <string name="org_albums_empty_title">Nog geen albums</string>
+    <string name="org_albums_empty_text">Een album verzamelt foto’s en video’s uit elke map, zonder ze te kopiëren of te verplaatsen. Een foto kan in meerdere albums staan.</string>
+    <string name="org_albums_footer">Albums bestaan alleen in PhotoMaid. Mappen tonen waar een bestand staat; collecties vinden media via een voorwaarde.</string>
+    <string name="org_album_empty">Dit album is leeg. Selecteer in ‘Foto’s’ media en tik op ⋯ › Aan album toevoegen.</string>
+    <string name="org_missing_remove">Uit lijst halen</string>
+    <string name="org_tags">Labels</string>
+    <string name="org_tag_new_hint">Nieuw label</string>
+    <string name="org_tag_add">Toevoegen</string>
+    <string name="org_tags_none">Nog geen labels. Voeg eigen woorden toe zoals ‘Factuur’ of ‘Vakantie’ – PhotoMaid weet alleen wat je zelf invult.</string>
+    <string name="org_tag_remove">Label verwijderen</string>
+    <string name="org_tag_delete">Overal verwijderen</string>
+    <string name="org_tag_delete_title">Label ‘%1$s’ overal verwijderen?</string>
+    <string name="org_tag_delete_text">Het label verdwijnt van alle media. De bestanden blijven ongewijzigd.</string>
+    <string name="org_tag_state_all">bij alle</string>
+    <string name="org_tag_state_some">bij sommige</string>
+    <string name="org_note">Notitie</string>
+    <string name="org_note_hint">Notitie (alleen in PhotoMaid, het bestand blijft ongewijzigd)</string>
+    <string name="org_note_save">Notitie opslaan</string>
+    <string name="org_basket">Selectiemand</string>
+    <string name="org_basket_add">In de selectiemand</string>
+    <string name="org_basket_already">Al in de selectiemand.</string>
+    <string name="org_basket_remove">Uit de mand halen</string>
+    <string name="org_basket_clear">Mand legen</string>
+    <string name="org_basket_clear_title">Selectiemand legen?</string>
+    <string name="org_basket_clear_text">Alleen de mand wordt geleegd. De foto’s en video’s blijven ongewijzigd.</string>
+    <string name="org_basket_intro">Verzamel media uit verschillende maanden en mappen. De mand blijft tot je hem leegt – hij heeft niets met de prullenbak te maken.</string>
+    <string name="org_basket_empty_title">De selectiemand is leeg</string>
+    <string name="org_basket_empty_text">Selecteer in ‘Foto’s’ media en tik op ⋯ › In de selectiemand.</string>
+    <string name="org_basket_to_album">Album maken van mand</string>
+    <plurals name="org_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="one">%1$d toegevoegd aan ‘%2$s’.</item>
+        <item quantity="other">%1$d toegevoegd aan ‘%2$s’.</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="one">%1$d uit het album gehaald. Het bestand blijft.</item>
+        <item quantity="other">%1$d uit het album gehaald. De bestanden blijven.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="one">%1$d item niet gevonden (verwijderd of niet meer op dit apparaat).</item>
+        <item quantity="other">%1$d items niet gevonden (verwijderd of niet meer op dit apparaat).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="one">%1$d in de selectiemand gelegd.</item>
+        <item quantity="other">%1$d in de selectiemand gelegd.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="one">Labels voor %1$d item</item>
+        <item quantity="other">Labels voor %1$d items</item>
+    </plurals>
 </resources>

@@ -1556,4 +1556,80 @@
     <string name="vid_export_info">Informacje o eksporcie</string>
     <string name="vid_export_info_fast">Przycinany jest tylko początek i koniec. PhotoMaid próbuje zachować jakość i koduje ponownie tylko początek do następnej klatki kluczowej. Jeśli wideo na to nie pozwala, kodowane jest całe wideo. Długość całkowita %1$s.</string>
     <string name="vid_export_info_reencode">Z powodu innych zmian przy zapisie kodowane jest całe wideo. Długość całkowita %1$s.</string>
+    <string name="lib_mode_albums">Albumy</string>
+    <string name="org_new_album">Nowy album</string>
+    <string name="org_album_name">Nazwa albumu</string>
+    <string name="org_create">Utwórz</string>
+    <string name="org_rename">Zmień nazwę</string>
+    <string name="org_album_delete">Usuń album</string>
+    <string name="org_album_delete_title">Usunąć „%1$s”?</string>
+    <string name="org_album_delete_text">Usuwany jest tylko album. Zdjęcia i filmy pozostają bez zmian w bibliotece.</string>
+    <string name="org_album_remove">Usuń z albumu</string>
+    <string name="org_add_to_album">Dodaj do albumu</string>
+    <string name="org_already_in_album">Wszystkie są już w „%1$s”.</string>
+    <string name="org_albums_empty_title">Brak albumów</string>
+    <string name="org_albums_empty_text">Album zbiera zdjęcia i filmy z dowolnych folderów bez kopiowania ani przenoszenia. Jedno zdjęcie może być w kilku albumach.</string>
+    <string name="org_albums_footer">Albumy istnieją tylko w PhotoMaid. Foldery pokazują, gdzie leży plik; kolekcje znajdują multimedia według warunku.</string>
+    <string name="org_album_empty">Ten album jest pusty. W „Zdjęciach” zaznacz multimedia i dotknij ⋯ › Dodaj do albumu.</string>
+    <string name="org_missing_remove">Usuń z listy</string>
+    <string name="org_tags">Tagi</string>
+    <string name="org_tag_new_hint">Nowy tag</string>
+    <string name="org_tag_add">Dodaj</string>
+    <string name="org_tags_none">Brak tagów. Dodaj własne słowa, np. „Faktura” lub „Wakacje” – PhotoMaid zna tylko to, co sam wpiszesz.</string>
+    <string name="org_tag_remove">Usuń tag</string>
+    <string name="org_tag_delete">Usuń wszędzie</string>
+    <string name="org_tag_delete_title">Usunąć tag „%1$s” wszędzie?</string>
+    <string name="org_tag_delete_text">Tag zniknie ze wszystkich multimediów. Pliki pozostają bez zmian.</string>
+    <string name="org_tag_state_all">u wszystkich</string>
+    <string name="org_tag_state_some">u niektórych</string>
+    <string name="org_note">Notatka</string>
+    <string name="org_note_hint">Notatka (tylko w PhotoMaid, plik pozostaje bez zmian)</string>
+    <string name="org_note_save">Zapisz notatkę</string>
+    <string name="org_basket">Koszyk wyboru</string>
+    <string name="org_basket_add">Dodaj do koszyka wyboru</string>
+    <string name="org_basket_already">Już w koszyku wyboru.</string>
+    <string name="org_basket_remove">Wyjmij z koszyka</string>
+    <string name="org_basket_clear">Opróżnij koszyk</string>
+    <string name="org_basket_clear_title">Opróżnić koszyk wyboru?</string>
+    <string name="org_basket_clear_text">Opróżniany jest tylko koszyk. Zdjęcia i filmy pozostają bez zmian.</string>
+    <string name="org_basket_intro">Zbieraj multimedia z różnych miesięcy i folderów. Koszyk zostaje, dopóki go nie opróżnisz – nie ma nic wspólnego z koszem.</string>
+    <string name="org_basket_empty_title">Koszyk wyboru jest pusty</string>
+    <string name="org_basket_empty_text">W „Zdjęciach” zaznacz multimedia i dotknij ⋯ › Dodaj do koszyka wyboru.</string>
+    <string name="org_basket_to_album">Utwórz album z koszyka</string>
+    <plurals name="org_items">
+        <item quantity="one">%1$d element</item>
+        <item quantity="few">%1$d elementy</item>
+        <item quantity="many">%1$d elementów</item>
+        <item quantity="other">%1$d elementu</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="one">Dodano %1$d do „%2$s”.</item>
+        <item quantity="few">Dodano %1$d do „%2$s”.</item>
+        <item quantity="many">Dodano %1$d do „%2$s”.</item>
+        <item quantity="other">Dodano %1$d do „%2$s”.</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="one">Usunięto %1$d z albumu. Plik zostaje.</item>
+        <item quantity="few">Usunięto %1$d z albumu. Pliki zostają.</item>
+        <item quantity="many">Usunięto %1$d z albumu. Pliki zostają.</item>
+        <item quantity="other">Usunięto %1$d z albumu. Pliki zostają.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="one">Nie znaleziono %1$d elementu (usunięty lub nie ma go już na tym urządzeniu).</item>
+        <item quantity="few">Nie znaleziono %1$d elementów (usunięte lub nie ma ich już na tym urządzeniu).</item>
+        <item quantity="many">Nie znaleziono %1$d elementów (usunięte lub nie ma ich już na tym urządzeniu).</item>
+        <item quantity="other">Nie znaleziono %1$d elementu (usunięte lub nie ma ich już na tym urządzeniu).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="one">Dodano %1$d do koszyka wyboru.</item>
+        <item quantity="few">Dodano %1$d do koszyka wyboru.</item>
+        <item quantity="many">Dodano %1$d do koszyka wyboru.</item>
+        <item quantity="other">Dodano %1$d do koszyka wyboru.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="one">Tagi dla %1$d elementu</item>
+        <item quantity="few">Tagi dla %1$d elementów</item>
+        <item quantity="many">Tagi dla %1$d elementów</item>
+        <item quantity="other">Tagi dla %1$d elementu</item>
+    </plurals>
 </resources>

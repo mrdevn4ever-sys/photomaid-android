@@ -1495,4 +1495,74 @@
     <string name="vid_export_info">Info export</string>
     <string name="vid_export_info_fast">Sunt tăiate doar începutul și sfârșitul. PhotoMaid încearcă să păstreze calitatea și recodează doar începutul până la următorul cadru cheie. Dacă videoclipul nu permite asta, este recodat în întregime. Durata totală %1$s.</string>
     <string name="vid_export_info_reencode">Din cauza celorlalte modificări, la salvare tot videoclipul este recodat. Durata totală %1$s.</string>
+    <string name="lib_mode_albums">Albume</string>
+    <string name="org_new_album">Album nou</string>
+    <string name="org_album_name">Numele albumului</string>
+    <string name="org_create">Creează</string>
+    <string name="org_rename">Redenumește</string>
+    <string name="org_album_delete">Șterge albumul</string>
+    <string name="org_album_delete_title">Ștergi „%1$s”?</string>
+    <string name="org_album_delete_text">Se șterge doar albumul. Fotografiile și videoclipurile rămân neschimbate în bibliotecă.</string>
+    <string name="org_album_remove">Scoate din album</string>
+    <string name="org_add_to_album">Adaugă la album</string>
+    <string name="org_already_in_album">Sunt deja toate în „%1$s”.</string>
+    <string name="org_albums_empty_title">Încă nu există albume</string>
+    <string name="org_albums_empty_text">Un album adună fotografii și videoclipuri din orice dosar, fără să le copieze sau să le mute. O fotografie poate fi în mai multe albume.</string>
+    <string name="org_albums_footer">Albumele există doar în PhotoMaid. Dosarele arată unde se află un fișier; colecțiile găsesc conținut după o condiție.</string>
+    <string name="org_album_empty">Albumul este gol. În „Fotografii”, selectează conținut și atinge ⋯ › Adaugă la album.</string>
+    <string name="org_missing_remove">Scoate din listă</string>
+    <string name="org_tags">Etichete</string>
+    <string name="org_tag_new_hint">Etichetă nouă</string>
+    <string name="org_tag_add">Adaugă</string>
+    <string name="org_tags_none">Încă nu există etichete. Adaugă propriile cuvinte, de pildă „Factură” sau „Vacanță” – PhotoMaid știe doar ce introduci tu.</string>
+    <string name="org_tag_remove">Elimină eticheta</string>
+    <string name="org_tag_delete">Elimină peste tot</string>
+    <string name="org_tag_delete_title">Elimini eticheta „%1$s” peste tot?</string>
+    <string name="org_tag_delete_text">Eticheta dispare de pe tot conținutul. Fișierele rămân neschimbate.</string>
+    <string name="org_tag_state_all">la toate</string>
+    <string name="org_tag_state_some">la unele</string>
+    <string name="org_note">Notă</string>
+    <string name="org_note_hint">Notă (doar în PhotoMaid, fișierul rămâne neschimbat)</string>
+    <string name="org_note_save">Salvează nota</string>
+    <string name="org_basket">Coș de selecție</string>
+    <string name="org_basket_add">Adaugă în coșul de selecție</string>
+    <string name="org_basket_already">Deja în coșul de selecție.</string>
+    <string name="org_basket_remove">Scoate din coș</string>
+    <string name="org_basket_clear">Golește coșul</string>
+    <string name="org_basket_clear_title">Golești coșul de selecție?</string>
+    <string name="org_basket_clear_text">Se golește doar coșul. Fotografiile și videoclipurile rămân neschimbate.</string>
+    <string name="org_basket_intro">Adună conținut din luni și dosare diferite. Coșul rămâne până îl golești – nu are legătură cu coșul de gunoi.</string>
+    <string name="org_basket_empty_title">Coșul de selecție este gol</string>
+    <string name="org_basket_empty_text">În „Fotografii”, selectează conținut și atinge ⋯ › Adaugă în coșul de selecție.</string>
+    <string name="org_basket_to_album">Creează album din coș</string>
+    <plurals name="org_items">
+        <item quantity="one">%1$d element</item>
+        <item quantity="few">%1$d elemente</item>
+        <item quantity="other">%1$d de elemente</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="one">%1$d adăugat la „%2$s”.</item>
+        <item quantity="few">%1$d adăugate la „%2$s”.</item>
+        <item quantity="other">%1$d de elemente adăugate la „%2$s”.</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="one">%1$d scos din album. Fișierul rămâne.</item>
+        <item quantity="few">%1$d scoase din album. Fișierele rămân.</item>
+        <item quantity="other">%1$d de elemente scoase din album. Fișierele rămân.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="one">%1$d element negăsit (șters sau nu mai e pe acest dispozitiv).</item>
+        <item quantity="few">%1$d elemente negăsite (șterse sau nu mai sunt pe acest dispozitiv).</item>
+        <item quantity="other">%1$d de elemente negăsite (șterse sau nu mai sunt pe acest dispozitiv).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="one">%1$d adăugat în coșul de selecție.</item>
+        <item quantity="few">%1$d adăugate în coșul de selecție.</item>
+        <item quantity="other">%1$d de elemente adăugate în coșul de selecție.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="one">Etichete pentru %1$d element</item>
+        <item quantity="few">Etichete pentru %1$d elemente</item>
+        <item quantity="other">Etichete pentru %1$d de elemente</item>
+    </plurals>
 </resources>

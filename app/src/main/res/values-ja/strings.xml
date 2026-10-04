@@ -1373,4 +1373,62 @@
     <string name="vid_export_info">書き出し情報</string>
     <string name="vid_export_info_fast">開始と終了だけをカットします。PhotoMaidは画質を保つため、次のキーフレームまでの冒頭だけを再エンコードしようとします。動画が対応していない場合は動画全体を再エンコードします。全体の長さ %1$s。</string>
     <string name="vid_export_info_reencode">ほかの変更があるため、保存時に動画全体を再エンコードします。全体の長さ %1$s。</string>
+    <string name="lib_mode_albums">アルバム</string>
+    <string name="org_new_album">新しいアルバム</string>
+    <string name="org_album_name">アルバム名</string>
+    <string name="org_create">作成</string>
+    <string name="org_rename">名前を変更</string>
+    <string name="org_album_delete">アルバムを削除</string>
+    <string name="org_album_delete_title">「%1$s」を削除しますか？</string>
+    <string name="org_album_delete_text">削除されるのはアルバムだけです。写真と動画はライブラリにそのまま残ります。</string>
+    <string name="org_album_remove">アルバムから外す</string>
+    <string name="org_add_to_album">アルバムに追加</string>
+    <string name="org_already_in_album">すべて「%1$s」に追加済みです。</string>
+    <string name="org_albums_empty_title">アルバムはまだありません</string>
+    <string name="org_albums_empty_text">アルバムは、どのフォルダの写真や動画もコピーや移動をせずにまとめます。1枚の写真を複数のアルバムに入れられます。</string>
+    <string name="org_albums_footer">アルバムはPhotoMaidの中だけのものです。フォルダはファイルの保存場所、コレクションは条件で見つけたメディアです。</string>
+    <string name="org_album_empty">このアルバムは空です。「写真」でメディアを選び、⋯ › アルバムに追加 をタップします。</string>
+    <string name="org_missing_remove">リストから外す</string>
+    <string name="org_tags">タグ</string>
+    <string name="org_tag_new_hint">新しいタグ</string>
+    <string name="org_tag_add">追加</string>
+    <string name="org_tags_none">タグはまだありません。「請求書」「旅行」など自分の言葉を追加できます。PhotoMaidが知るのはあなたが入力した内容だけです。</string>
+    <string name="org_tag_remove">タグを外す</string>
+    <string name="org_tag_delete">すべてから外す</string>
+    <string name="org_tag_delete_title">タグ「%1$s」をすべてから外しますか？</string>
+    <string name="org_tag_delete_text">タグはすべてのメディアから消えます。ファイルは変わりません。</string>
+    <string name="org_tag_state_all">すべてに付与</string>
+    <string name="org_tag_state_some">一部に付与</string>
+    <string name="org_note">メモ</string>
+    <string name="org_note_hint">メモ（PhotoMaid内のみ。ファイルは変わりません）</string>
+    <string name="org_note_save">メモを保存</string>
+    <string name="org_basket">選択かご</string>
+    <string name="org_basket_add">選択かごに入れる</string>
+    <string name="org_basket_already">すでに選択かごに入っています。</string>
+    <string name="org_basket_remove">かごから出す</string>
+    <string name="org_basket_clear">かごを空にする</string>
+    <string name="org_basket_clear_title">選択かごを空にしますか？</string>
+    <string name="org_basket_clear_text">空になるのはかごだけです。写真と動画は変わりません。</string>
+    <string name="org_basket_intro">いろいろな月やフォルダからメディアを集めます。かごは空にするまで残り、ゴミ箱とは関係ありません。</string>
+    <string name="org_basket_empty_title">選択かごは空です</string>
+    <string name="org_basket_empty_text">「写真」でメディアを選び、⋯ › 選択かごに入れる をタップします。</string>
+    <string name="org_basket_to_album">かごからアルバムを作成</string>
+    <plurals name="org_items">
+        <item quantity="other">%1$d件</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="other">%1$d件を「%2$s」に追加しました。</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="other">%1$d件をアルバムから外しました。ファイルは残ります。</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="other">%1$d件が見つかりません（削除されたか、この端末にありません）。</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="other">%1$d件を選択かごに入れました。</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="other">%1$d件のタグ</item>
+    </plurals>
 </resources>

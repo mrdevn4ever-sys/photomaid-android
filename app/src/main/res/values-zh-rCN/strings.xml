@@ -1373,4 +1373,62 @@
     <string name="vid_export_info">导出信息</string>
     <string name="vid_export_info_fast">只裁剪开头和结尾。PhotoMaid 会尽量保持画质，只重新编码开头到下一个关键帧的部分。如果视频不支持，则重新编码整个视频。总时长 %1$s。</string>
     <string name="vid_export_info_reencode">由于你的其他更改，保存时会重新编码整个视频。总时长 %1$s。</string>
+    <string name="lib_mode_albums">相册</string>
+    <string name="org_new_album">新建相册</string>
+    <string name="org_album_name">相册名称</string>
+    <string name="org_create">创建</string>
+    <string name="org_rename">重命名</string>
+    <string name="org_album_delete">删除相册</string>
+    <string name="org_album_delete_title">删除“%1$s”？</string>
+    <string name="org_album_delete_text">只删除相册。照片和视频在图库中保持不变。</string>
+    <string name="org_album_remove">从相册中移除</string>
+    <string name="org_add_to_album">添加到相册</string>
+    <string name="org_already_in_album">已全部在“%1$s”中。</string>
+    <string name="org_albums_empty_title">还没有相册</string>
+    <string name="org_albums_empty_text">相册可以汇集任意文件夹中的照片和视频，无需复制或移动。一张照片可以同时在多个相册中。</string>
+    <string name="org_albums_footer">相册只存在于 PhotoMaid 中。文件夹显示文件的存储位置，合集按条件查找媒体。</string>
+    <string name="org_album_empty">此相册为空。在“照片”中选择媒体，然后轻点 ⋯ › 添加到相册。</string>
+    <string name="org_missing_remove">从列表中移除</string>
+    <string name="org_tags">标签</string>
+    <string name="org_tag_new_hint">新标签</string>
+    <string name="org_tag_add">添加</string>
+    <string name="org_tags_none">还没有标签。添加你自己的词，例如“发票”或“假期”——PhotoMaid 只知道你自己输入的内容。</string>
+    <string name="org_tag_remove">移除标签</string>
+    <string name="org_tag_delete">全部移除</string>
+    <string name="org_tag_delete_title">从所有媒体中移除标签“%1$s”？</string>
+    <string name="org_tag_delete_text">该标签将从所有媒体中消失。文件保持不变。</string>
+    <string name="org_tag_state_all">全部已有</string>
+    <string name="org_tag_state_some">部分已有</string>
+    <string name="org_note">备注</string>
+    <string name="org_note_hint">备注（仅在 PhotoMaid 中，文件保持不变）</string>
+    <string name="org_note_save">保存备注</string>
+    <string name="org_basket">选择篮</string>
+    <string name="org_basket_add">加入选择篮</string>
+    <string name="org_basket_already">已在选择篮中。</string>
+    <string name="org_basket_remove">从选择篮移出</string>
+    <string name="org_basket_clear">清空选择篮</string>
+    <string name="org_basket_clear_title">清空选择篮？</string>
+    <string name="org_basket_clear_text">只清空选择篮。照片和视频保持不变。</string>
+    <string name="org_basket_intro">从不同月份和文件夹收集媒体。选择篮会一直保留，直到你清空它——它与回收站无关。</string>
+    <string name="org_basket_empty_title">选择篮为空</string>
+    <string name="org_basket_empty_text">在“照片”中选择媒体，然后轻点 ⋯ › 加入选择篮。</string>
+    <string name="org_basket_to_album">用选择篮创建相册</string>
+    <plurals name="org_items">
+        <item quantity="other">%1$d 项</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="other">已将 %1$d 项添加到“%2$s”。</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="other">已从相册移除 %1$d 项。文件仍保留。</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="other">找不到 %1$d 项（已删除或不在此设备上）。</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="other">已将 %1$d 项加入选择篮。</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="other">%1$d 项的标签</item>
+    </plurals>
 </resources>

@@ -1,5 +1,6 @@
 package app.photomaid.feature.library
 
+import app.photomaid.feature.organize.MediaOrganizeInfo
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -260,7 +261,7 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
     }
 
     if (info && current != null) ModalBottomSheet(onDismissRequest = { info = false }, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        modifier = Modifier.testTag("viewer.infosheet")) { InfoContent(current, req.raw[current.id]) }
+        modifier = Modifier.testTag("viewer.infosheet")) { InfoContent(current, req.raw[current.id], nav) }
     if (folderSheet && current != null) FolderSheet(current.kind, current.relativePath, folders, settings.pinnedFolders, settings.recentFolders,
         onTogglePin = { p -> scope.launch { togglePinnedFolder(app, p) } },
         onPick = { path ->
@@ -394,7 +395,7 @@ private fun ViewerPage(a: MediaAsset, active: Boolean, chrome: Boolean, onTap: (
 }
 
 @Composable
-private fun InfoContent(a: MediaAsset, raw: MediaAsset? = null) {
+private fun InfoContent(a: MediaAsset, raw: MediaAsset? = null, nav: Nav? = null) {
     val c = PM.colors
     val app = LocalApp.current
     // Kamera aus EXIF (nur lesen, lokal; fehlt sie, gibt es keine Zeile).
@@ -419,5 +420,7 @@ private fun InfoContent(a: MediaAsset, raw: MediaAsset? = null) {
             Text(k, style = AppTypography.footnote, color = c.textSecondary)
             Text(v, style = AppTypography.body, color = c.textPrimary)
         }
+        // Eigene Schlagwörter, Alben und Notiz (nur PhotoMaid, die Datei bleibt unverändert).
+        MediaOrganizeInfo(a, nav)
     }
 }

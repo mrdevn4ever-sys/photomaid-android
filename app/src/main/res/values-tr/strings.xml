@@ -1434,4 +1434,68 @@
     <string name="vid_export_info">Dışa aktarma bilgisi</string>
     <string name="vid_export_info_fast">Yalnızca başlangıç ve bitiş kırpılır. PhotoMaid kaliteyi korumaya çalışır ve yalnızca bir sonraki anahtar kareye kadar olan başlangıcı yeniden kodlar. Video buna izin vermezse tüm video yeniden kodlanır. Toplam süre %1$s.</string>
     <string name="vid_export_info_reencode">Diğer değişikliklerin nedeniyle kaydederken tüm video yeniden kodlanır. Toplam süre %1$s.</string>
+    <string name="lib_mode_albums">Albümler</string>
+    <string name="org_new_album">Yeni albüm</string>
+    <string name="org_album_name">Albüm adı</string>
+    <string name="org_create">Oluştur</string>
+    <string name="org_rename">Yeniden adlandır</string>
+    <string name="org_album_delete">Albümü sil</string>
+    <string name="org_album_delete_title">“%1$s” silinsin mi?</string>
+    <string name="org_album_delete_text">Yalnızca albüm silinir. Fotoğraflar ve videolar kitaplığında değişmeden kalır.</string>
+    <string name="org_album_remove">Albümden çıkar</string>
+    <string name="org_add_to_album">Albüme ekle</string>
+    <string name="org_already_in_album">Hepsi zaten “%1$s” içinde.</string>
+    <string name="org_albums_empty_title">Henüz albüm yok</string>
+    <string name="org_albums_empty_text">Albüm, her klasörden fotoğraf ve videoları kopyalamadan veya taşımadan bir araya getirir. Bir fotoğraf birden fazla albümde olabilir.</string>
+    <string name="org_albums_footer">Albümler yalnızca PhotoMaid’de vardır. Klasörler dosyanın nerede olduğunu gösterir; koleksiyonlar medyayı bir koşula göre bulur.</string>
+    <string name="org_album_empty">Bu albüm boş. “Fotoğraflar”da medya seç ve ⋯ › Albüme ekle’ye dokun.</string>
+    <string name="org_missing_remove">Listeden çıkar</string>
+    <string name="org_tags">Etiketler</string>
+    <string name="org_tag_new_hint">Yeni etiket</string>
+    <string name="org_tag_add">Ekle</string>
+    <string name="org_tags_none">Henüz etiket yok. “Fatura” veya “Tatil” gibi kendi kelimelerini ekle – PhotoMaid yalnızca senin girdiklerini bilir.</string>
+    <string name="org_tag_remove">Etiketi kaldır</string>
+    <string name="org_tag_delete">Her yerden kaldır</string>
+    <string name="org_tag_delete_title">“%1$s” etiketi her yerden kaldırılsın mı?</string>
+    <string name="org_tag_delete_text">Etiket tüm medyadan kalkar. Dosyalar değişmez.</string>
+    <string name="org_tag_state_all">hepsinde</string>
+    <string name="org_tag_state_some">bazılarında</string>
+    <string name="org_note">Not</string>
+    <string name="org_note_hint">Not (yalnızca PhotoMaid’de, dosya değişmez)</string>
+    <string name="org_note_save">Notu kaydet</string>
+    <string name="org_basket">Seçim sepeti</string>
+    <string name="org_basket_add">Seçim sepetine ekle</string>
+    <string name="org_basket_already">Zaten seçim sepetinde.</string>
+    <string name="org_basket_remove">Sepetten çıkar</string>
+    <string name="org_basket_clear">Sepeti boşalt</string>
+    <string name="org_basket_clear_title">Seçim sepeti boşaltılsın mı?</string>
+    <string name="org_basket_clear_text">Yalnızca sepet boşaltılır. Fotoğraflar ve videolar değişmez.</string>
+    <string name="org_basket_intro">Farklı aylar ve klasörlerden medya topla. Sepet sen boşaltana kadar kalır – çöp kutusuyla ilgisi yoktur.</string>
+    <string name="org_basket_empty_title">Seçim sepeti boş</string>
+    <string name="org_basket_empty_text">“Fotoğraflar”da medya seç ve ⋯ › Seçim sepetine ekle’ye dokun.</string>
+    <string name="org_basket_to_album">Sepetten albüm oluştur</string>
+    <plurals name="org_items">
+        <item quantity="one">%1$d öğe</item>
+        <item quantity="other">%1$d öğe</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="one">%1$d öğe “%2$s” albümüne eklendi.</item>
+        <item quantity="other">%1$d öğe “%2$s” albümüne eklendi.</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="one">%1$d öğe albümden çıkarıldı. Dosya kalır.</item>
+        <item quantity="other">%1$d öğe albümden çıkarıldı. Dosyalar kalır.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="one">%1$d öğe bulunamadı (silindi veya artık bu cihazda değil).</item>
+        <item quantity="other">%1$d öğe bulunamadı (silindi veya artık bu cihazda değil).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="one">%1$d öğe seçim sepetine eklendi.</item>
+        <item quantity="other">%1$d öğe seçim sepetine eklendi.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="one">%1$d öğe için etiketler</item>
+        <item quantity="other">%1$d öğe için etiketler</item>
+    </plurals>
 </resources>

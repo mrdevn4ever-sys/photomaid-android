@@ -12005,6 +12005,726 @@
    "tr": "Diğer değişikliklerin nedeniyle kaydederken tüm video yeniden kodlanır. Toplam süre %1$s.",
    "uk": "Через інші зміни під час збереження перекодовується все відео. Загальна тривалість %1$s.",
    "zh": "由于你的其他更改，保存时会重新编码整个视频。总时长 %1$s。"
+  },
+  "lib_mode_albums": {
+   "en": "Albums",
+   "de": "Alben",
+   "ar": "الألبومات",
+   "es": "Álbumes",
+   "fr": "Albums",
+   "it": "Album",
+   "ja": "アルバム",
+   "ko": "앨범",
+   "nl": "Albums",
+   "pl": "Albumy",
+   "pt": "Álbuns",
+   "ro": "Albume",
+   "ru": "Альбомы",
+   "tr": "Albümler",
+   "uk": "Альбоми",
+   "zh": "相册"
+  },
+  "org_new_album": {
+   "en": "New album",
+   "de": "Neues Album",
+   "ar": "ألبوم جديد",
+   "es": "Nuevo álbum",
+   "fr": "Nouvel album",
+   "it": "Nuovo album",
+   "ja": "新しいアルバム",
+   "ko": "새 앨범",
+   "nl": "Nieuw album",
+   "pl": "Nowy album",
+   "pt": "Novo álbum",
+   "ro": "Album nou",
+   "ru": "Новый альбом",
+   "tr": "Yeni albüm",
+   "uk": "Новий альбом",
+   "zh": "新建相册"
+  },
+  "org_album_name": {
+   "en": "Album name",
+   "de": "Name des Albums",
+   "ar": "اسم الألبوم",
+   "es": "Nombre del álbum",
+   "fr": "Nom de l’album",
+   "it": "Nome dell’album",
+   "ja": "アルバム名",
+   "ko": "앨범 이름",
+   "nl": "Albumnaam",
+   "pl": "Nazwa albumu",
+   "pt": "Nome do álbum",
+   "ro": "Numele albumului",
+   "ru": "Название альбома",
+   "tr": "Albüm adı",
+   "uk": "Назва альбому",
+   "zh": "相册名称"
+  },
+  "org_create": {
+   "en": "Create",
+   "de": "Erstellen",
+   "ar": "إنشاء",
+   "es": "Crear",
+   "fr": "Créer",
+   "it": "Crea",
+   "ja": "作成",
+   "ko": "만들기",
+   "nl": "Maken",
+   "pl": "Utwórz",
+   "pt": "Criar",
+   "ro": "Creează",
+   "ru": "Создать",
+   "tr": "Oluştur",
+   "uk": "Створити",
+   "zh": "创建"
+  },
+  "org_rename": {
+   "en": "Rename",
+   "de": "Umbenennen",
+   "ar": "إعادة التسمية",
+   "es": "Cambiar nombre",
+   "fr": "Renommer",
+   "it": "Rinomina",
+   "ja": "名前を変更",
+   "ko": "이름 바꾸기",
+   "nl": "Naam wijzigen",
+   "pl": "Zmień nazwę",
+   "pt": "Mudar o nome",
+   "ro": "Redenumește",
+   "ru": "Переименовать",
+   "tr": "Yeniden adlandır",
+   "uk": "Перейменувати",
+   "zh": "重命名"
+  },
+  "org_album_delete": {
+   "en": "Delete album",
+   "de": "Album löschen",
+   "ar": "حذف الألبوم",
+   "es": "Eliminar álbum",
+   "fr": "Supprimer l’album",
+   "it": "Elimina album",
+   "ja": "アルバムを削除",
+   "ko": "앨범 삭제",
+   "nl": "Album verwijderen",
+   "pl": "Usuń album",
+   "pt": "Eliminar álbum",
+   "ro": "Șterge albumul",
+   "ru": "Удалить альбом",
+   "tr": "Albümü sil",
+   "uk": "Видалити альбом",
+   "zh": "删除相册"
+  },
+  "org_album_delete_title": {
+   "en": "Delete “%1$s”?",
+   "de": "„%1$s“ löschen?",
+   "ar": "حذف „%1$s“؟",
+   "es": "¿Eliminar «%1$s»?",
+   "fr": "Supprimer « %1$s » ?",
+   "it": "Eliminare «%1$s»?",
+   "ja": "「%1$s」を削除しますか？",
+   "ko": "‘%1$s’을(를) 삭제할까요?",
+   "nl": "‘%1$s’ verwijderen?",
+   "pl": "Usunąć „%1$s”?",
+   "pt": "Eliminar «%1$s»?",
+   "ro": "Ștergi „%1$s”?",
+   "ru": "Удалить «%1$s»?",
+   "tr": "“%1$s” silinsin mi?",
+   "uk": "Видалити «%1$s»?",
+   "zh": "删除“%1$s”？"
+  },
+  "org_album_delete_text": {
+   "en": "Only the album is deleted. The photos and videos stay unchanged in your library.",
+   "de": "Nur die Zusammenstellung wird gelöscht. Die Fotos und Videos bleiben unverändert in deiner Mediathek.",
+   "ar": "يُحذف الألبوم فقط. تبقى الصور ومقاطع الفيديو دون تغيير في مكتبتك.",
+   "es": "Solo se elimina el álbum. Las fotos y los vídeos siguen igual en tu biblioteca.",
+   "fr": "Seul l’album est supprimé. Les photos et vidéos restent inchangées dans ta photothèque.",
+   "it": "Viene eliminato solo l’album. Foto e video restano invariati nella tua libreria.",
+   "ja": "削除されるのはアルバムだけです。写真と動画はライブラリにそのまま残ります。",
+   "ko": "앨범만 삭제돼요. 사진과 동영상은 보관함에 그대로 남아요.",
+   "nl": "Alleen het album wordt verwijderd. De foto’s en video’s blijven ongewijzigd in je bibliotheek.",
+   "pl": "Usuwany jest tylko album. Zdjęcia i filmy pozostają bez zmian w bibliotece.",
+   "pt": "Só o álbum é eliminado. As fotos e os vídeos ficam inalterados na tua biblioteca.",
+   "ro": "Se șterge doar albumul. Fotografiile și videoclipurile rămân neschimbate în bibliotecă.",
+   "ru": "Удаляется только альбом. Фото и видео остаются в медиатеке без изменений.",
+   "tr": "Yalnızca albüm silinir. Fotoğraflar ve videolar kitaplığında değişmeden kalır.",
+   "uk": "Видаляється лише альбом. Фото й відео залишаються в медіатеці без змін.",
+   "zh": "只删除相册。照片和视频在图库中保持不变。"
+  },
+  "org_album_remove": {
+   "en": "Remove from album",
+   "de": "Aus Album entfernen",
+   "ar": "إزالة من الألبوم",
+   "es": "Quitar del álbum",
+   "fr": "Retirer de l’album",
+   "it": "Rimuovi dall’album",
+   "ja": "アルバムから外す",
+   "ko": "앨범에서 빼기",
+   "nl": "Uit album halen",
+   "pl": "Usuń z albumu",
+   "pt": "Remover do álbum",
+   "ro": "Scoate din album",
+   "ru": "Убрать из альбома",
+   "tr": "Albümden çıkar",
+   "uk": "Прибрати з альбому",
+   "zh": "从相册中移除"
+  },
+  "org_add_to_album": {
+   "en": "Add to album",
+   "de": "Zu Album hinzufügen",
+   "ar": "إضافة إلى ألبوم",
+   "es": "Añadir a un álbum",
+   "fr": "Ajouter à un album",
+   "it": "Aggiungi a un album",
+   "ja": "アルバムに追加",
+   "ko": "앨범에 추가",
+   "nl": "Aan album toevoegen",
+   "pl": "Dodaj do albumu",
+   "pt": "Adicionar a um álbum",
+   "ro": "Adaugă la album",
+   "ru": "Добавить в альбом",
+   "tr": "Albüme ekle",
+   "uk": "Додати до альбому",
+   "zh": "添加到相册"
+  },
+  "org_already_in_album": {
+   "en": "Already all in “%1$s”.",
+   "de": "Schon alle in „%1$s“.",
+   "ar": "كلها موجودة بالفعل في „%1$s“.",
+   "es": "Ya están todos en «%1$s».",
+   "fr": "Déjà tous dans « %1$s ».",
+   "it": "Già tutti in «%1$s».",
+   "ja": "すべて「%1$s」に追加済みです。",
+   "ko": "이미 모두 ‘%1$s’에 있어요.",
+   "nl": "Al allemaal in ‘%1$s’.",
+   "pl": "Wszystkie są już w „%1$s”.",
+   "pt": "Já estão todos em «%1$s».",
+   "ro": "Sunt deja toate în „%1$s”.",
+   "ru": "Уже всё в «%1$s».",
+   "tr": "Hepsi zaten “%1$s” içinde.",
+   "uk": "Усе вже в «%1$s».",
+   "zh": "已全部在“%1$s”中。"
+  },
+  "org_albums_empty_title": {
+   "en": "No albums yet",
+   "de": "Noch keine Alben",
+   "ar": "لا توجد ألبومات بعد",
+   "es": "Aún no hay álbumes",
+   "fr": "Pas encore d’album",
+   "it": "Ancora nessun album",
+   "ja": "アルバムはまだありません",
+   "ko": "아직 앨범이 없어요",
+   "nl": "Nog geen albums",
+   "pl": "Brak albumów",
+   "pt": "Ainda não há álbuns",
+   "ro": "Încă nu există albume",
+   "ru": "Альбомов пока нет",
+   "tr": "Henüz albüm yok",
+   "uk": "Альбомів ще немає",
+   "zh": "还没有相册"
+  },
+  "org_albums_empty_text": {
+   "en": "An album collects photos and videos from any folder without copying or moving them. A photo can be in several albums.",
+   "de": "Ein Album sammelt Fotos und Videos aus beliebigen Ordnern, ohne sie zu kopieren oder zu verschieben. Ein Foto kann in mehreren Alben sein.",
+   "ar": "يجمع الألبوم الصور ومقاطع الفيديو من أي مجلد دون نسخها أو نقلها. يمكن أن تكون الصورة في عدة ألبومات.",
+   "es": "Un álbum reúne fotos y vídeos de cualquier carpeta sin copiarlos ni moverlos. Una foto puede estar en varios álbumes.",
+   "fr": "Un album rassemble des photos et vidéos de n’importe quel dossier, sans les copier ni les déplacer. Une photo peut figurer dans plusieurs albums.",
+   "it": "Un album raccoglie foto e video da qualsiasi cartella senza copiarli né spostarli. Una foto può stare in più album.",
+   "ja": "アルバムは、どのフォルダの写真や動画もコピーや移動をせずにまとめます。1枚の写真を複数のアルバムに入れられます。",
+   "ko": "앨범은 어느 폴더의 사진과 동영상이든 복사하거나 옮기지 않고 모아 줘요. 사진 한 장을 여러 앨범에 넣을 수 있어요.",
+   "nl": "Een album verzamelt foto’s en video’s uit elke map, zonder ze te kopiëren of te verplaatsen. Een foto kan in meerdere albums staan.",
+   "pl": "Album zbiera zdjęcia i filmy z dowolnych folderów bez kopiowania ani przenoszenia. Jedno zdjęcie może być w kilku albumach.",
+   "pt": "Um álbum reúne fotos e vídeos de qualquer pasta sem os copiar nem mover. Uma foto pode estar em vários álbuns.",
+   "ro": "Un album adună fotografii și videoclipuri din orice dosar, fără să le copieze sau să le mute. O fotografie poate fi în mai multe albume.",
+   "ru": "Альбом собирает фото и видео из любых папок, не копируя и не перемещая их. Одно фото может быть в нескольких альбомах.",
+   "tr": "Albüm, her klasörden fotoğraf ve videoları kopyalamadan veya taşımadan bir araya getirir. Bir fotoğraf birden fazla albümde olabilir.",
+   "uk": "Альбом збирає фото й відео з будь-яких папок, не копіюючи й не переміщуючи їх. Одне фото може бути в кількох альбомах.",
+   "zh": "相册可以汇集任意文件夹中的照片和视频，无需复制或移动。一张照片可以同时在多个相册中。"
+  },
+  "org_albums_footer": {
+   "en": "Albums exist only in PhotoMaid. Folders show where a file is stored; collections find media by a condition.",
+   "de": "Alben gibt es nur in PhotoMaid. Ordner zeigen, wo eine Datei liegt; Sammlungen finden Medien über eine Bedingung.",
+   "ar": "الألبومات موجودة في PhotoMaid فقط. تُظهر المجلدات مكان تخزين الملف، وتجد المجموعات الوسائط وفق شرط.",
+   "es": "Los álbumes solo existen en PhotoMaid. Las carpetas muestran dónde está un archivo; las colecciones encuentran contenido según una condición.",
+   "fr": "Les albums n’existent que dans PhotoMaid. Les dossiers indiquent où se trouve un fichier ; les collections trouvent des médias selon une condition.",
+   "it": "Gli album esistono solo in PhotoMaid. Le cartelle mostrano dove si trova un file; le raccolte trovano i contenuti in base a una condizione.",
+   "ja": "アルバムはPhotoMaidの中だけのものです。フォルダはファイルの保存場所、コレクションは条件で見つけたメディアです。",
+   "ko": "앨범은 PhotoMaid 안에만 있어요. 폴더는 파일이 저장된 위치를, 모음은 조건으로 찾은 미디어를 보여 줘요.",
+   "nl": "Albums bestaan alleen in PhotoMaid. Mappen tonen waar een bestand staat; collecties vinden media via een voorwaarde.",
+   "pl": "Albumy istnieją tylko w PhotoMaid. Foldery pokazują, gdzie leży plik; kolekcje znajdują multimedia według warunku.",
+   "pt": "Os álbuns só existem no PhotoMaid. As pastas mostram onde está um ficheiro; as coleções encontram multimédia por uma condição.",
+   "ro": "Albumele există doar în PhotoMaid. Dosarele arată unde se află un fișier; colecțiile găsesc conținut după o condiție.",
+   "ru": "Альбомы есть только в PhotoMaid. Папки показывают, где лежит файл; подборки находят медиа по условию.",
+   "tr": "Albümler yalnızca PhotoMaid’de vardır. Klasörler dosyanın nerede olduğunu gösterir; koleksiyonlar medyayı bir koşula göre bulur.",
+   "uk": "Альбоми є лише в PhotoMaid. Папки показують, де лежить файл; добірки знаходять медіа за умовою.",
+   "zh": "相册只存在于 PhotoMaid 中。文件夹显示文件的存储位置，合集按条件查找媒体。"
+  },
+  "org_album_empty": {
+   "en": "This album is empty. In “Photos”, select media and tap ⋯ › Add to album.",
+   "de": "Dieses Album ist leer. Wähle in „Fotos“ Medien aus und tippe auf ⋯ › Zu Album hinzufügen.",
+   "ar": "هذا الألبوم فارغ. في „الصور“ حدّد وسائط واضغط ⋯ › إضافة إلى ألبوم.",
+   "es": "Este álbum está vacío. En «Fotos», selecciona contenido y toca ⋯ › Añadir a un álbum.",
+   "fr": "Cet album est vide. Dans « Photos », sélectionne des médias puis touche ⋯ › Ajouter à un album.",
+   "it": "Questo album è vuoto. In «Foto» seleziona dei contenuti e tocca ⋯ › Aggiungi a un album.",
+   "ja": "このアルバムは空です。「写真」でメディアを選び、⋯ › アルバムに追加 をタップします。",
+   "ko": "앨범이 비어 있어요. ‘사진’에서 미디어를 선택하고 ⋯ › 앨범에 추가를 탭하세요.",
+   "nl": "Dit album is leeg. Selecteer in ‘Foto’s’ media en tik op ⋯ › Aan album toevoegen.",
+   "pl": "Ten album jest pusty. W „Zdjęciach” zaznacz multimedia i dotknij ⋯ › Dodaj do albumu.",
+   "pt": "Este álbum está vazio. Em «Fotos», seleciona conteúdos e toca em ⋯ › Adicionar a um álbum.",
+   "ro": "Albumul este gol. În „Fotografii”, selectează conținut și atinge ⋯ › Adaugă la album.",
+   "ru": "Альбом пуст. В разделе «Фото» выбери медиа и нажми ⋯ › Добавить в альбом.",
+   "tr": "Bu albüm boş. “Fotoğraflar”da medya seç ve ⋯ › Albüme ekle’ye dokun.",
+   "uk": "Альбом порожній. У розділі «Фото» вибери медіа й торкнися ⋯ › Додати до альбому.",
+   "zh": "此相册为空。在“照片”中选择媒体，然后轻点 ⋯ › 添加到相册。"
+  },
+  "org_missing_remove": {
+   "en": "Remove from list",
+   "de": "Aus der Liste entfernen",
+   "ar": "إزالة من القائمة",
+   "es": "Quitar de la lista",
+   "fr": "Retirer de la liste",
+   "it": "Rimuovi dall’elenco",
+   "ja": "リストから外す",
+   "ko": "목록에서 빼기",
+   "nl": "Uit lijst halen",
+   "pl": "Usuń z listy",
+   "pt": "Remover da lista",
+   "ro": "Scoate din listă",
+   "ru": "Убрать из списка",
+   "tr": "Listeden çıkar",
+   "uk": "Прибрати зі списку",
+   "zh": "从列表中移除"
+  },
+  "org_tags": {
+   "en": "Tags",
+   "de": "Schlagwörter",
+   "ar": "الوسوم",
+   "es": "Etiquetas",
+   "fr": "Mots-clés",
+   "it": "Tag",
+   "ja": "タグ",
+   "ko": "태그",
+   "nl": "Labels",
+   "pl": "Tagi",
+   "pt": "Etiquetas",
+   "ro": "Etichete",
+   "ru": "Метки",
+   "tr": "Etiketler",
+   "uk": "Мітки",
+   "zh": "标签"
+  },
+  "org_tag_new_hint": {
+   "en": "New tag",
+   "de": "Neues Schlagwort",
+   "ar": "وسم جديد",
+   "es": "Nueva etiqueta",
+   "fr": "Nouveau mot-clé",
+   "it": "Nuovo tag",
+   "ja": "新しいタグ",
+   "ko": "새 태그",
+   "nl": "Nieuw label",
+   "pl": "Nowy tag",
+   "pt": "Nova etiqueta",
+   "ro": "Etichetă nouă",
+   "ru": "Новая метка",
+   "tr": "Yeni etiket",
+   "uk": "Нова мітка",
+   "zh": "新标签"
+  },
+  "org_tag_add": {
+   "en": "Add",
+   "de": "Hinzufügen",
+   "ar": "إضافة",
+   "es": "Añadir",
+   "fr": "Ajouter",
+   "it": "Aggiungi",
+   "ja": "追加",
+   "ko": "추가",
+   "nl": "Toevoegen",
+   "pl": "Dodaj",
+   "pt": "Adicionar",
+   "ro": "Adaugă",
+   "ru": "Добавить",
+   "tr": "Ekle",
+   "uk": "Додати",
+   "zh": "添加"
+  },
+  "org_tags_none": {
+   "en": "No tags yet. Add your own words like “Invoice” or “Holiday” – PhotoMaid only knows what you enter yourself.",
+   "de": "Noch keine Schlagwörter. Vergib eigene Begriffe wie „Rechnung“ oder „Ferien“ – PhotoMaid kennt nur, was du selbst einträgst.",
+   "ar": "لا توجد وسوم بعد. أضف كلماتك مثل „فاتورة“ أو „عطلة“ – يعرف PhotoMaid فقط ما تُدخله بنفسك.",
+   "es": "Aún no hay etiquetas. Añade tus propias palabras, como «Factura» o «Vacaciones»: PhotoMaid solo sabe lo que tú escribes.",
+   "fr": "Pas encore de mot-clé. Ajoute tes propres mots comme « Facture » ou « Vacances » – PhotoMaid ne connaît que ce que tu saisis.",
+   "it": "Ancora nessun tag. Aggiungi parole tue come «Fattura» o «Vacanze»: PhotoMaid conosce solo ciò che inserisci tu.",
+   "ja": "タグはまだありません。「請求書」「旅行」など自分の言葉を追加できます。PhotoMaidが知るのはあなたが入力した内容だけです。",
+   "ko": "아직 태그가 없어요. ‘영수증’, ‘여행’ 같은 단어를 직접 추가하세요. PhotoMaid는 직접 입력한 내용만 알아요.",
+   "nl": "Nog geen labels. Voeg eigen woorden toe zoals ‘Factuur’ of ‘Vakantie’ – PhotoMaid weet alleen wat je zelf invult.",
+   "pl": "Brak tagów. Dodaj własne słowa, np. „Faktura” lub „Wakacje” – PhotoMaid zna tylko to, co sam wpiszesz.",
+   "pt": "Ainda não há etiquetas. Adiciona palavras tuas, como «Fatura» ou «Férias» – o PhotoMaid só sabe o que tu escreves.",
+   "ro": "Încă nu există etichete. Adaugă propriile cuvinte, de pildă „Factură” sau „Vacanță” – PhotoMaid știe doar ce introduci tu.",
+   "ru": "Меток пока нет. Добавь свои слова, например «Счёт» или «Отпуск», – PhotoMaid знает только то, что ты вводишь сам.",
+   "tr": "Henüz etiket yok. “Fatura” veya “Tatil” gibi kendi kelimelerini ekle – PhotoMaid yalnızca senin girdiklerini bilir.",
+   "uk": "Міток ще немає. Додай власні слова, наприклад «Рахунок» або «Відпустка», – PhotoMaid знає лише те, що ти вводиш сам.",
+   "zh": "还没有标签。添加你自己的词，例如“发票”或“假期”——PhotoMaid 只知道你自己输入的内容。"
+  },
+  "org_tag_remove": {
+   "en": "Remove tag",
+   "de": "Schlagwort entfernen",
+   "ar": "إزالة الوسم",
+   "es": "Quitar etiqueta",
+   "fr": "Retirer le mot-clé",
+   "it": "Rimuovi tag",
+   "ja": "タグを外す",
+   "ko": "태그 빼기",
+   "nl": "Label verwijderen",
+   "pl": "Usuń tag",
+   "pt": "Remover etiqueta",
+   "ro": "Elimină eticheta",
+   "ru": "Убрать метку",
+   "tr": "Etiketi kaldır",
+   "uk": "Прибрати мітку",
+   "zh": "移除标签"
+  },
+  "org_tag_delete": {
+   "en": "Remove everywhere",
+   "de": "Überall entfernen",
+   "ar": "إزالة من كل مكان",
+   "es": "Quitar de todo",
+   "fr": "Retirer partout",
+   "it": "Rimuovi ovunque",
+   "ja": "すべてから外す",
+   "ko": "모두에서 빼기",
+   "nl": "Overal verwijderen",
+   "pl": "Usuń wszędzie",
+   "pt": "Remover de tudo",
+   "ro": "Elimină peste tot",
+   "ru": "Убрать везде",
+   "tr": "Her yerden kaldır",
+   "uk": "Прибрати всюди",
+   "zh": "全部移除"
+  },
+  "org_tag_delete_title": {
+   "en": "Remove the tag “%1$s” everywhere?",
+   "de": "Schlagwort „%1$s“ überall entfernen?",
+   "ar": "إزالة الوسم „%1$s“ من كل مكان؟",
+   "es": "¿Quitar la etiqueta «%1$s» de todo?",
+   "fr": "Retirer le mot-clé « %1$s » partout ?",
+   "it": "Rimuovere il tag «%1$s» ovunque?",
+   "ja": "タグ「%1$s」をすべてから外しますか？",
+   "ko": "‘%1$s’ 태그를 모두에서 뺄까요?",
+   "nl": "Label ‘%1$s’ overal verwijderen?",
+   "pl": "Usunąć tag „%1$s” wszędzie?",
+   "pt": "Remover a etiqueta «%1$s» de tudo?",
+   "ro": "Elimini eticheta „%1$s” peste tot?",
+   "ru": "Убрать метку «%1$s» везде?",
+   "tr": "“%1$s” etiketi her yerden kaldırılsın mı?",
+   "uk": "Прибрати мітку «%1$s» всюди?",
+   "zh": "从所有媒体中移除标签“%1$s”？"
+  },
+  "org_tag_delete_text": {
+   "en": "The tag disappears from all media. The files stay unchanged.",
+   "de": "Das Schlagwort verschwindet von allen Medien. Die Dateien bleiben unverändert.",
+   "ar": "يختفي الوسم من كل الوسائط. تبقى الملفات دون تغيير.",
+   "es": "La etiqueta desaparece de todo el contenido. Los archivos no cambian.",
+   "fr": "Le mot-clé disparaît de tous les médias. Les fichiers restent inchangés.",
+   "it": "Il tag scompare da tutti i contenuti. I file restano invariati.",
+   "ja": "タグはすべてのメディアから消えます。ファイルは変わりません。",
+   "ko": "모든 미디어에서 태그가 사라져요. 파일은 그대로예요.",
+   "nl": "Het label verdwijnt van alle media. De bestanden blijven ongewijzigd.",
+   "pl": "Tag zniknie ze wszystkich multimediów. Pliki pozostają bez zmian.",
+   "pt": "A etiqueta desaparece de todos os conteúdos. Os ficheiros ficam inalterados.",
+   "ro": "Eticheta dispare de pe tot conținutul. Fișierele rămân neschimbate.",
+   "ru": "Метка исчезнет со всех медиа. Файлы не изменятся.",
+   "tr": "Etiket tüm medyadan kalkar. Dosyalar değişmez.",
+   "uk": "Мітка зникне з усіх медіа. Файли не зміняться.",
+   "zh": "该标签将从所有媒体中消失。文件保持不变。"
+  },
+  "org_tag_state_all": {
+   "en": "on all",
+   "de": "bei allen",
+   "ar": "على الكل",
+   "es": "en todos",
+   "fr": "sur tous",
+   "it": "su tutti",
+   "ja": "すべてに付与",
+   "ko": "모두에 있음",
+   "nl": "bij alle",
+   "pl": "u wszystkich",
+   "pt": "em todos",
+   "ro": "la toate",
+   "ru": "у всех",
+   "tr": "hepsinde",
+   "uk": "в усіх",
+   "zh": "全部已有"
+  },
+  "org_tag_state_some": {
+   "en": "on some",
+   "de": "bei einigen",
+   "ar": "على بعضها",
+   "es": "en algunos",
+   "fr": "sur certains",
+   "it": "su alcuni",
+   "ja": "一部に付与",
+   "ko": "일부에 있음",
+   "nl": "bij sommige",
+   "pl": "u niektórych",
+   "pt": "em alguns",
+   "ro": "la unele",
+   "ru": "у некоторых",
+   "tr": "bazılarında",
+   "uk": "у деяких",
+   "zh": "部分已有"
+  },
+  "org_note": {
+   "en": "Note",
+   "de": "Notiz",
+   "ar": "ملاحظة",
+   "es": "Nota",
+   "fr": "Note",
+   "it": "Nota",
+   "ja": "メモ",
+   "ko": "메모",
+   "nl": "Notitie",
+   "pl": "Notatka",
+   "pt": "Nota",
+   "ro": "Notă",
+   "ru": "Заметка",
+   "tr": "Not",
+   "uk": "Нотатка",
+   "zh": "备注"
+  },
+  "org_note_hint": {
+   "en": "Note (only in PhotoMaid, the file stays unchanged)",
+   "de": "Notiz (nur in PhotoMaid, die Datei bleibt unverändert)",
+   "ar": "ملاحظة (في PhotoMaid فقط، يبقى الملف دون تغيير)",
+   "es": "Nota (solo en PhotoMaid; el archivo no cambia)",
+   "fr": "Note (uniquement dans PhotoMaid, le fichier reste inchangé)",
+   "it": "Nota (solo in PhotoMaid, il file resta invariato)",
+   "ja": "メモ（PhotoMaid内のみ。ファイルは変わりません）",
+   "ko": "메모(PhotoMaid 안에서만, 파일은 그대로)",
+   "nl": "Notitie (alleen in PhotoMaid, het bestand blijft ongewijzigd)",
+   "pl": "Notatka (tylko w PhotoMaid, plik pozostaje bez zmian)",
+   "pt": "Nota (só no PhotoMaid, o ficheiro fica inalterado)",
+   "ro": "Notă (doar în PhotoMaid, fișierul rămâne neschimbat)",
+   "ru": "Заметка (только в PhotoMaid, файл не меняется)",
+   "tr": "Not (yalnızca PhotoMaid’de, dosya değişmez)",
+   "uk": "Нотатка (лише в PhotoMaid, файл не змінюється)",
+   "zh": "备注（仅在 PhotoMaid 中，文件保持不变）"
+  },
+  "org_note_save": {
+   "en": "Save note",
+   "de": "Notiz speichern",
+   "ar": "حفظ الملاحظة",
+   "es": "Guardar nota",
+   "fr": "Enregistrer la note",
+   "it": "Salva nota",
+   "ja": "メモを保存",
+   "ko": "메모 저장",
+   "nl": "Notitie opslaan",
+   "pl": "Zapisz notatkę",
+   "pt": "Guardar nota",
+   "ro": "Salvează nota",
+   "ru": "Сохранить заметку",
+   "tr": "Notu kaydet",
+   "uk": "Зберегти нотатку",
+   "zh": "保存备注"
+  },
+  "org_basket": {
+   "en": "Selection basket",
+   "de": "Auswahlkorb",
+   "ar": "سلة التحديد",
+   "es": "Cesta de selección",
+   "fr": "Panier de sélection",
+   "it": "Cestino di selezione",
+   "ja": "選択かご",
+   "ko": "선택 바구니",
+   "nl": "Selectiemand",
+   "pl": "Koszyk wyboru",
+   "pt": "Cesto de seleção",
+   "ro": "Coș de selecție",
+   "ru": "Корзина выбора",
+   "tr": "Seçim sepeti",
+   "uk": "Кошик вибору",
+   "zh": "选择篮"
+  },
+  "org_basket_add": {
+   "en": "Add to selection basket",
+   "de": "In den Auswahlkorb",
+   "ar": "إضافة إلى سلة التحديد",
+   "es": "Añadir a la cesta de selección",
+   "fr": "Ajouter au panier de sélection",
+   "it": "Aggiungi al cestino di selezione",
+   "ja": "選択かごに入れる",
+   "ko": "선택 바구니에 담기",
+   "nl": "In de selectiemand",
+   "pl": "Dodaj do koszyka wyboru",
+   "pt": "Adicionar ao cesto de seleção",
+   "ro": "Adaugă în coșul de selecție",
+   "ru": "В корзину выбора",
+   "tr": "Seçim sepetine ekle",
+   "uk": "До кошика вибору",
+   "zh": "加入选择篮"
+  },
+  "org_basket_already": {
+   "en": "Already in the selection basket.",
+   "de": "Schon im Auswahlkorb.",
+   "ar": "موجودة بالفعل في سلة التحديد.",
+   "es": "Ya está en la cesta de selección.",
+   "fr": "Déjà dans le panier de sélection.",
+   "it": "Già nel cestino di selezione.",
+   "ja": "すでに選択かごに入っています。",
+   "ko": "이미 선택 바구니에 있어요.",
+   "nl": "Al in de selectiemand.",
+   "pl": "Już w koszyku wyboru.",
+   "pt": "Já está no cesto de seleção.",
+   "ro": "Deja în coșul de selecție.",
+   "ru": "Уже в корзине выбора.",
+   "tr": "Zaten seçim sepetinde.",
+   "uk": "Уже в кошику вибору.",
+   "zh": "已在选择篮中。"
+  },
+  "org_basket_remove": {
+   "en": "Take out of basket",
+   "de": "Aus dem Korb nehmen",
+   "ar": "إخراج من السلة",
+   "es": "Sacar de la cesta",
+   "fr": "Retirer du panier",
+   "it": "Togli dal cestino",
+   "ja": "かごから出す",
+   "ko": "바구니에서 빼기",
+   "nl": "Uit de mand halen",
+   "pl": "Wyjmij z koszyka",
+   "pt": "Retirar do cesto",
+   "ro": "Scoate din coș",
+   "ru": "Вынуть из корзины",
+   "tr": "Sepetten çıkar",
+   "uk": "Вийняти з кошика",
+   "zh": "从选择篮移出"
+  },
+  "org_basket_clear": {
+   "en": "Empty basket",
+   "de": "Korb leeren",
+   "ar": "إفراغ السلة",
+   "es": "Vaciar cesta",
+   "fr": "Vider le panier",
+   "it": "Svuota cestino",
+   "ja": "かごを空にする",
+   "ko": "바구니 비우기",
+   "nl": "Mand legen",
+   "pl": "Opróżnij koszyk",
+   "pt": "Esvaziar cesto",
+   "ro": "Golește coșul",
+   "ru": "Очистить корзину",
+   "tr": "Sepeti boşalt",
+   "uk": "Очистити кошик",
+   "zh": "清空选择篮"
+  },
+  "org_basket_clear_title": {
+   "en": "Empty the selection basket?",
+   "de": "Auswahlkorb leeren?",
+   "ar": "إفراغ سلة التحديد؟",
+   "es": "¿Vaciar la cesta de selección?",
+   "fr": "Vider le panier de sélection ?",
+   "it": "Svuotare il cestino di selezione?",
+   "ja": "選択かごを空にしますか？",
+   "ko": "선택 바구니를 비울까요?",
+   "nl": "Selectiemand legen?",
+   "pl": "Opróżnić koszyk wyboru?",
+   "pt": "Esvaziar o cesto de seleção?",
+   "ro": "Golești coșul de selecție?",
+   "ru": "Очистить корзину выбора?",
+   "tr": "Seçim sepeti boşaltılsın mı?",
+   "uk": "Очистити кошик вибору?",
+   "zh": "清空选择篮？"
+  },
+  "org_basket_clear_text": {
+   "en": "Only the basket is emptied. The photos and videos stay unchanged.",
+   "de": "Nur die Zusammenstellung wird geleert. Die Fotos und Videos bleiben unverändert.",
+   "ar": "تُفرَغ السلة فقط. تبقى الصور ومقاطع الفيديو دون تغيير.",
+   "es": "Solo se vacía la cesta. Las fotos y los vídeos no cambian.",
+   "fr": "Seul le panier est vidé. Les photos et vidéos restent inchangées.",
+   "it": "Si svuota solo il cestino. Foto e video restano invariati.",
+   "ja": "空になるのはかごだけです。写真と動画は変わりません。",
+   "ko": "바구니만 비워져요. 사진과 동영상은 그대로예요.",
+   "nl": "Alleen de mand wordt geleegd. De foto’s en video’s blijven ongewijzigd.",
+   "pl": "Opróżniany jest tylko koszyk. Zdjęcia i filmy pozostają bez zmian.",
+   "pt": "Só o cesto é esvaziado. As fotos e os vídeos ficam inalterados.",
+   "ro": "Se golește doar coșul. Fotografiile și videoclipurile rămân neschimbate.",
+   "ru": "Очищается только корзина. Фото и видео не изменятся.",
+   "tr": "Yalnızca sepet boşaltılır. Fotoğraflar ve videolar değişmez.",
+   "uk": "Очищається лише кошик. Фото й відео не зміняться.",
+   "zh": "只清空选择篮。照片和视频保持不变。"
+  },
+  "org_basket_intro": {
+   "en": "Collect media from different months and folders. The basket stays until you empty it – it has nothing to do with the trash.",
+   "de": "Sammle Medien aus verschiedenen Monaten und Ordnern. Der Korb bleibt erhalten, bis du ihn leerst – mit dem Papierkorb hat er nichts zu tun.",
+   "ar": "اجمع وسائط من أشهر ومجلدات مختلفة. تبقى السلة حتى تفرغها – ولا علاقة لها بسلة المهملات.",
+   "es": "Reúne contenido de distintos meses y carpetas. La cesta se mantiene hasta que la vacíes; no tiene nada que ver con la papelera.",
+   "fr": "Rassemble des médias de différents mois et dossiers. Le panier reste jusqu’à ce que tu le vides – il n’a rien à voir avec la corbeille.",
+   "it": "Raccogli contenuti da mesi e cartelle diversi. Il cestino resta finché non lo svuoti e non ha nulla a che fare con il cestino dei rifiuti.",
+   "ja": "いろいろな月やフォルダからメディアを集めます。かごは空にするまで残り、ゴミ箱とは関係ありません。",
+   "ko": "여러 달과 폴더의 미디어를 모으세요. 바구니는 비울 때까지 유지되며 휴지통과는 관계없어요.",
+   "nl": "Verzamel media uit verschillende maanden en mappen. De mand blijft tot je hem leegt – hij heeft niets met de prullenbak te maken.",
+   "pl": "Zbieraj multimedia z różnych miesięcy i folderów. Koszyk zostaje, dopóki go nie opróżnisz – nie ma nic wspólnego z koszem.",
+   "pt": "Junta conteúdos de vários meses e pastas. O cesto mantém-se até o esvaziares – não tem nada a ver com o lixo.",
+   "ro": "Adună conținut din luni și dosare diferite. Coșul rămâne până îl golești – nu are legătură cu coșul de gunoi.",
+   "ru": "Собирай медиа из разных месяцев и папок. Корзина сохраняется, пока ты её не очистишь, и не связана с корзиной для удалённых.",
+   "tr": "Farklı aylar ve klasörlerden medya topla. Sepet sen boşaltana kadar kalır – çöp kutusuyla ilgisi yoktur.",
+   "uk": "Збирай медіа з різних місяців і папок. Кошик зберігається, доки ти його не очистиш, і не пов’язаний із кошиком для видалених.",
+   "zh": "从不同月份和文件夹收集媒体。选择篮会一直保留，直到你清空它——它与回收站无关。"
+  },
+  "org_basket_empty_title": {
+   "en": "The selection basket is empty",
+   "de": "Der Auswahlkorb ist leer",
+   "ar": "سلة التحديد فارغة",
+   "es": "La cesta de selección está vacía",
+   "fr": "Le panier de sélection est vide",
+   "it": "Il cestino di selezione è vuoto",
+   "ja": "選択かごは空です",
+   "ko": "선택 바구니가 비어 있어요",
+   "nl": "De selectiemand is leeg",
+   "pl": "Koszyk wyboru jest pusty",
+   "pt": "O cesto de seleção está vazio",
+   "ro": "Coșul de selecție este gol",
+   "ru": "Корзина выбора пуста",
+   "tr": "Seçim sepeti boş",
+   "uk": "Кошик вибору порожній",
+   "zh": "选择篮为空"
+  },
+  "org_basket_empty_text": {
+   "en": "In “Photos”, select media and tap ⋯ › Add to selection basket.",
+   "de": "Wähle in „Fotos“ Medien aus und tippe auf ⋯ › In den Auswahlkorb.",
+   "ar": "في „الصور“ حدّد وسائط واضغط ⋯ › إضافة إلى سلة التحديد.",
+   "es": "En «Fotos», selecciona contenido y toca ⋯ › Añadir a la cesta de selección.",
+   "fr": "Dans « Photos », sélectionne des médias puis touche ⋯ › Ajouter au panier de sélection.",
+   "it": "In «Foto» seleziona dei contenuti e tocca ⋯ › Aggiungi al cestino di selezione.",
+   "ja": "「写真」でメディアを選び、⋯ › 選択かごに入れる をタップします。",
+   "ko": "‘사진’에서 미디어를 선택하고 ⋯ › 선택 바구니에 담기를 탭하세요.",
+   "nl": "Selecteer in ‘Foto’s’ media en tik op ⋯ › In de selectiemand.",
+   "pl": "W „Zdjęciach” zaznacz multimedia i dotknij ⋯ › Dodaj do koszyka wyboru.",
+   "pt": "Em «Fotos», seleciona conteúdos e toca em ⋯ › Adicionar ao cesto de seleção.",
+   "ro": "În „Fotografii”, selectează conținut și atinge ⋯ › Adaugă în coșul de selecție.",
+   "ru": "В разделе «Фото» выбери медиа и нажми ⋯ › В корзину выбора.",
+   "tr": "“Fotoğraflar”da medya seç ve ⋯ › Seçim sepetine ekle’ye dokun.",
+   "uk": "У розділі «Фото» вибери медіа й торкнися ⋯ › До кошика вибору.",
+   "zh": "在“照片”中选择媒体，然后轻点 ⋯ › 加入选择篮。"
+  },
+  "org_basket_to_album": {
+   "en": "Create album from basket",
+   "de": "Album aus dem Korb erstellen",
+   "ar": "إنشاء ألبوم من السلة",
+   "es": "Crear álbum con la cesta",
+   "fr": "Créer un album avec le panier",
+   "it": "Crea album dal cestino",
+   "ja": "かごからアルバムを作成",
+   "ko": "바구니로 앨범 만들기",
+   "nl": "Album maken van mand",
+   "pl": "Utwórz album z koszyka",
+   "pt": "Criar álbum a partir do cesto",
+   "ro": "Creează album din coș",
+   "ru": "Создать альбом из корзины",
+   "tr": "Sepetten albüm oluştur",
+   "uk": "Створити альбом із кошика",
+   "zh": "用选择篮创建相册"
   }
  },
  "plurals": {
@@ -14424,6 +15144,474 @@
    },
    "zh": {
     "other": "%1$d 个原文件在 Android 回收站中。"
+   }
+  },
+  "org_items": {
+   "en": {
+    "one": "%1$d item",
+    "other": "%1$d items"
+   },
+   "de": {
+    "one": "%1$d Medium",
+    "other": "%1$d Medien"
+   },
+   "ar": {
+    "zero": "%1$d عنصر",
+    "one": "عنصر واحد",
+    "two": "عنصران",
+    "few": "%1$d عناصر",
+    "many": "%1$d عنصرًا",
+    "other": "%1$d عنصر"
+   },
+   "es": {
+    "one": "%1$d elemento",
+    "many": "%1$d elementos",
+    "other": "%1$d elementos"
+   },
+   "fr": {
+    "one": "%1$d élément",
+    "many": "%1$d éléments",
+    "other": "%1$d éléments"
+   },
+   "it": {
+    "one": "%1$d elemento",
+    "many": "%1$d elementi",
+    "other": "%1$d elementi"
+   },
+   "ja": {
+    "other": "%1$d件"
+   },
+   "ko": {
+    "other": "%1$d개"
+   },
+   "nl": {
+    "one": "%1$d item",
+    "other": "%1$d items"
+   },
+   "pl": {
+    "one": "%1$d element",
+    "few": "%1$d elementy",
+    "many": "%1$d elementów",
+    "other": "%1$d elementu"
+   },
+   "pt": {
+    "one": "%1$d elemento",
+    "many": "%1$d elementos",
+    "other": "%1$d elementos"
+   },
+   "ro": {
+    "one": "%1$d element",
+    "few": "%1$d elemente",
+    "other": "%1$d de elemente"
+   },
+   "ru": {
+    "one": "%1$d объект",
+    "few": "%1$d объекта",
+    "many": "%1$d объектов",
+    "other": "%1$d объекта"
+   },
+   "tr": {
+    "one": "%1$d öğe",
+    "other": "%1$d öğe"
+   },
+   "uk": {
+    "one": "%1$d об’єкт",
+    "few": "%1$d об’єкти",
+    "many": "%1$d об’єктів",
+    "other": "%1$d об’єкта"
+   },
+   "zh": {
+    "other": "%1$d 项"
+   }
+  },
+  "org_added_to_album": {
+   "en": {
+    "one": "%1$d added to “%2$s”.",
+    "other": "%1$d added to “%2$s”."
+   },
+   "de": {
+    "one": "%1$d zu „%2$s“ hinzugefügt.",
+    "other": "%1$d zu „%2$s“ hinzugefügt."
+   },
+   "ar": {
+    "zero": "أُضيف %1$d إلى „%2$s“.",
+    "one": "أُضيف عنصر واحد إلى „%2$s“.",
+    "two": "أُضيف عنصران إلى „%2$s“.",
+    "few": "أُضيفت %1$d عناصر إلى „%2$s“.",
+    "many": "أُضيف %1$d عنصرًا إلى „%2$s“.",
+    "other": "أُضيف %1$d عنصر إلى „%2$s“."
+   },
+   "es": {
+    "one": "%1$d añadido a «%2$s».",
+    "many": "%1$d añadidos a «%2$s».",
+    "other": "%1$d añadidos a «%2$s»."
+   },
+   "fr": {
+    "one": "%1$d ajouté à « %2$s ».",
+    "many": "%1$d ajoutés à « %2$s ».",
+    "other": "%1$d ajoutés à « %2$s »."
+   },
+   "it": {
+    "one": "%1$d aggiunto a «%2$s».",
+    "many": "%1$d aggiunti a «%2$s».",
+    "other": "%1$d aggiunti a «%2$s»."
+   },
+   "ja": {
+    "other": "%1$d件を「%2$s」に追加しました。"
+   },
+   "ko": {
+    "other": "%1$d개를 ‘%2$s’에 추가했어요."
+   },
+   "nl": {
+    "one": "%1$d toegevoegd aan ‘%2$s’.",
+    "other": "%1$d toegevoegd aan ‘%2$s’."
+   },
+   "pl": {
+    "one": "Dodano %1$d do „%2$s”.",
+    "few": "Dodano %1$d do „%2$s”.",
+    "many": "Dodano %1$d do „%2$s”.",
+    "other": "Dodano %1$d do „%2$s”."
+   },
+   "pt": {
+    "one": "%1$d adicionado a «%2$s».",
+    "many": "%1$d adicionados a «%2$s».",
+    "other": "%1$d adicionados a «%2$s»."
+   },
+   "ro": {
+    "one": "%1$d adăugat la „%2$s”.",
+    "few": "%1$d adăugate la „%2$s”.",
+    "other": "%1$d de elemente adăugate la „%2$s”."
+   },
+   "ru": {
+    "one": "%1$d добавлен в «%2$s».",
+    "few": "%1$d добавлено в «%2$s».",
+    "many": "%1$d добавлено в «%2$s».",
+    "other": "%1$d добавлено в «%2$s»."
+   },
+   "tr": {
+    "one": "%1$d öğe “%2$s” albümüne eklendi.",
+    "other": "%1$d öğe “%2$s” albümüne eklendi."
+   },
+   "uk": {
+    "one": "%1$d додано до «%2$s».",
+    "few": "%1$d додано до «%2$s».",
+    "many": "%1$d додано до «%2$s».",
+    "other": "%1$d додано до «%2$s»."
+   },
+   "zh": {
+    "other": "已将 %1$d 项添加到“%2$s”。"
+   }
+  },
+  "org_removed_from_album": {
+   "en": {
+    "one": "%1$d removed from the album. The file stays.",
+    "other": "%1$d removed from the album. The files stay."
+   },
+   "de": {
+    "one": "%1$d aus dem Album entfernt. Die Datei bleibt erhalten.",
+    "other": "%1$d aus dem Album entfernt. Die Dateien bleiben erhalten."
+   },
+   "ar": {
+    "zero": "أُزيل %1$d من الألبوم. تبقى الملفات.",
+    "one": "أُزيل عنصر واحد من الألبوم. يبقى الملف.",
+    "two": "أُزيل عنصران من الألبوم. يبقى الملفان.",
+    "few": "أُزيلت %1$d عناصر من الألبوم. تبقى الملفات.",
+    "many": "أُزيل %1$d عنصرًا من الألبوم. تبقى الملفات.",
+    "other": "أُزيل %1$d عنصر من الألبوم. تبقى الملفات."
+   },
+   "es": {
+    "one": "%1$d quitado del álbum. El archivo se conserva.",
+    "many": "%1$d quitados del álbum. Los archivos se conservan.",
+    "other": "%1$d quitados del álbum. Los archivos se conservan."
+   },
+   "fr": {
+    "one": "%1$d retiré de l’album. Le fichier reste.",
+    "many": "%1$d retirés de l’album. Les fichiers restent.",
+    "other": "%1$d retirés de l’album. Les fichiers restent."
+   },
+   "it": {
+    "one": "%1$d rimosso dall’album. Il file resta.",
+    "many": "%1$d rimossi dall’album. I file restano.",
+    "other": "%1$d rimossi dall’album. I file restano."
+   },
+   "ja": {
+    "other": "%1$d件をアルバムから外しました。ファイルは残ります。"
+   },
+   "ko": {
+    "other": "%1$d개를 앨범에서 뺐어요. 파일은 남아 있어요."
+   },
+   "nl": {
+    "one": "%1$d uit het album gehaald. Het bestand blijft.",
+    "other": "%1$d uit het album gehaald. De bestanden blijven."
+   },
+   "pl": {
+    "one": "Usunięto %1$d z albumu. Plik zostaje.",
+    "few": "Usunięto %1$d z albumu. Pliki zostają.",
+    "many": "Usunięto %1$d z albumu. Pliki zostają.",
+    "other": "Usunięto %1$d z albumu. Pliki zostają."
+   },
+   "pt": {
+    "one": "%1$d removido do álbum. O ficheiro mantém-se.",
+    "many": "%1$d removidos do álbum. Os ficheiros mantêm-se.",
+    "other": "%1$d removidos do álbum. Os ficheiros mantêm-se."
+   },
+   "ro": {
+    "one": "%1$d scos din album. Fișierul rămâne.",
+    "few": "%1$d scoase din album. Fișierele rămân.",
+    "other": "%1$d de elemente scoase din album. Fișierele rămân."
+   },
+   "ru": {
+    "one": "%1$d убран из альбома. Файл остаётся.",
+    "few": "%1$d убрано из альбома. Файлы остаются.",
+    "many": "%1$d убрано из альбома. Файлы остаются.",
+    "other": "%1$d убрано из альбома. Файлы остаются."
+   },
+   "tr": {
+    "one": "%1$d öğe albümden çıkarıldı. Dosya kalır.",
+    "other": "%1$d öğe albümden çıkarıldı. Dosyalar kalır."
+   },
+   "uk": {
+    "one": "%1$d прибрано з альбому. Файл залишається.",
+    "few": "%1$d прибрано з альбому. Файли залишаються.",
+    "many": "%1$d прибрано з альбому. Файли залишаються.",
+    "other": "%1$d прибрано з альбому. Файли залишаються."
+   },
+   "zh": {
+    "other": "已从相册移除 %1$d 项。文件仍保留。"
+   }
+  },
+  "org_missing": {
+   "en": {
+    "one": "%1$d item not found (deleted or no longer on this device).",
+    "other": "%1$d items not found (deleted or no longer on this device)."
+   },
+   "de": {
+    "one": "%1$d Medium nicht gefunden (gelöscht oder nicht mehr auf diesem Gerät).",
+    "other": "%1$d Medien nicht gefunden (gelöscht oder nicht mehr auf diesem Gerät)."
+   },
+   "ar": {
+    "zero": "لم يُعثر على %1$d عنصر (محذوف أو لم يعد على هذا الجهاز).",
+    "one": "لم يُعثر على عنصر واحد (محذوف أو لم يعد على هذا الجهاز).",
+    "two": "لم يُعثر على عنصرين (محذوفان أو لم يعودا على هذا الجهاز).",
+    "few": "لم يُعثر على %1$d عناصر (محذوفة أو لم تعد على هذا الجهاز).",
+    "many": "لم يُعثر على %1$d عنصرًا (محذوفة أو لم تعد على هذا الجهاز).",
+    "other": "لم يُعثر على %1$d عنصر (محذوفة أو لم تعد على هذا الجهاز)."
+   },
+   "es": {
+    "one": "%1$d elemento no encontrado (eliminado o ya no está en este dispositivo).",
+    "many": "%1$d elementos no encontrados (eliminados o ya no están en este dispositivo).",
+    "other": "%1$d elementos no encontrados (eliminados o ya no están en este dispositivo)."
+   },
+   "fr": {
+    "one": "%1$d élément introuvable (supprimé ou plus sur cet appareil).",
+    "many": "%1$d éléments introuvables (supprimés ou plus sur cet appareil).",
+    "other": "%1$d éléments introuvables (supprimés ou plus sur cet appareil)."
+   },
+   "it": {
+    "one": "%1$d elemento non trovato (eliminato o non più su questo dispositivo).",
+    "many": "%1$d elementi non trovati (eliminati o non più su questo dispositivo).",
+    "other": "%1$d elementi non trovati (eliminati o non più su questo dispositivo)."
+   },
+   "ja": {
+    "other": "%1$d件が見つかりません（削除されたか、この端末にありません）。"
+   },
+   "ko": {
+    "other": "%1$d개를 찾을 수 없어요(삭제되었거나 이 기기에 없음)."
+   },
+   "nl": {
+    "one": "%1$d item niet gevonden (verwijderd of niet meer op dit apparaat).",
+    "other": "%1$d items niet gevonden (verwijderd of niet meer op dit apparaat)."
+   },
+   "pl": {
+    "one": "Nie znaleziono %1$d elementu (usunięty lub nie ma go już na tym urządzeniu).",
+    "few": "Nie znaleziono %1$d elementów (usunięte lub nie ma ich już na tym urządzeniu).",
+    "many": "Nie znaleziono %1$d elementów (usunięte lub nie ma ich już na tym urządzeniu).",
+    "other": "Nie znaleziono %1$d elementu (usunięte lub nie ma ich już na tym urządzeniu)."
+   },
+   "pt": {
+    "one": "%1$d elemento não encontrado (eliminado ou já não está neste dispositivo).",
+    "many": "%1$d elementos não encontrados (eliminados ou já não estão neste dispositivo).",
+    "other": "%1$d elementos não encontrados (eliminados ou já não estão neste dispositivo)."
+   },
+   "ro": {
+    "one": "%1$d element negăsit (șters sau nu mai e pe acest dispozitiv).",
+    "few": "%1$d elemente negăsite (șterse sau nu mai sunt pe acest dispozitiv).",
+    "other": "%1$d de elemente negăsite (șterse sau nu mai sunt pe acest dispozitiv)."
+   },
+   "ru": {
+    "one": "%1$d объект не найден (удалён или больше не на этом устройстве).",
+    "few": "%1$d объекта не найдено (удалены или больше не на этом устройстве).",
+    "many": "%1$d объектов не найдено (удалены или больше не на этом устройстве).",
+    "other": "%1$d объекта не найдено (удалены или больше не на этом устройстве)."
+   },
+   "tr": {
+    "one": "%1$d öğe bulunamadı (silindi veya artık bu cihazda değil).",
+    "other": "%1$d öğe bulunamadı (silindi veya artık bu cihazda değil)."
+   },
+   "uk": {
+    "one": "%1$d об’єкт не знайдено (видалено або більше немає на цьому пристрої).",
+    "few": "%1$d об’єкти не знайдено (видалено або більше немає на цьому пристрої).",
+    "many": "%1$d об’єктів не знайдено (видалено або більше немає на цьому пристрої).",
+    "other": "%1$d об’єкта не знайдено (видалено або більше немає на цьому пристрої)."
+   },
+   "zh": {
+    "other": "找不到 %1$d 项（已删除或不在此设备上）。"
+   }
+  },
+  "org_basket_added": {
+   "en": {
+    "one": "%1$d added to the selection basket.",
+    "other": "%1$d added to the selection basket."
+   },
+   "de": {
+    "one": "%1$d in den Auswahlkorb gelegt.",
+    "other": "%1$d in den Auswahlkorb gelegt."
+   },
+   "ar": {
+    "zero": "أُضيف %1$d إلى سلة التحديد.",
+    "one": "أُضيف عنصر واحد إلى سلة التحديد.",
+    "two": "أُضيف عنصران إلى سلة التحديد.",
+    "few": "أُضيفت %1$d عناصر إلى سلة التحديد.",
+    "many": "أُضيف %1$d عنصرًا إلى سلة التحديد.",
+    "other": "أُضيف %1$d عنصر إلى سلة التحديد."
+   },
+   "es": {
+    "one": "%1$d añadido a la cesta de selección.",
+    "many": "%1$d añadidos a la cesta de selección.",
+    "other": "%1$d añadidos a la cesta de selección."
+   },
+   "fr": {
+    "one": "%1$d ajouté au panier de sélection.",
+    "many": "%1$d ajoutés au panier de sélection.",
+    "other": "%1$d ajoutés au panier de sélection."
+   },
+   "it": {
+    "one": "%1$d aggiunto al cestino di selezione.",
+    "many": "%1$d aggiunti al cestino di selezione.",
+    "other": "%1$d aggiunti al cestino di selezione."
+   },
+   "ja": {
+    "other": "%1$d件を選択かごに入れました。"
+   },
+   "ko": {
+    "other": "%1$d개를 선택 바구니에 담았어요."
+   },
+   "nl": {
+    "one": "%1$d in de selectiemand gelegd.",
+    "other": "%1$d in de selectiemand gelegd."
+   },
+   "pl": {
+    "one": "Dodano %1$d do koszyka wyboru.",
+    "few": "Dodano %1$d do koszyka wyboru.",
+    "many": "Dodano %1$d do koszyka wyboru.",
+    "other": "Dodano %1$d do koszyka wyboru."
+   },
+   "pt": {
+    "one": "%1$d adicionado ao cesto de seleção.",
+    "many": "%1$d adicionados ao cesto de seleção.",
+    "other": "%1$d adicionados ao cesto de seleção."
+   },
+   "ro": {
+    "one": "%1$d adăugat în coșul de selecție.",
+    "few": "%1$d adăugate în coșul de selecție.",
+    "other": "%1$d de elemente adăugate în coșul de selecție."
+   },
+   "ru": {
+    "one": "%1$d добавлен в корзину выбора.",
+    "few": "%1$d добавлено в корзину выбора.",
+    "many": "%1$d добавлено в корзину выбора.",
+    "other": "%1$d добавлено в корзину выбора."
+   },
+   "tr": {
+    "one": "%1$d öğe seçim sepetine eklendi.",
+    "other": "%1$d öğe seçim sepetine eklendi."
+   },
+   "uk": {
+    "one": "%1$d додано до кошика вибору.",
+    "few": "%1$d додано до кошика вибору.",
+    "many": "%1$d додано до кошика вибору.",
+    "other": "%1$d додано до кошика вибору."
+   },
+   "zh": {
+    "other": "已将 %1$d 项加入选择篮。"
+   }
+  },
+  "org_tags_for": {
+   "en": {
+    "one": "Tags for %1$d item",
+    "other": "Tags for %1$d items"
+   },
+   "de": {
+    "one": "Schlagwörter für %1$d Medium",
+    "other": "Schlagwörter für %1$d Medien"
+   },
+   "ar": {
+    "zero": "وسوم لـ %1$d عنصر",
+    "one": "وسوم لعنصر واحد",
+    "two": "وسوم لعنصرين",
+    "few": "وسوم لـ %1$d عناصر",
+    "many": "وسوم لـ %1$d عنصرًا",
+    "other": "وسوم لـ %1$d عنصر"
+   },
+   "es": {
+    "one": "Etiquetas para %1$d elemento",
+    "many": "Etiquetas para %1$d elementos",
+    "other": "Etiquetas para %1$d elementos"
+   },
+   "fr": {
+    "one": "Mots-clés pour %1$d élément",
+    "many": "Mots-clés pour %1$d éléments",
+    "other": "Mots-clés pour %1$d éléments"
+   },
+   "it": {
+    "one": "Tag per %1$d elemento",
+    "many": "Tag per %1$d elementi",
+    "other": "Tag per %1$d elementi"
+   },
+   "ja": {
+    "other": "%1$d件のタグ"
+   },
+   "ko": {
+    "other": "%1$d개 항목의 태그"
+   },
+   "nl": {
+    "one": "Labels voor %1$d item",
+    "other": "Labels voor %1$d items"
+   },
+   "pl": {
+    "one": "Tagi dla %1$d elementu",
+    "few": "Tagi dla %1$d elementów",
+    "many": "Tagi dla %1$d elementów",
+    "other": "Tagi dla %1$d elementu"
+   },
+   "pt": {
+    "one": "Etiquetas para %1$d elemento",
+    "many": "Etiquetas para %1$d elementos",
+    "other": "Etiquetas para %1$d elementos"
+   },
+   "ro": {
+    "one": "Etichete pentru %1$d element",
+    "few": "Etichete pentru %1$d elemente",
+    "other": "Etichete pentru %1$d de elemente"
+   },
+   "ru": {
+    "one": "Метки для %1$d объекта",
+    "few": "Метки для %1$d объектов",
+    "many": "Метки для %1$d объектов",
+    "other": "Метки для %1$d объекта"
+   },
+   "tr": {
+    "one": "%1$d öğe için etiketler",
+    "other": "%1$d öğe için etiketler"
+   },
+   "uk": {
+    "one": "Мітки для %1$d об’єкта",
+    "few": "Мітки для %1$d об’єктів",
+    "many": "Мітки для %1$d об’єктів",
+    "other": "Мітки для %1$d об’єкта"
+   },
+   "zh": {
+    "other": "%1$d 项的标签"
    }
   }
  }

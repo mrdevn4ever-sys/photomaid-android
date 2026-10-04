@@ -1,5 +1,7 @@
 package app.photomaid.navigation
 
+import app.photomaid.feature.organize.OrganizeScreen
+import app.photomaid.feature.organize.OrganizeTarget
 import app.photomaid.feature.months.MonthsScreen
 import app.photomaid.feature.editor.EditorScreen
 import app.photomaid.feature.editor.EditsScreen
@@ -160,6 +162,8 @@ interface Nav {
     fun openViewer(request: ViewerRequest) {}
     /** Mediathek: Ordner bzw. eigene Gruppe öffnen. */
     fun openFolder(target: FolderTarget) {}
+    /** Organisieren: Album, Schlagwort oder Auswahlkorb (nie eine Entscheidung). */
+    fun openOrganize(target: OrganizeTarget) {}
     /** Diashow (nur Ansehen). */
     fun openSlideshow(request: SlideshowRequest) {}
     /** Studio P6: Video zusammenfügen / Diashow als Video. */
@@ -280,6 +284,9 @@ private fun RootNav(app: AppModel) {
             override fun openSlideshow(request: SlideshowRequest) {
                 SlideshowRequests.map[request.id] = request; root.navigate("slideshow/${request.id}")
             }
+            override fun openOrganize(target: OrganizeTarget) {
+                root.navigate("organize/" + android.net.Uri.encode(target.encode()))
+            }
             override fun openFolder(target: FolderTarget) {
                 root.navigate("folder/" + android.net.Uri.encode(target.encode()))
             }
@@ -366,6 +373,12 @@ private fun RootNav(app: AppModel) {
             val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
             if (target == null) LaunchedEffect(entry) { close() }
             else FolderScreen(target, nav, onClose = { close() })
+        }
+        composable("organize/{target}") { entry ->
+            val target = entry.arguments?.getString("target")?.let(OrganizeTarget::decode)
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (target == null) LaunchedEffect(entry) { close() }
+            else OrganizeScreen(target, nav, onClose = { close() })
         }
         composable(Routes.HIDDEN) { HiddenScreen(nav) }
         composable(Routes.SYSTEM_TRASH) { SystemTrashScreen(nav) }

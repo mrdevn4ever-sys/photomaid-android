@@ -1434,4 +1434,68 @@
     <string name="vid_export_info">Exportinfo</string>
     <string name="vid_export_info_fast">Nur Anfang und Ende gekürzt. PhotoMaid versucht, die Qualität zu erhalten, und kodiert nur den Anfang bis zum nächsten Schlüsselbild neu. Lässt das Video das nicht zu, wird das ganze Video neu kodiert. Gesamtlänge %1$s.</string>
     <string name="vid_export_info_reencode">Wegen deiner übrigen Änderungen wird beim Speichern das ganze Video neu kodiert. Gesamtlänge %1$s.</string>
+    <string name="lib_mode_albums">Alben</string>
+    <string name="org_new_album">Neues Album</string>
+    <string name="org_album_name">Name des Albums</string>
+    <string name="org_create">Erstellen</string>
+    <string name="org_rename">Umbenennen</string>
+    <string name="org_album_delete">Album löschen</string>
+    <string name="org_album_delete_title">„%1$s“ löschen?</string>
+    <string name="org_album_delete_text">Nur die Zusammenstellung wird gelöscht. Die Fotos und Videos bleiben unverändert in deiner Mediathek.</string>
+    <string name="org_album_remove">Aus Album entfernen</string>
+    <string name="org_add_to_album">Zu Album hinzufügen</string>
+    <string name="org_already_in_album">Schon alle in „%1$s“.</string>
+    <string name="org_albums_empty_title">Noch keine Alben</string>
+    <string name="org_albums_empty_text">Ein Album sammelt Fotos und Videos aus beliebigen Ordnern, ohne sie zu kopieren oder zu verschieben. Ein Foto kann in mehreren Alben sein.</string>
+    <string name="org_albums_footer">Alben gibt es nur in PhotoMaid. Ordner zeigen, wo eine Datei liegt; Sammlungen finden Medien über eine Bedingung.</string>
+    <string name="org_album_empty">Dieses Album ist leer. Wähle in „Fotos“ Medien aus und tippe auf ⋯ › Zu Album hinzufügen.</string>
+    <string name="org_missing_remove">Aus der Liste entfernen</string>
+    <string name="org_tags">Schlagwörter</string>
+    <string name="org_tag_new_hint">Neues Schlagwort</string>
+    <string name="org_tag_add">Hinzufügen</string>
+    <string name="org_tags_none">Noch keine Schlagwörter. Vergib eigene Begriffe wie „Rechnung“ oder „Ferien“ – PhotoMaid kennt nur, was du selbst einträgst.</string>
+    <string name="org_tag_remove">Schlagwort entfernen</string>
+    <string name="org_tag_delete">Überall entfernen</string>
+    <string name="org_tag_delete_title">Schlagwort „%1$s“ überall entfernen?</string>
+    <string name="org_tag_delete_text">Das Schlagwort verschwindet von allen Medien. Die Dateien bleiben unverändert.</string>
+    <string name="org_tag_state_all">bei allen</string>
+    <string name="org_tag_state_some">bei einigen</string>
+    <string name="org_note">Notiz</string>
+    <string name="org_note_hint">Notiz (nur in PhotoMaid, die Datei bleibt unverändert)</string>
+    <string name="org_note_save">Notiz speichern</string>
+    <string name="org_basket">Auswahlkorb</string>
+    <string name="org_basket_add">In den Auswahlkorb</string>
+    <string name="org_basket_already">Schon im Auswahlkorb.</string>
+    <string name="org_basket_remove">Aus dem Korb nehmen</string>
+    <string name="org_basket_clear">Korb leeren</string>
+    <string name="org_basket_clear_title">Auswahlkorb leeren?</string>
+    <string name="org_basket_clear_text">Nur die Zusammenstellung wird geleert. Die Fotos und Videos bleiben unverändert.</string>
+    <string name="org_basket_intro">Sammle Medien aus verschiedenen Monaten und Ordnern. Der Korb bleibt erhalten, bis du ihn leerst – mit dem Papierkorb hat er nichts zu tun.</string>
+    <string name="org_basket_empty_title">Der Auswahlkorb ist leer</string>
+    <string name="org_basket_empty_text">Wähle in „Fotos“ Medien aus und tippe auf ⋯ › In den Auswahlkorb.</string>
+    <string name="org_basket_to_album">Album aus dem Korb erstellen</string>
+    <plurals name="org_items">
+        <item quantity="one">%1$d Medium</item>
+        <item quantity="other">%1$d Medien</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="one">%1$d zu „%2$s“ hinzugefügt.</item>
+        <item quantity="other">%1$d zu „%2$s“ hinzugefügt.</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="one">%1$d aus dem Album entfernt. Die Datei bleibt erhalten.</item>
+        <item quantity="other">%1$d aus dem Album entfernt. Die Dateien bleiben erhalten.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="one">%1$d Medium nicht gefunden (gelöscht oder nicht mehr auf diesem Gerät).</item>
+        <item quantity="other">%1$d Medien nicht gefunden (gelöscht oder nicht mehr auf diesem Gerät).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="one">%1$d in den Auswahlkorb gelegt.</item>
+        <item quantity="other">%1$d in den Auswahlkorb gelegt.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="one">Schlagwörter für %1$d Medium</item>
+        <item quantity="other">Schlagwörter für %1$d Medien</item>
+    </plurals>
 </resources>

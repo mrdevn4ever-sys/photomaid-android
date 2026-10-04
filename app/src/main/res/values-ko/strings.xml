@@ -1373,4 +1373,62 @@
     <string name="vid_export_info">내보내기 정보</string>
     <string name="vid_export_info_fast">시작과 끝만 잘라요. PhotoMaid는 화질을 유지하려고 다음 키프레임까지의 시작 부분만 다시 인코딩해요. 동영상이 이를 지원하지 않으면 전체를 다시 인코딩해요. 전체 길이 %1$s.</string>
     <string name="vid_export_info_reencode">다른 변경 사항 때문에 저장할 때 동영상 전체를 다시 인코딩해요. 전체 길이 %1$s.</string>
+    <string name="lib_mode_albums">앨범</string>
+    <string name="org_new_album">새 앨범</string>
+    <string name="org_album_name">앨범 이름</string>
+    <string name="org_create">만들기</string>
+    <string name="org_rename">이름 바꾸기</string>
+    <string name="org_album_delete">앨범 삭제</string>
+    <string name="org_album_delete_title">‘%1$s’을(를) 삭제할까요?</string>
+    <string name="org_album_delete_text">앨범만 삭제돼요. 사진과 동영상은 보관함에 그대로 남아요.</string>
+    <string name="org_album_remove">앨범에서 빼기</string>
+    <string name="org_add_to_album">앨범에 추가</string>
+    <string name="org_already_in_album">이미 모두 ‘%1$s’에 있어요.</string>
+    <string name="org_albums_empty_title">아직 앨범이 없어요</string>
+    <string name="org_albums_empty_text">앨범은 어느 폴더의 사진과 동영상이든 복사하거나 옮기지 않고 모아 줘요. 사진 한 장을 여러 앨범에 넣을 수 있어요.</string>
+    <string name="org_albums_footer">앨범은 PhotoMaid 안에만 있어요. 폴더는 파일이 저장된 위치를, 모음은 조건으로 찾은 미디어를 보여 줘요.</string>
+    <string name="org_album_empty">앨범이 비어 있어요. ‘사진’에서 미디어를 선택하고 ⋯ › 앨범에 추가를 탭하세요.</string>
+    <string name="org_missing_remove">목록에서 빼기</string>
+    <string name="org_tags">태그</string>
+    <string name="org_tag_new_hint">새 태그</string>
+    <string name="org_tag_add">추가</string>
+    <string name="org_tags_none">아직 태그가 없어요. ‘영수증’, ‘여행’ 같은 단어를 직접 추가하세요. PhotoMaid는 직접 입력한 내용만 알아요.</string>
+    <string name="org_tag_remove">태그 빼기</string>
+    <string name="org_tag_delete">모두에서 빼기</string>
+    <string name="org_tag_delete_title">‘%1$s’ 태그를 모두에서 뺄까요?</string>
+    <string name="org_tag_delete_text">모든 미디어에서 태그가 사라져요. 파일은 그대로예요.</string>
+    <string name="org_tag_state_all">모두에 있음</string>
+    <string name="org_tag_state_some">일부에 있음</string>
+    <string name="org_note">메모</string>
+    <string name="org_note_hint">메모(PhotoMaid 안에서만, 파일은 그대로)</string>
+    <string name="org_note_save">메모 저장</string>
+    <string name="org_basket">선택 바구니</string>
+    <string name="org_basket_add">선택 바구니에 담기</string>
+    <string name="org_basket_already">이미 선택 바구니에 있어요.</string>
+    <string name="org_basket_remove">바구니에서 빼기</string>
+    <string name="org_basket_clear">바구니 비우기</string>
+    <string name="org_basket_clear_title">선택 바구니를 비울까요?</string>
+    <string name="org_basket_clear_text">바구니만 비워져요. 사진과 동영상은 그대로예요.</string>
+    <string name="org_basket_intro">여러 달과 폴더의 미디어를 모으세요. 바구니는 비울 때까지 유지되며 휴지통과는 관계없어요.</string>
+    <string name="org_basket_empty_title">선택 바구니가 비어 있어요</string>
+    <string name="org_basket_empty_text">‘사진’에서 미디어를 선택하고 ⋯ › 선택 바구니에 담기를 탭하세요.</string>
+    <string name="org_basket_to_album">바구니로 앨범 만들기</string>
+    <plurals name="org_items">
+        <item quantity="other">%1$d개</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="other">%1$d개를 ‘%2$s’에 추가했어요.</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="other">%1$d개를 앨범에서 뺐어요. 파일은 남아 있어요.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="other">%1$d개를 찾을 수 없어요(삭제되었거나 이 기기에 없음).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="other">%1$d개를 선택 바구니에 담았어요.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="other">%1$d개 항목의 태그</item>
+    </plurals>
 </resources>

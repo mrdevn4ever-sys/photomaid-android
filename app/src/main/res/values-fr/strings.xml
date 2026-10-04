@@ -1495,4 +1495,74 @@
     <string name="vid_export_info">Infos d’export</string>
     <string name="vid_export_info_fast">Seuls le début et la fin sont coupés. PhotoMaid essaie de garder la qualité et ne réencode que le début jusqu’à la prochaine image clé. Si la vidéo ne le permet pas, toute la vidéo est réencodée. Durée totale %1$s.</string>
     <string name="vid_export_info_reencode">En raison de tes autres modifications, toute la vidéo est réencodée à l’enregistrement. Durée totale %1$s.</string>
+    <string name="lib_mode_albums">Albums</string>
+    <string name="org_new_album">Nouvel album</string>
+    <string name="org_album_name">Nom de l’album</string>
+    <string name="org_create">Créer</string>
+    <string name="org_rename">Renommer</string>
+    <string name="org_album_delete">Supprimer l’album</string>
+    <string name="org_album_delete_title">Supprimer « %1$s » ?</string>
+    <string name="org_album_delete_text">Seul l’album est supprimé. Les photos et vidéos restent inchangées dans ta photothèque.</string>
+    <string name="org_album_remove">Retirer de l’album</string>
+    <string name="org_add_to_album">Ajouter à un album</string>
+    <string name="org_already_in_album">Déjà tous dans « %1$s ».</string>
+    <string name="org_albums_empty_title">Pas encore d’album</string>
+    <string name="org_albums_empty_text">Un album rassemble des photos et vidéos de n’importe quel dossier, sans les copier ni les déplacer. Une photo peut figurer dans plusieurs albums.</string>
+    <string name="org_albums_footer">Les albums n’existent que dans PhotoMaid. Les dossiers indiquent où se trouve un fichier ; les collections trouvent des médias selon une condition.</string>
+    <string name="org_album_empty">Cet album est vide. Dans « Photos », sélectionne des médias puis touche ⋯ › Ajouter à un album.</string>
+    <string name="org_missing_remove">Retirer de la liste</string>
+    <string name="org_tags">Mots-clés</string>
+    <string name="org_tag_new_hint">Nouveau mot-clé</string>
+    <string name="org_tag_add">Ajouter</string>
+    <string name="org_tags_none">Pas encore de mot-clé. Ajoute tes propres mots comme « Facture » ou « Vacances » – PhotoMaid ne connaît que ce que tu saisis.</string>
+    <string name="org_tag_remove">Retirer le mot-clé</string>
+    <string name="org_tag_delete">Retirer partout</string>
+    <string name="org_tag_delete_title">Retirer le mot-clé « %1$s » partout ?</string>
+    <string name="org_tag_delete_text">Le mot-clé disparaît de tous les médias. Les fichiers restent inchangés.</string>
+    <string name="org_tag_state_all">sur tous</string>
+    <string name="org_tag_state_some">sur certains</string>
+    <string name="org_note">Note</string>
+    <string name="org_note_hint">Note (uniquement dans PhotoMaid, le fichier reste inchangé)</string>
+    <string name="org_note_save">Enregistrer la note</string>
+    <string name="org_basket">Panier de sélection</string>
+    <string name="org_basket_add">Ajouter au panier de sélection</string>
+    <string name="org_basket_already">Déjà dans le panier de sélection.</string>
+    <string name="org_basket_remove">Retirer du panier</string>
+    <string name="org_basket_clear">Vider le panier</string>
+    <string name="org_basket_clear_title">Vider le panier de sélection ?</string>
+    <string name="org_basket_clear_text">Seul le panier est vidé. Les photos et vidéos restent inchangées.</string>
+    <string name="org_basket_intro">Rassemble des médias de différents mois et dossiers. Le panier reste jusqu’à ce que tu le vides – il n’a rien à voir avec la corbeille.</string>
+    <string name="org_basket_empty_title">Le panier de sélection est vide</string>
+    <string name="org_basket_empty_text">Dans « Photos », sélectionne des médias puis touche ⋯ › Ajouter au panier de sélection.</string>
+    <string name="org_basket_to_album">Créer un album avec le panier</string>
+    <plurals name="org_items">
+        <item quantity="one">%1$d élément</item>
+        <item quantity="many">%1$d éléments</item>
+        <item quantity="other">%1$d éléments</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="one">%1$d ajouté à « %2$s ».</item>
+        <item quantity="many">%1$d ajoutés à « %2$s ».</item>
+        <item quantity="other">%1$d ajoutés à « %2$s ».</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="one">%1$d retiré de l’album. Le fichier reste.</item>
+        <item quantity="many">%1$d retirés de l’album. Les fichiers restent.</item>
+        <item quantity="other">%1$d retirés de l’album. Les fichiers restent.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="one">%1$d élément introuvable (supprimé ou plus sur cet appareil).</item>
+        <item quantity="many">%1$d éléments introuvables (supprimés ou plus sur cet appareil).</item>
+        <item quantity="other">%1$d éléments introuvables (supprimés ou plus sur cet appareil).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="one">%1$d ajouté au panier de sélection.</item>
+        <item quantity="many">%1$d ajoutés au panier de sélection.</item>
+        <item quantity="other">%1$d ajoutés au panier de sélection.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="one">Mots-clés pour %1$d élément</item>
+        <item quantity="many">Mots-clés pour %1$d éléments</item>
+        <item quantity="other">Mots-clés pour %1$d éléments</item>
+    </plurals>
 </resources>

@@ -43,7 +43,9 @@ enum class LibraryFilter(val label: Int) {
  * Favorit, Kamera-Modell aus EXIF, sobald gelesen). Nichts verlässt das Gerät, nichts wird gespeichert.
  */
 class LibrarySearch(context: Context, assets: List<MediaAsset>, zone: ZoneId = ZoneId.systemDefault(), locale: Locale = Locale.getDefault(),
-    camera: (String) -> String? = { null }) {
+    camera: (String) -> String? = { null },
+    /** Eigene Schlagwörter und Notizen je Medium (Organisieren). */
+    extra: (String) -> List<String> = { emptyList() }) {
     private val fields: Map<String, List<String>>
 
     init {
@@ -57,7 +59,7 @@ class LibrarySearch(context: Context, assets: List<MediaAsset>, zone: ZoneId = Z
             val d = a.creationDate?.atZone(zone)
             a.id to listOfNotNull(a.displayName, a.relativePath, d?.let(month::format), d?.let(monthShort::format), d?.let(day::format),
                 d?.year?.toString(), kinds[a.kind], if (a.isFavorite) fav else null, a.mimeType?.substringAfter('/'), camera(a.id))
-                .map(SearchText::normalize)
+                .plus(extra(a.id)).map(SearchText::normalize)
         }
     }
 

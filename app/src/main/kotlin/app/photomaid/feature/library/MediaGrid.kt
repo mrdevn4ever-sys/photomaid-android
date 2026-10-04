@@ -1,5 +1,15 @@
 package app.photomaid.feature.library
 
+import app.photomaid.system.MediaIntents
+import app.photomaid.feature.organize.TagSheet
+import app.photomaid.feature.organize.AlbumPickerSheet
+import app.photomaid.feature.organize.OrganizeMenuItems
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.MoreHoriz
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
@@ -283,6 +293,8 @@ internal fun SelectionActions(
     unhide: Boolean = false,
     /** RAW-Partner gehen bei Papierkorb, Ausblenden und Verschieben mit. */
     raw: RawIndex = RawIndex.EMPTY,
+    /** Zusätzliche erste Aktion (z. B. „Aus Album entfernen“) – nie eine Entscheidung. */
+    extra: SelectionExtra? = null,
 ) {
     val app = LocalApp.current
     val settings by app.settings.collectAsState()
@@ -292,9 +304,14 @@ internal fun SelectionActions(
     var folders by remember { mutableStateOf<List<MediaFolder>?>(null) }
     var confirmTrash by remember { mutableStateOf(false) }
     var confirmHide by remember { mutableStateOf(false) }
+    var more by remember { mutableStateOf(false) }
+    var albumSheet by remember { mutableStateOf(false) }
+    var tagSheet by remember { mutableStateOf(false) }
     val allFav = chosen.isNotEmpty() && chosen.all { it.isFavorite }
 
-    if (chosen.isNotEmpty()) Row(modifier.navigationBarsPadding().glassCapsule(elevation = 6.dp).padding(horizontal = AppSpacing.xs, vertical = 4.dp).testTag("lib.selbar"),
+    // Passt die Leiste nicht in die Breite (viele Aktionen, große Schrift), scrollt sie – nichts wird abgeschnitten.
+    if (chosen.isNotEmpty()) Row(modifier.navigationBarsPadding().padding(horizontal = AppSpacing.s).glassCapsule(elevation = 6.dp)
+        .horizontalScroll(rememberScrollState()).padding(horizontal = AppSpacing.xs, vertical = 4.dp).testTag("lib.selbar"),
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
         if (unhide) {
             GlassIconButton(Icons.Rounded.Visibility, stringResource(R.string.lib_unhide), Modifier.testTag("lib.sel.unhide"), quiet = true) {
@@ -304,6 +321,7 @@ internal fun SelectionActions(
             }
             return@Row
         }
+        extra?.let { e -> GlassIconButton(e.icon, e.label, Modifier.testTag(e.tag), quiet = true, onClick = e.onClick) }
         GlassIconButton(if (allFav) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder, stringResource(if (allFav) R.string.fav_remove else R.string.fav_add),
             Modifier.testTag("lib.sel.fav"), quiet = true) {
             val target = !allFav
@@ -326,7 +344,22 @@ internal fun SelectionActions(
         }
         GlassIconButton(Icons.Rounded.VisibilityOff, stringResource(R.string.lib_hide), Modifier.testTag("lib.sel.hide"), quiet = true) { confirmHide = true }
         GlassIconButton(Icons.Rounded.Delete, stringResource(R.string.lib_trash_action), Modifier.testTag("lib.sel.trash"), quiet = true) { confirmTrash = true }
+        // Organisieren und Teilen (nie eine Entscheidung).
+        Box {
+            GlassIconButton(Icons.Rounded.MoreHoriz, stringResource(R.string.more_actions), Modifier.testTag("lib.sel.more"), quiet = true) { more = true }
+            DropdownMenu(more, onDismissRequest = { more = false }) {
+                OrganizeMenuItems(chosen, close = { more = false }, onAlbum = { albumSheet = true }, onTags = { tagSheet = true }) { message = it }
+                DropdownMenuItem(text = { Text(stringResource(R.string.share)) }, leadingIcon = { Icon(Icons.Rounded.Share, null) },
+                    modifier = Modifier.testTag("lib.sel.share"), onClick = {
+                        more = false
+                        runCatching { app.context.startActivity(MediaIntents.shareMany(chosen.map { it.uri }, chosen.map { MediaIntents.mimeType(it.kind, it.mimeType) },
+                            app.string(R.string.share)).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                    })
+            }
+        }
     }
+    if (albumSheet) AlbumPickerSheet(chosen, onDismiss = { albumSheet = false }) { m -> albumSheet = false; message = m; onClear() }
+    if (tagSheet) TagSheet(chosen) { tagSheet = false }
 
     if (confirmHide) ConfirmationSheet(
         title = pluralStringResource(R.plurals.lib_hide_title, chosen.size, chosen.size),
@@ -357,6 +390,9 @@ internal fun SelectionActions(
     }
     message?.let { m -> NoticeDialog(m) { message = null } }
 }
+
+/** Zusätzliche Aktion in der Auswahlleiste (z. B. „Aus Album entfernen“). */
+data class SelectionExtra(val icon: androidx.compose.ui.graphics.vector.ImageVector, val label: String, val tag: String, val onClick: () -> Unit)
 
 /** Mehrere Medien verschieben (eine Systembestätigung); liefert die Meldung oder `null` bei Abbruch. */
 internal suspend fun moveAll(app: app.photomaid.AppModel, ids: List<String>, path: String, onMoved: () -> Unit = {}): String? {

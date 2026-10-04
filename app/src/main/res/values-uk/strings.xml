@@ -1556,4 +1556,80 @@
     <string name="vid_export_info">Про експорт</string>
     <string name="vid_export_info_fast">Обрізаються лише початок і кінець. PhotoMaid намагається зберегти якість і перекодовує лише початок до наступного ключового кадру. Якщо відео цього не дозволяє, перекодовується все відео. Загальна тривалість %1$s.</string>
     <string name="vid_export_info_reencode">Через інші зміни під час збереження перекодовується все відео. Загальна тривалість %1$s.</string>
+    <string name="lib_mode_albums">Альбоми</string>
+    <string name="org_new_album">Новий альбом</string>
+    <string name="org_album_name">Назва альбому</string>
+    <string name="org_create">Створити</string>
+    <string name="org_rename">Перейменувати</string>
+    <string name="org_album_delete">Видалити альбом</string>
+    <string name="org_album_delete_title">Видалити «%1$s»?</string>
+    <string name="org_album_delete_text">Видаляється лише альбом. Фото й відео залишаються в медіатеці без змін.</string>
+    <string name="org_album_remove">Прибрати з альбому</string>
+    <string name="org_add_to_album">Додати до альбому</string>
+    <string name="org_already_in_album">Усе вже в «%1$s».</string>
+    <string name="org_albums_empty_title">Альбомів ще немає</string>
+    <string name="org_albums_empty_text">Альбом збирає фото й відео з будь-яких папок, не копіюючи й не переміщуючи їх. Одне фото може бути в кількох альбомах.</string>
+    <string name="org_albums_footer">Альбоми є лише в PhotoMaid. Папки показують, де лежить файл; добірки знаходять медіа за умовою.</string>
+    <string name="org_album_empty">Альбом порожній. У розділі «Фото» вибери медіа й торкнися ⋯ › Додати до альбому.</string>
+    <string name="org_missing_remove">Прибрати зі списку</string>
+    <string name="org_tags">Мітки</string>
+    <string name="org_tag_new_hint">Нова мітка</string>
+    <string name="org_tag_add">Додати</string>
+    <string name="org_tags_none">Міток ще немає. Додай власні слова, наприклад «Рахунок» або «Відпустка», – PhotoMaid знає лише те, що ти вводиш сам.</string>
+    <string name="org_tag_remove">Прибрати мітку</string>
+    <string name="org_tag_delete">Прибрати всюди</string>
+    <string name="org_tag_delete_title">Прибрати мітку «%1$s» всюди?</string>
+    <string name="org_tag_delete_text">Мітка зникне з усіх медіа. Файли не зміняться.</string>
+    <string name="org_tag_state_all">в усіх</string>
+    <string name="org_tag_state_some">у деяких</string>
+    <string name="org_note">Нотатка</string>
+    <string name="org_note_hint">Нотатка (лише в PhotoMaid, файл не змінюється)</string>
+    <string name="org_note_save">Зберегти нотатку</string>
+    <string name="org_basket">Кошик вибору</string>
+    <string name="org_basket_add">До кошика вибору</string>
+    <string name="org_basket_already">Уже в кошику вибору.</string>
+    <string name="org_basket_remove">Вийняти з кошика</string>
+    <string name="org_basket_clear">Очистити кошик</string>
+    <string name="org_basket_clear_title">Очистити кошик вибору?</string>
+    <string name="org_basket_clear_text">Очищається лише кошик. Фото й відео не зміняться.</string>
+    <string name="org_basket_intro">Збирай медіа з різних місяців і папок. Кошик зберігається, доки ти його не очистиш, і не пов’язаний із кошиком для видалених.</string>
+    <string name="org_basket_empty_title">Кошик вибору порожній</string>
+    <string name="org_basket_empty_text">У розділі «Фото» вибери медіа й торкнися ⋯ › До кошика вибору.</string>
+    <string name="org_basket_to_album">Створити альбом із кошика</string>
+    <plurals name="org_items">
+        <item quantity="one">%1$d об’єкт</item>
+        <item quantity="few">%1$d об’єкти</item>
+        <item quantity="many">%1$d об’єктів</item>
+        <item quantity="other">%1$d об’єкта</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="one">%1$d додано до «%2$s».</item>
+        <item quantity="few">%1$d додано до «%2$s».</item>
+        <item quantity="many">%1$d додано до «%2$s».</item>
+        <item quantity="other">%1$d додано до «%2$s».</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="one">%1$d прибрано з альбому. Файл залишається.</item>
+        <item quantity="few">%1$d прибрано з альбому. Файли залишаються.</item>
+        <item quantity="many">%1$d прибрано з альбому. Файли залишаються.</item>
+        <item quantity="other">%1$d прибрано з альбому. Файли залишаються.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="one">%1$d об’єкт не знайдено (видалено або більше немає на цьому пристрої).</item>
+        <item quantity="few">%1$d об’єкти не знайдено (видалено або більше немає на цьому пристрої).</item>
+        <item quantity="many">%1$d об’єктів не знайдено (видалено або більше немає на цьому пристрої).</item>
+        <item quantity="other">%1$d об’єкта не знайдено (видалено або більше немає на цьому пристрої).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="one">%1$d додано до кошика вибору.</item>
+        <item quantity="few">%1$d додано до кошика вибору.</item>
+        <item quantity="many">%1$d додано до кошика вибору.</item>
+        <item quantity="other">%1$d додано до кошика вибору.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="one">Мітки для %1$d об’єкта</item>
+        <item quantity="few">Мітки для %1$d об’єктів</item>
+        <item quantity="many">Мітки для %1$d об’єктів</item>
+        <item quantity="other">Мітки для %1$d об’єкта</item>
+    </plurals>
 </resources>

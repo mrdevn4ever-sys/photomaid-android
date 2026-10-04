@@ -1495,4 +1495,74 @@
     <string name="vid_export_info">Info de exportação</string>
     <string name="vid_export_info_fast">Só o início e o fim são cortados. O PhotoMaid tenta manter a qualidade e recodifica só o início até à próxima imagem-chave. Se o vídeo não o permitir, é recodificado por inteiro. Duração total %1$s.</string>
     <string name="vid_export_info_reencode">Devido às tuas outras alterações, o vídeo inteiro é recodificado ao guardar. Duração total %1$s.</string>
+    <string name="lib_mode_albums">Álbuns</string>
+    <string name="org_new_album">Novo álbum</string>
+    <string name="org_album_name">Nome do álbum</string>
+    <string name="org_create">Criar</string>
+    <string name="org_rename">Mudar o nome</string>
+    <string name="org_album_delete">Eliminar álbum</string>
+    <string name="org_album_delete_title">Eliminar «%1$s»?</string>
+    <string name="org_album_delete_text">Só o álbum é eliminado. As fotos e os vídeos ficam inalterados na tua biblioteca.</string>
+    <string name="org_album_remove">Remover do álbum</string>
+    <string name="org_add_to_album">Adicionar a um álbum</string>
+    <string name="org_already_in_album">Já estão todos em «%1$s».</string>
+    <string name="org_albums_empty_title">Ainda não há álbuns</string>
+    <string name="org_albums_empty_text">Um álbum reúne fotos e vídeos de qualquer pasta sem os copiar nem mover. Uma foto pode estar em vários álbuns.</string>
+    <string name="org_albums_footer">Os álbuns só existem no PhotoMaid. As pastas mostram onde está um ficheiro; as coleções encontram multimédia por uma condição.</string>
+    <string name="org_album_empty">Este álbum está vazio. Em «Fotos», seleciona conteúdos e toca em ⋯ › Adicionar a um álbum.</string>
+    <string name="org_missing_remove">Remover da lista</string>
+    <string name="org_tags">Etiquetas</string>
+    <string name="org_tag_new_hint">Nova etiqueta</string>
+    <string name="org_tag_add">Adicionar</string>
+    <string name="org_tags_none">Ainda não há etiquetas. Adiciona palavras tuas, como «Fatura» ou «Férias» – o PhotoMaid só sabe o que tu escreves.</string>
+    <string name="org_tag_remove">Remover etiqueta</string>
+    <string name="org_tag_delete">Remover de tudo</string>
+    <string name="org_tag_delete_title">Remover a etiqueta «%1$s» de tudo?</string>
+    <string name="org_tag_delete_text">A etiqueta desaparece de todos os conteúdos. Os ficheiros ficam inalterados.</string>
+    <string name="org_tag_state_all">em todos</string>
+    <string name="org_tag_state_some">em alguns</string>
+    <string name="org_note">Nota</string>
+    <string name="org_note_hint">Nota (só no PhotoMaid, o ficheiro fica inalterado)</string>
+    <string name="org_note_save">Guardar nota</string>
+    <string name="org_basket">Cesto de seleção</string>
+    <string name="org_basket_add">Adicionar ao cesto de seleção</string>
+    <string name="org_basket_already">Já está no cesto de seleção.</string>
+    <string name="org_basket_remove">Retirar do cesto</string>
+    <string name="org_basket_clear">Esvaziar cesto</string>
+    <string name="org_basket_clear_title">Esvaziar o cesto de seleção?</string>
+    <string name="org_basket_clear_text">Só o cesto é esvaziado. As fotos e os vídeos ficam inalterados.</string>
+    <string name="org_basket_intro">Junta conteúdos de vários meses e pastas. O cesto mantém-se até o esvaziares – não tem nada a ver com o lixo.</string>
+    <string name="org_basket_empty_title">O cesto de seleção está vazio</string>
+    <string name="org_basket_empty_text">Em «Fotos», seleciona conteúdos e toca em ⋯ › Adicionar ao cesto de seleção.</string>
+    <string name="org_basket_to_album">Criar álbum a partir do cesto</string>
+    <plurals name="org_items">
+        <item quantity="one">%1$d elemento</item>
+        <item quantity="many">%1$d elementos</item>
+        <item quantity="other">%1$d elementos</item>
+    </plurals>
+    <plurals name="org_added_to_album">
+        <item quantity="one">%1$d adicionado a «%2$s».</item>
+        <item quantity="many">%1$d adicionados a «%2$s».</item>
+        <item quantity="other">%1$d adicionados a «%2$s».</item>
+    </plurals>
+    <plurals name="org_removed_from_album">
+        <item quantity="one">%1$d removido do álbum. O ficheiro mantém-se.</item>
+        <item quantity="many">%1$d removidos do álbum. Os ficheiros mantêm-se.</item>
+        <item quantity="other">%1$d removidos do álbum. Os ficheiros mantêm-se.</item>
+    </plurals>
+    <plurals name="org_missing">
+        <item quantity="one">%1$d elemento não encontrado (eliminado ou já não está neste dispositivo).</item>
+        <item quantity="many">%1$d elementos não encontrados (eliminados ou já não estão neste dispositivo).</item>
+        <item quantity="other">%1$d elementos não encontrados (eliminados ou já não estão neste dispositivo).</item>
+    </plurals>
+    <plurals name="org_basket_added">
+        <item quantity="one">%1$d adicionado ao cesto de seleção.</item>
+        <item quantity="many">%1$d adicionados ao cesto de seleção.</item>
+        <item quantity="other">%1$d adicionados ao cesto de seleção.</item>
+    </plurals>
+    <plurals name="org_tags_for">
+        <item quantity="one">Etiquetas para %1$d elemento</item>
+        <item quantity="many">Etiquetas para %1$d elementos</item>
+        <item quantity="other">Etiquetas para %1$d elementos</item>
+    </plurals>
 </resources>

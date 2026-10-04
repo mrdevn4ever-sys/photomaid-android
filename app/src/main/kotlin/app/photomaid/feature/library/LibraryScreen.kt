@@ -1,5 +1,9 @@
 package app.photomaid.feature.library
 
+import app.photomaid.feature.organize.AlbumsPane
+import app.photomaid.feature.organize.OrganizeTarget
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.material.icons.rounded.ShoppingBasket
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -68,7 +72,7 @@ import java.time.ZoneId
 import java.util.UUID
 
 /** Ansicht im Tab „Fotos“ (nur Ansicht, nicht gespeichert). */
-enum class LibraryMode(val label: Int) { TIMELINE(R.string.lib_mode_timeline), FOLDERS(R.string.lib_mode_folders), FAVORITES(R.string.lib_filter_favorites) }
+enum class LibraryMode(val label: Int) { TIMELINE(R.string.lib_mode_timeline), FOLDERS(R.string.lib_mode_folders), FAVORITES(R.string.lib_filter_favorites), ALBUMS(R.string.lib_mode_albums) }
 
 /**
  * Tab „Fotos“: Zeitachse (Tag · Monat · Jahr, zwei Finger wechseln die Stufe), Ordner (Baum, Gruppen) und Favoriten
@@ -94,6 +98,7 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
     var search by remember { mutableStateOf<LibrarySearch?>(null) }
     var selection by remember { mutableStateOf<Set<String>>(emptySet()) }
     val zone = remember { ZoneId.systemDefault() }
+    val org by app.organize.state.collectAsState()
 
     LaunchedEffect(token, access) {
         if (!access.canRead) { all = emptyList(); return@LaunchedEffect }
@@ -103,9 +108,13 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
     }
     // Kamera-Modelle erst lesen, wenn gesucht wird (EXIF, lokal, im Hintergrund).
     LaunchedEffect(all, searching) { val list = all; if (searching && list != null) withContext(Dispatchers.IO) { app.cameras.index(list) } }
-    LaunchedEffect(all, cameraVersion) {
+    // Suche findet auch eigene Schlagwörter und Notizen (nur was der Nutzer selbst eingetragen hat).
+    LaunchedEffect(all, cameraVersion, org.tags, org.notes) {
         val list = all ?: return@LaunchedEffect
-        search = withContext(Dispatchers.Default) { LibrarySearch(ctx, list, camera = app.cameras::cached) }
+        val tags = org.tags; val notes = org.notes
+        search = withContext(Dispatchers.Default) {
+            LibrarySearch(ctx, list, camera = app.cameras::cached, extra = { id -> tags[id].orEmpty() + listOfNotNull(notes[id]) })
+        }
     }
     PruneSelection(all, selection) { selection = it }
     LaunchedEffect(mode) { selection = emptySet() }
@@ -118,7 +127,7 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
                 val favs = searched.filter { it.isFavorite }
                 if (settings.favoritesByFolder) favoritesByFolder(favs, settings) else timelineCells(ctx, favs, level, zone)
             }
-            LibraryMode.FOLDERS -> emptyList()
+            LibraryMode.FOLDERS, LibraryMode.ALBUMS -> emptyList()
         }
     }
     val ordered = remember(cells) { cells.tiles() }
@@ -142,6 +151,10 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
                     Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
                         if (mode != LibraryMode.FOLDERS && ordered.isNotEmpty()) GlassIconButton(Icons.Rounded.Slideshow, stringResource(R.string.slideshow_start),
                             Modifier.testTag("lib.slideshow")) { nav.openSlideshow(SlideshowRequest(UUID.randomUUID().toString(), ordered)) }
+                        // Auswahlkorb: sichtbar, sobald etwas darin liegt.
+                        if (org.basket.isNotEmpty()) GlassIconButton(Icons.Rounded.ShoppingBasket,
+                            stringResource(R.string.org_basket) + " · " + pluralStringResource(R.plurals.org_items, org.basket.size, org.basket.size),
+                            Modifier.testTag("lib.basket")) { nav.openOrganize(OrganizeTarget.Basket) }
                         GlassIconButton(Icons.Rounded.Search, stringResource(R.string.lib_search), Modifier.testTag("lib.search")) { searching = !searching; if (!searching) query = "" }
                         GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
                     }
@@ -169,7 +182,7 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
                         Chip(stringResource(R.string.lib_fav_by_date), !settings.favoritesByFolder, Modifier.testTag("lib.fav.bydate")) {
                             scope.launch { app.updateSettings { it.copy(favoritesByFolder = false) } } }
                     }
-                    LibraryMode.FOLDERS -> Box(Modifier.height(AppSpacing.xs))
+                    LibraryMode.FOLDERS, LibraryMode.ALBUMS -> Box(Modifier.height(AppSpacing.xs))
                 }
             }
             val list = all
@@ -182,6 +195,7 @@ fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {
                 }
                 list == null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
                 mode == LibraryMode.FOLDERS -> FoldersPane(nav, list, if (searching) query else "")
+                mode == LibraryMode.ALBUMS -> AlbumsPane(nav, list, if (searching) query else "")
                 ordered.isEmpty() -> Box(Modifier.fillMaxSize().padding(AppSpacing.pageMargin).testTag("lib.empty"), contentAlignment = Alignment.Center) {
                     when {
                         query.isNotBlank() -> EmptyState(Icons.Rounded.Search, stringResource(R.string.lib_search_none_title), stringResource(R.string.lib_search_none_text, query))
