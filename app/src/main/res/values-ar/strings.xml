@@ -39,7 +39,7 @@
     <string name="undo">تراجع</string>
     <string name="error_settings_not_saved">تعذّر حفظ الإعداد.</string>
     <string name="error_change_not_saved">تعذّر حفظ التغيير.</string>
-    <string name="error_undo_conflict">لا يمكن التراجع: تغيّر هذا العنصر منذ ذلك الحين.</string>
+    <string name="error_undo_conflict">لا يمكن التراجع عن ذلك الآن لأنك غيّرته في هذه الأثناء.</string>
     <string name="error_undo_busy">لا يمكن التراجع أثناء إفراغ سلة المهملات.</string>
     <string name="error_undo_generic">لا يمكن التراجع عن هذا الآن.</string>
     <string name="tab_today">اليوم</string>
@@ -78,7 +78,7 @@
         <item quantity="many">عناصر من «لاحقًا» حان وقت مراجعتها: %1$d</item>
         <item quantity="other">عناصر من «لاحقًا» حان وقت مراجعتها: %1$d</item>
     </plurals>
-    <string name="today_reconciliation">تعذّر التأكد من نتيجة إجراء سابق في سلة المهملات. لن يُحذف أي شيء مجددًا.</string>
+    <string name="today_reconciliation">انقطع شيء ما عند آخر إفراغ لسلة المهملات. للأمان لن يُحذف أي شيء مرة أخرى.</string>
     <string name="cat_photos">صور</string>
     <string name="cat_videos">فيديوهات</string>
     <string name="cat_screenshots">لقطات الشاشة</string>
@@ -321,7 +321,7 @@
     <string name="large_unknown_footer">حجم هذه الملفات غير متاح. لا نقدّره ولا نضيفه إلى الإجمالي.</string>
     <string name="storage_a">جهازك</string>
     <string name="storage_available">المتاح بحسب Android: %1$s</string>
-    <string name="storage_unavailable">معلومات المساحة غير متاحة</string>
+    <string name="storage_unavailable">معلومات التخزين غير متاحة حاليًا</string>
     <string name="storage_b">ما يراه PhotoMaid</string>
     <string name="storage_of_which_screens">منها لقطات الشاشة</string>
     <string name="storage_connected_folders">المجلدات المتصلة</string>
@@ -471,12 +471,12 @@
     <string name="pro_f1">بلا إعلانات</string>
     <string name="pro_f1d">لا بطاقات إعلانية بين صورك وفيديوهاتك.</string>
     <string name="pro_details">كيف تعمل Pro</string>
-    <string name="pro_details_dup">النسخ المتطابقة لها محتوى ملفات متطابق تمامًا. يقارنها PhotoMaid على جهازك، وليس في السحابة. الصور المتشابهة ليست نسخًا متطابقة.</string>
+    <string name="pro_details_dup">النسخ هي ملفات متطابقة حتى آخر تفصيل. يقارنها PhotoMaid على جهازك وليس في السحابة. الصور المتشابهة فقط لا تُعد نسخًا.</string>
     <string name="pro_details_rules">تعرض المجموعات المحتوى المطابق على جهازك. تفتحه وتراجعه بنفسك. لا تحذف شيئًا تلقائيًا ولا تنظّف في الخلفية.</string>
-    <string name="pro_details_cleanup">يُحسب الحد اليومي من العناصر التي أُزيلت بنجاح بعد تأكيدك في سلة المهملات. السحب لا يُحسب منه.</string>
+    <string name="pro_details_cleanup">لا يُحتسب في الحد اليومي إلا ما تزيله فعلًا من سلة المهملات. التمرير لا يُحتسب أبدًا.</string>
     <string name="expanded">موسّع</string>
     <string name="collapsed">مطوي</string>
-    <string name="pro_privacy">يتم فحص الصور والملفات وترتيبها على جهازك. تُرسل بيانات تقنية إلى Google أو مزوّدي الإعلانات للمشتريات والإعلانات، وليس الصور أو أسماء الملفات أو بصماتها الرقمية.</string>
+    <string name="pro_privacy">تُفحص صورك وملفاتك وتُرتّب على جهازك فقط. للشراء والإعلانات يصل إلى Google أو المعلنين الحد الأدنى فقط – وليس صورك أو أسماءها أو أي بيانات مستخلصة منها أبدًا.</string>
     <string name="pro_pending">عملية الشراء بانتظار التأكيد.</string>
     <string name="pro_unlock">تفعيل PhotoMaid Pro</string>
     <string name="pro_price_once">%1$s · شراء لمرة واحدة</string>
@@ -494,7 +494,7 @@
     <string name="pro_msg_nofill">لا يتوفر إعلان الآن. حاول لاحقًا.</string>
     <string name="pro_msg_ad_unavailable">تجربة أدوات Pro غير متاحة الآن. لم يتم تفعيل أي ميزة.</string>
     <string name="set_privacy">الخصوصية والوصول</string>
-    <string name="set_privacy_detail">المعالجة على جهازك</string>
+    <string name="set_privacy_detail">تبقى صورك على جهازك</string>
     <string name="set_notifications">الإشعارات</string>
     <string name="allowed">مسموح</string>
     <string name="off">متوقف</string>
@@ -526,13 +526,13 @@
     <string name="help_decide">اختر ما تريد فعله</string>
     <string name="help_decide_text">اسحب لأعلى للاحتفاظ، ولليسار لسلة المهملات، ولليمين لوقت لاحق. يظهر العنصر بعد يومين افتراضيًا، ويمكنك تعديل المدة في الإعدادات. بعد السحب مباشرةً، اضغط «تغيير» لاختيار موعد آخر. اسحب لأسفل للرجوع دون اختيار جديد.</string>
     <string name="help_delete">الحذف</string>
-    <string name="help_delete_text">السحب لا يحذف شيئًا. تنتقل العناصر التي تريد إزالتها أولًا إلى سلة مهملات PhotoMaid. تؤكد إزالتها عند إفراغها. تنتقل الصور والفيديوهات إلى سلة مهملات Android بعد تأكيد إضافي منه. أما الملفات فتُحذف نهائيًا.</string>
+    <string name="help_delete_text">التمرير لا يحذف أي شيء أبدًا. ما تستبعده يذهب أولًا إلى سلة مهملات PhotoMaid. لا يُزال شيء إلا عند إفراغها – وتنتقل الصور والفيديوهات إلى سلة مهملات Android بعد أن يسألك Android مرة أخرى. أما الملفات من المجلدات المرتبطة فتُحذف نهائيًا.</string>
     <string name="help_cloud">السحابة</string>
     <string name="help_cloud_text">قد تزامن خدمات سحابية مثل صور Google عمليات الحذف مع أجهزة أخرى. راجع إعداداتها. لا ينزّل PhotoMaid المحتوى الموجود في السحابة فقط.</string>
     <string name="help_free">مجاني</string>
     <string name="help_free_text">العرض والسحب والحفظ لوقت لاحق بلا حدود. من دون Pro، يمكنك إزالة ما يصل إلى %1$d يوميًا.</string>
     <string name="privacy_title">خصوصيتك أولًا</string>
-    <string name="privacy_text">يفحص PhotoMaid صورك وفيديوهاتك والملفات المسموح بها على جهازك. لا تحتاج إلى حساب PhotoMaid، ولا يوجد خادم PhotoMaid. قد تزامن خدمات سحابية مثل صور Google عمليات الحذف مع أجهزة أخرى.</string>
+    <string name="privacy_text">يطّلع PhotoMaid على صورك ومقاطع الفيديو والملفات المسموح بها على جهازك فقط. لا تحتاج إلى حساب، ولا يوجد خادم لـ PhotoMaid. من المفيد أن تعرف: مع الخدمات السحابية مثل صور Google قد يختفي ما تحذفه من أجهزتك الأخرى أيضًا.</string>
     <string name="privacy_media">صور وفيديوهات</string>
     <string name="privacy_media_text">لعرض الصور والفيديوهات وترتيبها وإزالتها بعد تأكيدك.</string>
     <string name="privacy_allow">السماح بالوصول</string>
@@ -546,8 +546,8 @@
     <string name="privacy_notifications_allow">السماح بالإشعارات</string>
     <string name="privacy_folders">مجلدات (اختياري)</string>
     <string name="privacy_folders_text">تأتي الملفات الأخرى فقط من مجلدات تختارها. وصّلها من تنظيف › ملفات.</string>
-    <string name="privacy_purchases">تتم المشتريات عبر Google Play. لا تُرسل صور أو أسماء ملفات أو مسارات أو بصمات رقمية لهذا الغرض.</string>
-    <string name="privacy_ads">تعرض النسخة المجانية إعلانات Google AdMob. يمكنك تغيير موافقتك على الإعلانات في الإعدادات. لا تُشارك صورك أو أسماء ملفاتك أو مساراتها أو بصماتها الرقمية مع مزوّدي الإعلانات. Pro بلا إعلانات.</string>
+    <string name="privacy_purchases">تتم عمليات الشراء عبر Google Play. لا تُرسل صورك أو أسماؤها أو مجلداتها أو أي بيانات مستخلصة منها لهذا الغرض أبدًا.</string>
+    <string name="privacy_ads">تعرض النسخة المجانية إعلانات من Google AdMob. يمكنك تغيير موافقتك في الإعدادات. لا تصل صورك أو أسماؤها أو مجلداتها أو أي بيانات مستخلصة منها إلى المعلنين أبدًا. لا إعلانات مع Pro.</string>
     <string name="continue_">التالي</string>
     <string name="notif_channel">تذكيرات</string>
     <string name="notif_due_body">حان اليوم وقت مراجعة شيء في «لاحقًا».</string>
@@ -599,7 +599,7 @@
     <string name="pro_active_title">Pro مفعّلة</string>
     <string name="pro_active_sub">شراء لمرة واحدة: بلا إعلانات أو حد يومي، مع جميع أدوات Pro.</string>
     <string name="later_notify_title">هل تريد تذكيرًا بموعد المراجعة؟</string>
-    <string name="pro_privacy_no_ads">يتم فحص الصور والملفات وترتيبها على جهازك. تُرسل بيانات تقنية إلى Google للمشتريات، وليس الصور أو أسماء الملفات أو بصماتها الرقمية.</string>
+    <string name="pro_privacy_no_ads">تُفحص صورك وملفاتك وتُرتّب على جهازك فقط. للشراء يصل إلى Google الحد الأدنى فقط – وليس صورك أو أسماءها أو أي بيانات مستخلصة منها أبدًا.</string>
     <string name="hub_nothing_pending">راجعت كل شيء</string>
     <plurals name="hub_pending">
         <item quantity="zero">للمراجعة: %1$d</item>
@@ -734,7 +734,7 @@
     <string name="tour_today_quick_title">اختصاراتك</string>
     <string name="tour_today_quick_text">صور أو فيديوهات أو لقطات شاشة أو مجلد: أنشئ اختصارات لما تنظّفه كثيرًا.</string>
     <string name="tour_today_tab_title">طرق أخرى للتنظيف</string>
-    <string name="tour_today_tab_text">ستجد الملفات الكبيرة والنسخ والمجلدات والمجموعات في «تنظيف».</string>
+    <string name="tour_today_tab_text">الملفات الكبيرة والصور المكررة والأشهر الفردية والمجموعات الجاهزة: هنا ترتّب خطوة بخطوة.</string>
     <string name="tour_feed_basket_title">سلة مهملاتك</string>
     <string name="tour_feed_basket_text">يُظهر العدد ما اخترت إزالته. اضغط عليه لمراجعة اختيارك وإفراغ سلة المهملات.</string>
     <string name="tour_feed_undo_title">تراجع</string>
@@ -794,8 +794,8 @@
     <string name="grid_open">نظرة عامة</string>
     <string name="grid_select_all">الكل</string>
     <string name="grid_select_none">لا شيء</string>
-    <string name="help_tours_again">عرض الشروحات مجددًا</string>
-    <string name="help_tours_reset">ستظهر الشروحات مجددًا عند فتح كل شاشة في المرة القادمة.</string>
+    <string name="help_tours_again">عرض الجولة والنصائح مرة أخرى</string>
+    <string name="help_tours_reset">ستظهر الجولة والنصائح مجددًا في المرة القادمة.</string>
     <string name="hub_months_sub">أنهِ الترتيب شهرًا بعد شهر</string>
     <string name="later_back_to_stack">إعادة إلى المجموعة</string>
     <string name="later_bookmarked_row">مؤجَّل بلا موعد</string>
@@ -977,8 +977,8 @@
     <string name="edit_save_replace_action">حفظ، والأصل إلى السلة</string>
     <string name="edit_remove_location">إزالة الموقع</string>
     <string name="edit_remove_location_text">لن تتضمن الصورة المحفوظة مكان التقاطها.</string>
-    <string name="edit_hint_heic">سيُحفظ بصيغة JPEG (لا يمكن كتابة HEIC بشكل موثوق على هذا الجهاز).</string>
-    <string name="edit_hint_hdr">تغييرات الألوان تزيل سطوع HDR الإضافي لهذه الصورة.</string>
+    <string name="edit_hint_heic">يُحفظ بصيغة JPEG ليعمل في كل مكان – لا يستطيع هذا الجهاز حفظ HEIC بشكل موثوق.</string>
+    <string name="edit_hint_hdr">لهذه الصورة إضاءة شديدة السطوع (HDR). بعد تغيير الألوان يقلّ سطوعها قليلًا.</string>
     <string name="edit_hint_lossless">بلا فقد: يتغير الاتجاه فقط وتبقى جودة الصورة كما هي تمامًا.</string>
     <string name="edit_hint_replace_confirm">سيطلب Android مرة واحدة تأكيد نقل الأصل إلى سلة مهملات Android.</string>
     <string name="edit_saving">جارٍ الحفظ…</string>
@@ -986,7 +986,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s ث</string>
     <string name="edit_trim_start">البداية</string>
     <string name="edit_trim_end">النهاية</string>
-    <string name="edit_trim_hint">اسحب المقابض. المدة الكاملة %1$s. تبقى الجودة كما هي؛ يُعاد ترميز البداية فقط حتى الإطار الرئيسي التالي.</string>
+    <string name="edit_trim_hint">اسحب المقابض لتحديد البداية والنهاية. المدة الكلية %1$s. تبقى جودة الصورة كما هي.</string>
     <string name="edit_discard_title">تجاهل التغييرات؟</string>
     <string name="edit_discard_text">لن يُحفظ تعديلك. يبقى الأصل كما هو.</string>
     <string name="edit_discard">تجاهل</string>
@@ -1070,8 +1070,8 @@
     <string name="edit_mk_rect">مستطيل</string>
     <string name="edit_mk_brush">فرشاة</string>
     <string name="edit_mk_strength">الشدة</string>
-    <string name="edit_mk_redact_solid_hint">موصى به للتفاصيل الحساسة: يتم استبدال البكسلات المخفية بالكامل في الملف المحفوظ أو المُشارك.</string>
-    <string name="edit_mk_redact_hint">يعتمد التنقيط والتمويه على كتل كبيرة. للنص الذي يجب أن يبقى غير مقروء، الخيار „معتم“ أكثر أمانًا.</string>
+    <string name="edit_mk_redact_solid_hint">موصى به للتفاصيل الخاصة: ما تغطيه يختفي فعلًا من الملف المحفوظ أو المشارَك.</string>
+    <string name="edit_mk_redact_hint">مع «تنقيط» و«تمويه» قد تظهر الحدود. للنص الذي يجب ألا يُقرأ أبدًا اختر «معتم».</string>
     <string name="edit_mk_edit_text">تعديل</string>
     <string name="edit_mk_duplicate">تكرار</string>
     <string name="edit_mk_front">إلى الأمام</string>
@@ -1251,7 +1251,7 @@
     <string name="ret_linear">تدرج</string>
     <string name="ret_brush">فرشاة</string>
     <string name="ret_red_eye">العين الحمراء</string>
-    <string name="ret_red_eye_hint">اضغط على عين حمراء. كبّر بإصبعين للوجوه الصغيرة. تتغير البكسلات الحمراء الواضحة فقط.</string>
+    <string name="ret_red_eye_hint">اضغط على عين حمراء. للوجوه الصغيرة كبّر أولًا بإصبعين. يتغيّر الأحمر في العين فقط.</string>
     <string name="ret_red_eye_undo">إزالة الأخيرة</string>
     <string name="ret_size">الحجم</string>
     <string name="ret_new">جديد</string>
@@ -1283,7 +1283,7 @@
     <string name="vid_cut_confirm">إزالة</string>
     <string name="vid_cut_draft">إزالة %1$s – %2$s؟ اسحب المقابض الحمراء.</string>
     <string name="vid_cut_hint_restore">تُزال المقاطع الحمراء فعلًا عند الحفظ (الطول الكلي %1$s). اضغط على مقطع أدناه لاستعادته.</string>
-    <string name="vid_trim_hint_reencode">اسحب المقابض. الطول الكلي %1$s. بسبب تغييراتك الأخرى يُعاد ترميز الفيديو.</string>
+    <string name="vid_trim_hint_reencode">اسحب المقابض. المدة الكلية %1$s. بسبب تغييراتك الأخرى يُعاد إنشاء الفيديو عند الحفظ – وهذا يستغرق وقتًا أطول قليلًا.</string>
     <string name="vid_speed_result">النتيجة: %1$s</string>
     <string name="vid_speed_hint">يُسرَّع الصوت أو يُبطَّأ مع الحفاظ على طبقته.</string>
     <string name="vid_no_audio">هذا الفيديو بلا صوت.</string>
@@ -1292,7 +1292,7 @@
     <string name="vid_volume">مستوى الصوت</string>
     <string name="vid_fade">تلاشٍ عند البداية والنهاية</string>
     <string name="vid_fade_none">بلا</string>
-    <string name="vid_audio_export">حفظ الصوت بصيغة M4A</string>
+    <string name="vid_audio_export">حفظ الصوت فقط</string>
     <string name="vid_audio_suffix">صوت</string>
     <string name="vid_audio_running">جارٍ حفظ الصوت</string>
     <string name="vid_audio_saved">حُفظ «%1$s» في Music/PhotoMaid.</string>
@@ -1302,12 +1302,12 @@
     <string name="vid_fill_hint">يملأ المقاس الجديد؛ تُقص الحواف خارجه.</string>
     <string name="vid_fit_hint">يعرض الفيديو كاملًا؛ تصبح المساحة الفارغة أشرطة سوداء.</string>
     <string name="vid_profile">الجودة</string>
-    <string name="vid_profile_high">جودة عالية (الدقة الأصلية)</string>
-    <string name="vid_profile_balanced">متوازن (حتى 1080p)</string>
-    <string name="vid_profile_small">ملف صغير (720p)</string>
+    <string name="vid_profile_high">أفضل جودة (مثل الأصل)</string>
+    <string name="vid_profile_balanced">متوازن (Full HD)</string>
+    <string name="vid_profile_small">ملف صغير (HD)</string>
     <string name="vid_estimate">حوالي %1$s</string>
-    <string name="vid_estimate_hint">تقدير من معدل البت × المدة. يُظهر الملف المحفوظ حجمه الحقيقي.</string>
-    <string name="vid_hdr_hint">يُحفظ فيديو HDR هذا بصيغة SDR لأن تغييرات اللون مُطبَّقة.</string>
+    <string name="vid_estimate_hint">تقدير تقريبي فقط. سترى الحجم الفعلي بعد الحفظ.</string>
+    <string name="vid_hdr_hint">لهذا الفيديو ألوان شديدة السطوع (HDR). مع تغييرات الألوان يُحفظ بألوان عادية.</string>
     <string name="tab_library">الصور</string>
     <string name="lib_filter_all">الكل</string>
     <string name="lib_filter_favorites">المفضلة</string>
@@ -1491,7 +1491,7 @@
     <string name="systrash_delete_text">ثم أكِّد لدى Android. لا يمكن استعادة الصور والفيديوهات المحذوفة نهائيًا.</string>
     <string name="lib_info_raw">ملف RAW</string>
     <string name="set_delete_permanently">حذف نهائيًا</string>
-    <string name="set_delete_permanently_detail">إيقاف: الإفراغ ينقل إلى سلة مهملات Android (قابلة للاستعادة لفترة). تشغيل: حذف نهائي فورًا.</string>
+    <string name="set_delete_permanently_detail">إيقاف: عند الإفراغ ينتقل كل شيء أولًا إلى سلة مهملات Android ويمكن استعادته لفترة. تشغيل: يُحذف كل شيء نهائيًا فورًا.</string>
     <string name="set_delete_permanently_confirm_title">تشغيل الحذف النهائي؟</string>
     <string name="set_delete_permanently_confirm_text">من الآن فصاعدًا، يؤدي إفراغ سلة PhotoMaid إلى حذف الصور والفيديوهات نهائيًا. لن تذهب إلى سلة مهملات Android ولا يمكن استعادتها – ولا من نسخ احتياطية لم تُزامَن بعد. سيسأل Android في كل مرة.</string>
     <string name="set_delete_permanently_confirm_action">تشغيل</string>
@@ -1563,9 +1563,9 @@
     <string name="movie_format_first">مثل المقطع الأول</string>
     <string name="movie_fit_note">لا تُشوَّه المقاطع أبدًا: إما تظهر الصورة كاملة (بحواف سوداء) أو تملأ الإطار وتُقص الحواف.</string>
     <string name="movie_quality">الجودة</string>
-    <string name="movie_quality_high">عالية (1080p)</string>
+    <string name="movie_quality_high">عالية (Full HD)</string>
     <string name="movie_quality_balanced">متوازنة</string>
-    <string name="movie_quality_small">صغيرة (720p)</string>
+    <string name="movie_quality_small">صغيرة (HD)</string>
     <string name="movie_music_none">لا موسيقى بعد.</string>
     <string name="movie_music_pick">اختيار ملف صوتي</string>
     <string name="movie_music_remove">إزالة</string>
@@ -1588,7 +1588,7 @@
     <string name="tools_convert">تحويل</string>
     <string name="tools_convert_sub">مثلًا HEIC إلى JPEG، كنسخ جديدة</string>
     <string name="tools_location">إزالة الموقع</string>
-    <string name="tools_location_sub">نسخ بلا بيانات GPS، مثلًا قبل المشاركة</string>
+    <string name="tools_location_sub">نسخ بدون مكان التصوير، مثلًا قبل المشاركة</string>
     <string name="tools_stitch">دمج لقطات الشاشة</string>
     <string name="tools_stitch_sub">واحدة تحت الأخرى، كصورة طويلة واحدة</string>
     <string name="tools_gif">إنشاء GIF</string>
@@ -1609,8 +1609,8 @@
     <string name="tools_q_small">ملف أصغر</string>
     <string name="tools_remove_location">إزالة الموقع أيضًا</string>
     <string name="tools_target_format">التنسيق الجديد</string>
-    <string name="tools_convert_note">يُفتح JPEG في كل مكان؛ يحتفظ PNG بكل بكسل لكن الملفات أكبر. تُتخطّى الملفات التي بهذا التنسيق أصلًا.</string>
-    <string name="tools_location_note">تحتفظ نسخ JPEG بكل بكسل – تُزال بيانات GPS فقط. تُتخطّى الصور التي لا موقع لها.</string>
+    <string name="tools_convert_note">كل الأجهزة تفتح JPEG. يحتفظ PNG بكل التفاصيل لكن الملفات تصبح أكبر. تُتخطّى الصور التي بهذا التنسيق أصلًا.</string>
+    <string name="tools_location_note">تبدو النسخ مثل الأصل تمامًا – يُزال فقط مكان التقاط الصورة. تُتخطّى الصور التي لا تحتوي على موقع.</string>
     <string name="tools_stitch_note">بالترتيب الذي اخترته. تأخذ كلها عرض أضيق صورة – لا شيء يُشوَّه أو يُكبَّر.</string>
     <string name="tools_gif_size">الحجم</string>
     <string name="tools_gif_part">جزء من الفيديو (10 ث كحد أقصى)</string>
@@ -1675,9 +1675,9 @@
     <string name="dock_crop">قص</string>
     <string name="dock_more">المزيد</string>
     <string name="vid_trim_hint_short">اسحب المقابض لتحديد البداية والنهاية.</string>
-    <string name="vid_export_info">معلومات التصدير</string>
-    <string name="vid_export_info_fast">تم قص البداية والنهاية فقط. يحاول PhotoMaid الحفاظ على الجودة ويعيد ترميز البداية فقط حتى الإطار الرئيسي التالي. إذا لم يسمح الفيديو بذلك، يُعاد ترميز الفيديو كله. المدة الكاملة %1$s.</string>
-    <string name="vid_export_info_reencode">بسبب تغييراتك الأخرى، يُعاد ترميز الفيديو كله عند الحفظ. المدة الكاملة %1$s.</string>
+    <string name="vid_export_info">طريقة الحفظ</string>
+    <string name="vid_export_info_fast">قصصت البداية والنهاية فقط. هذا سريع وتبقى جودة الصورة كما في الأصل. إن لم يسمح هذا الفيديو بذلك، يعيد PhotoMaid إنشاءه بالكامل – ويستغرق ذلك وقتًا أطول قليلًا. المدة الكلية %1$s.</string>
+    <string name="vid_export_info_reencode">بسبب تغييراتك الأخرى يعيد PhotoMaid إنشاء الفيديو كاملًا عند الحفظ. قد يستغرق ذلك لحظة. المدة الكلية %1$s.</string>
     <string name="lib_mode_albums">الألبومات</string>
     <string name="org_new_album">ألبوم جديد</string>
     <string name="org_album_name">اسم الألبوم</string>
@@ -1789,7 +1789,7 @@
     <string name="wf_target_note">يقيس PhotoMaid النتيجة. إذا تعذّر بلوغ الهدف ضمن هذه الحدود فلن يُنشأ ملف وسترى السبب.</string>
     <string name="wf_videos">مقاطع الفيديو</string>
     <string name="wf_video_skip">تخطٍّ</string>
-    <string name="wf_video_note">يُعاد ترميز الفيديو إلى الحجم المستهدف؛ لا تنخفض الدقة إلا عند الحاجة.</string>
+    <string name="wf_video_note">تُحفظ الفيديوهات من جديد لتناسب الحجم المطلوب. لا تصغر الصورة إلا عند الحاجة.</string>
     <string name="wf_location">إزالة الموقع</string>
     <string name="wf_name_base">اسم الملف</string>
     <string name="wf_name_base_hint">مثل إعلان ← إعلان_001 (فارغ = الاسم الأصلي)</string>
@@ -1829,7 +1829,7 @@
     <string name="wf_reason_video">مقاطع الفيديو ليست جزءًا من سير العمل هذا.</string>
     <string name="wf_reason_video_long">طويل جدًا بالنسبة للحجم المستهدف – لم يُنشأ ملف.</string>
     <string name="wf_reason_unreachable">أصغر نسخة مقيسة: %1$s – فوق الهدف، لذا لم يُنشأ ملف.</string>
-    <string name="wf_reason_error">تعذّرت المعالجة.</string>
+    <string name="wf_reason_error">عذرًا، لم ينجح ذلك.</string>
     <string name="wf_summary">%1$d تم · %2$d تم تخطيه · %3$d لم يبلغ الهدف · %4$d فشل</string>
     <string name="wf_share_again">مشاركة مرة أخرى</string>
     <string name="wf_counts">%1$s صور · %2$s فيديو</string>
@@ -1947,4 +1947,12 @@
         <item quantity="other">تعذّرت قراءة %1$d صورة – تبقى مساحاتها فارغة.</item>
     </plurals>
     <string name="pdf_summary">%1$s، %2$s</string>
+    <string name="tour_lib_title">كل صورك</string>
+    <string name="tour_lib_text">هنا كل صورك ومقاطع الفيديو – حسب اليوم أو الشهر أو السنة، وفي المجلدات والألبومات والمفضلة. المشاهدة لا تغيّر شيئًا.</string>
+    <string name="tour_studio_title">كن مبدعًا</string>
+    <string name="tour_studio_text">عدّل الصور، واصنع صورًا مجمّعة وأفلامًا قصيرة وملفات PDF، واستخدم أدوات مفيدة. تحصل دائمًا على ملفات جديدة – وتبقى الأصول كما هي.</string>
+    <string name="tour_history_title">لاحقًا والسجل</string>
+    <string name="tour_history_text">هنا ترى ما احتفظت به أو استبعدته أو أجّلته. يمكنك تغيير أي قرار من هنا.</string>
+    <string name="tour_settings_title">الإعدادات والمساعدة</string>
+    <string name="tour_settings_text">اضبط PhotoMaid كما تحب واعثر على الإجابات هنا. يمكنك إعادة هذه الجولة في أي وقت.</string>
 </resources>

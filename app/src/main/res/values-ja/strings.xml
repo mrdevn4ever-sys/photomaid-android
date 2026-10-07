@@ -34,7 +34,7 @@
     <string name="undo">取り消す</string>
     <string name="error_settings_not_saved">設定を保存できませんでした。</string>
     <string name="error_change_not_saved">変更を保存できませんでした。</string>
-    <string name="error_undo_conflict">この項目はその後変更されたため、取り消せません。</string>
+    <string name="error_undo_conflict">その後に変更したため、もう元に戻せません。</string>
     <string name="error_undo_busy">ゴミ箱を空にしている間は、操作を取り消せません。</string>
     <string name="error_undo_generic">今は取り消せません。</string>
     <string name="tab_today">今日</string>
@@ -63,7 +63,7 @@
     <plurals name="today_due">
         <item quantity="other">「あとで」から確認するもの：%1$d件</item>
     </plurals>
-    <string name="today_reconciliation">以前のゴミ箱の操作結果を確認できませんでした。同じ削除を繰り返すことはありません。</string>
+    <string name="today_reconciliation">前回ゴミ箱を空にしたときに何かが中断されました。念のため、もう一度削除することはありません。</string>
     <string name="cat_photos">写真</string>
     <string name="cat_videos">動画</string>
     <string name="cat_screenshots">スクリーンショット</string>
@@ -241,7 +241,7 @@
     <string name="large_unknown_footer">これらのファイルはサイズを取得できません。推定せず、合計にも含めません。</string>
     <string name="storage_a">この端末</string>
     <string name="storage_available">Androidが示す空き容量：%1$s</string>
-    <string name="storage_unavailable">ストレージ情報を取得できません</string>
+    <string name="storage_unavailable">今はストレージ情報を確認できません</string>
     <string name="storage_b">PhotoMaidで確認できる範囲</string>
     <string name="storage_of_which_screens">うちスクリーンショット</string>
     <string name="storage_connected_folders">接続したフォルダ</string>
@@ -356,12 +356,12 @@
     <string name="pro_f1">広告なし</string>
     <string name="pro_f1d">写真や動画の間に広告カードが入りません。</string>
     <string name="pro_details">Proについて</string>
-    <string name="pro_details_dup">ファイルの内容が完全に一致するものがコピーです。PhotoMaidはクラウドではなく端末内で比較します。似ているだけの画像は含みません。</string>
+    <string name="pro_details_dup">コピーとは細部まで完全に同じファイルのことです。PhotoMaid はクラウドではなく端末内で比べます。似ているだけの画像はコピーに含みません。</string>
     <string name="pro_details_rules">コレクションは端末内で条件に合うものを表示します。自分で開いて確認する仕組みで、自動削除やバックグラウンドでの整理は行いません。</string>
-    <string name="pro_details_cleanup">ゴミ箱で確認したあと、実際に削除できた件数だけが1日の上限に数えられます。スワイプは数えません。</string>
+    <string name="pro_details_cleanup">1日の上限に数えるのは、ゴミ箱から実際に削除したものだけです。スワイプは数えません。</string>
     <string name="expanded">展開済み</string>
     <string name="collapsed">折りたたみ済み</string>
-    <string name="pro_privacy">写真やファイルの確認と整理は端末内で行います。購入や広告のために技術的なデータがGoogleや広告配信会社に送られますが、写真、ファイル名、チェックサムは送られません。</string>
+    <string name="pro_privacy">写真とファイルの確認・整理は端末の中だけで行います。購入と広告のために Google や広告会社へ送るのは必要最小限だけで、写真やその名前、写真から得た情報は送りません。</string>
     <string name="pro_pending">購入の確認を待っています。</string>
     <string name="pro_unlock">PhotoMaid Proを購入</string>
     <string name="pro_price_once">%1$s・買い切り</string>
@@ -379,7 +379,7 @@
     <string name="pro_msg_nofill">今は広告を表示できません。あとでお試しください。</string>
     <string name="pro_msg_ad_unavailable">今はProのツールをお試し利用できません。特典は適用されていません。</string>
     <string name="set_privacy">プライバシーとアクセス</string>
-    <string name="set_privacy_detail">端末内で処理</string>
+    <string name="set_privacy_detail">写真は端末の中だけ</string>
     <string name="set_notifications">通知</string>
     <string name="allowed">許可済み</string>
     <string name="off">オフ</string>
@@ -406,13 +406,13 @@
     <string name="help_decide">残すかどうかを選ぶ</string>
     <string name="help_decide_text">上にスワイプで残し、左でゴミ箱、右であとで表示します。初期設定では2日後に再表示し、設定で期間を変えられます。スワイプ直後の「変更」では別の日付を選べます。下にスワイプすると、新しい選択をせずに前へ戻ります。</string>
     <string name="help_delete">削除について</string>
-    <string name="help_delete_text">スワイプだけでは何も削除されません。選んだものは、まずPhotoMaidのゴミ箱に入ります。空にするときに削除を確認します。写真と動画はAndroidでもう一度確認したあとAndroidのゴミ箱へ移り、ファイルは完全に削除されます。</string>
+    <string name="help_delete_text">スワイプで削除されることはありません。外したものはまず PhotoMaid のゴミ箱に入ります。ゴミ箱を空にしたときだけ削除され、写真と動画は Android がもう一度確認した後に Android のゴミ箱へ移ります。連携フォルダのファイルは完全に削除されます。</string>
     <string name="help_cloud">クラウド</string>
     <string name="help_cloud_text">Google フォトなどのクラウドサービスでは、削除が他の端末に同期される場合があります。各サービスの設定を確認してください。PhotoMaidはクラウドにしかないデータをダウンロードしません。</string>
     <string name="help_free">無料版</string>
     <string name="help_free_text">表示、スワイプ、あとで見るための保存は無制限です。Proなしでは、1日%1$d件まで削除できます。</string>
     <string name="privacy_title">プライバシーを大切に</string>
-    <string name="privacy_text">PhotoMaidは写真、動画、許可されたファイルを端末内で確認します。PhotoMaidアカウントは不要で、PhotoMaidのサーバーもありません。Google フォトなどのクラウドサービスでは、削除が他の端末に同期される場合があります。</string>
+    <string name="privacy_text">PhotoMaid は写真・動画・許可したファイルを端末の中だけで扱います。アカウントは不要で、PhotoMaid のサーバーもありません。なお、Google フォトなどのクラウドでは、削除したものがほかの端末からも消えることがあります。</string>
     <string name="privacy_media">写真と動画</string>
     <string name="privacy_media_text">写真や動画の表示、整理、確認後の削除に使います。</string>
     <string name="privacy_allow">アクセスを許可</string>
@@ -426,8 +426,8 @@
     <string name="privacy_notifications_allow">通知を許可</string>
     <string name="privacy_folders">フォルダ（任意）</string>
     <string name="privacy_folders_text">その他のファイルは、自分で選んだフォルダだけから表示します。「整理」›「ファイル」で接続できます。</string>
-    <string name="privacy_purchases">購入はGoogle Playで処理されます。このために写真、ファイル名、パス、チェックサムが送信されることはありません。</string>
-    <string name="privacy_ads">無料版にはGoogle AdMobの広告が表示されます。広告への同意は設定で変更できます。写真、ファイル名、パス、チェックサムは広告配信会社と共有しません。Proには広告がありません。</string>
+    <string name="privacy_purchases">購入は Google Play で行います。写真、その名前やフォルダ、写真から得た情報が送られることはありません。</string>
+    <string name="privacy_ads">無料版では Google AdMob の広告が表示されます。同意は設定で変更できます。写真、その名前やフォルダ、写真から得た情報が広告会社に渡ることはありません。Pro では広告は表示されません。</string>
     <string name="continue_">次へ</string>
     <string name="notif_channel">リマインダー</string>
     <string name="notif_due_body">「あとで」にあるものを、今日はもう一度確認しましょう。</string>
@@ -479,7 +479,7 @@
     <string name="pro_active_title">Proは有効です</string>
     <string name="pro_active_sub">買い切りで広告なし、1日の上限なし。Proの全ツールを使えます。</string>
     <string name="later_notify_title">確認する日に通知しますか？</string>
-    <string name="pro_privacy_no_ads">写真やファイルの確認と整理は端末内で行います。購入のために技術的なデータがGoogleに送られますが、写真、ファイル名、チェックサムは送られません。</string>
+    <string name="pro_privacy_no_ads">写真とファイルの確認・整理は端末の中だけで行います。購入のために Google へ送るのは必要最小限だけで、写真やその名前、写真から得た情報は送りません。</string>
     <string name="hub_nothing_pending">すべて確認済み</string>
     <plurals name="hub_pending">
         <item quantity="other">確認するもの：%1$d件</item>
@@ -589,7 +589,7 @@
     <string name="tour_today_quick_title">自分のショートカット</string>
     <string name="tour_today_quick_text">写真、動画、スクリーンショット、フォルダなど、よく整理するものへのショートカットを作れます。</string>
     <string name="tour_today_tab_title">ほかにも整理する方法があります</string>
-    <string name="tour_today_tab_text">大きなファイル、コピー、フォルダ、コレクションは「整理」にあります。</string>
+    <string name="tour_today_tab_text">大きなファイル、重複した写真、月ごと、用意されたコレクション。ここで少しずつ整理できます。</string>
     <string name="tour_feed_basket_title">あなたのゴミ箱</string>
     <string name="tour_feed_basket_text">数字は削除用に選んだ件数です。タップして内容を確認し、ゴミ箱を空にできます。</string>
     <string name="tour_feed_undo_title">取り消す</string>
@@ -644,8 +644,8 @@
     <string name="grid_open">一覧</string>
     <string name="grid_select_all">すべて</string>
     <string name="grid_select_none">なし</string>
-    <string name="help_tours_again">チュートリアルをもう一度表示</string>
-    <string name="help_tours_reset">次に各画面を開いたときにチュートリアルが再表示されます。</string>
+    <string name="help_tours_again">ツアーとヒントをもう一度表示</string>
+    <string name="help_tours_reset">次に開いたとき、ツアーとヒントがもう一度表示されます。</string>
     <string name="hub_months_sub">月ごとに片づける</string>
     <string name="later_back_to_stack">スタックに戻す</string>
     <string name="later_bookmarked_row">日付なしで保留中</string>
@@ -782,8 +782,8 @@
     <string name="edit_save_replace_action">保存して元をゴミ箱へ</string>
     <string name="edit_remove_location">位置情報を削除</string>
     <string name="edit_remove_location_text">保存した写真に撮影場所が含まれなくなります。</string>
-    <string name="edit_hint_heic">JPEGで保存されます（この端末ではHEICを確実に書き込めません）。</string>
-    <string name="edit_hint_hdr">色を変更すると、この写真のHDRの明るさは失われます。</string>
+    <string name="edit_hint_heic">どこでも使えるよう JPEG で保存します。この端末では HEIC を確実に保存できません。</string>
+    <string name="edit_hint_hdr">この写真は特に明るい部分（HDR）があります。色を変更すると輝きが少し弱くなります。</string>
     <string name="edit_hint_lossless">劣化なし：向きだけが変わり、画質はまったく同じです。</string>
     <string name="edit_hint_replace_confirm">元の写真をAndroidのゴミ箱に移動してよいか、Androidが一度確認します。</string>
     <string name="edit_saving">保存中…</string>
@@ -791,7 +791,7 @@
     <string name="edit_trim_range">%1$s～%2$s・%3$s秒</string>
     <string name="edit_trim_start">開始</string>
     <string name="edit_trim_end">終了</string>
-    <string name="edit_trim_hint">ハンドルをドラッグします。全体の長さ %1$s。画質は変わらず、次のキーフレームまでの冒頭だけが再エンコードされます。</string>
+    <string name="edit_trim_hint">ハンドルをドラッグして始まりと終わりを決めます。全体の長さ %1$s。画質はそのままです。</string>
     <string name="edit_discard_title">変更を破棄しますか？</string>
     <string name="edit_discard_text">編集内容は保存されません。元の写真はそのままです。</string>
     <string name="edit_discard">破棄</string>
@@ -875,8 +875,8 @@
     <string name="edit_mk_rect">四角形</string>
     <string name="edit_mk_brush">ブラシ</string>
     <string name="edit_mk_strength">強さ</string>
-    <string name="edit_mk_redact_solid_hint">機密情報におすすめ：保存・共有するファイルでは、隠したピクセルが完全に置き換わります。</string>
-    <string name="edit_mk_redact_hint">モザイクとぼかしは大きなブロックを使います。確実に読めなくしたい文字には「塗りつぶし」が安全です。</string>
+    <string name="edit_mk_redact_solid_hint">個人的な情報に最適：隠した部分は、保存・共有したファイルから本当に消えます。</string>
+    <string name="edit_mk_redact_hint">「モザイク」や「ぼかし」では輪郭がわかることがあります。読めないようにしたい文字には「塗りつぶし」を使ってください。</string>
     <string name="edit_mk_edit_text">編集</string>
     <string name="edit_mk_duplicate">複製</string>
     <string name="edit_mk_front">前面へ</string>
@@ -1041,7 +1041,7 @@
     <string name="ret_linear">グラデーション</string>
     <string name="ret_brush">ブラシ</string>
     <string name="ret_red_eye">赤目</string>
-    <string name="ret_red_eye_hint">赤い目をタップします。顔が小さいときは2本指で拡大。はっきり赤いピクセルだけが変わります。</string>
+    <string name="ret_red_eye_hint">赤い目をタップします。小さな顔は先に2本指で拡大してください。変わるのは目の赤い部分だけです。</string>
     <string name="ret_red_eye_undo">最後を取り消す</string>
     <string name="ret_size">サイズ</string>
     <string name="ret_new">新規</string>
@@ -1073,7 +1073,7 @@
     <string name="vid_cut_confirm">削除</string>
     <string name="vid_cut_draft">%1$s – %2$s を削除しますか？赤いハンドルをドラッグ。</string>
     <string name="vid_cut_hint_restore">赤い区間は保存時に実際に削除されます（全体 %1$s）。下の区間をタップすると元に戻ります。</string>
-    <string name="vid_trim_hint_reencode">ハンドルをドラッグ。全体 %1$s。ほかの変更があるため動画は再エンコードされます。</string>
+    <string name="vid_trim_hint_reencode">ハンドルをドラッグします。全体の長さ %1$s。ほかの変更があるため、保存時に動画を作り直します。少し時間がかかります。</string>
     <string name="vid_speed_result">仕上がり：%1$s</string>
     <string name="vid_speed_hint">音声は音程を保ったまま速く・遅くなります。</string>
     <string name="vid_no_audio">この動画には音声がありません。</string>
@@ -1082,7 +1082,7 @@
     <string name="vid_volume">音量</string>
     <string name="vid_fade">フェードイン・アウト</string>
     <string name="vid_fade_none">なし</string>
-    <string name="vid_audio_export">音声をM4Aで保存</string>
+    <string name="vid_audio_export">音声だけ保存</string>
     <string name="vid_audio_suffix">音声</string>
     <string name="vid_audio_running">音声を保存中</string>
     <string name="vid_audio_saved">「%1$s」をMusic/PhotoMaidに保存しました。</string>
@@ -1092,12 +1092,12 @@
     <string name="vid_fill_hint">新しい比率いっぱいに表示し、はみ出した端は切り取ります。</string>
     <string name="vid_fit_hint">動画全体を表示し、余白は黒い帯になります。</string>
     <string name="vid_profile">画質</string>
-    <string name="vid_profile_high">高画質（元の解像度）</string>
-    <string name="vid_profile_balanced">バランス（最大1080p）</string>
-    <string name="vid_profile_small">小さいファイル（720p）</string>
+    <string name="vid_profile_high">最高画質（元と同じ）</string>
+    <string name="vid_profile_balanced">バランス（フルHD）</string>
+    <string name="vid_profile_small">小さいファイル（HD）</string>
     <string name="vid_estimate">約 %1$s</string>
-    <string name="vid_estimate_hint">ビットレート×長さからの見積もりです。保存したファイルに実際のサイズが表示されます。</string>
-    <string name="vid_hdr_hint">色の変更があるため、このHDR動画はSDRで保存されます。</string>
+    <string name="vid_estimate_hint">おおよその目安です。実際のサイズは保存後にわかります。</string>
+    <string name="vid_hdr_hint">この動画は特に明るい色（HDR）です。色を変更したため、通常の色で保存されます。</string>
     <string name="tab_library">写真</string>
     <string name="lib_filter_all">すべて</string>
     <string name="lib_filter_favorites">お気に入り</string>
@@ -1241,7 +1241,7 @@
     <string name="systrash_delete_text">続けてAndroidで確認します。完全に削除した写真と動画は復元できません。</string>
     <string name="lib_info_raw">RAWファイル</string>
     <string name="set_delete_permanently">完全に削除</string>
-    <string name="set_delete_permanently_detail">オフ：空にするとAndroidのゴミ箱へ（しばらく復元可能）。オン：すぐに完全に削除。</string>
+    <string name="set_delete_permanently_detail">オフ：空にすると、まず Android のゴミ箱に入り、しばらくは元に戻せます。オン：すぐに完全に削除されます。</string>
     <string name="set_delete_permanently_confirm_title">完全に削除をオンにしますか？</string>
     <string name="set_delete_permanently_confirm_text">今後PhotoMaidのゴミ箱を空にすると、写真と動画は完全に削除されます。Androidのゴミ箱には入らず、まだ同期されていないバックアップからも復元できません。Androidは毎回確認します。</string>
     <string name="set_delete_permanently_confirm_action">オンにする</string>
@@ -1288,9 +1288,9 @@
     <string name="movie_format_first">最初のクリップと同じ</string>
     <string name="movie_fit_note">クリップが引き伸ばされることはありません。全体を表示（黒い余白あり）するか、枠いっぱいにして端を切り取ります。</string>
     <string name="movie_quality">画質</string>
-    <string name="movie_quality_high">高 (1080p)</string>
+    <string name="movie_quality_high">高（フルHD）</string>
     <string name="movie_quality_balanced">バランス</string>
-    <string name="movie_quality_small">小 (720p)</string>
+    <string name="movie_quality_small">小（HD）</string>
     <string name="movie_music_none">まだ音楽はありません。</string>
     <string name="movie_music_pick">音声ファイルを選択</string>
     <string name="movie_music_remove">削除</string>
@@ -1313,7 +1313,7 @@
     <string name="tools_convert">変換</string>
     <string name="tools_convert_sub">例：HEICをJPEGに、新しいコピーとして</string>
     <string name="tools_location">位置情報を削除</string>
-    <string name="tools_location_sub">GPS情報なしのコピー（共有前などに）</string>
+    <string name="tools_location_sub">撮影場所なしのコピー（共有の前などに）</string>
     <string name="tools_stitch">スクリーンショットをつなげる</string>
     <string name="tools_stitch_sub">縦に並べて1枚の長い画像に</string>
     <string name="tools_gif">GIFを作成</string>
@@ -1334,8 +1334,8 @@
     <string name="tools_q_small">小さいファイル</string>
     <string name="tools_remove_location">位置情報も削除</string>
     <string name="tools_target_format">新しい形式</string>
-    <string name="tools_convert_note">JPEGはどこでも開けます。PNGは画素を損ないませんがファイルが大きくなります。すでにこの形式のファイルはスキップします。</string>
-    <string name="tools_location_note">JPEGのコピーは画素をそのまま保ち、GPS情報だけを削除します。位置情報のない写真はスキップします。</string>
+    <string name="tools_convert_note">JPEG はどの端末でも開けます。PNG は細部まで残りますが、ファイルが大きくなります。すでにこの形式の写真はスキップします。</string>
+    <string name="tools_location_note">コピーは元の写真とまったく同じ見た目で、撮影場所だけが削除されます。場所のない写真はスキップします。</string>
     <string name="tools_stitch_note">選んだ順に並べます。すべて最も狭い画像の幅に合わせ、引き伸ばしや拡大はしません。</string>
     <string name="tools_gif_size">サイズ</string>
     <string name="tools_gif_part">動画の範囲（最大10秒）</string>
@@ -1370,9 +1370,9 @@
     <string name="dock_crop">切り抜き</string>
     <string name="dock_more">その他</string>
     <string name="vid_trim_hint_short">ハンドルをドラッグして開始と終了を決めます。</string>
-    <string name="vid_export_info">書き出し情報</string>
-    <string name="vid_export_info_fast">開始と終了だけをカットします。PhotoMaidは画質を保つため、次のキーフレームまでの冒頭だけを再エンコードしようとします。動画が対応していない場合は動画全体を再エンコードします。全体の長さ %1$s。</string>
-    <string name="vid_export_info_reencode">ほかの変更があるため、保存時に動画全体を再エンコードします。全体の長さ %1$s。</string>
+    <string name="vid_export_info">保存のしかた</string>
+    <string name="vid_export_info_fast">始まりと終わりだけをカットしました。すばやく保存でき、画質も元のままです。この動画で難しい場合は、PhotoMaid が全体を作り直すため少し時間がかかります。全体の長さ %1$s。</string>
+    <string name="vid_export_info_reencode">ほかの変更があるため、保存時に PhotoMaid が動画全体を作り直します。少し時間がかかることがあります。全体の長さ %1$s。</string>
     <string name="lib_mode_albums">アルバム</string>
     <string name="org_new_album">新しいアルバム</string>
     <string name="org_album_name">アルバム名</string>
@@ -1454,7 +1454,7 @@
     <string name="wf_target_note">PhotoMaidは結果を測定します。この範囲で目標に届かない場合はファイルを作らず、理由を表示します。</string>
     <string name="wf_videos">動画</string>
     <string name="wf_video_skip">スキップ</string>
-    <string name="wf_video_note">動画は目標サイズに合わせて再エンコードされます。解像度は必要なときだけ下がります。</string>
+    <string name="wf_video_note">動画は目標サイズに合うように保存し直されます。画面サイズは必要なときだけ小さくなります。</string>
     <string name="wf_location">位置情報を削除</string>
     <string name="wf_name_base">ファイル名</string>
     <string name="wf_name_base_hint">例: 出品 → 出品_001（空欄 = 元の名前）</string>
@@ -1494,7 +1494,7 @@
     <string name="wf_reason_video">このワークフローは動画を扱いません。</string>
     <string name="wf_reason_video_long">目標サイズには長すぎます。ファイルは作成されていません。</string>
     <string name="wf_reason_unreachable">測定した最小の版: %1$s – 目標を超えるためファイルは作成されていません。</string>
-    <string name="wf_reason_error">処理できませんでした。</string>
+    <string name="wf_reason_error">うまくいきませんでした。</string>
     <string name="wf_summary">完了 %1$d · スキップ %2$d · 目標未達 %3$d · 失敗 %4$d</string>
     <string name="wf_share_again">もう一度共有</string>
     <string name="wf_counts">写真 %1$s · 動画 %2$s</string>
@@ -1572,4 +1572,12 @@
         <item quantity="other">写真 %1$d 枚を読み込めませんでした。その枠は空白のままです。</item>
     </plurals>
     <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">すべての写真</string>
+    <string name="tour_lib_text">すべての写真と動画を、日・月・年ごとやフォルダ、アルバム、お気に入りで見られます。見るだけでは何も変わりません。</string>
+    <string name="tour_studio_title">クリエイティブに</string>
+    <string name="tour_studio_text">写真の編集、コラージュ、短いムービー、PDF、便利なツール。いつも新しいファイルが作られ、元の写真はそのままです。</string>
+    <string name="tour_history_title">あとで・履歴</string>
+    <string name="tour_history_text">残したもの、外したもの、あとで見るものを確認できます。どの判断もここで変更できます。</string>
+    <string name="tour_settings_title">設定とヘルプ</string>
+    <string name="tour_settings_text">PhotoMaid を好みに合わせて設定し、答えを探せます。このツアーはいつでももう一度見られます。</string>
 </resources>

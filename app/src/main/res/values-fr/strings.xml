@@ -36,7 +36,7 @@
     <string name="undo">Annuler l’action</string>
     <string name="error_settings_not_saved">Le réglage n’a pas pu être enregistré.</string>
     <string name="error_change_not_saved">La modification n’a pas pu être enregistrée.</string>
-    <string name="error_undo_conflict">Impossible d’annuler : cet élément a été modifié entre-temps.</string>
+    <string name="error_undo_conflict">Impossible d’annuler, car vous l’avez modifié entre-temps.</string>
     <string name="error_undo_busy">Attends que la corbeille soit vidée avant d’annuler une action.</string>
     <string name="error_undo_generic">Cette action ne peut pas être annulée pour le moment.</string>
     <string name="tab_today">Aujourd’hui</string>
@@ -69,7 +69,7 @@
         <item quantity="many">%1$d éléments de « Plus tard » sont à revoir</item>
         <item quantity="other">%1$d éléments de « Plus tard » sont à revoir</item>
     </plurals>
-    <string name="today_reconciliation">Le résultat d’une ancienne action dans la corbeille n’a pas pu être confirmé. Rien ne sera supprimé une seconde fois.</string>
+    <string name="today_reconciliation">Quelque chose a été interrompu lors du dernier vidage de la corbeille. Par sécurité, rien n’est supprimé à nouveau.</string>
     <string name="cat_photos">Photos</string>
     <string name="cat_videos">Vidéos</string>
     <string name="cat_screenshots">Captures d’écran</string>
@@ -273,7 +273,7 @@
     <string name="large_unknown_footer">La taille de ces fichiers est indisponible. Elle n’est ni estimée ni incluse dans le total.</string>
     <string name="storage_a">Ton appareil</string>
     <string name="storage_available">%1$s libres selon Android</string>
-    <string name="storage_unavailable">Infos de stockage indisponibles</string>
+    <string name="storage_unavailable">Infos de stockage indisponibles pour le moment</string>
     <string name="storage_b">Visible par PhotoMaid</string>
     <string name="storage_of_which_screens">dont captures d’écran</string>
     <string name="storage_connected_folders">Dossiers connectés</string>
@@ -402,12 +402,12 @@
     <string name="pro_f1">Sans publicité</string>
     <string name="pro_f1d">Aucune carte publicitaire entre tes photos et vidéos.</string>
     <string name="pro_details">Comment fonctionne Pro</string>
-    <string name="pro_details_dup">Les copies ont exactement le même contenu. PhotoMaid les compare sur ton appareil, pas dans le cloud. Les images similaires ne comptent pas comme des copies.</string>
+    <string name="pro_details_dup">Les copies sont des fichiers identiques jusque dans le moindre détail. PhotoMaid les compare sur votre appareil, pas dans le cloud. Les images qui se ressemblent seulement ne comptent pas.</string>
     <string name="pro_details_rules">Les collections affichent le contenu correspondant sur ton appareil. Tu les ouvres et fais le tri toi-même. Elles ne suppriment rien automatiquement et ne trient pas en arrière-plan.</string>
-    <string name="pro_details_cleanup">Seuls les éléments retirés avec succès après ta confirmation dans la corbeille comptent dans la limite quotidienne. Les gestes ne comptent pas.</string>
+    <string name="pro_details_cleanup">Seul ce que vous retirez vraiment de la corbeille compte dans la limite quotidienne. Balayer ne compte jamais.</string>
     <string name="expanded">Déplié</string>
     <string name="collapsed">Replié</string>
-    <string name="pro_privacy">Les photos et fichiers sont vérifiés et organisés sur ton appareil. Les achats et publicités transmettent des données techniques à Google ou aux fournisseurs publicitaires, mais pas de photos, noms de fichiers ou sommes de contrôle.</string>
+    <string name="pro_privacy">Vos photos et fichiers sont examinés et triés uniquement sur votre appareil. Pour les achats et la publicité, seul le strict nécessaire va à Google ou aux régies – jamais vos photos, leurs noms ou ce qui en est tiré.</string>
     <string name="pro_pending">Ton achat attend une confirmation.</string>
     <string name="pro_unlock">Débloquer PhotoMaid Pro</string>
     <string name="pro_price_once">%1$s · Achat unique</string>
@@ -425,7 +425,7 @@
     <string name="pro_msg_nofill">Aucune publicité n’est disponible pour le moment. Réessaie plus tard.</string>
     <string name="pro_msg_ad_unavailable">L’essai des outils Pro est indisponible pour le moment. Rien n’a été débloqué.</string>
     <string name="set_privacy">Confidentialité et accès</string>
-    <string name="set_privacy_detail">Traitement sur ton appareil</string>
+    <string name="set_privacy_detail">Vos photos restent sur votre appareil</string>
     <string name="set_notifications">Notifications</string>
     <string name="allowed">Autorisé</string>
     <string name="off">Désactivé</string>
@@ -454,13 +454,13 @@
     <string name="help_decide">Faire un choix</string>
     <string name="help_decide_text">Glisse vers le haut pour garder, à gauche pour la corbeille et à droite pour plus tard. Par défaut, l’élément revient dans 2 jours. Tu peux changer ce délai dans les paramètres. Juste après le geste, utilise « Modifier » pour choisir une autre date. Vers le bas, tu reviens sans faire de nouveau choix.</string>
     <string name="help_delete">Suppression</string>
-    <string name="help_delete_text">Les gestes ne suppriment rien. Les éléments vont d’abord dans la corbeille PhotoMaid. Tu confirmes leur retrait en la vidant. Les photos et vidéos vont dans la corbeille Android après sa demande de confirmation. Les fichiers sont supprimés définitivement.</string>
+    <string name="help_delete_text">Balayer ne supprime jamais rien. Ce que vous écartez va d’abord dans la corbeille PhotoMaid. Rien n’est retiré tant que vous ne la videz pas – les photos et vidéos vont alors dans la corbeille Android, après une nouvelle confirmation d’Android. Les fichiers des dossiers associés sont supprimés définitivement.</string>
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">Les services cloud comme Google Photos peuvent répercuter les suppressions sur d’autres appareils. Vérifie leurs paramètres. PhotoMaid ne télécharge pas le contenu stocké uniquement dans le cloud.</string>
     <string name="help_free">Gratuit</string>
     <string name="help_free_text">Voir, faire défiler et garder pour plus tard sont illimités. Sans Pro, tu peux en retirer jusqu’à %1$d par jour.</string>
     <string name="privacy_title">Ta confidentialité d’abord</string>
-    <string name="privacy_text">PhotoMaid vérifie tes photos, vidéos et fichiers autorisés sur ton appareil. Aucun compte PhotoMaid n’est nécessaire et il n’existe pas de serveur PhotoMaid. Les services cloud comme Google Photos peuvent synchroniser les suppressions avec d’autres appareils.</string>
+    <string name="privacy_text">PhotoMaid consulte vos photos, vidéos et fichiers autorisés uniquement sur votre appareil. Pas besoin de compte, et il n’y a pas de serveur PhotoMaid. Bon à savoir : avec des services cloud comme Google Photos, ce que vous supprimez peut aussi disparaître de vos autres appareils.</string>
     <string name="privacy_media">Photos et vidéos</string>
     <string name="privacy_media_text">Pour voir, organiser et retirer des photos et vidéos après ta confirmation.</string>
     <string name="privacy_allow">Autoriser l’accès</string>
@@ -474,8 +474,8 @@
     <string name="privacy_notifications_allow">Autoriser les notifications</string>
     <string name="privacy_folders">Dossiers (facultatif)</string>
     <string name="privacy_folders_text">Les autres fichiers proviennent uniquement des dossiers que tu choisis. Connecte-les dans Faire le tri › Fichiers.</string>
-    <string name="privacy_purchases">Les achats sont gérés par Google Play. Aucune photo, aucun nom de fichier, chemin ou somme de contrôle n’est transmis pour cela.</string>
-    <string name="privacy_ads">La version gratuite affiche des publicités Google AdMob. Tu peux modifier ton consentement publicitaire dans les paramètres. Les photos, noms de fichiers, chemins et sommes de contrôle ne sont pas partagés avec les fournisseurs publicitaires. Pro est sans publicité.</string>
+    <string name="privacy_purchases">Les achats passent par Google Play. Vos photos, leurs noms, dossiers ou toute information qui en est tirée ne sont jamais envoyés pour cela.</string>
+    <string name="privacy_ads">La version gratuite affiche des publicités Google AdMob. Vous pouvez modifier votre consentement dans les paramètres. Vos photos, leurs noms, dossiers ou toute information qui en est tirée ne vont jamais aux régies publicitaires. Avec Pro, pas de publicité.</string>
     <string name="continue_">Suivant</string>
     <string name="notif_channel">Rappels</string>
     <string name="notif_due_body">Un élément de « Plus tard » est à revoir aujourd’hui.</string>
@@ -527,7 +527,7 @@
     <string name="pro_active_title">Pro est actif</string>
     <string name="pro_active_sub">Achat unique : sans publicité ni limite quotidienne, avec tous les outils Pro.</string>
     <string name="later_notify_title">Recevoir un rappel au moment de revoir ?</string>
-    <string name="pro_privacy_no_ads">Les photos et fichiers sont vérifiés et organisés sur ton appareil. L’achat transmet des données techniques à Google, mais pas de photos, noms de fichiers ou sommes de contrôle.</string>
+    <string name="pro_privacy_no_ads">Vos photos et fichiers sont examinés et triés uniquement sur votre appareil. Pour l’achat, seul le strict nécessaire va à Google – jamais vos photos, leurs noms ou ce qui en est tiré.</string>
     <string name="hub_nothing_pending">Tout a été vérifié</string>
     <plurals name="hub_pending">
         <item quantity="one">%1$d à voir</item>
@@ -647,7 +647,7 @@
     <string name="tour_today_quick_title">Tes raccourcis</string>
     <string name="tour_today_quick_text">Photos, vidéos, captures d’écran ou dossier : crée des raccourcis vers ce que tu tries souvent.</string>
     <string name="tour_today_tab_title">D’autres façons de trier</string>
-    <string name="tour_today_tab_text">Retrouve les gros fichiers, copies, dossiers et collections dans « Faire le tri ».</string>
+    <string name="tour_today_tab_text">Gros fichiers, photos en double, mois par mois et collections prêtes : c’est ici que vous faites le tri pas à pas.</string>
     <string name="tour_feed_basket_title">Ta corbeille</string>
     <string name="tour_feed_basket_text">Le nombre indique combien d’éléments tu as mis de côté. Touche-le pour revoir ta sélection et vider la corbeille.</string>
     <string name="tour_feed_undo_title">Annuler l’action</string>
@@ -704,8 +704,8 @@
     <string name="grid_open">Vue d’ensemble</string>
     <string name="grid_select_all">Tout</string>
     <string name="grid_select_none">Aucun</string>
-    <string name="help_tours_again">Afficher à nouveau les tutoriels</string>
-    <string name="help_tours_reset">Les tutoriels réapparaîtront à la prochaine ouverture de chaque écran.</string>
+    <string name="help_tours_again">Revoir la visite et les astuces</string>
+    <string name="help_tours_reset">La visite et les astuces réapparaîtront la prochaine fois.</string>
     <string name="hub_months_sub">Termine mois après mois</string>
     <string name="later_back_to_stack">Remettre dans la pile</string>
     <string name="later_bookmarked_row">Mis de côté, sans date</string>
@@ -860,8 +860,8 @@
     <string name="edit_save_replace_action">Enregistrer, original à la corbeille</string>
     <string name="edit_remove_location">Retirer la position</string>
     <string name="edit_remove_location_text">La photo enregistrée n’indiquera pas où elle a été prise.</string>
-    <string name="edit_hint_heic">Enregistrée en JPEG (le HEIC ne peut pas être écrit de façon fiable sur cet appareil).</string>
-    <string name="edit_hint_hdr">Les changements de couleur suppriment la luminosité HDR supplémentaire de cette photo.</string>
+    <string name="edit_hint_heic">Enregistré en JPEG pour fonctionner partout – cet appareil ne sait pas enregistrer le HEIC de façon fiable.</string>
+    <string name="edit_hint_hdr">Cette photo a des hautes lumières très vives (HDR). Après des changements de couleur, elle brille un peu moins.</string>
     <string name="edit_hint_lossless">Sans perte : seule l’orientation change, la qualité reste exactement la même.</string>
     <string name="edit_hint_replace_confirm">Android demande une fois de confirmer le déplacement de l’original dans la corbeille Android.</string>
     <string name="edit_saving">Enregistrement…</string>
@@ -869,7 +869,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s s</string>
     <string name="edit_trim_start">Début</string>
     <string name="edit_trim_end">Fin</string>
-    <string name="edit_trim_hint">Fais glisser les poignées. Durée totale %1$s. La qualité reste identique ; seul le début jusqu’à la prochaine image clé est réencodé.</string>
+    <string name="edit_trim_hint">Faites glisser les poignées pour choisir le début et la fin. Durée totale %1$s. La qualité d’image reste la même.</string>
     <string name="edit_discard_title">Abandonner les modifications ?</string>
     <string name="edit_discard_text">Ta modification ne sera pas enregistrée. L’original reste tel quel.</string>
     <string name="edit_discard">Abandonner</string>
@@ -953,8 +953,8 @@
     <string name="edit_mk_rect">Rectangle</string>
     <string name="edit_mk_brush">Pinceau</string>
     <string name="edit_mk_strength">Intensité</string>
-    <string name="edit_mk_redact_solid_hint">Recommandé pour les infos sensibles : les pixels masqués sont entièrement remplacés dans le fichier enregistré ou partagé.</string>
-    <string name="edit_mk_redact_hint">La pixellisation et le flou utilisent de gros blocs. Pour un texte qui doit rester illisible, « Opaque » est plus sûr.</string>
+    <string name="edit_mk_redact_solid_hint">Recommandé pour les infos personnelles : ce que vous masquez disparaît vraiment du fichier enregistré ou partagé.</string>
+    <string name="edit_mk_redact_hint">Avec « Pixelliser » et « Flou », on devine encore les contours. Pour un texte qui doit rester illisible, choisissez « Opaque ».</string>
     <string name="edit_mk_edit_text">Modifier</string>
     <string name="edit_mk_duplicate">Dupliquer</string>
     <string name="edit_mk_front">Au premier plan</string>
@@ -1125,7 +1125,7 @@
     <string name="ret_linear">Dégradé</string>
     <string name="ret_brush">Pinceau</string>
     <string name="ret_red_eye">Yeux rouges</string>
-    <string name="ret_red_eye_hint">Touche un œil rouge. Zoome à deux doigts pour les petits visages. Seuls les pixels nettement rouges changent.</string>
+    <string name="ret_red_eye_hint">Touchez un œil rouge. Pour les petits visages, zoomez d’abord avec deux doigts. Seul le rouge de l’œil change.</string>
     <string name="ret_red_eye_undo">Retirer la dernière</string>
     <string name="ret_size">Taille</string>
     <string name="ret_new">Nouveau</string>
@@ -1157,7 +1157,7 @@
     <string name="vid_cut_confirm">Supprimer</string>
     <string name="vid_cut_draft">Supprimer %1$s – %2$s ? Fais glisser les poignées rouges.</string>
     <string name="vid_cut_hint_restore">Les passages rouges sont vraiment supprimés à l’enregistrement (durée totale %1$s). Touche un passage ci-dessous pour le récupérer.</string>
-    <string name="vid_trim_hint_reencode">Fais glisser les poignées. Durée totale %1$s. À cause de tes autres modifications, la vidéo est réencodée.</string>
+    <string name="vid_trim_hint_reencode">Faites glisser les poignées. Durée totale %1$s. À cause de vos autres modifications, la vidéo est recalculée à l’enregistrement – cela prend un peu plus de temps.</string>
     <string name="vid_speed_result">Résultat : %1$s</string>
     <string name="vid_speed_hint">Le son est accéléré ou ralenti sans changer de hauteur.</string>
     <string name="vid_no_audio">Cette vidéo n’a pas de son.</string>
@@ -1166,7 +1166,7 @@
     <string name="vid_volume">Volume</string>
     <string name="vid_fade">Fondu d’entrée et de sortie</string>
     <string name="vid_fade_none">Aucun</string>
-    <string name="vid_audio_export">Enregistrer le son en M4A</string>
+    <string name="vid_audio_export">Enregistrer seulement le son</string>
     <string name="vid_audio_suffix">son</string>
     <string name="vid_audio_running">Enregistrement du son</string>
     <string name="vid_audio_saved">« %1$s » enregistré dans Music/PhotoMaid.</string>
@@ -1176,12 +1176,12 @@
     <string name="vid_fill_hint">Remplit le nouveau format ; les bords en trop sont coupés.</string>
     <string name="vid_fit_hint">Affiche toute la vidéo ; l’espace libre devient des bandes noires.</string>
     <string name="vid_profile">Qualité</string>
-    <string name="vid_profile_high">Haute qualité (résolution d’origine)</string>
-    <string name="vid_profile_balanced">Équilibré (jusqu’à 1080p)</string>
-    <string name="vid_profile_small">Petit fichier (720p)</string>
+    <string name="vid_profile_high">Meilleure qualité (comme l’original)</string>
+    <string name="vid_profile_balanced">Équilibré (Full HD)</string>
+    <string name="vid_profile_small">Petit fichier (HD)</string>
     <string name="vid_estimate">env. %1$s</string>
-    <string name="vid_estimate_hint">Estimation : débit × durée. Le fichier enregistré indique sa taille réelle.</string>
-    <string name="vid_hdr_hint">Cette vidéo HDR est enregistrée en SDR car des modifications de couleur sont appliquées.</string>
+    <string name="vid_estimate_hint">C’est seulement une estimation. Vous verrez la vraie taille après l’enregistrement.</string>
+    <string name="vid_hdr_hint">Cette vidéo a des couleurs très lumineuses (HDR). Avec vos changements de couleur, elle est enregistrée en couleurs normales.</string>
     <string name="tab_library">Photos</string>
     <string name="lib_filter_all">Tout</string>
     <string name="lib_filter_favorites">Favoris</string>
@@ -1341,7 +1341,7 @@
     <string name="systrash_delete_text">Confirmez ensuite auprès d’Android. Les photos et vidéos supprimées définitivement ne peuvent pas être restaurées.</string>
     <string name="lib_info_raw">Fichier RAW</string>
     <string name="set_delete_permanently">Supprimer définitivement</string>
-    <string name="set_delete_permanently_detail">Désactivé : vider place dans la corbeille Android (restaurable un temps). Activé : supprimé définitivement tout de suite.</string>
+    <string name="set_delete_permanently_detail">Désactivé : en vidant, tout va d’abord dans la corbeille Android et peut être récupéré pendant un temps. Activé : tout est supprimé définitivement tout de suite.</string>
     <string name="set_delete_permanently_confirm_title">Activer la suppression définitive ?</string>
     <string name="set_delete_permanently_confirm_text">Désormais, vider la corbeille PhotoMaid supprime définitivement photos et vidéos. Elles ne vont pas dans la corbeille Android et ne peuvent pas être restaurées – pas même depuis des sauvegardes pas encore synchronisées. Android demande quand même à chaque fois.</string>
     <string name="set_delete_permanently_confirm_action">Activer</string>
@@ -1398,9 +1398,9 @@
     <string name="movie_format_first">Comme le 1er clip</string>
     <string name="movie_fit_note">Les clips ne sont jamais déformés : soit l’image entière est visible (bords noirs), soit elle remplit le cadre et les bords sont coupés.</string>
     <string name="movie_quality">Qualité</string>
-    <string name="movie_quality_high">Haute (1080p)</string>
+    <string name="movie_quality_high">Haute (Full HD)</string>
     <string name="movie_quality_balanced">Équilibrée</string>
-    <string name="movie_quality_small">Petite (720p)</string>
+    <string name="movie_quality_small">Petite (HD)</string>
     <string name="movie_music_none">Pas encore de musique.</string>
     <string name="movie_music_pick">Choisir un fichier audio</string>
     <string name="movie_music_remove">Retirer</string>
@@ -1423,7 +1423,7 @@
     <string name="tools_convert">Convertir</string>
     <string name="tools_convert_sub">p. ex. HEIC en JPEG, en nouvelles copies</string>
     <string name="tools_location">Retirer la position</string>
-    <string name="tools_location_sub">Copies sans données GPS, p. ex. avant de partager</string>
+    <string name="tools_location_sub">Copies sans lieu, p. ex. avant de partager</string>
     <string name="tools_stitch">Assembler des captures</string>
     <string name="tools_stitch_sub">Les unes sous les autres, en une longue image</string>
     <string name="tools_gif">Créer un GIF</string>
@@ -1444,8 +1444,8 @@
     <string name="tools_q_small">Fichier plus léger</string>
     <string name="tools_remove_location">Retirer aussi la position</string>
     <string name="tools_target_format">Nouveau format</string>
-    <string name="tools_convert_note">Le JPEG s’ouvre partout ; le PNG garde chaque pixel mais les fichiers sont plus lourds. Les fichiers déjà dans ce format sont ignorés.</string>
-    <string name="tools_location_note">Les copies JPEG gardent chaque pixel : seules les données GPS sont retirées. Les photos sans position sont ignorées.</string>
+    <string name="tools_convert_note">Tous les appareils ouvrent le JPEG. Le PNG garde tous les détails, mais les fichiers sont plus gros. Les photos déjà dans ce format sont ignorées.</string>
+    <string name="tools_location_note">Les copies sont identiques à l’original – seul le lieu de prise de vue est retiré. Les photos sans lieu sont ignorées.</string>
     <string name="tools_stitch_note">Dans l’ordre choisi. Toutes prennent la largeur de l’image la plus étroite : rien n’est déformé ni agrandi.</string>
     <string name="tools_gif_size">Taille</string>
     <string name="tools_gif_part">Partie de la vidéo (10 s max.)</string>
@@ -1492,9 +1492,9 @@
     <string name="dock_crop">Recadrer</string>
     <string name="dock_more">Plus</string>
     <string name="vid_trim_hint_short">Fais glisser les poignées pour définir le début et la fin.</string>
-    <string name="vid_export_info">Infos d’export</string>
-    <string name="vid_export_info_fast">Seuls le début et la fin sont coupés. PhotoMaid essaie de garder la qualité et ne réencode que le début jusqu’à la prochaine image clé. Si la vidéo ne le permet pas, toute la vidéo est réencodée. Durée totale %1$s.</string>
-    <string name="vid_export_info_reencode">En raison de tes autres modifications, toute la vidéo est réencodée à l’enregistrement. Durée totale %1$s.</string>
+    <string name="vid_export_info">Comment c’est enregistré</string>
+    <string name="vid_export_info_fast">Vous avez seulement coupé le début et la fin. C’est rapide et la qualité reste celle de l’original. Si cette vidéo ne le permet pas, PhotoMaid la recalcule entièrement – cela prend un peu plus de temps. Durée totale %1$s.</string>
+    <string name="vid_export_info_reencode">À cause de vos autres modifications, PhotoMaid recalcule toute la vidéo à l’enregistrement. Cela peut prendre un moment. Durée totale %1$s.</string>
     <string name="lib_mode_albums">Albums</string>
     <string name="org_new_album">Nouvel album</string>
     <string name="org_album_name">Nom de l’album</string>
@@ -1588,7 +1588,7 @@
     <string name="wf_target_note">PhotoMaid mesure le résultat. Si l’objectif est inatteignable dans ces limites, aucun fichier n’est créé et tu sauras pourquoi.</string>
     <string name="wf_videos">Vidéos</string>
     <string name="wf_video_skip">Ignorer</string>
-    <string name="wf_video_note">Les vidéos sont réencodées à la taille cible ; la résolution ne baisse que si nécessaire.</string>
+    <string name="wf_video_note">Les vidéos sont réenregistrées pour respecter la taille visée. L’image ne rétrécit que si c’est nécessaire.</string>
     <string name="wf_location">Supprimer la position</string>
     <string name="wf_name_base">Nom de fichier</string>
     <string name="wf_name_base_hint">ex. Annonce → Annonce_001 (vide = nom d’origine)</string>
@@ -1628,7 +1628,7 @@
     <string name="wf_reason_video">Les vidéos ne font pas partie de ce flux.</string>
     <string name="wf_reason_video_long">Trop long pour la taille cible – aucun fichier créé.</string>
     <string name="wf_reason_unreachable">Plus petite version mesurée : %1$s – au-dessus de l’objectif, aucun fichier créé.</string>
-    <string name="wf_reason_error">Impossible à traiter.</string>
+    <string name="wf_reason_error">Désolé, cela n’a pas fonctionné.</string>
     <string name="wf_summary">%1$d terminés · %2$d ignorés · %3$d objectif non atteint · %4$d échecs</string>
     <string name="wf_share_again">Partager à nouveau</string>
     <string name="wf_counts">%1$s photos · %2$s vidéos</string>
@@ -1722,4 +1722,12 @@
         <item quantity="other">%1$d photos n’ont pas pu être lues – leurs emplacements restent vides.</item>
     </plurals>
     <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">Toutes vos photos</string>
+    <string name="tour_lib_text">Retrouvez ici toutes vos photos et vidéos – par jour, mois ou année, dans les dossiers, albums et favoris. Regarder ne change rien.</string>
+    <string name="tour_studio_title">Laissez parler votre créativité</string>
+    <string name="tour_studio_text">Retouchez vos photos, créez des collages, de petits films et des PDF, et utilisez des outils pratiques. De nouveaux fichiers sont toujours créés – vos originaux restent intacts.</string>
+    <string name="tour_history_title">Plus tard et historique</string>
+    <string name="tour_history_text">Voyez ce que vous avez gardé, écarté ou remis à plus tard. Vous pouvez encore changer chaque décision ici.</string>
+    <string name="tour_settings_title">Paramètres et aide</string>
+    <string name="tour_settings_text">Réglez PhotoMaid à votre goût et trouvez des réponses. Vous pouvez refaire cette visite à tout moment.</string>
 </resources>

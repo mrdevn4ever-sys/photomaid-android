@@ -165,7 +165,7 @@ fun TodayScreen(nav: Nav) {
             val hour = remember { java.time.LocalTime.now().hour }
             val greeting = stringResource(when (hour) { in 5..10 -> R.string.today_greeting_morning; in 18..23, in 0..4 -> R.string.today_greeting_evening; else -> R.string.today_greeting_day })
             LargeTitleHeader(stringResource(R.string.tab_today), eyebrow = greeting) {
-                GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
+                GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), Modifier.coachTarget("today.settings"), onClick = nav::openSettings)
             }
             if (!access.canRead) {
                 SurfaceCard {

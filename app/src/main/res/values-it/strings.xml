@@ -36,7 +36,7 @@
     <string name="undo">Annulla azione</string>
     <string name="error_settings_not_saved">Non è stato possibile salvare l’impostazione.</string>
     <string name="error_change_not_saved">Non è stato possibile salvare la modifica.</string>
-    <string name="error_undo_conflict">Impossibile annullare: nel frattempo questo elemento è stato modificato.</string>
+    <string name="error_undo_conflict">Non si può più annullare perché nel frattempo l’hai modificato.</string>
     <string name="error_undo_busy">Attendi che il cestino sia stato svuotato prima di annullare un’azione.</string>
     <string name="error_undo_generic">Al momento non puoi annullare questa azione.</string>
     <string name="tab_today">Oggi</string>
@@ -69,7 +69,7 @@
         <item quantity="many">%1$d elementi in «Più tardi» sono da rivedere</item>
         <item quantity="other">%1$d elementi in «Più tardi» sono da rivedere</item>
     </plurals>
-    <string name="today_reconciliation">Non abbiamo potuto confermare il risultato di una precedente azione nel cestino. Nulla verrà eliminato una seconda volta.</string>
+    <string name="today_reconciliation">Qualcosa si è interrotto l’ultima volta che è stato svuotato il cestino. Per sicurezza non viene eliminato nulla di nuovo.</string>
     <string name="cat_photos">Foto</string>
     <string name="cat_videos">Video</string>
     <string name="cat_screenshots">Screenshot</string>
@@ -273,7 +273,7 @@
     <string name="large_unknown_footer">La dimensione di questi file non è disponibile. Non viene stimata né inclusa nel totale.</string>
     <string name="storage_a">Il tuo dispositivo</string>
     <string name="storage_available">%1$s liberi secondo Android</string>
-    <string name="storage_unavailable">Informazioni sulla memoria non disponibili</string>
+    <string name="storage_unavailable">Informazioni sullo spazio non disponibili ora</string>
     <string name="storage_b">Visibile a PhotoMaid</string>
     <string name="storage_of_which_screens">di cui screenshot</string>
     <string name="storage_connected_folders">Cartelle collegate</string>
@@ -402,12 +402,12 @@
     <string name="pro_f1">Senza pubblicità</string>
     <string name="pro_f1d">Nessuna scheda pubblicitaria tra le tue foto e i tuoi video.</string>
     <string name="pro_details">Come funziona Pro</string>
-    <string name="pro_details_dup">Le copie hanno esattamente lo stesso contenuto. PhotoMaid lo confronta sul dispositivo, non nel cloud. Le immagini simili non contano come copie.</string>
+    <string name="pro_details_dup">Le copie sono file identici fino all’ultimo dettaglio. PhotoMaid li confronta sul dispositivo, non nel cloud. Le immagini che si somigliano soltanto non contano come copie.</string>
     <string name="pro_details_rules">Le raccolte mostrano i contenuti corrispondenti sul dispositivo. Li apri e controlli tu. Non eliminano nulla automaticamente e non riordinano in background.</string>
-    <string name="pro_details_cleanup">Il limite giornaliero conta gli elementi rimossi con successo dopo la conferma nel cestino. I gesti non contano.</string>
+    <string name="pro_details_cleanup">Per il limite giornaliero conta solo ciò che rimuovi davvero dal cestino. Scorrere non conta mai.</string>
     <string name="expanded">Espanso</string>
     <string name="collapsed">Compresso</string>
-    <string name="pro_privacy">Foto e file vengono controllati e organizzati sul dispositivo. Acquisti e pubblicità inviano dati tecnici a Google o ai fornitori pubblicitari, non foto, nomi di file o somme di controllo.</string>
+    <string name="pro_privacy">Foto e file vengono controllati e ordinati solo sul tuo dispositivo. Per acquisti e pubblicità va a Google o agli inserzionisti solo lo stretto necessario, mai le tue foto, i loro nomi o dati ricavati da esse.</string>
     <string name="pro_pending">Il tuo acquisto è in attesa di conferma.</string>
     <string name="pro_unlock">Sblocca PhotoMaid Pro</string>
     <string name="pro_price_once">%1$s · Acquisto unico</string>
@@ -425,7 +425,7 @@
     <string name="pro_msg_nofill">Al momento non ci sono pubblicità disponibili. Riprova più tardi.</string>
     <string name="pro_msg_ad_unavailable">La prova degli strumenti Pro non è disponibile ora. Non è stato sbloccato nulla.</string>
     <string name="set_privacy">Privacy e accesso</string>
-    <string name="set_privacy_detail">Elaborazione sul dispositivo</string>
+    <string name="set_privacy_detail">Le tue foto restano sul dispositivo</string>
     <string name="set_notifications">Notifiche</string>
     <string name="allowed">Consentito</string>
     <string name="off">Disattivato</string>
@@ -454,13 +454,13 @@
     <string name="help_decide">Scegliere</string>
     <string name="help_decide_text">Scorri verso l’alto per conservare, a sinistra per il cestino e a destra per più tardi. Per impostazione predefinita, l’elemento torna dopo 2 giorni. Puoi cambiare l’intervallo nelle impostazioni. Subito dopo il gesto, usa «Modifica» per scegliere un’altra data. Scorri verso il basso per tornare indietro senza una nuova scelta.</string>
     <string name="help_delete">Eliminazione</string>
-    <string name="help_delete_text">I gesti non eliminano nulla. Gli elementi vanno prima nel cestino di PhotoMaid. Confermi la rimozione quando lo svuoti. Foto e video passano nel cestino di Android dopo la sua conferma. I file vengono eliminati definitivamente.</string>
+    <string name="help_delete_text">Scorrere non elimina mai nulla. Ciò che scarti va prima nel cestino di PhotoMaid. Si rimuove solo quando lo svuoti: foto e video passano allora nel cestino di Android, dopo che Android lo chiede ancora una volta. I file delle cartelle collegate vengono eliminati definitivamente.</string>
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">I servizi cloud, come Google Foto, possono sincronizzare le eliminazioni con altri dispositivi. Controlla le loro impostazioni. PhotoMaid non scarica contenuti presenti solo nel cloud.</string>
     <string name="help_free">Gratis</string>
     <string name="help_free_text">Vedere, scorrere e salvare per più tardi è illimitato. Senza Pro puoi rimuoverne fino a %1$d al giorno.</string>
     <string name="privacy_title">La tua privacy prima di tutto</string>
-    <string name="privacy_text">PhotoMaid controlla foto, video e file autorizzati sul tuo dispositivo. Non serve un account PhotoMaid e non c’è un server PhotoMaid. I servizi cloud, come Google Foto, possono sincronizzare le eliminazioni con altri dispositivi.</string>
+    <string name="privacy_text">PhotoMaid guarda foto, video e file consentiti solo sul tuo dispositivo. Non serve un account e non esiste un server PhotoMaid. Buono a sapersi: con servizi cloud come Google Foto ciò che elimini può sparire anche sugli altri dispositivi.</string>
     <string name="privacy_media">Foto e video</string>
     <string name="privacy_media_text">Per vedere, organizzare e rimuovere foto e video dopo la tua conferma.</string>
     <string name="privacy_allow">Consenti accesso</string>
@@ -474,8 +474,8 @@
     <string name="privacy_notifications_allow">Consenti notifiche</string>
     <string name="privacy_folders">Cartelle (facoltativo)</string>
     <string name="privacy_folders_text">Gli altri file provengono solo dalle cartelle che scegli. Collegale in Riordina › File.</string>
-    <string name="privacy_purchases">Gli acquisti sono gestiti da Google Play. Per questo non vengono inviati foto, nomi di file, percorsi o somme di controllo.</string>
-    <string name="privacy_ads">La versione gratuita mostra pubblicità di Google AdMob. Puoi modificare il consenso pubblicitario nelle impostazioni. Foto, nomi di file, percorsi e somme di controllo non vengono condivisi con i fornitori pubblicitari. Pro è senza pubblicità.</string>
+    <string name="privacy_purchases">Gli acquisti passano da Google Play. Le tue foto, i loro nomi, le cartelle o dati ricavati da esse non vengono mai inviati.</string>
+    <string name="privacy_ads">La versione gratuita mostra pubblicità di Google AdMob. Puoi cambiare il consenso nelle impostazioni. Le tue foto, i loro nomi, le cartelle o dati ricavati da esse non arrivano mai agli inserzionisti. Con Pro niente pubblicità.</string>
     <string name="continue_">Avanti</string>
     <string name="notif_channel">Promemoria</string>
     <string name="notif_due_body">Oggi è il momento di rivedere qualcosa in «Più tardi».</string>
@@ -527,7 +527,7 @@
     <string name="pro_active_title">Pro è attivo</string>
     <string name="pro_active_sub">Acquisto unico: senza pubblicità, senza limite giornaliero e con tutti gli strumenti Pro.</string>
     <string name="later_notify_title">Vuoi un promemoria quando è il momento?</string>
-    <string name="pro_privacy_no_ads">Foto e file vengono controllati e organizzati sul dispositivo. L’acquisto invia dati tecnici a Google, non foto, nomi di file o somme di controllo.</string>
+    <string name="pro_privacy_no_ads">Foto e file vengono controllati e ordinati solo sul tuo dispositivo. Per l’acquisto va a Google solo lo stretto necessario, mai le tue foto, i loro nomi o dati ricavati da esse.</string>
     <string name="hub_nothing_pending">Tutto controllato</string>
     <plurals name="hub_pending">
         <item quantity="one">%1$d da controllare</item>
@@ -647,7 +647,7 @@
     <string name="tour_today_quick_title">I tuoi accessi rapidi</string>
     <string name="tour_today_quick_text">Foto, video, screenshot o una cartella: crea accessi rapidi a ciò che riordini spesso.</string>
     <string name="tour_today_tab_title">Altri modi per riordinare</string>
-    <string name="tour_today_tab_text">Trovi file grandi, copie, cartelle e raccolte in «Riordina».</string>
+    <string name="tour_today_tab_text">File grandi, foto doppie, singoli mesi e raccolte pronte: qui riordini passo dopo passo.</string>
     <string name="tour_feed_basket_title">Il tuo cestino</string>
     <string name="tour_feed_basket_text">Il numero indica quanti elementi hai scelto di rimuovere. Toccalo per controllare la selezione e svuotare il cestino.</string>
     <string name="tour_feed_undo_title">Annulla azione</string>
@@ -704,8 +704,8 @@
     <string name="grid_open">Panoramica</string>
     <string name="grid_select_all">Tutti</string>
     <string name="grid_select_none">Nessuno</string>
-    <string name="help_tours_again">Mostra di nuovo i tutorial</string>
-    <string name="help_tours_reset">I tutorial ricompariranno alla prossima apertura di ogni schermata.</string>
+    <string name="help_tours_again">Mostra di nuovo la guida e i suggerimenti</string>
+    <string name="help_tours_reset">La guida e i suggerimenti riappariranno la prossima volta.</string>
     <string name="hub_months_sub">Finisci mese dopo mese</string>
     <string name="later_back_to_stack">Rimetti nella pila</string>
     <string name="later_bookmarked_row">Messo da parte, senza data</string>
@@ -860,8 +860,8 @@
     <string name="edit_save_replace_action">Salva, originale nel cestino</string>
     <string name="edit_remove_location">Rimuovi posizione</string>
     <string name="edit_remove_location_text">La foto salvata non conterrà il luogo dello scatto.</string>
-    <string name="edit_hint_heic">Salvata come JPEG (HEIC non si può scrivere in modo affidabile su questo dispositivo).</string>
-    <string name="edit_hint_hdr">Le modifiche di colore rimuovono la luminosità HDR aggiuntiva di questa foto.</string>
+    <string name="edit_hint_heic">Salvato come JPEG così funziona ovunque: questo dispositivo non salva i HEIC in modo affidabile.</string>
+    <string name="edit_hint_hdr">Questa foto ha luci molto brillanti (HDR). Dopo le modifiche al colore brillerà un po’ meno.</string>
     <string name="edit_hint_lossless">Senza perdita: cambia solo l’orientamento, la qualità resta identica.</string>
     <string name="edit_hint_replace_confirm">Android chiede una volta di confermare lo spostamento dell’originale nel cestino di Android.</string>
     <string name="edit_saving">Salvataggio…</string>
@@ -869,7 +869,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s s</string>
     <string name="edit_trim_start">Inizio</string>
     <string name="edit_trim_end">Fine</string>
-    <string name="edit_trim_hint">Trascina le maniglie. Durata totale %1$s. La qualità resta; viene ricodificato solo l’inizio fino al fotogramma chiave successivo.</string>
+    <string name="edit_trim_hint">Trascina le maniglie per scegliere inizio e fine. Durata totale %1$s. La qualità dell’immagine resta invariata.</string>
     <string name="edit_discard_title">Annullare le modifiche?</string>
     <string name="edit_discard_text">La modifica non verrà salvata. L’originale resta com’è.</string>
     <string name="edit_discard">Annulla modifiche</string>
@@ -953,8 +953,8 @@
     <string name="edit_mk_rect">Rettangolo</string>
     <string name="edit_mk_brush">Pennello</string>
     <string name="edit_mk_strength">Intensità</string>
-    <string name="edit_mk_redact_solid_hint">Consigliato per i dati sensibili: i pixel coperti vengono sostituiti del tutto nel file salvato o condiviso.</string>
-    <string name="edit_mk_redact_hint">Pixel e sfocatura usano blocchi grossi. Per testi che devono restare illeggibili, «Coprente» è più sicuro.</string>
+    <string name="edit_mk_redact_solid_hint">Consigliato per i dati personali: ciò che copri sparisce davvero dal file salvato o condiviso.</string>
+    <string name="edit_mk_redact_hint">Con «Pixel» e «Sfocatura» si intuiscono ancora i contorni. Per un testo che deve restare illeggibile, scegli «Coprente».</string>
     <string name="edit_mk_edit_text">Modifica</string>
     <string name="edit_mk_duplicate">Duplica</string>
     <string name="edit_mk_front">In primo piano</string>
@@ -1125,7 +1125,7 @@
     <string name="ret_linear">Sfumatura</string>
     <string name="ret_brush">Pennello</string>
     <string name="ret_red_eye">Occhi rossi</string>
-    <string name="ret_red_eye_hint">Tocca un occhio rosso. Ingrandisci con due dita per i volti piccoli. Cambiano solo i pixel chiaramente rossi.</string>
+    <string name="ret_red_eye_hint">Tocca un occhio rosso. Per i volti piccoli, ingrandisci prima con due dita. Cambia solo il rosso nell’occhio.</string>
     <string name="ret_red_eye_undo">Rimuovi l’ultima</string>
     <string name="ret_size">Dimensione</string>
     <string name="ret_new">Nuovo</string>
@@ -1157,7 +1157,7 @@
     <string name="vid_cut_confirm">Rimuovi</string>
     <string name="vid_cut_draft">Rimuovere %1$s – %2$s? Trascina le maniglie rosse.</string>
     <string name="vid_cut_hint_restore">Le parti rosse vengono davvero rimosse al salvataggio (totale %1$s). Tocca una parte qui sotto per recuperarla.</string>
-    <string name="vid_trim_hint_reencode">Trascina le maniglie. Totale %1$s. Per le altre modifiche il video viene ricodificato.</string>
+    <string name="vid_trim_hint_reencode">Trascina le maniglie. Durata totale %1$s. Per le altre modifiche, il video viene ricreato al salvataggio e ci vuole un po’ di più.</string>
     <string name="vid_speed_result">Risultato: %1$s</string>
     <string name="vid_speed_hint">L’audio viene accelerato o rallentato mantenendo l’intonazione.</string>
     <string name="vid_no_audio">Questo video non ha audio.</string>
@@ -1166,7 +1166,7 @@
     <string name="vid_volume">Volume</string>
     <string name="vid_fade">Dissolvenza in entrata e uscita</string>
     <string name="vid_fade_none">Nessuna</string>
-    <string name="vid_audio_export">Salva audio come M4A</string>
+    <string name="vid_audio_export">Salva solo l’audio</string>
     <string name="vid_audio_suffix">audio</string>
     <string name="vid_audio_running">Salvataggio audio</string>
     <string name="vid_audio_saved">«%1$s» salvato in Music/PhotoMaid.</string>
@@ -1176,12 +1176,12 @@
     <string name="vid_fill_hint">Riempie il nuovo formato; i bordi in eccesso vengono tagliati.</string>
     <string name="vid_fit_hint">Mostra il video intero; lo spazio libero diventa bande nere.</string>
     <string name="vid_profile">Qualità</string>
-    <string name="vid_profile_high">Alta qualità (risoluzione originale)</string>
-    <string name="vid_profile_balanced">Bilanciato (fino a 1080p)</string>
-    <string name="vid_profile_small">File piccolo (720p)</string>
+    <string name="vid_profile_high">Qualità migliore (come l’originale)</string>
+    <string name="vid_profile_balanced">Bilanciato (Full HD)</string>
+    <string name="vid_profile_small">File piccolo (HD)</string>
     <string name="vid_estimate">circa %1$s</string>
-    <string name="vid_estimate_hint">Stima da bitrate × durata. Il file salvato mostra la dimensione reale.</string>
-    <string name="vid_hdr_hint">Questo video HDR viene salvato in SDR perché sono applicate modifiche al colore.</string>
+    <string name="vid_estimate_hint">È solo una stima. La dimensione reale la vedi dopo il salvataggio.</string>
+    <string name="vid_hdr_hint">Questo video ha colori molto brillanti (HDR). Con le modifiche al colore viene salvato con colori normali.</string>
     <string name="tab_library">Foto</string>
     <string name="lib_filter_all">Tutti</string>
     <string name="lib_filter_favorites">Preferiti</string>
@@ -1341,7 +1341,7 @@
     <string name="systrash_delete_text">Poi conferma con Android. Foto e video eliminati definitivamente non si possono recuperare.</string>
     <string name="lib_info_raw">File RAW</string>
     <string name="set_delete_permanently">Elimina definitivamente</string>
-    <string name="set_delete_permanently_detail">Disattivato: svuotare sposta nel cestino di Android (recuperabile per un po’). Attivo: eliminato subito per sempre.</string>
+    <string name="set_delete_permanently_detail">Disattivato: svuotando, tutto va prima nel cestino di Android e si può recuperare per un po’. Attivato: tutto viene eliminato definitivamente subito.</string>
     <string name="set_delete_permanently_confirm_title">Attivare l’eliminazione definitiva?</string>
     <string name="set_delete_permanently_confirm_text">Da ora in poi svuotare il cestino di PhotoMaid elimina foto e video per sempre. Non finiscono nel cestino di Android e non si possono recuperare, nemmeno da backup non ancora sincronizzati. Android chiede comunque ogni volta.</string>
     <string name="set_delete_permanently_confirm_action">Attiva</string>
@@ -1398,9 +1398,9 @@
     <string name="movie_format_first">Come la prima clip</string>
     <string name="movie_fit_note">Le clip non vengono mai deformate: o si vede l’immagine intera (con bordi neri) o riempie il riquadro e i bordi vengono tagliati.</string>
     <string name="movie_quality">Qualità</string>
-    <string name="movie_quality_high">Alta (1080p)</string>
+    <string name="movie_quality_high">Alta (Full HD)</string>
     <string name="movie_quality_balanced">Bilanciata</string>
-    <string name="movie_quality_small">Piccola (720p)</string>
+    <string name="movie_quality_small">Piccola (HD)</string>
     <string name="movie_music_none">Ancora nessuna musica.</string>
     <string name="movie_music_pick">Scegli un file audio</string>
     <string name="movie_music_remove">Rimuovi</string>
@@ -1423,7 +1423,7 @@
     <string name="tools_convert">Converti</string>
     <string name="tools_convert_sub">ad es. da HEIC a JPEG, come nuove copie</string>
     <string name="tools_location">Rimuovi posizione</string>
-    <string name="tools_location_sub">Copie senza dati GPS, ad es. prima di condividere</string>
+    <string name="tools_location_sub">Copie senza posizione, ad es. prima di condividere</string>
     <string name="tools_stitch">Unisci screenshot</string>
     <string name="tools_stitch_sub">Una sotto l’altra, come un’unica immagine lunga</string>
     <string name="tools_gif">Crea GIF</string>
@@ -1444,8 +1444,8 @@
     <string name="tools_q_small">File più piccolo</string>
     <string name="tools_remove_location">Rimuovi anche la posizione</string>
     <string name="tools_target_format">Nuovo formato</string>
-    <string name="tools_convert_note">Il JPEG si apre ovunque; il PNG mantiene ogni pixel ma i file sono più grandi. I file già in questo formato vengono saltati.</string>
-    <string name="tools_location_note">Le copie JPEG mantengono ogni pixel: vengono rimossi solo i dati GPS. Le foto senza posizione vengono saltate.</string>
+    <string name="tools_convert_note">Ogni dispositivo apre i JPEG. PNG conserva tutti i dettagli, ma i file diventano più grandi. Le foto già in questo formato vengono saltate.</string>
+    <string name="tools_location_note">Le copie sono identiche all’originale: viene tolto solo il luogo dello scatto. Le foto senza posizione vengono saltate.</string>
     <string name="tools_stitch_note">Nell’ordine scelto. Tutte prendono la larghezza dell’immagine più stretta: niente viene deformato o ingrandito.</string>
     <string name="tools_gif_size">Dimensione</string>
     <string name="tools_gif_part">Parte del video (max 10 s)</string>
@@ -1492,9 +1492,9 @@
     <string name="dock_crop">Ritaglia</string>
     <string name="dock_more">Altro</string>
     <string name="vid_trim_hint_short">Trascina le maniglie per impostare inizio e fine.</string>
-    <string name="vid_export_info">Info esportazione</string>
-    <string name="vid_export_info_fast">Vengono tagliati solo inizio e fine. PhotoMaid prova a mantenere la qualità e ricodifica solo l’inizio fino al fotogramma chiave successivo. Se il video non lo consente, viene ricodificato tutto. Durata totale %1$s.</string>
-    <string name="vid_export_info_reencode">Per le altre modifiche, al salvataggio viene ricodificato l’intero video. Durata totale %1$s.</string>
+    <string name="vid_export_info">Come viene salvato</string>
+    <string name="vid_export_info_fast">Hai tagliato solo inizio e fine. È veloce e la qualità resta come nell’originale. Se questo video non lo consente, PhotoMaid lo ricrea per intero e ci vuole un po’ di più. Durata totale %1$s.</string>
+    <string name="vid_export_info_reencode">Per le altre modifiche, PhotoMaid ricrea l’intero video al salvataggio. Può volerci un momento. Durata totale %1$s.</string>
     <string name="lib_mode_albums">Album</string>
     <string name="org_new_album">Nuovo album</string>
     <string name="org_album_name">Nome dell’album</string>
@@ -1588,7 +1588,7 @@
     <string name="wf_target_note">PhotoMaid misura il risultato. Se l’obiettivo non è raggiungibile entro questi limiti, non viene creato alcun file e vedrai perché.</string>
     <string name="wf_videos">Video</string>
     <string name="wf_video_skip">Salta</string>
-    <string name="wf_video_note">I video vengono ricodificati alla dimensione obiettivo; la risoluzione cala solo se necessario.</string>
+    <string name="wf_video_note">I video vengono salvati di nuovo per rientrare nella dimensione scelta. L’immagine si rimpicciolisce solo se serve.</string>
     <string name="wf_location">Rimuovi posizione</string>
     <string name="wf_name_base">Nome file</string>
     <string name="wf_name_base_hint">es. Annuncio → Annuncio_001 (vuoto = nome originale)</string>
@@ -1628,7 +1628,7 @@
     <string name="wf_reason_video">I video non fanno parte di questo flusso.</string>
     <string name="wf_reason_video_long">Troppo lungo per la dimensione obiettivo: nessun file creato.</string>
     <string name="wf_reason_unreachable">Versione più piccola misurata: %1$s, sopra l’obiettivo, quindi nessun file creato.</string>
-    <string name="wf_reason_error">Impossibile elaborare.</string>
+    <string name="wf_reason_error">Purtroppo non ha funzionato.</string>
     <string name="wf_summary">%1$d fatti · %2$d saltati · %3$d obiettivo non raggiunto · %4$d non riusciti</string>
     <string name="wf_share_again">Condividi di nuovo</string>
     <string name="wf_counts">%1$s foto · %2$s video</string>
@@ -1722,4 +1722,12 @@
         <item quantity="other">Impossibile leggere %1$d foto: i loro spazi restano vuoti.</item>
     </plurals>
     <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">Tutte le tue foto</string>
+    <string name="tour_lib_text">Qui trovi tutte le foto e i video: per giorno, mese o anno, in cartelle, album e preferiti. Guardare non cambia nulla.</string>
+    <string name="tour_studio_title">Dai spazio alla creatività</string>
+    <string name="tour_studio_text">Modifica le foto, crea collage, brevi filmati e PDF e usa strumenti pratici. Nascono sempre nuovi file: gli originali restano come sono.</string>
+    <string name="tour_history_title">Più tardi e cronologia</string>
+    <string name="tour_history_text">Qui vedi cosa hai tenuto, scartato o rimandato. Puoi ancora cambiare ogni decisione.</string>
+    <string name="tour_settings_title">Impostazioni e aiuto</string>
+    <string name="tour_settings_text">Imposta PhotoMaid come preferisci e trova risposte. Puoi ripetere questa guida in qualsiasi momento.</string>
 </resources>

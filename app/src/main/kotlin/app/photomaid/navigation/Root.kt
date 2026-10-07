@@ -523,7 +523,12 @@ private fun MainTabs(rootNav: Nav) {
         CoachStep("today.review", stringResource(R.string.tour_today_hero_title), stringResource(R.string.tour_today_hero_text)),
         CoachStep("today.status", stringResource(R.string.tour_today_status_title), stringResource(R.string.tour_today_status_text)),
         CoachStep("today.quick", stringResource(R.string.tour_today_quick_title), stringResource(R.string.tour_today_quick_text)),
+        // Rundgang durch alle Bereiche (Reihenfolge wie die Leiste), zum Schluss Einstellungen & Hilfe.
+        CoachStep("tab.LIBRARY", stringResource(R.string.tour_lib_title), stringResource(R.string.tour_lib_text)),
         CoachStep("tab.CLEANUP", stringResource(R.string.tour_today_tab_title), stringResource(R.string.tour_today_tab_text)),
+        CoachStep("tab.STUDIO", stringResource(R.string.tour_studio_title), stringResource(R.string.tour_studio_text)),
+        CoachStep("tab.HISTORY", stringResource(R.string.tour_history_title), stringResource(R.string.tour_history_text)),
+        CoachStep("today.settings", stringResource(R.string.tour_settings_title), stringResource(R.string.tour_settings_text)),
     )
     CoachHost(tourSteps, active = !settings.todayTourSeen && tab == AppTab.TODAY && atRootNow && access.canRead,
         onFinish = { tourScope.launch { app.updateSettings { it.copy(todayTourSeen = true) } } }, modifier = Modifier.fillMaxSize()) {

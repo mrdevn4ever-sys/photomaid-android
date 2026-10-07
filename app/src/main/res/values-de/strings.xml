@@ -35,7 +35,7 @@
     <string name="undo">Rückgängig</string>
     <string name="error_settings_not_saved">Die Einstellung konnte nicht gespeichert werden.</string>
     <string name="error_change_not_saved">Die Änderung konnte nicht gespeichert werden.</string>
-    <string name="error_undo_conflict">Nicht mehr rückgängig zu machen: Der Eintrag wurde inzwischen geändert.</string>
+    <string name="error_undo_conflict">Das lässt sich nicht mehr rückgängig machen, weil du es inzwischen geändert hast.</string>
     <string name="error_undo_busy">Während der Papierkorb geleert wird, kannst du keine Aktion rückgängig machen.</string>
     <string name="error_undo_generic">Das lässt sich gerade nicht rückgängig machen.</string>
     <string name="tab_today">Heute</string>
@@ -66,7 +66,7 @@
         <item quantity="one">%1$d Element aus „Später“ ist wieder dran</item>
         <item quantity="other">%1$d Elemente aus „Später“ sind wieder dran</item>
     </plurals>
-    <string name="today_reconciliation">Wir konnten das Ergebnis einer früheren Papierkorb-Aktion nicht sicher feststellen. Es wird nichts erneut gelöscht.</string>
+    <string name="today_reconciliation">Beim letzten Leeren des Papierkorbs wurde etwas unterbrochen. Zur Sicherheit wird nichts noch einmal gelöscht.</string>
     <string name="cat_photos">Fotos</string>
     <string name="cat_videos">Videos</string>
     <string name="cat_screenshots">Screenshots</string>
@@ -257,7 +257,7 @@
     <string name="large_unknown_footer">Für diese Dateien ist keine Größe verfügbar. Ihre Größen werden nicht geschätzt oder mitgezählt.</string>
     <string name="storage_a">Dein Gerät</string>
     <string name="storage_available">%1$s frei laut Android</string>
-    <string name="storage_unavailable">Speicherinfo nicht verfügbar</string>
+    <string name="storage_unavailable">Speicherplatz gerade nicht abrufbar</string>
     <string name="storage_b">Für PhotoMaid sichtbar</string>
     <string name="storage_of_which_screens">davon Screenshots</string>
     <string name="storage_connected_folders">Verbundene Ordner</string>
@@ -379,12 +379,12 @@
     <string name="pro_f1">Ohne Werbung</string>
     <string name="pro_f1d">Keine Werbekarten zwischen deinen Fotos und Videos.</string>
     <string name="pro_details">So funktioniert Pro</string>
-    <string name="pro_details_dup">Kopien haben genau den gleichen Dateiinhalt. PhotoMaid vergleicht ihn auf deinem Gerät, nicht in der Cloud. Ähnliche Bilder zählen nicht als Kopien.</string>
+    <string name="pro_details_dup">Kopien sind Dateien, die bis ins letzte Detail gleich sind. PhotoMaid vergleicht sie auf deinem Gerät, nicht in der Cloud. Bilder, die sich nur ähneln, zählen nicht als Kopien.</string>
     <string name="pro_details_rules">Sammlungen zeigen passende Inhalte von deinem Gerät. Du öffnest und prüfst sie selbst. Sie löschen nichts automatisch und räumen nicht im Hintergrund auf.</string>
-    <string name="pro_details_cleanup">Das Tageslimit zählt erfolgreich entfernte Elemente nach deiner Bestätigung im Papierkorb. Wischen zählt nicht dazu.</string>
+    <string name="pro_details_cleanup">Zum Tageslimit zählt nur, was du im Papierkorb wirklich entfernst. Wischen zählt nie.</string>
     <string name="expanded">Ausgeklappt</string>
     <string name="collapsed">Eingeklappt</string>
-    <string name="pro_privacy">Fotos und Dateien werden auf deinem Gerät geprüft und sortiert. Für Käufe und Werbung werden technische Daten an Google oder Werbeanbieter übertragen – keine Fotos, Dateinamen oder Prüfsummen.</string>
+    <string name="pro_privacy">Deine Fotos und Dateien werden nur auf deinem Gerät geprüft und sortiert. Für Käufe und Werbung geht nur das Nötigste an Google oder Werbeanbieter – nie deine Fotos, ihre Namen oder Angaben daraus.</string>
     <string name="pro_pending">Dein Kauf wird noch bestätigt.</string>
     <string name="pro_unlock">PhotoMaid Pro freischalten</string>
     <string name="pro_price_once">%1$s · Einmalkauf</string>
@@ -402,7 +402,7 @@
     <string name="pro_msg_nofill">Gerade ist keine Werbung verfügbar. Versuche es später erneut.</string>
     <string name="pro_msg_ad_unavailable">Die Pro-Funktionen lassen sich gerade nicht testen. Es wurde nichts freigeschaltet.</string>
     <string name="set_privacy">Datenschutz &amp; Zugriff</string>
-    <string name="set_privacy_detail">Verarbeitung auf dem Gerät</string>
+    <string name="set_privacy_detail">Deine Fotos bleiben auf deinem Gerät</string>
     <string name="set_notifications">Mitteilungen</string>
     <string name="allowed">Erlaubt</string>
     <string name="off">Aus</string>
@@ -430,13 +430,13 @@
     <string name="help_decide">Entscheiden</string>
     <string name="help_decide_text">Wische nach oben zum Behalten, nach links für den Papierkorb und nach rechts für später. Standardmäßig siehst du es in 2 Tagen wieder. Den Standardabstand kannst du in den Einstellungen ändern. Direkt nach dem Wischen wählst du über „Ändern“ ein anderes Datum. Nach unten geht es zurück, ohne eine neue Entscheidung.</string>
     <string name="help_delete">Löschen</string>
-    <string name="help_delete_text">Beim Wischen wird nichts gelöscht. Aussortiertes landet zuerst im PhotoMaid-Papierkorb. Erst beim Leeren bestätigst du das Entfernen. Fotos und Videos kommen nach der Android-Bestätigung in den Android-Papierkorb. Dateien werden endgültig gelöscht.</string>
+    <string name="help_delete_text">Beim Wischen wird nie etwas gelöscht. Was du aussortierst, kommt erst in den PhotoMaid-Papierkorb. Erst wenn du ihn leerst, wird wirklich entfernt – Fotos und Videos landen dann im Android-Papierkorb, nachdem Android noch einmal nachgefragt hat. Dateien aus verbundenen Ordnern werden endgültig gelöscht.</string>
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">Cloud-Dienste wie Google Fotos können Löschungen auf andere Geräte übertragen. Prüfe dazu ihre Einstellungen. Inhalte, die nur in der Cloud liegen, lädt PhotoMaid nicht herunter.</string>
     <string name="help_free">Kostenlos</string>
     <string name="help_free_text">Ansehen, wischen und für später speichern ist unbegrenzt. Ohne Pro kannst du pro Tag bis zu %1$d davon entfernen.</string>
     <string name="privacy_title">Deine Privatsphäre zuerst</string>
-    <string name="privacy_text">PhotoMaid prüft deine Fotos, Videos und freigegebenen Dateien auf deinem Gerät. Du brauchst kein PhotoMaid-Konto; es gibt keinen PhotoMaid-Server. Cloud-Dienste wie Google Fotos können Löschungen mit anderen Geräten synchronisieren.</string>
+    <string name="privacy_text">PhotoMaid sieht sich deine Fotos, Videos und freigegebenen Dateien nur auf deinem Gerät an. Du brauchst kein Konto, und es gibt keinen PhotoMaid-Server. Gut zu wissen: Bei Cloud-Diensten wie Google Fotos kann Gelöschtes auch auf deinen anderen Geräten verschwinden.</string>
     <string name="privacy_media">Fotos &amp; Videos</string>
     <string name="privacy_media_text">Damit du Fotos und Videos ansehen, sortieren und nach deiner Bestätigung entfernen kannst.</string>
     <string name="privacy_allow">Zugriff erlauben</string>
@@ -450,8 +450,8 @@
     <string name="privacy_notifications_allow">Mitteilungen erlauben</string>
     <string name="privacy_folders">Ordner (optional)</string>
     <string name="privacy_folders_text">Weitere Dateien stammen nur aus Ordnern, die du auswählst. Verbinde sie unter Aufräumen › Dateien.</string>
-    <string name="privacy_purchases">Käufe werden über Google Play abgewickelt. Fotos, Dateinamen, Pfade und Prüfsummen werden dafür nicht übertragen.</string>
-    <string name="privacy_ads">Die kostenlose Version zeigt Werbung von Google AdMob. Deine Werbe-Einwilligung kannst du in den Einstellungen ändern. Fotos, Dateinamen, Pfade und Prüfsummen werden nicht an Werbeanbieter weitergegeben. Mit Pro gibt es keine Werbung.</string>
+    <string name="privacy_purchases">Käufe laufen über Google Play. Deine Fotos, ihre Namen, Ordner oder Angaben daraus werden dafür nie übertragen.</string>
+    <string name="privacy_ads">In der kostenlosen Version gibt es Werbung von Google AdMob. Deine Einwilligung dazu kannst du in den Einstellungen ändern. Deine Fotos, ihre Namen, Ordner oder Angaben daraus gehen nie an Werbeanbieter. Mit Pro gibt es keine Werbung.</string>
     <string name="continue_">Weiter</string>
     <string name="notif_channel">Erinnerungen</string>
     <string name="notif_due_body">Heute ist etwas aus „Später“ wieder dran.</string>
@@ -503,7 +503,7 @@
     <string name="pro_active_title">Pro ist aktiv</string>
     <string name="pro_active_sub">Einmal gekauft: ohne Werbung, ohne Tageslimit und mit allen Pro-Funktionen.</string>
     <string name="later_notify_title">Erinnern, wenn es wieder dran ist?</string>
-    <string name="pro_privacy_no_ads">Fotos und Dateien werden auf deinem Gerät geprüft und sortiert. Für den Kauf werden technische Daten an Google übertragen – keine Fotos, Dateinamen oder Prüfsummen.</string>
+    <string name="pro_privacy_no_ads">Deine Fotos und Dateien werden nur auf deinem Gerät geprüft und sortiert. Für den Kauf geht nur das Nötigste an Google – nie deine Fotos, ihre Namen oder Angaben daraus.</string>
     <string name="hub_nothing_pending">Alles durchgesehen</string>
     <plurals name="hub_pending">
         <item quantity="one">%1$d durchsehen</item>
@@ -618,7 +618,7 @@
     <string name="tour_today_quick_title">Deine Schnellzugriffe</string>
     <string name="tour_today_quick_text">Fotos, Videos, Screenshots oder ein Ordner: Lege Schnellzugriffe für das an, was du oft aufräumst.</string>
     <string name="tour_today_tab_title">Mehr zum Aufräumen</string>
-    <string name="tour_today_tab_text">Große Dateien, Kopien, Ordner und Sammlungen findest du unter „Aufräumen“.</string>
+    <string name="tour_today_tab_text">Große Dateien, doppelte Fotos, einzelne Monate und fertige Sammlungen: Hier räumst du gezielt auf.</string>
     <string name="tour_feed_basket_title">Dein Papierkorb</string>
     <string name="tour_feed_basket_text">Die Zahl zeigt, wie viel du aussortiert hast. Tippe darauf, um die Auswahl anzusehen und den Papierkorb zu leeren.</string>
     <string name="tour_feed_undo_title">Rückgängig</string>
@@ -651,7 +651,7 @@
     <string name="excl_add_footer">Ausgenommene Ordner und ihre Unterordner erscheinen in keinem Feed, keiner Zahl und keiner Monatsübersicht. Bereits getroffene Entscheidungen bleiben erhalten.</string>
     <string name="excl_add_header">Ordner ausnehmen</string>
     <string name="excl_confirm_action">Ausnehmen</string>
-    <string name="excl_confirm_text">Medien aus diesem Ordner und seinen Unterordnern erscheinen nicht mehr beim Aufräumen. Nichts wird gelöscht oder verschoben. Rückgängig in Einstellungen › Ausgenommene Ordner.</string>
+    <string name="excl_confirm_text">Fotos und Videos aus diesem Ordner und seinen Unterordnern erscheinen nicht mehr beim Aufräumen. Nichts wird gelöscht oder verschoben. Rückgängig in Einstellungen › Ausgenommene Ordner.</string>
     <string name="excl_confirm_title">„%1$s“ beim Aufräumen ausblenden?</string>
     <string name="excl_done">„%1$s“ wird beim Aufräumen nicht mehr gezeigt</string>
     <string name="excl_header">Ausgenommen</string>
@@ -674,8 +674,8 @@
     <string name="grid_open">Übersicht</string>
     <string name="grid_select_all">Alle</string>
     <string name="grid_select_none">Keine</string>
-    <string name="help_tours_again">Tutorials erneut zeigen</string>
-    <string name="help_tours_reset">Die Tutorials erscheinen beim nächsten Öffnen wieder.</string>
+    <string name="help_tours_again">Rundgang und Tipps noch einmal zeigen</string>
+    <string name="help_tours_reset">Der Rundgang und die Tipps erscheinen beim nächsten Öffnen wieder.</string>
     <string name="hub_months_sub">Monat für Monat fertig werden</string>
     <string name="later_back_to_stack">Zurück in den Stapel</string>
     <string name="later_bookmarked_row">Beiseitegelegt, ohne Termin</string>
@@ -686,7 +686,7 @@
     <string name="month_done">Durchgesehen</string>
     <string name="months_empty_text">Sobald Fotos oder Videos ein Aufnahmedatum haben, erscheinen hier die Monate.</string>
     <string name="months_empty_title">Noch keine Monate</string>
-    <string name="months_intro">So weit bist du in jedem Monat. Später zurückgestellte Medien zählen als durchgesehen.</string>
+    <string name="months_intro">So weit bist du in jedem Monat. Was du auf später gelegt hast, zählt als durchgesehen.</string>
     <string name="months_title">Nach Monat</string>
     <string name="order_largest">Größte zuerst</string>
     <string name="order_newest">Neueste zuerst</string>
@@ -706,7 +706,7 @@
     <string name="series_subtitle">Kurz hintereinander aufgenommen · %1$d</string>
     <string name="series_title">Serie vergleichen</string>
     <string name="set_buttons">Tasten zum Entscheiden</string>
-    <string name="set_buttons_detail">Zeigt unter dem Medium Tasten für Papierkorb, Behalten und Später. Wischen funktioniert weiterhin.</string>
+    <string name="set_buttons_detail">Zeigt unter dem Foto oder Video Tasten für Papierkorb, Behalten und Später. Wischen funktioniert weiterhin.</string>
     <string name="set_excluded_folders">Ausgenommene Ordner</string>
     <string name="today_continue_month">Weitermachen: %1$s</string>
     <string name="today_new_since_sub">seit deinem letzten Aufräumen</string>
@@ -821,8 +821,8 @@
     <string name="edit_save_replace_action">Speichern, Original in den Papierkorb</string>
     <string name="edit_remove_location">Standort entfernen</string>
     <string name="edit_remove_location_text">Das gespeicherte Foto enthält dann keinen Aufnahmeort.</string>
-    <string name="edit_hint_heic">Wird als JPEG gespeichert (HEIC lässt sich auf diesem Gerät nicht zuverlässig schreiben).</string>
-    <string name="edit_hint_hdr">Farbänderungen entfernen die zusätzliche HDR-Helligkeit dieses Fotos.</string>
+    <string name="edit_hint_heic">Wird als JPEG gespeichert, damit es überall funktioniert – HEIC kann dieses Gerät nicht zuverlässig speichern.</string>
+    <string name="edit_hint_hdr">Dieses Foto hat besonders helle Lichter (HDR). Nach Farbänderungen leuchtet es etwas weniger stark.</string>
     <string name="edit_hint_lossless">Verlustfrei: Nur die Ausrichtung ändert sich, die Bildqualität bleibt exakt gleich.</string>
     <string name="edit_hint_replace_confirm">Android fragt einmal nach, ob das Original in den Android-Papierkorb darf.</string>
     <string name="edit_saving">Wird gespeichert …</string>
@@ -830,7 +830,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s s</string>
     <string name="edit_trim_start">Anfang</string>
     <string name="edit_trim_end">Ende</string>
-    <string name="edit_trim_hint">Griffe ziehen. Gesamtlänge %1$s. Die Qualität bleibt; nur der Anfang bis zum nächsten Schlüsselbild wird neu kodiert.</string>
+    <string name="edit_trim_hint">Zieh an den Griffen, um Anfang und Ende festzulegen. Gesamtlänge %1$s. Die Bildqualität bleibt erhalten.</string>
     <string name="edit_discard_title">Änderungen verwerfen?</string>
     <string name="edit_discard_text">Deine Bearbeitung wird nicht gespeichert. Das Original bleibt, wie es ist.</string>
     <string name="edit_discard">Verwerfen</string>
@@ -839,10 +839,10 @@
     <string name="edit_done_copy_size">Als Kopie gespeichert · %1$s</string>
     <string name="edit_done_replaced">Original ersetzt · liegt im Android-Papierkorb</string>
     <string name="edit_done_declined">Original blieb erhalten · Bearbeitung als Kopie gespeichert</string>
-    <string name="edit_err_gone">Das Medium wurde inzwischen geändert, verschoben oder gelöscht. Es wurde nichts gespeichert.</string>
+    <string name="edit_err_gone">Das Foto oder Video wurde inzwischen geändert, verschoben oder gelöscht. Es wurde nichts gespeichert.</string>
     <string name="edit_err_too_large">Dieses Foto ist für dieses Gerät zu groß, um es vollständig zu bearbeiten. Versuche einen kleineren Ausschnitt oder eine geringere Größe.</string>
     <string name="edit_err_save">Die Bearbeitung konnte nicht gespeichert werden. Das Original ist unverändert.</string>
-    <string name="edit_err_load">Dieses Medium lässt sich nicht zum Bearbeiten öffnen.</string>
+    <string name="edit_err_load">Dieses Foto oder Video lässt sich leider nicht bearbeiten.</string>
     <string name="redo">Wiederholen</string>
     <string name="edits_title">Bearbeitet</string>
     <string name="hub_edits_sub">Kopien und ersetzte Originale</string>
@@ -914,8 +914,8 @@
     <string name="edit_mk_rect">Rechteck</string>
     <string name="edit_mk_brush">Pinsel</string>
     <string name="edit_mk_strength">Stärke</string>
-    <string name="edit_mk_redact_solid_hint">Empfohlen für Sensibles: Die abgedeckten Pixel werden in der gespeicherten oder geteilten Datei vollständig ersetzt.</string>
-    <string name="edit_mk_redact_hint">Verpixeln und Unschärfe arbeiten mit groben Blöcken. Für Text, der sicher unlesbar sein muss, ist „Deckend“ sicherer.</string>
+    <string name="edit_mk_redact_solid_hint">Empfohlen für Persönliches: Was du abdeckst, ist in der gespeicherten oder geteilten Datei wirklich weg.</string>
+    <string name="edit_mk_redact_hint">Bei „Verpixeln“ und „Unschärfe“ kann man Umrisse noch erahnen. Für Text, der sicher unlesbar sein soll, nimm lieber „Deckend“.</string>
     <string name="edit_mk_edit_text">Bearbeiten</string>
     <string name="edit_mk_duplicate">Duplizieren</string>
     <string name="edit_mk_front">Nach vorne</string>
@@ -1083,7 +1083,7 @@
     <string name="ret_linear">Verlauf</string>
     <string name="ret_brush">Pinsel</string>
     <string name="ret_red_eye">Rote Augen</string>
-    <string name="ret_red_eye_hint">Tippe auf ein rotes Auge. Bei kleinen Gesichtern mit zwei Fingern heranzoomen. Nur deutlich rote Pixel ändern sich.</string>
+    <string name="ret_red_eye_hint">Tippe auf ein rotes Auge. Bei kleinen Gesichtern vorher mit zwei Fingern heranzoomen. Es ändert sich nur das Rot im Auge.</string>
     <string name="ret_red_eye_undo">Letzte entfernen</string>
     <string name="ret_size">Größe</string>
     <string name="ret_new">Neu</string>
@@ -1115,7 +1115,7 @@
     <string name="vid_cut_confirm">Entfernen</string>
     <string name="vid_cut_draft">%1$s – %2$s entfernen? Rote Griffe ziehen.</string>
     <string name="vid_cut_hint_restore">Rote Bereiche werden beim Speichern wirklich entfernt (Gesamtlänge %1$s). Tippe unten auf einen Bereich, um ihn zurückzuholen.</string>
-    <string name="vid_trim_hint_reencode">Griffe ziehen. Gesamtlänge %1$s. Wegen deiner übrigen Änderungen wird das Video neu kodiert.</string>
+    <string name="vid_trim_hint_reencode">Zieh an den Griffen. Gesamtlänge %1$s. Wegen deiner anderen Änderungen wird das Video beim Speichern neu berechnet – das dauert etwas.</string>
     <string name="vid_speed_result">Ergebnis: %1$s</string>
     <string name="vid_speed_hint">Der Ton wird mit gleicher Tonhöhe schneller oder langsamer.</string>
     <string name="vid_no_audio">Dieses Video hat keinen Ton.</string>
@@ -1124,7 +1124,7 @@
     <string name="vid_volume">Lautstärke</string>
     <string name="vid_fade">Ein- und ausblenden</string>
     <string name="vid_fade_none">Keins</string>
-    <string name="vid_audio_export">Ton als M4A speichern</string>
+    <string name="vid_audio_export">Nur den Ton speichern</string>
     <string name="vid_audio_suffix">Ton</string>
     <string name="vid_audio_running">Ton wird gespeichert</string>
     <string name="vid_audio_saved">„%1$s“ in Music/PhotoMaid gespeichert.</string>
@@ -1134,12 +1134,12 @@
     <string name="vid_fill_hint">Füllt das neue Format; Ränder außerhalb werden abgeschnitten.</string>
     <string name="vid_fit_hint">Zeigt das ganze Video; freie Fläche wird zu schwarzen Balken.</string>
     <string name="vid_profile">Qualität</string>
-    <string name="vid_profile_high">Hohe Qualität (Originalauflösung)</string>
-    <string name="vid_profile_balanced">Ausgewogen (bis 1080p)</string>
-    <string name="vid_profile_small">Kleine Datei (720p)</string>
+    <string name="vid_profile_high">Beste Qualität (wie das Original)</string>
+    <string name="vid_profile_balanced">Ausgewogen (Full HD)</string>
+    <string name="vid_profile_small">Kleine Datei (HD)</string>
     <string name="vid_estimate">ca. %1$s</string>
-    <string name="vid_estimate_hint">Schätzung aus Bitrate × Dauer. Die gespeicherte Datei zeigt ihre echte Größe.</string>
-    <string name="vid_hdr_hint">Dieses HDR-Video wird als SDR gespeichert, weil Farbänderungen angewendet werden.</string>
+    <string name="vid_estimate_hint">Nur ungefähr. Wie groß die Datei wirklich wird, siehst du nach dem Speichern.</string>
+    <string name="vid_hdr_hint">Dieses Video hat besonders leuchtende Farben (HDR). Mit deinen Farbänderungen wird es mit normalen Farben gespeichert.</string>
     <string name="tab_library">Fotos</string>
     <string name="lib_filter_all">Alle</string>
     <string name="lib_filter_favorites">Favoriten</string>
@@ -1172,24 +1172,24 @@
     <string name="lib_info_type">Dateityp</string>
     <string name="lib_info_added">Auf diesem Gerät seit</string>
     <plurals name="lib_trash_title">
-        <item quantity="one">%1$d Medium in den Papierkorb?</item>
-        <item quantity="other">%1$d Medien in den Papierkorb?</item>
+        <item quantity="one">%1$d Element in den Papierkorb?</item>
+        <item quantity="other">%1$d Elemente in den Papierkorb?</item>
     </plurals>
     <plurals name="lib_trashed">
-        <item quantity="one">%1$d Medium liegt im PhotoMaid-Papierkorb.</item>
-        <item quantity="other">%1$d Medien liegen im PhotoMaid-Papierkorb.</item>
+        <item quantity="one">%1$d Element liegt im PhotoMaid-Papierkorb.</item>
+        <item quantity="other">%1$d Elemente liegen im PhotoMaid-Papierkorb.</item>
     </plurals>
     <string name="lib_mode_timeline">Zeitachse</string>
     <string name="lib_mode_folders">Ordner</string>
     <string name="lib_folders_search_hint">Ordner suchen …</string>
     <string name="lib_folders_none_query">Kein Ordner passt zu „%1$s“.</string>
     <string name="lib_folders_sort_recent">Zuletzt aktualisiert</string>
-    <string name="lib_folders_sort_count">Meiste Medien</string>
+    <string name="lib_folders_sort_count">Meiste Fotos</string>
     <string name="lib_folders_footer">Ordner zeigen, wo deine Fotos und Videos liegen. Android kennt keine leeren Ordner: Ein neuer Ordner erscheint, sobald du etwas hineinverschiebst.</string>
     <string name="lib_new_folder">Neuer Ordner</string>
     <string name="lib_new_folder_note">Danach wählst du Fotos und Videos, die hineinkommen. Der Ordner entsteht unter „Pictures“.</string>
     <string name="lib_new_folder_exists">Diesen Ordner gibt es schon. Was du gleich wählst, wird hineinverschoben.</string>
-    <string name="lib_new_folder_next">Medien wählen</string>
+    <string name="lib_new_folder_next">Fotos auswählen</string>
     <string name="lib_new_folder_pick">In neuen Ordner verschieben</string>
     <string name="lib_new_group">Neue Gruppe</string>
     <string name="lib_groups">Gruppen</string>
@@ -1223,7 +1223,7 @@
     <string name="lib_hide_folder_title">„%1$s“ in PhotoMaid ausblenden?</string>
     <string name="lib_hide_folder_text">Der Ordner und seine Unterordner erscheinen nicht mehr unter „Fotos“ und beim Aufräumen. Nichts wird verschoben oder gelöscht; andere Apps zeigen ihn weiter. Wieder einblenden unter Ordner › Ausgeblendet.</string>
     <string name="lib_hidden_title">Ausgeblendet</string>
-    <string name="lib_hidden_row">Ordner und Medien, die PhotoMaid nicht zeigt</string>
+    <string name="lib_hidden_row">Ordner, Fotos und Videos, die PhotoMaid nicht zeigt</string>
     <string name="lib_hidden_intro">PhotoMaid zeigt das hier nirgends. Die Dateien sind unverändert, andere Apps zeigen sie weiter.</string>
     <string name="lib_hidden_none_title">Nichts ausgeblendet</string>
     <string name="lib_hidden_none_text">Nutze „In PhotoMaid ausblenden“ bei einem Ordner, einem Foto oder einer Auswahl.</string>
@@ -1239,20 +1239,20 @@
         <item quantity="other">%1$d Ordner</item>
     </plurals>
     <plurals name="lib_hide_title">
-        <item quantity="one">%1$d Medium in PhotoMaid ausblenden?</item>
-        <item quantity="other">%1$d Medien in PhotoMaid ausblenden?</item>
+        <item quantity="one">%1$d Element in PhotoMaid ausblenden?</item>
+        <item quantity="other">%1$d Elemente in PhotoMaid ausblenden?</item>
     </plurals>
     <plurals name="lib_hidden_done">
-        <item quantity="one">%1$d Medium in PhotoMaid ausgeblendet</item>
-        <item quantity="other">%1$d Medien in PhotoMaid ausgeblendet</item>
+        <item quantity="one">%1$d Element in PhotoMaid ausgeblendet</item>
+        <item quantity="other">%1$d Elemente in PhotoMaid ausgeblendet</item>
     </plurals>
     <plurals name="lib_unhidden">
-        <item quantity="one">%1$d Medium wieder eingeblendet</item>
-        <item quantity="other">%1$d Medien wieder eingeblendet</item>
+        <item quantity="one">%1$d Element wieder eingeblendet</item>
+        <item quantity="other">%1$d Elemente wieder eingeblendet</item>
     </plurals>
     <plurals name="lib_hidden_media">
-        <item quantity="one">%1$d ausgeblendetes Medium</item>
-        <item quantity="other">%1$d ausgeblendete Medien</item>
+        <item quantity="one">%1$d ausgeblendetes Element</item>
+        <item quantity="other">%1$d ausgeblendete Elemente</item>
     </plurals>
     <string name="slideshow_start">Diashow</string>
     <string name="slideshow_from_here">Diashow ab hier</string>
@@ -1291,25 +1291,25 @@
     <string name="systrash_delete_text">Bestätige anschließend bei Android. Endgültig gelöschte Fotos und Videos lassen sich nicht wiederherstellen.</string>
     <string name="lib_info_raw">RAW-Datei</string>
     <string name="set_delete_permanently">Endgültig löschen</string>
-    <string name="set_delete_permanently_detail">Aus: Leeren legt in den Android-Papierkorb (eine Zeit lang wiederherstellbar). An: sofort endgültig gelöscht.</string>
+    <string name="set_delete_permanently_detail">Aus: Beim Leeren kommt alles erst in den Android-Papierkorb und lässt sich eine Zeit lang zurückholen. An: Alles wird sofort endgültig gelöscht.</string>
     <string name="set_delete_permanently_confirm_title">Endgültig löschen einschalten?</string>
     <string name="set_delete_permanently_confirm_text">Ab jetzt löscht Leeren des PhotoMaid-Papierkorbs Fotos und Videos endgültig. Sie kommen nicht in den Android-Papierkorb und lassen sich nicht wiederherstellen – auch nicht aus noch nicht gesicherten Backups. Android fragt trotzdem jedes Mal nach.</string>
     <string name="set_delete_permanently_confirm_action">Einschalten</string>
     <plurals name="result_media_deleted">
-        <item quantity="one">%1$d Medium endgültig gelöscht.</item>
-        <item quantity="other">%1$d Medien endgültig gelöscht.</item>
+        <item quantity="one">%1$d Element endgültig gelöscht.</item>
+        <item quantity="other">%1$d Elemente endgültig gelöscht.</item>
     </plurals>
     <plurals name="basket_confirm_delete_action">
-        <item quantity="one">%1$d Medium endgültig löschen</item>
-        <item quantity="other">%1$d Medien endgültig löschen</item>
+        <item quantity="one">%1$d Element endgültig löschen</item>
+        <item quantity="other">%1$d Elemente endgültig löschen</item>
     </plurals>
     <plurals name="systrash_restore">
-        <item quantity="one">%1$d Medium wiederherstellen</item>
-        <item quantity="other">%1$d Medien wiederherstellen</item>
+        <item quantity="one">%1$d Element wiederherstellen</item>
+        <item quantity="other">%1$d Elemente wiederherstellen</item>
     </plurals>
     <plurals name="systrash_restored">
-        <item quantity="one">%1$d Medium wiederhergestellt.</item>
-        <item quantity="other">%1$d Medien wiederhergestellt.</item>
+        <item quantity="one">%1$d Element wiederhergestellt.</item>
+        <item quantity="other">%1$d Elemente wiederhergestellt.</item>
     </plurals>
     <plurals name="systrash_days_left">
         <item quantity="one">noch %1$d Tag</item>
@@ -1343,9 +1343,9 @@
     <string name="movie_format_first">Wie erster Clip</string>
     <string name="movie_fit_note">Clips werden nie verzerrt: Entweder das ganze Bild ist zu sehen (mit schwarzen Rändern) oder es füllt den Rahmen und die Ränder werden abgeschnitten.</string>
     <string name="movie_quality">Qualität</string>
-    <string name="movie_quality_high">Hoch (1080p)</string>
+    <string name="movie_quality_high">Hoch (Full HD)</string>
     <string name="movie_quality_balanced">Ausgewogen</string>
-    <string name="movie_quality_small">Klein (720p)</string>
+    <string name="movie_quality_small">Klein (HD)</string>
     <string name="movie_music_none">Noch keine Musik.</string>
     <string name="movie_music_pick">Audiodatei wählen</string>
     <string name="movie_music_remove">Entfernen</string>
@@ -1368,7 +1368,7 @@
     <string name="tools_convert">Umwandeln</string>
     <string name="tools_convert_sub">z. B. HEIC in JPEG, als neue Kopien</string>
     <string name="tools_location">Standort entfernen</string>
-    <string name="tools_location_sub">Kopien ohne GPS-Daten, z. B. vor dem Teilen</string>
+    <string name="tools_location_sub">Kopien ohne Aufnahmeort, z. B. vor dem Teilen</string>
     <string name="tools_stitch">Screenshots zusammenfügen</string>
     <string name="tools_stitch_sub">Untereinander, als ein langes Bild</string>
     <string name="tools_gif">GIF erstellen</string>
@@ -1389,8 +1389,8 @@
     <string name="tools_q_small">Kleinere Datei</string>
     <string name="tools_remove_location">Standort auch entfernen</string>
     <string name="tools_target_format">Neues Format</string>
-    <string name="tools_convert_note">JPEG kann jedes Gerät öffnen; PNG behält jedes Pixel, die Dateien werden aber größer. Dateien, die schon dieses Format haben, werden übersprungen.</string>
-    <string name="tools_location_note">JPEG-Kopien behalten jedes Pixel – nur die GPS-Daten werden entfernt. Fotos ohne Standort werden übersprungen.</string>
+    <string name="tools_convert_note">JPEG öffnet jedes Gerät. PNG verliert keine Details, die Dateien werden aber größer. Fotos, die schon dieses Format haben, werden übersprungen.</string>
+    <string name="tools_location_note">Die Kopien sehen genauso aus wie das Original – nur der Aufnahmeort wird entfernt. Fotos ohne Ort werden übersprungen.</string>
     <string name="tools_stitch_note">In der gewählten Reihenfolge. Alle bekommen die Breite des schmalsten Bildes – nichts wird verzerrt oder vergrößert.</string>
     <string name="tools_gif_size">Größe</string>
     <string name="tools_gif_part">Teil des Videos (max. 10 s)</string>
@@ -1431,9 +1431,9 @@
     <string name="dock_crop">Zuschnitt</string>
     <string name="dock_more">Mehr</string>
     <string name="vid_trim_hint_short">Ziehe die Griffe, um Anfang und Ende festzulegen.</string>
-    <string name="vid_export_info">Exportinfo</string>
-    <string name="vid_export_info_fast">Nur Anfang und Ende gekürzt. PhotoMaid versucht, die Qualität zu erhalten, und kodiert nur den Anfang bis zum nächsten Schlüsselbild neu. Lässt das Video das nicht zu, wird das ganze Video neu kodiert. Gesamtlänge %1$s.</string>
-    <string name="vid_export_info_reencode">Wegen deiner übrigen Änderungen wird beim Speichern das ganze Video neu kodiert. Gesamtlänge %1$s.</string>
+    <string name="vid_export_info">So wird gespeichert</string>
+    <string name="vid_export_info_fast">Du hast nur Anfang und Ende gekürzt. Das geht schnell und die Bildqualität bleibt wie im Original. Klappt das bei diesem Video nicht, berechnet PhotoMaid es ganz neu – das dauert dann etwas länger. Gesamtlänge %1$s.</string>
+    <string name="vid_export_info_reencode">Wegen deiner anderen Änderungen berechnet PhotoMaid das ganze Video beim Speichern neu. Das kann einen Moment dauern. Gesamtlänge %1$s.</string>
     <string name="lib_mode_albums">Alben</string>
     <string name="org_new_album">Neues Album</string>
     <string name="org_album_name">Name des Albums</string>
@@ -1447,8 +1447,8 @@
     <string name="org_already_in_album">Schon alle in „%1$s“.</string>
     <string name="org_albums_empty_title">Noch keine Alben</string>
     <string name="org_albums_empty_text">Ein Album sammelt Fotos und Videos aus beliebigen Ordnern, ohne sie zu kopieren oder zu verschieben. Ein Foto kann in mehreren Alben sein.</string>
-    <string name="org_albums_footer">Alben gibt es nur in PhotoMaid. Ordner zeigen, wo eine Datei liegt; Sammlungen finden Medien über eine Bedingung.</string>
-    <string name="org_album_empty">Dieses Album ist leer. Wähle in „Fotos“ Medien aus und tippe auf ⋯ › Zu Album hinzufügen.</string>
+    <string name="org_albums_footer">Alben gibt es nur in PhotoMaid. Ordner zeigen, wo eine Datei liegt; Sammlungen finden Fotos über eine Bedingung.</string>
+    <string name="org_album_empty">Dieses Album ist leer. Wähle in „Fotos“ etwas aus und tippe auf ⋯ › Zu Album hinzufügen.</string>
     <string name="org_missing_remove">Aus der Liste entfernen</string>
     <string name="org_tags">Schlagwörter</string>
     <string name="org_tag_new_hint">Neues Schlagwort</string>
@@ -1457,7 +1457,7 @@
     <string name="org_tag_remove">Schlagwort entfernen</string>
     <string name="org_tag_delete">Überall entfernen</string>
     <string name="org_tag_delete_title">Schlagwort „%1$s“ überall entfernen?</string>
-    <string name="org_tag_delete_text">Das Schlagwort verschwindet von allen Medien. Die Dateien bleiben unverändert.</string>
+    <string name="org_tag_delete_text">Das Schlagwort verschwindet überall. Die Fotos und Videos selbst bleiben unverändert.</string>
     <string name="org_tag_state_all">bei allen</string>
     <string name="org_tag_state_some">bei einigen</string>
     <string name="org_note">Notiz</string>
@@ -1470,13 +1470,13 @@
     <string name="org_basket_clear">Korb leeren</string>
     <string name="org_basket_clear_title">Auswahlkorb leeren?</string>
     <string name="org_basket_clear_text">Nur die Zusammenstellung wird geleert. Die Fotos und Videos bleiben unverändert.</string>
-    <string name="org_basket_intro">Sammle Medien aus verschiedenen Monaten und Ordnern. Der Korb bleibt erhalten, bis du ihn leerst – mit dem Papierkorb hat er nichts zu tun.</string>
+    <string name="org_basket_intro">Sammle Fotos und Videos aus verschiedenen Monaten und Ordnern. Der Korb bleibt erhalten, bis du ihn leerst – mit dem Papierkorb hat er nichts zu tun.</string>
     <string name="org_basket_empty_title">Der Auswahlkorb ist leer</string>
-    <string name="org_basket_empty_text">Wähle in „Fotos“ Medien aus und tippe auf ⋯ › In den Auswahlkorb.</string>
+    <string name="org_basket_empty_text">Wähle in „Fotos“ etwas aus und tippe auf ⋯ › In den Auswahlkorb.</string>
     <string name="org_basket_to_album">Album aus dem Korb erstellen</string>
     <plurals name="org_items">
-        <item quantity="one">%1$d Medium</item>
-        <item quantity="other">%1$d Medien</item>
+        <item quantity="one">%1$d Element</item>
+        <item quantity="other">%1$d Elemente</item>
     </plurals>
     <plurals name="org_added_to_album">
         <item quantity="one">%1$d zu „%2$s“ hinzugefügt.</item>
@@ -1487,16 +1487,16 @@
         <item quantity="other">%1$d aus dem Album entfernt. Die Dateien bleiben erhalten.</item>
     </plurals>
     <plurals name="org_missing">
-        <item quantity="one">%1$d Medium nicht gefunden (gelöscht oder nicht mehr auf diesem Gerät).</item>
-        <item quantity="other">%1$d Medien nicht gefunden (gelöscht oder nicht mehr auf diesem Gerät).</item>
+        <item quantity="one">%1$d Element nicht gefunden (gelöscht oder nicht mehr auf diesem Gerät).</item>
+        <item quantity="other">%1$d Elemente nicht gefunden (gelöscht oder nicht mehr auf diesem Gerät).</item>
     </plurals>
     <plurals name="org_basket_added">
         <item quantity="one">%1$d in den Auswahlkorb gelegt.</item>
         <item quantity="other">%1$d in den Auswahlkorb gelegt.</item>
     </plurals>
     <plurals name="org_tags_for">
-        <item quantity="one">Schlagwörter für %1$d Medium</item>
-        <item quantity="other">Schlagwörter für %1$d Medien</item>
+        <item quantity="one">Schlagwörter für %1$d Element</item>
+        <item quantity="other">Schlagwörter für %1$d Elemente</item>
     </plurals>
     <string name="wf_title">Arbeitsabläufe</string>
     <string name="wf_studio_sub">Mehrere Schritte als eigenen Ablauf speichern</string>
@@ -1521,7 +1521,7 @@
     <string name="wf_target_note">PhotoMaid misst das Ergebnis. Ist das Ziel innerhalb dieser Grenzen nicht erreichbar, entsteht keine Datei und du siehst, warum.</string>
     <string name="wf_videos">Videos</string>
     <string name="wf_video_skip">Überspringen</string>
-    <string name="wf_video_note">Videos werden auf die Zielgröße neu kodiert; die Auflösung sinkt nur, wenn es nötig ist.</string>
+    <string name="wf_video_note">Videos werden passend zur Zielgröße neu gespeichert. Das Bild wird nur kleiner, wenn es nötig ist.</string>
     <string name="wf_location">Standort entfernen</string>
     <string name="wf_name_base">Dateiname</string>
     <string name="wf_name_base_hint">z. B. Kleinanzeige → Kleinanzeige_001 (leer = Originalname)</string>
@@ -1537,7 +1537,7 @@
     <string name="wf_delete_text">Nur der gespeicherte Ablauf wird gelöscht. Bereits erstellte Dateien bleiben.</string>
     <string name="wf_run">Ausführen</string>
     <string name="wf_apply">Arbeitsablauf anwenden</string>
-    <string name="wf_pick">Medien wählen</string>
+    <string name="wf_pick">Fotos und Videos auswählen</string>
     <string name="wf_preview_title">Das passiert</string>
     <string name="wf_step_format">Als %1$s speichern</string>
     <string name="wf_step_resize">Längste Seite höchstens %1$s px (nie vergrößert)</string>
@@ -1561,7 +1561,7 @@
     <string name="wf_reason_video">Videos sind in diesem Ablauf nicht vorgesehen.</string>
     <string name="wf_reason_video_long">Zu lang für die Zielgröße – es wurde keine Datei erstellt.</string>
     <string name="wf_reason_unreachable">Kleinste gemessene Fassung: %1$s – über dem Ziel, daher wurde keine Datei erstellt.</string>
-    <string name="wf_reason_error">Konnte nicht verarbeitet werden.</string>
+    <string name="wf_reason_error">Das hat leider nicht geklappt.</string>
     <string name="wf_summary">%1$d fertig · %2$d übersprungen · %3$d Ziel nicht erreicht · %4$d fehlgeschlagen</string>
     <string name="wf_share_again">Erneut teilen</string>
     <string name="wf_counts">%1$s Fotos · %2$s Videos</string>
@@ -1647,4 +1647,12 @@
         <item quantity="other">%1$d Fotos konnten nicht gelesen werden – ihre Felder bleiben leer.</item>
     </plurals>
     <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">Alle deine Fotos</string>
+    <string name="tour_lib_text">Hier findest du alle Fotos und Videos – nach Tagen, Monaten oder Jahren, in Ordnern, Alben und Favoriten. Ansehen ändert nichts.</string>
+    <string name="tour_studio_title">Kreativ werden</string>
+    <string name="tour_studio_text">Fotos bearbeiten, Collagen, kleine Filme, PDFs und praktische Werkzeuge. Dabei entstehen immer neue Dateien – deine Originale bleiben, wie sie sind.</string>
+    <string name="tour_history_title">Später &amp; Verlauf</string>
+    <string name="tour_history_text">Hier siehst du, was du behalten, aussortiert oder auf später gelegt hast. Jede Entscheidung kannst du hier noch ändern.</string>
+    <string name="tour_settings_title">Einstellungen &amp; Hilfe</string>
+    <string name="tour_settings_text">Hier stellst du PhotoMaid nach deinem Geschmack ein und findest Antworten. Diesen Rundgang kannst du dort jederzeit wiederholen.</string>
 </resources>

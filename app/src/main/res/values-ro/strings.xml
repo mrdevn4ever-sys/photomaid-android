@@ -36,7 +36,7 @@
     <string name="undo">Anulează acțiunea</string>
     <string name="error_settings_not_saved">Setarea nu a putut fi salvată.</string>
     <string name="error_change_not_saved">Modificarea nu a putut fi salvată.</string>
-    <string name="error_undo_conflict">Nu se poate anula: acest element a fost modificat între timp.</string>
+    <string name="error_undo_conflict">Nu mai poate fi anulat, pentru că l-ai modificat între timp.</string>
     <string name="error_undo_busy">Așteaptă să se golească coșul înainte să anulezi o acțiune.</string>
     <string name="error_undo_generic">Această acțiune nu poate fi anulată acum.</string>
     <string name="tab_today">Azi</string>
@@ -69,7 +69,7 @@
         <item quantity="few">%1$d elemente din „Mai târziu” trebuie revăzute</item>
         <item quantity="other">%1$d de elemente din „Mai târziu” trebuie revăzute</item>
     </plurals>
-    <string name="today_reconciliation">Nu am putut confirma rezultatul unei acțiuni anterioare din coș. Nimic nu va fi șters din nou.</string>
+    <string name="today_reconciliation">Ceva s-a întrerupt ultima dată când a fost golit coșul. Din siguranță, nu se mai șterge nimic din nou.</string>
     <string name="cat_photos">Fotografii</string>
     <string name="cat_videos">Videoclipuri</string>
     <string name="cat_screenshots">Capturi de ecran</string>
@@ -273,7 +273,7 @@
     <string name="large_unknown_footer">Dimensiunea acestor fișiere nu este disponibilă. Nu este estimată și nu este inclusă în total.</string>
     <string name="storage_a">Dispozitivul tău</string>
     <string name="storage_available">%1$s disponibili conform Android</string>
-    <string name="storage_unavailable">Informații despre stocare indisponibile</string>
+    <string name="storage_unavailable">Informațiile despre spațiu nu sunt disponibile acum</string>
     <string name="storage_b">Vizibil pentru PhotoMaid</string>
     <string name="storage_of_which_screens">din care capturi de ecran</string>
     <string name="storage_connected_folders">Dosare conectate</string>
@@ -402,12 +402,12 @@
     <string name="pro_f1">Fără reclame</string>
     <string name="pro_f1d">Fără carduri publicitare între fotografii și videoclipuri.</string>
     <string name="pro_details">Cum funcționează Pro</string>
-    <string name="pro_details_dup">Copiile au exact același conținut. PhotoMaid îl compară pe dispozitiv, nu în cloud. Imaginile asemănătoare nu sunt considerate copii.</string>
+    <string name="pro_details_dup">Copiile sunt fișiere identice până la ultimul detaliu. PhotoMaid le compară pe dispozitiv, nu în cloud. Imaginile doar asemănătoare nu contează drept copii.</string>
     <string name="pro_details_rules">Colecțiile arată conținut potrivit de pe dispozitiv. Îl deschizi și îl verifici tu. Nu șterg nimic automat și nu fac curățenie în fundal.</string>
-    <string name="pro_details_cleanup">Limita zilnică numără elementele eliminate cu succes după confirmarea în coș. Glisarea nu se ia în calcul.</string>
+    <string name="pro_details_cleanup">La limita zilnică se pune doar ce elimini cu adevărat din coș. Glisarea nu contează niciodată.</string>
     <string name="expanded">Extins</string>
     <string name="collapsed">Restrâns</string>
-    <string name="pro_privacy">Fotografiile și fișierele sunt verificate și organizate pe dispozitiv. Cumpărăturile și reclamele trimit date tehnice către Google sau furnizori de publicitate, nu fotografii, nume de fișiere sau sume de control.</string>
+    <string name="pro_privacy">Fotografiile și fișierele tale sunt verificate și sortate doar pe dispozitiv. Pentru cumpărături și reclame ajunge la Google sau la furnizori doar strictul necesar – niciodată fotografiile, numele lor sau ceva derivat din ele.</string>
     <string name="pro_pending">Achiziția ta așteaptă confirmarea.</string>
     <string name="pro_unlock">Deblochează PhotoMaid Pro</string>
     <string name="pro_price_once">%1$s · Achiziție unică</string>
@@ -425,7 +425,7 @@
     <string name="pro_msg_nofill">Nu este disponibilă nicio reclamă acum. Încearcă mai târziu.</string>
     <string name="pro_msg_ad_unavailable">Testarea instrumentelor Pro nu este disponibilă acum. Nu s-a deblocat nimic.</string>
     <string name="set_privacy">Confidențialitate și acces</string>
-    <string name="set_privacy_detail">Prelucrare pe dispozitiv</string>
+    <string name="set_privacy_detail">Fotografiile rămân pe dispozitiv</string>
     <string name="set_notifications">Notificări</string>
     <string name="allowed">Permis</string>
     <string name="off">Dezactivat</string>
@@ -454,13 +454,13 @@
     <string name="help_decide">Alegerea</string>
     <string name="help_decide_text">Glisează în sus pentru a păstra, la stânga pentru coș și la dreapta pentru mai târziu. Implicit, elementul revine în 2 zile. Poți schimba intervalul în setări. Imediat după glisare, folosește „Schimbă” pentru altă dată. Glisează în jos ca să revii fără o nouă alegere.</string>
     <string name="help_delete">Ștergerea</string>
-    <string name="help_delete_text">Glisarea nu șterge nimic. Elementele ajung mai întâi în coșul PhotoMaid. Confirmi eliminarea când îl golești. Fotografiile și videoclipurile ajung în coșul Android după confirmarea sistemului. Fișierele sunt șterse definitiv.</string>
+    <string name="help_delete_text">Glisarea nu șterge niciodată nimic. Ce pui deoparte ajunge mai întâi în coșul PhotoMaid. Abia când îl golești se elimină ceva – fotografiile și videoclipurile ajung atunci în coșul Android, după ce Android mai întreabă o dată. Fișierele din dosarele conectate se șterg definitiv.</string>
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">Serviciile cloud precum Google Foto pot sincroniza ștergerile cu alte dispozitive. Verifică-le setările. PhotoMaid nu descarcă elemente aflate doar în cloud.</string>
     <string name="help_free">Gratuit</string>
     <string name="help_free_text">Poți vedea, glisa și salva pentru mai târziu fără limită. Fără Pro, poți elimina cel mult %1$d pe zi.</string>
     <string name="privacy_title">Confidențialitatea ta pe primul loc</string>
-    <string name="privacy_text">PhotoMaid verifică fotografiile, videoclipurile și fișierele permise pe dispozitivul tău. Nu ai nevoie de cont PhotoMaid și nu există server PhotoMaid. Serviciile cloud precum Google Foto pot sincroniza ștergerile cu alte dispozitive.</string>
+    <string name="privacy_text">PhotoMaid se uită la fotografiile, videoclipurile și fișierele permise doar pe dispozitivul tău. Nu ai nevoie de cont și nu există server PhotoMaid. Bine de știut: la servicii cloud precum Google Foto, ce ștergi poate dispărea și de pe celelalte dispozitive.</string>
     <string name="privacy_media">Fotografii și videoclipuri</string>
     <string name="privacy_media_text">Pentru a vedea, organiza și elimina fotografii și videoclipuri după confirmarea ta.</string>
     <string name="privacy_allow">Permite accesul</string>
@@ -474,8 +474,8 @@
     <string name="privacy_notifications_allow">Permite notificările</string>
     <string name="privacy_folders">Dosare (opțional)</string>
     <string name="privacy_folders_text">Celelalte fișiere provin doar din dosarele alese de tine. Conectează-le în Curățenie › Fișiere.</string>
-    <string name="privacy_purchases">Achizițiile sunt gestionate prin Google Play. Nu sunt trimise fotografii, nume de fișiere, căi sau sume de control pentru acest lucru.</string>
-    <string name="privacy_ads">Versiunea gratuită arată reclame Google AdMob. Îți poți schimba consimțământul pentru reclame în setări. Fotografiile, numele de fișiere, căile și sumele de control nu sunt partajate cu furnizorii de publicitate. Pro nu are reclame.</string>
+    <string name="privacy_purchases">Cumpărăturile se fac prin Google Play. Fotografiile tale, numele lor, dosarele sau ceva derivat din ele nu se trimit niciodată pentru asta.</string>
+    <string name="privacy_ads">Versiunea gratuită afișează reclame Google AdMob. Îți poți schimba acordul în setări. Fotografiile tale, numele lor, dosarele sau ceva derivat din ele nu ajung niciodată la furnizorii de reclame. Cu Pro nu ai reclame.</string>
     <string name="continue_">Înainte</string>
     <string name="notif_channel">Mementouri</string>
     <string name="notif_due_body">Azi este timpul să revezi ceva din „Mai târziu”.</string>
@@ -527,7 +527,7 @@
     <string name="pro_active_title">Pro este activ</string>
     <string name="pro_active_sub">Achiziție unică: fără reclame, fără limită zilnică și cu toate instrumentele Pro.</string>
     <string name="later_notify_title">Vrei un memento când e timpul să revezi?</string>
-    <string name="pro_privacy_no_ads">Fotografiile și fișierele sunt verificate și organizate pe dispozitiv. Achiziția trimite date tehnice către Google, nu fotografii, nume de fișiere sau sume de control.</string>
+    <string name="pro_privacy_no_ads">Fotografiile și fișierele tale sunt verificate și sortate doar pe dispozitiv. Pentru cumpărare ajunge la Google doar strictul necesar – niciodată fotografiile, numele lor sau ceva derivat din ele.</string>
     <string name="hub_nothing_pending">Totul este verificat</string>
     <plurals name="hub_pending">
         <item quantity="one">De verificat: %1$d</item>
@@ -647,7 +647,7 @@
     <string name="tour_today_quick_title">Scurtăturile tale</string>
     <string name="tour_today_quick_text">Fotografii, videoclipuri, capturi sau un dosar: creează scurtături către ce organizezi des.</string>
     <string name="tour_today_tab_title">Alte moduri de a face curățenie</string>
-    <string name="tour_today_tab_text">Găsești fișiere mari, copii, dosare și colecții în „Curățenie”.</string>
+    <string name="tour_today_tab_text">Fișiere mari, fotografii duplicate, luni separate și colecții gata făcute: aici faci curățenie pas cu pas.</string>
     <string name="tour_feed_basket_title">Coșul tău</string>
     <string name="tour_feed_basket_text">Numărul arată câte elemente ai selectat. Atinge-l pentru a verifica selecția și a goli coșul.</string>
     <string name="tour_feed_undo_title">Anulează acțiunea</string>
@@ -704,8 +704,8 @@
     <string name="grid_open">Prezentare</string>
     <string name="grid_select_all">Toate</string>
     <string name="grid_select_none">Niciunul</string>
-    <string name="help_tours_again">Afișează din nou tutorialele</string>
-    <string name="help_tours_reset">Tutorialele vor apărea din nou la următoarea deschidere a fiecărui ecran.</string>
+    <string name="help_tours_again">Arată din nou turul și sfaturile</string>
+    <string name="help_tours_reset">Turul și sfaturile vor apărea din nou data viitoare.</string>
     <string name="hub_months_sub">Termină lună de lună</string>
     <string name="later_back_to_stack">Înapoi în teanc</string>
     <string name="later_bookmarked_row">Pus deoparte, fără dată</string>
@@ -860,8 +860,8 @@
     <string name="edit_save_replace_action">Salvează, originalul în coș</string>
     <string name="edit_remove_location">Elimină locația</string>
     <string name="edit_remove_location_text">Fotografia salvată nu va conține locul fotografierii.</string>
-    <string name="edit_hint_heic">Se salvează ca JPEG (HEIC nu poate fi scris fiabil pe acest dispozitiv).</string>
-    <string name="edit_hint_hdr">Modificările de culoare elimină luminozitatea HDR suplimentară a fotografiei.</string>
+    <string name="edit_hint_heic">Se salvează ca JPEG ca să meargă peste tot – acest dispozitiv nu poate salva sigur HEIC.</string>
+    <string name="edit_hint_hdr">Această fotografie are lumini foarte strălucitoare (HDR). După modificarea culorilor strălucește puțin mai slab.</string>
     <string name="edit_hint_lossless">Fără pierderi: se schimbă doar orientarea, calitatea rămâne identică.</string>
     <string name="edit_hint_replace_confirm">Android cere o dată confirmarea mutării originalului în coșul Android.</string>
     <string name="edit_saving">Se salvează…</string>
@@ -869,7 +869,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s s</string>
     <string name="edit_trim_start">Început</string>
     <string name="edit_trim_end">Sfârșit</string>
-    <string name="edit_trim_hint">Trage de mânere. Durata totală %1$s. Calitatea rămâne; doar începutul până la următorul cadru cheie este recodat.</string>
+    <string name="edit_trim_hint">Trage de mânere pentru a alege începutul și sfârșitul. Durată totală %1$s. Calitatea imaginii rămâne aceeași.</string>
     <string name="edit_discard_title">Renunți la modificări?</string>
     <string name="edit_discard_text">Editarea nu va fi salvată. Originalul rămâne așa cum este.</string>
     <string name="edit_discard">Renunță</string>
@@ -953,8 +953,8 @@
     <string name="edit_mk_rect">Dreptunghi</string>
     <string name="edit_mk_brush">Pensulă</string>
     <string name="edit_mk_strength">Intensitate</string>
-    <string name="edit_mk_redact_solid_hint">Recomandat pentru date sensibile: pixelii acoperiți sunt înlocuiți complet în fișierul salvat sau distribuit.</string>
-    <string name="edit_mk_redact_hint">Pixelarea și estomparea folosesc blocuri mari. Pentru text care trebuie să rămână ilizibil, „Opac” e mai sigur.</string>
+    <string name="edit_mk_redact_solid_hint">Recomandat pentru date personale: ce acoperi dispare cu adevărat din fișierul salvat sau partajat.</string>
+    <string name="edit_mk_redact_hint">La „Pixelare” și „Estompare” se mai pot ghici contururile. Pentru text care trebuie să rămână ilizibil, alege „Opac”.</string>
     <string name="edit_mk_edit_text">Editează</string>
     <string name="edit_mk_duplicate">Duplică</string>
     <string name="edit_mk_front">În față</string>
@@ -1125,7 +1125,7 @@
     <string name="ret_linear">Gradient</string>
     <string name="ret_brush">Pensulă</string>
     <string name="ret_red_eye">Ochi roșii</string>
-    <string name="ret_red_eye_hint">Atinge un ochi roșu. Mărește cu două degete la fețe mici. Se schimbă doar pixelii clar roșii.</string>
+    <string name="ret_red_eye_hint">Atinge un ochi roșu. La fețe mici, mărește mai întâi cu două degete. Se schimbă doar roșul din ochi.</string>
     <string name="ret_red_eye_undo">Elimină ultima</string>
     <string name="ret_size">Mărime</string>
     <string name="ret_new">Nou</string>
@@ -1157,7 +1157,7 @@
     <string name="vid_cut_confirm">Elimină</string>
     <string name="vid_cut_draft">Elimini %1$s – %2$s? Trage de mânerele roșii.</string>
     <string name="vid_cut_hint_restore">Porțiunile roșii sunt eliminate cu adevărat la salvare (total %1$s). Atinge o porțiune de mai jos ca s-o recuperezi.</string>
-    <string name="vid_trim_hint_reencode">Trage de mânere. Total %1$s. Din cauza celorlalte modificări, videoclipul este recodat.</string>
+    <string name="vid_trim_hint_reencode">Trage de mânere. Durată totală %1$s. Din cauza celorlalte modificări, videoclipul este refăcut la salvare – durează puțin mai mult.</string>
     <string name="vid_speed_result">Rezultat: %1$s</string>
     <string name="vid_speed_hint">Sunetul se accelerează sau încetinește fără să-și schimbe tonalitatea.</string>
     <string name="vid_no_audio">Acest videoclip nu are sunet.</string>
@@ -1166,7 +1166,7 @@
     <string name="vid_volume">Volum</string>
     <string name="vid_fade">Fade in și fade out</string>
     <string name="vid_fade_none">Fără</string>
-    <string name="vid_audio_export">Salvează sunetul ca M4A</string>
+    <string name="vid_audio_export">Salvează doar sunetul</string>
     <string name="vid_audio_suffix">sunet</string>
     <string name="vid_audio_running">Se salvează sunetul</string>
     <string name="vid_audio_saved">„%1$s” a fost salvat în Music/PhotoMaid.</string>
@@ -1176,12 +1176,12 @@
     <string name="vid_fill_hint">Umple noul format; marginile din afară sunt tăiate.</string>
     <string name="vid_fit_hint">Arată tot videoclipul; spațiul liber devine benzi negre.</string>
     <string name="vid_profile">Calitate</string>
-    <string name="vid_profile_high">Calitate înaltă (rezoluție originală)</string>
-    <string name="vid_profile_balanced">Echilibrat (până la 1080p)</string>
-    <string name="vid_profile_small">Fișier mic (720p)</string>
+    <string name="vid_profile_high">Cea mai bună calitate (ca originalul)</string>
+    <string name="vid_profile_balanced">Echilibrat (Full HD)</string>
+    <string name="vid_profile_small">Fișier mic (HD)</string>
     <string name="vid_estimate">cca %1$s</string>
-    <string name="vid_estimate_hint">Estimare din debit × durată. Fișierul salvat arată mărimea reală.</string>
-    <string name="vid_hdr_hint">Acest videoclip HDR se salvează ca SDR deoarece sunt aplicate modificări de culoare.</string>
+    <string name="vid_estimate_hint">Doar aproximativ. Mărimea reală o vezi după salvare.</string>
+    <string name="vid_hdr_hint">Acest videoclip are culori foarte strălucitoare (HDR). Cu modificările de culoare, se salvează cu culori obișnuite.</string>
     <string name="tab_library">Fotografii</string>
     <string name="lib_filter_all">Toate</string>
     <string name="lib_filter_favorites">Favorite</string>
@@ -1341,7 +1341,7 @@
     <string name="systrash_delete_text">Apoi confirmă în Android. Fotografiile și videoclipurile șterse definitiv nu pot fi recuperate.</string>
     <string name="lib_info_raw">Fișier RAW</string>
     <string name="set_delete_permanently">Șterge definitiv</string>
-    <string name="set_delete_permanently_detail">Dezactivat: golirea mută în coșul Android (recuperabil o vreme). Activat: șters definitiv imediat.</string>
+    <string name="set_delete_permanently_detail">Dezactivat: la golire, totul ajunge întâi în coșul Android și poate fi recuperat o vreme. Activat: totul se șterge definitiv imediat.</string>
     <string name="set_delete_permanently_confirm_title">Activezi ștergerea definitivă?</string>
     <string name="set_delete_permanently_confirm_text">De acum, golirea coșului PhotoMaid șterge definitiv fotografiile și videoclipurile. Nu ajung în coșul Android și nu pot fi recuperate – nici din copii nesincronizate încă. Android întreabă totuși de fiecare dată.</string>
     <string name="set_delete_permanently_confirm_action">Activează</string>
@@ -1398,9 +1398,9 @@
     <string name="movie_format_first">Ca primul clip</string>
     <string name="movie_fit_note">Clipurile nu sunt deformate niciodată: fie se vede imaginea întreagă (cu margini negre), fie umple cadrul și marginile se taie.</string>
     <string name="movie_quality">Calitate</string>
-    <string name="movie_quality_high">Înaltă (1080p)</string>
+    <string name="movie_quality_high">Înaltă (Full HD)</string>
     <string name="movie_quality_balanced">Echilibrată</string>
-    <string name="movie_quality_small">Mică (720p)</string>
+    <string name="movie_quality_small">Mică (HD)</string>
     <string name="movie_music_none">Încă fără muzică.</string>
     <string name="movie_music_pick">Alege un fișier audio</string>
     <string name="movie_music_remove">Elimină</string>
@@ -1423,7 +1423,7 @@
     <string name="tools_convert">Convertește</string>
     <string name="tools_convert_sub">de ex. HEIC în JPEG, ca și copii noi</string>
     <string name="tools_location">Elimină locația</string>
-    <string name="tools_location_sub">Copii fără date GPS, de ex. înainte de partajare</string>
+    <string name="tools_location_sub">Copii fără locație, de ex. înainte de partajare</string>
     <string name="tools_stitch">Unește capturi de ecran</string>
     <string name="tools_stitch_sub">Una sub alta, ca o singură imagine lungă</string>
     <string name="tools_gif">Creează GIF</string>
@@ -1444,8 +1444,8 @@
     <string name="tools_q_small">Fișier mai mic</string>
     <string name="tools_remove_location">Elimină și locația</string>
     <string name="tools_target_format">Format nou</string>
-    <string name="tools_convert_note">JPEG se deschide oriunde; PNG păstrează fiecare pixel, dar fișierele sunt mai mari. Fișierele deja în acest format sunt omise.</string>
-    <string name="tools_location_note">Copiile JPEG păstrează fiecare pixel – se elimină doar datele GPS. Fotografiile fără locație sunt omise.</string>
+    <string name="tools_convert_note">Orice dispozitiv deschide JPEG. PNG păstrează toate detaliile, dar fișierele sunt mai mari. Fotografiile care au deja acest format sunt omise.</string>
+    <string name="tools_location_note">Copiile arată exact ca originalul – se elimină doar locul în care a fost făcută fotografia. Fotografiile fără locație sunt omise.</string>
     <string name="tools_stitch_note">În ordinea aleasă. Toate primesc lățimea celei mai înguste imagini – nimic nu e deformat sau mărit.</string>
     <string name="tools_gif_size">Dimensiune</string>
     <string name="tools_gif_part">Partea din videoclip (max. 10 s)</string>
@@ -1492,9 +1492,9 @@
     <string name="dock_crop">Decupare</string>
     <string name="dock_more">Mai mult</string>
     <string name="vid_trim_hint_short">Trage de mânere pentru a stabili începutul și sfârșitul.</string>
-    <string name="vid_export_info">Info export</string>
-    <string name="vid_export_info_fast">Sunt tăiate doar începutul și sfârșitul. PhotoMaid încearcă să păstreze calitatea și recodează doar începutul până la următorul cadru cheie. Dacă videoclipul nu permite asta, este recodat în întregime. Durata totală %1$s.</string>
-    <string name="vid_export_info_reencode">Din cauza celorlalte modificări, la salvare tot videoclipul este recodat. Durata totală %1$s.</string>
+    <string name="vid_export_info">Cum se salvează</string>
+    <string name="vid_export_info_fast">Ai tăiat doar începutul și sfârșitul. Merge repede, iar calitatea rămâne ca în original. Dacă videoclipul nu permite asta, PhotoMaid îl reface complet – durează puțin mai mult. Durată totală %1$s.</string>
+    <string name="vid_export_info_reencode">Din cauza celorlalte modificări, PhotoMaid reface întregul videoclip la salvare. Poate dura un moment. Durată totală %1$s.</string>
     <string name="lib_mode_albums">Albume</string>
     <string name="org_new_album">Album nou</string>
     <string name="org_album_name">Numele albumului</string>
@@ -1588,7 +1588,7 @@
     <string name="wf_target_note">PhotoMaid măsoară rezultatul. Dacă ținta nu poate fi atinsă în aceste limite, nu se creează niciun fișier și vezi de ce.</string>
     <string name="wf_videos">Videoclipuri</string>
     <string name="wf_video_skip">Omite</string>
-    <string name="wf_video_note">Videoclipurile sunt recodate la dimensiunea țintă; rezoluția scade doar când e nevoie.</string>
+    <string name="wf_video_note">Videoclipurile sunt salvate din nou ca să se încadreze în mărimea dorită. Imaginea se micșorează doar dacă e nevoie.</string>
     <string name="wf_location">Elimină locația</string>
     <string name="wf_name_base">Numele fișierului</string>
     <string name="wf_name_base_hint">ex. Anunț → Anunț_001 (gol = numele original)</string>
@@ -1628,7 +1628,7 @@
     <string name="wf_reason_video">Videoclipurile nu fac parte din acest flux.</string>
     <string name="wf_reason_video_long">Prea lung pentru dimensiunea țintă – nu s-a creat niciun fișier.</string>
     <string name="wf_reason_unreachable">Cea mai mică versiune măsurată: %1$s – peste țintă, deci nu s-a creat niciun fișier.</string>
-    <string name="wf_reason_error">Nu a putut fi procesat.</string>
+    <string name="wf_reason_error">Din păcate, n-a mers.</string>
     <string name="wf_summary">%1$d gata · %2$d omise · %3$d țintă neatinsă · %4$d eșuate</string>
     <string name="wf_share_again">Partajează din nou</string>
     <string name="wf_counts">Fotografii: %1$s · videoclipuri: %2$s</string>
@@ -1722,4 +1722,12 @@
         <item quantity="other">%1$d de fotografii nu au putut fi citite – spațiile rămân goale.</item>
     </plurals>
     <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">Toate fotografiile tale</string>
+    <string name="tour_lib_text">Aici găsești toate fotografiile și videoclipurile – pe zile, luni sau ani, în dosare, albume și favorite. Doar privitul nu schimbă nimic.</string>
+    <string name="tour_studio_title">Fii creativ</string>
+    <string name="tour_studio_text">Editează fotografii, fă colaje, filmulețe și PDF-uri și folosește unelte practice. Se creează mereu fișiere noi – originalele rămân neschimbate.</string>
+    <string name="tour_history_title">Mai târziu și istoric</string>
+    <string name="tour_history_text">Vezi ce ai păstrat, ai pus deoparte sau ai lăsat pe mai târziu. Poți schimba aici orice decizie.</string>
+    <string name="tour_settings_title">Setări și ajutor</string>
+    <string name="tour_settings_text">Setează PhotoMaid după gustul tău și găsește răspunsuri. Poți relua oricând acest tur.</string>
 </resources>
