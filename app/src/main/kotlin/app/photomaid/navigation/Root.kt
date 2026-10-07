@@ -104,6 +104,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -635,6 +636,7 @@ private fun TabBarRow(selected: AppTab, onSelect: (AppTab) -> Unit) {
                     .then(if (isSel) Modifier.background(c.accent.copy(alpha = 0.12f), RoundedCornerShape(22.dp)) else Modifier)
                     .clickable(role = Role.Tab) { onSelect(t) }
                     .coachTarget("tab.${t.name}")
+                    .testTag("apptab.${t.name}")
                     .semantics { this.selected = isSel }
                     .padding(vertical = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
