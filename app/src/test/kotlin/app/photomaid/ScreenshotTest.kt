@@ -523,7 +523,7 @@ class ScreenshotTest {
 
     @Test fun e01_editor_crop() = expApp(pro = true).let { editor("e01_editor_crop", it, i = 1) { tap("aspect.R4_5") } }
     @Test fun e02_editor_crop_dark() = expApp(pro = true, dark = true).let { editor("e02_editor_crop_dark", it, i = 1) { tap("editor.rotate") } }
-    @Test fun e03_editor_adjust() = expApp(pro = true).let { editor("e03_editor_adjust", it, i = 1) { tap("tab.ADJUST"); tap("group.COLOR"); tap("adjust.WARMTH") } }
+    @Test fun e03_editor_adjust() = expApp(pro = true).let { editor("e03_editor_adjust", it, i = 1) { tap("tab.ADJUST"); tap("adjust.WARMTH") } }
     @Test fun e04_editor_filter_free() = expApp().let { editor("e04_editor_filter_free", it, i = 1) { tap("tab.FILTER"); tap("filter.MONO") } }
     @Test fun e05_editor_resize() = expApp(pro = true).let { editor("e05_editor_resize", it, i = 1) { tap("tab.RESIZE") } }
     @Test fun e06_editor_save_sheet() = expApp(pro = true).let { editor("e06_editor_save_sheet", it, i = 1) {
@@ -552,7 +552,7 @@ class ScreenshotTest {
 
     @Test fun e12_editor_light_histogram() = expApp(pro = true).let { editor("e12_editor_light_histogram", it, i = 1) {
         tap("tab.ADJUST"); tap("adjust.SHADOWS")
-        rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.histogram.toggle").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(10_000) { rule.onAllNodesWithTag("editor.menu").fetchSemanticsNodes().isNotEmpty() }
         rule.onNode(androidx.compose.ui.test.hasTestTag("editor.slider") and androidx.compose.ui.test.hasAnyAncestor(androidx.compose.ui.test.hasTestTag("slider.SHADOWS")))
             .performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { it(60f) }
         tap("editor.histogram.toggle")

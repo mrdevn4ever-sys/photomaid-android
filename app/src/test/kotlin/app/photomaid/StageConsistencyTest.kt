@@ -120,20 +120,36 @@ class StageConsistencyTest {
     private val problems = mutableListOf<String>()
     private fun report() { assertTrue("Prüflog-Funde:\n" + problems.joinToString("\n"), problems.isEmpty()) }
 
+    /**
+     * Medien-Editor (Fotos-App-Stil): Hauptwerkzeuge (Anpassen, Filter, Zuschneiden, Kürzen) haben eine schmale
+     * Werkzeugzone und dieselbe große Bühne; Werkzeuge mit vielen Einstellungen eine gemeinsame zweite Größe. Foto und
+     * Video beginnen auf gleicher Höhe; Video hat zusätzlich die Wiedergabezeile.
+     */
     @Test fun editorStageIsTheSameForPhotosAndVideosInEveryTab() {
         start()
-        val rects = linkedMapOf<String, Rect>()
+        val compact = linkedMapOf<String, Rect>(); val rich = linkedMapOf<String, Rect>()
+        val videoCompact = linkedMapOf<String, Rect>(); val videoRich = linkedMapOf<String, Rect>()
         for (a in listOf(photosPortrait, photoLandscape, panorama, videoLandscape, videoPortrait)) {
             show { EditorScreen(a.id, nav, onClose = {}) }
-            val tabs = if (a.kind == MediaKind.VIDEO) listOf("TRIM", "SPEED", "AUDIO", "FORMAT", "FILTER", "ADJUST") else listOf("CROP", "ADJUST", "FILTER", "RETOUCH", "MARKUP", "FRAME", "RESIZE")
+            val video = a.kind == MediaKind.VIDEO
+            val tabs = if (video) listOf("TRIM", "SPEED", "AUDIO", "FORMAT", "FILTER", "ADJUST") else listOf("CROP", "ADJUST", "FILTER", "RETOUCH", "MARKUP", "FRAME", "RESIZE")
+            val main = setOf("TRIM", "FILTER", "ADJUST", "CROP")
             pumpUntil { nodes("tab.${tabs[0]}").isNotEmpty() }
-            for (t in tabs) { click("tab.$t"); rects["${a.displayName}/$t"] = rect("media.stage") }
-            if (a.kind == MediaKind.VIDEO) {
+            for (t in tabs) {
+                click("tab.$t")
+                val target = when { video && t in main -> videoCompact; video -> videoRich; t in main -> compact; else -> rich }
+                target["${a.displayName}/$t"] = rect("media.stage")
+            }
+            if (video) {
                 val over = controlsOver(rect("editor.video"), ignore = setOf("editor.video"))
                 if (over.isNotEmpty()) problems += "W Video-Editor (${a.displayName}): Bedienelemente über dem Video: $over"
             }
         }
-        sameSize("M Editor-Bühne", rects)?.let { problems += it }
+        for ((what, m) in listOf("Foto Hauptwerkzeuge" to compact, "Foto weitere" to rich, "Video Hauptwerkzeuge" to videoCompact, "Video weitere" to videoRich))
+            sameSize("M Editor-Bühne $what", m)?.let { problems += it }
+        if (compact.values.first().height <= rich.values.first().height) problems += "M Hauptwerkzeuge sollen die größere Bühne haben"
+        val tops = (compact.values + rich.values + videoCompact.values + videoRich.values).map { it.top }
+        if (tops.max() - tops.min() > 1.5f) problems += "M Bühne beginnt nicht überall auf gleicher Höhe"
         report()
     }
 
@@ -233,20 +249,21 @@ class StageConsistencyTest {
     }
 
     /** Redesign: Foto-Editor, Video-Editor, Collage und Film teilen exakt eine Bühnengeometrie (gleiches Gerüst, gleiche Policy). */
+    /** Foto- und Video-Editor teilen Breite und Oberkante; Collage und Film (eigenes Gerüst) teilen ihre Geometrie. */
     @Test fun allEditorsShareOneStageGeometry() {
         start()
         val photos = lib.all.filter { it.kind != MediaKind.VIDEO }
-        val rects = linkedMapOf<String, Rect>()
-        show { EditorScreen(photosPortrait.id, nav, onClose = {}) }; rects["Foto-Editor"] = rect("media.stage")
-        show { EditorScreen(videoLandscape.id, nav, onClose = {}) }; rects["Video-Editor"] = rect("media.stage")
+        val editors = linkedMapOf<String, Rect>(); val others = linkedMapOf<String, Rect>()
+        show { EditorScreen(photosPortrait.id, nav, onClose = {}) }; editors["Foto-Editor"] = rect("media.stage")
+        show { EditorScreen(videoLandscape.id, nav, onClose = {}) }; editors["Video-Editor"] = rect("media.stage")
         show { CollageScreen(CollageRequest("c", CollageProject.create("c", photos.take(4).map { it.id }), fromDraft = false), nav, pick = {}, onClose = {}) }
-        rects["Collage"] = rect("media.stage")
+        others["Collage"] = rect("media.stage")
         show { MovieScreen(MovieRequest("m", movieFrom(listOf(videoLandscape, photosPortrait), false), false), nav, onClose = {}) }
-        rects["Film"] = rect("media.stage")
-        val ref = rects.values.first()
-        val bad = rects.filterValues { abs(it.left - ref.left) > 1.5f || abs(it.width - ref.width) > 1.5f }
-        if (bad.isNotEmpty()) problems += "M Bühnenbreite: $rects"
-        sameSize("M gemeinsame Bühne", rects)?.let { problems += it }
+        others["Film"] = rect("media.stage")
+        val ref = editors.values.first()
+        if (editors.values.any { abs(it.left - ref.left) > 1.5f || abs(it.width - ref.width) > 1.5f || abs(it.top - ref.top) > 1.5f }) problems += "M Editor-Bühne: $editors"
+        sameSize("M Collage/Film", others)?.let { problems += it }
+        if (editors.getValue("Foto-Editor").height < others.getValue("Collage").height) problems += "M Foto-Editor-Bühne kleiner als Collage"
         report()
     }
 
@@ -254,16 +271,23 @@ class StageConsistencyTest {
     @Test fun stageNeverJumpsDuringToolSwitches() {
         start()
         show { EditorScreen(photoLandscape.id, nav, onClose = {}) }
-        val ref = rect("media.stage")
+        click("tab.ADJUST")
+        val compact = rect("media.stage")
+        click("tab.MARKUP")
+        val rich = rect("media.stage")
         val seen = mutableListOf<String>()
+        fun same(r: Rect, ref: Rect) = abs(r.top - ref.top) <= 1f && abs(r.height - ref.height) <= 1f && abs(r.width - ref.width) <= 1f
+        // Jedes Bild des Wechsels zeigt genau eine der beiden Größen (kein Zwischenzustand, kein Wackeln).
         for (t in listOf("ADJUST", "FILTER", "CROP", "MARKUP", "RETOUCH", "FRAME", "RESIZE", "ADJUST")) {
             rule.openMoreFor("tab.$t") { pumpUntil { true } }
             rule.mainClock.autoAdvance = false
             rule.onAllNodesWithTag("tab.$t")[0].performSemanticsAction(SemanticsActions.OnClick)
+            val ref = if (t in setOf("ADJUST", "FILTER", "CROP")) compact else rich
             repeat(24) {
                 shadowOf(android.os.Looper.getMainLooper()).idle(); rule.mainClock.advanceTimeByFrame()
                 val r = nodes("media.stage").first().boundsInRoot
-                if (abs(r.top - ref.top) > 1f || abs(r.height - ref.height) > 1f || abs(r.width - ref.width) > 1f) seen += "$t Bild $it: $r"
+                if (!same(r, compact) && !same(r, rich)) seen += "$t Bild $it: $r"
+                if (it == 23 && !same(r, ref)) seen += "$t Endgröße: $r"
             }
             rule.mainClock.autoAdvance = true
         }
@@ -276,8 +300,8 @@ class StageConsistencyTest {
         start()
         val ime = mutableStateOf<androidx.compose.ui.unit.Dp?>(null)
         show { androidx.compose.runtime.CompositionLocalProvider(LocalEditorImeOverride provides ime.value) { EditorScreen(photoLandscape.id, nav, onClose = {}) } }
-        val before = rect("media.stage")
         rule.onAllNodesWithTag("tab.MARKUP")[0].performSemanticsAction(SemanticsActions.OnClick); pumpUntil { true }
+        val before = rect("media.stage")
         rule.onAllNodesWithTag("mk.text")[0].performSemanticsAction(SemanticsActions.OnClick)
         pumpUntil { nodes("text.field").isNotEmpty() }
         ime.value = 300f.let { androidx.compose.ui.unit.Dp(it) }

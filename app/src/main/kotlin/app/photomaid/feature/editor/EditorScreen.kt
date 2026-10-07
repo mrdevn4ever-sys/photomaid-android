@@ -1,6 +1,17 @@
 package app.photomaid.feature.editor
 
 import app.photomaid.design.LocalEditorPalette
+import app.photomaid.design.MediaEditorScaffold
+import app.photomaid.design.EditorPillButton
+import app.photomaid.design.EditorCapsuleDock
+import app.photomaid.design.DarkSystemBars
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Flip
+import androidx.compose.material.icons.rounded.Rotate90DegreesCw
+import androidx.compose.material.icons.rounded.ScreenRotationAlt
+import androidx.compose.material.icons.rounded.RestartAlt
+import androidx.compose.ui.draw.rotate
 import app.photomaid.design.EditorWideButton
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.selection.selectableGroup
@@ -171,23 +182,54 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
     val dockItems = mainTabs.map { t -> DockItem(t.name, t.icon, stringResource(if (t == EditorTab.CROP) R.string.dock_crop else t.label), "tab.${t.name}",
         badge = if (locked && t.isPro) Icons.Rounded.WorkspacePremium else null) } +
         DockItem(MORE, Icons.Rounded.MoreHoriz, stringResource(R.string.dock_more), "tab.$MORE")
-    EditorTheme {
+    val rich = when (vm.tab) {
+        EditorTab.ADJUST -> vm.adjustGroup == AdjustGroup.MIX
+        EditorTab.FILTER, EditorTab.TRIM -> false
+        EditorTab.CROP -> vm.perspectiveMode
+        else -> true
+    }
+    val title = when {
+        vm.tab == EditorTab.ADJUST && vm.adjustGroup == AdjustGroup.MIX -> stringResource(AdjustGroup.MIX.label)
+        vm.tab == EditorTab.ADJUST -> stringResource(vm.adjustTool.label)
+        else -> stringResource(vm.tab.label)
+    }
+    val out = vm.outputSize
+    val status = when {
+        vm.isVideo -> null
+        vm.comparing -> stringResource(R.string.edit_original)
+        vm.zoomPercent != null -> "\u2066${vm.zoomPercent} %\u2069"
+        out != null -> "\u2066" + out.label() + "\u2069"
+        else -> null
+    }
+    val statusTag = when { vm.comparing -> "editor.status"; vm.zoomPercent != null -> "editor.zoom"; out != null -> "editor.size"; else -> "editor.status" }
+    EditorTheme(dark = true) {
+    DarkSystemBars()
     CoachHost(steps, active = ready && !settings.editorTourSeen,
         onFinish = { scope.launch { app.updateSettings { it.copy(editorTourSeen = true) } } }, modifier = Modifier.fillMaxSize()) {
         // Ein Player für den ganzen Editor: bleibt über Werkzeugwechsel (auch Markieren) erhalten.
         val preview = if (vm.isVideo) rememberVideoPreview(vm) else null
         Box(Modifier.fillMaxSize().testTag("editor")) {
-            EditorScaffold(
-                header = {
-                    EditorTopBar(leading = {
-                        CancelButton(stringResource(R.string.cancel), Modifier.testTag("editor.cancel"), enabled = !vm.saving) {
-                            if (vm.hasChanges) confirmDiscard = true else onClose()
-                        }
-                    }, trailing = {
-                        EditorPrimaryButton(stringResource(R.string.save), Modifier.coachTarget("editor.save").testTag("editor.save"),
-                            enabled = vm.hasChanges && !vm.saving) { showSave = true }
-                    })
+            MediaEditorScaffold(
+                cancel = {
+                    EditorPillButton(Icons.Rounded.Close, stringResource(R.string.cancel), Modifier.testTag("editor.cancel"), enabled = !vm.saving) {
+                        if (vm.hasChanges) confirmDiscard = true else onClose()
+                    }
                 },
+                confirm = {
+                    EditorPillButton(Icons.Rounded.Check, stringResource(R.string.save), Modifier.coachTarget("editor.save").testTag("editor.save"),
+                        enabled = vm.hasChanges && !vm.saving, primary = true) { showSave = true }
+                },
+                leadingTools = {
+                    EditorActionButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.testTag("editor.undo"),
+                        enabled = vm.canUndo && !vm.saving, onClick = vm::undo)
+                    EditorActionButton(Icons.AutoMirrored.Rounded.Redo, stringResource(R.string.redo), Modifier.testTag("editor.redo"),
+                        enabled = vm.canRedo && !vm.saving, onClick = vm::redo)
+                },
+                trailingTools = { EditorHeaderTools(vm) },
+                title = title,
+                subtitle = status,
+                subtitleTag = statusTag,
+                rich = rich,
                 stage = {
                     Box(Modifier.fillMaxSize().coachTarget("editor.stage")) {
                         when {
@@ -195,38 +237,19 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                             vm.isVideo -> preview?.let { VideoEditStage(vm, it, Modifier.fillMaxSize()) }
                             else -> EditorStage(vm, Modifier.fillMaxSize())
                         }
-                    }
-                },
-                actions = {
-                    EditorActionButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.testTag("editor.undo"),
-                        enabled = vm.canUndo && !vm.saving, onClick = vm::undo)
-                    EditorActionButton(Icons.AutoMirrored.Rounded.Redo, stringResource(R.string.redo), Modifier.testTag("editor.redo"),
-                        enabled = vm.canRedo && !vm.saving, onClick = vm::redo)
-                    if (vm.isVideo) {
-                        if (preview != null) VideoTransport(vm, preview)
-                    } else {
-                        val out = vm.outputSize
-                        val status = when {
-                            vm.comparing -> stringResource(R.string.edit_original)
-                            vm.zoomPercent != null -> "\u2066${vm.zoomPercent} %\u2069"
-                            out != null -> "\u2066" + out.label() + "\u2069"
-                            else -> ""
-                        }
-                        EditorStatus(status, Modifier.testTag(when { vm.comparing -> "editor.status"; vm.zoomPercent != null -> "editor.zoom"; out != null -> "editor.size"; else -> "editor.status" }), emphasized = vm.comparing)
+                        // Nur Anzeigen (keine Werkzeuge) über dem Bild: Histogramm oben, Pro-Hinweis unten.
                         val geometryTab = vm.tab == EditorTab.CROP || vm.tab == EditorTab.MARKUP || vm.tab == EditorTab.RETOUCH
-                        EditorHoldButton(Icons.Rounded.Compare, stringResource(R.string.edit_compare_hint), vm.comparing, { vm.comparing = it },
-                            Modifier.testTag("editor.compare"), enabled = vm.hasChanges && !geometryTab)
-                        EditorActionButton(Icons.Rounded.BarChart, stringResource(R.string.edit_histogram), Modifier.testTag("editor.histogram.toggle"),
-                            active = vm.showHistogram) { vm.showHistogram = !vm.showHistogram }
-                        EditorActionButton(Icons.Rounded.WarningAmber, stringResource(R.string.edit_clipping), Modifier.testTag("editor.clipping.toggle"),
-                            active = vm.showClipping) { vm.showClipping = !vm.showClipping }
+                        if (!vm.isVideo && vm.showHistogram && !geometryTab) vm.histogram?.let {
+                            HistogramCard(it, Modifier.align(Alignment.TopStart).padding(AppSpacing.s).widthIn(max = 180.dp))
+                        }
+                        if (vm.needsPro && (vm.isVideo || vm.recipe.usesProTools))
+                            ProHint(onPro = nav::openPro, Modifier.align(Alignment.BottomCenter).padding(AppSpacing.s).widthIn(max = 420.dp))
                     }
                 },
+                actions = if (vm.isVideo && preview != null) ({ VideoTransport(vm, preview) }) else null,
                 tool = {
                     if (vm.tab in moreTabs) EditorSubTabs(moreTabs.map { Triple(it.name, stringResource(it.label), false) }, vm.tab.name,
                         { vm.tab = EditorTab.valueOf(it) }, Modifier.testTag("editor.more"), tagPrefix = "tab.")
-                    if (vm.needsPro && (vm.isVideo || vm.recipe.usesProTools)) ProHint(onPro = nav::openPro)
-                    if (!vm.isVideo && vm.showHistogram) vm.histogram?.let { HistogramCard(it, Modifier.fillMaxWidth()) }
                     Box(Modifier.fillMaxWidth().testTag("editor.panel.${vm.tab.name}")) {
                         when (vm.tab) {
                             EditorTab.CROP -> CropPanel(vm)
@@ -244,7 +267,8 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
                     }
                 },
                 dock = {
-                    EditorDock(dockItems, if (vm.tab in moreTabs) MORE else vm.tab.name, { k -> vm.tab = if (k == MORE) lastMore else EditorTab.valueOf(k) }, Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
+                    EditorCapsuleDock(dockItems, if (vm.tab in moreTabs) MORE else vm.tab.name, { k -> vm.tab = if (k == MORE) lastMore else EditorTab.valueOf(k) },
+                        Modifier.coachTarget("editor.tabs").testTag("editor.tabs"))
                 },
             )
             SavingOverlay(vm)
@@ -254,7 +278,7 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
 
     var pickFolder by remember { mutableStateOf(false) }
     var folders by remember { mutableStateOf<List<MediaFolder>?>(null) }
-    if (showSave) EditorTheme { SaveSheet(vm, initial = SaveMode.COPY, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() },
+    if (showSave) EditorTheme(dark = true) { SaveSheet(vm, initial = SaveMode.COPY, onDismiss = { showSave = false }, onPro = { showSave = false; nav.openPro() },
         onFolder = {
             pickFolder = true
             scope.launch { folders = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { app.allPhotos.folders() } }
@@ -292,6 +316,52 @@ fun EditorScreen(assetId: String, nav: Nav, onClose: () -> Unit) {
         AlertDialog(onDismissRequest = { vm.error = null }, modifier = Modifier.testTag("editor.error"),
             title = { Text(stringResource(R.string.notice)) }, text = { Text(msg) },
             confirmButton = { TextButton({ vm.error = null }) { Text(stringResource(R.string.ok)) } })
+    }
+}
+
+/**
+ * Rechte Kapsel im Kopf: beim Zuschneiden Spiegeln/Drehen (wie die Fotos-App), sonst Vorher/Nachher; dazu ⋯ mit
+ * Histogramm, Warnung für abgeschnittene Bereiche und Zurücksetzen des Werkzeugs.
+ */
+@Composable
+private fun EditorHeaderTools(vm: EditorViewModel) {
+    var menu by remember { mutableStateOf(false) }
+    val haptics = androidx.compose.ui.platform.LocalHapticFeedback.current
+    val crop = !vm.isVideo && vm.tab == EditorTab.CROP && !vm.perspectiveMode
+    if (crop) {
+        EditorActionButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_h), Modifier.testTag("editor.flipH"), onClick = vm::flipHorizontal)
+        EditorActionButton(Icons.Rounded.Rotate90DegreesCw, stringResource(R.string.edit_rotate), Modifier.testTag("editor.rotate")) {
+            vm.rotate(); haptics.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.SegmentTick)
+        }
+    } else if (!vm.isVideo) {
+        val geometryTab = vm.tab == EditorTab.CROP || vm.tab == EditorTab.MARKUP || vm.tab == EditorTab.RETOUCH
+        EditorHoldButton(Icons.Rounded.Compare, stringResource(R.string.edit_compare_hint), vm.comparing, { vm.comparing = it },
+            Modifier.testTag("editor.compare"), enabled = vm.hasChanges && !geometryTab)
+    }
+    Box {
+        EditorActionButton(Icons.Rounded.MoreHoriz, stringResource(R.string.more_actions), Modifier.testTag("editor.menu")) { menu = true }
+        androidx.compose.material3.DropdownMenu(menu, onDismissRequest = { menu = false }) {
+            if (crop) {
+                androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(R.string.edit_flip_v)) }, leadingIcon = { Icon(Icons.Rounded.Flip, null, Modifier.rotate(90f)) },
+                    modifier = Modifier.testTag("editor.flipV"), onClick = { menu = false; vm.flipVertical() })
+                val canToggle = vm.aspect != app.photomaid.core.edit.AspectPreset.FREE && vm.aspect != app.photomaid.core.edit.AspectPreset.ORIGINAL &&
+                    vm.aspect != app.photomaid.core.edit.AspectPreset.SQUARE
+                if (canToggle) androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(if (vm.landscape) R.string.edit_portrait else R.string.edit_landscape)) },
+                    leadingIcon = { Icon(Icons.Rounded.ScreenRotationAlt, null) }, modifier = Modifier.testTag("editor.orientation"),
+                    onClick = { menu = false; vm.toggleOrientation() })
+            }
+            if (!vm.isVideo) {
+                androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(R.string.edit_histogram)) }, leadingIcon = { Icon(Icons.Rounded.BarChart, null) },
+                    trailingIcon = { if (vm.showHistogram) Icon(Icons.Rounded.Check, null) }, modifier = Modifier.testTag("editor.histogram.toggle"),
+                    onClick = { menu = false; vm.showHistogram = !vm.showHistogram })
+                androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(R.string.edit_clipping)) }, leadingIcon = { Icon(Icons.Rounded.WarningAmber, null) },
+                    trailingIcon = { if (vm.showClipping) Icon(Icons.Rounded.Check, null) }, modifier = Modifier.testTag("editor.clipping.toggle"),
+                    onClick = { menu = false; vm.showClipping = !vm.showClipping })
+            }
+            androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(R.string.edit_reset_group, stringResource(vm.tab.label))) },
+                leadingIcon = { Icon(Icons.Rounded.RestartAlt, null) }, modifier = Modifier.testTag("editor.reset"),
+                onClick = { menu = false; vm.resetTab() })
+        }
     }
 }
 

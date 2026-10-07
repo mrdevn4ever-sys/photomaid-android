@@ -95,7 +95,9 @@ val LocalEditorImeOverride = compositionLocalOf<Dp?> { null }
  * und Textrollen durch die ruhige Editorpalette ersetzt. Akzent und Signalfarben bleiben PhotoMaid.
  */
 @Composable
-fun EditorTheme(content: @Composable () -> Unit) {
+fun EditorTheme(dark: Boolean = false, content: @Composable () -> Unit) {
+    // Foto-/Video-Editor: immer dunkel wie die Fotos-App (Bild steht im Mittelpunkt); andere Editoren folgen der App.
+    if (dark && !PM.colors.isDark) { PhotoMaidTheme(AppearanceChoice.DARK) { EditorTheme(dark = true, content = content) }; return }
     val base = PM.colors
     val p = if (base.isDark) EditorPalette.Dark else EditorPalette.Light
     val colors = remember(base, p) {

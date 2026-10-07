@@ -98,6 +98,10 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3
   Entwürfe; Pro/30-Minuten-Test: bis 20 Fotos, Frei, A4-Druck, 50 Entwürfe – ausprobieren immer frei, kein Wasserzeichen.
   Medienauswahl (`MediaPickerScreen`) ist nie eine Entscheidung. Neue String-Kennungen vorher auf Kollision prüfen.
+- Editor-Oberfläche (Nutzerwunsch 2026-10-07, `design/MediaEditorChrome.kt`): wie die Fotos-App, immer dunkel – ✕/✓-Kapseln,
+  Rückgängig · TITEL · Vergleich/⋯, große Bühne, schmale Werkzeugzone (runde Werkzeuge + `EditorRuler`) für Anpassen/Filter/
+  Zuschneiden/Kürzen, höhere Zone für Werkzeuge mit vielen Einstellungen, Reiterkapsel. Zoom mit zwei Fingern auf jeder Bühne
+  (`ZoomableStage`, nur Ansicht, nie im Rezept). Nichts Bedienbares auf dem Bild außer dem Werkzeug selbst.
 - Editor (2026-10, `feature/editor/`, Kern `core/.../edit/`): nicht destruktives Rezept (`EditRecipe`), Vorschau = Export
   (gleiche Geometrie/Farbmatrix). Speichern nur als neue Datei: „Als Kopie speichern“ oder „Kopie speichern und Original in den Papierkorb“
   (`SaveMode.REPLACE`, Original per `createTrashRequest` in den Android-Papierkorb, wiederherstellbar in „Bearbeitet“) – nie überschreiben.

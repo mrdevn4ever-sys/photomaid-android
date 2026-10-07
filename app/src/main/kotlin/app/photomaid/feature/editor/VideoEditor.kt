@@ -201,7 +201,8 @@ internal fun VideoEditStage(vm: EditorViewModel, pv: VideoPreview, modifier: Mod
     val a = vm.asset ?: return
     val ratio = vm.videoLayout?.output?.aspect ?: if (a.pixelWidth > 0 && a.pixelHeight > 0) a.aspectRatio else 16f / 9f
     val playLabel = stringResource(if (pv.playing) R.string.pause else R.string.play)
-    Box(modifier.padding(AppSpacing.s), contentAlignment = Alignment.Center) {
+    val zoom = remember { app.photomaid.design.StageZoom() }
+    app.photomaid.design.ZoomableStage(zoom, modifier.padding(AppSpacing.xs)) {
         Box(Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = ratio < 1f).background(Color.Black)
             .clickable(role = Role.Button, onClickLabel = playLabel) { pv.toggle() }
             .testTag("editor.video")) {
@@ -260,7 +261,12 @@ internal fun VideoPosterStage(vm: EditorViewModel, modifier: Modifier = Modifier
     val poster = vm.videoPoster
     Box(modifier) {
         if (poster == null) CircularProgressIndicator(Modifier.align(Alignment.Center))
-        else MarkupStage(vm.markup, poster, poster, null, Modifier.fillMaxSize())
+        else {
+            val zoom = remember { app.photomaid.design.StageZoom() }
+            app.photomaid.design.ZoomableStage(zoom, Modifier.fillMaxSize(), enabled = vm.markup.tool != MarkupTool.SELECT) {
+                MarkupStage(vm.markup, poster, poster, null, Modifier.fillMaxSize())
+            }
+        }
     }
 }
 

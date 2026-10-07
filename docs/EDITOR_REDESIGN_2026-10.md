@@ -66,6 +66,27 @@ Unverändert beibehalten: feste Bühne, Werkzeuge außerhalb des Bildes, gemeins
 
 Geräteprüfung (echte Videowiedergabe, geöffnete Tastatur im Textwerkzeug, TalkBack-Bedienung): **NOT RUN / BLOCKED** – in dieser Umgebung gibt es kein Gerät. Robolectric zeigt Standbild/Filmstreifen, aber keine laufende Wiedergabe; die Tastatur ist nur simuliert.
 
+## 2d. Runde 3: Fotos-App-Stil (Nutzerwunsch 07.10.2026)
+
+Rückmeldung mit Bildschirmfoto der Fotos-App: „Fotos und Videos müssen zoombar sein und sind wegen der großen
+Anpassungs-Buttons zu klein.“ Umsetzung (`design/MediaEditorChrome.kt`, nur Foto-/Video-Editor; Collage, Film und
+Werkzeuge behalten das bisherige Gerüst):
+
+| Bereich | Vorher | Jetzt |
+|---|---|---|
+| Kopf | „Abbrechen“ · „Speichern“ + eigene Hilfsleiste (52 dp) | ✕ / ✓ als Kapseln; Zeile 2: Rückgängig/Wiederholen · TITEL (Werkzeug) mit Größe/Zoom · Vergleich + ⋯ |
+| Bühne (393 × 852 dp) | 408 dp hoch | 524 dp bei Anpassen/Filter/Zuschneiden/Kürzen (+28 %) |
+| Anpassen | Gruppenreiter, Werkzeugkreise mit Text, Regler mit Name und Wert, „zurücksetzen“ | eine Reihe runder Werkzeuge (gewähltes in der Mitte, Ring = Stärke), Skalenregler mit Mittelmarke (Doppeltipp = 0), Name im Titel |
+| Zuschneiden | Modus-Chips, Seitenverhältnisse, Regler, Drehen/Spiegeln-Reihe | Modus und Seitenverhältnisse in einer Reihe, Begradigen als Skala; Spiegeln/Drehen im Kopf, Vertikal/Ausrichtung/Zurücksetzen unter ⋯ |
+| Navigation | Leiste über die ganze Breite | Reiterkapsel (Punkt + Akzent = aktiv) |
+| Zoom | nur Ergebnis | jede Bühne mit zwei Fingern (`ZoomableStage`), ein Finger bleibt beim Werkzeug; begonnener Strich wird beim zweiten Finger verworfen |
+| Farben | folgt der App | immer dunkel (`EditorTheme(dark = true)`, helle Systemleisten-Symbole) |
+
+Regel geändert: Die Bühne ist nicht mehr für alle Werkzeuge gleich groß, sondern **je Werkzeugart**: Hauptwerkzeuge
+(schmale Zone) und Werkzeuge mit vielen Einstellungen (Markieren, Retusche, Rahmen, Größe, Tempo, Ton, Format,
+Farbmischer, Perspektive). Innerhalb einer Art springt sie nie (`StageConsistencyTest`). Histogramm und Pro-Hinweis
+liegen als reine Anzeige auf der Bühne. Aufnahmen: `docs/screenshots/editor-apple/`. Gerät: NOT RUN.
+
 ## 3. Geschützte Regeln
 
 - **A – feste Bühne:** `EditorLayoutPolicy` hängt nur von Fenster, Schrift, Tastatur ab. Gemessen: Foto-Editor, Video-Editor, Collage und Film haben dieselbe Bühne (`allEditorsShareOneStageGeometry`); die Bühne springt in keinem Bild eines Werkzeugwechsels (`stageNeverJumpsDuringToolSwitches`, 8 Wechsel × 24 Bilder); Tastatur öffnet/schließt → exakt zurück.

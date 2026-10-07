@@ -183,6 +183,8 @@ internal fun MarkupStage(m: MarkupController, image: Bitmap?, baseImage: Bitmap?
                         live.clear(); live.add(down.position); drag = down.position to down.position
                         while (true) {
                             val ev = awaitPointerEvent(); val ch = ev.changes.firstOrNull { it.id == down.id } ?: break
+                            // Zweiter Finger = Zoom der Bühne: angefangenen Strich verwerfen.
+                            if (ev.changes.count { it.pressed } >= 2) { live.clear(); drag = null; return@awaitEachGesture }
                             if (!ch.pressed) break
                             if (brushLike) live.add(ch.position) else drag = down.position to ch.position
                             ch.consume()
@@ -197,6 +199,7 @@ internal fun MarkupStage(m: MarkupController, image: Bitmap?, baseImage: Bitmap?
                         drag = down.position to down.position
                         while (true) {
                             val ev = awaitPointerEvent(); val ch = ev.changes.firstOrNull { it.id == down.id } ?: break
+                            if (ev.changes.count { it.pressed } >= 2) { drag = null; return@awaitEachGesture }
                             if (!ch.pressed) break
                             drag = down.position to ch.position; ch.consume()
                         }
