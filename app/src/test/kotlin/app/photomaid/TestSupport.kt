@@ -291,6 +291,10 @@ fun makeTestApp(
     introSeen: Boolean = true,
     configure: suspend (AppModel) -> Unit = {},
 ): AppModel = runBlocking(Dispatchers.IO) {
+    // FileProvider merkt sich die Pfadregeln statisch je Authority. Robolectric gibt jedem Test ein eigenes Datenverzeichnis –
+    // ohne Zurücksetzen zeigt der Cache auf das Verzeichnis eines früheren Tests und Teilen schlägt fehl (nur in Tests).
+    runCatching { androidx.core.content.FileProvider::class.java.getDeclaredField("sCache").apply { isAccessible = true }
+        .let { f -> synchronized(f.get(null)!!) { (f.get(null) as java.util.HashMap<*, *>).clear() } } }
     // Robolectric kennt kein ImageDecoder: in Tests BitmapFactory-Decoder verwenden.
     coil3.SingletonImageLoader.setUnsafe(coil3.ImageLoader.Builder(context).imageDecoderEnabled(false).build())
     val db = PhotoMaidDatabase.open(context, inMemory = true)
