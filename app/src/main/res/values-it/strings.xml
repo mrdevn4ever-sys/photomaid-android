@@ -1721,4 +1721,5 @@
         <item quantity="many">Impossibile leggere %1$d foto: i loro spazi restano vuoti.</item>
         <item quantity="other">Impossibile leggere %1$d foto: i loro spazi restano vuoti.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

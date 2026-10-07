@@ -42,10 +42,11 @@ class PdfExportTest {
     private lateinit var lib: FakeMediaLibrary
     private val nav = RecordingNav()
 
-    private fun start(pro: Boolean = false) {
+    /** [ui]: Bild-Engine auf dem Main-Thread (Robolectric-Grafik neben Compose). Ohne UI nicht: runBlocking blockiert sonst Main. */
+    private fun start(pro: Boolean = false, ui: Boolean = false) {
         app = makeTestApp(rule.activity, media = { FakeMediaLibrary(it, count = 5, videos = 1).also { l -> lib = l } },
             purchase = if (pro) FakePurchaseGateway(PurchaseState.PURCHASED) else null)
-        app.editEngine.io = Dispatchers.Main; app.editEngine.parallel = false
+        if (ui) { app.editEngine.io = Dispatchers.Main; app.editEngine.parallel = false } else app.editEngine.parallel = false
     }
     private fun pumpUntil(timeoutMs: Long = 30_000, cond: () -> Boolean) {
         rule.mainClock.autoAdvance = false
@@ -70,7 +71,7 @@ class PdfExportTest {
     @Test fun savesMultiPagePdfWithoutTouchingSources() {
         start()
         val before = lib.all.size
-        val (r, _) = runBlocking { buildPdf(app, photos(), PdfOptions(perPage = PerPage.TWO), "Test.pdf", share = false) }
+        val (r, _) = runBlocking(Dispatchers.IO) { buildPdf(app, photos(), PdfOptions(perPage = PerPage.TWO), "Test.pdf", share = false) }
         r as PdfOutcome.Saved
         assertEquals(3, r.pages); assertEquals(0, r.unreadable)
         val s = pdfText("Test.pdf")
@@ -84,7 +85,7 @@ class PdfExportTest {
     @Test fun imagesKeepTheirAspectAndNoMetadataOrNamesLeak() {
         start()
         val ph = photos()
-        runBlocking { buildPdf(app, ph, PdfOptions(perPage = PerPage.FOUR, fit = ImageFit.FIT, caption = Caption.NAME), "Meta.pdf", share = false) }
+        runBlocking(Dispatchers.IO) { buildPdf(app, ph, PdfOptions(perPage = PerPage.FOUR, fit = ImageFit.FIT, caption = Caption.NAME), "Meta.pdf", share = false) }
         val s = pdfText("Meta.pdf")
         val dims = Regex("/Width (\\d+) /Height (\\d+) /ColorSpace /DeviceRGB").findAll(s).map { it.groupValues[1].toDouble() / it.groupValues[2].toDouble() }.toList()
         val draws = Regex("q ([\\d.]+) 0 0 ([\\d.]+) [\\d.]+ [\\d.]+ cm /Im(\\d+) Do Q").findAll(s).toList()
@@ -99,13 +100,13 @@ class PdfExportTest {
 
     @Test fun shareStagesFileWithoutSaving() {
         start()
-        val (r, uri) = runBlocking { buildPdf(app, photos().take(2), PdfOptions(), "Teilen.pdf", share = true) }
+        val (r, uri) = runBlocking(Dispatchers.IO) { buildPdf(app, photos().take(2), PdfOptions(), "Teilen.pdf", share = true) }
         assertTrue(r is PdfOutcome.Shared); assertTrue(uri != null)
         assertTrue("nichts gespeichert", lib.documents.isEmpty())
     }
 
     @Test fun screenSkipsVideosAndReorders() {
-        start()
+        start(ui = true)
         rule.setContent { TestHost(app) { PdfScreen(PdfRequest("r", lib.all.map { it.id }), nav) {} } }
         pumpUntil { count("pdf.summary") == 1 }
         assertEquals("nur die 5 Fotos", 5, count("pdf.up"))
@@ -115,7 +116,7 @@ class PdfExportTest {
     }
 
     @Test fun proSavesFromScreen() {
-        start(pro = true)
+        start(pro = true, ui = true)
         rule.setContent { TestHost(app) { PdfScreen(PdfRequest("r", photos().map { it.id }), nav) {} } }
         pumpUntil { count("pdf.save") == 1 }
         click("pdf.save")
@@ -125,7 +126,7 @@ class PdfExportTest {
     }
 
     @Test fun freeContactSheetAsksForPro() {
-        start()
+        start(ui = true)
         rule.setContent { TestHost(app) { PdfScreen(PdfRequest("r", photos().map { it.id }, PdfOptions(perPage = PerPage.FOUR)), nav) {} } }
         pumpUntil { count("pdf.save") == 1 }
         assertEquals(1, count("editor.prohint"))

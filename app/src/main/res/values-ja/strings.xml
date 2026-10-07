@@ -1571,4 +1571,5 @@
     <plurals name="pdf_unreadable">
         <item quantity="other">写真 %1$d 枚を読み込めませんでした。その枠は空白のままです。</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

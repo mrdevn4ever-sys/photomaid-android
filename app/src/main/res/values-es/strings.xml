@@ -1721,4 +1721,5 @@
         <item quantity="many">No se han podido leer %1$d fotos: sus espacios quedan vacíos.</item>
         <item quantity="other">No se han podido leer %1$d fotos: sus espacios quedan vacíos.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

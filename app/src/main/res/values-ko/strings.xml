@@ -1571,4 +1571,5 @@
     <plurals name="pdf_unreadable">
         <item quantity="other">사진 %1$d장을 읽을 수 없어 그 칸은 비어 있어요.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

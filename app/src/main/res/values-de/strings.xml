@@ -1646,4 +1646,5 @@
         <item quantity="one">%1$d Foto konnte nicht gelesen werden – sein Feld bleibt leer.</item>
         <item quantity="other">%1$d Fotos konnten nicht gelesen werden – ihre Felder bleiben leer.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

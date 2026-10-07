@@ -1796,4 +1796,5 @@
         <item quantity="many">Nie udało się odczytać %1$d zdjęć – ich pola pozostają puste.</item>
         <item quantity="other">Nie udało się odczytać %1$d zdjęcia – pola pozostają puste.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

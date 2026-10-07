@@ -1796,4 +1796,5 @@
         <item quantity="many">Не вдалося прочитати %1$d фото – їхні місця залишаться порожніми.</item>
         <item quantity="other">Не вдалося прочитати %1$d фото – їхні місця залишаться порожніми.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

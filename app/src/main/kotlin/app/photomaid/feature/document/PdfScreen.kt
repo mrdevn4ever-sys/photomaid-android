@@ -198,7 +198,7 @@ fun PdfScreen(req: PdfRequest, nav: Nav, onClose: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             if (assets == null) return@Column
             if (ordered.isEmpty()) { Text(stringResource(R.string.pdf_no_photos), style = AppTypography.body, color = c.textPrimary, modifier = Modifier.testTag("pdf.empty")); return@Column }
-            Text(pluralStringResource(R.plurals.pdf_pages, pages.size, pages.size) + " · " + pluralStringResource(R.plurals.pdf_photos, ordered.size, ordered.size),
+            Text(stringResource(R.string.pdf_summary, pluralStringResource(R.plurals.pdf_pages, pages.size, pages.size), pluralStringResource(R.plurals.pdf_photos, ordered.size, ordered.size)),
                 style = AppTypography.headline, color = c.textPrimary, modifier = Modifier.testTag("pdf.summary"))
             Row(Modifier.horizontalScroll(rememberScrollState()).testTag("pdf.previews"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
                 pages.take(MAX_PREVIEWS).forEachIndexed { i, p ->

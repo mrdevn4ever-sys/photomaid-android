@@ -1646,4 +1646,5 @@
         <item quantity="one">%1$d photo couldn’t be read – its space stays empty.</item>
         <item quantity="other">%1$d photos couldn’t be read – their spaces stay empty.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

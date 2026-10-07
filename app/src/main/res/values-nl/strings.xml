@@ -1646,4 +1646,5 @@
         <item quantity="one">%1$d foto kon niet worden gelezen – het vak blijft leeg.</item>
         <item quantity="other">%1$d foto’s konden niet worden gelezen – de vakken blijven leeg.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

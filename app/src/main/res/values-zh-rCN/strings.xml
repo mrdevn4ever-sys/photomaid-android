@@ -1571,4 +1571,5 @@
     <plurals name="pdf_unreadable">
         <item quantity="other">%1$d 张照片无法读取，其位置留空。</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>

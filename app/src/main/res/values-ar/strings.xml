@@ -1946,4 +1946,5 @@
         <item quantity="many">تعذّرت قراءة %1$d صورة – تبقى مساحاتها فارغة.</item>
         <item quantity="other">تعذّرت قراءة %1$d صورة – تبقى مساحاتها فارغة.</item>
     </plurals>
+    <string name="pdf_summary">%1$s، %2$s</string>
 </resources>

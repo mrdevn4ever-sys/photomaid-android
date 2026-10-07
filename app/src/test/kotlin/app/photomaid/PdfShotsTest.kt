@@ -20,6 +20,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import app.photomaid.core.document.Caption
+import app.photomaid.core.model.MediaKind
 import app.photomaid.core.document.PdfOptions
 import app.photomaid.core.document.PerPage
 import app.photomaid.feature.document.PdfRequest
@@ -43,7 +44,7 @@ class PdfShotsTest {
         val app = makeTestApp(rule.activity, media = { FakeMediaLibrary(it, visual = true).also { l -> lib = l } }) { a ->
             a.updateSettings { it.copy(appearance = if (dark) AppearanceChoice.DARK else AppearanceChoice.LIGHT) } }
         app.editEngine.io = kotlinx.coroutines.Dispatchers.Main; app.editEngine.parallel = false
-        val ids = lib.all.filter { it.kind != app.photomaid.core.model.MediaKind.VIDEO }.take(5).map { it.id }
+        val ids = lib.all.filter { it.kind != MediaKind.VIDEO }.take(5).map { it.id }
         rule.setContent { TestHost(app) { PdfScreen(PdfRequest("p", ids, PdfOptions(perPage = PerPage.FOUR, caption = Caption.NUMBER)), nav) {} } }
         pump(); pump(120)
         captureScreenRoboImage("build/outputs/roborazzi/pdf_${variant}.png")

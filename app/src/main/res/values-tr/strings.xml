@@ -1646,4 +1646,5 @@
         <item quantity="one">%1$d fotoğraf okunamadı – alanı boş kalır.</item>
         <item quantity="other">%1$d fotoğraf okunamadı – alanları boş kalır.</item>
     </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
 </resources>
