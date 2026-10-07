@@ -1878,4 +1878,72 @@
         <item quantity="many">لم يُستلم %1$d عنصرًا إضافيًا (500 كحد أقصى في المرة).</item>
         <item quantity="other">لم يُستلم %1$d عنصر إضافي (500 كحد أقصى في المرة).</item>
     </plurals>
+    <string name="pdf_title">إنشاء PDF</string>
+    <string name="pdf_studio_sub">صور كمستند أو ورقة مصغّرات</string>
+    <string name="pdf_pick">صور لملف PDF</string>
+    <string name="pdf_from_selection">إنشاء PDF</string>
+    <string name="pdf_no_photos">لا توجد صور في هذا التحديد. لا يمكن وضع الفيديوهات في ملف PDF.</string>
+    <string name="pdf_no_date">بلا تاريخ</string>
+    <string name="pdf_saved">تم الحفظ في «Documents/PhotoMaid» · %1$s</string>
+    <string name="pdf_failed">تعذّر حفظ ملف PDF.</string>
+    <string name="pdf_page_of">الصفحة %1$d من %2$d</string>
+    <string name="pdf_capped">%1$d صورة كحد أقصى لكل PDF – تم أخذ أول %1$d.</string>
+    <string name="pdf_per_page">صور لكل صفحة</string>
+    <string name="pdf_fit">احتواء</string>
+    <string name="pdf_fill">ملء</string>
+    <string name="pdf_paper">الورق</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">الاتجاه</string>
+    <string name="pdf_orient_auto">تلقائي</string>
+    <string name="pdf_orient_portrait">عمودي</string>
+    <string name="pdf_orient_landscape">أفقي</string>
+    <string name="pdf_margin">الهامش</string>
+    <string name="pdf_margin_none">بلا</string>
+    <string name="pdf_margin_small">ضيق</string>
+    <string name="pdf_margin_normal">عادي</string>
+    <string name="pdf_caption">التسمية</string>
+    <string name="pdf_caption_none">بلا</string>
+    <string name="pdf_caption_number">الرقم</string>
+    <string name="pdf_caption_name">اسم الملف</string>
+    <string name="pdf_caption_date">التاريخ</string>
+    <string name="pdf_order">الترتيب</string>
+    <string name="pdf_move_up">نقل لأعلى</string>
+    <string name="pdf_move_down">نقل لأسفل</string>
+    <string name="pdf_name">اسم الملف</string>
+    <string name="pdf_save">حفظ كملف PDF</string>
+    <string name="pdf_share">مشاركة PDF</string>
+    <string name="pdf_running">جارٍ إنشاء PDF …</string>
+    <string name="pdf_privacy">تُضمَّن الصور من جديد: لا ينتقل الموقع وبيانات التصوير الأخرى إلى ملف PDF. تبقى الأصول دون تغيير.</string>
+    <plurals name="pdf_pages">
+        <item quantity="zero">%1$d صفحة</item>
+        <item quantity="one">صفحة واحدة</item>
+        <item quantity="two">صفحتان</item>
+        <item quantity="few">%1$d صفحات</item>
+        <item quantity="many">%1$d صفحة</item>
+        <item quantity="other">%1$d صفحة</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="zero">%1$d صورة</item>
+        <item quantity="one">صورة واحدة</item>
+        <item quantity="two">صورتان</item>
+        <item quantity="few">%1$d صور</item>
+        <item quantity="many">%1$d صورة</item>
+        <item quantity="other">%1$d صورة</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="zero">لن يُضمَّن %1$d فيديو.</item>
+        <item quantity="one">لن يُضمَّن فيديو واحد.</item>
+        <item quantity="two">لن يُضمَّن فيديوهان.</item>
+        <item quantity="few">لن تُضمَّن %1$d فيديوهات.</item>
+        <item quantity="many">لن يُضمَّن %1$d فيديو.</item>
+        <item quantity="other">لن يُضمَّن %1$d فيديو.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="zero">تعذّرت قراءة %1$d صورة – تبقى مساحتها فارغة.</item>
+        <item quantity="one">تعذّرت قراءة صورة واحدة – تبقى مساحتها فارغة.</item>
+        <item quantity="two">تعذّرت قراءة صورتين – تبقى مساحتهما فارغة.</item>
+        <item quantity="few">تعذّرت قراءة %1$d صور – تبقى مساحاتها فارغة.</item>
+        <item quantity="many">تعذّرت قراءة %1$d صورة – تبقى مساحاتها فارغة.</item>
+        <item quantity="other">تعذّرت قراءة %1$d صورة – تبقى مساحاتها فارغة.</item>
+    </plurals>
 </resources>

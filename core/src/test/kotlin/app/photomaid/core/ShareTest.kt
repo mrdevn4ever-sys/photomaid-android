@@ -50,7 +50,7 @@ class ShareTest {
         assertTrue(ShareAction.EDIT in ShareActions.available(1))
         assertFalse(ShareAction.EDIT in ShareActions.available(2))
         // Es gibt keine Aktion Behalten/Papierkorb/Löschen.
-        assertEquals(setOf("WORKFLOW", "EDIT", "ALBUM", "BASKET"), ShareAction.entries.map { it.name }.toSet())
+        assertEquals(setOf("WORKFLOW", "EDIT", "PDF", "ALBUM", "BASKET"), ShareAction.entries.map { it.name }.toSet())
     }
 
     @Test fun shortcutIdsRoundTrip() {

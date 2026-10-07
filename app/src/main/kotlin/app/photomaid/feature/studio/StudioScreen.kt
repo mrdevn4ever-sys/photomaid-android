@@ -1,7 +1,10 @@
 package app.photomaid.feature.studio
 
+import app.photomaid.feature.document.PdfRequest
+import app.photomaid.core.document.PdfRules
 import app.photomaid.feature.workflow.WorkflowRequest
 import androidx.compose.material.icons.rounded.AutoMode
+import androidx.compose.material.icons.rounded.PictureAsPdf
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers
 import app.photomaid.core.studio.VideoRules
@@ -143,6 +146,15 @@ fun StudioScreen(nav: Nav) {
                     ListRow(Icons.Rounded.AutoMode, stringResource(R.string.wf_title), Modifier.testTag("studio.workflows"), tint = c.accent,
                         tile = c.accent.copy(alpha = 0.13f), subtitle = stringResource(R.string.wf_studio_sub), enabled = access.canRead) {
                         nav.openWorkflows(WorkflowRequest(UUID.randomUUID().toString(), null))
+                    }
+                    RowDivider(RowDividerInset)
+                    // Paket 4: mehrseitiges PDF / Kontaktbogen (nur Anordnung, keine Erkennung).
+                    ListRow(Icons.Rounded.PictureAsPdf, stringResource(R.string.pdf_title), Modifier.testTag("studio.pdf"), tint = c.accent,
+                        tile = c.accent.copy(alpha = 0.13f), subtitle = stringResource(R.string.pdf_studio_sub), enabled = access.canRead) {
+                        nav.openPicker(PickRequest(UUID.randomUUID().toString(), photos = true, videos = false, min = 1,
+                            max = PdfRules.PRO_MAX, title = R.string.pdf_pick, library = true) { picked ->
+                            nav.openPdf(PdfRequest(UUID.randomUUID().toString(), picked))
+                        })
                     }
                     RowDivider(RowDividerInset)
                     val tools = listOf(

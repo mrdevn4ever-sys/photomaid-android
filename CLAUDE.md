@@ -86,6 +86,13 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   eindeutig über Name + Größe (`ShareMatch`); Rest wird gezählt, nie kopiert. Dynamische Shortcuts (feste Ziele + bis zu 4
   Abläufe, Direktes Teilen je Ablauf über `res/xml/shortcuts.xml`) öffnen nur Ansichten: nie Entscheidung, nie Löschen, nie
   ein Start ohne Tipp, keine Medien-IDs. Kein Shortcut/Intent darf je löschen oder entscheiden.
+- Dokumente (Ausbau Paket 4, 2026-10, `feature/document/PdfScreen.kt`, Export `media/PdfExporter.kt`, Kern
+  `core/.../document/PdfLayout.kt` + eigener `PdfWriter`): mehrseitiges PDF aus Fotos (A4/A5/US Letter, Ausrichtung, Rand,
+  1/2/4/6/12 je Seite, Einpassen oder Füllen – nie verzerren, Beschriftung Nummer/Dateiname/Datum als Bild, Reihenfolge).
+  Vorschau = Export (gleiche Aufteilung, gleicher Zeichenweg). Bilder neu als JPEG eingebettet: keine EXIF-/Standortdaten,
+  keine Dateinamen als Text, Dokument-Info nur „PhotoMaid“. Speichern nach `Documents/PhotoMaid/` (kein Medium, keine
+  Entscheidung, Quellen unverändert) oder nur teilen; Größe gemessen. Free bis 10 Fotos, 1–2 je Seite; Kontaktbögen (ab 4)
+  und bis 200 Fotos mit `hasProToolsAccess`. Keine Text-/Dokumenterkennung. Einstiege: Studio, Auswahl › ⋯, Teilen-Ziel.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3

@@ -1594,4 +1594,56 @@
         <item quantity="one">Nog %1$d niet overgenomen (maximaal 500 tegelijk).</item>
         <item quantity="other">Nog %1$d niet overgenomen (maximaal 500 tegelijk).</item>
     </plurals>
+    <string name="pdf_title">PDF maken</string>
+    <string name="pdf_studio_sub">Foto’s als document of contactblad</string>
+    <string name="pdf_pick">Foto’s voor de PDF</string>
+    <string name="pdf_from_selection">Als PDF</string>
+    <string name="pdf_no_photos">Deze selectie bevat geen foto’s. Video’s kunnen niet in een PDF.</string>
+    <string name="pdf_no_date">Geen datum</string>
+    <string name="pdf_saved">Opgeslagen in ‘Documents/PhotoMaid’ · %1$s</string>
+    <string name="pdf_failed">De PDF kon niet worden opgeslagen.</string>
+    <string name="pdf_page_of">Pagina %1$d van %2$d</string>
+    <string name="pdf_capped">Maximaal %1$d foto’s per PDF – de eerste %1$d zijn overgenomen.</string>
+    <string name="pdf_per_page">Foto’s per pagina</string>
+    <string name="pdf_fit">Passend</string>
+    <string name="pdf_fill">Vullen</string>
+    <string name="pdf_paper">Papier</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Stand</string>
+    <string name="pdf_orient_auto">Automatisch</string>
+    <string name="pdf_orient_portrait">Staand</string>
+    <string name="pdf_orient_landscape">Liggend</string>
+    <string name="pdf_margin">Marge</string>
+    <string name="pdf_margin_none">Geen</string>
+    <string name="pdf_margin_small">Smal</string>
+    <string name="pdf_margin_normal">Normaal</string>
+    <string name="pdf_caption">Bijschrift</string>
+    <string name="pdf_caption_none">Geen</string>
+    <string name="pdf_caption_number">Nummer</string>
+    <string name="pdf_caption_name">Bestandsnaam</string>
+    <string name="pdf_caption_date">Datum</string>
+    <string name="pdf_order">Volgorde</string>
+    <string name="pdf_move_up">Omhoog</string>
+    <string name="pdf_move_down">Omlaag</string>
+    <string name="pdf_name">Bestandsnaam</string>
+    <string name="pdf_save">Opslaan als PDF</string>
+    <string name="pdf_share">PDF delen</string>
+    <string name="pdf_running">PDF wordt gemaakt …</string>
+    <string name="pdf_privacy">Foto’s worden opnieuw ingesloten: locatie en andere opnamegegevens komen niet in de PDF. De originelen blijven ongewijzigd.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d pagina</item>
+        <item quantity="other">%1$d pagina’s</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d foto</item>
+        <item quantity="other">%1$d foto’s</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d video wordt niet opgenomen.</item>
+        <item quantity="other">%1$d video’s worden niet opgenomen.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">%1$d foto kon niet worden gelezen – het vak blijft leeg.</item>
+        <item quantity="other">%1$d foto’s konden niet worden gelezen – de vakken blijven leeg.</item>
+    </plurals>
 </resources>

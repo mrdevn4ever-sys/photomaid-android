@@ -1594,4 +1594,56 @@
         <item quantity="one">%1$d more not taken over (at most 500 at once).</item>
         <item quantity="other">%1$d more not taken over (at most 500 at once).</item>
     </plurals>
+    <string name="pdf_title">Create PDF</string>
+    <string name="pdf_studio_sub">Photos as a document or contact sheet</string>
+    <string name="pdf_pick">Photos for the PDF</string>
+    <string name="pdf_from_selection">Create PDF</string>
+    <string name="pdf_no_photos">There are no photos in this selection. Videos can’t be placed in a PDF.</string>
+    <string name="pdf_no_date">No date</string>
+    <string name="pdf_saved">Saved to “Documents/PhotoMaid” · %1$s</string>
+    <string name="pdf_failed">The PDF couldn’t be saved.</string>
+    <string name="pdf_page_of">Page %1$d of %2$d</string>
+    <string name="pdf_capped">At most %1$d photos per PDF – the first %1$d were taken.</string>
+    <string name="pdf_per_page">Photos per page</string>
+    <string name="pdf_fit">Fit</string>
+    <string name="pdf_fill">Fill</string>
+    <string name="pdf_paper">Paper</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Orientation</string>
+    <string name="pdf_orient_auto">Automatic</string>
+    <string name="pdf_orient_portrait">Portrait</string>
+    <string name="pdf_orient_landscape">Landscape</string>
+    <string name="pdf_margin">Margin</string>
+    <string name="pdf_margin_none">None</string>
+    <string name="pdf_margin_small">Narrow</string>
+    <string name="pdf_margin_normal">Normal</string>
+    <string name="pdf_caption">Caption</string>
+    <string name="pdf_caption_none">None</string>
+    <string name="pdf_caption_number">Number</string>
+    <string name="pdf_caption_name">File name</string>
+    <string name="pdf_caption_date">Date</string>
+    <string name="pdf_order">Order</string>
+    <string name="pdf_move_up">Move up</string>
+    <string name="pdf_move_down">Move down</string>
+    <string name="pdf_name">File name</string>
+    <string name="pdf_save">Save as PDF</string>
+    <string name="pdf_share">Share PDF</string>
+    <string name="pdf_running">Creating PDF …</string>
+    <string name="pdf_privacy">Photos are re-embedded: location and other capture data don’t go into the PDF. The originals stay unchanged.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d page</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d photo</item>
+        <item quantity="other">%1$d photos</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d video isn’t included.</item>
+        <item quantity="other">%1$d videos aren’t included.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">%1$d photo couldn’t be read – its space stays empty.</item>
+        <item quantity="other">%1$d photos couldn’t be read – their spaces stay empty.</item>
+    </plurals>
 </resources>

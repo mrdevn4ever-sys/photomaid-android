@@ -137,6 +137,14 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Langdruck auf das App-Symbol (auch anheftbar): Jetzt aufräumen · Fällig aus „Später“ · Auswahlkorb · Arbeitsabläufe · bis zu 4 eigene Abläufe (S4)
 - Kein Einstieg von außen entscheidet, löscht oder startet etwas ohne weiteren Tipp; Shortcuts enthalten keine Medien-IDs
 
+## 8c. Dokumente – PDF (Ausbau Paket 4)
+- Studio › Werkzeuge › PDF erstellen, Auswahl › ⋯ › Als PDF, oder „An PhotoMaid senden“ › PDF erstellen (D1)
+- Papier A4 / A5 / US Letter, Ausrichtung automatisch/hoch/quer, Rand ohne/schmal/normal, 1, 2, 4, 6 oder 12 Bilder je Seite (Kontaktbogen), Einpassen oder Füllen – nie verzerrt (D2)
+- Beschriftung je Bild: Nummer, Dateiname oder Datum; Reihenfolge mit „Nach oben/unten“; Vorschau der Seiten = Ergebnis (D3)
+- Speichern unter „Dokumente/PhotoMaid“ (Größe gemessen) oder nur teilen; Videos werden nicht übernommen (gezählt) (D4)
+- Bilder werden neu eingebettet: kein Standort, keine Aufnahmedaten, keine Dateinamen als Text im PDF; Originale unverändert, keine Entscheidung
+- Free: bis 10 Fotos, 1–2 je Seite; Pro / 30-Minuten-Test: Kontaktbögen und bis 200 Fotos (Vorschau immer frei)
+
 ## 9. Foto-Editor (✏️ aus Feed, Betrachter oder Studio)
 - Gemeinsames Editor-Gerüst (Redesign 2026-10):
   - feste Bühne, die nicht vom Medium oder Werkzeug abhängt

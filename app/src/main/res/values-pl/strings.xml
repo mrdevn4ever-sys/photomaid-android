@@ -1736,4 +1736,64 @@
         <item quantity="many">Kolejnych %1$d nie przejęto (maks. 500 naraz).</item>
         <item quantity="other">Kolejnych %1$d nie przejęto (maks. 500 naraz).</item>
     </plurals>
+    <string name="pdf_title">Utwórz PDF</string>
+    <string name="pdf_studio_sub">Zdjęcia jako dokument lub stykówka</string>
+    <string name="pdf_pick">Zdjęcia do PDF</string>
+    <string name="pdf_from_selection">Utwórz PDF</string>
+    <string name="pdf_no_photos">W tym wyborze nie ma zdjęć. Filmów nie można umieścić w PDF.</string>
+    <string name="pdf_no_date">Bez daty</string>
+    <string name="pdf_saved">Zapisano w „Documents/PhotoMaid” · %1$s</string>
+    <string name="pdf_failed">Nie udało się zapisać PDF.</string>
+    <string name="pdf_page_of">Strona %1$d z %2$d</string>
+    <string name="pdf_capped">Maksymalnie %1$d zdjęć w PDF – przejęto pierwsze %1$d.</string>
+    <string name="pdf_per_page">Zdjęć na stronę</string>
+    <string name="pdf_fit">Dopasuj</string>
+    <string name="pdf_fill">Wypełnij</string>
+    <string name="pdf_paper">Papier</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Orientacja</string>
+    <string name="pdf_orient_auto">Automatyczna</string>
+    <string name="pdf_orient_portrait">Pionowa</string>
+    <string name="pdf_orient_landscape">Pozioma</string>
+    <string name="pdf_margin">Margines</string>
+    <string name="pdf_margin_none">Brak</string>
+    <string name="pdf_margin_small">Wąski</string>
+    <string name="pdf_margin_normal">Normalny</string>
+    <string name="pdf_caption">Podpis</string>
+    <string name="pdf_caption_none">Brak</string>
+    <string name="pdf_caption_number">Numer</string>
+    <string name="pdf_caption_name">Nazwa pliku</string>
+    <string name="pdf_caption_date">Data</string>
+    <string name="pdf_order">Kolejność</string>
+    <string name="pdf_move_up">W górę</string>
+    <string name="pdf_move_down">W dół</string>
+    <string name="pdf_name">Nazwa pliku</string>
+    <string name="pdf_save">Zapisz jako PDF</string>
+    <string name="pdf_share">Udostępnij PDF</string>
+    <string name="pdf_running">Tworzenie PDF…</string>
+    <string name="pdf_privacy">Zdjęcia są osadzane na nowo: lokalizacja i inne dane zdjęcia nie trafiają do PDF. Oryginały pozostają bez zmian.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d strona</item>
+        <item quantity="few">%1$d strony</item>
+        <item quantity="many">%1$d stron</item>
+        <item quantity="other">%1$d strony</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d zdjęcie</item>
+        <item quantity="few">%1$d zdjęcia</item>
+        <item quantity="many">%1$d zdjęć</item>
+        <item quantity="other">%1$d zdjęcia</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d film nie zostanie dodany.</item>
+        <item quantity="few">%1$d filmy nie zostaną dodane.</item>
+        <item quantity="many">%1$d filmów nie zostanie dodanych.</item>
+        <item quantity="other">%1$d filmu nie dodano.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">Nie udało się odczytać %1$d zdjęcia – jego pole pozostaje puste.</item>
+        <item quantity="few">Nie udało się odczytać %1$d zdjęć – ich pola pozostają puste.</item>
+        <item quantity="many">Nie udało się odczytać %1$d zdjęć – ich pola pozostają puste.</item>
+        <item quantity="other">Nie udało się odczytać %1$d zdjęcia – pola pozostają puste.</item>
+    </plurals>
 </resources>

@@ -1665,4 +1665,60 @@
         <item quantity="many">%1$d más no incluidos (máximo 500 a la vez).</item>
         <item quantity="other">%1$d más no incluidos (máximo 500 a la vez).</item>
     </plurals>
+    <string name="pdf_title">Crear PDF</string>
+    <string name="pdf_studio_sub">Fotos como documento u hoja de contactos</string>
+    <string name="pdf_pick">Fotos para el PDF</string>
+    <string name="pdf_from_selection">Crear PDF</string>
+    <string name="pdf_no_photos">No hay fotos en esta selección. Los vídeos no se pueden incluir en un PDF.</string>
+    <string name="pdf_no_date">Sin fecha</string>
+    <string name="pdf_saved">Guardado en «Documents/PhotoMaid» · %1$s</string>
+    <string name="pdf_failed">No se ha podido guardar el PDF.</string>
+    <string name="pdf_page_of">Página %1$d de %2$d</string>
+    <string name="pdf_capped">Como máximo %1$d fotos por PDF: se han incluido las primeras %1$d.</string>
+    <string name="pdf_per_page">Fotos por página</string>
+    <string name="pdf_fit">Ajustar</string>
+    <string name="pdf_fill">Rellenar</string>
+    <string name="pdf_paper">Papel</string>
+    <string name="pdf_paper_letter">Carta (EE. UU.)</string>
+    <string name="pdf_orientation">Orientación</string>
+    <string name="pdf_orient_auto">Automática</string>
+    <string name="pdf_orient_portrait">Vertical</string>
+    <string name="pdf_orient_landscape">Horizontal</string>
+    <string name="pdf_margin">Margen</string>
+    <string name="pdf_margin_none">Sin margen</string>
+    <string name="pdf_margin_small">Estrecho</string>
+    <string name="pdf_margin_normal">Normal</string>
+    <string name="pdf_caption">Leyenda</string>
+    <string name="pdf_caption_none">Ninguna</string>
+    <string name="pdf_caption_number">Número</string>
+    <string name="pdf_caption_name">Nombre de archivo</string>
+    <string name="pdf_caption_date">Fecha</string>
+    <string name="pdf_order">Orden</string>
+    <string name="pdf_move_up">Subir</string>
+    <string name="pdf_move_down">Bajar</string>
+    <string name="pdf_name">Nombre del archivo</string>
+    <string name="pdf_save">Guardar como PDF</string>
+    <string name="pdf_share">Compartir PDF</string>
+    <string name="pdf_running">Creando PDF…</string>
+    <string name="pdf_privacy">Las fotos se vuelven a incrustar: la ubicación y otros datos de captura no pasan al PDF. Los originales no cambian.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d página</item>
+        <item quantity="many">%1$d páginas</item>
+        <item quantity="other">%1$d páginas</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d foto</item>
+        <item quantity="many">%1$d fotos</item>
+        <item quantity="other">%1$d fotos</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d vídeo no se incluye.</item>
+        <item quantity="many">%1$d vídeos no se incluyen.</item>
+        <item quantity="other">%1$d vídeos no se incluyen.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">No se ha podido leer %1$d foto: su espacio queda vacío.</item>
+        <item quantity="many">No se han podido leer %1$d fotos: sus espacios quedan vacíos.</item>
+        <item quantity="other">No se han podido leer %1$d fotos: sus espacios quedan vacíos.</item>
+    </plurals>
 </resources>

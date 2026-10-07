@@ -1594,4 +1594,56 @@
         <item quantity="one">%1$d tane daha alınmadı (bir seferde en fazla 500).</item>
         <item quantity="other">%1$d tane daha alınmadı (bir seferde en fazla 500).</item>
     </plurals>
+    <string name="pdf_title">PDF oluştur</string>
+    <string name="pdf_studio_sub">Fotoğrafları belge veya kontak baskı olarak</string>
+    <string name="pdf_pick">PDF için fotoğraflar</string>
+    <string name="pdf_from_selection">PDF oluştur</string>
+    <string name="pdf_no_photos">Bu seçimde fotoğraf yok. Videolar PDF’e eklenemez.</string>
+    <string name="pdf_no_date">Tarih yok</string>
+    <string name="pdf_saved">“Documents/PhotoMaid” klasörüne kaydedildi · %1$s</string>
+    <string name="pdf_failed">PDF kaydedilemedi.</string>
+    <string name="pdf_page_of">Sayfa %1$d / %2$d</string>
+    <string name="pdf_capped">PDF başına en fazla %1$d fotoğraf – ilk %1$d tanesi alındı.</string>
+    <string name="pdf_per_page">Sayfa başına fotoğraf</string>
+    <string name="pdf_fit">Sığdır</string>
+    <string name="pdf_fill">Doldur</string>
+    <string name="pdf_paper">Kâğıt</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Yön</string>
+    <string name="pdf_orient_auto">Otomatik</string>
+    <string name="pdf_orient_portrait">Dikey</string>
+    <string name="pdf_orient_landscape">Yatay</string>
+    <string name="pdf_margin">Kenar boşluğu</string>
+    <string name="pdf_margin_none">Yok</string>
+    <string name="pdf_margin_small">Dar</string>
+    <string name="pdf_margin_normal">Normal</string>
+    <string name="pdf_caption">Açıklama</string>
+    <string name="pdf_caption_none">Yok</string>
+    <string name="pdf_caption_number">Numara</string>
+    <string name="pdf_caption_name">Dosya adı</string>
+    <string name="pdf_caption_date">Tarih</string>
+    <string name="pdf_order">Sıra</string>
+    <string name="pdf_move_up">Yukarı taşı</string>
+    <string name="pdf_move_down">Aşağı taşı</string>
+    <string name="pdf_name">Dosya adı</string>
+    <string name="pdf_save">PDF olarak kaydet</string>
+    <string name="pdf_share">PDF’i paylaş</string>
+    <string name="pdf_running">PDF oluşturuluyor…</string>
+    <string name="pdf_privacy">Fotoğraflar yeniden yerleştirilir: konum ve diğer çekim verileri PDF’e geçmez. Orijinaller değişmez.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d sayfa</item>
+        <item quantity="other">%1$d sayfa</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d fotoğraf</item>
+        <item quantity="other">%1$d fotoğraf</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d video eklenmez.</item>
+        <item quantity="other">%1$d video eklenmez.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">%1$d fotoğraf okunamadı – alanı boş kalır.</item>
+        <item quantity="other">%1$d fotoğraf okunamadı – alanları boş kalır.</item>
+    </plurals>
 </resources>

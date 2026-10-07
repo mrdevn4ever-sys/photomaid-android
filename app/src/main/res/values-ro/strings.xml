@@ -1665,4 +1665,60 @@
         <item quantity="few">Încă %1$d nepreluate (maximum 500 deodată).</item>
         <item quantity="other">Încă %1$d de nepreluate (maximum 500 deodată).</item>
     </plurals>
+    <string name="pdf_title">Creează PDF</string>
+    <string name="pdf_studio_sub">Fotografii ca document sau foaie de contact</string>
+    <string name="pdf_pick">Fotografii pentru PDF</string>
+    <string name="pdf_from_selection">Creează PDF</string>
+    <string name="pdf_no_photos">Selecția nu conține fotografii. Videoclipurile nu pot fi puse într-un PDF.</string>
+    <string name="pdf_no_date">Fără dată</string>
+    <string name="pdf_saved">Salvat în „Documents/PhotoMaid” · %1$s</string>
+    <string name="pdf_failed">PDF-ul nu a putut fi salvat.</string>
+    <string name="pdf_page_of">Pagina %1$d din %2$d</string>
+    <string name="pdf_capped">Cel mult %1$d fotografii per PDF – au fost preluate primele %1$d.</string>
+    <string name="pdf_per_page">Fotografii pe pagină</string>
+    <string name="pdf_fit">Încadrează</string>
+    <string name="pdf_fill">Umple</string>
+    <string name="pdf_paper">Hârtie</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Orientare</string>
+    <string name="pdf_orient_auto">Automată</string>
+    <string name="pdf_orient_portrait">Portret</string>
+    <string name="pdf_orient_landscape">Peisaj</string>
+    <string name="pdf_margin">Margine</string>
+    <string name="pdf_margin_none">Fără</string>
+    <string name="pdf_margin_small">Îngustă</string>
+    <string name="pdf_margin_normal">Normală</string>
+    <string name="pdf_caption">Etichetă</string>
+    <string name="pdf_caption_none">Fără</string>
+    <string name="pdf_caption_number">Număr</string>
+    <string name="pdf_caption_name">Nume fișier</string>
+    <string name="pdf_caption_date">Dată</string>
+    <string name="pdf_order">Ordine</string>
+    <string name="pdf_move_up">Mută în sus</string>
+    <string name="pdf_move_down">Mută în jos</string>
+    <string name="pdf_name">Nume fișier</string>
+    <string name="pdf_save">Salvează ca PDF</string>
+    <string name="pdf_share">Partajează PDF</string>
+    <string name="pdf_running">Se creează PDF-ul…</string>
+    <string name="pdf_privacy">Fotografiile sunt încorporate din nou: locația și alte date de captură nu ajung în PDF. Originalele rămân neschimbate.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d pagină</item>
+        <item quantity="few">%1$d pagini</item>
+        <item quantity="other">%1$d de pagini</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d fotografie</item>
+        <item quantity="few">%1$d fotografii</item>
+        <item quantity="other">%1$d de fotografii</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d videoclip nu este inclus.</item>
+        <item quantity="few">%1$d videoclipuri nu sunt incluse.</item>
+        <item quantity="other">%1$d de videoclipuri nu sunt incluse.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">%1$d fotografie nu a putut fi citită – spațiul rămâne gol.</item>
+        <item quantity="few">%1$d fotografii nu au putut fi citite – spațiile rămân goale.</item>
+        <item quantity="other">%1$d de fotografii nu au putut fi citite – spațiile rămân goale.</item>
+    </plurals>
 </resources>

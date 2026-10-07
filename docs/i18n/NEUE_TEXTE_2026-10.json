@@ -14165,6 +14165,654 @@
    "tr": "Bu iş akışı silindi.",
    "uk": "Цей сценарій видалено.",
    "zh": "此工作流程已删除。"
+  },
+  "pdf_title": {
+   "en": "Create PDF",
+   "de": "PDF erstellen",
+   "ar": "إنشاء PDF",
+   "es": "Crear PDF",
+   "fr": "Créer un PDF",
+   "it": "Crea PDF",
+   "ja": "PDF を作成",
+   "ko": "PDF 만들기",
+   "nl": "PDF maken",
+   "pl": "Utwórz PDF",
+   "pt": "Criar PDF",
+   "ro": "Creează PDF",
+   "ru": "Создать PDF",
+   "tr": "PDF oluştur",
+   "uk": "Створити PDF",
+   "zh": "创建 PDF"
+  },
+  "pdf_studio_sub": {
+   "en": "Photos as a document or contact sheet",
+   "de": "Fotos als Dokument oder Kontaktbogen",
+   "ar": "صور كمستند أو ورقة مصغّرات",
+   "es": "Fotos como documento u hoja de contactos",
+   "fr": "Photos en document ou planche contact",
+   "it": "Foto come documento o provino",
+   "ja": "写真を文書やコンタクトシートに",
+   "ko": "사진을 문서나 밀착 인화지로",
+   "nl": "Foto’s als document of contactblad",
+   "pl": "Zdjęcia jako dokument lub stykówka",
+   "pt": "Fotos como documento ou folha de contacto",
+   "ro": "Fotografii ca document sau foaie de contact",
+   "ru": "Фото как документ или контактный лист",
+   "tr": "Fotoğrafları belge veya kontak baskı olarak",
+   "uk": "Фото як документ або контактний аркуш",
+   "zh": "照片生成文档或缩略图页"
+  },
+  "pdf_pick": {
+   "en": "Photos for the PDF",
+   "de": "Fotos für das PDF",
+   "ar": "صور لملف PDF",
+   "es": "Fotos para el PDF",
+   "fr": "Photos pour le PDF",
+   "it": "Foto per il PDF",
+   "ja": "PDF にする写真",
+   "ko": "PDF에 넣을 사진",
+   "nl": "Foto’s voor de PDF",
+   "pl": "Zdjęcia do PDF",
+   "pt": "Fotos para o PDF",
+   "ro": "Fotografii pentru PDF",
+   "ru": "Фото для PDF",
+   "tr": "PDF için fotoğraflar",
+   "uk": "Фото для PDF",
+   "zh": "用于 PDF 的照片"
+  },
+  "pdf_from_selection": {
+   "en": "Create PDF",
+   "de": "Als PDF",
+   "ar": "إنشاء PDF",
+   "es": "Crear PDF",
+   "fr": "Créer un PDF",
+   "it": "Crea PDF",
+   "ja": "PDF を作成",
+   "ko": "PDF 만들기",
+   "nl": "Als PDF",
+   "pl": "Utwórz PDF",
+   "pt": "Criar PDF",
+   "ro": "Creează PDF",
+   "ru": "Создать PDF",
+   "tr": "PDF oluştur",
+   "uk": "Створити PDF",
+   "zh": "生成 PDF"
+  },
+  "pdf_no_photos": {
+   "en": "There are no photos in this selection. Videos can’t be placed in a PDF.",
+   "de": "In dieser Auswahl sind keine Fotos. Videos lassen sich nicht in ein PDF übernehmen.",
+   "ar": "لا توجد صور في هذا التحديد. لا يمكن وضع الفيديوهات في ملف PDF.",
+   "es": "No hay fotos en esta selección. Los vídeos no se pueden incluir en un PDF.",
+   "fr": "Cette sélection ne contient aucune photo. Les vidéos ne peuvent pas être placées dans un PDF.",
+   "it": "In questa selezione non ci sono foto. I video non si possono inserire in un PDF.",
+   "ja": "この選択には写真がありません。動画は PDF に入れられません。",
+   "ko": "선택한 항목에 사진이 없어요. 동영상은 PDF에 넣을 수 없어요.",
+   "nl": "Deze selectie bevat geen foto’s. Video’s kunnen niet in een PDF.",
+   "pl": "W tym wyborze nie ma zdjęć. Filmów nie można umieścić w PDF.",
+   "pt": "Esta seleção não tem fotos. Os vídeos não podem ser colocados num PDF.",
+   "ro": "Selecția nu conține fotografii. Videoclipurile nu pot fi puse într-un PDF.",
+   "ru": "В выборке нет фото. Видео нельзя поместить в PDF.",
+   "tr": "Bu seçimde fotoğraf yok. Videolar PDF’e eklenemez.",
+   "uk": "У вибірці немає фото. Відео не можна додати до PDF.",
+   "zh": "所选内容中没有照片。视频无法放入 PDF。"
+  },
+  "pdf_no_date": {
+   "en": "No date",
+   "de": "Ohne Datum",
+   "ar": "بلا تاريخ",
+   "es": "Sin fecha",
+   "fr": "Sans date",
+   "it": "Senza data",
+   "ja": "日付なし",
+   "ko": "날짜 없음",
+   "nl": "Geen datum",
+   "pl": "Bez daty",
+   "pt": "Sem data",
+   "ro": "Fără dată",
+   "ru": "Без даты",
+   "tr": "Tarih yok",
+   "uk": "Без дати",
+   "zh": "无日期"
+  },
+  "pdf_saved": {
+   "en": "Saved to “Documents/PhotoMaid” · %1$s",
+   "de": "Gespeichert in „Dokumente/PhotoMaid“ · %1$s",
+   "ar": "تم الحفظ في «Documents/PhotoMaid» · %1$s",
+   "es": "Guardado en «Documents/PhotoMaid» · %1$s",
+   "fr": "Enregistré dans « Documents/PhotoMaid » · %1$s",
+   "it": "Salvato in «Documents/PhotoMaid» · %1$s",
+   "ja": "「Documents/PhotoMaid」に保存しました · %1$s",
+   "ko": "‘Documents/PhotoMaid’에 저장됨 · %1$s",
+   "nl": "Opgeslagen in ‘Documents/PhotoMaid’ · %1$s",
+   "pl": "Zapisano w „Documents/PhotoMaid” · %1$s",
+   "pt": "Guardado em «Documents/PhotoMaid» · %1$s",
+   "ro": "Salvat în „Documents/PhotoMaid” · %1$s",
+   "ru": "Сохранено в «Documents/PhotoMaid» · %1$s",
+   "tr": "“Documents/PhotoMaid” klasörüne kaydedildi · %1$s",
+   "uk": "Збережено в «Documents/PhotoMaid» · %1$s",
+   "zh": "已保存到“Documents/PhotoMaid” · %1$s"
+  },
+  "pdf_failed": {
+   "en": "The PDF couldn’t be saved.",
+   "de": "Das PDF konnte nicht gespeichert werden.",
+   "ar": "تعذّر حفظ ملف PDF.",
+   "es": "No se ha podido guardar el PDF.",
+   "fr": "Impossible d’enregistrer le PDF.",
+   "it": "Impossibile salvare il PDF.",
+   "ja": "PDF を保存できませんでした。",
+   "ko": "PDF를 저장할 수 없었어요.",
+   "nl": "De PDF kon niet worden opgeslagen.",
+   "pl": "Nie udało się zapisać PDF.",
+   "pt": "Não foi possível guardar o PDF.",
+   "ro": "PDF-ul nu a putut fi salvat.",
+   "ru": "Не удалось сохранить PDF.",
+   "tr": "PDF kaydedilemedi.",
+   "uk": "Не вдалося зберегти PDF.",
+   "zh": "无法保存 PDF。"
+  },
+  "pdf_page_of": {
+   "en": "Page %1$d of %2$d",
+   "de": "Seite %1$d von %2$d",
+   "ar": "الصفحة %1$d من %2$d",
+   "es": "Página %1$d de %2$d",
+   "fr": "Page %1$d sur %2$d",
+   "it": "Pagina %1$d di %2$d",
+   "ja": "%2$d ページ中 %1$d",
+   "ko": "%2$d페이지 중 %1$d",
+   "nl": "Pagina %1$d van %2$d",
+   "pl": "Strona %1$d z %2$d",
+   "pt": "Página %1$d de %2$d",
+   "ro": "Pagina %1$d din %2$d",
+   "ru": "Страница %1$d из %2$d",
+   "tr": "Sayfa %1$d / %2$d",
+   "uk": "Сторінка %1$d з %2$d",
+   "zh": "第 %1$d 页，共 %2$d 页"
+  },
+  "pdf_capped": {
+   "en": "At most %1$d photos per PDF – the first %1$d were taken.",
+   "de": "Höchstens %1$d Fotos je PDF – die ersten %1$d sind übernommen.",
+   "ar": "%1$d صورة كحد أقصى لكل PDF – تم أخذ أول %1$d.",
+   "es": "Como máximo %1$d fotos por PDF: se han incluido las primeras %1$d.",
+   "fr": "%1$d photos au maximum par PDF – les %1$d premières sont reprises.",
+   "it": "Al massimo %1$d foto per PDF: sono incluse le prime %1$d.",
+   "ja": "PDF 1 件あたり最大 %1$d 枚 – 最初の %1$d 枚を使用します。",
+   "ko": "PDF당 최대 %1$d장 – 처음 %1$d장을 사용해요.",
+   "nl": "Maximaal %1$d foto’s per PDF – de eerste %1$d zijn overgenomen.",
+   "pl": "Maksymalnie %1$d zdjęć w PDF – przejęto pierwsze %1$d.",
+   "pt": "No máximo %1$d fotos por PDF – foram incluídas as primeiras %1$d.",
+   "ro": "Cel mult %1$d fotografii per PDF – au fost preluate primele %1$d.",
+   "ru": "Не больше %1$d фото в PDF – взяты первые %1$d.",
+   "tr": "PDF başına en fazla %1$d fotoğraf – ilk %1$d tanesi alındı.",
+   "uk": "Не більше %1$d фото в PDF – узято перші %1$d.",
+   "zh": "每个 PDF 最多 %1$d 张照片，已采用前 %1$d 张。"
+  },
+  "pdf_per_page": {
+   "en": "Photos per page",
+   "de": "Bilder je Seite",
+   "ar": "صور لكل صفحة",
+   "es": "Fotos por página",
+   "fr": "Photos par page",
+   "it": "Foto per pagina",
+   "ja": "1 ページあたりの写真",
+   "ko": "페이지당 사진",
+   "nl": "Foto’s per pagina",
+   "pl": "Zdjęć na stronę",
+   "pt": "Fotos por página",
+   "ro": "Fotografii pe pagină",
+   "ru": "Фото на странице",
+   "tr": "Sayfa başına fotoğraf",
+   "uk": "Фото на сторінці",
+   "zh": "每页照片数"
+  },
+  "pdf_fit": {
+   "en": "Fit",
+   "de": "Einpassen",
+   "ar": "احتواء",
+   "es": "Ajustar",
+   "fr": "Adapter",
+   "it": "Adatta",
+   "ja": "全体を表示",
+   "ko": "맞추기",
+   "nl": "Passend",
+   "pl": "Dopasuj",
+   "pt": "Ajustar",
+   "ro": "Încadrează",
+   "ru": "Вписать",
+   "tr": "Sığdır",
+   "uk": "Вписати",
+   "zh": "适应"
+  },
+  "pdf_fill": {
+   "en": "Fill",
+   "de": "Füllen",
+   "ar": "ملء",
+   "es": "Rellenar",
+   "fr": "Remplir",
+   "it": "Riempi",
+   "ja": "全体に配置",
+   "ko": "채우기",
+   "nl": "Vullen",
+   "pl": "Wypełnij",
+   "pt": "Preencher",
+   "ro": "Umple",
+   "ru": "Заполнить",
+   "tr": "Doldur",
+   "uk": "Заповнити",
+   "zh": "填充"
+  },
+  "pdf_paper": {
+   "en": "Paper",
+   "de": "Papier",
+   "ar": "الورق",
+   "es": "Papel",
+   "fr": "Papier",
+   "it": "Carta",
+   "ja": "用紙",
+   "ko": "용지",
+   "nl": "Papier",
+   "pl": "Papier",
+   "pt": "Papel",
+   "ro": "Hârtie",
+   "ru": "Бумага",
+   "tr": "Kâğıt",
+   "uk": "Папір",
+   "zh": "纸张"
+  },
+  "pdf_paper_letter": {
+   "en": "US Letter",
+   "de": "US Letter",
+   "ar": "US Letter",
+   "es": "Carta (EE. UU.)",
+   "fr": "Lettre US",
+   "it": "Lettera USA",
+   "ja": "US レター",
+   "ko": "US 레터",
+   "nl": "US Letter",
+   "pl": "US Letter",
+   "pt": "Carta (EUA)",
+   "ro": "US Letter",
+   "ru": "US Letter",
+   "tr": "US Letter",
+   "uk": "US Letter",
+   "zh": "美国信纸"
+  },
+  "pdf_orientation": {
+   "en": "Orientation",
+   "de": "Ausrichtung",
+   "ar": "الاتجاه",
+   "es": "Orientación",
+   "fr": "Orientation",
+   "it": "Orientamento",
+   "ja": "向き",
+   "ko": "방향",
+   "nl": "Stand",
+   "pl": "Orientacja",
+   "pt": "Orientação",
+   "ro": "Orientare",
+   "ru": "Ориентация",
+   "tr": "Yön",
+   "uk": "Орієнтація",
+   "zh": "方向"
+  },
+  "pdf_orient_auto": {
+   "en": "Automatic",
+   "de": "Automatisch",
+   "ar": "تلقائي",
+   "es": "Automática",
+   "fr": "Automatique",
+   "it": "Automatico",
+   "ja": "自動",
+   "ko": "자동",
+   "nl": "Automatisch",
+   "pl": "Automatyczna",
+   "pt": "Automática",
+   "ro": "Automată",
+   "ru": "Автоматически",
+   "tr": "Otomatik",
+   "uk": "Автоматично",
+   "zh": "自动"
+  },
+  "pdf_orient_portrait": {
+   "en": "Portrait",
+   "de": "Hochformat",
+   "ar": "عمودي",
+   "es": "Vertical",
+   "fr": "Portrait",
+   "it": "Verticale",
+   "ja": "縦",
+   "ko": "세로",
+   "nl": "Staand",
+   "pl": "Pionowa",
+   "pt": "Vertical",
+   "ro": "Portret",
+   "ru": "Книжная",
+   "tr": "Dikey",
+   "uk": "Книжкова",
+   "zh": "纵向"
+  },
+  "pdf_orient_landscape": {
+   "en": "Landscape",
+   "de": "Querformat",
+   "ar": "أفقي",
+   "es": "Horizontal",
+   "fr": "Paysage",
+   "it": "Orizzontale",
+   "ja": "横",
+   "ko": "가로",
+   "nl": "Liggend",
+   "pl": "Pozioma",
+   "pt": "Horizontal",
+   "ro": "Peisaj",
+   "ru": "Альбомная",
+   "tr": "Yatay",
+   "uk": "Альбомна",
+   "zh": "横向"
+  },
+  "pdf_margin": {
+   "en": "Margin",
+   "de": "Rand",
+   "ar": "الهامش",
+   "es": "Margen",
+   "fr": "Marge",
+   "it": "Margine",
+   "ja": "余白",
+   "ko": "여백",
+   "nl": "Marge",
+   "pl": "Margines",
+   "pt": "Margem",
+   "ro": "Margine",
+   "ru": "Поля",
+   "tr": "Kenar boşluğu",
+   "uk": "Поля",
+   "zh": "页边距"
+  },
+  "pdf_margin_none": {
+   "en": "None",
+   "de": "Ohne",
+   "ar": "بلا",
+   "es": "Sin margen",
+   "fr": "Aucune",
+   "it": "Nessuno",
+   "ja": "なし",
+   "ko": "없음",
+   "nl": "Geen",
+   "pl": "Brak",
+   "pt": "Sem margem",
+   "ro": "Fără",
+   "ru": "Без полей",
+   "tr": "Yok",
+   "uk": "Без полів",
+   "zh": "无"
+  },
+  "pdf_margin_small": {
+   "en": "Narrow",
+   "de": "Schmal",
+   "ar": "ضيق",
+   "es": "Estrecho",
+   "fr": "Étroite",
+   "it": "Stretto",
+   "ja": "狭い",
+   "ko": "좁게",
+   "nl": "Smal",
+   "pl": "Wąski",
+   "pt": "Estreita",
+   "ro": "Îngustă",
+   "ru": "Узкие",
+   "tr": "Dar",
+   "uk": "Вузькі",
+   "zh": "窄"
+  },
+  "pdf_margin_normal": {
+   "en": "Normal",
+   "de": "Normal",
+   "ar": "عادي",
+   "es": "Normal",
+   "fr": "Normale",
+   "it": "Normale",
+   "ja": "標準",
+   "ko": "보통",
+   "nl": "Normaal",
+   "pl": "Normalny",
+   "pt": "Normal",
+   "ro": "Normală",
+   "ru": "Обычные",
+   "tr": "Normal",
+   "uk": "Звичайні",
+   "zh": "标准"
+  },
+  "pdf_caption": {
+   "en": "Caption",
+   "de": "Beschriftung",
+   "ar": "التسمية",
+   "es": "Leyenda",
+   "fr": "Légende",
+   "it": "Didascalia",
+   "ja": "キャプション",
+   "ko": "설명",
+   "nl": "Bijschrift",
+   "pl": "Podpis",
+   "pt": "Legenda",
+   "ro": "Etichetă",
+   "ru": "Подпись",
+   "tr": "Açıklama",
+   "uk": "Підпис",
+   "zh": "说明文字"
+  },
+  "pdf_caption_none": {
+   "en": "None",
+   "de": "Keine",
+   "ar": "بلا",
+   "es": "Ninguna",
+   "fr": "Aucune",
+   "it": "Nessuna",
+   "ja": "なし",
+   "ko": "없음",
+   "nl": "Geen",
+   "pl": "Brak",
+   "pt": "Nenhuma",
+   "ro": "Fără",
+   "ru": "Нет",
+   "tr": "Yok",
+   "uk": "Немає",
+   "zh": "无"
+  },
+  "pdf_caption_number": {
+   "en": "Number",
+   "de": "Nummer",
+   "ar": "الرقم",
+   "es": "Número",
+   "fr": "Numéro",
+   "it": "Numero",
+   "ja": "番号",
+   "ko": "번호",
+   "nl": "Nummer",
+   "pl": "Numer",
+   "pt": "Número",
+   "ro": "Număr",
+   "ru": "Номер",
+   "tr": "Numara",
+   "uk": "Номер",
+   "zh": "编号"
+  },
+  "pdf_caption_name": {
+   "en": "File name",
+   "de": "Dateiname",
+   "ar": "اسم الملف",
+   "es": "Nombre de archivo",
+   "fr": "Nom du fichier",
+   "it": "Nome file",
+   "ja": "ファイル名",
+   "ko": "파일 이름",
+   "nl": "Bestandsnaam",
+   "pl": "Nazwa pliku",
+   "pt": "Nome do ficheiro",
+   "ro": "Nume fișier",
+   "ru": "Имя файла",
+   "tr": "Dosya adı",
+   "uk": "Назва файлу",
+   "zh": "文件名"
+  },
+  "pdf_caption_date": {
+   "en": "Date",
+   "de": "Datum",
+   "ar": "التاريخ",
+   "es": "Fecha",
+   "fr": "Date",
+   "it": "Data",
+   "ja": "日付",
+   "ko": "날짜",
+   "nl": "Datum",
+   "pl": "Data",
+   "pt": "Data",
+   "ro": "Dată",
+   "ru": "Дата",
+   "tr": "Tarih",
+   "uk": "Дата",
+   "zh": "日期"
+  },
+  "pdf_order": {
+   "en": "Order",
+   "de": "Reihenfolge",
+   "ar": "الترتيب",
+   "es": "Orden",
+   "fr": "Ordre",
+   "it": "Ordine",
+   "ja": "順番",
+   "ko": "순서",
+   "nl": "Volgorde",
+   "pl": "Kolejność",
+   "pt": "Ordem",
+   "ro": "Ordine",
+   "ru": "Порядок",
+   "tr": "Sıra",
+   "uk": "Порядок",
+   "zh": "顺序"
+  },
+  "pdf_move_up": {
+   "en": "Move up",
+   "de": "Nach oben",
+   "ar": "نقل لأعلى",
+   "es": "Subir",
+   "fr": "Monter",
+   "it": "Sposta su",
+   "ja": "上へ",
+   "ko": "위로",
+   "nl": "Omhoog",
+   "pl": "W górę",
+   "pt": "Mover para cima",
+   "ro": "Mută în sus",
+   "ru": "Выше",
+   "tr": "Yukarı taşı",
+   "uk": "Вище",
+   "zh": "上移"
+  },
+  "pdf_move_down": {
+   "en": "Move down",
+   "de": "Nach unten",
+   "ar": "نقل لأسفل",
+   "es": "Bajar",
+   "fr": "Descendre",
+   "it": "Sposta giù",
+   "ja": "下へ",
+   "ko": "아래로",
+   "nl": "Omlaag",
+   "pl": "W dół",
+   "pt": "Mover para baixo",
+   "ro": "Mută în jos",
+   "ru": "Ниже",
+   "tr": "Aşağı taşı",
+   "uk": "Нижче",
+   "zh": "下移"
+  },
+  "pdf_name": {
+   "en": "File name",
+   "de": "Dateiname",
+   "ar": "اسم الملف",
+   "es": "Nombre del archivo",
+   "fr": "Nom du fichier",
+   "it": "Nome del file",
+   "ja": "ファイル名",
+   "ko": "파일 이름",
+   "nl": "Bestandsnaam",
+   "pl": "Nazwa pliku",
+   "pt": "Nome do ficheiro",
+   "ro": "Nume fișier",
+   "ru": "Имя файла",
+   "tr": "Dosya adı",
+   "uk": "Назва файлу",
+   "zh": "文件名"
+  },
+  "pdf_save": {
+   "en": "Save as PDF",
+   "de": "Als PDF speichern",
+   "ar": "حفظ كملف PDF",
+   "es": "Guardar como PDF",
+   "fr": "Enregistrer en PDF",
+   "it": "Salva come PDF",
+   "ja": "PDF として保存",
+   "ko": "PDF로 저장",
+   "nl": "Opslaan als PDF",
+   "pl": "Zapisz jako PDF",
+   "pt": "Guardar como PDF",
+   "ro": "Salvează ca PDF",
+   "ru": "Сохранить как PDF",
+   "tr": "PDF olarak kaydet",
+   "uk": "Зберегти як PDF",
+   "zh": "存为 PDF"
+  },
+  "pdf_share": {
+   "en": "Share PDF",
+   "de": "PDF teilen",
+   "ar": "مشاركة PDF",
+   "es": "Compartir PDF",
+   "fr": "Partager le PDF",
+   "it": "Condividi PDF",
+   "ja": "PDF を共有",
+   "ko": "PDF 공유",
+   "nl": "PDF delen",
+   "pl": "Udostępnij PDF",
+   "pt": "Partilhar PDF",
+   "ro": "Partajează PDF",
+   "ru": "Поделиться PDF",
+   "tr": "PDF’i paylaş",
+   "uk": "Поділитися PDF",
+   "zh": "分享 PDF"
+  },
+  "pdf_running": {
+   "en": "Creating PDF …",
+   "de": "PDF wird erstellt …",
+   "ar": "جارٍ إنشاء PDF …",
+   "es": "Creando PDF…",
+   "fr": "Création du PDF…",
+   "it": "Creazione del PDF…",
+   "ja": "PDF を作成中…",
+   "ko": "PDF 만드는 중…",
+   "nl": "PDF wordt gemaakt …",
+   "pl": "Tworzenie PDF…",
+   "pt": "A criar o PDF…",
+   "ro": "Se creează PDF-ul…",
+   "ru": "Создание PDF…",
+   "tr": "PDF oluşturuluyor…",
+   "uk": "Створення PDF…",
+   "zh": "正在创建 PDF…"
+  },
+  "pdf_privacy": {
+   "en": "Photos are re-embedded: location and other capture data don’t go into the PDF. The originals stay unchanged.",
+   "de": "Die Fotos werden neu eingebettet: Standort und andere Aufnahmedaten gelangen nicht ins PDF. Die Originale bleiben unverändert.",
+   "ar": "تُضمَّن الصور من جديد: لا ينتقل الموقع وبيانات التصوير الأخرى إلى ملف PDF. تبقى الأصول دون تغيير.",
+   "es": "Las fotos se vuelven a incrustar: la ubicación y otros datos de captura no pasan al PDF. Los originales no cambian.",
+   "fr": "Les photos sont réintégrées : la position et les autres données de prise de vue ne vont pas dans le PDF. Les originaux restent inchangés.",
+   "it": "Le foto vengono reinserite: posizione e altri dati di scatto non finiscono nel PDF. Gli originali restano invariati.",
+   "ja": "写真は埋め込み直されるため、位置情報などの撮影データは PDF に含まれません。元の写真は変更されません。",
+   "ko": "사진을 새로 넣기 때문에 위치와 기타 촬영 정보는 PDF에 들어가지 않아요. 원본은 그대로예요.",
+   "nl": "Foto’s worden opnieuw ingesloten: locatie en andere opnamegegevens komen niet in de PDF. De originelen blijven ongewijzigd.",
+   "pl": "Zdjęcia są osadzane na nowo: lokalizacja i inne dane zdjęcia nie trafiają do PDF. Oryginały pozostają bez zmian.",
+   "pt": "As fotos são incorporadas de novo: a localização e outros dados da captura não passam para o PDF. Os originais ficam inalterados.",
+   "ro": "Fotografiile sunt încorporate din nou: locația și alte date de captură nu ajung în PDF. Originalele rămân neschimbate.",
+   "ru": "Фото встраиваются заново: местоположение и другие данные съёмки не попадают в PDF. Оригиналы не меняются.",
+   "tr": "Fotoğraflar yeniden yerleştirilir: konum ve diğer çekim verileri PDF’e geçmez. Orijinaller değişmez.",
+   "uk": "Фото вбудовуються заново: місце та інші дані зйомки не потрапляють у PDF. Оригінали не змінюються.",
+   "zh": "照片会重新嵌入：位置及其他拍摄数据不会进入 PDF。原始照片保持不变。"
   }
  },
  "plurals": {
@@ -17364,6 +18012,318 @@
    },
    "zh": {
     "other": "另有 %1$d 个未接收（一次最多 500 个）。"
+   }
+  },
+  "pdf_pages": {
+   "en": {
+    "one": "%1$d page",
+    "other": "%1$d pages"
+   },
+   "de": {
+    "one": "%1$d Seite",
+    "other": "%1$d Seiten"
+   },
+   "ar": {
+    "zero": "%1$d صفحة",
+    "one": "صفحة واحدة",
+    "two": "صفحتان",
+    "few": "%1$d صفحات",
+    "many": "%1$d صفحة",
+    "other": "%1$d صفحة"
+   },
+   "es": {
+    "one": "%1$d página",
+    "many": "%1$d páginas",
+    "other": "%1$d páginas"
+   },
+   "fr": {
+    "one": "%1$d page",
+    "many": "%1$d pages",
+    "other": "%1$d pages"
+   },
+   "it": {
+    "one": "%1$d pagina",
+    "many": "%1$d pagine",
+    "other": "%1$d pagine"
+   },
+   "ja": {
+    "other": "%1$d ページ"
+   },
+   "ko": {
+    "other": "%1$d페이지"
+   },
+   "nl": {
+    "one": "%1$d pagina",
+    "other": "%1$d pagina’s"
+   },
+   "pl": {
+    "one": "%1$d strona",
+    "few": "%1$d strony",
+    "many": "%1$d stron",
+    "other": "%1$d strony"
+   },
+   "pt": {
+    "one": "%1$d página",
+    "many": "%1$d páginas",
+    "other": "%1$d páginas"
+   },
+   "ro": {
+    "one": "%1$d pagină",
+    "few": "%1$d pagini",
+    "other": "%1$d de pagini"
+   },
+   "ru": {
+    "one": "%1$d страница",
+    "few": "%1$d страницы",
+    "many": "%1$d страниц",
+    "other": "%1$d страницы"
+   },
+   "tr": {
+    "one": "%1$d sayfa",
+    "other": "%1$d sayfa"
+   },
+   "uk": {
+    "one": "%1$d сторінка",
+    "few": "%1$d сторінки",
+    "many": "%1$d сторінок",
+    "other": "%1$d сторінки"
+   },
+   "zh": {
+    "other": "%1$d 页"
+   }
+  },
+  "pdf_photos": {
+   "en": {
+    "one": "%1$d photo",
+    "other": "%1$d photos"
+   },
+   "de": {
+    "one": "%1$d Foto",
+    "other": "%1$d Fotos"
+   },
+   "ar": {
+    "zero": "%1$d صورة",
+    "one": "صورة واحدة",
+    "two": "صورتان",
+    "few": "%1$d صور",
+    "many": "%1$d صورة",
+    "other": "%1$d صورة"
+   },
+   "es": {
+    "one": "%1$d foto",
+    "many": "%1$d fotos",
+    "other": "%1$d fotos"
+   },
+   "fr": {
+    "one": "%1$d photo",
+    "many": "%1$d photos",
+    "other": "%1$d photos"
+   },
+   "it": {
+    "one": "%1$d foto",
+    "many": "%1$d foto",
+    "other": "%1$d foto"
+   },
+   "ja": {
+    "other": "写真 %1$d 枚"
+   },
+   "ko": {
+    "other": "사진 %1$d장"
+   },
+   "nl": {
+    "one": "%1$d foto",
+    "other": "%1$d foto’s"
+   },
+   "pl": {
+    "one": "%1$d zdjęcie",
+    "few": "%1$d zdjęcia",
+    "many": "%1$d zdjęć",
+    "other": "%1$d zdjęcia"
+   },
+   "pt": {
+    "one": "%1$d foto",
+    "many": "%1$d fotos",
+    "other": "%1$d fotos"
+   },
+   "ro": {
+    "one": "%1$d fotografie",
+    "few": "%1$d fotografii",
+    "other": "%1$d de fotografii"
+   },
+   "ru": {
+    "one": "%1$d фото",
+    "few": "%1$d фото",
+    "many": "%1$d фото",
+    "other": "%1$d фото"
+   },
+   "tr": {
+    "one": "%1$d fotoğraf",
+    "other": "%1$d fotoğraf"
+   },
+   "uk": {
+    "one": "%1$d фото",
+    "few": "%1$d фото",
+    "many": "%1$d фото",
+    "other": "%1$d фото"
+   },
+   "zh": {
+    "other": "%1$d 张照片"
+   }
+  },
+  "pdf_videos_skipped": {
+   "en": {
+    "one": "%1$d video isn’t included.",
+    "other": "%1$d videos aren’t included."
+   },
+   "de": {
+    "one": "%1$d Video wird nicht übernommen.",
+    "other": "%1$d Videos werden nicht übernommen."
+   },
+   "ar": {
+    "zero": "لن يُضمَّن %1$d فيديو.",
+    "one": "لن يُضمَّن فيديو واحد.",
+    "two": "لن يُضمَّن فيديوهان.",
+    "few": "لن تُضمَّن %1$d فيديوهات.",
+    "many": "لن يُضمَّن %1$d فيديو.",
+    "other": "لن يُضمَّن %1$d فيديو."
+   },
+   "es": {
+    "one": "%1$d vídeo no se incluye.",
+    "many": "%1$d vídeos no se incluyen.",
+    "other": "%1$d vídeos no se incluyen."
+   },
+   "fr": {
+    "one": "%1$d vidéo n’est pas reprise.",
+    "many": "%1$d vidéos ne sont pas reprises.",
+    "other": "%1$d vidéos ne sont pas reprises."
+   },
+   "it": {
+    "one": "%1$d video non viene incluso.",
+    "many": "%1$d video non vengono inclusi.",
+    "other": "%1$d video non vengono inclusi."
+   },
+   "ja": {
+    "other": "動画 %1$d 件は含まれません。"
+   },
+   "ko": {
+    "other": "동영상 %1$d개는 포함되지 않아요."
+   },
+   "nl": {
+    "one": "%1$d video wordt niet opgenomen.",
+    "other": "%1$d video’s worden niet opgenomen."
+   },
+   "pl": {
+    "one": "%1$d film nie zostanie dodany.",
+    "few": "%1$d filmy nie zostaną dodane.",
+    "many": "%1$d filmów nie zostanie dodanych.",
+    "other": "%1$d filmu nie dodano."
+   },
+   "pt": {
+    "one": "%1$d vídeo não é incluído.",
+    "many": "%1$d vídeos não são incluídos.",
+    "other": "%1$d vídeos não são incluídos."
+   },
+   "ro": {
+    "one": "%1$d videoclip nu este inclus.",
+    "few": "%1$d videoclipuri nu sunt incluse.",
+    "other": "%1$d de videoclipuri nu sunt incluse."
+   },
+   "ru": {
+    "one": "%1$d видео не добавлено.",
+    "few": "%1$d видео не добавлены.",
+    "many": "%1$d видео не добавлены.",
+    "other": "%1$d видео не добавлены."
+   },
+   "tr": {
+    "one": "%1$d video eklenmez.",
+    "other": "%1$d video eklenmez."
+   },
+   "uk": {
+    "one": "%1$d відео не додано.",
+    "few": "%1$d відео не додано.",
+    "many": "%1$d відео не додано.",
+    "other": "%1$d відео не додано."
+   },
+   "zh": {
+    "other": "%1$d 个视频不会包含在内。"
+   }
+  },
+  "pdf_unreadable": {
+   "en": {
+    "one": "%1$d photo couldn’t be read – its space stays empty.",
+    "other": "%1$d photos couldn’t be read – their spaces stay empty."
+   },
+   "de": {
+    "one": "%1$d Foto konnte nicht gelesen werden – sein Feld bleibt leer.",
+    "other": "%1$d Fotos konnten nicht gelesen werden – ihre Felder bleiben leer."
+   },
+   "ar": {
+    "zero": "تعذّرت قراءة %1$d صورة – تبقى مساحتها فارغة.",
+    "one": "تعذّرت قراءة صورة واحدة – تبقى مساحتها فارغة.",
+    "two": "تعذّرت قراءة صورتين – تبقى مساحتهما فارغة.",
+    "few": "تعذّرت قراءة %1$d صور – تبقى مساحاتها فارغة.",
+    "many": "تعذّرت قراءة %1$d صورة – تبقى مساحاتها فارغة.",
+    "other": "تعذّرت قراءة %1$d صورة – تبقى مساحاتها فارغة."
+   },
+   "es": {
+    "one": "No se ha podido leer %1$d foto: su espacio queda vacío.",
+    "many": "No se han podido leer %1$d fotos: sus espacios quedan vacíos.",
+    "other": "No se han podido leer %1$d fotos: sus espacios quedan vacíos."
+   },
+   "fr": {
+    "one": "%1$d photo n’a pas pu être lue – son emplacement reste vide.",
+    "many": "%1$d photos n’ont pas pu être lues – leurs emplacements restent vides.",
+    "other": "%1$d photos n’ont pas pu être lues – leurs emplacements restent vides."
+   },
+   "it": {
+    "one": "Impossibile leggere %1$d foto: il suo spazio resta vuoto.",
+    "many": "Impossibile leggere %1$d foto: i loro spazi restano vuoti.",
+    "other": "Impossibile leggere %1$d foto: i loro spazi restano vuoti."
+   },
+   "ja": {
+    "other": "写真 %1$d 枚を読み込めませんでした。その枠は空白のままです。"
+   },
+   "ko": {
+    "other": "사진 %1$d장을 읽을 수 없어 그 칸은 비어 있어요."
+   },
+   "nl": {
+    "one": "%1$d foto kon niet worden gelezen – het vak blijft leeg.",
+    "other": "%1$d foto’s konden niet worden gelezen – de vakken blijven leeg."
+   },
+   "pl": {
+    "one": "Nie udało się odczytać %1$d zdjęcia – jego pole pozostaje puste.",
+    "few": "Nie udało się odczytać %1$d zdjęć – ich pola pozostają puste.",
+    "many": "Nie udało się odczytać %1$d zdjęć – ich pola pozostają puste.",
+    "other": "Nie udało się odczytać %1$d zdjęcia – pola pozostają puste."
+   },
+   "pt": {
+    "one": "Não foi possível ler %1$d foto – o espaço fica vazio.",
+    "many": "Não foi possível ler %1$d fotos – os espaços ficam vazios.",
+    "other": "Não foi possível ler %1$d fotos – os espaços ficam vazios."
+   },
+   "ro": {
+    "one": "%1$d fotografie nu a putut fi citită – spațiul rămâne gol.",
+    "few": "%1$d fotografii nu au putut fi citite – spațiile rămân goale.",
+    "other": "%1$d de fotografii nu au putut fi citite – spațiile rămân goale."
+   },
+   "ru": {
+    "one": "Не удалось прочитать %1$d фото – его место останется пустым.",
+    "few": "Не удалось прочитать %1$d фото – их места останутся пустыми.",
+    "many": "Не удалось прочитать %1$d фото – их места останутся пустыми.",
+    "other": "Не удалось прочитать %1$d фото – их места останутся пустыми."
+   },
+   "tr": {
+    "one": "%1$d fotoğraf okunamadı – alanı boş kalır.",
+    "other": "%1$d fotoğraf okunamadı – alanları boş kalır."
+   },
+   "uk": {
+    "one": "Не вдалося прочитати %1$d фото – його місце залишиться порожнім.",
+    "few": "Не вдалося прочитати %1$d фото – їхні місця залишаться порожніми.",
+    "many": "Не вдалося прочитати %1$d фото – їхні місця залишаться порожніми.",
+    "other": "Не вдалося прочитати %1$d фото – їхні місця залишаться порожніми."
+   },
+   "zh": {
+    "other": "%1$d 张照片无法读取，其位置留空。"
    }
   }
  }

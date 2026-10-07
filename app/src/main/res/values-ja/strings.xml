@@ -1523,4 +1523,52 @@
     <plurals name="share_overflow">
         <item quantity="other">ほか %1$d 件は取り込まれません（一度に最大 500 件）。</item>
     </plurals>
+    <string name="pdf_title">PDF を作成</string>
+    <string name="pdf_studio_sub">写真を文書やコンタクトシートに</string>
+    <string name="pdf_pick">PDF にする写真</string>
+    <string name="pdf_from_selection">PDF を作成</string>
+    <string name="pdf_no_photos">この選択には写真がありません。動画は PDF に入れられません。</string>
+    <string name="pdf_no_date">日付なし</string>
+    <string name="pdf_saved">「Documents/PhotoMaid」に保存しました · %1$s</string>
+    <string name="pdf_failed">PDF を保存できませんでした。</string>
+    <string name="pdf_page_of">%2$d ページ中 %1$d</string>
+    <string name="pdf_capped">PDF 1 件あたり最大 %1$d 枚 – 最初の %1$d 枚を使用します。</string>
+    <string name="pdf_per_page">1 ページあたりの写真</string>
+    <string name="pdf_fit">全体を表示</string>
+    <string name="pdf_fill">全体に配置</string>
+    <string name="pdf_paper">用紙</string>
+    <string name="pdf_paper_letter">US レター</string>
+    <string name="pdf_orientation">向き</string>
+    <string name="pdf_orient_auto">自動</string>
+    <string name="pdf_orient_portrait">縦</string>
+    <string name="pdf_orient_landscape">横</string>
+    <string name="pdf_margin">余白</string>
+    <string name="pdf_margin_none">なし</string>
+    <string name="pdf_margin_small">狭い</string>
+    <string name="pdf_margin_normal">標準</string>
+    <string name="pdf_caption">キャプション</string>
+    <string name="pdf_caption_none">なし</string>
+    <string name="pdf_caption_number">番号</string>
+    <string name="pdf_caption_name">ファイル名</string>
+    <string name="pdf_caption_date">日付</string>
+    <string name="pdf_order">順番</string>
+    <string name="pdf_move_up">上へ</string>
+    <string name="pdf_move_down">下へ</string>
+    <string name="pdf_name">ファイル名</string>
+    <string name="pdf_save">PDF として保存</string>
+    <string name="pdf_share">PDF を共有</string>
+    <string name="pdf_running">PDF を作成中…</string>
+    <string name="pdf_privacy">写真は埋め込み直されるため、位置情報などの撮影データは PDF に含まれません。元の写真は変更されません。</string>
+    <plurals name="pdf_pages">
+        <item quantity="other">%1$d ページ</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="other">写真 %1$d 枚</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="other">動画 %1$d 件は含まれません。</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="other">写真 %1$d 枚を読み込めませんでした。その枠は空白のままです。</item>
+    </plurals>
 </resources>

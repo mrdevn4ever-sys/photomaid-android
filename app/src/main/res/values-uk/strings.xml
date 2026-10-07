@@ -1736,4 +1736,64 @@
         <item quantity="many">Ще %1$d не прийнято (не більше 500 за раз).</item>
         <item quantity="other">Ще %1$d не прийнято (не більше 500 за раз).</item>
     </plurals>
+    <string name="pdf_title">Створити PDF</string>
+    <string name="pdf_studio_sub">Фото як документ або контактний аркуш</string>
+    <string name="pdf_pick">Фото для PDF</string>
+    <string name="pdf_from_selection">Створити PDF</string>
+    <string name="pdf_no_photos">У вибірці немає фото. Відео не можна додати до PDF.</string>
+    <string name="pdf_no_date">Без дати</string>
+    <string name="pdf_saved">Збережено в «Documents/PhotoMaid» · %1$s</string>
+    <string name="pdf_failed">Не вдалося зберегти PDF.</string>
+    <string name="pdf_page_of">Сторінка %1$d з %2$d</string>
+    <string name="pdf_capped">Не більше %1$d фото в PDF – узято перші %1$d.</string>
+    <string name="pdf_per_page">Фото на сторінці</string>
+    <string name="pdf_fit">Вписати</string>
+    <string name="pdf_fill">Заповнити</string>
+    <string name="pdf_paper">Папір</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Орієнтація</string>
+    <string name="pdf_orient_auto">Автоматично</string>
+    <string name="pdf_orient_portrait">Книжкова</string>
+    <string name="pdf_orient_landscape">Альбомна</string>
+    <string name="pdf_margin">Поля</string>
+    <string name="pdf_margin_none">Без полів</string>
+    <string name="pdf_margin_small">Вузькі</string>
+    <string name="pdf_margin_normal">Звичайні</string>
+    <string name="pdf_caption">Підпис</string>
+    <string name="pdf_caption_none">Немає</string>
+    <string name="pdf_caption_number">Номер</string>
+    <string name="pdf_caption_name">Назва файлу</string>
+    <string name="pdf_caption_date">Дата</string>
+    <string name="pdf_order">Порядок</string>
+    <string name="pdf_move_up">Вище</string>
+    <string name="pdf_move_down">Нижче</string>
+    <string name="pdf_name">Назва файлу</string>
+    <string name="pdf_save">Зберегти як PDF</string>
+    <string name="pdf_share">Поділитися PDF</string>
+    <string name="pdf_running">Створення PDF…</string>
+    <string name="pdf_privacy">Фото вбудовуються заново: місце та інші дані зйомки не потрапляють у PDF. Оригінали не змінюються.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d сторінка</item>
+        <item quantity="few">%1$d сторінки</item>
+        <item quantity="many">%1$d сторінок</item>
+        <item quantity="other">%1$d сторінки</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d фото</item>
+        <item quantity="few">%1$d фото</item>
+        <item quantity="many">%1$d фото</item>
+        <item quantity="other">%1$d фото</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d відео не додано.</item>
+        <item quantity="few">%1$d відео не додано.</item>
+        <item quantity="many">%1$d відео не додано.</item>
+        <item quantity="other">%1$d відео не додано.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">Не вдалося прочитати %1$d фото – його місце залишиться порожнім.</item>
+        <item quantity="few">Не вдалося прочитати %1$d фото – їхні місця залишаться порожніми.</item>
+        <item quantity="many">Не вдалося прочитати %1$d фото – їхні місця залишаться порожніми.</item>
+        <item quantity="other">Не вдалося прочитати %1$d фото – їхні місця залишаться порожніми.</item>
+    </plurals>
 </resources>

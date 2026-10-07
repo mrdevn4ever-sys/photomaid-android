@@ -1,7 +1,9 @@
 package app.photomaid.feature.library
 
+import app.photomaid.feature.document.PdfRequest
 import app.photomaid.feature.workflow.WorkflowRequest
 import androidx.compose.material.icons.rounded.AutoMode
+import androidx.compose.material.icons.rounded.PictureAsPdf
 import app.photomaid.system.MediaIntents
 import app.photomaid.feature.organize.TagSheet
 import app.photomaid.feature.organize.AlbumPickerSheet
@@ -354,6 +356,10 @@ internal fun SelectionActions(
                 DropdownMenuItem(text = { Text(stringResource(R.string.wf_apply)) }, leadingIcon = { Icon(Icons.Rounded.AutoMode, null) },
                     modifier = Modifier.testTag("lib.sel.workflow"), onClick = {
                         more = false; nav.openWorkflows(WorkflowRequest(UUID.randomUUID().toString(), chosen.map { it.id }))
+                    })
+                if (chosen.any { it.kind != MediaKind.VIDEO }) DropdownMenuItem(text = { Text(stringResource(R.string.pdf_from_selection)) },
+                    leadingIcon = { Icon(Icons.Rounded.PictureAsPdf, null) }, modifier = Modifier.testTag("lib.sel.pdf"), onClick = {
+                        more = false; nav.openPdf(PdfRequest(UUID.randomUUID().toString(), chosen.map { it.id }))
                     })
                 DropdownMenuItem(text = { Text(stringResource(R.string.share)) }, leadingIcon = { Icon(Icons.Rounded.Share, null) },
                     modifier = Modifier.testTag("lib.sel.share"), onClick = {

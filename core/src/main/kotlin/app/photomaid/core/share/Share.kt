@@ -57,14 +57,14 @@ data class ShareIntake(val matched: List<String>, val unmatched: Int, val reject
 }
 
 /** Aktionen für übergebene Medien. Keine davon ist eine Aufräum-Entscheidung. */
-enum class ShareAction { WORKFLOW, EDIT, ALBUM, BASKET }
+enum class ShareAction { WORKFLOW, EDIT, PDF, ALBUM, BASKET }
 
 object ShareActions {
     /** Bearbeiten nur für genau ein Medium; alles andere ab einem zugeordneten Medium. */
     fun available(matched: Int): List<ShareAction> = when {
         matched <= 0 -> emptyList()
-        matched == 1 -> listOf(ShareAction.WORKFLOW, ShareAction.EDIT, ShareAction.ALBUM, ShareAction.BASKET)
-        else -> listOf(ShareAction.WORKFLOW, ShareAction.ALBUM, ShareAction.BASKET)
+        matched == 1 -> listOf(ShareAction.WORKFLOW, ShareAction.EDIT, ShareAction.PDF, ShareAction.ALBUM, ShareAction.BASKET)
+        else -> listOf(ShareAction.WORKFLOW, ShareAction.PDF, ShareAction.ALBUM, ShareAction.BASKET)
     }
 }
 

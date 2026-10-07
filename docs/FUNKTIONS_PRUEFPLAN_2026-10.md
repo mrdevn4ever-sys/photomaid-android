@@ -141,6 +141,16 @@ Spalte „Regeln“: welche der drei harten Regeln hier besonders zählt.
 | W4 | Zielgröße Foto/Video | 2 MB / 20 MB, echte Galerie-Dateien prüfen | keine Datei über dem Ziel; sonst Grund (`WorkflowRunTest`) | – |
 | W5 | Nur teilen | an echte App teilen | nichts in der Galerie gespeichert | – |
 
+#### Dokumente – PDF
+
+| ID | Funktion | Prüfen | Erwartet | Regeln |
+|---|---|---|---|---|
+| D1 | Einstiege | Studio, Auswahl › ⋯, Teilen-Ziel | PDF-Seite mit den Fotos, Videos gezählt | B |
+| D2 | Seiten | alle Formate/Ränder/Je-Seite, Hoch- und Querbilder | nie verzerrt; Füllen beschneidet mittig | – |
+| D3 | Vorschau = Ergebnis | PDF in einem PDF-Betrachter öffnen | gleiche Aufteilung, Beschriftung lesbar (auch Arabisch/Japanisch) | – |
+| D4 | Speichern/Teilen | „Als PDF speichern“, „PDF teilen“ | Datei in Dokumente/PhotoMaid, Größe stimmt; Teilen speichert nichts | – |
+| D5 | Datenschutz | PDF auf EXIF/Standort prüfen | keine Aufnahmedaten, keine Dateinamen als Text | – |
+
 #### Teilen-Ziel und App-Shortcuts
 
 | ID | Funktion | Prüfen | Erwartet | Regeln |
