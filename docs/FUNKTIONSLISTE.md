@@ -137,16 +137,23 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Langdruck auf das App-Symbol (auch anheftbar): Jetzt aufräumen · Fällig aus „Später“ · Auswahlkorb · Arbeitsabläufe · bis zu 4 eigene Abläufe (S4)
 - Kein Einstieg von außen entscheidet, löscht oder startet etwas ohne weiteren Tipp; Shortcuts enthalten keine Medien-IDs
 
+## 8c. Dokumente – PDF (Ausbau Paket 4)
+- Studio › Werkzeuge › PDF erstellen, Auswahl › ⋯ › Als PDF, oder „An PhotoMaid senden“ › PDF erstellen (D1)
+- Papier A4 / A5 / US Letter, Ausrichtung automatisch/hoch/quer, Rand ohne/schmal/normal, 1, 2, 4, 6 oder 12 Bilder je Seite (Kontaktbogen), Einpassen oder Füllen – nie verzerrt (D2)
+- Beschriftung je Bild: Nummer, Dateiname oder Datum; Reihenfolge mit „Nach oben/unten“; Vorschau der Seiten = Ergebnis (D3)
+- Speichern unter „Dokumente/PhotoMaid“ (Größe gemessen) oder nur teilen; Videos werden nicht übernommen (gezählt) (D4)
+- Bilder werden neu eingebettet: kein Standort, keine Aufnahmedaten, keine Dateinamen als Text im PDF; Originale unverändert, keine Entscheidung
+- Free: bis 10 Fotos, 1–2 je Seite; Pro / 30-Minuten-Test: Kontaktbögen und bis 200 Fotos (Vorschau immer frei)
+
 ## 9. Foto-Editor (✏️ aus Feed, Betrachter oder Studio)
-- Gemeinsames Editor-Gerüst (Redesign 2026-10):
-  - feste Bühne, die nicht vom Medium oder Werkzeug abhängt
-  - keine Bedienelemente auf dem Bild
-  - Hilfsleiste mit Rückgängig/Wiederholen, Größe/Zoom, Vergleich (halten), Histogramm und Warnung
-  - scrollende Werkzeugzone
-  - Navigation **Zuschnitt · Anpassen · Filter · Markieren · Mehr** (unter Mehr: Retusche, Rahmen, Größe) (E1)
+- Editor im Stil der Fotos-App (Nutzerwunsch 07.10.2026), immer dunkel:
+  - Kopf: ✕ und ✓ als Kapseln; darunter Rückgängig/Wiederholen · Werkzeugname mit Größe/Zoom · Vergleich (halten) und ⋯ (Histogramm, Warnung für abgeschnittene Bereiche, Zurücksetzen); beim Zuschneiden Spiegeln/Drehen im Kopf
+  - große Bühne; bei Anpassen, Filter, Zuschneiden und Kürzen nur eine schmale Werkzeugzone, bei Werkzeugen mit vielen Einstellungen eine höhere
+  - Zoom mit zwei Fingern auf jeder Bühne (Ergebnis, Zuschneiden, Perspektive, Retusche, Markieren, Video); Doppeltipp auf das Ergebnis = 100 % – nur Ansicht, ändert nichts
+  - Reiterkapsel unten **Zuschnitt · Anpassen · Filter · Markieren · Mehr** (unter Mehr: Retusche, Rahmen, Größe) (E1)
 - Zuschnitt: Seitenverhältnisse, Drehen, Spiegeln, Begradigen; Perspektive über vier Ecken (kostenlos) (E2)
 - Anpassen (Speichern mit Pro, Vorschau frei) (E3):
-  - Gruppen Licht, Farbe, Farbmischer (helligkeitserhaltend), Detail, Effekte
+  - eine Reihe runder Werkzeuge (Ring zeigt die Stärke), darunter ein Skalenregler mit Mittelmarke (Doppeltipp = 0); Farbmischer (helligkeitserhaltend) am Ende der Reihe
   - Regler: Belichtung, Helligkeit, Kontrast, Lichter, Schatten, Weiß, Schwarz, Wärme, Tönung, Sättigung, Dynamik, Klarheit, Schärfen (mit Radius und Schwelle), Vignette, Körnung u. a.
 - Filter mit Stärke und eigene Vorlagen (sichern, umbenennen, löschen) (E4)
 - Retusche: Rote Augen (Farbregel, kostenlos) und Bereiche Kreis/Verlauf/Pinsel (rein manuell, Pro); keine Erkennung von Gesichtern, Augen oder Himmel (E5)

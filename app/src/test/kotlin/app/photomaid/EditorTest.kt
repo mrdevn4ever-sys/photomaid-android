@@ -1,5 +1,6 @@
 package app.photomaid
 
+import app.photomaid.core.edit.EditFormat
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -154,6 +155,24 @@ class EditorTest {
             removeLocation = true, softwareTag = "PhotoMaid")
         assertNull(ExifInterface(drop.file).latLong)
         keep.file.delete(); drop.file.delete()
+        }
+    }
+
+    /** T9 „Standort entfernen“: gleicher Weg wie das Werkzeug – JPEG verlustfrei kopiert, nur GPS gelöscht, Aufnahmezeit bleibt. */
+    @Test fun stripLocationToolPathIsLosslessAndRemovesOnlyGps() {
+        start()
+        io {
+        val f = jpegWithExif()
+        assertTrue(app.editEngine.hasLocation(Uri.fromFile(f)))
+        val out = app.editEngine.export(Uri.fromFile(f), "image/jpeg", EditRecipe(), PxSize(120, 80), removeLocation = true,
+            softwareTag = "PhotoMaid", formatOverride = EditFormat.JPEG, quality = null)
+        assertTrue(out.lossless)
+        assertFalse(app.editEngine.hasLocation(Uri.fromFile(out.file)))
+        assertEquals("2026:09:20 10:11:12", ExifInterface(out.file).getAttribute(ExifInterface.TAG_DATETIME_ORIGINAL))
+        val a = BitmapFactory.decodeFile(f.absolutePath); val b = BitmapFactory.decodeFile(out.file.absolutePath)
+        assertEquals(a.width, b.width); assertEquals(a.getPixel(10, 10), b.getPixel(10, 10)); assertEquals(a.getPixel(100, 70), b.getPixel(100, 70))
+        assertTrue(ExifInterface(f).latLong != null) // Original unverändert
+        out.file.delete()
         }
     }
 

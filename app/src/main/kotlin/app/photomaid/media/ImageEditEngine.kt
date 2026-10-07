@@ -255,7 +255,8 @@ class ImageEditEngine(private val context: Context) {
             val q = (quality ?: EditFormat.JPEG_QUALITY).coerceIn(40, 100)
             val out = File(context.cacheDir, "edit_${System.nanoTime()}.${format.extension}")
             try {
-                if (recipe.isOrientationOnly && mime.equals("image/jpeg", true) && format == EditFormat.JPEG && quality == null) {
+                // Verlustfrei: nur Ausrichtung geändert oder gar nichts am Bild (z. B. „Standort entfernen“) → Bytes kopieren, nur EXIF ändern.
+                if ((recipe.isOrientationOnly || recipe.isIdentity) && mime.equals("image/jpeg", true) && format == EditFormat.JPEG && quality == null) {
                     input(uri)?.use { i -> out.outputStream().use { i.copyTo(it) } } ?: throw EditError.Unreadable()
                     val ex = ExifInterface(out)
                     // Eigene Rechnung statt ExifInterface.rotate(): die bricht bei fehlender/0-Ausrichtung ab.

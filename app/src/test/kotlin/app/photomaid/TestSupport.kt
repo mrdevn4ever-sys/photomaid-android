@@ -190,6 +190,13 @@ class FakeMediaLibrary(
         return app.photomaid.media.EditSaveResult.Saved(a.id, replaced, declined, f.length())
     }
     val audio = mutableListOf<String>()
+    /** Gespeicherte PDFs (Name → Datei), nie in der Mediathek. */
+    val documents = mutableMapOf<String, File>()
+    override suspend fun saveDocument(file: File, displayName: String): app.photomaid.media.EditSaveResult {
+        val f = File(File(context.cacheDir, "qa-docs").apply { mkdirs() }, displayName); file.copyTo(f, overwrite = true)
+        documents[displayName] = f
+        return app.photomaid.media.EditSaveResult.Saved("doc://$displayName", replaced = false, replaceDeclined = false, bytes = f.length())
+    }
     override suspend fun saveAudio(file: File, displayName: String): app.photomaid.media.EditSaveResult {
         audio += displayName
         return app.photomaid.media.EditSaveResult.Saved("audio://$displayName", replaced = false, replaceDeclined = false, bytes = file.length())
@@ -333,6 +340,8 @@ class RecordingNav : Nav {
     val workflowRuns = mutableListOf<app.photomaid.feature.workflow.WorkflowRunRequest>()
     override fun openWorkflowRun(request: app.photomaid.feature.workflow.WorkflowRunRequest) { events += "workflowRun"; workflowRuns += request }
     override fun push(route: String) { events += "push:$route" }
+    val pdfs = mutableListOf<app.photomaid.feature.document.PdfRequest>()
+    override fun openPdf(request: app.photomaid.feature.document.PdfRequest) { events += "pdf"; pdfs += request }
     val workflowLists = mutableListOf<app.photomaid.feature.workflow.WorkflowRequest>()
     override fun openWorkflows(request: app.photomaid.feature.workflow.WorkflowRequest) { events += "workflows"; workflowLists += request }
     val organize = mutableListOf<app.photomaid.feature.organize.OrganizeTarget>()

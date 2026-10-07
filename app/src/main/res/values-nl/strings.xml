@@ -35,7 +35,7 @@
     <string name="undo">Ongedaan maken</string>
     <string name="error_settings_not_saved">De instelling kon niet worden opgeslagen.</string>
     <string name="error_change_not_saved">De wijziging kon niet worden opgeslagen.</string>
-    <string name="error_undo_conflict">Ongedaan maken lukt niet: dit item is intussen gewijzigd.</string>
+    <string name="error_undo_conflict">Dit kan niet meer ongedaan worden gemaakt, omdat je het intussen hebt gewijzigd.</string>
     <string name="error_undo_busy">Wacht tot de prullenbak leeg is voordat je een actie ongedaan maakt.</string>
     <string name="error_undo_generic">Dit kan nu niet ongedaan worden gemaakt.</string>
     <string name="tab_today">Vandaag</string>
@@ -66,7 +66,7 @@
         <item quantity="one">%1$d item uit ‘Later’ is weer aan de beurt</item>
         <item quantity="other">%1$d items uit ‘Later’ zijn weer aan de beurt</item>
     </plurals>
-    <string name="today_reconciliation">We konden het resultaat van een eerdere prullenbakactie niet bevestigen. Er wordt niets opnieuw verwijderd.</string>
+    <string name="today_reconciliation">Bij het laatste legen van de prullenbak is iets onderbroken. Voor de zekerheid wordt niets opnieuw verwijderd.</string>
     <string name="cat_photos">Foto’s</string>
     <string name="cat_videos">Video’s</string>
     <string name="cat_screenshots">Schermafbeeldingen</string>
@@ -257,7 +257,7 @@
     <string name="large_unknown_footer">Voor deze bestanden is geen grootte beschikbaar. Hun grootte wordt niet geschat of meegeteld.</string>
     <string name="storage_a">Je apparaat</string>
     <string name="storage_available">%1$s vrij volgens Android</string>
-    <string name="storage_unavailable">Opslaginformatie niet beschikbaar</string>
+    <string name="storage_unavailable">Opslaginfo is nu niet beschikbaar</string>
     <string name="storage_b">Zichtbaar voor PhotoMaid</string>
     <string name="storage_of_which_screens">waarvan schermafbeeldingen</string>
     <string name="storage_connected_folders">Gekoppelde mappen</string>
@@ -379,12 +379,12 @@
     <string name="pro_f1">Geen advertenties</string>
     <string name="pro_f1d">Geen advertentiekaarten tussen je foto’s en video’s.</string>
     <string name="pro_details">Zo werkt Pro</string>
-    <string name="pro_details_dup">Kopieën hebben precies dezelfde bestandsinhoud. PhotoMaid vergelijkt die op je apparaat, niet in de cloud. Afbeeldingen die op elkaar lijken, tellen niet als kopieën.</string>
+    <string name="pro_details_dup">Kopieën zijn bestanden die tot in het kleinste detail gelijk zijn. PhotoMaid vergelijkt ze op je apparaat, niet in de cloud. Beelden die alleen op elkaar lijken, tellen niet als kopie.</string>
     <string name="pro_details_rules">Verzamelingen tonen passende inhoud op je apparaat. Je opent en bekijkt die zelf. Ze verwijderen niets automatisch en ruimen niet op de achtergrond op.</string>
-    <string name="pro_details_cleanup">De daglimiet telt items die na je bevestiging in de prullenbak succesvol zijn verwijderd. Vegen telt niet mee.</string>
+    <string name="pro_details_cleanup">Voor de daglimiet telt alleen wat je echt uit de prullenbak verwijdert. Vegen telt nooit.</string>
     <string name="expanded">Uitgeklapt</string>
     <string name="collapsed">Ingeklapt</string>
-    <string name="pro_privacy">Foto’s en bestanden worden op je apparaat gecontroleerd en geordend. Voor aankopen en advertenties gaan technische gegevens naar Google of advertentieaanbieders, maar geen foto’s, bestandsnamen of controlesommen.</string>
+    <string name="pro_privacy">Je foto’s en bestanden worden alleen op je apparaat bekeken en gesorteerd. Voor aankopen en advertenties gaat alleen het hoognodige naar Google of adverteerders – nooit je foto’s, hun namen of iets wat eruit is afgeleid.</string>
     <string name="pro_pending">Je aankoop wacht op bevestiging.</string>
     <string name="pro_unlock">PhotoMaid Pro ontgrendelen</string>
     <string name="pro_price_once">%1$s · Eenmalige aankoop</string>
@@ -402,7 +402,7 @@
     <string name="pro_msg_nofill">Er is nu geen advertentie beschikbaar. Probeer het later opnieuw.</string>
     <string name="pro_msg_ad_unavailable">De Pro-functietest is nu niet beschikbaar. Er is niets ontgrendeld.</string>
     <string name="set_privacy">Privacy en toegang</string>
-    <string name="set_privacy_detail">Verwerkt op je apparaat</string>
+    <string name="set_privacy_detail">Je foto’s blijven op je apparaat</string>
     <string name="set_notifications">Meldingen</string>
     <string name="allowed">Toegestaan</string>
     <string name="off">Uit</string>
@@ -430,13 +430,13 @@
     <string name="help_decide">Kiezen</string>
     <string name="help_decide_text">Veeg omhoog om te bewaren, naar links voor de prullenbak en naar rechts voor later. Standaard komt het item na 2 dagen terug. Je kunt die wachttijd wijzigen in de instellingen. Kies direct na het vegen via ‘Wijzigen’ een andere datum. Veeg omlaag om terug te gaan zonder een nieuwe keuze.</string>
     <string name="help_delete">Verwijderen</string>
-    <string name="help_delete_text">Vegen verwijdert niets. Items gaan eerst naar de PhotoMaid-prullenbak. Je bevestigt het verwijderen bij het legen. Foto’s en video’s gaan na bevestiging bij Android naar de Android-prullenbak. Bestanden worden definitief verwijderd.</string>
+    <string name="help_delete_text">Vegen verwijdert nooit iets. Wat je apart zet, gaat eerst naar de PhotoMaid-prullenbak. Pas als je die leegt, wordt er echt iets verwijderd – foto’s en video’s gaan dan naar de Android-prullenbak, nadat Android het nog een keer vraagt. Bestanden uit gekoppelde mappen worden definitief verwijderd.</string>
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">Clouddiensten zoals Google Foto’s kunnen verwijderingen synchroniseren met andere apparaten. Controleer hun instellingen. PhotoMaid downloadt geen inhoud die alleen in de cloud staat.</string>
     <string name="help_free">Gratis</string>
     <string name="help_free_text">Bekijken, vegen en voor later bewaren is onbeperkt. Zonder Pro kun je er maximaal %1$d per dag verwijderen.</string>
     <string name="privacy_title">Je privacy staat voorop</string>
-    <string name="privacy_text">PhotoMaid controleert je foto’s, video’s en toegestane bestanden op je apparaat. Je hebt geen PhotoMaid-account nodig en er is geen PhotoMaid-server. Clouddiensten zoals Google Foto’s kunnen verwijderingen synchroniseren met andere apparaten.</string>
+    <string name="privacy_text">PhotoMaid bekijkt je foto’s, video’s en toegestane bestanden alleen op je apparaat. Je hebt geen account nodig en er is geen PhotoMaid-server. Goed om te weten: bij clouddiensten zoals Google Foto kan wat je verwijdert ook op je andere apparaten verdwijnen.</string>
     <string name="privacy_media">Foto’s en video’s</string>
     <string name="privacy_media_text">Om foto’s en video’s te bekijken, te ordenen en na je bevestiging te verwijderen.</string>
     <string name="privacy_allow">Toegang toestaan</string>
@@ -450,8 +450,8 @@
     <string name="privacy_notifications_allow">Meldingen toestaan</string>
     <string name="privacy_folders">Mappen (optioneel)</string>
     <string name="privacy_folders_text">Andere bestanden komen alleen uit mappen die je kiest. Koppel ze via Opruimen › Bestanden.</string>
-    <string name="privacy_purchases">Aankopen worden verwerkt door Google Play. Hiervoor worden geen foto’s, bestandsnamen, paden of controlesommen verstuurd.</string>
-    <string name="privacy_ads">De gratis versie toont advertenties van Google AdMob. Je kunt je advertentietoestemming wijzigen in de instellingen. Foto’s, bestandsnamen, paden en controlesommen worden niet gedeeld met advertentieaanbieders. Pro is zonder advertenties.</string>
+    <string name="privacy_purchases">Aankopen lopen via Google Play. Je foto’s, hun namen, mappen of iets wat eruit is afgeleid, worden daarvoor nooit verstuurd.</string>
+    <string name="privacy_ads">De gratis versie toont advertenties van Google AdMob. Je toestemming kun je in de instellingen wijzigen. Je foto’s, hun namen, mappen of iets wat eruit is afgeleid, gaan nooit naar adverteerders. Met Pro zijn er geen advertenties.</string>
     <string name="continue_">Volgende</string>
     <string name="notif_channel">Herinneringen</string>
     <string name="notif_due_body">Er is vandaag iets uit ‘Later’ weer aan de beurt.</string>
@@ -503,7 +503,7 @@
     <string name="pro_active_title">Pro is actief</string>
     <string name="pro_active_sub">Eenmalige aankoop: geen advertenties, geen daglimiet en alle Pro-functies.</string>
     <string name="later_notify_title">Een herinnering als het weer aan de beurt is?</string>
-    <string name="pro_privacy_no_ads">Foto’s en bestanden worden op je apparaat gecontroleerd en geordend. Voor de aankoop gaan technische gegevens naar Google, maar geen foto’s, bestandsnamen of controlesommen.</string>
+    <string name="pro_privacy_no_ads">Je foto’s en bestanden worden alleen op je apparaat bekeken en gesorteerd. Voor de aankoop gaat alleen het hoognodige naar Google – nooit je foto’s, hun namen of iets wat eruit is afgeleid.</string>
     <string name="hub_nothing_pending">Alles bekeken</string>
     <plurals name="hub_pending">
         <item quantity="one">%1$d te bekijken</item>
@@ -618,7 +618,7 @@
     <string name="tour_today_quick_title">Je snelkoppelingen</string>
     <string name="tour_today_quick_text">Foto’s, video’s, schermafbeeldingen of een map: maak snelkoppelingen naar wat je vaak opruimt.</string>
     <string name="tour_today_tab_title">Meer manieren om op te ruimen</string>
-    <string name="tour_today_tab_text">Je vindt grote bestanden, kopieën, mappen en verzamelingen onder ‘Opruimen’.</string>
+    <string name="tour_today_tab_text">Grote bestanden, dubbele foto’s, losse maanden en kant-en-klare collecties: hier ruim je stap voor stap op.</string>
     <string name="tour_feed_basket_title">Je prullenbak</string>
     <string name="tour_feed_basket_text">Het getal toont hoeveel je hebt geselecteerd. Tik erop om je selectie te bekijken en de prullenbak te legen.</string>
     <string name="tour_feed_undo_title">Ongedaan maken</string>
@@ -674,8 +674,8 @@
     <string name="grid_open">Overzicht</string>
     <string name="grid_select_all">Alles</string>
     <string name="grid_select_none">Geen</string>
-    <string name="help_tours_again">Tutorials opnieuw tonen</string>
-    <string name="help_tours_reset">De tutorials verschijnen weer als je elk scherm opnieuw opent.</string>
+    <string name="help_tours_again">Rondleiding en tips opnieuw tonen</string>
+    <string name="help_tours_reset">De rondleiding en tips verschijnen de volgende keer weer.</string>
     <string name="hub_months_sub">Maand voor maand klaar</string>
     <string name="later_back_to_stack">Terug naar de stapel</string>
     <string name="later_bookmarked_row">Opzijgelegd, zonder datum</string>
@@ -821,8 +821,8 @@
     <string name="edit_save_replace_action">Opslaan, origineel naar prullenbak</string>
     <string name="edit_remove_location">Locatie verwijderen</string>
     <string name="edit_remove_location_text">De opgeslagen foto bevat dan geen opnamelocatie.</string>
-    <string name="edit_hint_heic">Wordt als JPEG opgeslagen (HEIC kan op dit apparaat niet betrouwbaar worden geschreven).</string>
-    <string name="edit_hint_hdr">Kleurwijzigingen verwijderen de extra HDR-helderheid van deze foto.</string>
+    <string name="edit_hint_heic">Opgeslagen als JPEG zodat het overal werkt – dit apparaat kan HEIC niet betrouwbaar opslaan.</string>
+    <string name="edit_hint_hdr">Deze foto heeft extra heldere lichten (HDR). Na kleurwijzigingen straalt hij iets minder.</string>
     <string name="edit_hint_lossless">Verliesvrij: alleen de stand verandert, de beeldkwaliteit blijft precies gelijk.</string>
     <string name="edit_hint_replace_confirm">Android vraagt één keer of het origineel naar de Android-prullenbak mag.</string>
     <string name="edit_saving">Opslaan…</string>
@@ -830,7 +830,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s s</string>
     <string name="edit_trim_start">Begin</string>
     <string name="edit_trim_end">Einde</string>
-    <string name="edit_trim_hint">Sleep de grepen. Totale lengte %1$s. De kwaliteit blijft; alleen het begin tot het volgende keyframe wordt opnieuw gecodeerd.</string>
+    <string name="edit_trim_hint">Sleep aan de grepen om begin en einde te kiezen. Totale lengte %1$s. De beeldkwaliteit blijft gelijk.</string>
     <string name="edit_discard_title">Wijzigingen weggooien?</string>
     <string name="edit_discard_text">Je bewerking wordt niet opgeslagen. Het origineel blijft zoals het is.</string>
     <string name="edit_discard">Weggooien</string>
@@ -914,8 +914,8 @@
     <string name="edit_mk_rect">Rechthoek</string>
     <string name="edit_mk_brush">Penseel</string>
     <string name="edit_mk_strength">Sterkte</string>
-    <string name="edit_mk_redact_solid_hint">Aanbevolen voor gevoelige gegevens: de afgedekte pixels worden in het opgeslagen of gedeelde bestand volledig vervangen.</string>
-    <string name="edit_mk_redact_hint">Pixeleren en vervagen gebruiken grove blokken. Voor tekst die zeker onleesbaar moet zijn, is ‘Dekkend’ veiliger.</string>
+    <string name="edit_mk_redact_solid_hint">Aanbevolen voor persoonlijke details: wat je afdekt, is in het opgeslagen of gedeelde bestand echt weg.</string>
+    <string name="edit_mk_redact_hint">Bij ‘Pixeleren’ en ‘Vervagen’ zie je contouren soms nog. Voor tekst die echt onleesbaar moet zijn, kies je ‘Dekkend’.</string>
     <string name="edit_mk_edit_text">Bewerken</string>
     <string name="edit_mk_duplicate">Dupliceren</string>
     <string name="edit_mk_front">Naar voren</string>
@@ -1083,7 +1083,7 @@
     <string name="ret_linear">Verloop</string>
     <string name="ret_brush">Penseel</string>
     <string name="ret_red_eye">Rode ogen</string>
-    <string name="ret_red_eye_hint">Tik op een rood oog. Zoom met twee vingers in bij kleine gezichten. Alleen duidelijk rode pixels veranderen.</string>
+    <string name="ret_red_eye_hint">Tik op een rood oog. Zoom bij kleine gezichten eerst in met twee vingers. Alleen het rood in het oog verandert.</string>
     <string name="ret_red_eye_undo">Laatste verwijderen</string>
     <string name="ret_size">Grootte</string>
     <string name="ret_new">Nieuw</string>
@@ -1115,7 +1115,7 @@
     <string name="vid_cut_confirm">Verwijderen</string>
     <string name="vid_cut_draft">%1$s – %2$s verwijderen? Sleep de rode grepen.</string>
     <string name="vid_cut_hint_restore">Rode stukken worden bij opslaan echt verwijderd (totaal %1$s). Tik hieronder op een stuk om het terug te halen.</string>
-    <string name="vid_trim_hint_reencode">Sleep de grepen. Totaal %1$s. Door je andere wijzigingen wordt de video opnieuw gecodeerd.</string>
+    <string name="vid_trim_hint_reencode">Sleep aan de grepen. Totale lengte %1$s. Door je andere wijzigingen wordt de video bij het opslaan opnieuw gemaakt – dat duurt iets langer.</string>
     <string name="vid_speed_result">Resultaat: %1$s</string>
     <string name="vid_speed_hint">Het geluid wordt sneller of langzamer met dezelfde toonhoogte.</string>
     <string name="vid_no_audio">Deze video heeft geen geluid.</string>
@@ -1124,7 +1124,7 @@
     <string name="vid_volume">Volume</string>
     <string name="vid_fade">In- en uitfaden</string>
     <string name="vid_fade_none">Geen</string>
-    <string name="vid_audio_export">Geluid opslaan als M4A</string>
+    <string name="vid_audio_export">Alleen het geluid opslaan</string>
     <string name="vid_audio_suffix">geluid</string>
     <string name="vid_audio_running">Geluid opslaan</string>
     <string name="vid_audio_saved">‘%1$s’ opgeslagen in Music/PhotoMaid.</string>
@@ -1134,12 +1134,12 @@
     <string name="vid_fill_hint">Vult het nieuwe formaat; randen erbuiten worden afgesneden.</string>
     <string name="vid_fit_hint">Toont de hele video; vrije ruimte wordt zwarte balken.</string>
     <string name="vid_profile">Kwaliteit</string>
-    <string name="vid_profile_high">Hoge kwaliteit (oorspronkelijke resolutie)</string>
-    <string name="vid_profile_balanced">Gebalanceerd (tot 1080p)</string>
-    <string name="vid_profile_small">Klein bestand (720p)</string>
+    <string name="vid_profile_high">Beste kwaliteit (zoals het origineel)</string>
+    <string name="vid_profile_balanced">Gebalanceerd (Full HD)</string>
+    <string name="vid_profile_small">Klein bestand (HD)</string>
     <string name="vid_estimate">ca. %1$s</string>
-    <string name="vid_estimate_hint">Schatting uit bitrate × duur. Het opgeslagen bestand toont de echte grootte.</string>
-    <string name="vid_hdr_hint">Deze HDR-video wordt als SDR opgeslagen omdat er kleurwijzigingen zijn.</string>
+    <string name="vid_estimate_hint">Alleen een schatting. De echte grootte zie je na het opslaan.</string>
+    <string name="vid_hdr_hint">Deze video heeft extra stralende kleuren (HDR). Met je kleurwijzigingen wordt hij met normale kleuren opgeslagen.</string>
     <string name="tab_library">Foto’s</string>
     <string name="lib_filter_all">Alles</string>
     <string name="lib_filter_favorites">Favorieten</string>
@@ -1291,7 +1291,7 @@
     <string name="systrash_delete_text">Bevestig daarna bij Android. Definitief verwijderde foto’s en video’s zijn niet terug te halen.</string>
     <string name="lib_info_raw">RAW-bestand</string>
     <string name="set_delete_permanently">Definitief verwijderen</string>
-    <string name="set_delete_permanently_detail">Uit: legen verplaatst naar de Android-prullenbak (een tijd terug te halen). Aan: meteen definitief verwijderd.</string>
+    <string name="set_delete_permanently_detail">Uit: bij het legen gaat alles eerst naar de Android-prullenbak en kun je het een tijd terughalen. Aan: alles wordt meteen definitief verwijderd.</string>
     <string name="set_delete_permanently_confirm_title">Definitief verwijderen inschakelen?</string>
     <string name="set_delete_permanently_confirm_text">Vanaf nu verwijdert het legen van de PhotoMaid-prullenbak foto’s en video’s definitief. Ze gaan niet naar de Android-prullenbak en zijn niet terug te halen – ook niet uit nog niet gesynchroniseerde back-ups. Android vraagt toch elke keer.</string>
     <string name="set_delete_permanently_confirm_action">Inschakelen</string>
@@ -1343,9 +1343,9 @@
     <string name="movie_format_first">Zoals eerste clip</string>
     <string name="movie_fit_note">Clips worden nooit vervormd: of het hele beeld is te zien (met zwarte randen) of het vult het kader en de randen vallen weg.</string>
     <string name="movie_quality">Kwaliteit</string>
-    <string name="movie_quality_high">Hoog (1080p)</string>
+    <string name="movie_quality_high">Hoog (Full HD)</string>
     <string name="movie_quality_balanced">Gebalanceerd</string>
-    <string name="movie_quality_small">Klein (720p)</string>
+    <string name="movie_quality_small">Klein (HD)</string>
     <string name="movie_music_none">Nog geen muziek.</string>
     <string name="movie_music_pick">Audiobestand kiezen</string>
     <string name="movie_music_remove">Verwijderen</string>
@@ -1368,7 +1368,7 @@
     <string name="tools_convert">Omzetten</string>
     <string name="tools_convert_sub">bijv. HEIC naar JPEG, als nieuwe kopieën</string>
     <string name="tools_location">Locatie verwijderen</string>
-    <string name="tools_location_sub">Kopieën zonder gps-gegevens, bijv. vóór het delen</string>
+    <string name="tools_location_sub">Kopieën zonder locatie, bijv. voor het delen</string>
     <string name="tools_stitch">Schermafbeeldingen samenvoegen</string>
     <string name="tools_stitch_sub">Onder elkaar, als één lange afbeelding</string>
     <string name="tools_gif">GIF maken</string>
@@ -1389,8 +1389,8 @@
     <string name="tools_q_small">Kleiner bestand</string>
     <string name="tools_remove_location">Ook locatie verwijderen</string>
     <string name="tools_target_format">Nieuw formaat</string>
-    <string name="tools_convert_note">JPEG opent overal; PNG behoudt elke pixel, maar bestanden worden groter. Bestanden die al dit formaat hebben, worden overgeslagen.</string>
-    <string name="tools_location_note">JPEG-kopieën behouden elke pixel – alleen de gps-gegevens worden verwijderd. Foto’s zonder locatie worden overgeslagen.</string>
+    <string name="tools_convert_note">Elk apparaat opent JPEG. PNG behoudt alle details, maar bestanden worden groter. Foto’s die al dit formaat hebben, worden overgeslagen.</string>
+    <string name="tools_location_note">De kopieën zien er precies zo uit als het origineel – alleen de opnameplek wordt verwijderd. Foto’s zonder locatie worden overgeslagen.</string>
     <string name="tools_stitch_note">In de gekozen volgorde. Alles krijgt de breedte van de smalste afbeelding – niets wordt vervormd of vergroot.</string>
     <string name="tools_gif_size">Grootte</string>
     <string name="tools_gif_part">Deel van de video (max. 10 s)</string>
@@ -1431,9 +1431,9 @@
     <string name="dock_crop">Bijsnijden</string>
     <string name="dock_more">Meer</string>
     <string name="vid_trim_hint_short">Sleep de grepen om begin en einde te bepalen.</string>
-    <string name="vid_export_info">Exportinfo</string>
-    <string name="vid_export_info_fast">Alleen begin en einde worden ingekort. PhotoMaid probeert de kwaliteit te behouden en codeert alleen het begin tot het volgende keyframe opnieuw. Laat de video dat niet toe, dan wordt de hele video opnieuw gecodeerd. Totale lengte %1$s.</string>
-    <string name="vid_export_info_reencode">Door je andere wijzigingen wordt bij het opslaan de hele video opnieuw gecodeerd. Totale lengte %1$s.</string>
+    <string name="vid_export_info">Zo wordt het opgeslagen</string>
+    <string name="vid_export_info_fast">Je hebt alleen begin en einde ingekort. Dat gaat snel en de beeldkwaliteit blijft als in het origineel. Lukt dat bij deze video niet, dan maakt PhotoMaid hem helemaal opnieuw – dat duurt iets langer. Totale lengte %1$s.</string>
+    <string name="vid_export_info_reencode">Door je andere wijzigingen maakt PhotoMaid bij het opslaan de hele video opnieuw. Dat kan even duren. Totale lengte %1$s.</string>
     <string name="lib_mode_albums">Albums</string>
     <string name="org_new_album">Nieuw album</string>
     <string name="org_album_name">Albumnaam</string>
@@ -1521,7 +1521,7 @@
     <string name="wf_target_note">PhotoMaid meet het resultaat. Is het doel binnen deze grenzen niet haalbaar, dan ontstaat er geen bestand en zie je waarom.</string>
     <string name="wf_videos">Video’s</string>
     <string name="wf_video_skip">Overslaan</string>
-    <string name="wf_video_note">Video’s worden opnieuw gecodeerd naar de doelgrootte; de resolutie daalt alleen als het nodig is.</string>
+    <string name="wf_video_note">Video’s worden opnieuw opgeslagen om bij de doelgrootte te passen. Het beeld wordt alleen kleiner als het nodig is.</string>
     <string name="wf_location">Locatie verwijderen</string>
     <string name="wf_name_base">Bestandsnaam</string>
     <string name="wf_name_base_hint">bijv. Advertentie → Advertentie_001 (leeg = originele naam)</string>
@@ -1561,7 +1561,7 @@
     <string name="wf_reason_video">Video’s horen niet bij deze werkstroom.</string>
     <string name="wf_reason_video_long">Te lang voor de doelgrootte – er is geen bestand gemaakt.</string>
     <string name="wf_reason_unreachable">Kleinste gemeten versie: %1$s – boven het doel, dus er is geen bestand gemaakt.</string>
-    <string name="wf_reason_error">Kon niet worden verwerkt.</string>
+    <string name="wf_reason_error">Helaas, dat is niet gelukt.</string>
     <string name="wf_summary">%1$d klaar · %2$d overgeslagen · %3$d doel niet gehaald · %4$d mislukt</string>
     <string name="wf_share_again">Opnieuw delen</string>
     <string name="wf_counts">%1$s foto’s · %2$s video’s</string>
@@ -1594,4 +1594,65 @@
         <item quantity="one">Nog %1$d niet overgenomen (maximaal 500 tegelijk).</item>
         <item quantity="other">Nog %1$d niet overgenomen (maximaal 500 tegelijk).</item>
     </plurals>
+    <string name="pdf_title">PDF maken</string>
+    <string name="pdf_studio_sub">Foto’s als document of contactblad</string>
+    <string name="pdf_pick">Foto’s voor de PDF</string>
+    <string name="pdf_from_selection">Als PDF</string>
+    <string name="pdf_no_photos">Deze selectie bevat geen foto’s. Video’s kunnen niet in een PDF.</string>
+    <string name="pdf_no_date">Geen datum</string>
+    <string name="pdf_saved">Opgeslagen in ‘Documents/PhotoMaid’ · %1$s</string>
+    <string name="pdf_failed">De PDF kon niet worden opgeslagen.</string>
+    <string name="pdf_page_of">Pagina %1$d van %2$d</string>
+    <string name="pdf_capped">Maximaal %1$d foto’s per PDF – de eerste %1$d zijn overgenomen.</string>
+    <string name="pdf_per_page">Foto’s per pagina</string>
+    <string name="pdf_fit">Passend</string>
+    <string name="pdf_fill">Vullen</string>
+    <string name="pdf_paper">Papier</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Stand</string>
+    <string name="pdf_orient_auto">Automatisch</string>
+    <string name="pdf_orient_portrait">Staand</string>
+    <string name="pdf_orient_landscape">Liggend</string>
+    <string name="pdf_margin">Marge</string>
+    <string name="pdf_margin_none">Geen</string>
+    <string name="pdf_margin_small">Smal</string>
+    <string name="pdf_margin_normal">Normaal</string>
+    <string name="pdf_caption">Bijschrift</string>
+    <string name="pdf_caption_none">Geen</string>
+    <string name="pdf_caption_number">Nummer</string>
+    <string name="pdf_caption_name">Bestandsnaam</string>
+    <string name="pdf_caption_date">Datum</string>
+    <string name="pdf_order">Volgorde</string>
+    <string name="pdf_move_up">Omhoog</string>
+    <string name="pdf_move_down">Omlaag</string>
+    <string name="pdf_name">Bestandsnaam</string>
+    <string name="pdf_save">Opslaan als PDF</string>
+    <string name="pdf_share">PDF delen</string>
+    <string name="pdf_running">PDF wordt gemaakt …</string>
+    <string name="pdf_privacy">Foto’s worden opnieuw ingesloten: locatie en andere opnamegegevens komen niet in de PDF. De originelen blijven ongewijzigd.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d pagina</item>
+        <item quantity="other">%1$d pagina’s</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d foto</item>
+        <item quantity="other">%1$d foto’s</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d video wordt niet opgenomen.</item>
+        <item quantity="other">%1$d video’s worden niet opgenomen.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">%1$d foto kon niet worden gelezen – het vak blijft leeg.</item>
+        <item quantity="other">%1$d foto’s konden niet worden gelezen – de vakken blijven leeg.</item>
+    </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">Al je foto’s</string>
+    <string name="tour_lib_text">Hier staan al je foto’s en video’s – per dag, maand of jaar, in mappen, albums en favorieten. Kijken verandert niets.</string>
+    <string name="tour_studio_title">Aan de slag met je creativiteit</string>
+    <string name="tour_studio_text">Foto’s bewerken, collages, korte films, pdf’s en handige hulpmiddelen. Er komen altijd nieuwe bestanden bij – je originelen blijven zoals ze zijn.</string>
+    <string name="tour_history_title">Later &amp; geschiedenis</string>
+    <string name="tour_history_text">Zie wat je hebt bewaard, apart gezet of voor later bewaard. Elke keuze kun je hier nog aanpassen.</string>
+    <string name="tour_settings_title">Instellingen &amp; hulp</string>
+    <string name="tour_settings_text">Stel PhotoMaid naar wens in en vind antwoorden. Deze rondleiding kun je altijd opnieuw bekijken.</string>
 </resources>

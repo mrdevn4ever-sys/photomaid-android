@@ -3,6 +3,9 @@ package app.photomaid.feature.editor
 import app.photomaid.design.LocalEditorPalette
 import app.photomaid.design.EditorSubTabs
 import app.photomaid.design.EditorToolButton
+import app.photomaid.design.EditorRoundTool
+import app.photomaid.design.EditorRuler
+import androidx.compose.material.icons.rounded.InvertColors
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -277,36 +280,25 @@ internal fun ProHint(onPro: () -> Unit, modifier: Modifier = Modifier) {
 internal fun CropPanel(vm: EditorViewModel) {
     val haptics = LocalHapticFeedback.current
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-            Chip(stringResource(R.string.edit_crop_mode_crop), !vm.perspectiveMode, Modifier.testTag("crop.mode.crop")) { vm.perspectiveMode = false }
-            Chip(stringResource(R.string.edit_crop_mode_perspective), vm.perspectiveMode, Modifier.testTag("crop.mode.persp"), dot = vm.recipe.hasPerspective) { vm.perspectiveMode = true }
-        }
-        if (vm.perspectiveMode) { PerspectivePanel(vm); return@Column }
+        // Eine Reihe: Ausschnitt/Perspektive und die Seitenverhältnisse. Drehen/Spiegeln stehen oben im Kopf (wie die Fotos-App).
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("editor.aspects"),
             horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalAlignment = Alignment.CenterVertically) {
-            for (p in AspectPreset.entries) {
-                val sel = vm.aspect == p
-                val swapped = sel && p.w != p.h && p.w > 0 && vm.landscape != (p.w > p.h)
-                Chip(aspectLabel(p, swapped), sel, Modifier.testTag("aspect.${p.name}")) {
-                    vm.chooseAspect(p); haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
+            Chip(stringResource(R.string.edit_crop_mode_crop), !vm.perspectiveMode, Modifier.testTag("crop.mode.crop")) { vm.perspectiveMode = false }
+            Chip(stringResource(R.string.edit_crop_mode_perspective), vm.perspectiveMode, Modifier.testTag("crop.mode.persp"), dot = vm.recipe.hasPerspective) { vm.perspectiveMode = true }
+            if (!vm.perspectiveMode) {
+                Box(Modifier.size(width = 1.dp, height = 24.dp).background(LocalEditorPalette.current.stroke))
+                for (p in AspectPreset.entries) {
+                    val sel = vm.aspect == p
+                    val swapped = sel && p.w != p.h && p.w > 0 && vm.landscape != (p.w > p.h)
+                    Chip(aspectLabel(p, swapped), sel, Modifier.testTag("aspect.${p.name}")) {
+                        vm.chooseAspect(p); haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
+                    }
                 }
             }
         }
-        // Zentrales Element zuerst (vollständig sichtbar beim Öffnen); Drehen/Spiegeln folgen in der scrollenden Zone.
-        EditSlider(stringResource(R.string.edit_straighten), vm.recipe.straighten, -45f..45f, signed(vm.recipe.straighten, 1) + "°",
-            Modifier.testTag("slider.STRAIGHTEN"), snap = 0.4f) { v, commit -> vm.straighten((v * 10).roundToInt() / 10f, commit) }
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            ToolButton(Icons.Rounded.Rotate90DegreesCw, stringResource(R.string.edit_rotate), Modifier.testTag("editor.rotate")) {
-                vm.rotate(); haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
-            }
-            ToolButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_h), Modifier.testTag("editor.flipH"), onClick = vm::flipHorizontal)
-            ToolButton(Icons.Rounded.Flip, stringResource(R.string.edit_flip_v), Modifier.testTag("editor.flipV"), Modifier.rotate(90f), onClick = vm::flipVertical)
-            val canToggle = vm.aspect != AspectPreset.FREE && vm.aspect != AspectPreset.ORIGINAL && vm.aspect != AspectPreset.SQUARE
-            if (canToggle) ToolButton(Icons.Rounded.ScreenRotationAlt,
-                stringResource(if (vm.landscape) R.string.edit_portrait else R.string.edit_landscape), Modifier.weight(1f).testTag("editor.orientation"),
-                onClick = vm::toggleOrientation)
-            ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset), Modifier.testTag("editor.reset"), onClick = vm::resetTab)
-        }
+        if (vm.perspectiveMode) { PerspectivePanel(vm); return@Column }
+        EditorRuler(stringResource(R.string.edit_straighten), vm.recipe.straighten, -45f..45f, signed(vm.recipe.straighten, 1) + "°",
+            Modifier.testTag("slider.STRAIGHTEN"), snap = 0.4f, step = 1f) { v, commit -> vm.straighten((v * 10).roundToInt() / 10f, commit) }
     }
 }
 
@@ -316,61 +308,54 @@ internal fun CropPanel(vm: EditorViewModel) {
 @Composable
 internal fun AdjustPanel(vm: EditorViewModel) {
     val a = vm.recipe.adjust
+    // Eine Reihe runder Werkzeuge (wie die Fotos-App) – ohne Untergruppen; Radius/Schwelle erscheinen, sobald geschärft wird.
+    val groups = if (vm.isVideo) listOf(AdjustGroup.LIGHT, AdjustGroup.COLOR) else listOf(AdjustGroup.LIGHT, AdjustGroup.COLOR, AdjustGroup.DETAIL, AdjustGroup.EFFECTS)
+    val tools = groups.flatMap { g -> AdjustTool.of(g).filter { !it.advanced || a.sharpness >= 0.5f } }
+    val mix = vm.adjustGroup == AdjustGroup.MIX
+    val selIndex = if (mix) tools.size else tools.indexOf(vm.adjustTool).coerceAtLeast(0)
     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        // Gruppen als ruhige Textreiter (Licht · Farbe · Detail …); Punkt = in der Gruppe ist etwas geändert.
-        val groups = if (vm.isVideo) listOf(AdjustGroup.LIGHT, AdjustGroup.COLOR, AdjustGroup.MIX) else AdjustGroup.entries
-        EditorSubTabs(groups.map { g -> Triple(g.name, stringResource(g.label),
-            if (g == AdjustGroup.MIX) !vm.recipe.colorMix.isNeutral else AdjustTool.of(g).any { it.get(a) != 0f }) },
-            vm.adjustGroup.name, { k ->
-                val g = AdjustGroup.valueOf(k)
-                vm.adjustGroup = g
-                if (g != AdjustGroup.MIX && vm.adjustTool.group != g) vm.adjustTool = AdjustTool.of(g).first()
-            }, Modifier.testTag("adjust.groups"), tagPrefix = "group.")
-        if (vm.adjustGroup == AdjustGroup.MIX) {
-            MixPanel(vm)
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset_group, stringResource(AdjustGroup.MIX.label)), Modifier.testTag("editor.reset")) {
-                    vm.resetGroup(AdjustGroup.MIX) }
-            }
-            return@Column
-        }
-        val tools = AdjustTool.of(vm.adjustGroup).filter { !it.advanced }
-        LazyRow(Modifier.fillMaxWidth().testTag("adjust.tools"), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            items(tools, key = { it.name }) { t -> AdjustToolButton(t, vm.adjustTool == t, t.get(a) != 0f, Modifier) { vm.adjustTool = t } }
-        }
-        val t = vm.adjustTool
-        AdjustSlider(vm, t)
-        // Schärfen: Radius und Schwelle nur, wenn geschärft wird.
-        if (t == AdjustTool.SHARPNESS && a.sharpness >= 0.5f) {
-            AdjustSlider(vm, AdjustTool.SHARPEN_RADIUS)
-            AdjustSlider(vm, AdjustTool.SHARPEN_THRESHOLD)
-        }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            ToolButton(Icons.Rounded.RestartAlt, stringResource(R.string.edit_reset_group, stringResource(vm.adjustGroup.label)), Modifier.testTag("editor.reset")) {
-                vm.resetGroup(vm.adjustGroup)
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            // Gewähltes Werkzeug steht in der Mitte: Rand = halbe Breite, Scrollweg = Index × (Kreis + Abstand).
+            val side = (maxWidth / 2 - 30.dp).coerceAtLeast(0.dp)
+            val scroll = rememberScrollState()
+            val density = androidx.compose.ui.platform.LocalDensity.current
+            val stepPx = with(density) { (60.dp + AppSpacing.xs).toPx() }
+            LaunchedEffect(selIndex) { runCatching { scroll.animateScrollTo((selIndex * stepPx).roundToInt()) } }
+            Row(Modifier.fillMaxWidth().horizontalScroll(scroll).padding(horizontal = side).testTag("adjust.tools"),
+                horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                for (t in tools) {
+                    val v = t.get(a)
+                    AdjustToolButton(t, !mix && vm.adjustTool == t, v != 0f, Modifier, amount = v / maxOf(abs(t.min), t.max)) { vm.adjustGroup = t.group; vm.adjustTool = t }
+                }
+                EditorRoundTool(Icons.Rounded.InvertColors, stringResource(AdjustGroup.MIX.label), mix,
+                    if (vm.recipe.colorMix.isNeutral) 0f else 0.999f, Modifier.testTag("group.MIX"),
+                    valueText = if (vm.recipe.colorMix.isNeutral) null else stringResource(R.string.edit_changed)) { vm.adjustGroup = AdjustGroup.MIX }
             }
         }
+        if (mix) MixPanel(vm) else AdjustSlider(vm, vm.adjustTool)
     }
 }
 
 @Composable
 private fun AdjustSlider(vm: EditorViewModel, t: AdjustTool) {
     val v = vm.valueOf(t)
-    val text = when {
-        t == AdjustTool.SHARPEN_RADIUS && v < 0.5f -> stringResource(R.string.edit_auto_value)
-        t.bipolar -> signed(v)
-        else -> "${v.roundToInt()}"
-    }
-    EditSlider(stringResource(t.label), v, t.min..t.max, text, Modifier.testTag("slider.${t.name}")) { nv, commit ->
+    EditorRuler(stringResource(t.label), v, t.min..t.max, adjustValueText(t, v), Modifier.testTag("slider.${t.name}")) { nv, commit ->
         vm.adjust(t, nv.roundToInt().toFloat(), commit)
     }
 }
 
+@Composable
+private fun adjustValueText(t: AdjustTool, v: Float): String = when {
+    t == AdjustTool.SHARPEN_RADIUS && v < 0.5f -> stringResource(R.string.edit_auto_value)
+    t.bipolar -> signed(v)
+    else -> "${v.roundToInt()}"
+}
+
 /** Werkzeug im einheitlichen Stil der Editorfamilie; Punkt = Wert ≠ 0. */
 @Composable
-internal fun AdjustToolButton(t: AdjustTool, selected: Boolean, changed: Boolean, modifier: Modifier, onClick: () -> Unit) {
-    EditorToolButton(t.icon, stringResource(t.label), selected, modifier.testTag("adjust.${t.name}"), changed = changed,
-        changedLabel = stringResource(R.string.edit_changed), onClick = onClick)
+internal fun AdjustToolButton(t: AdjustTool, selected: Boolean, changed: Boolean, modifier: Modifier, amount: Float = 0f, onClick: () -> Unit) {
+    EditorRoundTool(t.icon, stringResource(t.label), selected, amount, modifier.testTag("adjust.${t.name}"),
+        valueText = if (changed) stringResource(R.string.edit_changed) else null, onClick = onClick)
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -383,7 +368,7 @@ internal fun FilterPanel(vm: EditorViewModel) {
     val presets by app.presets.items.collectAsState()
     var renaming by remember { mutableStateOf<EditPreset?>(null) }
     var menuFor by remember { mutableStateOf<EditPreset?>(null) }
-    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+    Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
         LazyRow(Modifier.fillMaxWidth().testTag("editor.filters"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
             items(FilterId.entries, key = { it.name }) { f ->
                 val sel = vm.recipe.filter == f
@@ -402,8 +387,8 @@ internal fun FilterPanel(vm: EditorViewModel) {
         }
         if (vm.recipe.filter != FilterId.NONE) {
             val pct = (vm.recipe.filterIntensity * 100).roundToInt()
-            EditSlider(stringResource(R.string.edit_filter_strength), vm.recipe.filterIntensity, 0f..1f,
-                NumberFormat.getPercentInstance().format(pct / 100.0), snap = 0f) { v, commit -> vm.filterIntensity(v, commit) }
+            EditorRuler(stringResource(R.string.edit_filter_strength), vm.recipe.filterIntensity, 0f..1f,
+                NumberFormat.getPercentInstance().format(pct / 100.0), Modifier.testTag("slider.FILTER"), snap = 0f, step = 0.02f) { v, commit -> vm.filterIntensity(v, commit) }
         }
         // Eigene Vorlagen: nur Einstellungen (Regler, Filter, Farbmischer).
         Text(stringResource(R.string.edit_presets), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)

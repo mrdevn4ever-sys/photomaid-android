@@ -79,6 +79,8 @@ import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.PM
 import app.photomaid.design.glassCapsule
+import app.photomaid.design.StageZoom
+import app.photomaid.design.ZoomableStage
 import kotlin.math.abs
 import kotlin.math.hypot
 
@@ -98,12 +100,17 @@ internal fun EditorStage(vm: EditorViewModel, modifier: Modifier = Modifier) {
     val c = PM.colors
     val src = vm.source
     Box(modifier.testTag("editor.stage"), contentAlignment = Alignment.Center) {
+        // Zwei Finger zoomen auf jeder Bühne (nur Ansicht); ein Finger bleibt beim Werkzeug. Neues Werkzeug = ganzes Bild.
+        val zoom = remember(vm.tab, vm.perspectiveMode) { StageZoom() }
         when {
             src == null -> CircularProgressIndicator()
-            vm.tab == EditorTab.CROP && vm.perspectiveMode -> PerspectiveStage(vm)
-            vm.tab == EditorTab.CROP -> CropStage(vm)
-            vm.tab == EditorTab.RETOUCH -> RetouchStage(vm)
-            vm.tab == EditorTab.MARKUP -> MarkupStage(vm.markup, vm.resultPreview, vm.baseResult, vm.recipe.frame, Modifier.fillMaxSize())
+            vm.tab == EditorTab.CROP && vm.perspectiveMode -> ZoomableStage(zoom, Modifier.fillMaxSize()) { PerspectiveStage(vm) }
+            vm.tab == EditorTab.CROP -> ZoomableStage(zoom, Modifier.fillMaxSize()) { CropStage(vm) }
+            vm.tab == EditorTab.RETOUCH -> ZoomableStage(zoom, Modifier.fillMaxSize()) { RetouchStage(vm) }
+            // Auswählen: zwei Finger skalieren/drehen die Ebene – dort kein Bühnenzoom.
+            vm.tab == EditorTab.MARKUP -> ZoomableStage(zoom, Modifier.fillMaxSize(), enabled = vm.markup.tool != MarkupTool.SELECT) {
+                MarkupStage(vm.markup, vm.resultPreview, vm.baseResult, vm.recipe.frame, Modifier.fillMaxSize())
+            }
             else -> ResultStage(vm, src.preview)
         }
     }
@@ -127,7 +134,7 @@ private fun ResultStage(vm: EditorViewModel, original: Bitmap) {
     val zoomLabel = stringResource(R.string.edit_zoom_100)
     val density = LocalDensity.current
     val out = vm.outputSize
-    BoxWithConstraints(Modifier.fillMaxSize().padding(AppSpacing.m).clipToBounds()
+    BoxWithConstraints(Modifier.fillMaxSize().padding(AppSpacing.xs).clipToBounds()
         .semantics {
             contentDescription = compareLabel
             customActions = listOf(CustomAccessibilityAction(zoomLabel) { if (scale > 1.01f) { scale = 1f; offset = Offset.Zero } else scale = 2f; true })
@@ -293,7 +300,7 @@ private fun CropStage(vm: EditorViewModel) {
     val grow = stringResource(R.string.edit_crop_grow)
     val cropLabel = stringResource(R.string.edit_crop_area)
     val cropState = vm.cropSize?.let { "${it.width} × ${it.height}" } ?: ""
-    BoxWithConstraints(Modifier.fillMaxSize().padding(AppSpacing.l)) {
+    BoxWithConstraints(Modifier.fillMaxSize().padding(AppSpacing.m)) {
         if (frame == null) { CircularProgressIndicator(Modifier.align(Alignment.Center)); return@BoxWithConstraints }
         val box = with(density) { Size(maxWidth.toPx(), maxHeight.toPx()) }
         val disp = fitRect(box, frame.width.toFloat() / frame.height)

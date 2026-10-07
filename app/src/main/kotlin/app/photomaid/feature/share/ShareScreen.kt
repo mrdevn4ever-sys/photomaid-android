@@ -1,5 +1,6 @@
 package app.photomaid.feature.share
 
+import app.photomaid.feature.document.PdfRequest
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoMode
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.PhotoAlbum
+import androidx.compose.material.icons.rounded.PictureAsPdf
 import androidx.compose.material.icons.rounded.ShoppingBasket
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -139,6 +141,9 @@ fun ShareScreen(req: EntryRequest.Share, nav: Nav, onClose: () -> Unit) {
                         }
                         ShareAction.EDIT -> ListRow(Icons.Rounded.Edit, stringResource(R.string.share_edit), Modifier.testTag("share.edit")) {
                             nav.openEditor(assets.first().id)
+                        }
+                        ShareAction.PDF -> ListRow(Icons.Rounded.PictureAsPdf, stringResource(R.string.pdf_title), Modifier.testTag("share.pdf")) {
+                            nav.openPdf(PdfRequest(UUID.randomUUID().toString(), assets.map { it.id }))
                         }
                         ShareAction.ALBUM -> ListRow(Icons.Rounded.PhotoAlbum, stringResource(R.string.org_add_to_album), Modifier.testTag("share.album")) {
                             albumSheet = true

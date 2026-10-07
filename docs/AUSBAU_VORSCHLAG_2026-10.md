@@ -2,7 +2,7 @@
 
 Grundlage: Rückmeldung zur `docs/FUNKTIONSLISTE.md`. Richtung: keine weiteren Filter, sondern ein zusammenhängender
 Ablauf **auswählen → ordnen → verbessern → ausgeben → kontrolliert archivieren**. Den Aufräum-Feed ergänzen, nicht überladen.
-Status: **Paket 1 (Organisieren) und Paket 2 (Arbeitsabläufe + Zielgröße) umgesetzt** am 04.10.2026; **Paket 3 Teilen-Ziel** (Ablauf, Bearbeiten, Album, Auswahlkorb – ohne PDF) **plus App-Shortcuts/Direktes Teilen** am 07.10.2026 (JVM-Tests PASS, Gerät NOT RUN); alle übrigen Punkte NOT RUN (nicht beauftragt).
+Status: **Paket 1 (Organisieren) und Paket 2 (Arbeitsabläufe + Zielgröße) umgesetzt** am 04.10.2026; **Paket 3 Teilen-Ziel** (Ablauf, Bearbeiten, Album, Auswahlkorb – ohne PDF) **plus App-Shortcuts/Direktes Teilen** am 07.10.2026; **Paket 4 Dokumente** (mehrseitiges PDF, Kontaktbögen; Perspektive für Dokumentseiten weiter über den Editor) am 07.10.2026 (JVM-Tests PASS, Gerät NOT RUN); alle übrigen Punkte NOT RUN (nicht beauftragt).
 
 Spalte „Regeln“: Prüfung gegen `CLAUDE.md` (lokal, keine KI, nie automatisch löschen, keine erfundenen Zahlen, Ansehen ≠ Entscheidung).
 

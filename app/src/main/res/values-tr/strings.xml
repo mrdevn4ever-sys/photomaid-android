@@ -35,7 +35,7 @@
     <string name="undo">Geri al</string>
     <string name="error_settings_not_saved">Ayar kaydedilemedi.</string>
     <string name="error_change_not_saved">Değişiklik kaydedilemedi.</string>
-    <string name="error_undo_conflict">Geri alınamıyor: bu öğe o zamandan beri değişti.</string>
+    <string name="error_undo_conflict">Bu artık geri alınamaz çünkü bu arada değiştirdin.</string>
     <string name="error_undo_busy">Bir işlemi geri almadan önce çöp kutusunun boşaltılmasını bekle.</string>
     <string name="error_undo_generic">Bu işlem şu anda geri alınamıyor.</string>
     <string name="tab_today">Bugün</string>
@@ -66,7 +66,7 @@
         <item quantity="one">“Sonra” bölümündeki %1$d öğeyi yeniden inceleme zamanı</item>
         <item quantity="other">“Sonra” bölümündeki %1$d öğeyi yeniden inceleme zamanı</item>
     </plurals>
-    <string name="today_reconciliation">Çöp kutusundaki önceki bir işlemin sonucunu doğrulayamadık. Hiçbir şey yeniden silinmeyecek.</string>
+    <string name="today_reconciliation">Çöp kutusu son boşaltılırken bir şey yarıda kaldı. Güvenlik için hiçbir şey yeniden silinmez.</string>
     <string name="cat_photos">Fotoğraflar</string>
     <string name="cat_videos">Videolar</string>
     <string name="cat_screenshots">Ekran görüntüleri</string>
@@ -257,7 +257,7 @@
     <string name="large_unknown_footer">Bu dosyaların boyutu alınamıyor. Boyutları tahmin edilmez ve toplama katılmaz.</string>
     <string name="storage_a">Cihazın</string>
     <string name="storage_available">Android verilerine göre %1$s boş</string>
-    <string name="storage_unavailable">Depolama bilgisi alınamıyor</string>
+    <string name="storage_unavailable">Depolama bilgisi şu anda alınamıyor</string>
     <string name="storage_b">PhotoMaid için görünür</string>
     <string name="storage_of_which_screens">ekran görüntüleri dâhil</string>
     <string name="storage_connected_folders">Bağlı klasörler</string>
@@ -379,12 +379,12 @@
     <string name="pro_f1">Reklamsız</string>
     <string name="pro_f1d">Fotoğraf ve videoların arasında reklam kartı yok.</string>
     <string name="pro_details">Pro nasıl çalışır?</string>
-    <string name="pro_details_dup">Kopyaların dosya içeriği birebir aynıdır. PhotoMaid bunu bulutta değil, cihazında karşılaştırır. Benzer resimler kopya sayılmaz.</string>
+    <string name="pro_details_dup">Kopyalar en ince ayrıntısına kadar aynı olan dosyalardır. PhotoMaid bunları bulutta değil cihazında karşılaştırır. Yalnızca benzeyen görseller kopya sayılmaz.</string>
     <string name="pro_details_rules">Koleksiyonlar cihazındaki eşleşen içerikleri gösterir. Bunları kendin açıp incelersin. Otomatik silmez veya arka planda temizlik yapmazlar.</string>
-    <string name="pro_details_cleanup">Günlük sınır, çöp kutusunda onayladıktan sonra başarıyla kaldırılan öğeleri sayar. Kaydırmalar sayılmaz.</string>
+    <string name="pro_details_cleanup">Günlük sınıra yalnızca çöp kutusundan gerçekten kaldırdıkların sayılır. Kaydırmak asla sayılmaz.</string>
     <string name="expanded">Genişletildi</string>
     <string name="collapsed">Daraltıldı</string>
-    <string name="pro_privacy">Fotoğraf ve dosyalar cihazında incelenip düzenlenir. Satın alma ve reklamlar için Google veya reklam sağlayıcılarına teknik veriler gönderilir; fotoğraflar, dosya adları veya sağlama değerleri gönderilmez.</string>
+    <string name="pro_privacy">Fotoğrafların ve dosyaların yalnızca cihazında incelenir ve sıralanır. Satın almalar ve reklamlar için Google’a veya reklamcılara yalnızca gerekenler gider – asla fotoğrafların, adları veya onlardan elde edilen bilgiler değil.</string>
     <string name="pro_pending">Satın alman onay bekliyor.</string>
     <string name="pro_unlock">PhotoMaid Pro’yu aç</string>
     <string name="pro_price_once">%1$s · Tek seferlik satın alma</string>
@@ -402,7 +402,7 @@
     <string name="pro_msg_nofill">Şu anda kullanılabilir reklam yok. Daha sonra tekrar dene.</string>
     <string name="pro_msg_ad_unavailable">Pro araç denemesi şu anda kullanılamıyor. Hiçbir şey açılmadı.</string>
     <string name="set_privacy">Gizlilik ve erişim</string>
-    <string name="set_privacy_detail">Cihazda işlenir</string>
+    <string name="set_privacy_detail">Fotoğrafların cihazında kalır</string>
     <string name="set_notifications">Bildirimler</string>
     <string name="allowed">İzin verildi</string>
     <string name="off">Kapalı</string>
@@ -430,13 +430,13 @@
     <string name="help_decide">Karar verme</string>
     <string name="help_decide_text">Saklamak için yukarı, çöp kutusu için sola, sonra için sağa kaydır. Varsayılan olarak öğe 2 gün sonra geri gelir. Bu süreyi ayarlardan değiştirebilirsin. Kaydırdıktan hemen sonra “Değiştir” ile başka bir tarih seç. Yeni karar vermeden geri dönmek için aşağı kaydır.</string>
     <string name="help_delete">Silme</string>
-    <string name="help_delete_text">Kaydırmak hiçbir şeyi silmez. Öğeler önce PhotoMaid çöp kutusuna gider. Boşaltırken kaldırmayı onaylarsın. Fotoğraf ve videolar Android onayından sonra Android çöp kutusuna gider. Dosyalar kalıcı olarak silinir.</string>
+    <string name="help_delete_text">Kaydırmak hiçbir zaman bir şey silmez. Ayırdığın şeyler önce PhotoMaid çöp kutusuna gider. Ancak onu boşalttığında gerçekten silinir – fotoğraflar ve videolar, Android bir kez daha sorduktan sonra Android çöp kutusuna taşınır. Bağlı klasörlerdeki dosyalar kalıcı olarak silinir.</string>
     <string name="help_cloud">Bulut</string>
     <string name="help_cloud_text">Google Fotoğraflar gibi bulut hizmetleri silme işlemlerini diğer cihazlarla eşitleyebilir. Ayarlarını kontrol et. PhotoMaid yalnızca bulutta bulunan içerikleri indirmez.</string>
     <string name="help_free">Ücretsiz</string>
     <string name="help_free_text">Görüntüleme, kaydırma ve sonra için saklama sınırsızdır. Pro olmadan günde en fazla %1$d öğe kaldırabilirsin.</string>
     <string name="privacy_title">Önce gizliliğin</string>
-    <string name="privacy_text">PhotoMaid fotoğraf, video ve izin verdiğin dosyaları cihazında inceler. PhotoMaid hesabı gerekmez ve PhotoMaid sunucusu yoktur. Google Fotoğraflar gibi bulut hizmetleri silme işlemlerini diğer cihazlarla eşitleyebilir.</string>
+    <string name="privacy_text">PhotoMaid fotoğraflarına, videolarına ve izin verdiğin dosyalara yalnızca cihazında bakar. Hesap gerekmez ve PhotoMaid sunucusu yoktur. Bilmekte fayda var: Google Fotoğraflar gibi bulut hizmetlerinde sildiklerin diğer cihazlarından da kaybolabilir.</string>
     <string name="privacy_media">Fotoğraf ve videolar</string>
     <string name="privacy_media_text">Fotoğraf ve videoları görüntülemek, düzenlemek ve onayından sonra kaldırmak için.</string>
     <string name="privacy_allow">Erişime izin ver</string>
@@ -450,8 +450,8 @@
     <string name="privacy_notifications_allow">Bildirimlere izin ver</string>
     <string name="privacy_folders">Klasörler (isteğe bağlı)</string>
     <string name="privacy_folders_text">Diğer dosyalar yalnızca seçtiğin klasörlerden gelir. Temizle › Dosyalar bölümünden bağla.</string>
-    <string name="privacy_purchases">Satın alımları Google Play işler. Bunun için fotoğraf, dosya adı, yol veya sağlama değeri gönderilmez.</string>
-    <string name="privacy_ads">Ücretsiz sürüm Google AdMob reklamları gösterir. Reklam iznini ayarlardan değiştirebilirsin. Fotoğraf, dosya adı, yol ve sağlama değerleri reklam sağlayıcılarıyla paylaşılmaz. Pro reklamsızdır.</string>
+    <string name="privacy_purchases">Satın almalar Google Play üzerinden yapılır. Fotoğrafların, adları, klasörleri veya onlardan elde edilen hiçbir bilgi bunun için gönderilmez.</string>
+    <string name="privacy_ads">Ücretsiz sürümde Google AdMob reklamları gösterilir. Onayını ayarlardan değiştirebilirsin. Fotoğrafların, adları, klasörleri veya onlardan elde edilen hiçbir bilgi reklamcılara gitmez. Pro’da reklam yoktur.</string>
     <string name="continue_">İleri</string>
     <string name="notif_channel">Hatırlatmalar</string>
     <string name="notif_due_body">Bugün “Sonra” bölümündeki bir şeyi inceleme zamanı.</string>
@@ -503,7 +503,7 @@
     <string name="pro_active_title">Pro etkin</string>
     <string name="pro_active_sub">Tek seferlik satın alma: reklamsız, günlük sınır olmadan ve tüm Pro araçlarıyla.</string>
     <string name="later_notify_title">İnceleme zamanı gelince hatırlatalım mı?</string>
-    <string name="pro_privacy_no_ads">Fotoğraf ve dosyalar cihazında incelenip düzenlenir. Satın alma için Google’a teknik veriler gönderilir; fotoğraflar, dosya adları veya sağlama değerleri gönderilmez.</string>
+    <string name="pro_privacy_no_ads">Fotoğrafların ve dosyaların yalnızca cihazında incelenir ve sıralanır. Satın alma için Google’a yalnızca gerekenler gider – asla fotoğrafların, adları veya onlardan elde edilen bilgiler değil.</string>
     <string name="hub_nothing_pending">Hepsi incelendi</string>
     <plurals name="hub_pending">
         <item quantity="one">İncelenecek: %1$d</item>
@@ -618,7 +618,7 @@
     <string name="tour_today_quick_title">Kısayolların</string>
     <string name="tour_today_quick_text">Fotoğraflar, videolar, ekran görüntüleri veya bir klasör: sık temizlediklerine kısayol oluştur.</string>
     <string name="tour_today_tab_title">Temizlemek için daha fazlası</string>
-    <string name="tour_today_tab_text">Büyük dosyalar, kopyalar, klasörler ve koleksiyonlar “Temizle” bölümünde.</string>
+    <string name="tour_today_tab_text">Büyük dosyalar, aynı fotoğraflar, tek tek aylar ve hazır koleksiyonlar: Burada adım adım düzenlersin.</string>
     <string name="tour_feed_basket_title">Çöp kutun</string>
     <string name="tour_feed_basket_text">Sayı, kaç öğe ayırdığını gösterir. Seçimini incelemek ve çöp kutusunu boşaltmak için dokun.</string>
     <string name="tour_feed_undo_title">Geri al</string>
@@ -674,8 +674,8 @@
     <string name="grid_open">Genel bakış</string>
     <string name="grid_select_all">Tümü</string>
     <string name="grid_select_none">Hiçbiri</string>
-    <string name="help_tours_again">Öğreticileri yeniden göster</string>
-    <string name="help_tours_reset">Öğreticiler her ekranı bir sonraki açışında yeniden görünecek.</string>
+    <string name="help_tours_again">Turu ve ipuçlarını yeniden göster</string>
+    <string name="help_tours_reset">Tur ve ipuçları bir sonraki açılışta yeniden görünecek.</string>
     <string name="hub_months_sub">Ay ay bitir</string>
     <string name="later_back_to_stack">Yığına geri koy</string>
     <string name="later_bookmarked_row">Tarihsiz ayrıldı</string>
@@ -821,8 +821,8 @@
     <string name="edit_save_replace_action">Kaydet, orijinal çöp kutusuna</string>
     <string name="edit_remove_location">Konumu kaldır</string>
     <string name="edit_remove_location_text">Kaydedilen fotoğrafta çekim yeri olmaz.</string>
-    <string name="edit_hint_heic">JPEG olarak kaydedilir (HEIC bu cihazda güvenilir şekilde yazılamaz).</string>
-    <string name="edit_hint_hdr">Renk değişiklikleri bu fotoğrafın ek HDR parlaklığını kaldırır.</string>
+    <string name="edit_hint_heic">Her yerde açılsın diye JPEG olarak kaydedilir – bu cihaz HEIC’i güvenilir şekilde kaydedemiyor.</string>
+    <string name="edit_hint_hdr">Bu fotoğrafın ışıkları çok parlak (HDR). Renk değişikliklerinden sonra biraz daha az parlar.</string>
     <string name="edit_hint_lossless">Kayıpsız: Yalnızca yön değişir, görüntü kalitesi tamamen aynı kalır.</string>
     <string name="edit_hint_replace_confirm">Android, orijinalin Android çöp kutusuna taşınması için bir kez onay ister.</string>
     <string name="edit_saving">Kaydediliyor…</string>
@@ -830,7 +830,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s sn</string>
     <string name="edit_trim_start">Başlangıç</string>
     <string name="edit_trim_end">Bitiş</string>
-    <string name="edit_trim_hint">Tutamaçları sürükle. Toplam süre %1$s. Kalite aynı kalır; yalnızca bir sonraki anahtar kareye kadar olan başlangıç yeniden kodlanır.</string>
+    <string name="edit_trim_hint">Başlangıcı ve bitişi seçmek için tutamaçları sürükle. Toplam süre %1$s. Görüntü kalitesi aynı kalır.</string>
     <string name="edit_discard_title">Değişiklikler silinsin mi?</string>
     <string name="edit_discard_text">Düzenlemen kaydedilmez. Orijinal olduğu gibi kalır.</string>
     <string name="edit_discard">Sil</string>
@@ -914,8 +914,8 @@
     <string name="edit_mk_rect">Dikdörtgen</string>
     <string name="edit_mk_brush">Fırça</string>
     <string name="edit_mk_strength">Yoğunluk</string>
-    <string name="edit_mk_redact_solid_hint">Hassas bilgiler için önerilir: Gizlenen pikseller kaydedilen veya paylaşılan dosyada tamamen değiştirilir.</string>
-    <string name="edit_mk_redact_hint">Pikselleştirme ve bulanıklaştırma büyük bloklar kullanır. Kesinlikle okunmaması gereken metin için „Opak” daha güvenlidir.</string>
+    <string name="edit_mk_redact_solid_hint">Kişisel bilgiler için önerilir: Kapattığın şey kaydedilen veya paylaşılan dosyadan gerçekten silinir.</string>
+    <string name="edit_mk_redact_hint">“Pikselleştir” ve “Bulanıklaştır” ile hatlar hâlâ seçilebilir. Okunmaması gereken yazılar için “Opak”ı seç.</string>
     <string name="edit_mk_edit_text">Düzenle</string>
     <string name="edit_mk_duplicate">Çoğalt</string>
     <string name="edit_mk_front">Öne getir</string>
@@ -1083,7 +1083,7 @@
     <string name="ret_linear">Geçiş</string>
     <string name="ret_brush">Fırça</string>
     <string name="ret_red_eye">Kırmızı göz</string>
-    <string name="ret_red_eye_hint">Kırmızı bir göze dokun. Küçük yüzlerde iki parmakla yakınlaştır. Yalnızca belirgin kırmızı pikseller değişir.</string>
+    <string name="ret_red_eye_hint">Kırmızı bir göze dokun. Küçük yüzlerde önce iki parmakla yakınlaştır. Yalnızca gözdeki kırmızı değişir.</string>
     <string name="ret_red_eye_undo">Sonuncuyu kaldır</string>
     <string name="ret_size">Boyut</string>
     <string name="ret_new">Yeni</string>
@@ -1115,7 +1115,7 @@
     <string name="vid_cut_confirm">Kaldır</string>
     <string name="vid_cut_draft">%1$s – %2$s kaldırılsın mı? Kırmızı tutamaçları sürükle.</string>
     <string name="vid_cut_hint_restore">Kırmızı bölümler kaydederken gerçekten kaldırılır (toplam %1$s). Geri almak için aşağıdaki bir bölüme dokun.</string>
-    <string name="vid_trim_hint_reencode">Tutamaçları sürükle. Toplam %1$s. Diğer değişikliklerin nedeniyle video yeniden kodlanır.</string>
+    <string name="vid_trim_hint_reencode">Tutamaçları sürükle. Toplam süre %1$s. Diğer değişikliklerin nedeniyle video kaydederken yeniden oluşturulur – biraz daha uzun sürer.</string>
     <string name="vid_speed_result">Sonuç: %1$s</string>
     <string name="vid_speed_hint">Ses, perdesi değişmeden hızlanır veya yavaşlar.</string>
     <string name="vid_no_audio">Bu videoda ses yok.</string>
@@ -1124,7 +1124,7 @@
     <string name="vid_volume">Ses düzeyi</string>
     <string name="vid_fade">Açılış ve kapanış geçişi</string>
     <string name="vid_fade_none">Yok</string>
-    <string name="vid_audio_export">Sesi M4A olarak kaydet</string>
+    <string name="vid_audio_export">Yalnızca sesi kaydet</string>
     <string name="vid_audio_suffix">ses</string>
     <string name="vid_audio_running">Ses kaydediliyor</string>
     <string name="vid_audio_saved">„%1$s” Music/PhotoMaid içine kaydedildi.</string>
@@ -1134,12 +1134,12 @@
     <string name="vid_fill_hint">Yeni biçimi doldurur; dışta kalan kenarlar kesilir.</string>
     <string name="vid_fit_hint">Videonun tamamını gösterir; boş alan siyah şerit olur.</string>
     <string name="vid_profile">Kalite</string>
-    <string name="vid_profile_high">Yüksek kalite (orijinal çözünürlük)</string>
-    <string name="vid_profile_balanced">Dengeli (1080p’ye kadar)</string>
-    <string name="vid_profile_small">Küçük dosya (720p)</string>
+    <string name="vid_profile_high">En iyi kalite (orijinal gibi)</string>
+    <string name="vid_profile_balanced">Dengeli (Full HD)</string>
+    <string name="vid_profile_small">Küçük dosya (HD)</string>
     <string name="vid_estimate">yakl. %1$s</string>
-    <string name="vid_estimate_hint">Bit hızı × süreden tahmin. Kaydedilen dosya gerçek boyutunu gösterir.</string>
-    <string name="vid_hdr_hint">Renk değişiklikleri uygulandığı için bu HDR video SDR olarak kaydedilir.</string>
+    <string name="vid_estimate_hint">Yalnızca yaklaşık. Gerçek boyutu kaydettikten sonra görürsün.</string>
+    <string name="vid_hdr_hint">Bu videonun renkleri çok parlak (HDR). Renk değişikliklerinle normal renklerle kaydedilir.</string>
     <string name="tab_library">Fotoğraflar</string>
     <string name="lib_filter_all">Tümü</string>
     <string name="lib_filter_favorites">Favoriler</string>
@@ -1291,7 +1291,7 @@
     <string name="systrash_delete_text">Ardından Android’de onayla. Kalıcı olarak silinen fotoğraf ve videolar geri yüklenemez.</string>
     <string name="lib_info_raw">RAW dosyası</string>
     <string name="set_delete_permanently">Kalıcı olarak sil</string>
-    <string name="set_delete_permanently_detail">Kapalı: boşaltma Android çöp kutusuna taşır (bir süre geri yüklenebilir). Açık: hemen kalıcı olarak silinir.</string>
+    <string name="set_delete_permanently_detail">Kapalı: Boşaltınca her şey önce Android çöp kutusuna gider ve bir süre geri alınabilir. Açık: Her şey hemen kalıcı olarak silinir.</string>
     <string name="set_delete_permanently_confirm_title">Kalıcı silme açılsın mı?</string>
     <string name="set_delete_permanently_confirm_text">Bundan sonra PhotoMaid çöp kutusunu boşaltmak fotoğraf ve videoları kalıcı olarak siler. Android çöp kutusuna gitmezler ve geri yüklenemezler – henüz eşitlenmemiş yedeklerden de. Android yine her seferinde sorar.</string>
     <string name="set_delete_permanently_confirm_action">Aç</string>
@@ -1343,9 +1343,9 @@
     <string name="movie_format_first">İlk klip gibi</string>
     <string name="movie_fit_note">Klipler asla esnetilmez: ya görüntünün tamamı görünür (siyah kenarlarla) ya da kareyi doldurur ve kenarlar kırpılır.</string>
     <string name="movie_quality">Kalite</string>
-    <string name="movie_quality_high">Yüksek (1080p)</string>
+    <string name="movie_quality_high">Yüksek (Full HD)</string>
     <string name="movie_quality_balanced">Dengeli</string>
-    <string name="movie_quality_small">Küçük (720p)</string>
+    <string name="movie_quality_small">Küçük (HD)</string>
     <string name="movie_music_none">Henüz müzik yok.</string>
     <string name="movie_music_pick">Ses dosyası seç</string>
     <string name="movie_music_remove">Kaldır</string>
@@ -1368,7 +1368,7 @@
     <string name="tools_convert">Dönüştür</string>
     <string name="tools_convert_sub">örn. HEIC’ten JPEG’e, yeni kopya olarak</string>
     <string name="tools_location">Konumu kaldır</string>
-    <string name="tools_location_sub">GPS verisi olmayan kopyalar, örn. paylaşmadan önce</string>
+    <string name="tools_location_sub">Konumsuz kopyalar, ör. paylaşmadan önce</string>
     <string name="tools_stitch">Ekran görüntülerini birleştir</string>
     <string name="tools_stitch_sub">Alt alta, tek uzun bir görsel olarak</string>
     <string name="tools_gif">GIF oluştur</string>
@@ -1389,8 +1389,8 @@
     <string name="tools_q_small">Daha küçük dosya</string>
     <string name="tools_remove_location">Konumu da kaldır</string>
     <string name="tools_target_format">Yeni biçim</string>
-    <string name="tools_convert_note">JPEG her yerde açılır; PNG her pikseli korur ama dosyalar büyür. Zaten bu biçimdeki dosyalar atlanır.</string>
-    <string name="tools_location_note">JPEG kopyaları her pikseli korur; yalnızca GPS verisi kaldırılır. Konumu olmayan fotoğraflar atlanır.</string>
+    <string name="tools_convert_note">JPEG’i her cihaz açar. PNG tüm ayrıntıları korur ama dosyalar büyür. Zaten bu biçimde olan fotoğraflar atlanır.</string>
+    <string name="tools_location_note">Kopyalar orijinalle tamamen aynı görünür – yalnızca çekim yeri kaldırılır. Konumu olmayan fotoğraflar atlanır.</string>
     <string name="tools_stitch_note">Seçtiğin sırayla. Hepsi en dar görselin genişliğini alır; hiçbir şey esnetilmez ya da büyütülmez.</string>
     <string name="tools_gif_size">Boyut</string>
     <string name="tools_gif_part">Videonun bölümü (en çok 10 sn)</string>
@@ -1431,9 +1431,9 @@
     <string name="dock_crop">Kırp</string>
     <string name="dock_more">Diğer</string>
     <string name="vid_trim_hint_short">Başlangıcı ve bitişi belirlemek için tutamaçları sürükle.</string>
-    <string name="vid_export_info">Dışa aktarma bilgisi</string>
-    <string name="vid_export_info_fast">Yalnızca başlangıç ve bitiş kırpılır. PhotoMaid kaliteyi korumaya çalışır ve yalnızca bir sonraki anahtar kareye kadar olan başlangıcı yeniden kodlar. Video buna izin vermezse tüm video yeniden kodlanır. Toplam süre %1$s.</string>
-    <string name="vid_export_info_reencode">Diğer değişikliklerin nedeniyle kaydederken tüm video yeniden kodlanır. Toplam süre %1$s.</string>
+    <string name="vid_export_info">Nasıl kaydedilir</string>
+    <string name="vid_export_info_fast">Yalnızca başı ve sonu kestin. Bu hızlıdır ve görüntü kalitesi orijinaldeki gibi kalır. Bu video buna izin vermezse PhotoMaid onu baştan oluşturur – biraz daha uzun sürer. Toplam süre %1$s.</string>
+    <string name="vid_export_info_reencode">Diğer değişikliklerin nedeniyle PhotoMaid kaydederken videonun tamamını yeniden oluşturur. Bu biraz sürebilir. Toplam süre %1$s.</string>
     <string name="lib_mode_albums">Albümler</string>
     <string name="org_new_album">Yeni albüm</string>
     <string name="org_album_name">Albüm adı</string>
@@ -1521,7 +1521,7 @@
     <string name="wf_target_note">PhotoMaid sonucu ölçer. Hedefe bu sınırlar içinde ulaşılamazsa dosya oluşturulmaz ve nedenini görürsün.</string>
     <string name="wf_videos">Videolar</string>
     <string name="wf_video_skip">Atla</string>
-    <string name="wf_video_note">Videolar hedef boyuta yeniden kodlanır; çözünürlük yalnızca gerektiğinde düşer.</string>
+    <string name="wf_video_note">Videolar hedef boyuta uyacak şekilde yeniden kaydedilir. Görüntü yalnızca gerekirse küçülür.</string>
     <string name="wf_location">Konumu kaldır</string>
     <string name="wf_name_base">Dosya adı</string>
     <string name="wf_name_base_hint">örn. İlan → İlan_001 (boş = orijinal ad)</string>
@@ -1561,7 +1561,7 @@
     <string name="wf_reason_video">Videolar bu iş akışının parçası değil.</string>
     <string name="wf_reason_video_long">Hedef boyut için çok uzun – dosya oluşturulmadı.</string>
     <string name="wf_reason_unreachable">Ölçülen en küçük sürüm: %1$s – hedefin üzerinde, bu yüzden dosya oluşturulmadı.</string>
-    <string name="wf_reason_error">İşlenemedi.</string>
+    <string name="wf_reason_error">Maalesef olmadı.</string>
     <string name="wf_summary">%1$d bitti · %2$d atlandı · %3$d hedefe ulaşılamadı · %4$d başarısız</string>
     <string name="wf_share_again">Tekrar paylaş</string>
     <string name="wf_counts">%1$s fotoğraf · %2$s video</string>
@@ -1594,4 +1594,65 @@
         <item quantity="one">%1$d tane daha alınmadı (bir seferde en fazla 500).</item>
         <item quantity="other">%1$d tane daha alınmadı (bir seferde en fazla 500).</item>
     </plurals>
+    <string name="pdf_title">PDF oluştur</string>
+    <string name="pdf_studio_sub">Fotoğrafları belge veya kontak baskı olarak</string>
+    <string name="pdf_pick">PDF için fotoğraflar</string>
+    <string name="pdf_from_selection">PDF oluştur</string>
+    <string name="pdf_no_photos">Bu seçimde fotoğraf yok. Videolar PDF’e eklenemez.</string>
+    <string name="pdf_no_date">Tarih yok</string>
+    <string name="pdf_saved">“Documents/PhotoMaid” klasörüne kaydedildi · %1$s</string>
+    <string name="pdf_failed">PDF kaydedilemedi.</string>
+    <string name="pdf_page_of">Sayfa %1$d / %2$d</string>
+    <string name="pdf_capped">PDF başına en fazla %1$d fotoğraf – ilk %1$d tanesi alındı.</string>
+    <string name="pdf_per_page">Sayfa başına fotoğraf</string>
+    <string name="pdf_fit">Sığdır</string>
+    <string name="pdf_fill">Doldur</string>
+    <string name="pdf_paper">Kâğıt</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Yön</string>
+    <string name="pdf_orient_auto">Otomatik</string>
+    <string name="pdf_orient_portrait">Dikey</string>
+    <string name="pdf_orient_landscape">Yatay</string>
+    <string name="pdf_margin">Kenar boşluğu</string>
+    <string name="pdf_margin_none">Yok</string>
+    <string name="pdf_margin_small">Dar</string>
+    <string name="pdf_margin_normal">Normal</string>
+    <string name="pdf_caption">Açıklama</string>
+    <string name="pdf_caption_none">Yok</string>
+    <string name="pdf_caption_number">Numara</string>
+    <string name="pdf_caption_name">Dosya adı</string>
+    <string name="pdf_caption_date">Tarih</string>
+    <string name="pdf_order">Sıra</string>
+    <string name="pdf_move_up">Yukarı taşı</string>
+    <string name="pdf_move_down">Aşağı taşı</string>
+    <string name="pdf_name">Dosya adı</string>
+    <string name="pdf_save">PDF olarak kaydet</string>
+    <string name="pdf_share">PDF’i paylaş</string>
+    <string name="pdf_running">PDF oluşturuluyor…</string>
+    <string name="pdf_privacy">Fotoğraflar yeniden yerleştirilir: konum ve diğer çekim verileri PDF’e geçmez. Orijinaller değişmez.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d sayfa</item>
+        <item quantity="other">%1$d sayfa</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d fotoğraf</item>
+        <item quantity="other">%1$d fotoğraf</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d video eklenmez.</item>
+        <item quantity="other">%1$d video eklenmez.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">%1$d fotoğraf okunamadı – alanı boş kalır.</item>
+        <item quantity="other">%1$d fotoğraf okunamadı – alanları boş kalır.</item>
+    </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">Tüm fotoğrafların</string>
+    <string name="tour_lib_text">Tüm fotoğrafların ve videoların burada: güne, aya veya yıla göre, klasörlerde, albümlerde ve favorilerde. Sadece bakmak hiçbir şeyi değiştirmez.</string>
+    <string name="tour_studio_title">Yaratıcı ol</string>
+    <string name="tour_studio_text">Fotoğrafları düzenle, kolaj, kısa film ve PDF yap, pratik araçları kullan. Her zaman yeni dosyalar oluşur – orijinallerin olduğu gibi kalır.</string>
+    <string name="tour_history_title">Sonra ve geçmiş</string>
+    <string name="tour_history_text">Neyi tuttuğunu, ayırdığını veya sonraya bıraktığını burada görürsün. Her kararı burada değiştirebilirsin.</string>
+    <string name="tour_settings_title">Ayarlar ve yardım</string>
+    <string name="tour_settings_text">PhotoMaid’i zevkine göre ayarla ve yanıtları bul. Bu turu istediğin zaman tekrarlayabilirsin.</string>
 </resources>

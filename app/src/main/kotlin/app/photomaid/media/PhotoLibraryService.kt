@@ -187,6 +187,8 @@ interface MediaLibrary {
     suspend fun saveEdited(request: EditSaveRequest): EditSaveResult = EditSaveResult.Failed("unsupported")
     /** Ton allein (M4A) nach `Music/PhotoMaid/` – kein Medium der Mediathek, keine Entscheidung. */
     suspend fun saveAudio(file: java.io.File, displayName: String): EditSaveResult = EditSaveResult.Failed("unsupported")
+    /** PDF nach `Documents/PhotoMaid/` – ein Dokument, kein Medium der Mediathek, keine Entscheidung. */
+    suspend fun saveDocument(file: java.io.File, displayName: String): EditSaveResult = EditSaveResult.Failed("unsupported")
 
     /** Medium aus dem Android-Papierkorb zurückholen (Systembestätigung). `Done` nur, wenn danach belegt. */
     suspend fun restoreFromTrash(id: String): MediaWriteResult = MediaWriteResult.Failed("unsupported")
@@ -524,6 +526,29 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         }
         journalRemove(uri)
         EditSaveResult.Saved(uri.toString(), replaced = false, replaceDeclined = false, bytes = readColumn(uri, MediaStore.MediaColumns.SIZE)?.toLongOrNull() ?: file.length())
+    }
+
+    override suspend fun saveDocument(file: java.io.File, displayName: String): EditSaveResult = withContext(Dispatchers.IO) {
+        val values = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, "Documents/PhotoMaid/")
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
+        }
+        val uri = runCatching { resolver.insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values) }.getOrNull()
+            ?: return@withContext EditSaveResult.Failed("insert")
+        journalAdd(uri)
+        try {
+            resolver.openOutputStream(uri, "w")?.use { o -> file.inputStream().use { it.copyTo(o) } } ?: throw IllegalStateException("stream")
+            resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }, null, null)
+        } catch (e: Exception) {
+            runCatching { resolver.delete(uri, null, null) }; journalRemove(uri)
+            Log.w("PhotoMaid", "pdf save failed: ${e.javaClass.simpleName}")
+            return@withContext EditSaveResult.Failed("write")
+        }
+        journalRemove(uri)
+        val bytes = readColumn(uri, MediaStore.MediaColumns.SIZE)?.toLongOrNull()?.takeIf { it > 0 } ?: file.length()
+        EditSaveResult.Saved(uri.toString(), replaced = false, replaceDeclined = false, bytes = bytes)
     }
 
     override suspend fun saveEdited(request: EditSaveRequest): EditSaveResult = withContext(Dispatchers.IO) {

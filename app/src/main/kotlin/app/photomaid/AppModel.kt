@@ -118,6 +118,7 @@ class AppModel(
     val collections = CollectionsStore(store)
     /** Bearbeiten (lokal): Bild-Engine, Video-Schnitt, Liste „Bearbeitet“, Ergebnis-Meldungen an den Feed. */
     val editEngine = app.photomaid.media.ImageEditEngine(context)
+    val pdf = app.photomaid.media.PdfExporter(editEngine)
     var videoTrimmer: app.photomaid.media.VideoTrimmer = app.photomaid.media.Media3VideoTrimmer(context)
     var videoExporter: app.photomaid.media.VideoEditExporter = app.photomaid.media.Media3VideoEditExporter(context)
     /** P6: Video zusammenfügen / Diashow als Video. */

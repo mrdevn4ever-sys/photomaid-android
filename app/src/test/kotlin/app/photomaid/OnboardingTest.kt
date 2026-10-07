@@ -76,9 +76,9 @@ class OnboardingTest {
         rule.onNodeWithText("Weiter").performClick()
         rule.waitUntil(5_000) { app.settings.value.privacyIntroSeen }
         assertEquals(ONBOARDING_VERSION, app.settings.value.onboardingVersion)
-        // Danach das Tutorial auf „Heute“ (1/4).
+        // Danach der Rundgang auf „Heute“ (1/8: alle Bereiche).
         rule.waitUntil(10_000) { has("coach.card") }
-        rule.onNodeWithText("1/4").assertExists()
+        rule.onNodeWithText("1/8").assertExists()
         rule.onNodeWithText("Hier geht’s los").assertExists()
     }
 
@@ -104,8 +104,14 @@ class OnboardingTest {
         val app = makeTestApp(ctx) { it.updateSettings { s -> s.copy(todayTourSeen = false) } }
         rule.setContent { TestHost(app) { RootContent(app) } }
         rule.waitUntil(10_000) { has("coach.card") }
-        for (i in 1..3) { rule.onNodeWithTag("coach.next").performClick(); rule.waitUntil(5_000) { shown("${i + 1}/4") } }
-        rule.onNodeWithText("Mehr zum Aufräumen").assertExists()
+        // Rundgang durch alle Bereiche: Heute (3) · Fotos · Aufräumen · Studio · Verlauf · Einstellungen & Hilfe.
+        val titles = listOf("Hier geht’s los", "Papierkorb & Später", "Deine Schnellzugriffe", "Alle deine Fotos", "Mehr zum Aufräumen",
+            "Kreativ werden", "Später & Verlauf", "Einstellungen & Hilfe")
+        for ((i, t) in titles.withIndex()) {
+            rule.waitUntil(5_000) { shown("${i + 1}/${titles.size}") }
+            rule.onNodeWithText(t).assertExists()
+            if (i < titles.lastIndex) rule.onNodeWithTag("coach.next").performClick()
+        }
         rule.onNodeWithText("Fertig").performClick()
         rule.waitUntil(5_000) { app.settings.value.todayTourSeen }
         rule.waitUntil(5_000) { !has("coach.card") }

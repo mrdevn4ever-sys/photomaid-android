@@ -8,6 +8,9 @@ import app.photomaid.feature.workflow.WorkflowRunRequest
 import app.photomaid.feature.workflow.WorkflowRequest
 import app.photomaid.feature.organize.OrganizeScreen
 import app.photomaid.feature.share.ShareRequests
+import app.photomaid.feature.document.PdfRequest
+import app.photomaid.feature.document.PdfRequests
+import app.photomaid.feature.document.PdfScreen
 import app.photomaid.feature.share.ShareScreen
 import app.photomaid.system.AppEntry
 import app.photomaid.system.EntryRequest
@@ -101,6 +104,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -179,6 +183,8 @@ interface Nav {
     /** Arbeitsabläufe: Liste (optional mit Auswahl) und Ausführen. Nie eine Entscheidung über die Quellen. */
     fun openWorkflows(request: WorkflowRequest) {}
     fun openWorkflowRun(request: WorkflowRunRequest) {}
+    /** Paket 4: PDF / Kontaktbogen aus Fotos. */
+    fun openPdf(request: PdfRequest) {}
     /** Diashow (nur Ansehen). */
     fun openSlideshow(request: SlideshowRequest) {}
     /** Studio P6: Video zusammenfügen / Diashow als Video. */
@@ -301,6 +307,9 @@ private fun RootNav(app: AppModel) {
             }
             override fun openWorkflows(request: WorkflowRequest) { WorkflowRequests.lists[request.id] = request; root.navigate("workflows/${request.id}") }
             override fun openWorkflowRun(request: WorkflowRunRequest) { WorkflowRequests.runs[request.id] = request; root.navigate("workflow/run/${request.id}") }
+            override fun openPdf(request: PdfRequest) {
+                PdfRequests.map[request.id] = request; root.navigate("pdf/${request.id}")
+            }
             override fun openOrganize(target: OrganizeTarget) {
                 root.navigate("organize/" + android.net.Uri.encode(target.encode()))
             }
@@ -406,6 +415,12 @@ private fun RootNav(app: AppModel) {
             val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
             if (req == null) LaunchedEffect(entry) { close() } else WorkflowRunScreen(req, nav, onClose = { key?.let { WorkflowRequests.runs.remove(it) }; close() })
         }
+        composable("pdf/{id}") { entry ->
+            val key = entry.arguments?.getString("id"); val req = key?.let { PdfRequests.map[it] }
+            RemoveOnDestroy(entry) { key?.let { PdfRequests.map.remove(it) } }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() } else PdfScreen(req, nav, onClose = { close() })
+        }
         composable("share/{id}") { entry ->
             val key = entry.arguments?.getString("id"); val req = key?.let { ShareRequests.map[it] }
             RemoveOnDestroy(entry) { key?.let { ShareRequests.map.remove(it) } }
@@ -509,7 +524,12 @@ private fun MainTabs(rootNav: Nav) {
         CoachStep("today.review", stringResource(R.string.tour_today_hero_title), stringResource(R.string.tour_today_hero_text)),
         CoachStep("today.status", stringResource(R.string.tour_today_status_title), stringResource(R.string.tour_today_status_text)),
         CoachStep("today.quick", stringResource(R.string.tour_today_quick_title), stringResource(R.string.tour_today_quick_text)),
+        // Rundgang durch alle Bereiche (Reihenfolge wie die Leiste), zum Schluss Einstellungen & Hilfe.
+        CoachStep("tab.LIBRARY", stringResource(R.string.tour_lib_title), stringResource(R.string.tour_lib_text)),
         CoachStep("tab.CLEANUP", stringResource(R.string.tour_today_tab_title), stringResource(R.string.tour_today_tab_text)),
+        CoachStep("tab.STUDIO", stringResource(R.string.tour_studio_title), stringResource(R.string.tour_studio_text)),
+        CoachStep("tab.HISTORY", stringResource(R.string.tour_history_title), stringResource(R.string.tour_history_text)),
+        CoachStep("today.settings", stringResource(R.string.tour_settings_title), stringResource(R.string.tour_settings_text)),
     )
     CoachHost(tourSteps, active = !settings.todayTourSeen && tab == AppTab.TODAY && atRootNow && access.canRead,
         onFinish = { tourScope.launch { app.updateSettings { it.copy(todayTourSeen = true) } } }, modifier = Modifier.fillMaxSize()) {
@@ -616,6 +636,7 @@ private fun TabBarRow(selected: AppTab, onSelect: (AppTab) -> Unit) {
                     .then(if (isSel) Modifier.background(c.accent.copy(alpha = 0.12f), RoundedCornerShape(22.dp)) else Modifier)
                     .clickable(role = Role.Tab) { onSelect(t) }
                     .coachTarget("tab.${t.name}")
+                    .testTag("apptab.${t.name}")
                     .semantics { this.selected = isSel }
                     .padding(vertical = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,

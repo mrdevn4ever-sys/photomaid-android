@@ -90,7 +90,7 @@ class G4Test {
         // Mit „Endgültig löschen“: deutlich andere Bestätigung.
         click("basket.empty.media")
         pumpUntil { rule.onAllNodes(hasText("Endgültig löschen?")).fetchSemanticsNodes().isNotEmpty() }
-        clickText("3 Medien endgültig löschen")
+        clickText("3 Elemente endgültig löschen")
         pumpUntil { lib.deleted.size == 3 }
     }
 
@@ -112,8 +112,8 @@ class G4Test {
         rule.onAllNodesWithTag("systrash.tile")[0].performSemanticsAction(SemanticsActions.OnClick); pumpUntil { count("systrash.delete") == 1 }
         click("systrash.delete")
         // Gleicher Text wie die Taste unten: die Bestätigung im Blatt ist der letzte Treffer.
-        pumpUntil { rule.onAllNodes(hasText("1 Medium endgültig löschen") and hasClickAction()).fetchSemanticsNodes().size >= 2 }
-        rule.onAllNodes(hasText("1 Medium endgültig löschen") and hasClickAction()).let { n -> n[n.fetchSemanticsNodes().size - 1] }
+        pumpUntil { rule.onAllNodes(hasText("1 Element endgültig löschen") and hasClickAction()).fetchSemanticsNodes().size >= 2 }
+        rule.onAllNodes(hasText("1 Element endgültig löschen") and hasClickAction()).let { n -> n[n.fetchSemanticsNodes().size - 1] }
             .performSemanticsAction(SemanticsActions.OnClick)
         pumpUntil { b.id in lib.deleted && count("systrash.empty") == 1 }
         assertEquals(Disposition.UNDECIDED, runBlocking { app.ledger.record(b.reference) }.disposition) // fremdes Medium: kein Eintrag

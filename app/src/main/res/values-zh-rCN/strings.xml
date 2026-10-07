@@ -34,7 +34,7 @@
     <string name="undo">撤销</string>
     <string name="error_settings_not_saved">未能保存设置。</string>
     <string name="error_change_not_saved">未能保存更改。</string>
-    <string name="error_undo_conflict">此项目已发生变化，无法撤销之前的操作。</string>
+    <string name="error_undo_conflict">无法再撤销，因为你在此期间已更改。</string>
     <string name="error_undo_busy">清空回收站时无法撤销操作。</string>
     <string name="error_undo_generic">暂时无法撤销。</string>
     <string name="tab_today">今天</string>
@@ -63,7 +63,7 @@
     <plurals name="today_due">
         <item quantity="other">“稍后”中有 %1$d 项可以再次查看</item>
     </plurals>
-    <string name="today_reconciliation">无法确认之前一次回收站操作的结果。不会重复删除。</string>
+    <string name="today_reconciliation">上次清空回收站时出现中断。为安全起见，不会再次删除任何内容。</string>
     <string name="cat_photos">照片</string>
     <string name="cat_videos">视频</string>
     <string name="cat_screenshots">截图</string>
@@ -241,7 +241,7 @@
     <string name="large_unknown_footer">无法获取这些文件的大小。不会估算，也不计入总大小。</string>
     <string name="storage_a">你的设备</string>
     <string name="storage_available">Android 显示可用 %1$s</string>
-    <string name="storage_unavailable">无法获取存储信息</string>
+    <string name="storage_unavailable">暂时无法获取存储空间信息</string>
     <string name="storage_b">PhotoMaid 可查看的内容</string>
     <string name="storage_of_which_screens">其中包含截图</string>
     <string name="storage_connected_folders">已连接的文件夹</string>
@@ -356,12 +356,12 @@
     <string name="pro_f1">无广告</string>
     <string name="pro_f1d">照片和视频之间不再出现广告卡片。</string>
     <string name="pro_details">Pro 功能说明</string>
-    <string name="pro_details_dup">副本的文件内容必须完全一致。PhotoMaid 在设备上比较，不上传到云端。相似图片不算相同副本。</string>
+    <string name="pro_details_dup">副本是连最小细节都完全相同的文件。PhotoMaid 在设备上比较，而不是在云端。只是相似的图片不算副本。</string>
     <string name="pro_details_rules">合集会显示设备上符合条件的内容，由你打开并逐项查看。不会自动删除，也不会在后台清理。</string>
-    <string name="pro_details_cleanup">只有在回收站确认后成功移除的项目才计入每日额度，滑动不计入。</string>
+    <string name="pro_details_cleanup">只有你在回收站里真正移除的内容才计入每日上限。滑动永远不计入。</string>
     <string name="expanded">已展开</string>
     <string name="collapsed">已收起</string>
-    <string name="pro_privacy">照片和文件的检查与整理在设备上进行。购买和广告会向 Google 或广告服务商传输技术数据，但不包含照片、文件名或校验值。</string>
+    <string name="pro_privacy">你的照片和文件只在设备上检查和整理。为了购买和广告，只会把最必要的信息发给 Google 或广告商——绝不会发送你的照片、照片名称或由其得出的信息。</string>
     <string name="pro_pending">购买正在等待确认。</string>
     <string name="pro_unlock">解锁 PhotoMaid Pro</string>
     <string name="pro_price_once">%1$s · 一次购买</string>
@@ -379,7 +379,7 @@
     <string name="pro_msg_nofill">暂时没有可用广告，请稍后重试。</string>
     <string name="pro_msg_ad_unavailable">暂时无法试用 Pro 工具，未解锁任何权益。</string>
     <string name="set_privacy">隐私与访问权限</string>
-    <string name="set_privacy_detail">在设备上处理</string>
+    <string name="set_privacy_detail">照片只保存在你的设备上</string>
     <string name="set_notifications">通知</string>
     <string name="allowed">已允许</string>
     <string name="off">关闭</string>
@@ -406,13 +406,13 @@
     <string name="help_decide">做出选择</string>
     <string name="help_decide_text">向上滑动保留，向左放入回收站，向右留待稍后。默认 2 天后再次显示，可在设置中调整间隔。滑动后立即点击“更改”，还能选择其他日期。向下滑动返回上一项，不会产生新的选择。</string>
     <string name="help_delete">关于删除</string>
-    <string name="help_delete_text">滑动不会直接删除内容。选出的内容会先放入 PhotoMaid 回收站，清空时再由你确认移除。照片和视频经 Android 再次确认后移入 Android 回收站。文件则会永久删除。</string>
+    <string name="help_delete_text">滑动永远不会删除任何内容。你挑出的内容会先进入 PhotoMaid 回收站。只有清空它时才会真正删除——照片和视频会在 Android 再次确认后移入 Android 回收站。已连接文件夹中的文件会被永久删除。</string>
     <string name="help_cloud">云端</string>
     <string name="help_cloud_text">Google 相册等云服务可能将删除操作同步到其他设备。请检查各服务的设置。PhotoMaid 不会下载仅存于云端的内容。</string>
     <string name="help_free">免费版</string>
     <string name="help_free_text">查看、滑动和留待稍后的次数不限。无需 Pro，每天最多可移除 %1$d 项。</string>
     <string name="privacy_title">重视你的隐私</string>
-    <string name="privacy_text">PhotoMaid 在设备上检查照片、视频和已授权的文件。不需要 PhotoMaid 账号，也没有 PhotoMaid 服务器。Google 相册等云服务可能将删除操作同步到其他设备。</string>
+    <string name="privacy_text">PhotoMaid 只在你的设备上查看照片、视频和你允许的文件。无需账户，也没有 PhotoMaid 服务器。请注意：在 Google 相册等云服务中，你删除的内容也可能从其他设备上消失。</string>
     <string name="privacy_media">照片和视频</string>
     <string name="privacy_media_text">用于查看、整理照片和视频，并在你确认后移除。</string>
     <string name="privacy_allow">允许访问</string>
@@ -426,8 +426,8 @@
     <string name="privacy_notifications_allow">允许通知</string>
     <string name="privacy_folders">文件夹（可选）</string>
     <string name="privacy_folders_text">其他文件只来自你选择的文件夹。可在“清理”›“文件”中连接。</string>
-    <string name="privacy_purchases">购买由 Google Play 处理，不会为此传输照片、文件名、路径或校验值。</string>
-    <string name="privacy_ads">免费版会显示 Google AdMob 广告，你可以在设置中更改广告同意选项。照片、文件名、路径和校验值不会分享给广告服务商。Pro 无广告。</string>
+    <string name="privacy_purchases">购买通过 Google Play 完成。你的照片、照片名称、文件夹或由其得出的任何信息都不会因此被发送。</string>
+    <string name="privacy_ads">免费版会显示 Google AdMob 广告。你可以在设置中更改同意。你的照片、照片名称、文件夹或由其得出的任何信息都不会发给广告商。Pro 版没有广告。</string>
     <string name="continue_">下一步</string>
     <string name="notif_channel">提醒</string>
     <string name="notif_due_body">今天可以再次查看“稍后”中的内容了。</string>
@@ -479,7 +479,7 @@
     <string name="pro_active_title">Pro 已启用</string>
     <string name="pro_active_sub">一次购买：无广告、无每日上限，并可使用全部 Pro 工具。</string>
     <string name="later_notify_title">到再次查看的时间时提醒你？</string>
-    <string name="pro_privacy_no_ads">照片和文件的检查与整理在设备上进行。购买会向 Google 传输技术数据，但不包含照片、文件名或校验值。</string>
+    <string name="pro_privacy_no_ads">你的照片和文件只在设备上检查和整理。为了购买，只会把最必要的信息发给 Google——绝不会发送你的照片、照片名称或由其得出的信息。</string>
     <string name="hub_nothing_pending">已全部查看</string>
     <plurals name="hub_pending">
         <item quantity="other">%1$d 项待查看</item>
@@ -589,7 +589,7 @@
     <string name="tour_today_quick_title">你的快捷入口</string>
     <string name="tour_today_quick_text">照片、视频、截图或文件夹：为经常清理的内容创建快捷入口。</string>
     <string name="tour_today_tab_title">更多清理方式</string>
-    <string name="tour_today_tab_text">在“清理”中可以找到大文件、副本、文件夹和合集。</string>
+    <string name="tour_today_tab_text">大文件、重复照片、按月整理和现成的合集：在这里一步步整理。</string>
     <string name="tour_feed_basket_title">你的回收站</string>
     <string name="tour_feed_basket_text">数字表示你选出的待移除数量。点击可查看所选内容并清空回收站。</string>
     <string name="tour_feed_undo_title">撤销</string>
@@ -644,8 +644,8 @@
     <string name="grid_open">概览</string>
     <string name="grid_select_all">全选</string>
     <string name="grid_select_none">全不选</string>
-    <string name="help_tours_again">重新显示教程</string>
-    <string name="help_tours_reset">下次打开各页面时会再次显示教程。</string>
+    <string name="help_tours_again">再次显示导览和提示</string>
+    <string name="help_tours_reset">下次打开时会再次显示导览和提示。</string>
     <string name="hub_months_sub">按月逐个完成</string>
     <string name="later_back_to_stack">放回队列</string>
     <string name="later_bookmarked_row">已搁置，无日期</string>
@@ -782,8 +782,8 @@
     <string name="edit_save_replace_action">保存，原文件移到回收站</string>
     <string name="edit_remove_location">移除位置信息</string>
     <string name="edit_remove_location_text">保存的照片将不包含拍摄地点。</string>
-    <string name="edit_hint_heic">将保存为 JPEG（此设备无法可靠写入 HEIC）。</string>
-    <string name="edit_hint_hdr">更改颜色会去除这张照片额外的 HDR 亮度。</string>
+    <string name="edit_hint_heic">保存为 JPEG，以便在任何地方都能打开——此设备无法可靠保存 HEIC。</string>
+    <string name="edit_hint_hdr">这张照片的高光特别明亮（HDR）。调整颜色后会稍微暗一些。</string>
     <string name="edit_hint_lossless">无损：只改变方向，画质完全不变。</string>
     <string name="edit_hint_replace_confirm">Android 会询问一次是否将原图移到 Android 回收站。</string>
     <string name="edit_saving">正在保存…</string>
@@ -791,7 +791,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s 秒</string>
     <string name="edit_trim_start">开始</string>
     <string name="edit_trim_end">结束</string>
-    <string name="edit_trim_hint">拖动两侧手柄。总时长 %1$s。画质不变，只重新编码开头到下一个关键帧的部分。</string>
+    <string name="edit_trim_hint">拖动手柄设置开头和结尾。总时长 %1$s。画质保持不变。</string>
     <string name="edit_discard_title">放弃更改？</string>
     <string name="edit_discard_text">你的编辑不会保存，原图保持不变。</string>
     <string name="edit_discard">放弃</string>
@@ -875,8 +875,8 @@
     <string name="edit_mk_rect">矩形</string>
     <string name="edit_mk_brush">画笔</string>
     <string name="edit_mk_strength">强度</string>
-    <string name="edit_mk_redact_solid_hint">推荐用于敏感信息：在保存或分享的文件中，被遮盖的像素会被完全替换。</string>
-    <string name="edit_mk_redact_hint">像素化和模糊使用较大的块。对于必须无法辨认的文字，“不透明”更安全。</string>
+    <string name="edit_mk_redact_solid_hint">推荐用于个人信息：你遮盖的内容在保存或分享的文件中会真正消失。</string>
+    <string name="edit_mk_redact_hint">使用“像素化”和“模糊”时仍可能看出轮廓。对于必须无法辨认的文字，请选择“不透明”。</string>
     <string name="edit_mk_edit_text">编辑</string>
     <string name="edit_mk_duplicate">复制</string>
     <string name="edit_mk_front">置于顶层</string>
@@ -1041,7 +1041,7 @@
     <string name="ret_linear">渐变</string>
     <string name="ret_brush">画笔</string>
     <string name="ret_red_eye">红眼</string>
-    <string name="ret_red_eye_hint">点按红色的眼睛。脸较小时可用双指放大。只有明显发红的像素会被修改。</string>
+    <string name="ret_red_eye_hint">点按红眼。脸部较小时，请先用两根手指放大。只会改变眼睛中的红色。</string>
     <string name="ret_red_eye_undo">移除最后一处</string>
     <string name="ret_size">大小</string>
     <string name="ret_new">新建</string>
@@ -1073,7 +1073,7 @@
     <string name="vid_cut_confirm">删除</string>
     <string name="vid_cut_draft">删除 %1$s – %2$s？拖动红色手柄。</string>
     <string name="vid_cut_hint_restore">红色片段会在保存时真正删除（总长 %1$s）。点按下方片段即可恢复。</string>
-    <string name="vid_trim_hint_reencode">拖动手柄。总长 %1$s。由于其他修改，视频会重新编码。</string>
+    <string name="vid_trim_hint_reencode">拖动手柄。总时长 %1$s。由于你的其他更改，保存时会重新生成视频，需要稍长一点时间。</string>
     <string name="vid_speed_result">结果：%1$s</string>
     <string name="vid_speed_hint">声音会变快或变慢，音调保持不变。</string>
     <string name="vid_no_audio">此视频没有声音。</string>
@@ -1082,7 +1082,7 @@
     <string name="vid_volume">音量</string>
     <string name="vid_fade">淡入淡出</string>
     <string name="vid_fade_none">无</string>
-    <string name="vid_audio_export">将声音保存为 M4A</string>
+    <string name="vid_audio_export">仅保存声音</string>
     <string name="vid_audio_suffix">声音</string>
     <string name="vid_audio_running">正在保存声音</string>
     <string name="vid_audio_saved">已将“%1$s”保存到 Music/PhotoMaid。</string>
@@ -1092,12 +1092,12 @@
     <string name="vid_fill_hint">填满新画幅；超出的边缘会被裁掉。</string>
     <string name="vid_fit_hint">显示完整视频；空白处为黑边。</string>
     <string name="vid_profile">画质</string>
-    <string name="vid_profile_high">高画质（原始分辨率）</string>
-    <string name="vid_profile_balanced">均衡（最高 1080p）</string>
-    <string name="vid_profile_small">小文件（720p）</string>
+    <string name="vid_profile_high">最佳画质（与原视频相同）</string>
+    <string name="vid_profile_balanced">均衡（全高清）</string>
+    <string name="vid_profile_small">小文件（高清）</string>
     <string name="vid_estimate">约 %1$s</string>
-    <string name="vid_estimate_hint">根据码率 × 时长估算，保存后的文件会显示实际大小。</string>
-    <string name="vid_hdr_hint">由于应用了颜色调整，此 HDR 视频将保存为 SDR。</string>
+    <string name="vid_estimate_hint">这只是大致估算。保存后可看到实际大小。</string>
+    <string name="vid_hdr_hint">这个视频的色彩特别明亮（HDR）。由于你调整了颜色，将以普通色彩保存。</string>
     <string name="tab_library">照片</string>
     <string name="lib_filter_all">全部</string>
     <string name="lib_filter_favorites">收藏</string>
@@ -1241,7 +1241,7 @@
     <string name="systrash_delete_text">随后请在 Android 中确认。永久删除的照片和视频无法恢复。</string>
     <string name="lib_info_raw">RAW 文件</string>
     <string name="set_delete_permanently">永久删除</string>
-    <string name="set_delete_permanently_detail">关闭：清空会移入 Android 回收站（一段时间内可恢复）。开启：立即永久删除。</string>
+    <string name="set_delete_permanently_detail">关闭：清空时所有内容先进入 Android 回收站，一段时间内可以恢复。开启：所有内容会立即被永久删除。</string>
     <string name="set_delete_permanently_confirm_title">要开启永久删除吗？</string>
     <string name="set_delete_permanently_confirm_text">此后清空 PhotoMaid 回收站将永久删除照片和视频。它们不会进入 Android 回收站，也无法恢复（包括尚未同步的备份）。Android 仍会每次确认。</string>
     <string name="set_delete_permanently_confirm_action">开启</string>
@@ -1288,9 +1288,9 @@
     <string name="movie_format_first">同第一个片段</string>
     <string name="movie_fit_note">片段绝不会被拉伸：要么完整显示（带黑边），要么填满画面并裁掉边缘。</string>
     <string name="movie_quality">画质</string>
-    <string name="movie_quality_high">高 (1080p)</string>
+    <string name="movie_quality_high">高（全高清）</string>
     <string name="movie_quality_balanced">均衡</string>
-    <string name="movie_quality_small">小 (720p)</string>
+    <string name="movie_quality_small">小（高清）</string>
     <string name="movie_music_none">尚未添加音乐。</string>
     <string name="movie_music_pick">选择音频文件</string>
     <string name="movie_music_remove">移除</string>
@@ -1313,7 +1313,7 @@
     <string name="tools_convert">转换</string>
     <string name="tools_convert_sub">例如 HEIC 转 JPEG，另存为新副本</string>
     <string name="tools_location">移除位置信息</string>
-    <string name="tools_location_sub">不含 GPS 数据的副本，例如分享前</string>
+    <string name="tools_location_sub">不含拍摄地点的副本，例如分享前</string>
     <string name="tools_stitch">拼接截图</string>
     <string name="tools_stitch_sub">上下拼接为一张长图</string>
     <string name="tools_gif">制作 GIF</string>
@@ -1334,8 +1334,8 @@
     <string name="tools_q_small">更小文件</string>
     <string name="tools_remove_location">同时移除位置信息</string>
     <string name="tools_target_format">新格式</string>
-    <string name="tools_convert_note">JPEG 到处都能打开；PNG 保留每个像素，但文件更大。已是此格式的文件会跳过。</string>
-    <string name="tools_location_note">JPEG 副本保留每个像素，只移除 GPS 数据。没有位置信息的照片会跳过。</string>
+    <string name="tools_convert_note">所有设备都能打开 JPEG。PNG 保留所有细节，但文件更大。已是该格式的照片会被跳过。</string>
+    <string name="tools_location_note">副本与原照片看起来完全相同，只会去掉拍摄地点。没有位置信息的照片会被跳过。</string>
     <string name="tools_stitch_note">按所选顺序拼接。全部采用最窄图片的宽度，不拉伸、不放大。</string>
     <string name="tools_gif_size">尺寸</string>
     <string name="tools_gif_part">视频片段（最长 10 秒）</string>
@@ -1370,9 +1370,9 @@
     <string name="dock_crop">裁剪</string>
     <string name="dock_more">更多</string>
     <string name="vid_trim_hint_short">拖动手柄来设置开头和结尾。</string>
-    <string name="vid_export_info">导出信息</string>
-    <string name="vid_export_info_fast">只裁剪开头和结尾。PhotoMaid 会尽量保持画质，只重新编码开头到下一个关键帧的部分。如果视频不支持，则重新编码整个视频。总时长 %1$s。</string>
-    <string name="vid_export_info_reencode">由于你的其他更改，保存时会重新编码整个视频。总时长 %1$s。</string>
+    <string name="vid_export_info">保存方式</string>
+    <string name="vid_export_info_fast">你只修剪了开头和结尾。这样很快，画质也与原视频一样。如果这个视频无法这样处理，PhotoMaid 会完整重新生成，需要稍长时间。总时长 %1$s。</string>
+    <string name="vid_export_info_reencode">由于你的其他更改，PhotoMaid 会在保存时重新生成整个视频，可能需要一点时间。总时长 %1$s。</string>
     <string name="lib_mode_albums">相册</string>
     <string name="org_new_album">新建相册</string>
     <string name="org_album_name">相册名称</string>
@@ -1454,7 +1454,7 @@
     <string name="wf_target_note">PhotoMaid 会测量结果。如果在这些限制内无法达到目标，就不会创建文件，并显示原因。</string>
     <string name="wf_videos">视频</string>
     <string name="wf_video_skip">跳过</string>
-    <string name="wf_video_note">视频会按目标大小重新编码；只有必要时才降低分辨率。</string>
+    <string name="wf_video_note">视频会重新保存以符合目标大小。只有在需要时画面才会变小。</string>
     <string name="wf_location">移除位置信息</string>
     <string name="wf_name_base">文件名</string>
     <string name="wf_name_base_hint">例如 Listing → Listing_001（留空 = 原文件名）</string>
@@ -1494,7 +1494,7 @@
     <string name="wf_reason_video">此工作流程不处理视频。</string>
     <string name="wf_reason_video_long">对于目标大小来说太长——未创建文件。</string>
     <string name="wf_reason_unreachable">测得的最小版本：%1$s——超过目标，因此未创建文件。</string>
-    <string name="wf_reason_error">无法处理。</string>
+    <string name="wf_reason_error">抱歉，未能完成。</string>
     <string name="wf_summary">完成 %1$d · 跳过 %2$d · 未达目标 %3$d · 失败 %4$d</string>
     <string name="wf_share_again">再次分享</string>
     <string name="wf_counts">照片 %1$s · 视频 %2$s</string>
@@ -1523,4 +1523,61 @@
     <plurals name="share_overflow">
         <item quantity="other">另有 %1$d 个未接收（一次最多 500 个）。</item>
     </plurals>
+    <string name="pdf_title">创建 PDF</string>
+    <string name="pdf_studio_sub">照片生成文档或缩略图页</string>
+    <string name="pdf_pick">用于 PDF 的照片</string>
+    <string name="pdf_from_selection">生成 PDF</string>
+    <string name="pdf_no_photos">所选内容中没有照片。视频无法放入 PDF。</string>
+    <string name="pdf_no_date">无日期</string>
+    <string name="pdf_saved">已保存到“Documents/PhotoMaid” · %1$s</string>
+    <string name="pdf_failed">无法保存 PDF。</string>
+    <string name="pdf_page_of">第 %1$d 页，共 %2$d 页</string>
+    <string name="pdf_capped">每个 PDF 最多 %1$d 张照片，已采用前 %1$d 张。</string>
+    <string name="pdf_per_page">每页照片数</string>
+    <string name="pdf_fit">适应</string>
+    <string name="pdf_fill">填充</string>
+    <string name="pdf_paper">纸张</string>
+    <string name="pdf_paper_letter">美国信纸</string>
+    <string name="pdf_orientation">方向</string>
+    <string name="pdf_orient_auto">自动</string>
+    <string name="pdf_orient_portrait">纵向</string>
+    <string name="pdf_orient_landscape">横向</string>
+    <string name="pdf_margin">页边距</string>
+    <string name="pdf_margin_none">无</string>
+    <string name="pdf_margin_small">窄</string>
+    <string name="pdf_margin_normal">标准</string>
+    <string name="pdf_caption">说明文字</string>
+    <string name="pdf_caption_none">无</string>
+    <string name="pdf_caption_number">编号</string>
+    <string name="pdf_caption_name">文件名</string>
+    <string name="pdf_caption_date">日期</string>
+    <string name="pdf_order">顺序</string>
+    <string name="pdf_move_up">上移</string>
+    <string name="pdf_move_down">下移</string>
+    <string name="pdf_name">文件名</string>
+    <string name="pdf_save">存为 PDF</string>
+    <string name="pdf_share">分享 PDF</string>
+    <string name="pdf_running">正在创建 PDF…</string>
+    <string name="pdf_privacy">照片会重新嵌入：位置及其他拍摄数据不会进入 PDF。原始照片保持不变。</string>
+    <plurals name="pdf_pages">
+        <item quantity="other">%1$d 页</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="other">%1$d 张照片</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="other">%1$d 个视频不会包含在内。</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="other">%1$d 张照片无法读取，其位置留空。</item>
+    </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">你的所有照片</string>
+    <string name="tour_lib_text">这里有你所有的照片和视频——按日、月、年查看，也可在文件夹、相册和收藏中查看。只是查看不会改变任何内容。</string>
+    <string name="tour_studio_title">发挥创意</string>
+    <string name="tour_studio_text">编辑照片，制作拼图、小影片和 PDF，并使用实用工具。始终生成新文件——原始照片保持不变。</string>
+    <string name="tour_history_title">稍后与记录</string>
+    <string name="tour_history_text">在这里查看你保留、挑出或留到稍后的内容。任何决定都可以在这里更改。</string>
+    <string name="tour_settings_title">设置与帮助</string>
+    <string name="tour_settings_text">按你的喜好设置 PhotoMaid，并找到答案。你可以随时重新查看这个导览。</string>
 </resources>

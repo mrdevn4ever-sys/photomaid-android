@@ -86,11 +86,22 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   eindeutig über Name + Größe (`ShareMatch`); Rest wird gezählt, nie kopiert. Dynamische Shortcuts (feste Ziele + bis zu 4
   Abläufe, Direktes Teilen je Ablauf über `res/xml/shortcuts.xml`) öffnen nur Ansichten: nie Entscheidung, nie Löschen, nie
   ein Start ohne Tipp, keine Medien-IDs. Kein Shortcut/Intent darf je löschen oder entscheiden.
+- Dokumente (Ausbau Paket 4, 2026-10, `feature/document/PdfScreen.kt`, Export `media/PdfExporter.kt`, Kern
+  `core/.../document/PdfLayout.kt` + eigener `PdfWriter`): mehrseitiges PDF aus Fotos (A4/A5/US Letter, Ausrichtung, Rand,
+  1/2/4/6/12 je Seite, Einpassen oder Füllen – nie verzerren, Beschriftung Nummer/Dateiname/Datum als Bild, Reihenfolge).
+  Vorschau = Export (gleiche Aufteilung, gleicher Zeichenweg). Bilder neu als JPEG eingebettet: keine EXIF-/Standortdaten,
+  keine Dateinamen als Text, Dokument-Info nur „PhotoMaid“. Speichern nach `Documents/PhotoMaid/` (kein Medium, keine
+  Entscheidung, Quellen unverändert) oder nur teilen; Größe gemessen. Free bis 10 Fotos, 1–2 je Seite; Kontaktbögen (ab 4)
+  und bis 200 Fotos mit `hasProToolsAccess`. Keine Text-/Dokumenterkennung. Einstiege: Studio, Auswahl › ⋯, Teilen-Ziel.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3
   Entwürfe; Pro/30-Minuten-Test: bis 20 Fotos, Frei, A4-Druck, 50 Entwürfe – ausprobieren immer frei, kein Wasserzeichen.
   Medienauswahl (`MediaPickerScreen`) ist nie eine Entscheidung. Neue String-Kennungen vorher auf Kollision prüfen.
+- Editor-Oberfläche (Nutzerwunsch 2026-10-07, `design/MediaEditorChrome.kt`): wie die Fotos-App, immer dunkel – ✕/✓-Kapseln,
+  Rückgängig · TITEL · Vergleich/⋯, große Bühne, schmale Werkzeugzone (runde Werkzeuge + `EditorRuler`) für Anpassen/Filter/
+  Zuschneiden/Kürzen, höhere Zone für Werkzeuge mit vielen Einstellungen, Reiterkapsel. Zoom mit zwei Fingern auf jeder Bühne
+  (`ZoomableStage`, nur Ansicht, nie im Rezept). Nichts Bedienbares auf dem Bild außer dem Werkzeug selbst.
 - Editor (2026-10, `feature/editor/`, Kern `core/.../edit/`): nicht destruktives Rezept (`EditRecipe`), Vorschau = Export
   (gleiche Geometrie/Farbmatrix). Speichern nur als neue Datei: „Als Kopie speichern“ oder „Kopie speichern und Original in den Papierkorb“
   (`SaveMode.REPLACE`, Original per `createTrashRequest` in den Android-Papierkorb, wiederherstellbar in „Bearbeitet“) – nie überschreiben.

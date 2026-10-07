@@ -34,7 +34,7 @@
     <string name="undo">실행 취소</string>
     <string name="error_settings_not_saved">설정을 저장하지 못했어요.</string>
     <string name="error_change_not_saved">변경 사항을 저장하지 못했어요.</string>
-    <string name="error_undo_conflict">그동안 이 항목이 변경되어 실행을 취소할 수 없어요.</string>
+    <string name="error_undo_conflict">그사이 바꿨기 때문에 더 이상 되돌릴 수 없어요.</string>
     <string name="error_undo_busy">휴지통을 비우는 동안에는 실행을 취소할 수 없어요.</string>
     <string name="error_undo_generic">지금은 실행을 취소할 수 없어요.</string>
     <string name="tab_today">오늘</string>
@@ -63,7 +63,7 @@
     <plurals name="today_due">
         <item quantity="other">‘나중에’에서 다시 확인할 항목 %1$d개</item>
     </plurals>
-    <string name="today_reconciliation">이전 휴지통 작업의 결과를 확인하지 못했어요. 같은 삭제 작업을 반복하지 않아요.</string>
+    <string name="today_reconciliation">지난번 휴지통을 비울 때 무언가 중단됐어요. 안전을 위해 아무것도 다시 지우지 않아요.</string>
     <string name="cat_photos">사진</string>
     <string name="cat_videos">동영상</string>
     <string name="cat_screenshots">스크린샷</string>
@@ -241,7 +241,7 @@
     <string name="large_unknown_footer">이 파일들의 크기는 알 수 없어요. 크기를 추정하거나 합계에 넣지 않아요.</string>
     <string name="storage_a">내 기기</string>
     <string name="storage_available">Android 기준 여유 공간 %1$s</string>
-    <string name="storage_unavailable">저장 공간 정보를 가져올 수 없어요</string>
+    <string name="storage_unavailable">지금은 저장 공간 정보를 확인할 수 없어요</string>
     <string name="storage_b">PhotoMaid에서 볼 수 있는 항목</string>
     <string name="storage_of_which_screens">스크린샷 포함</string>
     <string name="storage_connected_folders">연결한 폴더</string>
@@ -356,12 +356,12 @@
     <string name="pro_f1">광고 없음</string>
     <string name="pro_f1d">사진과 동영상 사이에 광고 카드가 표시되지 않아요.</string>
     <string name="pro_details">Pro 안내</string>
-    <string name="pro_details_dup">파일 내용이 완전히 같아야 같은 사본이에요. PhotoMaid는 클라우드가 아닌 기기에서 비교해요. 비슷한 이미지는 사본에 포함하지 않아요.</string>
+    <string name="pro_details_dup">복사본은 마지막 세부까지 똑같은 파일이에요. PhotoMaid는 클라우드가 아니라 기기에서 비교해요. 비슷하기만 한 이미지는 복사본으로 치지 않아요.</string>
     <string name="pro_details_rules">모음은 기기에 있는 항목 중 조건에 맞는 것을 보여 줘요. 직접 열고 확인하는 방식이며, 자동 삭제나 백그라운드 정리는 하지 않아요.</string>
-    <string name="pro_details_cleanup">휴지통에서 확인한 뒤 실제로 삭제된 항목만 하루 한도에 포함돼요. 스와이프는 포함되지 않아요.</string>
+    <string name="pro_details_cleanup">하루 한도에는 휴지통에서 실제로 지운 것만 들어가요. 넘기기는 세지 않아요.</string>
     <string name="expanded">펼쳐짐</string>
     <string name="collapsed">접힘</string>
-    <string name="pro_privacy">사진과 파일의 확인 및 정리는 기기에서 이루어져요. 구매와 광고에는 기술 정보가 Google 또는 광고 제공업체로 전송되지만 사진, 파일 이름, 체크섬은 전송되지 않아요.</string>
+    <string name="pro_privacy">사진과 파일은 기기 안에서만 확인하고 정리해요. 구매와 광고를 위해 Google이나 광고 업체에 꼭 필요한 것만 보내고, 사진이나 사진 이름, 사진에서 얻은 정보는 절대 보내지 않아요.</string>
     <string name="pro_pending">구매 확인을 기다리고 있어요.</string>
     <string name="pro_unlock">PhotoMaid Pro 이용하기</string>
     <string name="pro_price_once">%1$s · 일회성 구매</string>
@@ -379,7 +379,7 @@
     <string name="pro_msg_nofill">지금은 볼 수 있는 광고가 없어요. 나중에 다시 시도해 주세요.</string>
     <string name="pro_msg_ad_unavailable">지금은 Pro 도구를 체험할 수 없어요. 적용된 혜택은 없어요.</string>
     <string name="set_privacy">개인정보 및 접근 권한</string>
-    <string name="set_privacy_detail">기기에서 처리</string>
+    <string name="set_privacy_detail">사진은 기기에만 있어요</string>
     <string name="set_notifications">알림</string>
     <string name="allowed">허용됨</string>
     <string name="off">꺼짐</string>
@@ -406,13 +406,13 @@
     <string name="help_decide">선택하기</string>
     <string name="help_decide_text">위로 밀면 보관, 왼쪽은 휴지통, 오른쪽은 나중에 다시 보기예요. 기본적으로 2일 뒤에 다시 표시되며 설정에서 기간을 바꿀 수 있어요. 스와이프 직후 ‘변경’을 누르면 다른 날짜도 선택할 수 있어요. 아래로 밀면 새로 선택하지 않고 이전 항목으로 돌아가요.</string>
     <string name="help_delete">삭제 안내</string>
-    <string name="help_delete_text">스와이프만으로 삭제되지는 않아요. 골라 둔 항목은 먼저 PhotoMaid 휴지통에 들어가고, 비울 때 삭제를 확인해요. 사진과 동영상은 Android에서 한 번 더 확인한 뒤 Android 휴지통으로 이동해요. 파일은 영구 삭제돼요.</string>
+    <string name="help_delete_text">넘기기만으로는 아무것도 지워지지 않아요. 골라낸 것은 먼저 PhotoMaid 휴지통에 들어가요. 휴지통을 비울 때만 실제로 지워지고, 사진과 동영상은 Android가 한 번 더 물어본 뒤 Android 휴지통으로 옮겨져요. 연결된 폴더의 파일은 완전히 삭제돼요.</string>
     <string name="help_cloud">클라우드</string>
     <string name="help_cloud_text">Google 포토 같은 클라우드 서비스가 삭제 내용을 다른 기기에 동기화할 수 있어요. 각 서비스의 설정을 확인하세요. PhotoMaid는 클라우드에만 있는 콘텐츠를 다운로드하지 않아요.</string>
     <string name="help_free">무료</string>
     <string name="help_free_text">보기, 스와이프, 나중에 보기 저장은 무제한이에요. Pro 없이도 하루에 최대 %1$d개를 삭제할 수 있어요.</string>
     <string name="privacy_title">개인정보를 소중히 다뤄요</string>
-    <string name="privacy_text">PhotoMaid는 사진, 동영상, 허용한 파일을 기기에서 확인해요. PhotoMaid 계정은 필요 없고 PhotoMaid 서버도 없어요. Google 포토 같은 클라우드 서비스에서는 삭제 내용이 다른 기기에 동기화될 수 있어요.</string>
+    <string name="privacy_text">PhotoMaid는 사진, 동영상, 허용한 파일을 기기 안에서만 봐요. 계정이 필요 없고 PhotoMaid 서버도 없어요. 참고: Google 포토 같은 클라우드에서는 지운 것이 다른 기기에서도 사라질 수 있어요.</string>
     <string name="privacy_media">사진 및 동영상</string>
     <string name="privacy_media_text">사진과 동영상을 보고 정리하고, 확인 후 삭제하는 데 사용해요.</string>
     <string name="privacy_allow">접근 허용</string>
@@ -426,8 +426,8 @@
     <string name="privacy_notifications_allow">알림 허용</string>
     <string name="privacy_folders">폴더 (선택 사항)</string>
     <string name="privacy_folders_text">다른 파일은 직접 선택한 폴더에서만 가져와요. 정리 › 파일에서 연결하세요.</string>
-    <string name="privacy_purchases">구매는 Google Play에서 처리해요. 이를 위해 사진, 파일 이름, 경로, 체크섬을 전송하지 않아요.</string>
-    <string name="privacy_ads">무료 버전에는 Google AdMob 광고가 표시돼요. 광고 동의는 설정에서 변경할 수 있어요. 사진, 파일 이름, 경로, 체크섬은 광고 제공업체와 공유하지 않아요. Pro에는 광고가 없어요.</string>
+    <string name="privacy_purchases">구매는 Google Play에서 이뤄져요. 사진, 사진 이름, 폴더나 사진에서 얻은 정보는 절대 보내지 않아요.</string>
+    <string name="privacy_ads">무료 버전에는 Google AdMob 광고가 나와요. 동의는 설정에서 바꿀 수 있어요. 사진, 사진 이름, 폴더나 사진에서 얻은 정보는 광고 업체에 절대 가지 않아요. Pro에는 광고가 없어요.</string>
     <string name="continue_">다음</string>
     <string name="notif_channel">리마인더</string>
     <string name="notif_due_body">오늘 ‘나중에’에 있는 항목을 다시 볼 차례예요.</string>
@@ -479,7 +479,7 @@
     <string name="pro_active_title">Pro가 활성화되어 있어요</string>
     <string name="pro_active_sub">한 번 구매하면 광고와 하루 한도 없이 모든 Pro 도구를 이용할 수 있어요.</string>
     <string name="later_notify_title">다시 볼 때 알려 드릴까요?</string>
-    <string name="pro_privacy_no_ads">사진과 파일의 확인 및 정리는 기기에서 이루어져요. 구매를 위해 기술 정보가 Google로 전송되지만 사진, 파일 이름, 체크섬은 전송되지 않아요.</string>
+    <string name="pro_privacy_no_ads">사진과 파일은 기기 안에서만 확인하고 정리해요. 구매를 위해 Google에 꼭 필요한 것만 보내고, 사진이나 사진 이름, 사진에서 얻은 정보는 절대 보내지 않아요.</string>
     <string name="hub_nothing_pending">모두 확인했어요</string>
     <plurals name="hub_pending">
         <item quantity="other">확인할 항목 %1$d개</item>
@@ -589,7 +589,7 @@
     <string name="tour_today_quick_title">내 바로가기</string>
     <string name="tour_today_quick_text">사진, 동영상, 스크린샷, 폴더 등 자주 정리하는 항목으로 바로가기를 만드세요.</string>
     <string name="tour_today_tab_title">더 다양한 정리 방법</string>
-    <string name="tour_today_tab_text">큰 파일, 사본, 폴더, 모음은 ‘정리’에서 찾을 수 있어요.</string>
+    <string name="tour_today_tab_text">큰 파일, 중복 사진, 월별 정리, 준비된 컬렉션까지. 여기서 차근차근 정리해요.</string>
     <string name="tour_feed_basket_title">내 휴지통</string>
     <string name="tour_feed_basket_text">숫자는 삭제하려고 고른 항목 수예요. 누르면 선택 내용을 확인하고 휴지통을 비울 수 있어요.</string>
     <string name="tour_feed_undo_title">실행 취소</string>
@@ -644,8 +644,8 @@
     <string name="grid_open">한눈에 보기</string>
     <string name="grid_select_all">전체</string>
     <string name="grid_select_none">선택 해제</string>
-    <string name="help_tours_again">튜토리얼 다시 보기</string>
-    <string name="help_tours_reset">다음에 각 화면을 열면 튜토리얼이 다시 나타나요.</string>
+    <string name="help_tours_again">둘러보기와 팁 다시 보기</string>
+    <string name="help_tours_reset">다음에 열 때 둘러보기와 팁이 다시 나타나요.</string>
     <string name="hub_months_sub">한 달씩 끝내기</string>
     <string name="later_back_to_stack">스택으로 되돌리기</string>
     <string name="later_bookmarked_row">날짜 없이 따로 둠</string>
@@ -782,8 +782,8 @@
     <string name="edit_save_replace_action">저장하고 원본은 휴지통으로</string>
     <string name="edit_remove_location">위치 정보 삭제</string>
     <string name="edit_remove_location_text">저장한 사진에 촬영 위치가 들어가지 않아요.</string>
-    <string name="edit_hint_heic">JPEG로 저장돼요(이 기기에서는 HEIC를 안정적으로 쓸 수 없어요).</string>
-    <string name="edit_hint_hdr">색을 바꾸면 이 사진의 추가 HDR 밝기가 사라져요.</string>
+    <string name="edit_hint_heic">어디서나 열리도록 JPEG로 저장해요. 이 기기는 HEIC를 안정적으로 저장할 수 없어요.</string>
+    <string name="edit_hint_hdr">이 사진은 아주 밝은 부분(HDR)이 있어요. 색을 바꾸면 조금 덜 빛나요.</string>
     <string name="edit_hint_lossless">무손실: 방향만 바뀌고 화질은 그대로예요.</string>
     <string name="edit_hint_replace_confirm">Android가 원본을 Android 휴지통으로 옮겨도 되는지 한 번 물어봐요.</string>
     <string name="edit_saving">저장 중…</string>
@@ -791,7 +791,7 @@
     <string name="edit_trim_range">%1$s~%2$s · %3$s초</string>
     <string name="edit_trim_start">시작</string>
     <string name="edit_trim_end">끝</string>
-    <string name="edit_trim_hint">핸들을 끌어 보세요. 전체 길이 %1$s. 화질은 그대로이며 다음 키프레임까지의 시작 부분만 다시 인코딩돼요.</string>
+    <string name="edit_trim_hint">핸들을 끌어 시작과 끝을 정하세요. 전체 길이 %1$s. 화질은 그대로예요.</string>
     <string name="edit_discard_title">변경 사항을 버릴까요?</string>
     <string name="edit_discard_text">편집 내용은 저장되지 않아요. 원본은 그대로예요.</string>
     <string name="edit_discard">버리기</string>
@@ -875,8 +875,8 @@
     <string name="edit_mk_rect">사각형</string>
     <string name="edit_mk_brush">브러시</string>
     <string name="edit_mk_strength">강도</string>
-    <string name="edit_mk_redact_solid_hint">민감한 정보에 추천: 저장하거나 공유하는 파일에서 가린 픽셀이 완전히 바뀌어요.</string>
-    <string name="edit_mk_redact_hint">모자이크와 흐림은 큰 블록을 써요. 반드시 읽을 수 없어야 하는 글자에는 \'불투명\'이 더 안전해요.</string>
+    <string name="edit_mk_redact_solid_hint">개인 정보에 추천해요: 가린 부분은 저장하거나 공유한 파일에서 정말로 사라져요.</string>
+    <string name="edit_mk_redact_hint">‘모자이크’와 ‘흐림’은 윤곽이 보일 수 있어요. 꼭 읽히면 안 되는 글자에는 ‘불투명’을 쓰세요.</string>
     <string name="edit_mk_edit_text">편집</string>
     <string name="edit_mk_duplicate">복제</string>
     <string name="edit_mk_front">앞으로</string>
@@ -1041,7 +1041,7 @@
     <string name="ret_linear">그라데이션</string>
     <string name="ret_brush">브러시</string>
     <string name="ret_red_eye">적목</string>
-    <string name="ret_red_eye_hint">빨간 눈을 탭하세요. 얼굴이 작으면 두 손가락으로 확대하세요. 확실히 빨간 픽셀만 바뀌어요.</string>
+    <string name="ret_red_eye_hint">빨간 눈을 탭하세요. 작은 얼굴은 먼저 두 손가락으로 확대하세요. 눈의 빨간색만 바뀌어요.</string>
     <string name="ret_red_eye_undo">마지막 제거</string>
     <string name="ret_size">크기</string>
     <string name="ret_new">새로</string>
@@ -1073,7 +1073,7 @@
     <string name="vid_cut_confirm">제거</string>
     <string name="vid_cut_draft">%1$s – %2$s를 제거할까요? 빨간 핸들을 끌어요.</string>
     <string name="vid_cut_hint_restore">빨간 구간은 저장할 때 실제로 제거돼요(전체 %1$s). 아래 구간을 탭하면 되돌려요.</string>
-    <string name="vid_trim_hint_reencode">핸들을 끌어요. 전체 %1$s. 다른 변경 때문에 동영상을 다시 인코딩해요.</string>
+    <string name="vid_trim_hint_reencode">핸들을 끌어 주세요. 전체 길이 %1$s. 다른 변경 사항 때문에 저장할 때 동영상을 다시 만들어요. 조금 더 걸려요.</string>
     <string name="vid_speed_result">결과: %1$s</string>
     <string name="vid_speed_hint">소리는 음높이를 유지한 채 빨라지거나 느려져요.</string>
     <string name="vid_no_audio">이 동영상에는 소리가 없어요.</string>
@@ -1082,7 +1082,7 @@
     <string name="vid_volume">볼륨</string>
     <string name="vid_fade">페이드 인/아웃</string>
     <string name="vid_fade_none">없음</string>
-    <string name="vid_audio_export">소리를 M4A로 저장</string>
+    <string name="vid_audio_export">소리만 저장</string>
     <string name="vid_audio_suffix">소리</string>
     <string name="vid_audio_running">소리 저장 중</string>
     <string name="vid_audio_saved">\'%1$s\'을(를) Music/PhotoMaid에 저장했어요.</string>
@@ -1092,12 +1092,12 @@
     <string name="vid_fill_hint">새 비율을 채우고 바깥 가장자리는 잘라요.</string>
     <string name="vid_fit_hint">전체 동영상을 보여 주고 빈 공간은 검은 띠가 돼요.</string>
     <string name="vid_profile">화질</string>
-    <string name="vid_profile_high">고화질(원본 해상도)</string>
-    <string name="vid_profile_balanced">균형(최대 1080p)</string>
-    <string name="vid_profile_small">작은 파일(720p)</string>
+    <string name="vid_profile_high">최고 화질(원본과 같음)</string>
+    <string name="vid_profile_balanced">균형(풀 HD)</string>
+    <string name="vid_profile_small">작은 파일(HD)</string>
     <string name="vid_estimate">약 %1$s</string>
-    <string name="vid_estimate_hint">비트레이트 × 길이로 추정한 값이에요. 저장된 파일에 실제 크기가 표시돼요.</string>
-    <string name="vid_hdr_hint">색상 변경이 적용되어 이 HDR 동영상은 SDR로 저장돼요.</string>
+    <string name="vid_estimate_hint">대략적인 크기예요. 실제 크기는 저장한 뒤 확인할 수 있어요.</string>
+    <string name="vid_hdr_hint">이 동영상은 아주 밝은 색(HDR)이에요. 색을 바꿨기 때문에 일반 색으로 저장돼요.</string>
     <string name="tab_library">사진</string>
     <string name="lib_filter_all">전체</string>
     <string name="lib_filter_favorites">즐겨찾기</string>
@@ -1241,7 +1241,7 @@
     <string name="systrash_delete_text">이어서 Android에서 확인하세요. 영구 삭제한 사진과 동영상은 복원할 수 없습니다.</string>
     <string name="lib_info_raw">RAW 파일</string>
     <string name="set_delete_permanently">영구 삭제</string>
-    <string name="set_delete_permanently_detail">끄기: 비우면 Android 휴지통으로 이동(한동안 복원 가능). 켜기: 즉시 영구 삭제.</string>
+    <string name="set_delete_permanently_detail">끔: 비우면 모두 먼저 Android 휴지통으로 가고 한동안 되살릴 수 있어요. 켬: 바로 완전히 삭제돼요.</string>
     <string name="set_delete_permanently_confirm_title">영구 삭제를 켤까요?</string>
     <string name="set_delete_permanently_confirm_text">이제부터 PhotoMaid 휴지통을 비우면 사진과 동영상이 영구 삭제됩니다. Android 휴지통에 들어가지 않으며 아직 동기화되지 않은 백업에서도 복원할 수 없습니다. Android는 매번 확인합니다.</string>
     <string name="set_delete_permanently_confirm_action">켜기</string>
@@ -1288,9 +1288,9 @@
     <string name="movie_format_first">첫 클립과 같게</string>
     <string name="movie_fit_note">클립은 절대 늘어나지 않습니다. 전체를 보여 주거나(검은 여백) 화면을 채우고 가장자리를 자릅니다.</string>
     <string name="movie_quality">화질</string>
-    <string name="movie_quality_high">높음 (1080p)</string>
+    <string name="movie_quality_high">높음(풀 HD)</string>
     <string name="movie_quality_balanced">균형</string>
-    <string name="movie_quality_small">작게 (720p)</string>
+    <string name="movie_quality_small">작게(HD)</string>
     <string name="movie_music_none">아직 음악이 없습니다.</string>
     <string name="movie_music_pick">오디오 파일 선택</string>
     <string name="movie_music_remove">제거</string>
@@ -1313,7 +1313,7 @@
     <string name="tools_convert">변환</string>
     <string name="tools_convert_sub">예: HEIC를 JPEG로, 새 사본으로</string>
     <string name="tools_location">위치 정보 제거</string>
-    <string name="tools_location_sub">GPS 정보 없는 사본(공유 전 등)</string>
+    <string name="tools_location_sub">촬영 장소 없는 복사본(예: 공유하기 전)</string>
     <string name="tools_stitch">스크린샷 이어 붙이기</string>
     <string name="tools_stitch_sub">위아래로 이어 긴 이미지 하나로</string>
     <string name="tools_gif">GIF 만들기</string>
@@ -1334,8 +1334,8 @@
     <string name="tools_q_small">작은 파일</string>
     <string name="tools_remove_location">위치 정보도 제거</string>
     <string name="tools_target_format">새 형식</string>
-    <string name="tools_convert_note">JPEG는 어디서나 열립니다. PNG는 모든 픽셀을 보존하지만 파일이 커집니다. 이미 이 형식인 파일은 건너뜁니다.</string>
-    <string name="tools_location_note">JPEG 사본은 모든 픽셀을 그대로 두고 GPS 정보만 제거합니다. 위치 정보가 없는 사진은 건너뜁니다.</string>
+    <string name="tools_convert_note">JPEG는 어느 기기에서나 열려요. PNG는 세부까지 그대로지만 파일이 커져요. 이미 이 형식인 사진은 건너뛰어요.</string>
+    <string name="tools_location_note">복사본은 원본과 똑같아 보여요. 촬영 장소만 지워져요. 장소 정보가 없는 사진은 건너뛰어요.</string>
     <string name="tools_stitch_note">선택한 순서대로 이어 붙입니다. 모두 가장 좁은 이미지 너비에 맞추며, 늘이거나 확대하지 않습니다.</string>
     <string name="tools_gif_size">크기</string>
     <string name="tools_gif_part">동영상 구간(최대 10초)</string>
@@ -1370,9 +1370,9 @@
     <string name="dock_crop">자르기</string>
     <string name="dock_more">더보기</string>
     <string name="vid_trim_hint_short">핸들을 끌어 시작과 끝을 정하세요.</string>
-    <string name="vid_export_info">내보내기 정보</string>
-    <string name="vid_export_info_fast">시작과 끝만 잘라요. PhotoMaid는 화질을 유지하려고 다음 키프레임까지의 시작 부분만 다시 인코딩해요. 동영상이 이를 지원하지 않으면 전체를 다시 인코딩해요. 전체 길이 %1$s.</string>
-    <string name="vid_export_info_reencode">다른 변경 사항 때문에 저장할 때 동영상 전체를 다시 인코딩해요. 전체 길이 %1$s.</string>
+    <string name="vid_export_info">저장 방식</string>
+    <string name="vid_export_info_fast">시작과 끝만 잘랐어요. 빠르게 저장되고 화질은 원본 그대로예요. 이 동영상에서 안 되면 PhotoMaid가 전체를 다시 만들어서 조금 더 걸려요. 전체 길이 %1$s.</string>
+    <string name="vid_export_info_reencode">다른 변경 사항 때문에 저장할 때 PhotoMaid가 동영상 전체를 다시 만들어요. 잠시 걸릴 수 있어요. 전체 길이 %1$s.</string>
     <string name="lib_mode_albums">앨범</string>
     <string name="org_new_album">새 앨범</string>
     <string name="org_album_name">앨범 이름</string>
@@ -1454,7 +1454,7 @@
     <string name="wf_target_note">PhotoMaid는 결과를 측정해요. 이 범위에서 목표에 도달할 수 없으면 파일을 만들지 않고 이유를 보여 줘요.</string>
     <string name="wf_videos">동영상</string>
     <string name="wf_video_skip">건너뛰기</string>
-    <string name="wf_video_note">동영상은 목표 크기로 다시 인코딩되며, 필요할 때만 해상도가 낮아져요.</string>
+    <string name="wf_video_note">동영상은 목표 크기에 맞게 다시 저장돼요. 화면 크기는 필요할 때만 작아져요.</string>
     <string name="wf_location">위치 정보 삭제</string>
     <string name="wf_name_base">파일 이름</string>
     <string name="wf_name_base_hint">예: 판매글 → 판매글_001(비우면 원래 이름)</string>
@@ -1494,7 +1494,7 @@
     <string name="wf_reason_video">이 작업 흐름은 동영상을 다루지 않아요.</string>
     <string name="wf_reason_video_long">목표 크기에 비해 너무 길어요. 파일을 만들지 않았어요.</string>
     <string name="wf_reason_unreachable">측정한 가장 작은 버전: %1$s – 목표를 넘어 파일을 만들지 않았어요.</string>
-    <string name="wf_reason_error">처리할 수 없었어요.</string>
+    <string name="wf_reason_error">죄송해요, 잘 안 됐어요.</string>
     <string name="wf_summary">완료 %1$d · 건너뜀 %2$d · 목표 미달 %3$d · 실패 %4$d</string>
     <string name="wf_share_again">다시 공유</string>
     <string name="wf_counts">사진 %1$s · 동영상 %2$s</string>
@@ -1523,4 +1523,61 @@
     <plurals name="share_overflow">
         <item quantity="other">%1$d개는 더 가져오지 않았어요(한 번에 최대 500개).</item>
     </plurals>
+    <string name="pdf_title">PDF 만들기</string>
+    <string name="pdf_studio_sub">사진을 문서나 밀착 인화지로</string>
+    <string name="pdf_pick">PDF에 넣을 사진</string>
+    <string name="pdf_from_selection">PDF 만들기</string>
+    <string name="pdf_no_photos">선택한 항목에 사진이 없어요. 동영상은 PDF에 넣을 수 없어요.</string>
+    <string name="pdf_no_date">날짜 없음</string>
+    <string name="pdf_saved">‘Documents/PhotoMaid’에 저장됨 · %1$s</string>
+    <string name="pdf_failed">PDF를 저장할 수 없었어요.</string>
+    <string name="pdf_page_of">%2$d페이지 중 %1$d</string>
+    <string name="pdf_capped">PDF당 최대 %1$d장 – 처음 %1$d장을 사용해요.</string>
+    <string name="pdf_per_page">페이지당 사진</string>
+    <string name="pdf_fit">맞추기</string>
+    <string name="pdf_fill">채우기</string>
+    <string name="pdf_paper">용지</string>
+    <string name="pdf_paper_letter">US 레터</string>
+    <string name="pdf_orientation">방향</string>
+    <string name="pdf_orient_auto">자동</string>
+    <string name="pdf_orient_portrait">세로</string>
+    <string name="pdf_orient_landscape">가로</string>
+    <string name="pdf_margin">여백</string>
+    <string name="pdf_margin_none">없음</string>
+    <string name="pdf_margin_small">좁게</string>
+    <string name="pdf_margin_normal">보통</string>
+    <string name="pdf_caption">설명</string>
+    <string name="pdf_caption_none">없음</string>
+    <string name="pdf_caption_number">번호</string>
+    <string name="pdf_caption_name">파일 이름</string>
+    <string name="pdf_caption_date">날짜</string>
+    <string name="pdf_order">순서</string>
+    <string name="pdf_move_up">위로</string>
+    <string name="pdf_move_down">아래로</string>
+    <string name="pdf_name">파일 이름</string>
+    <string name="pdf_save">PDF로 저장</string>
+    <string name="pdf_share">PDF 공유</string>
+    <string name="pdf_running">PDF 만드는 중…</string>
+    <string name="pdf_privacy">사진을 새로 넣기 때문에 위치와 기타 촬영 정보는 PDF에 들어가지 않아요. 원본은 그대로예요.</string>
+    <plurals name="pdf_pages">
+        <item quantity="other">%1$d페이지</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="other">사진 %1$d장</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="other">동영상 %1$d개는 포함되지 않아요.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="other">사진 %1$d장을 읽을 수 없어 그 칸은 비어 있어요.</item>
+    </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">모든 사진</string>
+    <string name="tour_lib_text">모든 사진과 동영상을 일·월·연도별, 폴더, 앨범, 즐겨찾기에서 볼 수 있어요. 보기만 해서는 아무것도 바뀌지 않아요.</string>
+    <string name="tour_studio_title">창의력을 발휘해요</string>
+    <string name="tour_studio_text">사진 편집, 콜라주, 짧은 영상, PDF, 편리한 도구까지. 항상 새 파일이 만들어지고 원본은 그대로예요.</string>
+    <string name="tour_history_title">나중에 · 기록</string>
+    <string name="tour_history_text">보관한 것, 골라낸 것, 나중에 볼 것을 확인할 수 있어요. 여기서 모든 결정을 바꿀 수 있어요.</string>
+    <string name="tour_settings_title">설정 및 도움말</string>
+    <string name="tour_settings_text">PhotoMaid를 원하는 대로 설정하고 답을 찾아보세요. 이 둘러보기는 언제든 다시 볼 수 있어요.</string>
 </resources>

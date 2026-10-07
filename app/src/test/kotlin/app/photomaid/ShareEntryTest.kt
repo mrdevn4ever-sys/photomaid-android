@@ -140,6 +140,8 @@ class ShareEntryTest {
         assertEquals("Bearbeiten nur für genau ein Medium", 0, count("share.edit"))
         click("share.workflow")
         assertEquals(lib.all.take(2).map { it.id }, nav.workflowLists.single().assetIds)
+        click("share.pdf")
+        assertEquals(lib.all.take(2).map { it.id }, nav.pdfs.single().assetIds)
         click("share.basket"); pumpUntil { app.organize.state.value.basket.size == 2 }
         assertUntouched()
     }

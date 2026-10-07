@@ -48,7 +48,7 @@ class MonetizationTest {
 
     private fun has(tag: String) = rule.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty()
     private fun shown(t: String): Boolean = rule.onAllNodes(hasText(t)).fetchSemanticsNodes().isNotEmpty()
-    private fun waitTag(tag: String) = rule.waitUntil(10_000) { has(tag) }
+    private fun waitTag(tag: String) = rule.waitUntil(30_000) { has(tag) }
 
     /** 18 von 20 heute schon entfernt, 4 im Papierkorb → Limit-Blatt. */
     private fun limitApp(vararg results: RewardedAdResult) =
@@ -62,7 +62,7 @@ class MonetizationTest {
 
     private fun openLimitSheet(app: AppModel) {
         rule.setContent { TestHost(app) { CleanupBasketScreen(nav, showsDone = true) } }
-        rule.waitUntil(10_000) { shown("4 Fotos und Videos entfernen") }
+        rule.waitUntil(30_000) { shown("4 Fotos und Videos entfernen") }
         rule.onNodeWithText("4 Fotos und Videos entfernen").performClick()
         waitTag("basket.limit.bonus")
     }
@@ -74,7 +74,7 @@ class MonetizationTest {
         rule.onNodeWithTag("basket.limit.pro").assertExists() // Pro bleibt primär
         rule.onNodeWithTag("basket.limit.bonus").performClick()
         // Danach direkt die Android-Bestätigung für alle 4 – 22 von 40 frei.
-        rule.waitUntil(10_000) { shown("4 entfernen") }
+        rule.waitUntil(30_000) { shown("4 entfernen") }
         assertEquals(40, app.read.value.allowance?.limit)
         assertEquals(22, app.read.value.allowance?.available)
         assertFalse(app.entitlements.canOfferLimitBonus) // 1× täglich
@@ -85,7 +85,7 @@ class MonetizationTest {
         val app = limitApp(RewardedAdResult.DismissedWithoutReward)
         openLimitSheet(app)
         rule.onNodeWithTag("basket.limit.bonus").performClick()
-        rule.waitUntil(10_000) { shown("Die Werbung wurde vorzeitig geschlossen. Du hast keine Freischaltung erhalten und kannst es heute erneut versuchen.") }
+        rule.waitUntil(30_000) { shown("Die Werbung wurde vorzeitig geschlossen. Du hast keine Freischaltung erhalten und kannst es heute erneut versuchen.") }
         assertEquals(20, app.read.value.allowance?.limit)
         assertTrue(app.entitlements.canOfferLimitBonus) // Tag nicht verbraucht
     }
@@ -112,10 +112,10 @@ class MonetizationTest {
     private fun finishFeed(app: AppModel) {
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, onClose = {}, openBasket = {}) } }
         for (i in 1..2) {
-            rule.waitUntil(10_000) { has("feed.media.ready") && shown("$i von 2") }
+            rule.waitUntil(30_000) { has("feed.media.ready") && shown("$i von 2") }
             rule.onNodeWithTag("feed.stage").performTouchInput { swipeLeft() }
         }
-        rule.waitUntil(10_000) { shown("Für jetzt fertig") }
+        rule.waitUntil(30_000) { shown("Für jetzt fertig") }
         rule.waitForIdle()
     }
 

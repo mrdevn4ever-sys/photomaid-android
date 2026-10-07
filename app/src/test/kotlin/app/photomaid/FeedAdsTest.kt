@@ -33,6 +33,8 @@ import java.time.ZoneId
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class FeedAdsTest {
+    /** Unter Volllast (Gesamtsuite) brauchte ein Schritt einmal über 30 s; allein 3/3 PASS. */
+    private val WAIT_MS = 60_000L
     @get:Rule val rule = createComposeRule()
     private val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
     private val ads = FakeFeedAds()
@@ -52,11 +54,11 @@ class FeedAdsTest {
         rule.setContent { TestHost(app) { ReviewFeedScreen(FeedRequest(FeedRequest.Source.Category(MediaCategory.PHOTOS)), nav, onClose = {}, openBasket = {}) } }
         await("1 von 20")
     }
-    private fun await(pos: String) = rule.waitUntil(30_000) {
+    private fun await(pos: String) = rule.waitUntil(WAIT_MS) {
         rule.onAllNodesWithTag("feed.media.ready").fetchSemanticsNodes().isNotEmpty() && rule.onAllNodes(hasText(pos)).fetchSemanticsNodes().isNotEmpty()
     }
     private fun adVisible() = rule.onAllNodesWithTag("feed.ad").fetchSemanticsNodes().isNotEmpty()
-    private fun waitAd() = rule.waitUntil(30_000) { adVisible() }
+    private fun waitAd() = rule.waitUntil(WAIT_MS) { adVisible() }
     private fun events(app: AppModel) = app.ledger.stateFlow.value.events.size
 
     @Test fun cardAfterDecisionIsNotADecisionAndNeedsMinimumTime() {
@@ -71,7 +73,7 @@ class FeedAdsTest {
         assertTrue(adVisible())
         Thread.sleep(1_700)
         rule.onNodeWithTag("feed.ad").performTouchInput { swipeLeft() }
-        rule.waitUntil(30_000) { !adVisible() }
+        rule.waitUntil(WAIT_MS) { !adVisible() }
         await("2 von 20")
         assertEquals(1, events(app)) // nur die eine echte Entscheidung, das Wegwischen zählt nicht
         assertTrue(app.read.value.basket.isEmpty()) // „links“ auf der Karte legt nichts in den Papierkorb
@@ -82,9 +84,9 @@ class FeedAdsTest {
         open(app)
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
         waitAd(); Thread.sleep(1_700)
-        rule.waitUntil(30_000) { rule.onAllNodesWithTag("feed.ad.skip").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(WAIT_MS) { rule.onAllNodesWithTag("feed.ad.skip").fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithTag("feed.ad.skip").performClick()
-        rule.waitUntil(30_000) { !adVisible() }
+        rule.waitUntil(WAIT_MS) { !adVisible() }
         // Mindestabstand 60 s seit der letzten Karte (zusätzlich zum Takt): Uhr eine Minute weiter.
         app.wallClockMs = { System.currentTimeMillis() + 61_000 }
         for (i in 2..7) { await("$i von 20"); rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }; rule.waitForIdle(); assertTrue("$i", !adVisible()) }
@@ -100,9 +102,9 @@ class FeedAdsTest {
         open(app)
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
         waitAd(); Thread.sleep(1_700)
-        rule.waitUntil(30_000) { rule.onAllNodesWithTag("feed.ad.skip").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(WAIT_MS) { rule.onAllNodesWithTag("feed.ad.skip").fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithTag("feed.ad.skip").performClick()
-        rule.waitUntil(30_000) { !adVisible() }
+        rule.waitUntil(WAIT_MS) { !adVisible() }
         for (i in 2..8) { await("$i von 20"); rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }; rule.waitForIdle() }
         await("9 von 20")
         assertTrue(!adVisible())
@@ -133,7 +135,7 @@ class FeedAdsTest {
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
         waitAd()
         rule.onNodeWithTag("feed.ad").performTouchInput { swipeDown() } // „Zurück“ überspringt sofort
-        rule.waitUntil(30_000) { !adVisible() }
+        rule.waitUntil(WAIT_MS) { !adVisible() }
         await("1 von 20")
         assertEquals(1, events(app))
     }
@@ -146,7 +148,7 @@ class FeedAdsTest {
         waitAd()
         // Runter mitten auf der Anzeige: sofort zurück (auch vor der Mindestdauer).
         rule.onNodeWithTag("feed.ad").performTouchInput { swipe(center, Offset(centerX, bottom - 4f), 250) }
-        rule.waitUntil(30_000) { !adVisible() }
+        rule.waitUntil(WAIT_MS) { !adVisible() }
         await("1 von 20")
         assertEquals(1, events(app))
     }
@@ -157,7 +159,7 @@ class FeedAdsTest {
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
         waitAd(); Thread.sleep(1_700); rule.mainClock.advanceTimeBy(1_700)
         rule.onNodeWithTag("feed.ad").performTouchInput { swipe(center, Offset(left + 4f, centerY), 250) }
-        rule.waitUntil(30_000) { !adVisible() }
+        rule.waitUntil(WAIT_MS) { !adVisible() }
         await("2 von 20")
         assertEquals(1, events(app)) // Wegwischen ist keine Entscheidung
     }

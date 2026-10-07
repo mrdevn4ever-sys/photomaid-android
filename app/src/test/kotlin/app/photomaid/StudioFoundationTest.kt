@@ -90,27 +90,29 @@ class StudioFoundationTest {
         }
     }
 
+    /** Eine Reihe runder Werkzeuge (wie die Fotos-App), der Skalenregler gehört zum gewählten Werkzeug. */
     @Test fun adjustGroupsAndAdvancedSharpenSliders() {
         start()
         openEditor()
         click("tab.ADJUST")
-        waitTag("group.LIGHT")
+        waitTag("adjust.EXPOSURE")
         click("adjust.HIGHLIGHTS")
         rule.onNodeWithTag("slider.HIGHLIGHTS").assertExists()
-        click("group.DETAIL")
-        click("adjust.SHARPNESS")
-        assertTrue(gone("slider.SHARPEN_RADIUS")) // erst sichtbar, wenn geschärft wird
-        slider("SHARPNESS", 60f)
-        waitTag("slider.SHARPEN_RADIUS"); waitTag("slider.SHARPEN_THRESHOLD")
-        click("group.EFFECTS")
+        // Alle Gruppen in derselben Reihe: Detail und Effekte ohne Umschalten erreichbar.
         waitTag("adjust.VIGNETTE"); waitTag("adjust.GRAIN")
+        click("adjust.SHARPNESS")
+        assertTrue(gone("adjust.SHARPEN_RADIUS")) // erst sichtbar, wenn geschärft wird
+        slider("SHARPNESS", 60f)
+        waitTag("adjust.SHARPEN_RADIUS"); waitTag("adjust.SHARPEN_THRESHOLD")
+        click("adjust.SHARPEN_RADIUS"); waitTag("slider.SHARPEN_RADIUS")
+        click("adjust.SHARPEN_THRESHOLD"); waitTag("slider.SHARPEN_THRESHOLD")
     }
 
     @Test fun histogramAndClippingAreDisplayOnly() {
         start()
         openEditor()
         click("tab.ADJUST")
-        waitTag("editor.histogram.toggle")
+        waitTag("editor.menu") // Histogramm/Warnung liegen im ⋯-Menü des Kopfs
         click("editor.histogram.toggle")
         waitTag("editor.histogram")
         click("editor.clipping.toggle")

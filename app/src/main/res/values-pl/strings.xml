@@ -37,7 +37,7 @@
     <string name="undo">Cofnij</string>
     <string name="error_settings_not_saved">Nie udało się zapisać ustawienia.</string>
     <string name="error_change_not_saved">Nie udało się zapisać zmiany.</string>
-    <string name="error_undo_conflict">Nie można cofnąć: ten element został w międzyczasie zmieniony.</string>
+    <string name="error_undo_conflict">Nie można już tego cofnąć, bo w międzyczasie to zmieniono.</string>
     <string name="error_undo_busy">Poczekaj na zakończenie opróżniania kosza, zanim cofniesz działanie.</string>
     <string name="error_undo_generic">Nie można teraz cofnąć tego działania.</string>
     <string name="tab_today">Dzisiaj</string>
@@ -72,7 +72,7 @@
         <item quantity="many">%1$d elementów z „Później” czeka na ponowny przegląd</item>
         <item quantity="other">%1$d elementów z „Później” czeka na ponowny przegląd</item>
     </plurals>
-    <string name="today_reconciliation">Nie udało się potwierdzić wyniku wcześniejszego działania w koszu. Nic nie zostanie usunięte ponownie.</string>
+    <string name="today_reconciliation">Podczas ostatniego opróżniania kosza coś zostało przerwane. Dla bezpieczeństwa nic nie zostanie usunięte ponownie.</string>
     <string name="cat_photos">Zdjęcia</string>
     <string name="cat_videos">Filmy</string>
     <string name="cat_screenshots">Zrzuty ekranu</string>
@@ -289,7 +289,7 @@
     <string name="large_unknown_footer">Rozmiar tych plików jest niedostępny. Nie jest szacowany ani wliczany do sumy.</string>
     <string name="storage_a">Twoje urządzenie</string>
     <string name="storage_available">Wolne według Android: %1$s</string>
-    <string name="storage_unavailable">Informacje o pamięci są niedostępne</string>
+    <string name="storage_unavailable">Informacje o miejscu są teraz niedostępne</string>
     <string name="storage_b">Widoczne dla PhotoMaid</string>
     <string name="storage_of_which_screens">w tym zrzuty ekranu</string>
     <string name="storage_connected_folders">Połączone foldery</string>
@@ -425,12 +425,12 @@
     <string name="pro_f1">Bez reklam</string>
     <string name="pro_f1d">Bez kart reklamowych między zdjęciami i filmami.</string>
     <string name="pro_details">Jak działa Pro</string>
-    <string name="pro_details_dup">Kopie mają dokładnie taką samą zawartość pliku. PhotoMaid porównuje ją na urządzeniu, nie w chmurze. Podobne zdjęcia nie są uznawane za kopie.</string>
+    <string name="pro_details_dup">Kopie to pliki identyczne co do najmniejszego szczegółu. PhotoMaid porównuje je na urządzeniu, nie w chmurze. Obrazy tylko podobne nie są liczone jako kopie.</string>
     <string name="pro_details_rules">Kolekcje pokazują pasujące treści z urządzenia. Otwierasz i przeglądasz je samodzielnie. Niczego nie usuwają automatycznie ani nie sprzątają w tle.</string>
-    <string name="pro_details_cleanup">Limit dzienny uwzględnia tylko elementy skutecznie usunięte po potwierdzeniu w koszu. Przesuwanie nie wlicza się do limitu.</string>
+    <string name="pro_details_cleanup">Do dziennego limitu liczy się tylko to, co naprawdę usuniesz z kosza. Przesuwanie się nie liczy.</string>
     <string name="expanded">Rozwinięte</string>
     <string name="collapsed">Zwinięte</string>
-    <string name="pro_privacy">Zdjęcia i pliki są sprawdzane i porządkowane na urządzeniu. Zakupy i reklamy przesyłają dane techniczne do Google lub dostawców reklam, ale nie zdjęcia, nazwy plików ani sumy kontrolne.</string>
+    <string name="pro_privacy">Zdjęcia i pliki są sprawdzane i porządkowane tylko na Twoim urządzeniu. Do zakupów i reklam do Google lub reklamodawców trafia tylko to, co niezbędne – nigdy zdjęcia, ich nazwy ani nic z nich wyliczonego.</string>
     <string name="pro_pending">Twój zakup czeka na potwierdzenie.</string>
     <string name="pro_unlock">Odblokuj PhotoMaid Pro</string>
     <string name="pro_price_once">%1$s · Zakup jednorazowy</string>
@@ -448,7 +448,7 @@
     <string name="pro_msg_nofill">Teraz nie ma dostępnej reklamy. Spróbuj później.</string>
     <string name="pro_msg_ad_unavailable">Test narzędzi Pro jest teraz niedostępny. Nic nie odblokowano.</string>
     <string name="set_privacy">Prywatność i dostęp</string>
-    <string name="set_privacy_detail">Przetwarzanie na urządzeniu</string>
+    <string name="set_privacy_detail">Zdjęcia zostają na urządzeniu</string>
     <string name="set_notifications">Powiadomienia</string>
     <string name="allowed">Zezwolono</string>
     <string name="off">Wyłączone</string>
@@ -478,13 +478,13 @@
     <string name="help_decide">Podejmowanie decyzji</string>
     <string name="help_decide_text">Przesuń w górę, aby zachować, w lewo, aby przenieść do kosza, lub w prawo, aby wrócić później. Domyślnie element wraca po 2 dniach. Odstęp zmienisz w ustawieniach. Tuż po przesunięciu wybierz „Zmień”, aby ustawić inną datę. Ruch w dół cofa widok bez nowej decyzji.</string>
     <string name="help_delete">Usuwanie</string>
-    <string name="help_delete_text">Przesuwanie niczego nie usuwa. Elementy najpierw trafiają do kosza PhotoMaid. Potwierdzasz usuwanie przy jego opróżnianiu. Zdjęcia i filmy trafiają do kosza Android po potwierdzeniu w systemie. Pliki są usuwane trwale.</string>
+    <string name="help_delete_text">Przesuwanie nigdy niczego nie usuwa. To, co odkładasz, trafia najpierw do kosza PhotoMaid. Usuwane jest dopiero po opróżnieniu kosza – zdjęcia i filmy trafiają wtedy do kosza Androida, gdy Android zapyta jeszcze raz. Pliki z połączonych folderów są usuwane na stałe.</string>
     <string name="help_cloud">Chmura</string>
     <string name="help_cloud_text">Usługi chmurowe, takie jak Zdjęcia Google, mogą synchronizować usunięcia z innymi urządzeniami. Sprawdź ich ustawienia. PhotoMaid nie pobiera treści zapisanych wyłącznie w chmurze.</string>
     <string name="help_free">Bezpłatnie</string>
     <string name="help_free_text">Przeglądanie, przesuwanie i zapisywanie na później jest bez limitu. Bez Pro możesz usunąć maksymalnie %1$d dziennie.</string>
     <string name="privacy_title">Twoja prywatność jest ważna</string>
-    <string name="privacy_text">PhotoMaid sprawdza zdjęcia, filmy i udostępnione pliki na Twoim urządzeniu. Nie potrzebujesz konta PhotoMaid i nie ma serwera PhotoMaid. Usługi chmurowe, takie jak Zdjęcia Google, mogą synchronizować usunięcia z innymi urządzeniami.</string>
+    <string name="privacy_text">PhotoMaid przegląda zdjęcia, filmy i dozwolone pliki tylko na Twoim urządzeniu. Nie potrzebujesz konta i nie ma serwera PhotoMaid. Warto wiedzieć: w usługach chmurowych, takich jak Zdjęcia Google, usunięte rzeczy mogą zniknąć też z innych urządzeń.</string>
     <string name="privacy_media">Zdjęcia i filmy</string>
     <string name="privacy_media_text">Aby przeglądać, porządkować i usuwać zdjęcia oraz filmy po Twoim potwierdzeniu.</string>
     <string name="privacy_allow">Zezwól na dostęp</string>
@@ -498,8 +498,8 @@
     <string name="privacy_notifications_allow">Zezwól na powiadomienia</string>
     <string name="privacy_folders">Foldery (opcjonalnie)</string>
     <string name="privacy_folders_text">Pozostałe pliki pochodzą tylko z wybranych folderów. Połącz je w Porządki › Pliki.</string>
-    <string name="privacy_purchases">Zakupy obsługuje Google Play. Nie są przy tym przesyłane zdjęcia, nazwy plików, ścieżki ani sumy kontrolne.</string>
-    <string name="privacy_ads">Bezpłatna wersja pokazuje reklamy Google AdMob. Zgodę na reklamy możesz zmienić w ustawieniach. Zdjęcia, nazwy plików, ścieżki i sumy kontrolne nie są przekazywane dostawcom reklam. Pro nie ma reklam.</string>
+    <string name="privacy_purchases">Zakupy odbywają się przez Google Play. Twoje zdjęcia, ich nazwy, foldery ani nic z nich wyliczonego nigdy nie są w tym celu wysyłane.</string>
+    <string name="privacy_ads">Wersja bezpłatna wyświetla reklamy Google AdMob. Zgodę możesz zmienić w ustawieniach. Twoje zdjęcia, ich nazwy, foldery ani nic z nich wyliczonego nigdy nie trafiają do reklamodawców. W Pro nie ma reklam.</string>
     <string name="continue_">Dalej</string>
     <string name="notif_channel">Przypomnienia</string>
     <string name="notif_due_body">Dziś czas wrócić do czegoś z „Później”.</string>
@@ -551,7 +551,7 @@
     <string name="pro_active_title">Pro jest aktywne</string>
     <string name="pro_active_sub">Zakup jednorazowy: bez reklam, bez limitu dziennego i ze wszystkimi narzędziami Pro.</string>
     <string name="later_notify_title">Przypomnieć, gdy przyjdzie pora przejrzeć?</string>
-    <string name="pro_privacy_no_ads">Zdjęcia i pliki są sprawdzane i porządkowane na urządzeniu. Zakup przesyła dane techniczne do Google, ale nie zdjęcia, nazwy plików ani sumy kontrolne.</string>
+    <string name="pro_privacy_no_ads">Zdjęcia i pliki są sprawdzane i porządkowane tylko na Twoim urządzeniu. Do zakupu do Google trafia tylko to, co niezbędne – nigdy zdjęcia, ich nazwy ani nic z nich wyliczonego.</string>
     <string name="hub_nothing_pending">Wszystko przejrzane</string>
     <plurals name="hub_pending">
         <item quantity="one">Do przejrzenia: %1$d</item>
@@ -676,7 +676,7 @@
     <string name="tour_today_quick_title">Twoje skróty</string>
     <string name="tour_today_quick_text">Zdjęcia, filmy, zrzuty ekranu lub folder: dodaj skróty do tego, co często porządkujesz.</string>
     <string name="tour_today_tab_title">Więcej sposobów na porządki</string>
-    <string name="tour_today_tab_text">Duże pliki, kopie, foldery i kolekcje znajdziesz w „Porządki”.</string>
+    <string name="tour_today_tab_text">Duże pliki, podwójne zdjęcia, pojedyncze miesiące i gotowe kolekcje: tu robisz porządki krok po kroku.</string>
     <string name="tour_feed_basket_title">Twój kosz</string>
     <string name="tour_feed_basket_text">Liczba pokazuje, ile elementów zostało wybranych. Dotknij jej, aby przejrzeć wybór i opróżnić kosz.</string>
     <string name="tour_feed_undo_title">Cofnij</string>
@@ -734,8 +734,8 @@
     <string name="grid_open">Przegląd</string>
     <string name="grid_select_all">Wszystkie</string>
     <string name="grid_select_none">Żadne</string>
-    <string name="help_tours_again">Pokaż samouczki ponownie</string>
-    <string name="help_tours_reset">Samouczki pojawią się ponownie przy następnym otwarciu ekranów.</string>
+    <string name="help_tours_again">Pokaż ponownie przewodnik i wskazówki</string>
+    <string name="help_tours_reset">Przewodnik i wskazówki pojawią się ponownie przy następnym otwarciu.</string>
     <string name="hub_months_sub">Kończ miesiąc po miesiącu</string>
     <string name="later_back_to_stack">Wróć do stosu</string>
     <string name="later_bookmarked_row">Odłożone, bez daty</string>
@@ -899,8 +899,8 @@
     <string name="edit_save_replace_action">Zapisz, oryginał do kosza</string>
     <string name="edit_remove_location">Usuń lokalizację</string>
     <string name="edit_remove_location_text">Zapisane zdjęcie nie będzie zawierać miejsca wykonania.</string>
-    <string name="edit_hint_heic">Zostanie zapisane jako JPEG (HEIC nie da się niezawodnie zapisać na tym urządzeniu).</string>
-    <string name="edit_hint_hdr">Zmiany kolorów usuwają dodatkową jasność HDR tego zdjęcia.</string>
+    <string name="edit_hint_heic">Zapisano jako JPEG, by działało wszędzie – to urządzenie nie zapisuje niezawodnie plików HEIC.</string>
+    <string name="edit_hint_hdr">To zdjęcie ma szczególnie jasne światła (HDR). Po zmianie kolorów będzie świecić nieco słabiej.</string>
     <string name="edit_hint_lossless">Bezstratnie: zmienia się tylko orientacja, jakość pozostaje dokładnie taka sama.</string>
     <string name="edit_hint_replace_confirm">Android raz zapyta, czy przenieść oryginał do kosza Androida.</string>
     <string name="edit_saving">Zapisywanie…</string>
@@ -908,7 +908,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s s</string>
     <string name="edit_trim_start">Początek</string>
     <string name="edit_trim_end">Koniec</string>
-    <string name="edit_trim_hint">Przeciągnij uchwyty. Długość całkowita %1$s. Jakość się nie zmienia; ponownie kodowany jest tylko początek do następnej klatki kluczowej.</string>
+    <string name="edit_trim_hint">Przeciągnij uchwyty, aby wybrać początek i koniec. Łączna długość %1$s. Jakość obrazu się nie zmienia.</string>
     <string name="edit_discard_title">Odrzucić zmiany?</string>
     <string name="edit_discard_text">Edycja nie zostanie zapisana. Oryginał pozostaje bez zmian.</string>
     <string name="edit_discard">Odrzuć</string>
@@ -992,8 +992,8 @@
     <string name="edit_mk_rect">Prostokąt</string>
     <string name="edit_mk_brush">Pędzel</string>
     <string name="edit_mk_strength">Siła</string>
-    <string name="edit_mk_redact_solid_hint">Zalecane dla danych wrażliwych: zakryte piksele są w zapisanym lub udostępnionym pliku całkowicie zastąpione.</string>
-    <string name="edit_mk_redact_hint">Pikselizacja i rozmycie używają dużych bloków. Dla tekstu, który musi być nieczytelny, bezpieczniejsze jest „Kryjące”.</string>
+    <string name="edit_mk_redact_solid_hint">Zalecane dla danych osobistych: to, co zakryjesz, naprawdę znika z zapisanego lub udostępnionego pliku.</string>
+    <string name="edit_mk_redact_hint">Przy „Pikselizuj” i „Rozmycie” kontury mogą być nadal widoczne. Dla tekstu, który ma być nieczytelny, wybierz „Kryjące”.</string>
     <string name="edit_mk_edit_text">Edytuj</string>
     <string name="edit_mk_duplicate">Duplikuj</string>
     <string name="edit_mk_front">Na wierzch</string>
@@ -1167,7 +1167,7 @@
     <string name="ret_linear">Gradient</string>
     <string name="ret_brush">Pędzel</string>
     <string name="ret_red_eye">Czerwone oczy</string>
-    <string name="ret_red_eye_hint">Dotknij czerwonego oka. Przy małych twarzach powiększ dwoma palcami. Zmieniają się tylko wyraźnie czerwone piksele.</string>
+    <string name="ret_red_eye_hint">Dotknij czerwonego oka. Przy małych twarzach najpierw przybliż dwoma palcami. Zmienia się tylko czerwień w oku.</string>
     <string name="ret_red_eye_undo">Usuń ostatnią</string>
     <string name="ret_size">Rozmiar</string>
     <string name="ret_new">Nowy</string>
@@ -1199,7 +1199,7 @@
     <string name="vid_cut_confirm">Usuń</string>
     <string name="vid_cut_draft">Usunąć %1$s – %2$s? Przeciągnij czerwone uchwyty.</string>
     <string name="vid_cut_hint_restore">Czerwone fragmenty są przy zapisie naprawdę usuwane (całość %1$s). Dotknij fragmentu poniżej, aby go przywrócić.</string>
-    <string name="vid_trim_hint_reencode">Przeciągnij uchwyty. Całość %1$s. Z powodu innych zmian film zostanie zakodowany ponownie.</string>
+    <string name="vid_trim_hint_reencode">Przeciągnij uchwyty. Łączna długość %1$s. Z powodu innych zmian film zostanie przy zapisie utworzony od nowa – to potrwa trochę dłużej.</string>
     <string name="vid_speed_result">Wynik: %1$s</string>
     <string name="vid_speed_hint">Dźwięk przyspiesza lub zwalnia bez zmiany wysokości.</string>
     <string name="vid_no_audio">Ten film nie ma dźwięku.</string>
@@ -1208,7 +1208,7 @@
     <string name="vid_volume">Głośność</string>
     <string name="vid_fade">Wyciszanie na początku i końcu</string>
     <string name="vid_fade_none">Brak</string>
-    <string name="vid_audio_export">Zapisz dźwięk jako M4A</string>
+    <string name="vid_audio_export">Zapisz tylko dźwięk</string>
     <string name="vid_audio_suffix">dzwiek</string>
     <string name="vid_audio_running">Zapisywanie dźwięku</string>
     <string name="vid_audio_saved">Zapisano „%1$s” w Music/PhotoMaid.</string>
@@ -1218,12 +1218,12 @@
     <string name="vid_fill_hint">Wypełnia nowy format; krawędzie poza nim są obcinane.</string>
     <string name="vid_fit_hint">Pokazuje cały film; wolne miejsce staje się czarnymi pasami.</string>
     <string name="vid_profile">Jakość</string>
-    <string name="vid_profile_high">Wysoka jakość (oryginalna rozdzielczość)</string>
-    <string name="vid_profile_balanced">Zrównoważona (do 1080p)</string>
-    <string name="vid_profile_small">Mały plik (720p)</string>
+    <string name="vid_profile_high">Najlepsza jakość (jak oryginał)</string>
+    <string name="vid_profile_balanced">Zrównoważona (Full HD)</string>
+    <string name="vid_profile_small">Mały plik (HD)</string>
     <string name="vid_estimate">ok. %1$s</string>
-    <string name="vid_estimate_hint">Szacunek z przepływności × długości. Zapisany plik pokazuje rzeczywisty rozmiar.</string>
-    <string name="vid_hdr_hint">Ten film HDR zostanie zapisany jako SDR, ponieważ zastosowano zmiany kolorów.</string>
+    <string name="vid_estimate_hint">To tylko przybliżenie. Rzeczywisty rozmiar zobaczysz po zapisaniu.</string>
+    <string name="vid_hdr_hint">Ten film ma szczególnie jasne kolory (HDR). Po zmianie kolorów zostanie zapisany w zwykłych kolorach.</string>
     <string name="tab_library">Zdjęcia</string>
     <string name="lib_filter_all">Wszystko</string>
     <string name="lib_filter_favorites">Ulubione</string>
@@ -1391,7 +1391,7 @@
     <string name="systrash_delete_text">Następnie potwierdź w Androidzie. Trwale usuniętych zdjęć i filmów nie da się przywrócić.</string>
     <string name="lib_info_raw">Plik RAW</string>
     <string name="set_delete_permanently">Trwale usuwaj</string>
-    <string name="set_delete_permanently_detail">Wyłączone: opróżnienie przenosi do kosza Androida (przez pewien czas można przywrócić). Włączone: od razu trwale usuwa.</string>
+    <string name="set_delete_permanently_detail">Wyłączone: przy opróżnianiu wszystko trafia najpierw do kosza Androida i przez jakiś czas można to przywrócić. Włączone: wszystko jest od razu usuwane na stałe.</string>
     <string name="set_delete_permanently_confirm_title">Włączyć trwałe usuwanie?</string>
     <string name="set_delete_permanently_confirm_text">Od teraz opróżnienie kosza PhotoMaid trwale usuwa zdjęcia i filmy. Nie trafiają do kosza Androida i nie da się ich przywrócić – także z niezsynchronizowanych kopii. Android i tak zapyta za każdym razem.</string>
     <string name="set_delete_permanently_confirm_action">Włącz</string>
@@ -1453,9 +1453,9 @@
     <string name="movie_format_first">Jak pierwszy klip</string>
     <string name="movie_fit_note">Klipy nigdy nie są zniekształcane: albo widać cały obraz (z czarnymi krawędziami), albo wypełnia kadr, a krawędzie są przycinane.</string>
     <string name="movie_quality">Jakość</string>
-    <string name="movie_quality_high">Wysoka (1080p)</string>
+    <string name="movie_quality_high">Wysoka (Full HD)</string>
     <string name="movie_quality_balanced">Zrównoważona</string>
-    <string name="movie_quality_small">Mała (720p)</string>
+    <string name="movie_quality_small">Mała (HD)</string>
     <string name="movie_music_none">Brak muzyki.</string>
     <string name="movie_music_pick">Wybierz plik audio</string>
     <string name="movie_music_remove">Usuń</string>
@@ -1478,7 +1478,7 @@
     <string name="tools_convert">Konwertuj</string>
     <string name="tools_convert_sub">np. HEIC na JPEG, jako nowe kopie</string>
     <string name="tools_location">Usuń lokalizację</string>
-    <string name="tools_location_sub">Kopie bez danych GPS, np. przed udostępnieniem</string>
+    <string name="tools_location_sub">Kopie bez lokalizacji, np. przed udostępnieniem</string>
     <string name="tools_stitch">Połącz zrzuty ekranu</string>
     <string name="tools_stitch_sub">Jeden pod drugim, jako jeden długi obraz</string>
     <string name="tools_gif">Utwórz GIF</string>
@@ -1499,8 +1499,8 @@
     <string name="tools_q_small">Mniejszy plik</string>
     <string name="tools_remove_location">Usuń też lokalizację</string>
     <string name="tools_target_format">Nowy format</string>
-    <string name="tools_convert_note">JPEG otworzy każde urządzenie; PNG zachowuje każdy piksel, ale pliki są większe. Pliki w tym formacie są pomijane.</string>
-    <string name="tools_location_note">Kopie JPEG zachowują każdy piksel – usuwane są tylko dane GPS. Zdjęcia bez lokalizacji są pomijane.</string>
+    <string name="tools_convert_note">Każde urządzenie otworzy JPEG. PNG zachowuje wszystkie szczegóły, ale pliki są większe. Zdjęcia już w tym formacie są pomijane.</string>
+    <string name="tools_location_note">Kopie wyglądają dokładnie jak oryginał – usuwane jest tylko miejsce zrobienia zdjęcia. Zdjęcia bez lokalizacji są pomijane.</string>
     <string name="tools_stitch_note">W wybranej kolejności. Wszystkie dostają szerokość najwęższego obrazu – nic nie jest zniekształcane ani powiększane.</string>
     <string name="tools_gif_size">Rozmiar</string>
     <string name="tools_gif_part">Fragment filmu (maks. 10 s)</string>
@@ -1553,9 +1553,9 @@
     <string name="dock_crop">Kadruj</string>
     <string name="dock_more">Więcej</string>
     <string name="vid_trim_hint_short">Przeciągnij uchwyty, aby ustawić początek i koniec.</string>
-    <string name="vid_export_info">Informacje o eksporcie</string>
-    <string name="vid_export_info_fast">Przycinany jest tylko początek i koniec. PhotoMaid próbuje zachować jakość i koduje ponownie tylko początek do następnej klatki kluczowej. Jeśli wideo na to nie pozwala, kodowane jest całe wideo. Długość całkowita %1$s.</string>
-    <string name="vid_export_info_reencode">Z powodu innych zmian przy zapisie kodowane jest całe wideo. Długość całkowita %1$s.</string>
+    <string name="vid_export_info">Jak to zostanie zapisane</string>
+    <string name="vid_export_info_fast">Przycięto tylko początek i koniec. To szybkie, a jakość obrazu zostaje jak w oryginale. Jeśli ten film na to nie pozwala, PhotoMaid utworzy go od nowa – potrwa to trochę dłużej. Łączna długość %1$s.</string>
+    <string name="vid_export_info_reencode">Z powodu innych zmian PhotoMaid przy zapisie utworzy cały film od nowa. To może chwilę potrwać. Łączna długość %1$s.</string>
     <string name="lib_mode_albums">Albumy</string>
     <string name="org_new_album">Nowy album</string>
     <string name="org_album_name">Nazwa albumu</string>
@@ -1655,7 +1655,7 @@
     <string name="wf_target_note">PhotoMaid mierzy wynik. Jeśli celu nie da się osiągnąć w tych granicach, plik nie powstanie, a zobaczysz dlaczego.</string>
     <string name="wf_videos">Filmy</string>
     <string name="wf_video_skip">Pomiń</string>
-    <string name="wf_video_note">Filmy są ponownie kodowane do docelowego rozmiaru; rozdzielczość spada tylko w razie potrzeby.</string>
+    <string name="wf_video_note">Filmy są zapisywane ponownie, by zmieściły się w docelowym rozmiarze. Obraz zmniejsza się tylko w razie potrzeby.</string>
     <string name="wf_location">Usuń lokalizację</string>
     <string name="wf_name_base">Nazwa pliku</string>
     <string name="wf_name_base_hint">np. Ogłoszenie → Ogłoszenie_001 (puste = oryginalna nazwa)</string>
@@ -1695,7 +1695,7 @@
     <string name="wf_reason_video">Filmy nie są częścią tego przepływu.</string>
     <string name="wf_reason_video_long">Za długi na docelowy rozmiar – nie utworzono pliku.</string>
     <string name="wf_reason_unreachable">Najmniejsza zmierzona wersja: %1$s – powyżej celu, więc nie utworzono pliku.</string>
-    <string name="wf_reason_error">Nie udało się przetworzyć.</string>
+    <string name="wf_reason_error">Niestety się nie udało.</string>
     <string name="wf_summary">Gotowe: %1$d · pominięte: %2$d · cel nieosiągnięty: %3$d · błędy: %4$d</string>
     <string name="wf_share_again">Udostępnij ponownie</string>
     <string name="wf_counts">Zdjęcia: %1$s · filmy: %2$s</string>
@@ -1736,4 +1736,73 @@
         <item quantity="many">Kolejnych %1$d nie przejęto (maks. 500 naraz).</item>
         <item quantity="other">Kolejnych %1$d nie przejęto (maks. 500 naraz).</item>
     </plurals>
+    <string name="pdf_title">Utwórz PDF</string>
+    <string name="pdf_studio_sub">Zdjęcia jako dokument lub stykówka</string>
+    <string name="pdf_pick">Zdjęcia do PDF</string>
+    <string name="pdf_from_selection">Utwórz PDF</string>
+    <string name="pdf_no_photos">W tym wyborze nie ma zdjęć. Filmów nie można umieścić w PDF.</string>
+    <string name="pdf_no_date">Bez daty</string>
+    <string name="pdf_saved">Zapisano w „Documents/PhotoMaid” · %1$s</string>
+    <string name="pdf_failed">Nie udało się zapisać PDF.</string>
+    <string name="pdf_page_of">Strona %1$d z %2$d</string>
+    <string name="pdf_capped">Maksymalnie %1$d zdjęć w PDF – przejęto pierwsze %1$d.</string>
+    <string name="pdf_per_page">Zdjęć na stronę</string>
+    <string name="pdf_fit">Dopasuj</string>
+    <string name="pdf_fill">Wypełnij</string>
+    <string name="pdf_paper">Papier</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Orientacja</string>
+    <string name="pdf_orient_auto">Automatyczna</string>
+    <string name="pdf_orient_portrait">Pionowa</string>
+    <string name="pdf_orient_landscape">Pozioma</string>
+    <string name="pdf_margin">Margines</string>
+    <string name="pdf_margin_none">Brak</string>
+    <string name="pdf_margin_small">Wąski</string>
+    <string name="pdf_margin_normal">Normalny</string>
+    <string name="pdf_caption">Podpis</string>
+    <string name="pdf_caption_none">Brak</string>
+    <string name="pdf_caption_number">Numer</string>
+    <string name="pdf_caption_name">Nazwa pliku</string>
+    <string name="pdf_caption_date">Data</string>
+    <string name="pdf_order">Kolejność</string>
+    <string name="pdf_move_up">W górę</string>
+    <string name="pdf_move_down">W dół</string>
+    <string name="pdf_name">Nazwa pliku</string>
+    <string name="pdf_save">Zapisz jako PDF</string>
+    <string name="pdf_share">Udostępnij PDF</string>
+    <string name="pdf_running">Tworzenie PDF…</string>
+    <string name="pdf_privacy">Zdjęcia są osadzane na nowo: lokalizacja i inne dane zdjęcia nie trafiają do PDF. Oryginały pozostają bez zmian.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d strona</item>
+        <item quantity="few">%1$d strony</item>
+        <item quantity="many">%1$d stron</item>
+        <item quantity="other">%1$d strony</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d zdjęcie</item>
+        <item quantity="few">%1$d zdjęcia</item>
+        <item quantity="many">%1$d zdjęć</item>
+        <item quantity="other">%1$d zdjęcia</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d film nie zostanie dodany.</item>
+        <item quantity="few">%1$d filmy nie zostaną dodane.</item>
+        <item quantity="many">%1$d filmów nie zostanie dodanych.</item>
+        <item quantity="other">%1$d filmu nie dodano.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">Nie udało się odczytać %1$d zdjęcia – jego pole pozostaje puste.</item>
+        <item quantity="few">Nie udało się odczytać %1$d zdjęć – ich pola pozostają puste.</item>
+        <item quantity="many">Nie udało się odczytać %1$d zdjęć – ich pola pozostają puste.</item>
+        <item quantity="other">Nie udało się odczytać %1$d zdjęcia – pola pozostają puste.</item>
+    </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">Wszystkie zdjęcia</string>
+    <string name="tour_lib_text">Tu są wszystkie zdjęcia i filmy – według dni, miesięcy lub lat, w folderach, albumach i ulubionych. Samo oglądanie niczego nie zmienia.</string>
+    <string name="tour_studio_title">Twórz</string>
+    <string name="tour_studio_text">Edytuj zdjęcia, twórz kolaże, krótkie filmy i pliki PDF, korzystaj z przydatnych narzędzi. Zawsze powstają nowe pliki – oryginały zostają bez zmian.</string>
+    <string name="tour_history_title">Później i historia</string>
+    <string name="tour_history_text">Zobacz, co zachowujesz, odkładasz lub zostawiasz na później. Każdą decyzję możesz tu jeszcze zmienić.</string>
+    <string name="tour_settings_title">Ustawienia i pomoc</string>
+    <string name="tour_settings_text">Dostosuj PhotoMaid do siebie i znajdź odpowiedzi. Ten przewodnik możesz obejrzeć ponownie w każdej chwili.</string>
 </resources>

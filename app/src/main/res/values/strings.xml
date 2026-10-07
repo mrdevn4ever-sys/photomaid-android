@@ -35,7 +35,7 @@
     <string name="undo">Undo</string>
     <string name="error_settings_not_saved">The setting couldn’t be saved.</string>
     <string name="error_change_not_saved">The change couldn’t be saved.</string>
-    <string name="error_undo_conflict">Can’t undo: this item has changed since then.</string>
+    <string name="error_undo_conflict">This can’t be undone any more because you changed it in the meantime.</string>
     <string name="error_undo_busy">Wait until the trash has finished emptying before using Undo.</string>
     <string name="error_undo_generic">This can’t be undone right now.</string>
     <string name="tab_today">Today</string>
@@ -66,7 +66,7 @@
         <item quantity="one">%1$d item from “Later” is ready to review</item>
         <item quantity="other">%1$d items from “Later” are ready to review</item>
     </plurals>
-    <string name="today_reconciliation">We couldn’t confirm the result of an earlier trash action. Nothing will be deleted again.</string>
+    <string name="today_reconciliation">Something was interrupted the last time the trash was emptied. To be safe, nothing is deleted again.</string>
     <string name="cat_photos">Photos</string>
     <string name="cat_videos">Videos</string>
     <string name="cat_screenshots">Screenshots</string>
@@ -257,7 +257,7 @@
     <string name="large_unknown_footer">These files have no available size. Their sizes aren’t estimated or included in the total.</string>
     <string name="storage_a">Your device</string>
     <string name="storage_available">%1$s free according to Android</string>
-    <string name="storage_unavailable">Storage info unavailable</string>
+    <string name="storage_unavailable">Storage info isn’t available right now</string>
     <string name="storage_b">Visible to PhotoMaid</string>
     <string name="storage_of_which_screens">including screenshots</string>
     <string name="storage_connected_folders">Connected folders</string>
@@ -379,12 +379,12 @@
     <string name="pro_f1">No ads</string>
     <string name="pro_f1d">No ad cards between your photos and videos.</string>
     <string name="pro_details">How Pro works</string>
-    <string name="pro_details_dup">Copies have exactly the same file content. PhotoMaid compares it on your device, not in the cloud. Similar images don’t count as copies.</string>
+    <string name="pro_details_dup">Copies are files that are identical down to the last detail. PhotoMaid compares them on your device, not in the cloud. Images that only look similar don’t count as copies.</string>
     <string name="pro_details_rules">Collections show matching content from your device. You open and review it yourself. They never delete automatically or clean up in the background.</string>
-    <string name="pro_details_cleanup">The daily limit counts items successfully removed after you confirm in the trash. Swiping doesn’t count toward it.</string>
+    <string name="pro_details_cleanup">Only what you actually remove from the trash counts toward the daily limit. Swiping never counts.</string>
     <string name="expanded">Expanded</string>
     <string name="collapsed">Collapsed</string>
-    <string name="pro_privacy">Photos and files are checked and organized on your device. Purchases and ads send technical data to Google or ad providers — not photos, filenames or checksums.</string>
+    <string name="pro_privacy">Your photos and files are checked and sorted only on your device. For purchases and ads only the bare minimum goes to Google or ad providers – never your photos, their names or anything derived from them.</string>
     <string name="pro_pending">Your purchase is awaiting confirmation.</string>
     <string name="pro_unlock">Unlock PhotoMaid Pro</string>
     <string name="pro_price_once">%1$s · One-time purchase</string>
@@ -402,7 +402,7 @@
     <string name="pro_msg_nofill">No ad is available right now. Try again later.</string>
     <string name="pro_msg_ad_unavailable">The Pro tool preview isn’t available right now. Nothing was unlocked.</string>
     <string name="set_privacy">Privacy &amp; access</string>
-    <string name="set_privacy_detail">Processed on your device</string>
+    <string name="set_privacy_detail">Your photos stay on your device</string>
     <string name="set_notifications">Notifications</string>
     <string name="allowed">Allowed</string>
     <string name="off">Off</string>
@@ -430,13 +430,13 @@
     <string name="help_decide">Make a choice</string>
     <string name="help_decide_text">Swipe up to keep, left for trash and right for later. By default, it returns in 2 days. You can change this delay in settings. Just after swiping, use “Change” to choose a different date. Swipe down to go back without making a new choice.</string>
     <string name="help_delete">Deleting</string>
-    <string name="help_delete_text">Swiping doesn’t delete anything. Items you set aside go to the PhotoMaid trash first. You confirm removal when emptying it. Photos and videos move to the Android trash after Android asks you to confirm. Files are permanently deleted.</string>
+    <string name="help_delete_text">Swiping never deletes anything. What you set aside goes to the PhotoMaid trash first. Only when you empty it is anything removed – photos and videos then go to the Android trash after Android asks once more. Files from linked folders are deleted for good.</string>
     <string name="help_cloud">Cloud</string>
     <string name="help_cloud_text">Cloud services such as Google Photos may sync deletions to other devices. Check their settings. PhotoMaid doesn’t download content stored only in the cloud.</string>
     <string name="help_free">Free</string>
     <string name="help_free_text">Viewing, swiping and saving for later are unlimited. Without Pro, you can remove up to %1$d a day.</string>
     <string name="privacy_title">Your privacy comes first</string>
-    <string name="privacy_text">PhotoMaid checks your photos, videos and allowed files on your device. No PhotoMaid account is needed, and there is no PhotoMaid server. Cloud services such as Google Photos may sync deletions to other devices.</string>
+    <string name="privacy_text">PhotoMaid looks at your photos, videos and allowed files only on your device. You don’t need an account, and there’s no PhotoMaid server. Good to know: with cloud services like Google Photos, things you delete may also disappear on your other devices.</string>
     <string name="privacy_media">Photos &amp; videos</string>
     <string name="privacy_media_text">To view, organize and remove photos and videos after your confirmation.</string>
     <string name="privacy_allow">Allow access</string>
@@ -450,8 +450,8 @@
     <string name="privacy_notifications_allow">Allow notifications</string>
     <string name="privacy_folders">Folders (optional)</string>
     <string name="privacy_folders_text">Other files come only from folders you choose. Connect them under Clean up › Files.</string>
-    <string name="privacy_purchases">Purchases are handled by Google Play. Photos, filenames, paths and checksums aren’t sent for this.</string>
-    <string name="privacy_ads">The free version shows Google AdMob ads. You can change your ad consent in settings. Photos, filenames, paths and checksums aren’t shared with ad providers. Pro has no ads.</string>
+    <string name="privacy_purchases">Purchases go through Google Play. Your photos, their names, folders or anything derived from them are never sent for this.</string>
+    <string name="privacy_ads">The free version shows ads from Google AdMob. You can change your consent in settings. Your photos, their names, folders or anything derived from them never go to ad providers. Pro has no ads.</string>
     <string name="continue_">Next</string>
     <string name="notif_channel">Reminders</string>
     <string name="notif_due_body">Something in “Later” is ready to review today.</string>
@@ -503,7 +503,7 @@
     <string name="pro_active_title">Pro is active</string>
     <string name="pro_active_sub">One-time purchase: no ads, no daily limit and all Pro tools.</string>
     <string name="later_notify_title">Remind you when it’s time to review?</string>
-    <string name="pro_privacy_no_ads">Photos and files are checked and organized on your device. Purchases send technical data to Google — not photos, filenames or checksums.</string>
+    <string name="pro_privacy_no_ads">Your photos and files are checked and sorted only on your device. For the purchase only the bare minimum goes to Google – never your photos, their names or anything derived from them.</string>
     <string name="hub_nothing_pending">All reviewed</string>
     <plurals name="hub_pending">
         <item quantity="one">%1$d to review</item>
@@ -618,7 +618,7 @@
     <string name="tour_today_quick_title">Your shortcuts</string>
     <string name="tour_today_quick_text">Photos, videos, screenshots or a folder: create shortcuts to what you clean up often.</string>
     <string name="tour_today_tab_title">More ways to clean up</string>
-    <string name="tour_today_tab_text">Find large files, copies, folders and collections under “Clean up”.</string>
+    <string name="tour_today_tab_text">Large files, duplicate photos, single months and ready-made collections: this is where you tidy up step by step.</string>
     <string name="tour_feed_basket_title">Your trash</string>
     <string name="tour_feed_basket_text">The number shows how much you’ve set aside. Tap it to review your selection and empty the trash.</string>
     <string name="tour_feed_undo_title">Undo</string>
@@ -674,8 +674,8 @@
     <string name="grid_open">Overview</string>
     <string name="grid_select_all">All</string>
     <string name="grid_select_none">None</string>
-    <string name="help_tours_again">Show tutorials again</string>
-    <string name="help_tours_reset">The tutorials will appear again the next time you open each screen.</string>
+    <string name="help_tours_again">Show the tour and tips again</string>
+    <string name="help_tours_reset">The tour and tips will appear again next time.</string>
     <string name="hub_months_sub">Get done month by month</string>
     <string name="later_back_to_stack">Back to the stack</string>
     <string name="later_bookmarked_row">Set aside, no date</string>
@@ -821,8 +821,8 @@
     <string name="edit_save_replace_action">Save copy, original to trash</string>
     <string name="edit_remove_location">Remove location</string>
     <string name="edit_remove_location_text">The saved photo won’t include where it was taken.</string>
-    <string name="edit_hint_heic">Saved as JPEG (HEIC can’t be written reliably on this device).</string>
-    <string name="edit_hint_hdr">Colour changes remove the extra HDR brightness of this photo.</string>
+    <string name="edit_hint_heic">Saved as JPEG so it works everywhere – this device can’t reliably save HEIC.</string>
+    <string name="edit_hint_hdr">This photo has extra-bright highlights (HDR). After colour changes it shines a little less.</string>
     <string name="edit_hint_lossless">Lossless: only the orientation changes, image quality stays exactly the same.</string>
     <string name="edit_hint_replace_confirm">Android asks once to confirm moving the original to the Android trash.</string>
     <string name="edit_saving">Saving…</string>
@@ -830,7 +830,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s s</string>
     <string name="edit_trim_start">Start</string>
     <string name="edit_trim_end">End</string>
-    <string name="edit_trim_hint">Drag the handles. Total length %1$s. Quality stays the same; only the start up to the next keyframe is re-encoded.</string>
+    <string name="edit_trim_hint">Drag the handles to set the start and end. Total length %1$s. The picture quality stays the same.</string>
     <string name="edit_discard_title">Discard changes?</string>
     <string name="edit_discard_text">Your edit won’t be saved. The original stays as it is.</string>
     <string name="edit_discard">Discard</string>
@@ -914,8 +914,8 @@
     <string name="edit_mk_rect">Rectangle</string>
     <string name="edit_mk_brush">Brush</string>
     <string name="edit_mk_strength">Strength</string>
-    <string name="edit_mk_redact_solid_hint">Recommended for sensitive details: the covered pixels are replaced completely in the saved or shared file.</string>
-    <string name="edit_mk_redact_hint">Pixelate and blur use coarse blocks. For text that must stay unreadable, “Solid” is safer.</string>
+    <string name="edit_mk_redact_solid_hint">Recommended for private details: whatever you cover is really gone in the saved or shared file.</string>
+    <string name="edit_mk_redact_hint">With “Pixelate” and “Blur” outlines may still show. For text that must stay unreadable, choose “Solid”.</string>
     <string name="edit_mk_edit_text">Edit</string>
     <string name="edit_mk_duplicate">Duplicate</string>
     <string name="edit_mk_front">Bring forward</string>
@@ -1083,7 +1083,7 @@
     <string name="ret_linear">Gradient</string>
     <string name="ret_brush">Brush</string>
     <string name="ret_red_eye">Red eye</string>
-    <string name="ret_red_eye_hint">Tap a red eye. Zoom in with two fingers for small faces. Only clearly red pixels change.</string>
+    <string name="ret_red_eye_hint">Tap a red eye. For small faces, zoom in with two fingers first. Only the red in the eye changes.</string>
     <string name="ret_red_eye_undo">Remove last</string>
     <string name="ret_size">Size</string>
     <string name="ret_new">New</string>
@@ -1115,7 +1115,7 @@
     <string name="vid_cut_confirm">Remove</string>
     <string name="vid_cut_draft">Remove %1$s – %2$s? Drag the red handles.</string>
     <string name="vid_cut_hint_restore">Red sections are really removed when saving (total %1$s). Tap a section below to bring it back.</string>
-    <string name="vid_trim_hint_reencode">Drag the handles. Total %1$s. Because of your other changes the video is encoded again.</string>
+    <string name="vid_trim_hint_reencode">Drag the handles. Total length %1$s. Because of your other changes, the video is rebuilt when you save – this takes a little longer.</string>
     <string name="vid_speed_result">Result: %1$s</string>
     <string name="vid_speed_hint">The sound is sped up or slowed down with the same pitch.</string>
     <string name="vid_no_audio">This video has no sound.</string>
@@ -1124,7 +1124,7 @@
     <string name="vid_volume">Volume</string>
     <string name="vid_fade">Fade in and out</string>
     <string name="vid_fade_none">None</string>
-    <string name="vid_audio_export">Save sound as M4A</string>
+    <string name="vid_audio_export">Save the sound only</string>
     <string name="vid_audio_suffix">sound</string>
     <string name="vid_audio_running">Saving sound</string>
     <string name="vid_audio_saved">Saved “%1$s” in Music/PhotoMaid.</string>
@@ -1134,12 +1134,12 @@
     <string name="vid_fill_hint">Fills the new format; edges outside are cut off.</string>
     <string name="vid_fit_hint">Shows the whole video; free space becomes black bars.</string>
     <string name="vid_profile">Quality</string>
-    <string name="vid_profile_high">High quality (original resolution)</string>
-    <string name="vid_profile_balanced">Balanced (up to 1080p)</string>
-    <string name="vid_profile_small">Small file (720p)</string>
+    <string name="vid_profile_high">Best quality (like the original)</string>
+    <string name="vid_profile_balanced">Balanced (Full HD)</string>
+    <string name="vid_profile_small">Small file (HD)</string>
     <string name="vid_estimate">approx. %1$s</string>
-    <string name="vid_estimate_hint">Estimate from bitrate × duration. The saved file shows its real size.</string>
-    <string name="vid_hdr_hint">This HDR video is saved as SDR because colour changes are applied.</string>
+    <string name="vid_estimate_hint">Only a rough guess. You’ll see the real file size after saving.</string>
+    <string name="vid_hdr_hint">This video has extra-bright colours (HDR). With your colour changes it’s saved with normal colours.</string>
     <string name="tab_library">Photos</string>
     <string name="lib_filter_all">All</string>
     <string name="lib_filter_favorites">Favourites</string>
@@ -1189,7 +1189,7 @@
     <string name="lib_new_folder">New folder</string>
     <string name="lib_new_folder_note">Next, choose photos and videos to move. The folder is created in Pictures.</string>
     <string name="lib_new_folder_exists">This folder already exists. What you choose next will be moved into it.</string>
-    <string name="lib_new_folder_next">Choose media</string>
+    <string name="lib_new_folder_next">Choose photos</string>
     <string name="lib_new_folder_pick">Move into new folder</string>
     <string name="lib_new_group">New group</string>
     <string name="lib_groups">Groups</string>
@@ -1223,7 +1223,7 @@
     <string name="lib_hide_folder_title">Hide “%1$s” in PhotoMaid?</string>
     <string name="lib_hide_folder_text">The folder and its subfolders will no longer appear under Photos or during cleanup. Nothing is moved or deleted; other apps still show it. Show it again under Folders › Hidden.</string>
     <string name="lib_hidden_title">Hidden</string>
-    <string name="lib_hidden_row">Folders and media PhotoMaid doesn’t show</string>
+    <string name="lib_hidden_row">Folders, photos and videos PhotoMaid doesn’t show</string>
     <string name="lib_hidden_intro">PhotoMaid doesn’t show these anywhere. The files are unchanged and other apps still show them.</string>
     <string name="lib_hidden_none_title">Nothing hidden</string>
     <string name="lib_hidden_none_text">Use “Hide in PhotoMaid” on a folder, a photo or a selection.</string>
@@ -1291,7 +1291,7 @@
     <string name="systrash_delete_text">Then confirm with Android. Permanently deleted photos and videos cannot be restored.</string>
     <string name="lib_info_raw">RAW file</string>
     <string name="set_delete_permanently">Permanently delete</string>
-    <string name="set_delete_permanently_detail">Off: emptying the PhotoMaid trash moves items to the Android trash (restorable for a while). On: deleted for good right away.</string>
+    <string name="set_delete_permanently_detail">Off: when you empty the trash, everything goes to the Android trash first and can be brought back for a while. On: everything is deleted for good right away.</string>
     <string name="set_delete_permanently_confirm_title">Turn on permanent deletion?</string>
     <string name="set_delete_permanently_confirm_text">From now on, emptying the PhotoMaid trash deletes photos and videos for good. They do not go to the Android trash and cannot be restored – also not from backups that have not synced yet. Android still asks each time.</string>
     <string name="set_delete_permanently_confirm_action">Turn on</string>
@@ -1343,9 +1343,9 @@
     <string name="movie_format_first">Like first clip</string>
     <string name="movie_fit_note">Clips are never stretched: either the whole picture is shown (with black edges) or it fills the frame and the edges are cut off.</string>
     <string name="movie_quality">Quality</string>
-    <string name="movie_quality_high">High (1080p)</string>
+    <string name="movie_quality_high">High (Full HD)</string>
     <string name="movie_quality_balanced">Balanced</string>
-    <string name="movie_quality_small">Small (720p)</string>
+    <string name="movie_quality_small">Small (HD)</string>
     <string name="movie_music_none">No music yet.</string>
     <string name="movie_music_pick">Choose an audio file</string>
     <string name="movie_music_remove">Remove</string>
@@ -1368,7 +1368,7 @@
     <string name="tools_convert">Convert</string>
     <string name="tools_convert_sub">e.g. HEIC to JPEG, as new copies</string>
     <string name="tools_location">Remove location</string>
-    <string name="tools_location_sub">Copies without GPS data, e.g. before sharing</string>
+    <string name="tools_location_sub">Copies without the location, e.g. before sharing</string>
     <string name="tools_stitch">Join screenshots</string>
     <string name="tools_stitch_sub">One below the other, as one long image</string>
     <string name="tools_gif">Create GIF</string>
@@ -1389,8 +1389,8 @@
     <string name="tools_q_small">Smaller file</string>
     <string name="tools_remove_location">Also remove location</string>
     <string name="tools_target_format">New format</string>
-    <string name="tools_convert_note">JPEG is read everywhere; PNG keeps every pixel but files get bigger. Files already in this format are skipped.</string>
-    <string name="tools_location_note">JPEG copies keep every pixel – only the GPS data is removed. Photos without location are skipped.</string>
+    <string name="tools_convert_note">Every device opens JPEG. PNG keeps every detail, but files get bigger. Photos already in this format are skipped.</string>
+    <string name="tools_location_note">The copies look exactly like the original – only the place where the photo was taken is removed. Photos without a location are skipped.</string>
     <string name="tools_stitch_note">In the order you chose. All get the width of the narrowest image – nothing is stretched or enlarged.</string>
     <string name="tools_gif_size">Size</string>
     <string name="tools_gif_part">Part of the video (max. 10 s)</string>
@@ -1431,9 +1431,9 @@
     <string name="dock_crop">Crop</string>
     <string name="dock_more">More</string>
     <string name="vid_trim_hint_short">Drag the handles to set the start and end.</string>
-    <string name="vid_export_info">Export info</string>
-    <string name="vid_export_info_fast">Only start and end are trimmed. PhotoMaid tries to keep the quality and re-encodes only the start up to the next keyframe. If the video doesn’t allow that, the whole video is re-encoded. Total length %1$s.</string>
-    <string name="vid_export_info_reencode">Because of your other changes, the whole video is re-encoded when saving. Total length %1$s.</string>
+    <string name="vid_export_info">How it’s saved</string>
+    <string name="vid_export_info_fast">You only trimmed the start and end. That’s quick and the picture quality stays as in the original. If this video doesn’t allow it, PhotoMaid rebuilds it completely – which takes a little longer. Total length %1$s.</string>
+    <string name="vid_export_info_reencode">Because of your other changes, PhotoMaid rebuilds the whole video when you save. This can take a moment. Total length %1$s.</string>
     <string name="lib_mode_albums">Albums</string>
     <string name="org_new_album">New album</string>
     <string name="org_album_name">Album name</string>
@@ -1447,8 +1447,8 @@
     <string name="org_already_in_album">Already all in “%1$s”.</string>
     <string name="org_albums_empty_title">No albums yet</string>
     <string name="org_albums_empty_text">An album collects photos and videos from any folder without copying or moving them. A photo can be in several albums.</string>
-    <string name="org_albums_footer">Albums exist only in PhotoMaid. Folders show where a file is stored; collections find media by a condition.</string>
-    <string name="org_album_empty">This album is empty. In “Photos”, select media and tap ⋯ › Add to album.</string>
+    <string name="org_albums_footer">Albums exist only in PhotoMaid. Folders show where a file is stored; collections find photos by a condition.</string>
+    <string name="org_album_empty">This album is empty. In “Photos”, select something and tap ⋯ › Add to album.</string>
     <string name="org_missing_remove">Remove from list</string>
     <string name="org_tags">Tags</string>
     <string name="org_tag_new_hint">New tag</string>
@@ -1457,7 +1457,7 @@
     <string name="org_tag_remove">Remove tag</string>
     <string name="org_tag_delete">Remove everywhere</string>
     <string name="org_tag_delete_title">Remove the tag “%1$s” everywhere?</string>
-    <string name="org_tag_delete_text">The tag disappears from all media. The files stay unchanged.</string>
+    <string name="org_tag_delete_text">The tag disappears everywhere. The photos and videos themselves stay unchanged.</string>
     <string name="org_tag_state_all">on all</string>
     <string name="org_tag_state_some">on some</string>
     <string name="org_note">Note</string>
@@ -1470,9 +1470,9 @@
     <string name="org_basket_clear">Empty basket</string>
     <string name="org_basket_clear_title">Empty the selection basket?</string>
     <string name="org_basket_clear_text">Only the basket is emptied. The photos and videos stay unchanged.</string>
-    <string name="org_basket_intro">Collect media from different months and folders. The basket stays until you empty it – it has nothing to do with the trash.</string>
+    <string name="org_basket_intro">Collect photos and videos from different months and folders. The basket stays until you empty it – it has nothing to do with the trash.</string>
     <string name="org_basket_empty_title">The selection basket is empty</string>
-    <string name="org_basket_empty_text">In “Photos”, select media and tap ⋯ › Add to selection basket.</string>
+    <string name="org_basket_empty_text">In “Photos”, select something and tap ⋯ › Add to selection basket.</string>
     <string name="org_basket_to_album">Create album from basket</string>
     <plurals name="org_items">
         <item quantity="one">%1$d item</item>
@@ -1521,7 +1521,7 @@
     <string name="wf_target_note">PhotoMaid measures the result. If the target can’t be reached within these limits, no file is created and you’ll see why.</string>
     <string name="wf_videos">Videos</string>
     <string name="wf_video_skip">Skip</string>
-    <string name="wf_video_note">Videos are re-encoded to the target size; the resolution only drops when needed.</string>
+    <string name="wf_video_note">Videos are saved again to fit the target size. The picture only gets smaller if needed.</string>
     <string name="wf_location">Remove location</string>
     <string name="wf_name_base">File name</string>
     <string name="wf_name_base_hint">e.g. Listing → Listing_001 (empty = keep original name)</string>
@@ -1537,7 +1537,7 @@
     <string name="wf_delete_text">Only the saved workflow is deleted. Files it already created stay.</string>
     <string name="wf_run">Run</string>
     <string name="wf_apply">Apply workflow</string>
-    <string name="wf_pick">Choose media</string>
+    <string name="wf_pick">Choose photos and videos</string>
     <string name="wf_preview_title">What happens</string>
     <string name="wf_step_format">Save as %1$s</string>
     <string name="wf_step_resize">Longest side at most %1$s px (never enlarged)</string>
@@ -1561,7 +1561,7 @@
     <string name="wf_reason_video">Videos aren’t part of this workflow.</string>
     <string name="wf_reason_video_long">Too long for the target size – no file was created.</string>
     <string name="wf_reason_unreachable">Smallest measured version: %1$s – above the target, so no file was created.</string>
-    <string name="wf_reason_error">Couldn’t be processed.</string>
+    <string name="wf_reason_error">Sorry, that didn’t work.</string>
     <string name="wf_summary">%1$d done · %2$d skipped · %3$d target not reached · %4$d failed</string>
     <string name="wf_share_again">Share again</string>
     <string name="wf_counts">%1$s photos · %2$s videos</string>
@@ -1594,4 +1594,65 @@
         <item quantity="one">%1$d more not taken over (at most 500 at once).</item>
         <item quantity="other">%1$d more not taken over (at most 500 at once).</item>
     </plurals>
+    <string name="pdf_title">Create PDF</string>
+    <string name="pdf_studio_sub">Photos as a document or contact sheet</string>
+    <string name="pdf_pick">Photos for the PDF</string>
+    <string name="pdf_from_selection">Create PDF</string>
+    <string name="pdf_no_photos">There are no photos in this selection. Videos can’t be placed in a PDF.</string>
+    <string name="pdf_no_date">No date</string>
+    <string name="pdf_saved">Saved to “Documents/PhotoMaid” · %1$s</string>
+    <string name="pdf_failed">The PDF couldn’t be saved.</string>
+    <string name="pdf_page_of">Page %1$d of %2$d</string>
+    <string name="pdf_capped">At most %1$d photos per PDF – the first %1$d were taken.</string>
+    <string name="pdf_per_page">Photos per page</string>
+    <string name="pdf_fit">Fit</string>
+    <string name="pdf_fill">Fill</string>
+    <string name="pdf_paper">Paper</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Orientation</string>
+    <string name="pdf_orient_auto">Automatic</string>
+    <string name="pdf_orient_portrait">Portrait</string>
+    <string name="pdf_orient_landscape">Landscape</string>
+    <string name="pdf_margin">Margin</string>
+    <string name="pdf_margin_none">None</string>
+    <string name="pdf_margin_small">Narrow</string>
+    <string name="pdf_margin_normal">Normal</string>
+    <string name="pdf_caption">Caption</string>
+    <string name="pdf_caption_none">None</string>
+    <string name="pdf_caption_number">Number</string>
+    <string name="pdf_caption_name">File name</string>
+    <string name="pdf_caption_date">Date</string>
+    <string name="pdf_order">Order</string>
+    <string name="pdf_move_up">Move up</string>
+    <string name="pdf_move_down">Move down</string>
+    <string name="pdf_name">File name</string>
+    <string name="pdf_save">Save as PDF</string>
+    <string name="pdf_share">Share PDF</string>
+    <string name="pdf_running">Creating PDF …</string>
+    <string name="pdf_privacy">Photos are re-embedded: location and other capture data don’t go into the PDF. The originals stay unchanged.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d page</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d photo</item>
+        <item quantity="other">%1$d photos</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d video isn’t included.</item>
+        <item quantity="other">%1$d videos aren’t included.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">%1$d photo couldn’t be read – its space stays empty.</item>
+        <item quantity="other">%1$d photos couldn’t be read – their spaces stay empty.</item>
+    </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">All your photos</string>
+    <string name="tour_lib_text">Here are all your photos and videos – by day, month or year, in folders, albums and favourites. Just looking never changes anything.</string>
+    <string name="tour_studio_title">Get creative</string>
+    <string name="tour_studio_text">Edit photos, make collages, short films and PDFs, and use handy tools. You always get new files – your originals stay as they are.</string>
+    <string name="tour_history_title">Later &amp; history</string>
+    <string name="tour_history_text">See what you kept, set aside or saved for later. You can still change any decision here.</string>
+    <string name="tour_settings_title">Settings &amp; help</string>
+    <string name="tour_settings_text">Make PhotoMaid your own and find answers here. You can take this tour again at any time.</string>
 </resources>

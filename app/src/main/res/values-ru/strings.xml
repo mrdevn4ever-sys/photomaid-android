@@ -37,7 +37,7 @@
     <string name="undo">Отменить действие</string>
     <string name="error_settings_not_saved">Не удалось сохранить настройку.</string>
     <string name="error_change_not_saved">Не удалось сохранить изменение.</string>
-    <string name="error_undo_conflict">Нельзя отменить: этот элемент уже был изменён.</string>
+    <string name="error_undo_conflict">Это уже нельзя отменить – вы успели это изменить.</string>
     <string name="error_undo_busy">Дождись завершения очистки корзины, прежде чем отменять действие.</string>
     <string name="error_undo_generic">Сейчас это действие нельзя отменить.</string>
     <string name="tab_today">Сегодня</string>
@@ -72,7 +72,7 @@
         <item quantity="many">Пора снова просмотреть %1$d элементов из «Позже»</item>
         <item quantity="other">Пора снова просмотреть %1$d элемента из «Позже»</item>
     </plurals>
-    <string name="today_reconciliation">Не удалось подтвердить результат прежнего действия в корзине. Ничего не будет удалено повторно.</string>
+    <string name="today_reconciliation">В прошлый раз при очистке корзины что-то прервалось. Для надёжности ничего не будет удалено повторно.</string>
     <string name="cat_photos">Фото</string>
     <string name="cat_videos">Видео</string>
     <string name="cat_screenshots">Скриншоты</string>
@@ -289,7 +289,7 @@
     <string name="large_unknown_footer">Размер этих файлов недоступен. Он не оценивается и не включается в сумму.</string>
     <string name="storage_a">Твоё устройство</string>
     <string name="storage_available">Свободно по данным Android: %1$s</string>
-    <string name="storage_unavailable">Сведения о памяти недоступны</string>
+    <string name="storage_unavailable">Сведения о памяти сейчас недоступны</string>
     <string name="storage_b">Доступно PhotoMaid</string>
     <string name="storage_of_which_screens">из них скриншоты</string>
     <string name="storage_connected_folders">Подключённые папки</string>
@@ -425,12 +425,12 @@
     <string name="pro_f1">Без рекламы</string>
     <string name="pro_f1d">Без рекламных карточек между фото и видео.</string>
     <string name="pro_details">Как работает Pro</string>
-    <string name="pro_details_dup">Копии имеют полностью одинаковое содержимое файла. PhotoMaid сравнивает его на устройстве, не в облаке. Похожие изображения не считаются копиями.</string>
+    <string name="pro_details_dup">Копии – это файлы, совпадающие до мельчайших деталей. PhotoMaid сравнивает их на устройстве, а не в облаке. Просто похожие снимки копиями не считаются.</string>
     <string name="pro_details_rules">Подборки показывают подходящее содержимое с устройства. Ты открываешь и просматриваешь его сам. Они ничего не удаляют автоматически и не убирают в фоне.</string>
-    <string name="pro_details_cleanup">Дневной лимит учитывает элементы, успешно удалённые после подтверждения в корзине. Смахивания не учитываются.</string>
+    <string name="pro_details_cleanup">В дневной лимит входит только то, что вы действительно удаляете из корзины. Пролистывание не считается.</string>
     <string name="expanded">Развёрнуто</string>
     <string name="collapsed">Свёрнуто</string>
-    <string name="pro_privacy">Фото и файлы проверяются и упорядочиваются на устройстве. Для покупок и рекламы технические данные передаются Google или рекламным поставщикам — но не фото, имена файлов или контрольные суммы.</string>
+    <string name="pro_privacy">Ваши фото и файлы проверяются и сортируются только на устройстве. Для покупок и рекламы Google или рекламодателям уходит лишь самое необходимое – никогда ваши фото, их названия или данные из них.</string>
     <string name="pro_pending">Покупка ожидает подтверждения.</string>
     <string name="pro_unlock">Открыть PhotoMaid Pro</string>
     <string name="pro_price_once">%1$s · Разовая покупка</string>
@@ -448,7 +448,7 @@
     <string name="pro_msg_nofill">Сейчас нет доступной рекламы. Попробуй позже.</string>
     <string name="pro_msg_ad_unavailable">Сейчас пробный доступ к инструментам Pro недоступен. Ничего не открыто.</string>
     <string name="set_privacy">Конфиденциальность и доступ</string>
-    <string name="set_privacy_detail">Обработка на устройстве</string>
+    <string name="set_privacy_detail">Фото остаются на устройстве</string>
     <string name="set_notifications">Уведомления</string>
     <string name="allowed">Разрешено</string>
     <string name="off">Выключено</string>
@@ -478,13 +478,13 @@
     <string name="help_decide">Решения</string>
     <string name="help_decide_text">Смахни вверх, чтобы оставить, влево — в корзину, вправо — на потом. По умолчанию элемент вернётся через 2 дня. Интервал можно изменить в настройках. Сразу после смахивания нажми «Изменить», чтобы выбрать другую дату. Смахивание вниз возвращает назад без нового решения.</string>
     <string name="help_delete">Удаление</string>
-    <string name="help_delete_text">Смахивания ничего не удаляют. Элементы сначала попадают в корзину PhotoMaid. При её очистке ты подтверждаешь удаление. Фото и видео после подтверждения Android попадают в его корзину. Файлы удаляются навсегда.</string>
+    <string name="help_delete_text">Пролистывание никогда ничего не удаляет. Отложенное сначала попадает в корзину PhotoMaid. Удаляется что-то только при её очистке – фото и видео уходят в корзину Android после повторного вопроса Android. Файлы из подключённых папок удаляются навсегда.</string>
     <string name="help_cloud">Облако</string>
     <string name="help_cloud_text">Облачные сервисы, например Google Фото, могут синхронизировать удаления с другими устройствами. Проверь их настройки. PhotoMaid не загружает содержимое, которое есть только в облаке.</string>
     <string name="help_free">Бесплатно</string>
     <string name="help_free_text">Просмотр, смахивания и сохранение на потом — без ограничений. Без Pro можно удалить до %1$d в день.</string>
     <string name="privacy_title">Твоя приватность прежде всего</string>
-    <string name="privacy_text">PhotoMaid проверяет фото, видео и разрешённые файлы на твоём устройстве. Аккаунт PhotoMaid не нужен, сервера PhotoMaid нет. Облачные сервисы, например Google Фото, могут синхронизировать удаления с другими устройствами.</string>
+    <string name="privacy_text">PhotoMaid просматривает ваши фото, видео и разрешённые файлы только на устройстве. Аккаунт не нужен, и сервера PhotoMaid нет. Полезно знать: в облачных сервисах вроде Google Фото удалённое может исчезнуть и на других устройствах.</string>
     <string name="privacy_media">Фото и видео</string>
     <string name="privacy_media_text">Чтобы просматривать, упорядочивать и удалять фото и видео после твоего подтверждения.</string>
     <string name="privacy_allow">Разрешить доступ</string>
@@ -498,8 +498,8 @@
     <string name="privacy_notifications_allow">Разрешить уведомления</string>
     <string name="privacy_folders">Папки (необязательно)</string>
     <string name="privacy_folders_text">Другие файлы берутся только из выбранных папок. Подключи их в разделе Уборка › Файлы.</string>
-    <string name="privacy_purchases">Покупки обрабатывает Google Play. Для этого не передаются фото, имена файлов, пути или контрольные суммы.</string>
-    <string name="privacy_ads">Бесплатная версия показывает рекламу Google AdMob. Согласие на рекламу можно изменить в настройках. Фото, имена файлов, пути и контрольные суммы не передаются рекламным поставщикам. В Pro нет рекламы.</string>
+    <string name="privacy_purchases">Покупки проходят через Google Play. Ваши фото, их названия, папки и любые данные из них для этого никогда не передаются.</string>
+    <string name="privacy_ads">В бесплатной версии показывается реклама Google AdMob. Согласие можно изменить в настройках. Ваши фото, их названия, папки и любые данные из них никогда не попадают к рекламодателям. В Pro рекламы нет.</string>
     <string name="continue_">Далее</string>
     <string name="notif_channel">Напоминания</string>
     <string name="notif_due_body">Сегодня пора посмотреть что-то из «Позже».</string>
@@ -551,7 +551,7 @@
     <string name="pro_active_title">Pro активен</string>
     <string name="pro_active_sub">Разовая покупка: без рекламы, без дневного лимита и со всеми инструментами Pro.</string>
     <string name="later_notify_title">Напомнить, когда пора посмотреть?</string>
-    <string name="pro_privacy_no_ads">Фото и файлы проверяются и упорядочиваются на устройстве. Для покупки технические данные передаются Google — но не фото, имена файлов или контрольные суммы.</string>
+    <string name="pro_privacy_no_ads">Ваши фото и файлы проверяются и сортируются только на устройстве. Для покупки Google получает лишь самое необходимое – никогда ваши фото, их названия или данные из них.</string>
     <string name="hub_nothing_pending">Всё просмотрено</string>
     <plurals name="hub_pending">
         <item quantity="one">Просмотреть: %1$d</item>
@@ -676,7 +676,7 @@
     <string name="tour_today_quick_title">Твои ярлыки</string>
     <string name="tour_today_quick_text">Фото, видео, скриншоты или папка: добавь ярлыки к тому, что часто разбираешь.</string>
     <string name="tour_today_tab_title">Другие способы уборки</string>
-    <string name="tour_today_tab_text">Большие файлы, копии, папки и подборки есть в разделе «Уборка».</string>
+    <string name="tour_today_tab_text">Большие файлы, повторяющиеся фото, отдельные месяцы и готовые подборки: здесь вы наводите порядок шаг за шагом.</string>
     <string name="tour_feed_basket_title">Твоя корзина</string>
     <string name="tour_feed_basket_text">Число показывает, сколько элементов выбрано. Нажми на него, чтобы проверить выбор и очистить корзину.</string>
     <string name="tour_feed_undo_title">Отменить действие</string>
@@ -734,8 +734,8 @@
     <string name="grid_open">Обзор</string>
     <string name="grid_select_all">Все</string>
     <string name="grid_select_none">Снять</string>
-    <string name="help_tours_again">Показать подсказки снова</string>
-    <string name="help_tours_reset">Подсказки снова появятся при следующем открытии экранов.</string>
+    <string name="help_tours_again">Снова показать обзор и подсказки</string>
+    <string name="help_tours_reset">Обзор и подсказки появятся снова при следующем открытии.</string>
     <string name="hub_months_sub">Месяц за месяцем до конца</string>
     <string name="later_back_to_stack">Вернуть в стопку</string>
     <string name="later_bookmarked_row">Отложено без даты</string>
@@ -899,8 +899,8 @@
     <string name="edit_save_replace_action">Сохранить, оригинал в корзину</string>
     <string name="edit_remove_location">Удалить геоданные</string>
     <string name="edit_remove_location_text">В сохранённом фото не будет места съёмки.</string>
-    <string name="edit_hint_heic">Сохранится в JPEG (HEIC нельзя надёжно записать на этом устройстве).</string>
-    <string name="edit_hint_hdr">Изменение цвета убирает дополнительную HDR-яркость этого фото.</string>
+    <string name="edit_hint_heic">Сохраняется в JPEG, чтобы открывалось везде, – это устройство не умеет надёжно сохранять HEIC.</string>
+    <string name="edit_hint_hdr">На этом фото особенно яркие света (HDR). После изменения цвета оно будет сиять чуть слабее.</string>
     <string name="edit_hint_lossless">Без потерь: меняется только ориентация, качество остаётся прежним.</string>
     <string name="edit_hint_replace_confirm">Android один раз спросит, можно ли переместить оригинал в корзину Android.</string>
     <string name="edit_saving">Сохранение…</string>
@@ -908,7 +908,7 @@
     <string name="edit_trim_range">%1$s – %2$s · %3$s с</string>
     <string name="edit_trim_start">Начало</string>
     <string name="edit_trim_end">Конец</string>
-    <string name="edit_trim_hint">Перетащи ползунки. Общая длина %1$s. Качество сохраняется: перекодируется только начало до следующего ключевого кадра.</string>
+    <string name="edit_trim_hint">Потяните за ручки, чтобы выбрать начало и конец. Общая длина %1$s. Качество изображения не меняется.</string>
     <string name="edit_discard_title">Отменить изменения?</string>
     <string name="edit_discard_text">Изменения не сохранятся. Оригинал останется как есть.</string>
     <string name="edit_discard">Отменить</string>
@@ -992,8 +992,8 @@
     <string name="edit_mk_rect">Прямоугольник</string>
     <string name="edit_mk_brush">Кисть</string>
     <string name="edit_mk_strength">Сила</string>
-    <string name="edit_mk_redact_solid_hint">Рекомендуется для личных данных: закрытые пиксели полностью заменяются в сохранённом или отправленном файле.</string>
-    <string name="edit_mk_redact_hint">Пикселизация и размытие используют крупные блоки. Для текста, который точно нельзя прочитать, надёжнее «Сплошная заливка».</string>
+    <string name="edit_mk_redact_solid_hint">Рекомендуется для личного: то, что вы закрыли, действительно исчезает из сохранённого или отправленного файла.</string>
+    <string name="edit_mk_redact_hint">При «Пикселизации» и «Размытии» контуры ещё можно угадать. Для текста, который нельзя прочитать, выберите «Сплошная заливка».</string>
     <string name="edit_mk_edit_text">Изменить</string>
     <string name="edit_mk_duplicate">Дублировать</string>
     <string name="edit_mk_front">Вперёд</string>
@@ -1167,7 +1167,7 @@
     <string name="ret_linear">Градиент</string>
     <string name="ret_brush">Кисть</string>
     <string name="ret_red_eye">Красные глаза</string>
-    <string name="ret_red_eye_hint">Нажми на красный глаз. Для маленьких лиц приблизь двумя пальцами. Меняются только явно красные пиксели.</string>
+    <string name="ret_red_eye_hint">Коснитесь красного глаза. Для маленьких лиц сначала увеличьте двумя пальцами. Меняется только красный цвет в глазу.</string>
     <string name="ret_red_eye_undo">Убрать последнюю</string>
     <string name="ret_size">Размер</string>
     <string name="ret_new">Новый</string>
@@ -1199,7 +1199,7 @@
     <string name="vid_cut_confirm">Удалить</string>
     <string name="vid_cut_draft">Удалить %1$s – %2$s? Перетащи красные маркеры.</string>
     <string name="vid_cut_hint_restore">Красные фрагменты при сохранении действительно удаляются (всего %1$s). Нажми на фрагмент ниже, чтобы вернуть его.</string>
-    <string name="vid_trim_hint_reencode">Перетащи маркеры. Всего %1$s. Из-за других изменений видео будет перекодировано.</string>
+    <string name="vid_trim_hint_reencode">Потяните за ручки. Общая длина %1$s. Из-за других изменений видео пересоздаётся при сохранении – это займёт чуть больше времени.</string>
     <string name="vid_speed_result">Итог: %1$s</string>
     <string name="vid_speed_hint">Звук ускоряется или замедляется без изменения высоты.</string>
     <string name="vid_no_audio">В этом видео нет звука.</string>
@@ -1208,7 +1208,7 @@
     <string name="vid_volume">Громкость</string>
     <string name="vid_fade">Плавное начало и конец</string>
     <string name="vid_fade_none">Нет</string>
-    <string name="vid_audio_export">Сохранить звук как M4A</string>
+    <string name="vid_audio_export">Сохранить только звук</string>
     <string name="vid_audio_suffix">звук</string>
     <string name="vid_audio_running">Сохранение звука</string>
     <string name="vid_audio_saved">«%1$s» сохранён в Music/PhotoMaid.</string>
@@ -1218,12 +1218,12 @@
     <string name="vid_fill_hint">Заполняет новый формат; края за пределами обрезаются.</string>
     <string name="vid_fit_hint">Показывает всё видео; свободное место — чёрные полосы.</string>
     <string name="vid_profile">Качество</string>
-    <string name="vid_profile_high">Высокое качество (исходное разрешение)</string>
-    <string name="vid_profile_balanced">Сбалансированное (до 1080p)</string>
-    <string name="vid_profile_small">Маленький файл (720p)</string>
+    <string name="vid_profile_high">Лучшее качество (как оригинал)</string>
+    <string name="vid_profile_balanced">Сбалансированно (Full HD)</string>
+    <string name="vid_profile_small">Маленький файл (HD)</string>
     <string name="vid_estimate">≈ %1$s</string>
-    <string name="vid_estimate_hint">Оценка по битрейту × длительности. У сохранённого файла виден реальный размер.</string>
-    <string name="vid_hdr_hint">Это HDR-видео сохраняется как SDR, потому что применены изменения цвета.</string>
+    <string name="vid_estimate_hint">Это лишь примерная оценка. Точный размер вы увидите после сохранения.</string>
+    <string name="vid_hdr_hint">У этого видео особенно яркие цвета (HDR). С вашими изменениями цвета оно сохранится в обычных цветах.</string>
     <string name="tab_library">Фото</string>
     <string name="lib_filter_all">Все</string>
     <string name="lib_filter_favorites">Избранное</string>
@@ -1391,7 +1391,7 @@
     <string name="systrash_delete_text">Затем подтвердите в Android. Удалённые навсегда фото и видео восстановить нельзя.</string>
     <string name="lib_info_raw">Файл RAW</string>
     <string name="set_delete_permanently">Удалять навсегда</string>
-    <string name="set_delete_permanently_detail">Выкл.: очистка перемещает в корзину Android (можно восстановить какое-то время). Вкл.: сразу удаляется навсегда.</string>
+    <string name="set_delete_permanently_detail">Выкл.: при очистке всё сначала попадает в корзину Android, и какое-то время это можно вернуть. Вкл.: всё сразу удаляется навсегда.</string>
     <string name="set_delete_permanently_confirm_title">Включить удаление навсегда?</string>
     <string name="set_delete_permanently_confirm_text">Теперь очистка корзины PhotoMaid удаляет фото и видео навсегда. Они не попадают в корзину Android, восстановить их нельзя – даже из ещё не синхронизированных копий. Android всё равно спросит каждый раз.</string>
     <string name="set_delete_permanently_confirm_action">Включить</string>
@@ -1453,9 +1453,9 @@
     <string name="movie_format_first">Как первый клип</string>
     <string name="movie_fit_note">Клипы никогда не растягиваются: либо видно всё изображение (с чёрными полями), либо оно заполняет кадр, а края обрезаются.</string>
     <string name="movie_quality">Качество</string>
-    <string name="movie_quality_high">Высокое (1080p)</string>
+    <string name="movie_quality_high">Высокое (Full HD)</string>
     <string name="movie_quality_balanced">Сбалансированное</string>
-    <string name="movie_quality_small">Маленькое (720p)</string>
+    <string name="movie_quality_small">Маленькое (HD)</string>
     <string name="movie_music_none">Музыки пока нет.</string>
     <string name="movie_music_pick">Выбрать аудиофайл</string>
     <string name="movie_music_remove">Убрать</string>
@@ -1478,7 +1478,7 @@
     <string name="tools_convert">Преобразовать</string>
     <string name="tools_convert_sub">например, HEIC в JPEG, как новые копии</string>
     <string name="tools_location">Удалить геоданные</string>
-    <string name="tools_location_sub">Копии без GPS, например перед отправкой</string>
+    <string name="tools_location_sub">Копии без места съёмки, например перед отправкой</string>
     <string name="tools_stitch">Склеить скриншоты</string>
     <string name="tools_stitch_sub">Друг под другом, одним длинным изображением</string>
     <string name="tools_gif">Создать GIF</string>
@@ -1499,8 +1499,8 @@
     <string name="tools_q_small">Файл меньше</string>
     <string name="tools_remove_location">Также удалить геоданные</string>
     <string name="tools_target_format">Новый формат</string>
-    <string name="tools_convert_note">JPEG открывается везде; PNG сохраняет каждый пиксель, но файлы больше. Файлы в этом формате пропускаются.</string>
-    <string name="tools_location_note">Копии JPEG сохраняют каждый пиксель – удаляются только GPS-данные. Фото без геоданных пропускаются.</string>
+    <string name="tools_convert_note">JPEG открывается на любом устройстве. PNG сохраняет все детали, но файлы больше. Фото, которые уже в этом формате, пропускаются.</string>
+    <string name="tools_location_note">Копии выглядят точно как оригинал – удаляется только место съёмки. Фото без места пропускаются.</string>
     <string name="tools_stitch_note">В выбранном порядке. Все получают ширину самого узкого изображения – ничего не растягивается и не увеличивается.</string>
     <string name="tools_gif_size">Размер</string>
     <string name="tools_gif_part">Фрагмент видео (макс. 10 с)</string>
@@ -1553,9 +1553,9 @@
     <string name="dock_crop">Кадр</string>
     <string name="dock_more">Ещё</string>
     <string name="vid_trim_hint_short">Перетащи ползунки, чтобы задать начало и конец.</string>
-    <string name="vid_export_info">Об экспорте</string>
-    <string name="vid_export_info_fast">Обрезаются только начало и конец. PhotoMaid старается сохранить качество и перекодирует только начало до следующего ключевого кадра. Если видео этого не позволяет, перекодируется всё видео. Общая длина %1$s.</string>
-    <string name="vid_export_info_reencode">Из‑за других изменений при сохранении перекодируется всё видео. Общая длина %1$s.</string>
+    <string name="vid_export_info">Как сохраняется</string>
+    <string name="vid_export_info_fast">Вы обрезали только начало и конец. Это быстро, и качество остаётся как в оригинале. Если это видео так не позволяет, PhotoMaid пересоздаст его целиком – это займёт чуть больше времени. Общая длина %1$s.</string>
+    <string name="vid_export_info_reencode">Из-за других изменений PhotoMaid пересоздаёт всё видео при сохранении. Это может занять немного времени. Общая длина %1$s.</string>
     <string name="lib_mode_albums">Альбомы</string>
     <string name="org_new_album">Новый альбом</string>
     <string name="org_album_name">Название альбома</string>
@@ -1655,7 +1655,7 @@
     <string name="wf_target_note">PhotoMaid измеряет результат. Если цель недостижима в этих пределах, файл не создаётся, и вы увидите причину.</string>
     <string name="wf_videos">Видео</string>
     <string name="wf_video_skip">Пропустить</string>
-    <string name="wf_video_note">Видео перекодируются под целевой размер; разрешение снижается, только если нужно.</string>
+    <string name="wf_video_note">Видео сохраняются заново под нужный размер. Изображение уменьшается, только если нужно.</string>
     <string name="wf_location">Удалить геоданные</string>
     <string name="wf_name_base">Имя файла</string>
     <string name="wf_name_base_hint">напр. Объявление → Объявление_001 (пусто = исходное имя)</string>
@@ -1695,7 +1695,7 @@
     <string name="wf_reason_video">Видео не входят в этот сценарий.</string>
     <string name="wf_reason_video_long">Слишком длинное для целевого размера – файл не создан.</string>
     <string name="wf_reason_unreachable">Наименьшая измеренная версия: %1$s – выше цели, поэтому файл не создан.</string>
-    <string name="wf_reason_error">Не удалось обработать.</string>
+    <string name="wf_reason_error">К сожалению, не получилось.</string>
     <string name="wf_summary">Готово: %1$d · пропущено: %2$d · цель не достигнута: %3$d · ошибок: %4$d</string>
     <string name="wf_share_again">Поделиться снова</string>
     <string name="wf_counts">Фото: %1$s · видео: %2$s</string>
@@ -1736,4 +1736,73 @@
         <item quantity="many">Ещё %1$d не приняты (не больше 500 за раз).</item>
         <item quantity="other">Ещё %1$d не приняты (не больше 500 за раз).</item>
     </plurals>
+    <string name="pdf_title">Создать PDF</string>
+    <string name="pdf_studio_sub">Фото как документ или контактный лист</string>
+    <string name="pdf_pick">Фото для PDF</string>
+    <string name="pdf_from_selection">Создать PDF</string>
+    <string name="pdf_no_photos">В выборке нет фото. Видео нельзя поместить в PDF.</string>
+    <string name="pdf_no_date">Без даты</string>
+    <string name="pdf_saved">Сохранено в «Documents/PhotoMaid» · %1$s</string>
+    <string name="pdf_failed">Не удалось сохранить PDF.</string>
+    <string name="pdf_page_of">Страница %1$d из %2$d</string>
+    <string name="pdf_capped">Не больше %1$d фото в PDF – взяты первые %1$d.</string>
+    <string name="pdf_per_page">Фото на странице</string>
+    <string name="pdf_fit">Вписать</string>
+    <string name="pdf_fill">Заполнить</string>
+    <string name="pdf_paper">Бумага</string>
+    <string name="pdf_paper_letter">US Letter</string>
+    <string name="pdf_orientation">Ориентация</string>
+    <string name="pdf_orient_auto">Автоматически</string>
+    <string name="pdf_orient_portrait">Книжная</string>
+    <string name="pdf_orient_landscape">Альбомная</string>
+    <string name="pdf_margin">Поля</string>
+    <string name="pdf_margin_none">Без полей</string>
+    <string name="pdf_margin_small">Узкие</string>
+    <string name="pdf_margin_normal">Обычные</string>
+    <string name="pdf_caption">Подпись</string>
+    <string name="pdf_caption_none">Нет</string>
+    <string name="pdf_caption_number">Номер</string>
+    <string name="pdf_caption_name">Имя файла</string>
+    <string name="pdf_caption_date">Дата</string>
+    <string name="pdf_order">Порядок</string>
+    <string name="pdf_move_up">Выше</string>
+    <string name="pdf_move_down">Ниже</string>
+    <string name="pdf_name">Имя файла</string>
+    <string name="pdf_save">Сохранить как PDF</string>
+    <string name="pdf_share">Поделиться PDF</string>
+    <string name="pdf_running">Создание PDF…</string>
+    <string name="pdf_privacy">Фото встраиваются заново: местоположение и другие данные съёмки не попадают в PDF. Оригиналы не меняются.</string>
+    <plurals name="pdf_pages">
+        <item quantity="one">%1$d страница</item>
+        <item quantity="few">%1$d страницы</item>
+        <item quantity="many">%1$d страниц</item>
+        <item quantity="other">%1$d страницы</item>
+    </plurals>
+    <plurals name="pdf_photos">
+        <item quantity="one">%1$d фото</item>
+        <item quantity="few">%1$d фото</item>
+        <item quantity="many">%1$d фото</item>
+        <item quantity="other">%1$d фото</item>
+    </plurals>
+    <plurals name="pdf_videos_skipped">
+        <item quantity="one">%1$d видео не добавлено.</item>
+        <item quantity="few">%1$d видео не добавлены.</item>
+        <item quantity="many">%1$d видео не добавлены.</item>
+        <item quantity="other">%1$d видео не добавлены.</item>
+    </plurals>
+    <plurals name="pdf_unreadable">
+        <item quantity="one">Не удалось прочитать %1$d фото – его место останется пустым.</item>
+        <item quantity="few">Не удалось прочитать %1$d фото – их места останутся пустыми.</item>
+        <item quantity="many">Не удалось прочитать %1$d фото – их места останутся пустыми.</item>
+        <item quantity="other">Не удалось прочитать %1$d фото – их места останутся пустыми.</item>
+    </plurals>
+    <string name="pdf_summary">%1$s · %2$s</string>
+    <string name="tour_lib_title">Все ваши фото</string>
+    <string name="tour_lib_text">Здесь все ваши фото и видео – по дням, месяцам или годам, в папках, альбомах и избранном. Просмотр ничего не меняет.</string>
+    <string name="tour_studio_title">Творите</string>
+    <string name="tour_studio_text">Редактируйте фото, делайте коллажи, короткие фильмы и PDF, пользуйтесь удобными инструментами. Всегда создаются новые файлы – оригиналы остаются как есть.</string>
+    <string name="tour_history_title">Позже и история</string>
+    <string name="tour_history_text">Здесь видно, что вы оставили, отложили в сторону или на потом. Любое решение можно изменить.</string>
+    <string name="tour_settings_title">Настройки и помощь</string>
+    <string name="tour_settings_text">Настройте PhotoMaid под себя и найдите ответы. Этот обзор можно повторить в любое время.</string>
 </resources>
