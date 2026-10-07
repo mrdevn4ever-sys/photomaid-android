@@ -1566,4 +1566,32 @@
     <string name="wf_share_again">Tekrar paylaş</string>
     <string name="wf_counts">%1$s fotoğraf · %2$s video</string>
     <string name="wf_start">Başlat</string>
+    <string name="share_target_label">PhotoMaid’e gönder</string>
+    <string name="share_title">Alındı</string>
+    <string name="share_none">Paylaşılan dosyaların hiçbiri bu cihazın fotoğraf arşivinde değil.</string>
+    <string name="share_no_access">PhotoMaid henüz fotoğraflarına erişemiyor. Ayarlarda erişime izin verip yeniden gönder.</string>
+    <string name="share_never">Hiçbir şey silinmez veya karara bağlanmaz. Yeni dosya yalnızca kaydettiğinde oluşur.</string>
+    <string name="share_workflow">İş akışı uygula</string>
+    <string name="share_edit">Düzenle</string>
+    <string name="shortcut_clean">Düzenle</string>
+    <string name="shortcut_clean_long">Şimdi düzenle</string>
+    <string name="shortcut_due">Zamanı gelen</string>
+    <string name="shortcut_due_long">“Sonra”dan zamanı gelenler</string>
+    <string name="shortcut_workflow_gone">Bu iş akışı silindi.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d fotoğraf veya video</item>
+        <item quantity="other">%1$d fotoğraf ve video</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d dosya bu cihazın arşivinde değil ve alınmayacak.</item>
+        <item quantity="other">%1$d dosya bu cihazın arşivinde değil ve alınmayacak.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d dosya fotoğraf veya video değil.</item>
+        <item quantity="other">%1$d dosya fotoğraf veya video değil.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">%1$d tane daha alınmadı (bir seferde en fazla 500).</item>
+        <item quantity="other">%1$d tane daha alınmadı (bir seferde en fazla 500).</item>
+    </plurals>
 </resources>

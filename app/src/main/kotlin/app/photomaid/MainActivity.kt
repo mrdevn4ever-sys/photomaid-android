@@ -1,5 +1,6 @@
 package app.photomaid
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,11 +16,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import app.photomaid.design.AppBackground
 import app.photomaid.design.ErrorState
 import app.photomaid.design.PhotoMaidTheme
 import app.photomaid.navigation.RootContent
+import app.photomaid.system.AppEntry
 import app.photomaid.system.SystemDialogs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private val trashLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
@@ -35,6 +40,7 @@ class MainActivity : ComponentActivity() {
         // Nur im Build-Typ `qa` wirksam (in debug/release sind die Fixtures leer).
         QAFixtures.seedMedia = BuildConfig.QA_FIXTURES && intent.getBooleanExtra("qa-seed-media", false)
         application.startBoot(qaFixtures = intent.getBooleanExtra("qa-fixtures", false))
+        if (savedInstanceState == null) readEntry(intent)
         setContent {
             val boot by application.boot.collectAsState()
             when (val b = boot) {
@@ -46,6 +52,17 @@ class MainActivity : ComponentActivity() {
                 BootState.Loading -> PhotoMaidTheme { Loading() }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        readEntry(intent)
+    }
+
+    /** App-Shortcut oder Teilen: Dateiangaben sofort lesen (Übergabe-Rechte gelten nur, solange diese Activity lebt). */
+    private fun readEntry(intent: Intent?) {
+        lifecycleScope.launch(Dispatchers.IO) { AppEntry.read(this@MainActivity, intent)?.let { AppEntry.post(System.identityHashCode(this@MainActivity), it) } }
     }
 
     override fun onDestroy() {

@@ -7,6 +7,11 @@ import app.photomaid.feature.workflow.WorkflowRequests
 import app.photomaid.feature.workflow.WorkflowRunRequest
 import app.photomaid.feature.workflow.WorkflowRequest
 import app.photomaid.feature.organize.OrganizeScreen
+import app.photomaid.feature.share.ShareRequests
+import app.photomaid.feature.share.ShareScreen
+import app.photomaid.system.AppEntry
+import app.photomaid.system.EntryRequest
+import app.photomaid.core.share.ShortcutTarget
 import app.photomaid.feature.organize.OrganizeTarget
 import app.photomaid.feature.months.MonthsScreen
 import app.photomaid.feature.editor.EditorScreen
@@ -95,6 +100,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -400,6 +406,12 @@ private fun RootNav(app: AppModel) {
             val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
             if (req == null) LaunchedEffect(entry) { close() } else WorkflowRunScreen(req, nav, onClose = { key?.let { WorkflowRequests.runs.remove(it) }; close() })
         }
+        composable("share/{id}") { entry ->
+            val key = entry.arguments?.getString("id"); val req = key?.let { ShareRequests.map[it] }
+            RemoveOnDestroy(entry) { key?.let { ShareRequests.map.remove(it) } }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() } else ShareScreen(req, nav, onClose = { close() })
+        }
         composable("organize/{target}") { entry ->
             val target = entry.arguments?.getString("target")?.let(OrganizeTarget::decode)
             val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
@@ -440,6 +452,32 @@ private fun RootNav(app: AppModel) {
         }
         composable(Routes.PRO) { ProScreen(nav) }
         composable(Routes.PRIVACY) { PrivacyAccessScreen(onboarding = false, onDone = { root.popBackStack() }) }
+    }
+    // Einstiege von außen (App-Shortcut, Teilen): erst hier, nach dem Onboarding, und genau einmal abholen.
+    val owner = System.identityHashCode(LocalContext.current.findActivity())
+    LaunchedEffect(nav, owner) {
+        AppEntry.pending.collect { if (it != null) AppEntry.take(owner)?.let { r -> openEntry(app, nav, r) } }
+    }
+}
+
+/** Ein Einstieg öffnet nur eine Ansicht – keine Entscheidung, nichts wird gelöscht oder ohne weiteren Tipp gestartet. */
+internal fun openEntry(app: AppModel, nav: Nav, r: EntryRequest) {
+    when (r) {
+        is EntryRequest.Share -> { val id = java.util.UUID.randomUUID().toString(); ShareRequests.map[id] = r; nav.push("share/$id") }
+        is EntryRequest.Shortcut -> when (val t = r.target) {
+            ShortcutTarget.Clean -> nav.openFeed(FeedRequest(FeedRequest.Source.AllMedia))
+            ShortcutTarget.Due -> nav.openFeed(FeedRequest(FeedRequest.Source.Due))
+            ShortcutTarget.Basket -> nav.openOrganize(OrganizeTarget.Basket)
+            ShortcutTarget.Workflows -> nav.openWorkflows(WorkflowRequest(java.util.UUID.randomUUID().toString(), null))
+            is ShortcutTarget.Workflow -> {
+                val w = app.workflows.get(t.workflowId)
+                if (w == null) nav.openWorkflows(WorkflowRequest(java.util.UUID.randomUUID().toString(), null))
+                else nav.openPicker(PickRequest(java.util.UUID.randomUUID().toString(), photos = true, videos = true, min = 1, max = 500,
+                    title = R.string.wf_pick, library = true) { picked ->
+                    nav.openWorkflowRun(WorkflowRunRequest(java.util.UUID.randomUUID().toString(), w.id, picked))
+                })
+            }
+        }
     }
 }
 
@@ -618,3 +656,9 @@ val TabBarClearance = 96.dp
 /** Listenende auf Tab-Startseiten: Tabbar + Systemnavigation (Gerätebefund: 3-Tasten-Leiste verdeckte den Speicher). */
 @Composable
 fun TabBarEndSpacer(minus: androidx.compose.ui.unit.Dp = 0.dp) = Spacer(Modifier.navigationBarsPadding().height(TabBarClearance - minus))
+
+private tailrec fun android.content.Context.findActivity(): android.app.Activity? = when (this) {
+    is android.app.Activity -> this
+    is android.content.ContextWrapper -> baseContext.findActivity()
+    else -> null
+}

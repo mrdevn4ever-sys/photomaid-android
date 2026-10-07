@@ -1566,4 +1566,32 @@
     <string name="wf_share_again">Opnieuw delen</string>
     <string name="wf_counts">%1$s foto’s · %2$s video’s</string>
     <string name="wf_start">Starten</string>
+    <string name="share_target_label">Naar PhotoMaid sturen</string>
+    <string name="share_title">Ontvangen</string>
+    <string name="share_none">Geen van de gedeelde bestanden staat in de fotobibliotheek van dit apparaat.</string>
+    <string name="share_no_access">PhotoMaid heeft nog geen toegang tot je foto’s. Sta toegang toe in Instellingen en stuur opnieuw.</string>
+    <string name="share_never">Er wordt niets verwijderd of beslist. Een nieuw bestand ontstaat pas als je opslaat.</string>
+    <string name="share_workflow">Werkstroom toepassen</string>
+    <string name="share_edit">Bewerken</string>
+    <string name="shortcut_clean">Opruimen</string>
+    <string name="shortcut_clean_long">Nu opruimen</string>
+    <string name="shortcut_due">Gepland</string>
+    <string name="shortcut_due_long">Gepland uit ‘Later’</string>
+    <string name="shortcut_workflow_gone">Deze werkstroom is verwijderd.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d foto of video</item>
+        <item quantity="other">%1$d foto’s en video’s</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d bestand staat niet in de bibliotheek van dit apparaat en wordt niet overgenomen.</item>
+        <item quantity="other">%1$d bestanden staan niet in de bibliotheek van dit apparaat en worden niet overgenomen.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d bestand is geen foto of video.</item>
+        <item quantity="other">%1$d bestanden zijn geen foto’s of video’s.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">Nog %1$d niet overgenomen (maximaal 500 tegelijk).</item>
+        <item quantity="other">Nog %1$d niet overgenomen (maximaal 500 tegelijk).</item>
+    </plurals>
 </resources>

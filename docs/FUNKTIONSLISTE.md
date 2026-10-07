@@ -130,6 +130,13 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Ergebnisliste je Datei: fertig (vorher → nachher gemessen), übersprungen, Ziel nicht erreicht (keine Datei, kleinste gemessene Größe als Grund), fehlgeschlagen; „Erneut teilen“ (W4)
 - Nie löschen, nie Papierkorb, keine Entscheidung über Quellen; Free bis 10 Dateien je Durchgang
 
+## 8b. Teilen-Ziel und App-Shortcuts
+- „An PhotoMaid senden“ aus jeder App (Fotos/Videos, einzeln oder mehrere): Seite „Übernommen“ mit Arbeitsablauf anwenden, Bearbeiten (genau ein Medium), Zu Album hinzufügen, In den Auswahlkorb (S1)
+- Zuordnung zur Mediathek über die MediaStore-ID, sonst nur eindeutig über Dateiname + Größe; nicht Gefundenes und Nicht-Fotos/-Videos werden gezählt und nicht übernommen – keine Kopie (S2)
+- Direktes Teilen an einen gespeicherten Ablauf (erscheint im Teilen-Menü): öffnet sofort die Vorschau „Das passiert“; erst „Starten“ arbeitet (S3)
+- Langdruck auf das App-Symbol (auch anheftbar): Jetzt aufräumen · Fällig aus „Später“ · Auswahlkorb · Arbeitsabläufe · bis zu 4 eigene Abläufe (S4)
+- Kein Einstieg von außen entscheidet, löscht oder startet etwas ohne weiteren Tipp; Shortcuts enthalten keine Medien-IDs
+
 ## 9. Foto-Editor (✏️ aus Feed, Betrachter oder Studio)
 - Gemeinsames Editor-Gerüst (Redesign 2026-10):
   - feste Bühne, die nicht vom Medium oder Werkzeug abhängt

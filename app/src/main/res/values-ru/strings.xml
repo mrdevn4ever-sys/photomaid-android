@@ -1700,4 +1700,40 @@
     <string name="wf_share_again">Поделиться снова</string>
     <string name="wf_counts">Фото: %1$s · видео: %2$s</string>
     <string name="wf_start">Начать</string>
+    <string name="share_target_label">Отправить в PhotoMaid</string>
+    <string name="share_title">Получено</string>
+    <string name="share_none">Ни одного из отправленных файлов нет в медиатеке этого устройства.</string>
+    <string name="share_no_access">У PhotoMaid пока нет доступа к фото. Разрешите доступ в настройках и отправьте снова.</string>
+    <string name="share_never">Ничего не удаляется и не решается. Новый файл появится, только когда вы сохраните.</string>
+    <string name="share_workflow">Применить сценарий</string>
+    <string name="share_edit">Изменить</string>
+    <string name="shortcut_clean">Разобрать</string>
+    <string name="shortcut_clean_long">Разобрать сейчас</string>
+    <string name="shortcut_due">К просмотру</string>
+    <string name="shortcut_due_long">К просмотру из «Позже»</string>
+    <string name="shortcut_workflow_gone">Этот сценарий удалён.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d фото или видео</item>
+        <item quantity="few">%1$d фото и видео</item>
+        <item quantity="many">%1$d фото и видео</item>
+        <item quantity="other">%1$d фото и видео</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d файла нет в медиатеке этого устройства, он не будет принят.</item>
+        <item quantity="few">%1$d файлов нет в медиатеке этого устройства, они не будут приняты.</item>
+        <item quantity="many">%1$d файлов нет в медиатеке этого устройства, они не будут приняты.</item>
+        <item quantity="other">%1$d файла нет в медиатеке этого устройства, они не будут приняты.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d файл — не фото и не видео.</item>
+        <item quantity="few">%1$d файла — не фото и не видео.</item>
+        <item quantity="many">%1$d файлов — не фото и не видео.</item>
+        <item quantity="other">%1$d файла — не фото и не видео.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">Ещё %1$d не принят (не больше 500 за раз).</item>
+        <item quantity="few">Ещё %1$d не приняты (не больше 500 за раз).</item>
+        <item quantity="many">Ещё %1$d не приняты (не больше 500 за раз).</item>
+        <item quantity="other">Ещё %1$d не приняты (не больше 500 за раз).</item>
+    </plurals>
 </resources>

@@ -1633,4 +1633,36 @@
     <string name="wf_share_again">Condividi di nuovo</string>
     <string name="wf_counts">%1$s foto · %2$s video</string>
     <string name="wf_start">Avvia</string>
+    <string name="share_target_label">Invia a PhotoMaid</string>
+    <string name="share_title">Ricevuto</string>
+    <string name="share_none">Nessuno dei file condivisi si trova nella libreria foto di questo dispositivo.</string>
+    <string name="share_no_access">PhotoMaid non ha ancora accesso alle tue foto. Consenti l’accesso nelle impostazioni e invia di nuovo.</string>
+    <string name="share_never">Nulla viene eliminato o deciso. Un nuovo file viene creato solo quando salvi.</string>
+    <string name="share_workflow">Applica flusso di lavoro</string>
+    <string name="share_edit">Modifica</string>
+    <string name="shortcut_clean">Riordina</string>
+    <string name="shortcut_clean_long">Riordina ora</string>
+    <string name="shortcut_due">In scadenza</string>
+    <string name="shortcut_due_long">In scadenza da «Più tardi»</string>
+    <string name="shortcut_workflow_gone">Questo flusso di lavoro è stato eliminato.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d foto o video</item>
+        <item quantity="many">%1$d foto e video</item>
+        <item quantity="other">%1$d foto e video</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d file non è nella libreria di questo dispositivo e non viene incluso.</item>
+        <item quantity="many">%1$d file non sono nella libreria di questo dispositivo e non vengono inclusi.</item>
+        <item quantity="other">%1$d file non sono nella libreria di questo dispositivo e non vengono inclusi.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d file non è una foto o un video.</item>
+        <item quantity="many">%1$d file non sono foto o video.</item>
+        <item quantity="other">%1$d file non sono foto o video.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">Altri %1$d non inclusi (massimo 500 alla volta).</item>
+        <item quantity="many">Altri %1$d non inclusi (massimo 500 alla volta).</item>
+        <item quantity="other">Altri %1$d non inclusi (massimo 500 alla volta).</item>
+    </plurals>
 </resources>

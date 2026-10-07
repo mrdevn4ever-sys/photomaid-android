@@ -1633,4 +1633,36 @@
     <string name="wf_share_again">Partajează din nou</string>
     <string name="wf_counts">Fotografii: %1$s · videoclipuri: %2$s</string>
     <string name="wf_start">Pornește</string>
+    <string name="share_target_label">Trimite la PhotoMaid</string>
+    <string name="share_title">Primite</string>
+    <string name="share_none">Niciunul dintre fișierele partajate nu se află în biblioteca foto a acestui dispozitiv.</string>
+    <string name="share_no_access">PhotoMaid nu are încă acces la fotografii. Permite accesul în setări, apoi trimite din nou.</string>
+    <string name="share_never">Nimic nu este șters sau decis. Un fișier nou apare doar când salvezi.</string>
+    <string name="share_workflow">Aplică un flux de lucru</string>
+    <string name="share_edit">Editează</string>
+    <string name="shortcut_clean">Curăță</string>
+    <string name="shortcut_clean_long">Curăță acum</string>
+    <string name="shortcut_due">Scadente</string>
+    <string name="shortcut_due_long">Scadente din „Mai târziu”</string>
+    <string name="shortcut_workflow_gone">Acest flux de lucru a fost șters.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d fotografie sau videoclip</item>
+        <item quantity="few">%1$d fotografii și videoclipuri</item>
+        <item quantity="other">%1$d de fotografii și videoclipuri</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d fișier nu se află în biblioteca acestui dispozitiv și nu este preluat.</item>
+        <item quantity="few">%1$d fișiere nu se află în biblioteca acestui dispozitiv și nu sunt preluate.</item>
+        <item quantity="other">%1$d de fișiere nu se află în biblioteca acestui dispozitiv și nu sunt preluate.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d fișier nu este fotografie sau videoclip.</item>
+        <item quantity="few">%1$d fișiere nu sunt fotografii sau videoclipuri.</item>
+        <item quantity="other">%1$d de fișiere nu sunt fotografii sau videoclipuri.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">Încă %1$d nepreluat (maximum 500 deodată).</item>
+        <item quantity="few">Încă %1$d nepreluate (maximum 500 deodată).</item>
+        <item quantity="other">Încă %1$d de nepreluate (maximum 500 deodată).</item>
+    </plurals>
 </resources>

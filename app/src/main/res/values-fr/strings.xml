@@ -1633,4 +1633,36 @@
     <string name="wf_share_again">Partager à nouveau</string>
     <string name="wf_counts">%1$s photos · %2$s vidéos</string>
     <string name="wf_start">Lancer</string>
+    <string name="share_target_label">Envoyer à PhotoMaid</string>
+    <string name="share_title">Reçu</string>
+    <string name="share_none">Aucun des fichiers partagés ne se trouve dans la photothèque de cet appareil.</string>
+    <string name="share_no_access">PhotoMaid n’a pas encore accès à vos photos. Autorisez l’accès dans les réglages, puis renvoyez.</string>
+    <string name="share_never">Rien n’est supprimé ni décidé. Un nouveau fichier n’est créé que si vous enregistrez.</string>
+    <string name="share_workflow">Appliquer un flux de travail</string>
+    <string name="share_edit">Modifier</string>
+    <string name="shortcut_clean">Ranger</string>
+    <string name="shortcut_clean_long">Ranger maintenant</string>
+    <string name="shortcut_due">À revoir</string>
+    <string name="shortcut_due_long">À revoir depuis « Plus tard »</string>
+    <string name="shortcut_workflow_gone">Ce flux de travail a été supprimé.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d photo ou vidéo</item>
+        <item quantity="many">%1$d photos et vidéos</item>
+        <item quantity="other">%1$d photos et vidéos</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d fichier n’est pas dans la photothèque de cet appareil et n’est pas repris.</item>
+        <item quantity="many">%1$d fichiers ne sont pas dans la photothèque de cet appareil et ne sont pas repris.</item>
+        <item quantity="other">%1$d fichiers ne sont pas dans la photothèque de cet appareil et ne sont pas repris.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d fichier n’est ni une photo ni une vidéo.</item>
+        <item quantity="many">%1$d fichiers ne sont ni des photos ni des vidéos.</item>
+        <item quantity="other">%1$d fichiers ne sont ni des photos ni des vidéos.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">%1$d de plus non repris (500 au maximum à la fois).</item>
+        <item quantity="many">%1$d de plus non repris (500 au maximum à la fois).</item>
+        <item quantity="other">%1$d de plus non repris (500 au maximum à la fois).</item>
+    </plurals>
 </resources>

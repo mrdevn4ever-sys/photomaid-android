@@ -43,6 +43,7 @@ import app.photomaid.media.PhotoLibraryService
 import app.photomaid.notifications.ReminderScheduler
 import app.photomaid.playback.FeedPlayer
 import kotlinx.coroutines.CoroutineScope
+import app.photomaid.system.AppShortcuts
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -169,6 +170,8 @@ class AppModel(
 
     fun start() {
         scope.launch { ledger.stateFlow.collect { publishRead() } }
+        // App-Shortcuts + Direktes Teilen je Ablauf aktuell halten (nur feste Ziele und Ablaufnamen, keine Medien).
+        scope.launch { workflows.items.collect { list -> withContext(Dispatchers.IO) { AppShortcuts.sync(context, list) } } }
         // Nach Absturz/Abbruch: halbfertige Exporte entfernen, alte Teilen-Dateien löschen (nie als Erfolg zeigen).
         scope.launch(Dispatchers.IO) {
             runCatching { allPhotos.cleanupPendingExports() }

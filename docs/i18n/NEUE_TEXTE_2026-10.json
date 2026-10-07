@@ -13949,6 +13949,222 @@
    "tr": "Başlat",
    "uk": "Почати",
    "zh": "开始"
+  },
+  "share_target_label": {
+   "en": "Send to PhotoMaid",
+   "de": "An PhotoMaid senden",
+   "ar": "إرسال إلى PhotoMaid",
+   "es": "Enviar a PhotoMaid",
+   "fr": "Envoyer à PhotoMaid",
+   "it": "Invia a PhotoMaid",
+   "ja": "PhotoMaid に送る",
+   "ko": "PhotoMaid로 보내기",
+   "nl": "Naar PhotoMaid sturen",
+   "pl": "Wyślij do PhotoMaid",
+   "pt": "Enviar para o PhotoMaid",
+   "ro": "Trimite la PhotoMaid",
+   "ru": "Отправить в PhotoMaid",
+   "tr": "PhotoMaid’e gönder",
+   "uk": "Надіслати в PhotoMaid",
+   "zh": "发送到 PhotoMaid"
+  },
+  "share_title": {
+   "en": "Received",
+   "de": "Übernommen",
+   "ar": "تم الاستلام",
+   "es": "Recibido",
+   "fr": "Reçu",
+   "it": "Ricevuto",
+   "ja": "受け取り",
+   "ko": "받은 항목",
+   "nl": "Ontvangen",
+   "pl": "Odebrane",
+   "pt": "Recebido",
+   "ro": "Primite",
+   "ru": "Получено",
+   "tr": "Alındı",
+   "uk": "Отримано",
+   "zh": "已接收"
+  },
+  "share_none": {
+   "en": "None of the shared files are in this device’s photo library.",
+   "de": "Keine der geteilten Dateien liegt in der Mediathek dieses Geräts.",
+   "ar": "لا يوجد أي من الملفات المشتركة في مكتبة صور هذا الجهاز.",
+   "es": "Ninguno de los archivos compartidos está en la fototeca de este dispositivo.",
+   "fr": "Aucun des fichiers partagés ne se trouve dans la photothèque de cet appareil.",
+   "it": "Nessuno dei file condivisi si trova nella libreria foto di questo dispositivo.",
+   "ja": "共有されたファイルはこの端末のフォトライブラリにありません。",
+   "ko": "공유된 파일 중 이 기기의 사진 보관함에 있는 파일이 없어요.",
+   "nl": "Geen van de gedeelde bestanden staat in de fotobibliotheek van dit apparaat.",
+   "pl": "Żaden z udostępnionych plików nie znajduje się w bibliotece zdjęć tego urządzenia.",
+   "pt": "Nenhum dos ficheiros partilhados está na fototeca deste dispositivo.",
+   "ro": "Niciunul dintre fișierele partajate nu se află în biblioteca foto a acestui dispozitiv.",
+   "ru": "Ни одного из отправленных файлов нет в медиатеке этого устройства.",
+   "tr": "Paylaşılan dosyaların hiçbiri bu cihazın fotoğraf arşivinde değil.",
+   "uk": "Жодного з надісланих файлів немає в медіатеці цього пристрою.",
+   "zh": "共享的文件都不在此设备的照片图库中。"
+  },
+  "share_no_access": {
+   "en": "PhotoMaid can’t access your photos yet. Allow access in Settings, then send again.",
+   "de": "PhotoMaid hat noch keinen Zugriff auf deine Fotos. Erlaube den Zugriff in den Einstellungen und sende erneut.",
+   "ar": "لا يمكن لـ PhotoMaid الوصول إلى صورك بعد. اسمح بالوصول في الإعدادات ثم أرسل مرة أخرى.",
+   "es": "PhotoMaid aún no puede acceder a tus fotos. Permite el acceso en Ajustes y vuelve a enviar.",
+   "fr": "PhotoMaid n’a pas encore accès à vos photos. Autorisez l’accès dans les réglages, puis renvoyez.",
+   "it": "PhotoMaid non ha ancora accesso alle tue foto. Consenti l’accesso nelle impostazioni e invia di nuovo.",
+   "ja": "PhotoMaid はまだ写真にアクセスできません。設定でアクセスを許可してから、もう一度送ってください。",
+   "ko": "PhotoMaid가 아직 사진에 접근할 수 없어요. 설정에서 접근을 허용한 후 다시 보내 주세요.",
+   "nl": "PhotoMaid heeft nog geen toegang tot je foto’s. Sta toegang toe in Instellingen en stuur opnieuw.",
+   "pl": "PhotoMaid nie ma jeszcze dostępu do zdjęć. Zezwól na dostęp w ustawieniach i wyślij ponownie.",
+   "pt": "O PhotoMaid ainda não tem acesso às suas fotos. Permita o acesso nas definições e envie novamente.",
+   "ro": "PhotoMaid nu are încă acces la fotografii. Permite accesul în setări, apoi trimite din nou.",
+   "ru": "У PhotoMaid пока нет доступа к фото. Разрешите доступ в настройках и отправьте снова.",
+   "tr": "PhotoMaid henüz fotoğraflarına erişemiyor. Ayarlarda erişime izin verip yeniden gönder.",
+   "uk": "PhotoMaid ще не має доступу до фото. Дозвольте доступ у налаштуваннях і надішліть знову.",
+   "zh": "PhotoMaid 尚无法访问你的照片。请在设置中允许访问，然后重新发送。"
+  },
+  "share_never": {
+   "en": "Nothing is deleted or decided. A new file is only saved when you choose to.",
+   "de": "Nichts wird gelöscht oder entschieden. Eine neue Datei entsteht erst, wenn du speicherst.",
+   "ar": "لن يُحذف أو يُقرَّر أي شيء. لا يُنشأ ملف جديد إلا عند الحفظ.",
+   "es": "No se elimina ni se decide nada. Solo se crea un archivo nuevo cuando guardas.",
+   "fr": "Rien n’est supprimé ni décidé. Un nouveau fichier n’est créé que si vous enregistrez.",
+   "it": "Nulla viene eliminato o deciso. Un nuovo file viene creato solo quando salvi.",
+   "ja": "削除や判定は行われません。新しいファイルは保存したときだけ作成されます。",
+   "ko": "삭제되거나 결정되는 것은 없어요. 저장할 때만 새 파일이 만들어져요.",
+   "nl": "Er wordt niets verwijderd of beslist. Een nieuw bestand ontstaat pas als je opslaat.",
+   "pl": "Nic nie jest usuwane ani rozstrzygane. Nowy plik powstaje dopiero po zapisaniu.",
+   "pt": "Nada é eliminado nem decidido. Só é criado um ficheiro novo quando guarda.",
+   "ro": "Nimic nu este șters sau decis. Un fișier nou apare doar când salvezi.",
+   "ru": "Ничего не удаляется и не решается. Новый файл появится, только когда вы сохраните.",
+   "tr": "Hiçbir şey silinmez veya karara bağlanmaz. Yeni dosya yalnızca kaydettiğinde oluşur.",
+   "uk": "Нічого не видаляється і не вирішується. Новий файл з’явиться, лише коли ви збережете.",
+   "zh": "不会删除或决定任何内容。只有在你保存时才会生成新文件。"
+  },
+  "share_workflow": {
+   "en": "Apply workflow",
+   "de": "Arbeitsablauf anwenden",
+   "ar": "تطبيق سير عمل",
+   "es": "Aplicar flujo de trabajo",
+   "fr": "Appliquer un flux de travail",
+   "it": "Applica flusso di lavoro",
+   "ja": "ワークフローを適用",
+   "ko": "워크플로 적용",
+   "nl": "Werkstroom toepassen",
+   "pl": "Zastosuj przepływ pracy",
+   "pt": "Aplicar fluxo de trabalho",
+   "ro": "Aplică un flux de lucru",
+   "ru": "Применить сценарий",
+   "tr": "İş akışı uygula",
+   "uk": "Застосувати сценарій",
+   "zh": "应用工作流程"
+  },
+  "share_edit": {
+   "en": "Edit",
+   "de": "Bearbeiten",
+   "ar": "تعديل",
+   "es": "Editar",
+   "fr": "Modifier",
+   "it": "Modifica",
+   "ja": "編集",
+   "ko": "편집",
+   "nl": "Bewerken",
+   "pl": "Edytuj",
+   "pt": "Editar",
+   "ro": "Editează",
+   "ru": "Изменить",
+   "tr": "Düzenle",
+   "uk": "Редагувати",
+   "zh": "编辑"
+  },
+  "shortcut_clean": {
+   "en": "Clean up",
+   "de": "Aufräumen",
+   "ar": "ترتيب",
+   "es": "Ordenar",
+   "fr": "Ranger",
+   "it": "Riordina",
+   "ja": "整理",
+   "ko": "정리",
+   "nl": "Opruimen",
+   "pl": "Porządki",
+   "pt": "Arrumar",
+   "ro": "Curăță",
+   "ru": "Разобрать",
+   "tr": "Düzenle",
+   "uk": "Розібрати",
+   "zh": "整理"
+  },
+  "shortcut_clean_long": {
+   "en": "Clean up now",
+   "de": "Jetzt aufräumen",
+   "ar": "ابدأ الترتيب الآن",
+   "es": "Ordenar ahora",
+   "fr": "Ranger maintenant",
+   "it": "Riordina ora",
+   "ja": "今すぐ整理",
+   "ko": "지금 정리",
+   "nl": "Nu opruimen",
+   "pl": "Zrób porządki teraz",
+   "pt": "Arrumar agora",
+   "ro": "Curăță acum",
+   "ru": "Разобрать сейчас",
+   "tr": "Şimdi düzenle",
+   "uk": "Розібрати зараз",
+   "zh": "立即整理"
+  },
+  "shortcut_due": {
+   "en": "Due",
+   "de": "Fällig",
+   "ar": "مستحق",
+   "es": "Pendientes",
+   "fr": "À revoir",
+   "it": "In scadenza",
+   "ja": "期限",
+   "ko": "다시 볼 항목",
+   "nl": "Gepland",
+   "pl": "Do przejrzenia",
+   "pt": "Pendentes",
+   "ro": "Scadente",
+   "ru": "К просмотру",
+   "tr": "Zamanı gelen",
+   "uk": "До перегляду",
+   "zh": "到期"
+  },
+  "shortcut_due_long": {
+   "en": "Due from Later",
+   "de": "Fällig aus „Später“",
+   "ar": "المستحق من «لاحقًا»",
+   "es": "Pendientes de «Más tarde»",
+   "fr": "À revoir depuis « Plus tard »",
+   "it": "In scadenza da «Più tardi»",
+   "ja": "「あとで」の期限分",
+   "ko": "‘나중에’에서 다시 볼 항목",
+   "nl": "Gepland uit ‘Later’",
+   "pl": "Do przejrzenia z „Później”",
+   "pt": "Pendentes de «Mais tarde»",
+   "ro": "Scadente din „Mai târziu”",
+   "ru": "К просмотру из «Позже»",
+   "tr": "“Sonra”dan zamanı gelenler",
+   "uk": "До перегляду з «Пізніше»",
+   "zh": "“稍后”中已到期"
+  },
+  "shortcut_workflow_gone": {
+   "en": "This workflow was deleted.",
+   "de": "Dieser Ablauf wurde gelöscht.",
+   "ar": "تم حذف سير العمل هذا.",
+   "es": "Este flujo de trabajo se eliminó.",
+   "fr": "Ce flux de travail a été supprimé.",
+   "it": "Questo flusso di lavoro è stato eliminato.",
+   "ja": "このワークフローは削除されました。",
+   "ko": "이 워크플로는 삭제되었어요.",
+   "nl": "Deze werkstroom is verwijderd.",
+   "pl": "Ten przepływ pracy został usunięty.",
+   "pt": "Este fluxo de trabalho foi eliminado.",
+   "ro": "Acest flux de lucru a fost șters.",
+   "ru": "Этот сценарий удалён.",
+   "tr": "Bu iş akışı silindi.",
+   "uk": "Цей сценарій видалено.",
+   "zh": "此工作流程已删除。"
   }
  },
  "plurals": {
@@ -16836,6 +17052,318 @@
    },
    "zh": {
     "other": "%1$d 项的标签"
+   }
+  },
+  "share_count": {
+   "en": {
+    "one": "%1$d photo or video",
+    "other": "%1$d photos and videos"
+   },
+   "de": {
+    "one": "%1$d Foto oder Video",
+    "other": "%1$d Fotos und Videos"
+   },
+   "ar": {
+    "zero": "%1$d صورة وفيديو",
+    "one": "صورة أو فيديو واحد",
+    "two": "عنصران",
+    "few": "%1$d صور وفيديوهات",
+    "many": "%1$d صورة وفيديو",
+    "other": "%1$d صورة وفيديو"
+   },
+   "es": {
+    "one": "%1$d foto o vídeo",
+    "many": "%1$d fotos y vídeos",
+    "other": "%1$d fotos y vídeos"
+   },
+   "fr": {
+    "one": "%1$d photo ou vidéo",
+    "many": "%1$d photos et vidéos",
+    "other": "%1$d photos et vidéos"
+   },
+   "it": {
+    "one": "%1$d foto o video",
+    "many": "%1$d foto e video",
+    "other": "%1$d foto e video"
+   },
+   "ja": {
+    "other": "写真・動画 %1$d 件"
+   },
+   "ko": {
+    "other": "사진·동영상 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d foto of video",
+    "other": "%1$d foto’s en video’s"
+   },
+   "pl": {
+    "one": "%1$d zdjęcie lub film",
+    "few": "%1$d zdjęcia i filmy",
+    "many": "%1$d zdjęć i filmów",
+    "other": "%1$d zdjęcia i filmu"
+   },
+   "pt": {
+    "one": "%1$d foto ou vídeo",
+    "many": "%1$d fotos e vídeos",
+    "other": "%1$d fotos e vídeos"
+   },
+   "ro": {
+    "one": "%1$d fotografie sau videoclip",
+    "few": "%1$d fotografii și videoclipuri",
+    "other": "%1$d de fotografii și videoclipuri"
+   },
+   "ru": {
+    "one": "%1$d фото или видео",
+    "few": "%1$d фото и видео",
+    "many": "%1$d фото и видео",
+    "other": "%1$d фото и видео"
+   },
+   "tr": {
+    "one": "%1$d fotoğraf veya video",
+    "other": "%1$d fotoğraf ve video"
+   },
+   "uk": {
+    "one": "%1$d фото або відео",
+    "few": "%1$d фото й відео",
+    "many": "%1$d фото й відео",
+    "other": "%1$d фото й відео"
+   },
+   "zh": {
+    "other": "%1$d 张照片和视频"
+   }
+  },
+  "share_unmatched": {
+   "en": {
+    "one": "%1$d file isn’t in this device’s library and won’t be taken over.",
+    "other": "%1$d files aren’t in this device’s library and won’t be taken over."
+   },
+   "de": {
+    "one": "%1$d Datei liegt nicht in der Mediathek dieses Geräts und wird nicht übernommen.",
+    "other": "%1$d Dateien liegen nicht in der Mediathek dieses Geräts und werden nicht übernommen."
+   },
+   "ar": {
+    "zero": "%1$d ملف ليس في مكتبة هذا الجهاز ولن يُستلم.",
+    "one": "ملف واحد ليس في مكتبة هذا الجهاز ولن يُستلم.",
+    "two": "ملفان ليسا في مكتبة هذا الجهاز ولن يُستلما.",
+    "few": "%1$d ملفات ليست في مكتبة هذا الجهاز ولن تُستلم.",
+    "many": "%1$d ملفًا ليس في مكتبة هذا الجهاز ولن يُستلم.",
+    "other": "%1$d ملف ليس في مكتبة هذا الجهاز ولن يُستلم."
+   },
+   "es": {
+    "one": "%1$d archivo no está en la fototeca de este dispositivo y no se incluye.",
+    "many": "%1$d archivos no están en la fototeca de este dispositivo y no se incluyen.",
+    "other": "%1$d archivos no están en la fototeca de este dispositivo y no se incluyen."
+   },
+   "fr": {
+    "one": "%1$d fichier n’est pas dans la photothèque de cet appareil et n’est pas repris.",
+    "many": "%1$d fichiers ne sont pas dans la photothèque de cet appareil et ne sont pas repris.",
+    "other": "%1$d fichiers ne sont pas dans la photothèque de cet appareil et ne sont pas repris."
+   },
+   "it": {
+    "one": "%1$d file non è nella libreria di questo dispositivo e non viene incluso.",
+    "many": "%1$d file non sono nella libreria di questo dispositivo e non vengono inclusi.",
+    "other": "%1$d file non sono nella libreria di questo dispositivo e non vengono inclusi."
+   },
+   "ja": {
+    "other": "%1$d 件のファイルはこの端末のライブラリにないため、取り込まれません。"
+   },
+   "ko": {
+    "other": "파일 %1$d개는 이 기기의 보관함에 없어 가져오지 않아요."
+   },
+   "nl": {
+    "one": "%1$d bestand staat niet in de bibliotheek van dit apparaat en wordt niet overgenomen.",
+    "other": "%1$d bestanden staan niet in de bibliotheek van dit apparaat en worden niet overgenomen."
+   },
+   "pl": {
+    "one": "%1$d plik nie znajduje się w bibliotece tego urządzenia i nie zostanie przejęty.",
+    "few": "%1$d pliki nie znajdują się w bibliotece tego urządzenia i nie zostaną przejęte.",
+    "many": "%1$d plików nie znajduje się w bibliotece tego urządzenia i nie zostanie przejętych.",
+    "other": "%1$d pliku nie ma w bibliotece tego urządzenia – nie zostanie przejęte."
+   },
+   "pt": {
+    "one": "%1$d ficheiro não está na fototeca deste dispositivo e não é incluído.",
+    "many": "%1$d ficheiros não estão na fototeca deste dispositivo e não são incluídos.",
+    "other": "%1$d ficheiros não estão na fototeca deste dispositivo e não são incluídos."
+   },
+   "ro": {
+    "one": "%1$d fișier nu se află în biblioteca acestui dispozitiv și nu este preluat.",
+    "few": "%1$d fișiere nu se află în biblioteca acestui dispozitiv și nu sunt preluate.",
+    "other": "%1$d de fișiere nu se află în biblioteca acestui dispozitiv și nu sunt preluate."
+   },
+   "ru": {
+    "one": "%1$d файла нет в медиатеке этого устройства, он не будет принят.",
+    "few": "%1$d файлов нет в медиатеке этого устройства, они не будут приняты.",
+    "many": "%1$d файлов нет в медиатеке этого устройства, они не будут приняты.",
+    "other": "%1$d файла нет в медиатеке этого устройства, они не будут приняты."
+   },
+   "tr": {
+    "one": "%1$d dosya bu cihazın arşivinde değil ve alınmayacak.",
+    "other": "%1$d dosya bu cihazın arşivinde değil ve alınmayacak."
+   },
+   "uk": {
+    "one": "%1$d файлу немає в медіатеці цього пристрою, його не буде прийнято.",
+    "few": "%1$d файлів немає в медіатеці цього пристрою, їх не буде прийнято.",
+    "many": "%1$d файлів немає в медіатеці цього пристрою, їх не буде прийнято.",
+    "other": "%1$d файлу немає в медіатеці цього пристрою, їх не буде прийнято."
+   },
+   "zh": {
+    "other": "%1$d 个文件不在此设备的图库中，不会被接收。"
+   }
+  },
+  "share_rejected": {
+   "en": {
+    "one": "%1$d file isn’t a photo or video.",
+    "other": "%1$d files aren’t photos or videos."
+   },
+   "de": {
+    "one": "%1$d Datei ist kein Foto oder Video.",
+    "other": "%1$d Dateien sind keine Fotos oder Videos."
+   },
+   "ar": {
+    "zero": "%1$d ملف ليس صورة أو فيديو.",
+    "one": "ملف واحد ليس صورة أو فيديو.",
+    "two": "ملفان ليسا صورة أو فيديو.",
+    "few": "%1$d ملفات ليست صورًا أو فيديوهات.",
+    "many": "%1$d ملفًا ليس صورة أو فيديو.",
+    "other": "%1$d ملف ليس صورة أو فيديو."
+   },
+   "es": {
+    "one": "%1$d archivo no es una foto ni un vídeo.",
+    "many": "%1$d archivos no son fotos ni vídeos.",
+    "other": "%1$d archivos no son fotos ni vídeos."
+   },
+   "fr": {
+    "one": "%1$d fichier n’est ni une photo ni une vidéo.",
+    "many": "%1$d fichiers ne sont ni des photos ni des vidéos.",
+    "other": "%1$d fichiers ne sont ni des photos ni des vidéos."
+   },
+   "it": {
+    "one": "%1$d file non è una foto o un video.",
+    "many": "%1$d file non sono foto o video.",
+    "other": "%1$d file non sono foto o video."
+   },
+   "ja": {
+    "other": "%1$d 件のファイルは写真や動画ではありません。"
+   },
+   "ko": {
+    "other": "파일 %1$d개는 사진이나 동영상이 아니에요."
+   },
+   "nl": {
+    "one": "%1$d bestand is geen foto of video.",
+    "other": "%1$d bestanden zijn geen foto’s of video’s."
+   },
+   "pl": {
+    "one": "%1$d plik nie jest zdjęciem ani filmem.",
+    "few": "%1$d pliki nie są zdjęciami ani filmami.",
+    "many": "%1$d plików nie jest zdjęciami ani filmami.",
+    "other": "%1$d pliku nie jest zdjęciem ani filmem."
+   },
+   "pt": {
+    "one": "%1$d ficheiro não é uma foto nem um vídeo.",
+    "many": "%1$d ficheiros não são fotos nem vídeos.",
+    "other": "%1$d ficheiros não são fotos nem vídeos."
+   },
+   "ro": {
+    "one": "%1$d fișier nu este fotografie sau videoclip.",
+    "few": "%1$d fișiere nu sunt fotografii sau videoclipuri.",
+    "other": "%1$d de fișiere nu sunt fotografii sau videoclipuri."
+   },
+   "ru": {
+    "one": "%1$d файл — не фото и не видео.",
+    "few": "%1$d файла — не фото и не видео.",
+    "many": "%1$d файлов — не фото и не видео.",
+    "other": "%1$d файла — не фото и не видео."
+   },
+   "tr": {
+    "one": "%1$d dosya fotoğraf veya video değil.",
+    "other": "%1$d dosya fotoğraf veya video değil."
+   },
+   "uk": {
+    "one": "%1$d файл — не фото і не відео.",
+    "few": "%1$d файли — не фото і не відео.",
+    "many": "%1$d файлів — не фото і не відео.",
+    "other": "%1$d файлу — не фото і не відео."
+   },
+   "zh": {
+    "other": "%1$d 个文件不是照片或视频。"
+   }
+  },
+  "share_overflow": {
+   "en": {
+    "one": "%1$d more not taken over (at most 500 at once).",
+    "other": "%1$d more not taken over (at most 500 at once)."
+   },
+   "de": {
+    "one": "%1$d weitere nicht übernommen (höchstens 500 auf einmal).",
+    "other": "%1$d weitere nicht übernommen (höchstens 500 auf einmal)."
+   },
+   "ar": {
+    "zero": "لم يُستلم %1$d إضافي (500 كحد أقصى في المرة).",
+    "one": "لم يُستلم عنصر إضافي واحد (500 كحد أقصى في المرة).",
+    "two": "لم يُستلم عنصران إضافيان (500 كحد أقصى في المرة).",
+    "few": "لم تُستلم %1$d عناصر إضافية (500 كحد أقصى في المرة).",
+    "many": "لم يُستلم %1$d عنصرًا إضافيًا (500 كحد أقصى في المرة).",
+    "other": "لم يُستلم %1$d عنصر إضافي (500 كحد أقصى في المرة)."
+   },
+   "es": {
+    "one": "%1$d más no incluido (máximo 500 a la vez).",
+    "many": "%1$d más no incluidos (máximo 500 a la vez).",
+    "other": "%1$d más no incluidos (máximo 500 a la vez)."
+   },
+   "fr": {
+    "one": "%1$d de plus non repris (500 au maximum à la fois).",
+    "many": "%1$d de plus non repris (500 au maximum à la fois).",
+    "other": "%1$d de plus non repris (500 au maximum à la fois)."
+   },
+   "it": {
+    "one": "Altri %1$d non inclusi (massimo 500 alla volta).",
+    "many": "Altri %1$d non inclusi (massimo 500 alla volta).",
+    "other": "Altri %1$d non inclusi (massimo 500 alla volta)."
+   },
+   "ja": {
+    "other": "ほか %1$d 件は取り込まれません（一度に最大 500 件）。"
+   },
+   "ko": {
+    "other": "%1$d개는 더 가져오지 않았어요(한 번에 최대 500개)."
+   },
+   "nl": {
+    "one": "Nog %1$d niet overgenomen (maximaal 500 tegelijk).",
+    "other": "Nog %1$d niet overgenomen (maximaal 500 tegelijk)."
+   },
+   "pl": {
+    "one": "Kolejny %1$d nie został przejęty (maks. 500 naraz).",
+    "few": "Kolejne %1$d nie zostały przejęte (maks. 500 naraz).",
+    "many": "Kolejnych %1$d nie przejęto (maks. 500 naraz).",
+    "other": "Kolejnych %1$d nie przejęto (maks. 500 naraz)."
+   },
+   "pt": {
+    "one": "Mais %1$d não incluído (máximo de 500 de cada vez).",
+    "many": "Mais %1$d não incluídos (máximo de 500 de cada vez).",
+    "other": "Mais %1$d não incluídos (máximo de 500 de cada vez)."
+   },
+   "ro": {
+    "one": "Încă %1$d nepreluat (maximum 500 deodată).",
+    "few": "Încă %1$d nepreluate (maximum 500 deodată).",
+    "other": "Încă %1$d de nepreluate (maximum 500 deodată)."
+   },
+   "ru": {
+    "one": "Ещё %1$d не принят (не больше 500 за раз).",
+    "few": "Ещё %1$d не приняты (не больше 500 за раз).",
+    "many": "Ещё %1$d не приняты (не больше 500 за раз).",
+    "other": "Ещё %1$d не приняты (не больше 500 за раз)."
+   },
+   "tr": {
+    "one": "%1$d tane daha alınmadı (bir seferde en fazla 500).",
+    "other": "%1$d tane daha alınmadı (bir seferde en fazla 500)."
+   },
+   "uk": {
+    "one": "Ще %1$d не прийнято (не більше 500 за раз).",
+    "few": "Ще %1$d не прийнято (не більше 500 за раз).",
+    "many": "Ще %1$d не прийнято (не більше 500 за раз).",
+    "other": "Ще %1$d не прийнято (не більше 500 за раз)."
+   },
+   "zh": {
+    "other": "另有 %1$d 个未接收（一次最多 500 个）。"
    }
   }
  }

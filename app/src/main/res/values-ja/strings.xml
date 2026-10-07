@@ -1499,4 +1499,28 @@
     <string name="wf_share_again">もう一度共有</string>
     <string name="wf_counts">写真 %1$s · 動画 %2$s</string>
     <string name="wf_start">開始</string>
+    <string name="share_target_label">PhotoMaid に送る</string>
+    <string name="share_title">受け取り</string>
+    <string name="share_none">共有されたファイルはこの端末のフォトライブラリにありません。</string>
+    <string name="share_no_access">PhotoMaid はまだ写真にアクセスできません。設定でアクセスを許可してから、もう一度送ってください。</string>
+    <string name="share_never">削除や判定は行われません。新しいファイルは保存したときだけ作成されます。</string>
+    <string name="share_workflow">ワークフローを適用</string>
+    <string name="share_edit">編集</string>
+    <string name="shortcut_clean">整理</string>
+    <string name="shortcut_clean_long">今すぐ整理</string>
+    <string name="shortcut_due">期限</string>
+    <string name="shortcut_due_long">「あとで」の期限分</string>
+    <string name="shortcut_workflow_gone">このワークフローは削除されました。</string>
+    <plurals name="share_count">
+        <item quantity="other">写真・動画 %1$d 件</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="other">%1$d 件のファイルはこの端末のライブラリにないため、取り込まれません。</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="other">%1$d 件のファイルは写真や動画ではありません。</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="other">ほか %1$d 件は取り込まれません（一度に最大 500 件）。</item>
+    </plurals>
 </resources>

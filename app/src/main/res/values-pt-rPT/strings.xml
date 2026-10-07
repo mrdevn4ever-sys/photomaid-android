@@ -1633,4 +1633,36 @@
     <string name="wf_share_again">Partilhar novamente</string>
     <string name="wf_counts">%1$s fotos · %2$s vídeos</string>
     <string name="wf_start">Iniciar</string>
+    <string name="share_target_label">Enviar para o PhotoMaid</string>
+    <string name="share_title">Recebido</string>
+    <string name="share_none">Nenhum dos ficheiros partilhados está na fototeca deste dispositivo.</string>
+    <string name="share_no_access">O PhotoMaid ainda não tem acesso às suas fotos. Permita o acesso nas definições e envie novamente.</string>
+    <string name="share_never">Nada é eliminado nem decidido. Só é criado um ficheiro novo quando guarda.</string>
+    <string name="share_workflow">Aplicar fluxo de trabalho</string>
+    <string name="share_edit">Editar</string>
+    <string name="shortcut_clean">Arrumar</string>
+    <string name="shortcut_clean_long">Arrumar agora</string>
+    <string name="shortcut_due">Pendentes</string>
+    <string name="shortcut_due_long">Pendentes de «Mais tarde»</string>
+    <string name="shortcut_workflow_gone">Este fluxo de trabalho foi eliminado.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d foto ou vídeo</item>
+        <item quantity="many">%1$d fotos e vídeos</item>
+        <item quantity="other">%1$d fotos e vídeos</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d ficheiro não está na fototeca deste dispositivo e não é incluído.</item>
+        <item quantity="many">%1$d ficheiros não estão na fototeca deste dispositivo e não são incluídos.</item>
+        <item quantity="other">%1$d ficheiros não estão na fototeca deste dispositivo e não são incluídos.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d ficheiro não é uma foto nem um vídeo.</item>
+        <item quantity="many">%1$d ficheiros não são fotos nem vídeos.</item>
+        <item quantity="other">%1$d ficheiros não são fotos nem vídeos.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">Mais %1$d não incluído (máximo de 500 de cada vez).</item>
+        <item quantity="many">Mais %1$d não incluídos (máximo de 500 de cada vez).</item>
+        <item quantity="other">Mais %1$d não incluídos (máximo de 500 de cada vez).</item>
+    </plurals>
 </resources>

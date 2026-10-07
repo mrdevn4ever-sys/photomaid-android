@@ -80,6 +80,12 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Ziel nicht erreicht/fehlgeschlagen). Zielgröße = Vorgabe: jedes Ergebnis wird gemessen (`TargetSize`, Video `VideoTarget` +
   ein Nachkodieren); nicht erreichbar → KEINE Datei, Grund mit kleinster gemessener Größe. Abläufe löschen nie, legen nichts
   in einen Papierkorb, entscheiden nie über Quellen; gespeicherte Ergebnisse = „Behalten“. Free bis 10 Dateien je Durchgang.
+- Teilen-Ziel + App-Shortcuts (2026-10, `system/AppEntry.kt`, `system/AppShortcuts.kt`, `feature/share/ShareScreen.kt`, Kern
+  `core/.../share/Share.kt`): „An PhotoMaid senden“ (`ACTION_SEND`/`SEND_MULTIPLE`, nur `image/*`/`video/*`) öffnet nur die Seite
+  „Übernommen“ (Ablauf anwenden, Bearbeiten bei genau einem Medium, Album, Auswahlkorb). Zuordnung über MediaStore-ID, sonst nur
+  eindeutig über Name + Größe (`ShareMatch`); Rest wird gezählt, nie kopiert. Dynamische Shortcuts (feste Ziele + bis zu 4
+  Abläufe, Direktes Teilen je Ablauf über `res/xml/shortcuts.xml`) öffnen nur Ansichten: nie Entscheidung, nie Löschen, nie
+  ein Start ohne Tipp, keine Medien-IDs. Kein Shortcut/Intent darf je löschen oder entscheiden.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3

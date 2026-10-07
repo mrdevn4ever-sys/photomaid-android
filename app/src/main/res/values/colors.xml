@@ -2,4 +2,5 @@
 <resources>
     <color name="pm_background">#FFEEF5FD</color>
     <color name="pm_icon_bg">#FFDCEAFB</color>
+    <color name="pm_shortcut_glyph">#FF0064D2</color>
 </resources>
