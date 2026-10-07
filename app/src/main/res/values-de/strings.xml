@@ -1566,4 +1566,32 @@
     <string name="wf_share_again">Erneut teilen</string>
     <string name="wf_counts">%1$s Fotos · %2$s Videos</string>
     <string name="wf_start">Starten</string>
+    <string name="share_target_label">An PhotoMaid senden</string>
+    <string name="share_title">Übernommen</string>
+    <string name="share_none">Keine der geteilten Dateien liegt in der Mediathek dieses Geräts.</string>
+    <string name="share_no_access">PhotoMaid hat noch keinen Zugriff auf deine Fotos. Erlaube den Zugriff in den Einstellungen und sende erneut.</string>
+    <string name="share_never">Nichts wird gelöscht oder entschieden. Eine neue Datei entsteht erst, wenn du speicherst.</string>
+    <string name="share_workflow">Arbeitsablauf anwenden</string>
+    <string name="share_edit">Bearbeiten</string>
+    <string name="shortcut_clean">Aufräumen</string>
+    <string name="shortcut_clean_long">Jetzt aufräumen</string>
+    <string name="shortcut_due">Fällig</string>
+    <string name="shortcut_due_long">Fällig aus „Später“</string>
+    <string name="shortcut_workflow_gone">Dieser Ablauf wurde gelöscht.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d Foto oder Video</item>
+        <item quantity="other">%1$d Fotos und Videos</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d Datei liegt nicht in der Mediathek dieses Geräts und wird nicht übernommen.</item>
+        <item quantity="other">%1$d Dateien liegen nicht in der Mediathek dieses Geräts und werden nicht übernommen.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d Datei ist kein Foto oder Video.</item>
+        <item quantity="other">%1$d Dateien sind keine Fotos oder Videos.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">%1$d weitere nicht übernommen (höchstens 500 auf einmal).</item>
+        <item quantity="other">%1$d weitere nicht übernommen (höchstens 500 auf einmal).</item>
+    </plurals>
 </resources>

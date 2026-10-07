@@ -1499,4 +1499,28 @@
     <string name="wf_share_again">다시 공유</string>
     <string name="wf_counts">사진 %1$s · 동영상 %2$s</string>
     <string name="wf_start">시작</string>
+    <string name="share_target_label">PhotoMaid로 보내기</string>
+    <string name="share_title">받은 항목</string>
+    <string name="share_none">공유된 파일 중 이 기기의 사진 보관함에 있는 파일이 없어요.</string>
+    <string name="share_no_access">PhotoMaid가 아직 사진에 접근할 수 없어요. 설정에서 접근을 허용한 후 다시 보내 주세요.</string>
+    <string name="share_never">삭제되거나 결정되는 것은 없어요. 저장할 때만 새 파일이 만들어져요.</string>
+    <string name="share_workflow">워크플로 적용</string>
+    <string name="share_edit">편집</string>
+    <string name="shortcut_clean">정리</string>
+    <string name="shortcut_clean_long">지금 정리</string>
+    <string name="shortcut_due">다시 볼 항목</string>
+    <string name="shortcut_due_long">‘나중에’에서 다시 볼 항목</string>
+    <string name="shortcut_workflow_gone">이 워크플로는 삭제되었어요.</string>
+    <plurals name="share_count">
+        <item quantity="other">사진·동영상 %1$d개</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="other">파일 %1$d개는 이 기기의 보관함에 없어 가져오지 않아요.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="other">파일 %1$d개는 사진이나 동영상이 아니에요.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="other">%1$d개는 더 가져오지 않았어요(한 번에 최대 500개).</item>
+    </plurals>
 </resources>

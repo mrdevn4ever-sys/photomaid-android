@@ -1834,4 +1834,48 @@
     <string name="wf_share_again">مشاركة مرة أخرى</string>
     <string name="wf_counts">%1$s صور · %2$s فيديو</string>
     <string name="wf_start">بدء</string>
+    <string name="share_target_label">إرسال إلى PhotoMaid</string>
+    <string name="share_title">تم الاستلام</string>
+    <string name="share_none">لا يوجد أي من الملفات المشتركة في مكتبة صور هذا الجهاز.</string>
+    <string name="share_no_access">لا يمكن لـ PhotoMaid الوصول إلى صورك بعد. اسمح بالوصول في الإعدادات ثم أرسل مرة أخرى.</string>
+    <string name="share_never">لن يُحذف أو يُقرَّر أي شيء. لا يُنشأ ملف جديد إلا عند الحفظ.</string>
+    <string name="share_workflow">تطبيق سير عمل</string>
+    <string name="share_edit">تعديل</string>
+    <string name="shortcut_clean">ترتيب</string>
+    <string name="shortcut_clean_long">ابدأ الترتيب الآن</string>
+    <string name="shortcut_due">مستحق</string>
+    <string name="shortcut_due_long">المستحق من «لاحقًا»</string>
+    <string name="shortcut_workflow_gone">تم حذف سير العمل هذا.</string>
+    <plurals name="share_count">
+        <item quantity="zero">%1$d صورة وفيديو</item>
+        <item quantity="one">صورة أو فيديو واحد</item>
+        <item quantity="two">عنصران</item>
+        <item quantity="few">%1$d صور وفيديوهات</item>
+        <item quantity="many">%1$d صورة وفيديو</item>
+        <item quantity="other">%1$d صورة وفيديو</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="zero">%1$d ملف ليس في مكتبة هذا الجهاز ولن يُستلم.</item>
+        <item quantity="one">ملف واحد ليس في مكتبة هذا الجهاز ولن يُستلم.</item>
+        <item quantity="two">ملفان ليسا في مكتبة هذا الجهاز ولن يُستلما.</item>
+        <item quantity="few">%1$d ملفات ليست في مكتبة هذا الجهاز ولن تُستلم.</item>
+        <item quantity="many">%1$d ملفًا ليس في مكتبة هذا الجهاز ولن يُستلم.</item>
+        <item quantity="other">%1$d ملف ليس في مكتبة هذا الجهاز ولن يُستلم.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="zero">%1$d ملف ليس صورة أو فيديو.</item>
+        <item quantity="one">ملف واحد ليس صورة أو فيديو.</item>
+        <item quantity="two">ملفان ليسا صورة أو فيديو.</item>
+        <item quantity="few">%1$d ملفات ليست صورًا أو فيديوهات.</item>
+        <item quantity="many">%1$d ملفًا ليس صورة أو فيديو.</item>
+        <item quantity="other">%1$d ملف ليس صورة أو فيديو.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="zero">لم يُستلم %1$d إضافي (500 كحد أقصى في المرة).</item>
+        <item quantity="one">لم يُستلم عنصر إضافي واحد (500 كحد أقصى في المرة).</item>
+        <item quantity="two">لم يُستلم عنصران إضافيان (500 كحد أقصى في المرة).</item>
+        <item quantity="few">لم تُستلم %1$d عناصر إضافية (500 كحد أقصى في المرة).</item>
+        <item quantity="many">لم يُستلم %1$d عنصرًا إضافيًا (500 كحد أقصى في المرة).</item>
+        <item quantity="other">لم يُستلم %1$d عنصر إضافي (500 كحد أقصى في المرة).</item>
+    </plurals>
 </resources>

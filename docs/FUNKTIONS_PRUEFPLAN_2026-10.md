@@ -141,6 +141,15 @@ Spalte „Regeln“: welche der drei harten Regeln hier besonders zählt.
 | W4 | Zielgröße Foto/Video | 2 MB / 20 MB, echte Galerie-Dateien prüfen | keine Datei über dem Ziel; sonst Grund (`WorkflowRunTest`) | – |
 | W5 | Nur teilen | an echte App teilen | nichts in der Galerie gespeichert | – |
 
+#### Teilen-Ziel und App-Shortcuts
+
+| ID | Funktion | Prüfen | Erwartet | Regeln |
+|---|---|---|---|---|
+| S1 | Senden an PhotoMaid | aus Google Fotos, Dateien, Messenger je 1 und 5 Medien teilen | Seite „Übernommen“, richtige Anzahl, Aktionen nutzbar | B |
+| S2 | Nicht in der Mediathek | Bild aus einem Chat-Cache, PDF mitteilen | gezählt, nicht übernommen, keine Kopie | – |
+| S3 | Direktes Teilen an Ablauf | Ablauf anlegen, im Teilen-Menü wählen | Vorschau „Das passiert“, nichts läuft ohne „Starten“ | B |
+| S4 | App-Shortcuts | Langdruck, anheften, Ablauf löschen | 4 feste + eigene Abläufe; gelöschter Ablauf angeheftet = deaktiviert | – |
+
 ### 2.8 Studio (Tab 4)
 | ID | Funktion | Prüfen | Erwartet | Regeln |
 |---|---|---|---|---|

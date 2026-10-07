@@ -1499,4 +1499,28 @@
     <string name="wf_share_again">再次分享</string>
     <string name="wf_counts">照片 %1$s · 视频 %2$s</string>
     <string name="wf_start">开始</string>
+    <string name="share_target_label">发送到 PhotoMaid</string>
+    <string name="share_title">已接收</string>
+    <string name="share_none">共享的文件都不在此设备的照片图库中。</string>
+    <string name="share_no_access">PhotoMaid 尚无法访问你的照片。请在设置中允许访问，然后重新发送。</string>
+    <string name="share_never">不会删除或决定任何内容。只有在你保存时才会生成新文件。</string>
+    <string name="share_workflow">应用工作流程</string>
+    <string name="share_edit">编辑</string>
+    <string name="shortcut_clean">整理</string>
+    <string name="shortcut_clean_long">立即整理</string>
+    <string name="shortcut_due">到期</string>
+    <string name="shortcut_due_long">“稍后”中已到期</string>
+    <string name="shortcut_workflow_gone">此工作流程已删除。</string>
+    <plurals name="share_count">
+        <item quantity="other">%1$d 张照片和视频</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="other">%1$d 个文件不在此设备的图库中，不会被接收。</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="other">%1$d 个文件不是照片或视频。</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="other">另有 %1$d 个未接收（一次最多 500 个）。</item>
+    </plurals>
 </resources>

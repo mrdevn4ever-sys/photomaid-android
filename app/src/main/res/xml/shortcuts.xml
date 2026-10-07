@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nur das Ziel für Direktes Teilen. Die eigentlichen Shortcuts sind dynamisch (system/AppShortcuts.kt), damit sie
+     in allen Build-Typen (applicationId mit Suffix) und allen Sprachen stimmen. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <share-target android:targetClass="app.photomaid.MainActivity">
+        <data android:mimeType="image/*" />
+        <data android:mimeType="video/*" />
+        <category android:name="app.photomaid.category.WORKFLOW_SHARE" />
+    </share-target>
+</shortcuts>

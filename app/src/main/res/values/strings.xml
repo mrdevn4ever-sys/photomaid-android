@@ -1566,4 +1566,32 @@
     <string name="wf_share_again">Share again</string>
     <string name="wf_counts">%1$s photos · %2$s videos</string>
     <string name="wf_start">Start</string>
+    <string name="share_target_label">Send to PhotoMaid</string>
+    <string name="share_title">Received</string>
+    <string name="share_none">None of the shared files are in this device’s photo library.</string>
+    <string name="share_no_access">PhotoMaid can’t access your photos yet. Allow access in Settings, then send again.</string>
+    <string name="share_never">Nothing is deleted or decided. A new file is only saved when you choose to.</string>
+    <string name="share_workflow">Apply workflow</string>
+    <string name="share_edit">Edit</string>
+    <string name="shortcut_clean">Clean up</string>
+    <string name="shortcut_clean_long">Clean up now</string>
+    <string name="shortcut_due">Due</string>
+    <string name="shortcut_due_long">Due from Later</string>
+    <string name="shortcut_workflow_gone">This workflow was deleted.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d photo or video</item>
+        <item quantity="other">%1$d photos and videos</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d file isn’t in this device’s library and won’t be taken over.</item>
+        <item quantity="other">%1$d files aren’t in this device’s library and won’t be taken over.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d file isn’t a photo or video.</item>
+        <item quantity="other">%1$d files aren’t photos or videos.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">%1$d more not taken over (at most 500 at once).</item>
+        <item quantity="other">%1$d more not taken over (at most 500 at once).</item>
+    </plurals>
 </resources>

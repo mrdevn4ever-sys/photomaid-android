@@ -333,6 +333,8 @@ class RecordingNav : Nav {
     val workflowRuns = mutableListOf<app.photomaid.feature.workflow.WorkflowRunRequest>()
     override fun openWorkflowRun(request: app.photomaid.feature.workflow.WorkflowRunRequest) { events += "workflowRun"; workflowRuns += request }
     override fun push(route: String) { events += "push:$route" }
+    val workflowLists = mutableListOf<app.photomaid.feature.workflow.WorkflowRequest>()
+    override fun openWorkflows(request: app.photomaid.feature.workflow.WorkflowRequest) { events += "workflows"; workflowLists += request }
     val organize = mutableListOf<app.photomaid.feature.organize.OrganizeTarget>()
     override fun openOrganize(target: app.photomaid.feature.organize.OrganizeTarget) { events += "organize:${target.encode()}"; organize += target }
     override fun openSettings() { events += "settings" }

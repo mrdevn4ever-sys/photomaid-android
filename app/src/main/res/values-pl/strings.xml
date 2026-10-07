@@ -1700,4 +1700,40 @@
     <string name="wf_share_again">Udostępnij ponownie</string>
     <string name="wf_counts">Zdjęcia: %1$s · filmy: %2$s</string>
     <string name="wf_start">Rozpocznij</string>
+    <string name="share_target_label">Wyślij do PhotoMaid</string>
+    <string name="share_title">Odebrane</string>
+    <string name="share_none">Żaden z udostępnionych plików nie znajduje się w bibliotece zdjęć tego urządzenia.</string>
+    <string name="share_no_access">PhotoMaid nie ma jeszcze dostępu do zdjęć. Zezwól na dostęp w ustawieniach i wyślij ponownie.</string>
+    <string name="share_never">Nic nie jest usuwane ani rozstrzygane. Nowy plik powstaje dopiero po zapisaniu.</string>
+    <string name="share_workflow">Zastosuj przepływ pracy</string>
+    <string name="share_edit">Edytuj</string>
+    <string name="shortcut_clean">Porządki</string>
+    <string name="shortcut_clean_long">Zrób porządki teraz</string>
+    <string name="shortcut_due">Do przejrzenia</string>
+    <string name="shortcut_due_long">Do przejrzenia z „Później”</string>
+    <string name="shortcut_workflow_gone">Ten przepływ pracy został usunięty.</string>
+    <plurals name="share_count">
+        <item quantity="one">%1$d zdjęcie lub film</item>
+        <item quantity="few">%1$d zdjęcia i filmy</item>
+        <item quantity="many">%1$d zdjęć i filmów</item>
+        <item quantity="other">%1$d zdjęcia i filmu</item>
+    </plurals>
+    <plurals name="share_unmatched">
+        <item quantity="one">%1$d plik nie znajduje się w bibliotece tego urządzenia i nie zostanie przejęty.</item>
+        <item quantity="few">%1$d pliki nie znajdują się w bibliotece tego urządzenia i nie zostaną przejęte.</item>
+        <item quantity="many">%1$d plików nie znajduje się w bibliotece tego urządzenia i nie zostanie przejętych.</item>
+        <item quantity="other">%1$d pliku nie ma w bibliotece tego urządzenia – nie zostanie przejęte.</item>
+    </plurals>
+    <plurals name="share_rejected">
+        <item quantity="one">%1$d plik nie jest zdjęciem ani filmem.</item>
+        <item quantity="few">%1$d pliki nie są zdjęciami ani filmami.</item>
+        <item quantity="many">%1$d plików nie jest zdjęciami ani filmami.</item>
+        <item quantity="other">%1$d pliku nie jest zdjęciem ani filmem.</item>
+    </plurals>
+    <plurals name="share_overflow">
+        <item quantity="one">Kolejny %1$d nie został przejęty (maks. 500 naraz).</item>
+        <item quantity="few">Kolejne %1$d nie zostały przejęte (maks. 500 naraz).</item>
+        <item quantity="many">Kolejnych %1$d nie przejęto (maks. 500 naraz).</item>
+        <item quantity="other">Kolejnych %1$d nie przejęto (maks. 500 naraz).</item>
+    </plurals>
 </resources>
