@@ -29,6 +29,9 @@ object SystemDialogs {
 
     val activity: Activity? get() = activityRef?.get()
 
+    /** Ein Systemdialog (z. B. Favorit bestätigen) ist gerade offen: die App ist nur kurz pausiert, nicht im Hintergrund. */
+    val inProgress: Boolean get() = pending != null
+
     fun onResult(resultCode: Int) {
         pending?.complete(resultCode)
         pending = null

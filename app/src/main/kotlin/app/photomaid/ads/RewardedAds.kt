@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.time.Instant
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.time.ZoneId
 
 /** Freiwillige Rewarded-Werbung. Belohnung NUR nach tatsächlichem SDK-Reward-Callback. */
@@ -31,6 +33,19 @@ interface RewardedAdGateway {
 class UnconfiguredRewardedAdGateway : RewardedAdGateway {
     override val isConfigured = false
     override suspend fun presentRewardedAd() = RewardedAdResult.NotConfigured
+}
+
+/** Was der Pro-Screen zum 30-Minuten-Test zeigt. */
+enum class RewardOffer {
+    /** Lifetime Pro oder kein Werbeanbieter konfiguriert: nichts anbieten (keine tote CTA). */
+    HIDDEN,
+    AVAILABLE,
+    /** Test läuft gerade. */
+    ACTIVE,
+    /** Heute schon genutzt – morgen wieder. */
+    USED_TODAY,
+    /** Kaufstatus noch unklar: vorerst keine Werbung. */
+    NOT_NOW,
 }
 
 /** Persistente Reward-Buchführung + Capability-Auflösung (iOS `EntitlementCenter`). */
@@ -59,19 +74,54 @@ class EntitlementCenter(
         get() = ads.isConfigured && capabilities.adsAllowed &&
             _rewards.value.canOfferReward(Instant.now(), ZoneId.systemDefault(), purchases.state.value)
 
-    /** Zeigt eine freiwillige Anzeige; schaltet nur nach Reward-Callback frei (idempotent). */
+    val rewardOffer: RewardOffer
+        get() {
+            val caps = capabilities
+            if (caps.tier == Capabilities.Tier.LIFETIME_PRO || !ads.isConfigured) return RewardOffer.HIDDEN
+            if (caps.tier == Capabilities.Tier.TEMPORARY_PRO) return RewardOffer.ACTIVE
+            if (_rewards.value.usedToday(Instant.now(), ZoneId.systemDefault())) return RewardOffer.USED_TODAY
+            if (!caps.adsAllowed) return RewardOffer.NOT_NOW
+            return RewardOffer.AVAILABLE
+        }
+
+    /** „+10 heute“ anbieten? Free und Pro-Test (beide haben ein Tageslimit), 1× pro lokalem Tag, nur mit Anbieter. */
+    val canOfferLimitBonus: Boolean
+        get() {
+            val caps = capabilities
+            return ads.isConfigured && caps.adsAllowed && !caps.hasUnlimitedTrashAccess &&
+                !_rewards.value.bonusUsedToday(Instant.now(), ZoneId.systemDefault())
+        }
+
+    /**
+     * Zeigt eine freiwillige Anzeige – nur nach bewusster Nutzeraktion. Freischaltung ausschließlich nach dem
+     * Reward-Callback des Anbieters (idempotent je `rewardID`); Abbruch, No-Fill oder Fehler verbrauchen den Tag nicht.
+     */
     suspend fun watchRewardedAd(pausePlayback: () -> Unit): RewardedAdResult {
         if (!canOfferReward) return RewardedAdResult.NotConfigured
+        return watch(pausePlayback) { ledger, id -> ledger.granting(id, Instant.now(), ZoneId.systemDefault(), purchases.state.value).first }
+    }
+
+    /** Video-Bonus: +10 Löschungen nur für heute. Gleiche Regeln wie der Pro-Test (nur nach Reward-Callback). */
+    suspend fun watchLimitBonusAd(pausePlayback: () -> Unit): RewardedAdResult {
+        if (!canOfferLimitBonus) return RewardedAdResult.NotConfigured
+        return watch(pausePlayback) { ledger, id -> ledger.grantingBonus(id, Instant.now(), ZoneId.systemDefault(), purchases.state.value).first }
+    }
+
+    private suspend fun watch(pausePlayback: () -> Unit, grant: (RewardLedger, String) -> RewardLedger): RewardedAdResult {
         pausePlayback()
         val result = ads.presentRewardedAd()
-        if (result is RewardedAdResult.Rewarded) {
-            runCatching {
-                val (ledger, _) = _rewards.value.granting(result.rewardID, Instant.now(), ZoneId.systemDefault(), purchases.state.value)
-                store.setValue(KEY, ledger)
-                _rewards.value = ledger
-            }
-        }
         tick()
-        return result
+        if (result !is RewardedAdResult.Rewarded) return result
+        return try {
+            val ledger = grant(_rewards.value, result.rewardID)
+            // Room erlaubt keinen Main-Thread-Zugriff; erst nach erfolgreichem Speichern gilt der Reward.
+            withContext(Dispatchers.IO) { store.setValue(KEY, ledger) }
+            _rewards.value = ledger
+            tick()
+            result
+        } catch (e: Exception) {
+            // Nicht gespeichert oder nicht erlaubt (Kauf/zweiter Reward): keine Erfolgsmeldung.
+            RewardedAdResult.Failed("grant:${e.javaClass.simpleName}")
+        }
     }
 }

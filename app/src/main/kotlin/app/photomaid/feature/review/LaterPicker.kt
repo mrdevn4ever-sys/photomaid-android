@@ -27,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -64,7 +65,7 @@ private class FromToday(private val today: LocalDate) : SelectableDates {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LaterPickerSheet(initial: LaterInterval, today: LocalDay, finish: (LocalDay?) -> Unit) {
+fun LaterPickerSheet(initial: LaterInterval, today: LocalDay, onNoDate: (() -> Unit)? = null, finish: (LocalDay?) -> Unit) {
     val c = PM.colors
     val ctx = LocalContext.current
     var value by rememberSaveable { mutableIntStateOf(initial.value) }
@@ -122,6 +123,14 @@ fun LaterPickerSheet(initial: LaterInterval, today: LocalDay, finish: (LocalDay?
             }
             Text(stringResource(R.string.picker_show_on, DayText.string(result)), style = AppTypography.subheadline, color = c.textSecondary)
             GlassButton(stringResource(if (useDate) R.string.picker_choose_interval else R.string.picker_specific_date)) { useDate = !useDate }
+            // „Später ohne Termin“: kommt nie von selbst zurück, nur über „Später › Ohne Termin“.
+            if (onNoDate != null) {
+                TextButton({ if (!finished) { finished = true; onNoDate() } }, Modifier.testTag("later.nodate")) {
+                    Text(stringResource(R.string.picker_no_date), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                }
+                Text(stringResource(R.string.picker_no_date_hint), style = AppTypography.caption, color = c.textSecondary,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            }
         }
     }
 }

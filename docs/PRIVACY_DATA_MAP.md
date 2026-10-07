@@ -10,7 +10,7 @@ Gegenstück zu `docs/PRIVACY_DATA_MAP.md` der iOS-App.
 | SHA-256-Hashes | nur im Speicher während des Duplikat-Scans | Nein | – | – |
 | Medien, Dateinamen, Pfade, Medien-/Dokument-IDs, Metadaten | nur lokal gelesen | **Nein** | – | – |
 | Kaufdaten | Google Play (Billing Library) | Ja (technisch, durch Google Play) | – | Google |
-| Werbedaten | – (kein Werbe-SDK im Build) | Nein | – | Release-Blocker, sobald ein Anbieter gewählt ist |
+| Werbedaten | Google AdMob + UMP (nur Free, erst nach Einwilligung) | Ja (durch Google: IP, Geräte-/Werbe-ID, Interaktionen, Diagnose) | – | Anfragen ohne Medien, Namen, Pfade, Hashes, IDs |
 
 ## Netzwerk
 
@@ -21,7 +21,7 @@ Gegenstück zu `docs/PRIVACY_DATA_MAP.md` der iOS-App.
   Media3 (lokale Wiedergabe), `RECEIVE_BOOT_COMPLETED`/`FOREGROUND_SERVICE` aus WorkManager (Erinnerungen).
   Die Berechtigungen werden bewusst **nicht** per `tools:node="remove"` entfernt (kein Eingriff in das Billing-SDK).
   Für die Play-„Datensicherheit“ sind die Angaben von Google zur Billing Library zu übernehmen.
-- Keine eigenen Analytics-, Crash- oder Werbe-SDKs.
+- Keine eigenen Analytics- oder Crash-SDKs. Werbung: Google AdMob (Free), gestartet erst nach UMP-Einwilligung.
 
 ## Berechtigungen
 
@@ -46,12 +46,59 @@ Löschen von Dateien: ausschließlich `DocumentsContract.deleteDocument` in vom 
   betreffen – PhotoMaid kann das nicht einsehen. ✔
 - Nicht verwendet: „100 % offline“, „100 % privat“.
 
+## Editor (2026-10)
+
+| Daten | Wo | Zweck | Verlässt das Gerät? |
+|---|---|---|---|
+| Bearbeitete Fassung (neue Datei) | MediaStore, Ordner des Originals | Ergebnis der Bearbeitung | nein (nur wenn die Galerie/Cloud-App sie selbst sichert) |
+| Liste „Bearbeitet“ (`edits.v1`: neue/alte Medien-ID, Art, Zeitpunkt; max. 500) | App-Speicher | Kennzeichen und „Original wiederherstellen“ | nein |
+| Zwischendateien beim Export | App-Cache, sofort gelöscht | Kodieren vor dem atomaren Einfügen | nein |
+| EXIF (Datum, Kamera, Belichtung, Ort) | in der neuen Datei | wie im Original; „Standort entfernen“ entfernt GPS | nein |
+
+Keine Bildanalyse, keine automatischen Werte, keine Werbung im Editor; Werbe-Anfragen erhalten nie Medien, Namen, Pfade oder IDs.
+
+## Studio (2026-10)
+
+| Daten | Wo | Zweck | Verlässt das Gerät? |
+|---|---|---|---|
+| Collage (neue Datei) | MediaStore `Pictures/PhotoMaid/` (oder gewählter Ordner) | Ergebnis | nein (nur wenn eine Galerie-/Cloud-App sie selbst sichert) |
+| Entwürfe (`studio.drafts.v1`: Projekt mit Medien-IDs und Einstellungen; Free 3, Pro 50) | App-Speicher | später weitermachen | nein |
+| Vorschaubild je Entwurf (`files/drafts/<id>.jpg`, max. 360 px) | App-Speicher | Liste im Studio | nein; wird mit dem Entwurf gelöscht |
+| „Nur teilen“-Datei | App-Cache `shared/`, beim nächsten Start gelöscht | Teilen ohne Galerie-Kopie | nur an die vom Nutzer gewählte App |
+
+| Ton als M4A | MediaStore `Music/PhotoMaid/` | Ergebnis „Ton als M4A speichern“ | nein |
+| Zusammengefügtes Video / Diashow (neue Datei) | MediaStore `Movies/PhotoMaid/` | Ergebnis (gilt als „Behalten“) | nein |
+| Musikdatei (nur Lesezugriff über die Systemauswahl, dauerhafte Leseberechtigung für den Export) | bleibt am Ort | Tonspur des Films | nein |
+| Werkzeug-Ergebnisse (verkleinerte/umgewandelte Kopien, Kopien ohne Standort, zusammengefügte Screenshots, GIF) | MediaStore: Ordner des Originals bzw. `Pictures/PhotoMaid/` | neue Dateien (gelten als „Behalten“); Originale nur auf Wunsch in den Android-Papierkorb | nein |
+| Standbild aus Video | Ordner des Videos | neues Foto (gilt als „Behalten“) | nein |
+| Export-Fortschritt | Benachrichtigung (Vordergrunddienst, lokal) | Export läuft weiter, wenn der Editor geschlossen wird | nein |
+
+Keine Werbung im Studio. Medienauswahl speichert nichts.
+
+## Mediathek (Tab „Fotos“, G1/G2)
+
+| Daten | Ort | Zweck | Verlässt das Gerät? |
+|---|---|---|---|
+| „In PhotoMaid ausgeblendet“: Medien-IDs (Content-URIs) und Ordnerpfade | App-Einstellungen (Room `key_value`) | Ausgeblendetes in PhotoMaid nicht zeigen; Dateien bleiben unverändert und in anderen Apps sichtbar (kein Tresor) | nein |
+| Sortierung je Ordner, „Nur Favoriten“ je Ordner, Ordnerlisten-Reihenfolge | App-Einstellungen (Ordnerpfade, keine Medien-IDs) | Ansicht | nein |
+| Eigene Gruppen (Name + Ordnerpfade) | App-Einstellungen | Ordner zusammen anzeigen; nichts verschoben oder kopiert | nein |
+| Kamera-Modell (EXIF `Make`/`Model`) | nur im Arbeitsspeicher der Sitzung | Suche, Info-Blatt | nein; nie gespeichert |
+| Suchbegriffe | nur im Arbeitsspeicher | Suche (ohne Akzente) | nein |
+| Diashow-Einstellungen (Reihenfolge, Dauer, Übergang, Videos, Wiederholen) | App-Einstellungen (keine Medien-IDs) | Diashow | nein |
+| Media-Session (Kopfhörer-Tasten) | nur im Prozess, ohne Titel/Bild/Pfad | Wiedergabe/Pause | nein; kein Hintergrunddienst, keine Sperrbildschirm-Anzeige |
+
+Keine Werbung in der Mediathek-Verwaltung; Werbe-Anfragen erhalten nie Medien, Namen, Pfade oder IDs.
+
 ## Entwurf „Datensicherheit“ (Play Console) – vom Inhaber zu bestätigen
 
 - Erfasste Daten: **keine** durch den Entwickler (Käufe werden von Google Play verarbeitet).
 - Geteilte Daten: keine.
 - Datenverschlüsselung bei Übertragung: nicht zutreffend (keine Übertragung durch die App).
 - Löschanfrage: Deinstallation entfernt alle lokalen Daten; es gibt kein Konto.
-- Sobald ein Werbe-SDK hinzukommt, muss dieser Abschnitt neu bewertet werden (Werbe-ID, Consent/UMP).
+- Werbe-SDK (AdMob) ist enthalten: in der Play Console angeben „Geräte- oder andere IDs“ (Werbe-ID) und
+  „App-Aktivität/Interaktionen“ sowie „Diagnose“ als **vom SDK erfasst und geteilt** (Zweck Werbung, Analyse, Betrugsschutz),
+  nicht optional in Free; Google-Angaben zum Mobile Ads SDK übernehmen.
+- Öffentliche Datenschutzerklärung: https://mrdevn4ever-sys.github.io/photomaid/privacy/ (DE), …/en/ (EN), Stand 2026-10-02.
+- Zielgruppe: ab 13 (keine Altersgruppe unter 13, keine Families-Richtlinie).
 
 Keine rechtliche Freigabe durch diese Arbeit.

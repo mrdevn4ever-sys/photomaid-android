@@ -1,5 +1,6 @@
 package app.photomaid.feature.review
 
+import app.photomaid.feature.settings.setExcluded
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.runtime.getValue
@@ -14,6 +15,8 @@ import androidx.lifecycle.viewModelScope
 import app.photomaid.AppModel
 import app.photomaid.FeedRequest
 import app.photomaid.R
+import app.photomaid.feature.editor.EditOutcome
+import app.photomaid.design.SizeText
 import app.photomaid.core.feed.BackNavigation
 import app.photomaid.core.feed.FeedGestureMachine
 import app.photomaid.core.feed.FeedIntent
@@ -32,12 +35,28 @@ import app.photomaid.core.model.ReviewSessionID
 import app.photomaid.design.AppMotion
 import app.photomaid.media.MediaAsset
 import app.photomaid.media.reviewableMedia
+import app.photomaid.feature.quickaccess.assetsFor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.drop
+import app.photomaid.media.MediaWriteResult
+import app.photomaid.ads.FeedAd
+import app.photomaid.core.ads.FeedAdPolicy
+import app.photomaid.core.capabilities.Capabilities
+import app.photomaid.core.model.MediaKind
+import app.photomaid.core.organize.MediaFolder
+import app.photomaid.core.organize.MediaFolders
+import app.photomaid.core.organize.PhotoSeries
+import app.photomaid.core.feed.FeedOrder
+import app.photomaid.core.feed.FeedOrdering
+import app.photomaid.core.progress.MonthKey
+import app.photomaid.core.decisions.DecisionAction
+import app.photomaid.core.decisions.DecisionCommand
 import java.util.UUID
 
 enum class PreviewState { LOADING, READY, FAILED }
@@ -51,8 +70,23 @@ data class LaterPill(val id: UUID = UUID.randomUUID(), val receiptID: UUID, val 
  */
 data class CustomLaterRequest(val id: UUID = UUID.randomUUID(), val item: ItemReference, val revision: Int)
 
-/** Haptik-Ereignis (feine, unterschiedliche Rückmeldung je Aktion). */
-enum class FeedHaptic { KEEP, CLEANUP, LATER, BUMP, UNDO }
+/**
+ * Haptik-Sprache des Feeds (feine, unterschiedliche Rückmeldung je Bedeutung; respektiert den App-Schalter und –
+ * über `performHapticFeedback` – die Systemeinstellung). READY: einmal, wenn Loslassen jetzt entscheiden würde.
+ */
+enum class FeedHaptic { KEEP, CLEANUP, LATER, READY, DATE, BUMP, UNDO, FAVORITE_ON, FAVORITE_OFF }
+
+/** Geschützter Favorit wurde nach links gewischt: Rückfrage statt Papierkorb. Keine Entscheidung. */
+data class ProtectedFavorite(val item: ItemReference, val isVideo: Boolean)
+
+private const val SUMMARY_AD_WAIT_MS = 8_000L
+private const val SUMMARY_AD_POLL_MS = 250L
+
+/** Werbekarte zwischen zwei Medien (nur Free). Keine Entscheidung; Wegwischen erst nach [FeedAdPolicy.MIN_VISIBLE_MS]. */
+data class AdCard(val id: UUID = UUID.randomUUID(), val ad: FeedAd, val shownAtMs: Long)
+
+/** Kurzer, nur nach belegtem Erfolg gezeigter Hinweis (z. B. „Nach „Urlaub“ verschoben“). */
+data class FeedNotice(val id: UUID = UUID.randomUUID(), val text: String)
 
 /**
  * Presentation-Logik des Entscheidungs-Feeds (iOS `FeedViewModel`). Die Entscheidungslogik selbst liegt in
@@ -73,6 +107,11 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     val offset = Animatable(Offset.Zero, Offset.VectorConverter)
     var lockedDirection by mutableStateOf<SwipeDirection?>(null)
         private set
+    /** Richtung, in die Loslassen jetzt entscheiden würde (für dezente Rahmenfarbe + eine Haptik). */
+    var readyDirection by mutableStateOf<SwipeDirection?>(null)
+        private set
+    /** Vom Screen gesetzt (Animationen entfernen). */
+    var reduceMotion = false
     var errorMessage by mutableStateOf<String?>(null)
     /** Synchron gesetzt, solange ein Commit läuft: Buttons/Aktionen/Zurück können das Item nicht verschieben. */
     var isCommitting by mutableStateOf(false)
@@ -94,14 +133,83 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
      */
     var animationScope: kotlinx.coroutines.CoroutineScope? = null
     private var pillJob: Job? = null
+    private var noticeJob: Job? = null
+    var protectedFavorite by mutableStateOf<ProtectedFavorite?>(null)
+        private set
+    var notice by mutableStateOf<FeedNotice?>(null)
+        private set
+    var adCard by mutableStateOf<AdCard?>(null)
+        private set
+    /** Uhr für die Mindestanzeigedauer (Tests können sie ersetzen). */
+    var nowMs: () -> Long = { app.wallClockMs() }
+    val adSkippable: Boolean get() = adCard?.let { nowMs() - it.shownAtMs >= FeedAdPolicy.MIN_VISIBLE_MS } == true
+    /** Läuft ein Schreibwunsch (Favorit/Verschieben) für das aktuelle Medium? Dann kein zweiter. */
+    var mediaWriteBusy by mutableStateOf(false)
+        private set
 
     val current: ItemReference? get() { version; return session.current }
     val currentAsset: MediaAsset? get() = current?.let { assets[it.localIdentifier] }
+    /** Nächstes Medium (liegt beim Wischen sichtbar werdend unter dem aktuellen). */
+    val next: ItemReference? get() { version; return session.items.getOrNull(session.index + 1) }
 
     private fun touch() { version++ }
     private fun emit(h: FeedHaptic) { if (app.settings.value.haptics) haptic = (++hapticSeq) to h }
 
-    init { viewModelScope.launch { load() } }
+    // Vor `init` angelegt: das Laden startet im init sofort (Main.immediate) und nutzt diese Felder.
+    /** Fester Startwert je Sitzung: „Zufällig“ bleibt beim Zurückwischen stabil. */
+    private val shuffleSeed = System.nanoTime()
+    /** Erkannte Fotoserien je Medium (Snapshot-State: der Knopf „Serie“ erscheint, sobald die Erkennung fertig ist). */
+    private var seriesById by mutableStateOf<Map<String, List<PhotoSeries.Member>>>(emptyMap())
+    var seriesOpen by mutableStateOf<List<MediaAsset>?>(null)
+        private set
+
+    init {
+        viewModelScope.launch { load() }
+        // Externe Änderungen (Favorit in der Galerie, Verschieben, Löschen): sichtbares Fenster frisch lesen.
+        viewModelScope.launch { app.photos.changeToken.drop(1).collectLatest { if (isLoaded) refreshWindowAssets() } }
+        // Gespeicherte Bearbeitung (Editor): bei „Original ersetzen“ die neue Fassung an dieselbe Stelle setzen, kurzer Hinweis.
+        viewModelScope.launch { app.editEvents.collect { onEdited(it) } }
+    }
+
+    private suspend fun onEdited(o: EditOutcome) {
+        val saved = o as? EditOutcome.Saved ?: return
+        val old = ItemReference.photo(saved.sourceId)
+        if (saved.replaced && old in session.items) {
+            withContext(Dispatchers.IO) { app.photos.assets(listOf(saved.newId)) }.firstOrNull()?.let { assets[it.id] = it }
+            if (saved.newId in assets) {
+                session.replaceItem(old, ItemReference.photo(saved.newId))
+                previews.remove(old)
+                refreshWindow()
+                touch()
+            }
+        }
+        val size = if (saved.bytes > 0) SizeText.bytes(saved.bytes) else null
+        showNotice(when {
+            saved.replaced -> app.string(R.string.edit_done_replaced)
+            saved.replaceDeclined -> app.string(R.string.edit_done_declined)
+            size != null -> app.string(R.string.edit_done_copy_size, size)
+            else -> app.string(R.string.edit_done_copy)
+        })
+    }
+
+    private suspend fun refreshWindowAssets() {
+        val ids = windowItems().map { it.localIdentifier }
+        if (ids.isEmpty()) return
+        val fresh = withContext(Dispatchers.IO) { app.photos.assets(ids) }
+        fresh.forEach { assets[it.id] = it }
+        // Extern gelöscht/verschoben/Zugriff entzogen: nicht mehr anzeigbar → Problemzustand mit „Weiter ohne Entscheidung“.
+        val present = fresh.map { it.id }.toSet()
+        for (ref in windowItems()) if (ref.localIdentifier !in present && ref in previews) {
+            previews[ref] = PreviewState.FAILED
+            session.markPreviewUnavailable(ref)
+        }
+        touch()
+    }
+
+    private suspend fun refreshAsset(id: String) {
+        withContext(Dispatchers.IO) { app.photos.assets(listOf(id)) }.firstOrNull()?.let { assets[id] = it }
+        touch()
+    }
 
     // Warteschlange
 
@@ -122,18 +230,144 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                     val refs = list.map { it.reference }
                     ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
                 }
+                is FeedRequest.Source.Quick -> {
+                    // Quelle liefert nur Mitglieder; welche noch offen sind, entscheidet der globale Ledger.
+                    val list = app.photos.assetsFor(src.item)
+                    list.forEach { assets[it.id] = it }
+                    val refs = list.map { it.reference }
+                    ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
+                }
                 FeedRequest.Source.Due -> ReviewQueues.dueQueue(app.ledger.allRecords(), s, today).filter { it.provider == ItemProvider.PhotoLibrary }
-                is FeedRequest.Source.Task -> src.task.items.filter { it.provider == ItemProvider.PhotoLibrary }
+                is FeedRequest.Source.Collection -> app.collections.result(src.collection, app).items.filter { it.provider == ItemProvider.PhotoLibrary }
                 is FeedRequest.Source.Items -> src.items.filter { it.provider == ItemProvider.PhotoLibrary }
+                is FeedRequest.Source.Month -> {
+                    val zone = java.time.ZoneId.systemDefault()
+                    val list = app.photos.reviewableMedia().filter { a -> a.creationDate?.let { MonthKey.of(it, zone) } == src.month }
+                    list.forEach { assets[it.id] = it }
+                    val refs = list.map { it.reference }
+                    // „Erneut durchsehen“: alle noch vorhandenen Medien des Monats; bestehende Entscheidungen bleiben, bis neu gewischt wird.
+                    if (src.again) refs else ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
+                }
+                is FeedRequest.Source.NewSince -> {
+                    val list = app.photos.reviewableMedia().filter { a -> a.dateAdded?.toEpochMilli()?.let { it > src.epochMs } == true }
+                    list.forEach { assets[it.id] = it }
+                    val refs = list.map { it.reference }
+                    ReviewQueues.normalQueue(refs, app.ledger.records(refs), s, today)
+                }
             }
         }
         val missing = candidates.map { it.localIdentifier }.filter { it !in assets }
         withContext(Dispatchers.IO) { app.photos.assets(missing) }.forEach { assets[it.id] = it }
         // Nicht (mehr) zugängliche Medien nicht anzeigen und nicht entscheiden.
-        session = FeedSession(s, candidates.filter { it.localIdentifier in assets })
+        val present = candidates.filter { it.localIdentifier in assets }
+        session = FeedSession(s, if (orderable) ordered(present, app.settings.value.feedOrder) else present)
+        (request.source as? FeedRequest.Source.Month)?.let { m -> app.updateSettings { it.copy(continueMonth = m.month.toString()) } }
+        rebuildSeries()
         isLoaded = true
         refreshWindow()
         touch()
+    }
+
+    // Reihenfolge (nicht für feste Listen wie Papierkorb oder Serien)
+
+    private val orderable: Boolean get() = request.source !is FeedRequest.Source.Items && request.source != FeedRequest.Source.Due
+
+    private fun ordered(refs: List<ItemReference>, order: FeedOrder): List<ItemReference> =
+        FeedOrdering.apply(refs, order, date = { assets[it.localIdentifier]?.creationDate },
+            size = { assets[it.localIdentifier]?.size?.bytesOrNull }, id = { it.localIdentifier }, seed = shuffleSeed)
+
+    val order: FeedOrder get() = app.settings.value.feedOrder
+    val canReorder: Boolean get() = orderable
+
+    /** Reihenfolge wechseln: nur die noch kommenden Medien werden neu geordnet, nichts wird entschieden. */
+    fun setOrder(order: FeedOrder) {
+        if (!orderable || isCommitting) return
+        viewModelScope.launch {
+            app.updateSettings { it.copy(feedOrder = order) }
+            session.reorderUpcoming { ordered(it, order) }
+            app.player.stop()
+            refreshWindow()
+            touch()
+        }
+    }
+
+    // Fotoserien (kurz hintereinander, gleicher Ordner) – nur Erkennung, Auswahl trifft der Nutzer.
+
+
+    private fun rebuildSeries() {
+        val members = session.items.mapNotNull { r -> assets[r.localIdentifier]?.takeIf { it.kind != MediaKind.VIDEO } }
+            .map { PhotoSeries.Member(it.id, it.relativePath, it.creationDate) }
+        seriesById = PhotoSeries.index(members)
+    }
+
+    /** Serie des aktuellen Mediums (nur Mitglieder, die in diesem Feed noch vorhanden sind), sonst `null`. */
+    val currentSeries: List<MediaAsset>?
+        get() {
+            version
+            val id = current?.localIdentifier ?: return null
+            val g = seriesById[id] ?: return null
+            val inFeed = session.items.drop(session.index).map { it.localIdentifier }.toSet() + id
+            return g.filter { it.id in inFeed }.mapNotNull { assets[it.id] }.takeIf { it.size >= PhotoSeries.MIN_SIZE }
+        }
+
+
+    fun openSeries() {
+        if (isCommitting || adCard != null) return
+        seriesOpen = currentSeries
+    }
+
+    fun closeSeries() { seriesOpen = null }
+
+    /**
+     * Auswahl der Serie bestätigen: [keep] werden behalten, alle anderen kommen in den PhotoMaid-Papierkorb (nichts
+     * gelöscht). Ein Ledger-Befehl je Medium (Item-ID, Revision, Command-ID, Aktion); danach verlassen die Mitglieder
+     * ohne weitere Entscheidung die Warteschlange. Keine Werbekarte, kein Werbezähler.
+     */
+    fun confirmSeries(members: List<MediaAsset>, keep: Set<String>) {
+        if (isCommitting) return
+        seriesOpen = null
+        isCommitting = true
+        viewModelScope.launch {
+            var failed = false
+            try {
+                for (a in members) {
+                    val ref = a.reference
+                    val intent = if (a.id in keep) FeedIntent.KEEP else FeedIntent.MARK_FOR_CLEANUP
+                    val action = if (intent == FeedIntent.KEEP) DecisionAction.Keep else DecisionAction.MarkForCleanup
+                    try {
+                        val rev = app.ledger.record(ref).revision
+                        app.apply(DecisionCommand(item = ref, expectedRevision = rev, action = action), session.id)
+                        session.recordDecision(ref, intent)
+                    } catch (e: Exception) { failed = true }
+                }
+                laterPill = null
+                session.dropUpcoming(members.map { it.reference }.toSet())
+                app.player.stop()
+                refreshWindow()
+                touch()
+                emit(FeedHaptic.KEEP)
+                showNotice(app.string(R.string.series_done, keep.size, members.size - keep.size))
+                if (failed) errorMessage = app.string(R.string.error_decision_not_saved)
+            } finally { isCommitting = false }
+        }
+    }
+
+    // Ordner vom Aufräumen ausnehmen (aus dem ⋯-Menü). Keine Entscheidung.
+
+    val currentFolder: String? get() = currentAsset?.relativePath?.let { MediaFolders.normalize(it) }?.takeIf { it.isNotEmpty() }
+
+    fun excludeCurrentFolder() {
+        val folder = currentFolder ?: return
+        if (isCommitting) return
+        viewModelScope.launch {
+            setExcluded(app, folder, true)
+            val gone = session.items.filter { r -> assets[r.localIdentifier]?.relativePath?.let { MediaFolders.normalize(it).lowercase().startsWith(folder.lowercase()) } == true }
+            session.dropUpcoming(gone.toSet())
+            app.player.stop()
+            refreshWindow()
+            touch()
+            showNotice(app.string(R.string.excl_done, MediaFolder(folder, 0).name))
+        }
     }
 
     // Vorschau
@@ -153,6 +387,16 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         for (ref in window) if (ref !in previews) previews[ref] = PreviewState.LOADING
     }
 
+    /** „Erneut versuchen“ je Medium (neuer Wert → Vorschaubild wird neu angefordert). */
+    val retries = mutableStateMapOf<ItemReference, Int>()
+
+    fun retryPreview(ref: ItemReference) {
+        if (ref !in previews) return
+        previews[ref] = PreviewState.LOADING
+        retries[ref] = (retries[ref] ?: 0) + 1
+        touch()
+    }
+
     /** Rückmeldung des Bildladers. Antwort nur übernehmen, wenn das Item noch im Fenster ist. */
     fun previewResult(ref: ItemReference, ok: Boolean) {
         if (ref !in previews) return
@@ -166,21 +410,46 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     fun dragChanged(t: Offset) {
         if (customLater != null) return
         machine.update(Vector2(t.x.toDouble(), t.y.toDouble()))
+        if (adCard != null) {
+            // Werbekarte folgt dem Finger, zeigt aber keine Bedeutung (keine Entscheidung möglich).
+            lockedDirection = null; readyDirection = null
+            val o = machine.displayOffset
+            viewModelScope.launch { offset.snapTo(Offset(o.dx.toFloat(), o.dy.toFloat())) }
+            return
+        }
         lockedDirection = machine.lockedDirection
+        val ready = if (machine.readyToCommit) machine.lockedDirection else null
+        if (ready != null && ready != readyDirection) emit(FeedHaptic.READY)
+        readyDirection = ready
         val o = machine.displayOffset
         viewModelScope.launch { offset.snapTo(Offset(o.dx.toFloat(), o.dy.toFloat())) }
     }
 
     fun dragEnded(t: Offset, v: Offset, reduceMotion: Boolean) {
+        readyDirection = null
         if (customLater != null) { dragCancelled(); return }
+        if (adCard != null) {
+            // Jede Richtung überspringt die Werbekarte – erst nach der Mindestdauer, nie eine Entscheidung.
+            val r = machine.end(Vector2(t.x.toDouble(), t.y.toDouble()), Vector2(v.x.toDouble(), v.y.toDouble()))
+            if (r is FeedGestureMachine.Resolution.Commit && FeedIntent.of(r.direction) == FeedIntent.PREVIOUS) {
+                perform(FeedIntent.PREVIOUS, reduceMotion) // „runter“ = sofort zurück, auch vor der Mindestdauer
+                return
+            }
+            machine.finishCommit()
+            if (r is FeedGestureMachine.Resolution.Commit && adSkippable) dismissAd()
+            lockedDirection = null
+            resetOffset(reduceMotion)
+            return
+        }
         when (val r = machine.end(Vector2(t.x.toDouble(), t.y.toDouble()), Vector2(v.x.toDouble(), v.y.toDouble()))) {
-            is FeedGestureMachine.Resolution.Commit -> perform(FeedIntent.of(r.direction), reduceMotion)
+            is FeedGestureMachine.Resolution.Commit -> perform(FeedIntent.of(r.direction), reduceMotion, velocity = v)
             else -> resetOffset(reduceMotion)
         }
     }
 
     fun dragCancelled() {
         machine.cancel()
+        readyDirection = null
         lockedDirection = null
         viewModelScope.launch { offset.snapTo(Offset.Zero) }
     }
@@ -195,15 +464,28 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     }
 
     /** Gemeinsamer Pfad für Gesten, Buttons und TalkBack-Aktionen. */
-    fun perform(intent: FeedIntent, reduceMotion: Boolean) {
+    fun perform(intent: FeedIntent, reduceMotion: Boolean, velocity: Offset = Offset.Zero) {
         // Solange eine Datumsauswahl offen ist, kann nichts anderes entschieden oder navigiert werden.
         if (customLater != null) { machine.finishCommit(); resetOffset(reduceMotion); return }
+        if (adCard != null) {
+            // „Zurück“ überspringt die Werbekarte sofort (dann normal zurück); Entscheidungen gibt es auf ihr nicht.
+            machine.finishCommit()
+            if (intent == FeedIntent.PREVIOUS) dismissAd() else { if (adSkippable) dismissAd(); resetOffset(reduceMotion); return }
+        }
         if (isCommitting) return
         if (intent == FeedIntent.LATER_CUSTOM) { openCustomLater(reduceMotion); return }
         if (intent == FeedIntent.PREVIOUS) {
             val nav = session.goBack()
             machine.finishCommit()
-            resetOffset(reduceMotion)
+            val scope = animationScope
+            if (nav is BackNavigation.Moved && scope != null && !reduceMotion) {
+                // Vorheriges Medium gleitet von oben herein (statt hartem Wechsel).
+                lockedDirection = null
+                scope.launch {
+                    offset.snapTo(Offset(0f, -viewSizeDp.height * 0.35f))
+                    offset.animateTo(Offset.Zero, AppMotion.standard(false))
+                }
+            } else resetOffset(reduceMotion)
             if (nav == BackNavigation.AtStart) emit(FeedHaptic.BUMP) // dezenter Anschlag, keine Aktion
             app.player.stop()
             refreshWindow()
@@ -211,8 +493,18 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
             return
         }
         val item = current ?: run { machine.finishCommit(); lockedDirection = null; return }
+        if (protectedFavorite != null) { machine.finishCommit(); resetOffset(reduceMotion); return }
+        // Favoriten schützen: kein stiller Papierkorb für einen Systemfavoriten – Rückfrage, Medium bleibt.
+        val asset = currentAsset
+        if (intent == FeedIntent.MARK_FOR_CLEANUP && app.settings.value.protectFavorites && asset?.isFavorite == true) {
+            machine.finishCommit()
+            lockedDirection = null
+            resetOffset(reduceMotion)
+            protectedFavorite = ProtectedFavorite(item, asset.kind == MediaKind.VIDEO)
+            return
+        }
         isCommitting = true
-        viewModelScope.launch { commit(intent, item, reduceMotion) }
+        viewModelScope.launch { commit(intent, item, reduceMotion, velocity = velocity) }
     }
 
     /**
@@ -245,7 +537,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         viewModelScope.launch { commit(FeedIntent.LATER_CUSTOM, item, reduceMotion, customDay = day) }
     }
 
-    private suspend fun commit(intent: FeedIntent, item: ItemReference, reduceMotion: Boolean, customDay: LocalDay? = null) {
+    private suspend fun commit(intent: FeedIntent, item: ItemReference, reduceMotion: Boolean, customDay: LocalDay? = null, velocity: Offset = Offset.Zero) {
         try {
             val revision = app.ledger.record(item).revision
             // Entscheidung nur für das Item, auf dem die Aktion ausgelöst wurde.
@@ -255,9 +547,10 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 resetOffset(reduceMotion)
                 return
             }
-            val target = exitOffset(intent)
+            val target = exitOffset(intent, offset.value)
+            // Fliegt mit der Wischgeschwindigkeit weiter (Feder statt fester Dauer) – schneller Wisch, schneller Wechsel.
             val fly = (animationScope ?: viewModelScope).async {
-                runCatching { if (animationScope != null) offset.animateTo(target, AppMotion.commit(reduceMotion)) else offset.snapTo(target) }
+                runCatching { if (animationScope != null) offset.animateTo(target, AppMotion.flyOut(reduceMotion), initialVelocity = velocity) else offset.snapTo(target) }
             }
             app.player.stop() // ausgehenden Player sofort anhalten
             try {
@@ -267,11 +560,14 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
                 session.commitSucceeded(pending.command.id, out.record)
                 emit(when (intent) { FeedIntent.KEEP -> FeedHaptic.KEEP; FeedIntent.MARK_FOR_CLEANUP -> FeedHaptic.CLEANUP; else -> FeedHaptic.LATER })
                 offset.snapTo(Offset.Zero)
-                laterPill = null
+                // Mehrere „Später“ hintereinander: die Pille bleibt stehen und wird nur ersetzt (kein Aus- und
+                // Wiedereinblenden bei jedem Wisch – Gerätebefund Lauf 7). Sonst verschwindet sie.
+                if (intent != FeedIntent.LATER || customDay != null) laterPill = null
                 machine.finishCommit()
                 lockedDirection = null
                 refreshWindow()
                 touch()
+                afterDecisionAds()
                 val receipt = session.receipt
                 if (receipt != null && receipt.item == item) {
                     // Gewähltes Datum als Ergänzung derselben Später-Aktion (gemeinsames Undo); sonst Standardtermin.
@@ -291,12 +587,13 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         }
     }
 
-    private fun exitOffset(intent: FeedIntent): Offset {
+    /** Ziel außerhalb des Bildschirms; die Querbewegung des Fingers bleibt erhalten (natürliche Flugbahn). */
+    private fun exitOffset(intent: FeedIntent, from: Offset): Offset {
         val w = viewSizeDp.width; val h = viewSizeDp.height
         return when (intent) {
-            FeedIntent.KEEP -> Offset(0f, -h * 1.2f)
-            FeedIntent.MARK_FOR_CLEANUP -> Offset(-w * 1.3f, 0f)
-            FeedIntent.LATER -> Offset(w * 1.3f, 0f)
+            FeedIntent.KEEP -> Offset(from.x, -h * 1.2f)
+            FeedIntent.MARK_FOR_CLEANUP -> Offset(-w * 1.3f, from.y)
+            FeedIntent.LATER -> Offset(w * 1.3f, from.y)
             FeedIntent.LATER_CUSTOM -> Offset(w * 1.3f, -h * 0.6f)
             FeedIntent.PREVIOUS -> Offset.Zero
         }
@@ -319,7 +616,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     /** Wisch nach rechts: sofort Standardtermin setzen und kurz als Pille zeigen. */
     private suspend fun applyDefaultLater(receipt: LaterReceipt) {
         val interval = defaultLaterInterval
-        if (!schedule(receipt, interval.dueDay(app.today))) return
+        if (!schedule(receipt, interval.dueDay(app.today))) { laterPill = null; return }
         val pill = LaterPill(receiptID = receipt.id, interval = interval)
         laterPill = pill
         pillJob?.cancel()
@@ -334,8 +631,25 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         pickerReceipt = null
         if (day == null) return
         viewModelScope.launch {
-            schedule(receipt, day)
+            if (schedule(receipt, day)) emit(FeedHaptic.DATE)
             laterPill = null
+        }
+    }
+
+    /** „Ohne Termin“ im Drehrad aus „Ändern“: beiseitelegen, kommt nicht von selbst zurück. */
+    fun pickerNoDate(receipt: LaterReceipt) {
+        pickerReceipt = null
+        viewModelScope.launch {
+            val cur = session.receipt
+            val cmd = if (cur?.id == receipt.id) session.bookmarkCommand(cur.id) else null
+            if (cmd != null) try {
+                val out = app.apply(cmd)
+                session.receiptScheduled(cur!!.id, out.record.revision)
+                emit(FeedHaptic.DATE)
+                showNotice(app.string(R.string.later_nodate_done))
+            } catch (e: Exception) { errorMessage = app.string(R.string.error_date_not_saved) }
+            laterPill = null
+            touch()
         }
     }
 
@@ -365,19 +679,181 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
         }
     }
 
+    // Favorit, Ordner (keine Review-Entscheidungen, kein Weiterblättern, nicht Teil des Undo-Stapels)
+
+    /** ♡ in der Aktionsleiste. Android fragt per Systemdialog; angezeigt wird nur der danach gelesene Zustand. */
+    fun toggleFavorite() {
+        val a = currentAsset ?: return
+        if (mediaWriteBusy || isCommitting) return
+        writeFavorite(a.id, !a.isFavorite) {}
+    }
+
+    private fun writeFavorite(id: String, value: Boolean, onDone: () -> Unit) {
+        mediaWriteBusy = true
+        viewModelScope.launch {
+            try {
+                when (app.photos.setFavorite(id, value)) {
+                    MediaWriteResult.Done -> { emit(if (value) FeedHaptic.FAVORITE_ON else FeedHaptic.FAVORITE_OFF); refreshAsset(id); onDone() }
+                    MediaWriteResult.Cancelled -> refreshAsset(id)
+                    is MediaWriteResult.Failed -> { refreshAsset(id); errorMessage = app.string(R.string.fav_failed) }
+                }
+            } finally { mediaWriteBusy = false }
+        }
+    }
+
+    /** Schutzdialog → „Favorit entfernen“: nur den Favoriten entfernen. Das Medium bleibt; erneut wischen = Papierkorb. */
+    fun unfavoriteProtected() {
+        val p = protectedFavorite ?: return
+        protectedFavorite = null
+        writeFavorite(p.item.localIdentifier, false) { showNotice(app.string(R.string.fav_removed_hint)) }
+    }
+
+    fun dismissProtected() { protectedFavorite = null }
+
+    /** Offenes Ordner-Sheet für dieses Medium; [folders] `null` = wird geladen. */
+    var folderSheetFor by mutableStateOf<MediaAsset?>(null)
+        private set
+    var folders by mutableStateOf<List<MediaFolder>?>(null)
+        private set
+
+    fun openFolders() {
+        val a = currentAsset ?: return
+        if (mediaWriteBusy || isCommitting) return
+        folders = null
+        folderSheetFor = a
+        viewModelScope.launch { folders = withContext(Dispatchers.IO) { runCatching { app.photos.folders() }.getOrDefault(emptyList()) } }
+    }
+
+    fun closeFolders() { folderSheetFor = null }
+
+    /** Verschieben in einen Ordner; Erfolgsmeldung nur, wenn MediaStore den neuen Pfad bestätigt. */
+    fun moveCurrent(relativePath: String) {
+        val a = currentAsset ?: return
+        if (mediaWriteBusy || isCommitting) return
+        mediaWriteBusy = true
+        viewModelScope.launch {
+            try {
+                when (app.photos.moveToFolder(a.id, relativePath)) {
+                    MediaWriteResult.Done -> {
+                        refreshAsset(a.id)
+                        rememberRecentFolder(app, relativePath)
+                        showNotice(app.string(R.string.folder_moved, MediaFolder(relativePath, 0).name))
+                    }
+                    MediaWriteResult.Cancelled -> Unit
+                    is MediaWriteResult.Failed -> { refreshAsset(a.id); errorMessage = app.string(R.string.folder_failed) }
+                }
+            } finally { mediaWriteBusy = false }
+        }
+    }
+
+    private fun showNotice(text: String) {
+        laterPill = null
+        val n = FeedNotice(text = text)
+        notice = n
+        noticeJob?.cancel()
+        noticeJob = viewModelScope.launch { delay(AppMotion.NOTICE_MS); if (notice?.id == n.id) notice = null }
+    }
+
+    // Werbekarte (nur Free; Lifetime und 30-Minuten-Pro sehen keine)
+
+    private fun adsForUser(): Boolean = app.capabilities.let { it.tier == Capabilities.Tier.FREE && it.adsAllowed }
+
+    /** Nach jeder gespeicherten Entscheidung: zählen, ggf. vorladen oder die Karte zeigen. */
+    private suspend fun afterDecisionAds() {
+        if (!adsForUser()) return
+        val counter = app.feedAdCounter
+        counter.recordDecision()
+        if (!app.feedAds.isAvailable) return
+        val today = app.today
+        if (counter.isDue(today, nowMs())) {
+            val ad = app.feedAds.take()
+            if (ad != null) {
+                app.player.stop()
+                laterPill = null
+                adCard = AdCard(ad = ad, shownAtMs = nowMs())
+                counter.recordCardShown(today, nowMs())
+                touch()
+            } else app.feedAds.preload()
+        } else if (counter.almostDue(today) || (session.items.size - session.index <= 2 && counter.summaryAllowed(today))) app.feedAds.preload()
+    }
+
+    /** Anzeige unter der Sitzungs-Zusammenfassung (nur Free; nie zusammen mit dem deutlichen Pro-Angebot). */
+    var summaryAd by mutableStateOf<FeedAd?>(null)
+        private set
+    private var summaryAdDecided = false
+
+    /** Einmal pro Durchgang entscheiden; „Letztes Medium“ und zurück zeigt dieselbe Anzeige, keine neue. */
+    fun prepareSummaryAd(strongUpsell: Boolean) {
+        if (summaryAdDecided) return
+        summaryAdDecided = true
+        if (strongUpsell || !adsForUser() || !app.feedAds.isAvailable) return
+        val today = app.today
+        if (!app.feedAdCounter.summaryAllowed(today)) return
+        viewModelScope.launch {
+            // Kurzer Durchgang: das Vorladen ist evtl. noch nicht fertig (Gerätebefund Lauf 6) – kurz nachfassen.
+            // Die Anzeige steht ganz unten; spätes Erscheinen verschiebt nichts darüber. Nur solange die Zusammenfassung offen ist.
+            var ad = app.feedAds.take()
+            var waited = 0L
+            while (ad == null && waited < SUMMARY_AD_WAIT_MS && session.isFinished) {
+                delay(SUMMARY_AD_POLL_MS); waited += SUMMARY_AD_POLL_MS
+                ad = app.feedAds.take()
+            }
+            if (ad == null) return@launch
+            if (!session.isFinished) { ad.destroy(); return@launch }
+            summaryAd = ad
+            app.feedAdCounter.recordShown(today)
+        }
+    }
+
+    /** Werbekarte schließen (Wisch nach Mindestdauer, „Weiter“, Zurück, Rückgängig). */
+    fun dismissAd(): Boolean {
+        val a = adCard ?: return false
+        adCard = null
+        a.ad.destroy()
+        touch()
+        return true
+    }
+
     // Undo
 
     fun undo() {
+        dismissAd() // Rückgängig überspringt die Werbekarte – immer, auch wenn gerade noch gespeichert wird
         if (isCommitting || customLater != null) return
         laterPill = null
         viewModelScope.launch {
+            val before = session.index
             val record = app.undo() ?: return@launch
             session.applyUndo(record)
             emit(FeedHaptic.UNDO)
+            // Zurückgeholtes Medium gleitet von oben herein – eindeutige, kurze Rückmeldung.
+            val scope = animationScope
+            if (session.index < before && scope != null && !reduceMotion) scope.launch {
+                offset.snapTo(Offset(0f, -viewSizeDp.height * 0.35f))
+                offset.animateTo(Offset.Zero, AppMotion.standard(false))
+            }
             refreshWindow()
             touch()
         }
     }
 
-    override fun onCleared() { app.player.stop() }
+    override fun onCleared() {
+        app.player.stop(); adCard?.ad?.destroy(); summaryAd?.destroy()
+        // „Neu seit dem letzten Aufräumen“: Zeitpunkt nur nach einer Sitzung mit mindestens einer Entscheidung.
+        if (session.summary.reviewed > 0) app.scope.launch { app.updateSettings { it.copy(lastSessionEndMs = System.currentTimeMillis()) } }
+    }
+}
+
+/** Zielordner zuletzt verwendet (max. [MAX_RECENT], neuester zuerst). Nur Pfade. */
+suspend fun rememberRecentFolder(app: AppModel, path: String) {
+    val p = MediaFolders.normalize(path)
+    app.updateSettings { s -> s.copy(recentFolders = (listOf(p) + s.recentFolders.filterNot { it.equals(p, ignoreCase = true) }).take(MAX_RECENT)) }
+}
+
+/** Zielordner an- bzw. abpinnen (max. [MAX_PINNED]). */
+suspend fun togglePinnedFolder(app: AppModel, path: String) {
+    val p = MediaFolders.normalize(path)
+    app.updateSettings { s ->
+        val has = s.pinnedFolders.any { it.equals(p, ignoreCase = true) }
+        s.copy(pinnedFolders = if (has) s.pinnedFolders.filterNot { it.equals(p, ignoreCase = true) } else (s.pinnedFolders + p).take(MAX_PINNED))
+    }
 }

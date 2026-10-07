@@ -22,8 +22,13 @@ android {
         versionCode = 1
         versionName = "0.1.0"
         buildConfigField("String", "PLAY_PRO_PRODUCT_ID", "\"${prop("photomaid.playProProductId")}\"")
-        buildConfigField("String", "PRIVACY_POLICY_URL", "\"${prop("photomaid.privacyPolicyUrl")}\"")
+        buildConfigField("String", "PRIVACY_POLICY_URL", "\"${prop("photomaid.privacyPolicyUrl").ifBlank { "https://mrdevn4ever-sys.github.io/photomaid/privacy/" }}\"")
         buildConfigField("boolean", "QA_FIXTURES", "false")
+        // Werbung (AdMob): echte IDs nur per Gradle-Property, nie im Repository. Leer = keine Werbung (Release).
+        manifestPlaceholders["admobAppId"] = prop("photomaid.admobAppId")
+        buildConfigField("String", "ADMOB_APP_ID", "\"${prop("photomaid.admobAppId")}\"")
+        buildConfigField("String", "ADMOB_NATIVE_UNIT", "\"${prop("photomaid.admobNativeUnit")}\"")
+        buildConfigField("String", "ADMOB_REWARDED_UNIT", "\"${prop("photomaid.admobRewardedUnit")}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,6 +40,24 @@ android {
             // Signatur: Release-Blocker (kein Upload-Keystore im Repository). Lokal mit Debug-Key prüfbar:
             signingConfig = if (prop("photomaid.signWithDebug") == "true") signingConfigs.getByName("debug") else null
         }
+        // Debug: offizielle Google-Test-Anzeigen (nie Produktions-IDs, keine echten Klicks).
+        getByName("debug") {
+            manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3940256099942544~3347511713\"")
+            buildConfigField("String", "ADMOB_NATIVE_UNIT", "\"ca-app-pub-3940256099942544/2247696110\"")
+            buildConfigField("String", "ADMOB_REWARDED_UNIT", "\"ca-app-pub-3940256099942544/5224354917\"")
+        }
+        // Geräte-QA/Performance: wie Release (R8, nicht debuggable), mit Debug-Schlüssel signiert, Google-TEST-Anzeigen.
+        // Gleiche App-ID wie Debug → `adb install -r` über den Debug-Build ohne Datenverlust. Niemals veröffentlichen.
+        create("perf") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3940256099942544~3347511713\"")
+            buildConfigField("String", "ADMOB_NATIVE_UNIT", "\"ca-app-pub-3940256099942544/2247696110\"")
+            buildConfigField("String", "ADMOB_REWARDED_UNIT", "\"ca-app-pub-3940256099942544/5224354917\"")
+        }
         // QA-Build: synthetische Fixtures (nur mit Intent-Extra „qa-fixtures“), niemals Release.
         create("qa") {
             initWith(getByName("debug"))
@@ -43,6 +66,9 @@ android {
             matchingFallbacks += listOf("debug")
         }
     }
+
+    // `perf` nutzt exakt die Release-Quellen (keine synthetischen Daten).
+    sourceSets { getByName("perf") { kotlin.srcDir("src/release/kotlin") } }
 
     buildFeatures {
         compose = true
@@ -103,9 +129,15 @@ dependencies {
     implementation(libs.work.runtime)
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.ui.compose)
+    implementation(libs.media3.transformer)
+    implementation(libs.media3.effect)
+    implementation(libs.media3.session)
+    implementation(libs.androidx.exifinterface)
     implementation(libs.coil.compose)
     implementation(libs.coil.video)
     implementation(libs.billing)
+    implementation(libs.play.ads)
+    implementation(libs.ump)
     implementation(libs.coroutines.android)
     implementation(libs.serialization.json)
 

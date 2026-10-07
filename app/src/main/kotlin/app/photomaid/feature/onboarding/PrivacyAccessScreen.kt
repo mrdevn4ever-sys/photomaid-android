@@ -42,11 +42,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.testTag
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
+import app.photomaid.design.GestureLegendRow
 import app.photomaid.R
 import app.photomaid.design.AppBackground
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
 import app.photomaid.design.GlassButton
+import app.photomaid.design.PlainButton
 import app.photomaid.design.PM
 import app.photomaid.design.ProminentButton
 import app.photomaid.design.SurfaceCard
@@ -90,8 +97,10 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(AppSpacing.pageMargin),
                 horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
                 Box(Modifier.glassRect().padding(AppSpacing.l)) { Icon(Icons.Rounded.Shield, null, tint = c.accent, modifier = Modifier.size(56.dp)) }
-                Text(stringResource(R.string.privacy_title), style = AppTypography.title, color = c.textPrimary, textAlign = TextAlign.Center)
-                Text(stringResource(R.string.privacy_text), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
+                // Der Claim erscheint nur hier beim ersten Start – „Heute“ zeigt danach direkt den Inhalt.
+                Text(stringResource(if (onboarding) R.string.onb_access_title else R.string.privacy_title),
+                    style = if (onboarding) AppTypography.display else AppTypography.title, color = c.textPrimary, textAlign = TextAlign.Center)
+                Text(stringResource(if (onboarding) R.string.onb_access_text else R.string.privacy_text), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
                 SurfaceCard {
                     Header(Icons.Rounded.PhotoLibrary, stringResource(R.string.privacy_media)) {
                         val (label, color) = when (access) {
@@ -107,45 +116,54 @@ fun PrivacyAccessScreen(onboarding: Boolean, onDone: () -> Unit) {
                     when (access) {
                         PhotoAccess.NOT_DETERMINED -> ProminentButton(stringResource(R.string.privacy_allow)) { mediaLauncher.launch(MediaPermissions.requestable()) }
                         // Android 14+: erneute Anfrage zeigt die System-Auswahl „Ausgewählte Fotos“ (iOS: limited picker).
-                        PhotoAccess.LIMITED -> GlassButton(stringResource(R.string.privacy_manage)) { mediaLauncher.launch(MediaPermissions.requestable()) }
+                        PhotoAccess.LIMITED -> Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                            GlassButton(stringResource(R.string.privacy_manage)) { mediaLauncher.launch(MediaPermissions.requestable()) }
+                            // Wurde eine Medienart dauerhaft abgelehnt, zeigt Android keinen Dialog mehr: Weg über die Einstellungen.
+                            PlainButton(stringResource(R.string.privacy_open_settings)) { openAppSettings() }
+                        }
                         PhotoAccess.DENIED -> GlassButton(stringResource(R.string.privacy_open_settings)) { openAppSettings() }
                         PhotoAccess.AUTHORIZED -> Unit
                     }
                 }
-                SurfaceCard {
-                    Header(Icons.Rounded.Notifications, stringResource(R.string.set_notifications)) {
-                        Text(stringResource(when (notif) {
-                            ReminderScheduler.Access.ALLOWED -> R.string.allowed
-                            ReminderScheduler.Access.DENIED -> R.string.access_denied
-                            ReminderScheduler.Access.NOT_DETERMINED -> R.string.access_not_asked
-                        }), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
-                    }
-                    Text(stringResource(R.string.privacy_notifications_text), style = AppTypography.caption, color = c.textSecondary)
-                    if (notif == ReminderScheduler.Access.NOT_DETERMINED) {
-                        Spacer(Modifier.height(AppSpacing.s))
-                        GlassButton(stringResource(R.string.privacy_notifications_allow)) {
-                            if (Build.VERSION.SDK_INT >= 33) notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                            else scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
+                // Mitteilungen (optional) – auch im Onboarding, mit ehrlichem Nutzen statt Statistik.
+                run {
+                    SurfaceCard {
+                        Header(Icons.Rounded.Notifications, stringResource(R.string.set_notifications)) {
+                            Text(stringResource(when (notif) {
+                                ReminderScheduler.Access.ALLOWED -> R.string.allowed
+                                ReminderScheduler.Access.DENIED -> R.string.access_denied
+                                ReminderScheduler.Access.NOT_DETERMINED -> R.string.access_not_asked
+                            }), style = AppTypography.caption.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+                        }
+                        Text(stringResource(R.string.privacy_notifications_text), style = AppTypography.caption, color = c.textSecondary)
+                        if (notif == ReminderScheduler.Access.NOT_DETERMINED) {
+                            Spacer(Modifier.height(AppSpacing.s))
+                            GlassButton(stringResource(R.string.privacy_notifications_allow)) {
+                                if (Build.VERSION.SDK_INT >= 33) notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                else scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
+                            }
                         }
                     }
                 }
-                SurfaceCard {
-                    Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                        Icon(Icons.Rounded.Folder, null, tint = c.accent)
-                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                            Text(stringResource(R.string.privacy_folders), style = AppTypography.headline, color = c.textPrimary)
-                            Text(stringResource(R.string.privacy_folders_text), style = AppTypography.caption, color = c.textSecondary)
+                if (!onboarding) {
+                    SurfaceCard {
+                        Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                            Icon(Icons.Rounded.Folder, null, tint = c.accent)
+                            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                                Text(stringResource(R.string.privacy_folders), style = AppTypography.headline, color = c.textPrimary)
+                                Text(stringResource(R.string.privacy_folders_text), style = AppTypography.caption, color = c.textSecondary)
+                            }
                         }
                     }
                 }
                 Text(stringResource(R.string.privacy_purchases), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+                if (LocalApp.current.adSdk.isConfigured) Text(stringResource(R.string.privacy_ads), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
             }
             // „Weiter“ immer sichtbar, auch auf kleinen Geräten und bei großer Schrift.
             ProminentButton(stringResource(R.string.continue_), Modifier.padding(horizontal = AppSpacing.pageMargin, vertical = AppSpacing.xs),
                 fillWidth = true, large = true, onClick = onDone)
         }
     }
-    @Suppress("UNUSED_EXPRESSION") onboarding
 }
 
 @Composable

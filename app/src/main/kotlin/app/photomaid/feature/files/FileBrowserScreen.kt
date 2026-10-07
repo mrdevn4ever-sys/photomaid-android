@@ -1,5 +1,6 @@
 package app.photomaid.feature.files
 
+import androidx.compose.material.icons.rounded.Schedule
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -20,7 +21,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.CreateNewFolder
 import androidx.compose.material.icons.rounded.Delete
@@ -62,6 +62,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.photomaid.AppModel
 import app.photomaid.R
+import app.photomaid.design.spacedItem
+import app.photomaid.design.lazyListSection
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.decisions.Disposition
 import app.photomaid.core.decisions.ItemRecord
@@ -88,7 +90,7 @@ import app.photomaid.files.SourceException
 import app.photomaid.files.SourceProblem
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.PageEndSpacer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -105,7 +107,13 @@ suspend fun scanAll(app: AppModel): FileIndex = withContext(Dispatchers.IO) {
     for (s in app.sources.sources.value) {
         try { all += app.sources.scan(s.id) } catch (e: Exception) { failed += s.id }
     }
-    FileIndex(all, failed, false)
+    // Dieselbe Datei über mehrere verbundene Ordner (z. B. „Download“ und „Download/Test“) nur einmal zeigen und zählen
+    // (Gerätebefund Lauf 6). Bevorzugt der Eintrag, über den schon entschieden wurde.
+    val records = app.ledger.records(all.map { it.reference })
+    val unique = all.groupBy { it.aliasKey ?: it.reference.description }.values.map { same ->
+        same.firstOrNull { (records[it.reference]?.disposition ?: Disposition.UNDECIDED) != Disposition.UNDECIDED } ?: same.first()
+    }
+    FileIndex(unique, failed, false)
 }
 
 /** Launcher für den Ordnerdialog (SAF). Ablehnung von Cloud-Ordnern wie iOS (iCloud Drive). */
@@ -178,41 +186,41 @@ fun FileBrowserScreen(nav: Nav) {
     ScreenScaffold(stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads), onBack = nav::back, actions = {
         GlassIconButton(Icons.Rounded.CreateNewFolder, stringResource(R.string.add_folder), onClick = pick)
     }) { mod ->
-        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
+        // Lazy je Zeile: große Ordner scrollen flüssig.
+        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin)) {
             if (sources.isEmpty()) {
-                item {
+                spacedItem("none") {
                     SurfaceCard {
                         Text(stringResource(R.string.files_none_title), style = AppTypography.headline, color = c.textPrimary)
                         Spacer(Modifier.height(AppSpacing.s))
-                        Text(stringResource(R.string.files_none_message), style = AppTypography.caption, color = c.textSecondary)
+                        Text(stringResource(R.string.files_none_message), style = AppTypography.subheadline, color = c.textSecondary)
                         Spacer(Modifier.height(AppSpacing.s))
                         ProminentButton(stringResource(R.string.choose_folder), onClick = pick)
+                        Spacer(Modifier.height(AppSpacing.s))
+                        Text(stringResource(R.string.files_none_tip), style = AppTypography.caption, color = c.textSecondary)
                     }
                 }
             } else {
-                item {
+                spacedItem("search") {
                     OutlinedTextField(query, { query = it }, Modifier.fillMaxWidth(), singleLine = true,
                         placeholder = { Text(stringResource(R.string.files_search)) }, leadingIcon = { Icon(Icons.Rounded.Search, null) },
                         shape = RoundedCornerShape(14.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedContainerColor = c.surface, focusedContainerColor = c.surface,
                             unfocusedBorderColor = c.surfaceStroke))
                 }
-                item {
+                spacedItem("kind") {
                     ListSection {
                         MenuRowPicker(stringResource(R.string.file_type), FileKindFilter.entries.map { it to kindLabel(it) }, kind) { kind = it }
                     }
                 }
-                if (index.scanning && index.entries.isEmpty()) item { Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { CircularProgressIndicator() } }
-                items(groups, key = { it.first }) { (title, entries) ->
-                    ListSection(header = title) {
-                        entries.forEachIndexed { i, e ->
-                            if (i > 0) RowDivider()
-                            FileRow(e, records[e.reference]?.disposition ?: Disposition.UNDECIDED, onOpen = { open(e) },
-                                onKeep = { decide(e, DecisionAction.Keep) }, onTrash = { decide(e, DecisionAction.MarkForCleanup) },
-                                onLater = { decide(e, DecisionAction.Later(ReviewSessionID())) })
-                        }
+                if (index.scanning && index.entries.isEmpty()) spacedItem("scanning") { Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { CircularProgressIndicator() } }
+                groups.forEach { (title, entries) ->
+                    lazyListSection("g:$title", entries, { it.reference.localIdentifier }, header = title) { e ->
+                        FileRow(e, records[e.reference]?.disposition ?: Disposition.UNDECIDED, onOpen = { open(e) },
+                            onKeep = { decide(e, DecisionAction.Keep) }, onTrash = { decide(e, DecisionAction.MarkForCleanup) },
+                            onLater = { decide(e, DecisionAction.Later(ReviewSessionID())) })
                     }
                 }
-                if (index.failed.isNotEmpty()) item {
+                if (index.failed.isNotEmpty()) spacedItem("failed") {
                     SurfaceCard {
                         Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                             Icon(Icons.Rounded.WarningAmber, null, tint = c.warning)
@@ -221,7 +229,7 @@ fun FileBrowserScreen(nav: Nav) {
                     }
                 }
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            item { PageEndSpacer() }
         }
     }
     NoticeDialog(errorText) { errorText = null }
@@ -258,7 +266,7 @@ private fun FileRow(e: FileEntry, state: Disposition, onOpen: () -> Unit, onKeep
         }
         when (state) {
             Disposition.MARKED_FOR_CLEANUP -> Icon(Icons.Rounded.Delete, null, tint = c.cleanup)
-            Disposition.LATER -> Icon(Icons.Rounded.Bookmark, null, tint = c.later)
+            Disposition.LATER -> Icon(Icons.Rounded.Schedule, null, tint = c.later)
             Disposition.KEPT -> Icon(Icons.Rounded.Check, null, tint = c.keep)
             else -> Unit
         }

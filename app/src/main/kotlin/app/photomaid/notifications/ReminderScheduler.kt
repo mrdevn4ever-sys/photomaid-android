@@ -12,10 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -23,16 +21,13 @@ import androidx.work.workDataOf
 import app.photomaid.MainActivity
 import app.photomaid.R
 import app.photomaid.core.model.LocalDay
-import app.photomaid.core.rules.ReviewRuleID
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.temporal.TemporalAdjusters
 import java.util.concurrent.TimeUnit
 
 /**
@@ -82,9 +77,15 @@ class ReminderScheduler(private val context: Context, private val everAsked: () 
     }.getOrDefault(false)
 
     /** Erinnerung am Termintag (09:00 lokal). Idempotent je Tag. */
+    /** In diesem Prozess schon eingeplante Tage: jeder Wisch nach rechts trifft meist denselben Standardtag. */
+    private val scheduledThisProcess = java.util.concurrent.ConcurrentHashMap.newKeySet<String>()
+
     fun scheduleDueReminder(day: LocalDay) {
         if (_access.value != Access.ALLOWED) return
         val name = "later.$day"
+        // Gerätebefund Lauf 7 (RECHTS p90 26 ms): WorkManager-Abfragen + Einplanen bei JEDEM „Später“ kosteten
+        // CPU während der nächsten Animation. Gleicher Tag (KEEP-Policy) → nichts zu tun.
+        if (name in scheduledThisProcess) return
         if (!alreadyScheduled(name) && pendingCount() >= MAX_PENDING) return
         val zone = ZoneId.systemDefault()
         val at = day.toLocalDate().atTime(LocalTime.of(9, 0)).atZone(zone)
@@ -94,35 +95,21 @@ class ReminderScheduler(private val context: Context, private val everAsked: () 
             .setInputData(workDataOf(KEY_KIND to "due"))
             .addTag(TAG).build()
         WorkManager.getInstance(context).enqueueUniqueWork(name, ExistingWorkPolicy.KEEP, req)
+        scheduledThisProcess += name
     }
 
-    /** Wöchentliche Erinnerung einer Regel (Wochentag 1 = Sonntag … 7 = Samstag, 10:00). Nur Hinweis, keine Fundzahl. */
-    fun scheduleRuleReminder(ruleID: ReviewRuleID, weekday: Int) {
-        if (_access.value != Access.ALLOWED) return
-        val name = "rule.${ruleID.rawValue}"
-        if (!alreadyScheduled(name) && pendingCount() >= MAX_PENDING) return
-        val dow = DayOfWeek.of(((weekday + 5) % 7) + 1) // 1=So → SUNDAY(7), 2=Mo → MONDAY(1)
-        val zone = ZoneId.systemDefault()
-        val now = ZonedDateTime.now(zone)
-        var next = now.with(TemporalAdjusters.nextOrSame(dow)).with(LocalTime.of(10, 0))
-        if (!next.isAfter(now)) next = next.plusWeeks(1)
-        val req = PeriodicWorkRequestBuilder<ReminderWorker>(7, TimeUnit.DAYS)
-            .setInitialDelay(Duration.between(now, next).toMillis(), TimeUnit.MILLISECONDS)
-            .setInputData(workDataOf(KEY_KIND to "rule"))
-            .addTag(TAG).build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(name, ExistingPeriodicWorkPolicy.UPDATE, req)
-    }
-
-    fun removeRuleReminder(ruleID: ReviewRuleID) {
-        WorkManager.getInstance(context).cancelUniqueWork("rule.${ruleID.rawValue}")
-    }
 }
 
 /** Zeigt die Erinnerung. Enthält nur einen allgemeinen Text – keine Dateinamen, keine Zahlen. */
 class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         val ctx = applicationContext
-        val body = if (inputData.getString(ReminderScheduler.KEY_KIND) == "rule") R.string.notif_rule_body else R.string.notif_due_body
+        // Regel-Erinnerungen gibt es nicht mehr (Sammlungen statt Routinen): Altaufträge früherer Testbuilds still beenden.
+        if (inputData.getString(ReminderScheduler.KEY_KIND) == "rule") {
+            WorkManager.getInstance(ctx).cancelWorkById(id)
+            return Result.success()
+        }
+        val body = R.string.notif_due_body
         if (Build.VERSION.SDK_INT >= 33 &&
             ContextCompat.checkSelfPermission(ctx, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
         ) return Result.success()

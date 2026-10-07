@@ -1,5 +1,11 @@
 package app.photomaid.core
 
+import app.photomaid.core.model.LocalDay
+import app.photomaid.core.collections.CollectionCandidate
+import app.photomaid.core.collections.CollectionFilter
+import app.photomaid.core.collections.CollectionSource
+import app.photomaid.core.collections.SmartCollection
+import app.photomaid.core.collections.SmartCollections
 import app.photomaid.core.capabilities.Capabilities
 import app.photomaid.core.capabilities.PurchaseState
 import app.photomaid.core.capabilities.RewardError
@@ -15,12 +21,12 @@ import app.photomaid.core.model.ItemProvider
 import app.photomaid.core.model.ItemReference
 import app.photomaid.core.model.KnownSize
 import app.photomaid.core.model.SizeTally
-import app.photomaid.core.rules.InventoryItem
-import app.photomaid.core.rules.ReviewRule
-import app.photomaid.core.rules.RuleEvaluator
-import app.photomaid.core.rules.RuleFilter
-import app.photomaid.core.rules.RuleSource
-import app.photomaid.core.rules.RuleTrigger
+
+
+
+
+
+
 import app.photomaid.core.storage.DeviceCapacity
 import app.photomaid.core.storage.StorageCategory
 import app.photomaid.core.storage.StorageOverview
@@ -138,53 +144,47 @@ class DuplicateTest {
     }
 }
 
-/** Port – Teil „Regeln und Routinen“. */
-class RuleTest {
+/** Sammlungen (ersetzen „Regeln & Routinen“, Produktentscheidung 2026-09-29): immer aktuell, kein Auslöser. */
+class CollectionTest {
     private val tz: ZoneId = ZoneId.of("Europe/Zurich")
+    private val now = TestClock.date("2026-06-10T09:00", tz.id)
 
-    private fun inv(n: Int, daysOld: Long, size: KnownSize = KnownSize.Known(1), now: Instant, firstSeen: Instant? = null) =
-        InventoryItem(photo(n), RuleSource.Screenshots, now.minusSeconds(daysOld * 86_400), size, firstSeen ?: now)
+    private fun cand(n: Int, daysOld: Long?, size: KnownSize = KnownSize.Known(1)) =
+        CollectionCandidate(photo(n), daysOld?.let { now.minusSeconds(it * 86_400) }, size)
 
-    @Test fun olderThanCreatesIdempotentTask() {
-        val now = TestClock.date("2026-06-10T09:00", tz.id)
-        val rule = ReviewRule(source = RuleSource.Screenshots, filter = RuleFilter.OlderThan(30), trigger = RuleTrigger.Daily)
-        val items = listOf(inv(1, 45, now = now), inv(2, 5, now = now))
-        val task = RuleEvaluator.evaluate(rule, items, emptyMap(), emptySet(), null, now, tz)
-        assertEquals(listOf(photo(1)), task?.items)
-        assertNull("Keine doppelte Aufgabe am selben Tag",
-            RuleEvaluator.evaluate(rule, items, emptyMap(), setOf(task!!.id), now, now.plusSeconds(3600), tz))
+    @Test fun olderThan() {
+        val c = SmartCollection(source = CollectionSource.SCREENSHOTS, filter = CollectionFilter.OlderThan(30))
+        val r = SmartCollections.evaluate(c, listOf(cand(1, 45), cand(2, 5), cand(3, null)), emptyMap(), now, tz)
+        assertEquals(listOf(photo(1)), r.items) // ohne Datum nicht enthalten
     }
 
-    @Test fun decidedAndUnknownSizesExcluded() {
-        val now = TestClock.date("2026-06-10T09:00", tz.id)
-        val rule = ReviewRule(source = RuleSource.Screenshots, filter = RuleFilter.KnownSizeAtLeast(1_000_000_000), trigger = RuleTrigger.Daily)
+    @Test fun largerThanExcludesDecidedAndUnknownButReportsUnknown() {
+        val c = SmartCollection(source = CollectionSource.VIDEOS, filter = CollectionFilter.LargerThan(50_000_000))
         val kept = ItemRecord(photo(1), disposition = Disposition.KEPT)
-        val task = RuleEvaluator.evaluate(rule, listOf(
-            inv(1, 1, KnownSize.Known(2_000_000_000), now), inv(2, 1, KnownSize.Unknown, now), inv(3, 1, KnownSize.Known(1_500_000_000), now),
-        ), mapOf(photo(1) to kept), emptySet(), null, now, tz)
-        assertEquals(listOf(photo(3)), task?.items)
+        val r = SmartCollections.evaluate(c, listOf(
+            cand(1, 1, KnownSize.Known(80_000_000)), cand(2, 1, KnownSize.Unknown), cand(3, 1, KnownSize.Known(60_000_000)),
+            cand(4, 1, KnownSize.Known(50_000_000)), // genau 50 MB ist nicht „größer als“
+        ), mapOf(photo(1) to kept), now, tz)
+        assertEquals(listOf(photo(3)), r.items)
+        assertEquals(60_000_000L, r.knownBytes) // nur bekannte Größen offener Elemente, nichts erfunden
+        assertEquals(1, r.unknownSizeCount)
     }
 
-    @Test fun weeklyOnlyOnWeekday() {
-        val sunday = TestClock.date("2026-06-14T09:00", tz.id)
-        val monday = TestClock.date("2026-06-15T09:00", tz.id)
-        var rule = ReviewRule(source = RuleSource.Screenshots, filter = RuleFilter.All, trigger = RuleTrigger.Weekly(1))
-        val items = listOf(inv(1, 1, now = sunday))
-        assertNotNull(RuleEvaluator.evaluate(rule, items, emptyMap(), emptySet(), null, sunday, tz))
-        assertNull(RuleEvaluator.evaluate(rule, items, emptyMap(), emptySet(), null, monday, tz))
-        rule = rule.copy(isEnabled = false)
-        assertNull(RuleEvaluator.evaluate(rule, items, emptyMap(), emptySet(), null, sunday, tz))
+    @Test fun alwaysCurrentNoTrigger() {
+        // Dieselbe Sammlung liefert zu jeder Zeit den aktuellen Stand – keine Aufgaben, keine „einmal pro Tag“-Sperre.
+        val c = SmartCollections.builtIns.first()
+        val items = listOf(cand(1, 1, KnownSize.Known(200_000_000)))
+        assertEquals(1, SmartCollections.evaluate(c, items, emptyMap(), now, tz).items.size)
+        assertEquals(1, SmartCollections.evaluate(c, items, emptyMap(), now.plusSeconds(60), tz).items.size)
+        val later = ItemRecord(photo(1), disposition = Disposition.LATER, dueDay = LocalDay.of(now, tz).addingDays(2))
+        assertEquals(0, SmartCollections.evaluate(c, items, mapOf(photo(1) to later), now, tz).items.size)
     }
 
-    @Test fun newlyDiscoveredAfterTen() {
-        val last = TestClock.date("2026-06-09T09:00", tz.id)
-        val now = TestClock.date("2026-06-10T09:00", tz.id)
-        val rule = ReviewRule(source = RuleSource.Screenshots, filter = RuleFilter.All, trigger = RuleTrigger.NewlyDiscovered(10))
-        val nine = (0 until 9).map { inv(it, 0, now = now) }
-        val old = (100 until 120).map { inv(it, 3, now = now, firstSeen = last.minusSeconds(60)) }
-        assertNull(RuleEvaluator.evaluate(rule, nine + old, emptyMap(), emptySet(), last, now, tz))
-        val ten = (0 until 10).map { inv(it, 0, now = now) }
-        assertEquals(10, RuleEvaluator.evaluate(rule, ten + old, emptyMap(), emptySet(), last, now, tz)?.items?.size)
+    @Test fun builtInsAreStableAndSizeChoicesFitMediaType() {
+        assertTrue(SmartCollections.builtIns.all { it.builtIn })
+        assertEquals(SmartCollections.builtIns.map { it.id }, SmartCollections.builtIns.map { it.id }.distinct())
+        assertTrue(SmartCollections.sizeChoices(CollectionSource.PHOTOS).all { it <= 20_000_000 })
+        assertTrue(SmartCollections.sizeChoices(CollectionSource.VIDEOS).first() >= 50_000_000)
     }
 }
 
@@ -196,9 +196,9 @@ class CapabilityTest {
         for (state in PurchaseState.entries) {
             val caps = Capabilities.resolve(state, RewardLedger(), Instant.now())
             if (state == PurchaseState.PURCHASED) {
-                assertTrue(caps.tier == Capabilities.Tier.PRO && caps.dailyCleanupLimit == null && !caps.adsAllowed && caps.exactDuplicates)
+                assertTrue(caps.tier == Capabilities.Tier.LIFETIME_PRO && caps.dailyCleanupLimit == null && !caps.adsAllowed && caps.exactDuplicates)
             } else {
-                assertTrue(caps.tier == Capabilities.Tier.FREE && caps.dailyCleanupLimit == 15 && !caps.exactDuplicates)
+                assertTrue(caps.tier == Capabilities.Tier.FREE && caps.dailyCleanupLimit == 20 && !caps.exactDuplicates)
                 assertEquals(state != PurchaseState.UNKNOWN, caps.adsAllowed)
             }
         }
@@ -210,8 +210,8 @@ class CapabilityTest {
         assertEquals(w, ledger.granting("r1", now.plusSeconds(5), tz, PurchaseState.NOT_PURCHASED).second)
         assertThrowsSuspend<RewardError.DailyUnlockUsed> { ledger.granting("r2", now.plusSeconds(3600), tz, PurchaseState.NOT_PURCHASED) }
         val during = Capabilities.resolve(PurchaseState.NOT_PURCHASED, ledger, now.plusSeconds(600))
-        assertTrue(during.tier == Capabilities.Tier.REWARDED_PREVIEW && during.exactDuplicates && during.dailyCleanupLimit == 15)
-        assertTrue(!during.persistentRoutines && during.oneTimeRuleTestScan)
+        assertTrue(during.tier == Capabilities.Tier.TEMPORARY_PRO && during.exactDuplicates && during.dailyCleanupLimit == 20)
+        assertTrue(during.customCollections)
         assertTrue(abs((during.rewardRemaining ?: Duration.ZERO).seconds - 20 * 60) < 1)
         assertEquals(Capabilities.Tier.FREE, Capabilities.resolve(PurchaseState.NOT_PURCHASED, ledger, now.plusSeconds(30 * 60 + 1)).tier)
         assertTrue(ledger.canOfferReward(now.plusSeconds(86_400), tz, PurchaseState.NOT_PURCHASED))

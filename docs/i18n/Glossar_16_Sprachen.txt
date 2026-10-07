@@ -1,0 +1,192 @@
+PHOTOMAID – GLOSSAR, 16 SPRACHEN
+Wörter werden in Sätzen sprachüblich gebeugt. Begriffe sind keine Wort-für-Wort-Ersetzungsregeln.
+
+PAPIERKORB
+Appinterner Papierkorb vor der Bestätigung. Der Android-Papierkorb wird in längeren Texten ausdrücklich von diesem unterschieden.
+  de: Papierkorb
+  en: Trash
+  es: Papelera
+  fr: Corbeille
+  it: Cestino
+  pt-PT: Lixo
+  nl: Prullenbak
+  pl: Kosz
+  ro: Coș
+  uk: Кошик
+  tr: Çöp kutusu
+  ru: Корзина
+  ar: سلة المهملات
+  ja: ゴミ箱
+  ko: 휴지통
+  zh-CN: 回收站
+
+SPAETER
+Erneut anzeigen, nicht löschen und nicht automatisch als behalten markieren.
+  de: Später
+  en: Later
+  es: Después
+  fr: Plus tard
+  it: Più tardi
+  pt-PT: Mais tarde
+  nl: Later
+  pl: Później
+  ro: Mai târziu
+  uk: Пізніше
+  tr: Sonra
+  ru: Позже
+  ar: لاحقًا
+  ja: あとで
+  ko: 나중에
+  zh-CN: 稍后
+
+BEHALTEN
+Bewusste Behalten-Entscheidung beim Wischen nach oben; keine neue Dateikopie.
+  de: Behalten
+  en: Keep
+  es: Conservar
+  fr: Garder
+  it: Conserva
+  pt-PT: Manter
+  nl: Bewaren
+  pl: Zachowaj
+  ro: Păstrează
+  uk: Залишити
+  tr: Sakla
+  ru: Оставить
+  ar: احتفاظ
+  ja: 残す
+  ko: 보관
+  zh-CN: 保留
+
+PRO
+Produktstufe; Schreibweise Pro unverändert.
+  de: Pro
+  en: Pro
+  es: Pro
+  fr: Pro
+  it: Pro
+  pt-PT: Pro
+  nl: Pro
+  pl: Pro
+  ro: Pro
+  uk: Pro
+  tr: Pro
+  ru: Pro
+  ar: Pro
+  ja: Pro
+  ko: Pro
+  zh-CN: Pro
+
+SCHNELLZUGRIFFE
+Schnelle Einstiege. In Englisch shortcuts und in RU/UK ярлыки/ярлики für einzelne Einträge; Quick access/Быстрый доступ/Швидкий доступ als Abschnitt.
+  de: Schnellzugriffe
+  en: Quick access
+  es: Accesos rápidos
+  fr: Raccourcis
+  it: Accessi rapidi
+  pt-PT: Atalhos
+  nl: Snelkoppelingen
+  pl: Skróty
+  ro: Scurtături
+  uk: Швидкий доступ
+  tr: Kısayollar
+  ru: Быстрый доступ
+  ar: اختصارات
+  ja: ショートカット
+  ko: 바로가기
+  zh-CN: 快捷入口
+
+SAMMLUNGEN
+Gespeicherte Filter, keine neuen Gerätealben und keine automatische Löschregel.
+  de: Sammlungen
+  en: Collections
+  es: Colecciones
+  fr: Collections
+  it: Raccolte
+  pt-PT: Coleções
+  nl: Verzamelingen
+  pl: Kolekcje
+  ro: Colecții
+  uk: Добірки
+  tr: Koleksiyonlar
+  ru: Подборки
+  ar: مجموعات
+  ja: コレクション
+  ko: 모음
+  zh-CN: 合集
+
+AUFRAEUMEN
+Navigation und Aufgabe: Inhalte prüfen und aussortieren.
+  de: Aufräumen
+  en: Clean up
+  es: Limpiar
+  fr: Faire le tri
+  it: Riordina
+  pt-PT: Limpar
+  nl: Opruimen
+  pl: Porządki
+  ro: Curățenie
+  uk: Прибирання
+  tr: Temizle
+  ru: Уборка
+  ar: تنظيف
+  ja: 整理
+  ko: 정리
+  zh-CN: 清理
+
+IDENTISCHE_KOPIEN
+Gleicher Dateiinhalt; keine Erkennung bloß ähnlicher Bilder.
+  de: Identische Kopien
+  en: Identical copies
+  es: Copias idénticas
+  fr: Copies identiques
+  it: Copie identiche
+  pt-PT: Cópias idênticas
+  nl: Identieke kopieën
+  pl: Identyczne kopie
+  ro: Copii identice
+  uk: Ідентичні копії
+  tr: Birebir aynı kopyalar
+  ru: Одинаковые копии
+  ar: نسخ متطابقة
+  ja: 完全に同じコピー
+  ko: 완전히 같은 사본
+  zh-CN: 完全相同的副本
+
+ANDROID_PAPIERKORB
+Systemseitiger Papierkorb nach bestätigtem Entfernen von Fotos/Videos; nicht die Auswahl im PhotoMaid-Papierkorb.
+  de: Android-Papierkorb
+  en: Android trash
+  es: papelera de Android
+  fr: corbeille Android
+  it: cestino di Android
+  pt-PT: lixo do Android
+  nl: Android-prullenbak
+  pl: kosz Androida
+  ro: coșul Android
+  uk: кошик Android
+  tr: Android çöp kutusu
+  ru: корзина Android
+  ar: سلة مهملات Android
+  ja: Androidのゴミ箱
+  ko: Android 휴지통
+  zh-CN: Android 回收站
+
+ENDGUELTIG_LOESCHEN
+Nur bei endgültiger Dateilöschung; nicht als allgemeines Versprechen für Medien verwenden.
+  de: endgültig löschen
+  en: permanently delete
+  es: eliminar definitivamente
+  fr: supprimer définitivement
+  it: eliminare definitivamente
+  pt-PT: eliminar definitivamente
+  nl: definitief verwijderen
+  pl: trwale usunąć
+  ro: șterge definitiv
+  uk: видалити назавжди
+  tr: kalıcı olarak sil
+  ru: удалить навсегда
+  ar: حذف نهائيًا
+  ja: 完全に削除
+  ko: 영구 삭제
+  zh-CN: 永久删除

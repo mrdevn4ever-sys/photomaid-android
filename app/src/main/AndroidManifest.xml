@@ -12,11 +12,17 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Google Play Billing (Pro-Einmalkauf). -->
     <uses-permission android:name="com.android.vending.BILLING" />
-    <!-- Kein INTERNET für eigene Zwecke: nur Play Billing (über den Play-Dienst). -->
+    <!-- Lange Video-Exporte laufen weiter, wenn der Editor geschlossen wird (Vordergrunddienst mit Fortschritt). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- Kein eigenes Netzwerk (kein Backend, kein Upload). INTERNET/ACCESS_NETWORK_STATE/AD_ID kommen nur über das
+         AdMob-SDK (Werbung in Free, erst nach UMP-Einwilligung gestartet). -->
 
     <application
         android:name=".PhotoMaidApplication"
         android:allowBackup="true"
+        android:largeHeap="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -24,13 +30,32 @@
         android:label="@string/app_name"
         android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
-        android:enableOnBackInvokedCallback="true"
+        android:enableOnBackInvokedCallback="false"
         android:theme="@style/Theme.PhotoMaid"
         tools:targetApi="37">
+
+        <!-- AdMob: App-ID aus Gradle (Debug: Google-Test-ID; Release: nur wenn konfiguriert). -->
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="${admobAppId}" />
+        <!-- SDK erst nach Einwilligung und nur mit konfigurierter ID starten (kein Auto-Start ohne ID). -->
+        <provider android:name="com.google.android.gms.ads.MobileAdsInitProvider" android:authorities="${applicationId}.mobileadsinitprovider" tools:node="remove" />
+
+        <!-- Video-Export: mediaProcessing ab Android 15, dataSync auf Android 14. -->
+        <service android:name=".export.ExportService" android:exported="false" android:foregroundServiceType="mediaProcessing|dataSync" />
+
+        <!-- „Bearbeiten und teilen“: nur cache/shared/ (siehe xml/share_paths.xml). -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.share"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/share_paths" />
+        </provider>
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity,DiscouragedApi"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.PhotoMaid.Starting">
             <intent-filter>

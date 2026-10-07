@@ -1,5 +1,10 @@
 package app.photomaid.core
 
+import app.photomaid.core.collections.CollectionCandidate
+import app.photomaid.core.collections.CollectionFilter
+import app.photomaid.core.collections.CollectionSource
+import app.photomaid.core.collections.SmartCollection
+import app.photomaid.core.collections.SmartCollections
 import app.photomaid.core.cleanup.CleanupOperationKind
 import app.photomaid.core.cleanup.OperationIntent
 import app.photomaid.core.cleanup.OperationState
@@ -14,10 +19,10 @@ import app.photomaid.core.model.LocalDay
 import app.photomaid.core.model.OperationID
 import app.photomaid.core.model.PhotoMaidJson
 import app.photomaid.core.model.ReviewSessionID
-import app.photomaid.core.rules.ReviewRule
-import app.photomaid.core.rules.RuleFilter
-import app.photomaid.core.rules.RuleSource
-import app.photomaid.core.rules.RuleTrigger
+
+
+
+
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.Instant
@@ -35,8 +40,8 @@ class SerializationTest {
         val i = OperationIntent(OperationID(), CleanupOperationKind.PHOTO_LIBRARY_DELETE, mapOf(photo(1) to 2, file("x") to 1),
             LocalDay(2026, 6, 10), 2, OperationState.SUBMITTED, Instant.ofEpochMilli(1))
         assertEquals(i, PhotoMaidJson.decodeFromString<OperationIntent>(PhotoMaidJson.encodeToString(i)))
-        val rule = ReviewRule(source = RuleSource.ConnectedSource(SOURCE_ID), filter = RuleFilter.KnownSizeAtLeast(5), trigger = RuleTrigger.Weekly(2))
-        assertEquals(rule, PhotoMaidJson.decodeFromString<ReviewRule>(PhotoMaidJson.encodeToString(rule)))
+        val col = SmartCollection(source = CollectionSource.VIDEOS, filter = CollectionFilter.LargerThan(5))
+        assertEquals(col, PhotoMaidJson.decodeFromString<SmartCollection>(PhotoMaidJson.encodeToString(col)))
         val a: DecisionAction = DecisionAction.Schedule(LocalDay(2026, 1, 1))
         assertEquals(a, PhotoMaidJson.decodeFromString<DecisionAction>(PhotoMaidJson.encodeToString(a)))
     }

@@ -1,6 +1,20 @@
 package app.photomaid.feature.pro
 
+import app.photomaid.feature.onboarding.OfferBenefits
+import app.photomaid.feature.onboarding.OfferHero
 import app.photomaid.design.clickableRow
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.material.icons.rounded.Block
 import app.photomaid.design.ListSection
 import app.photomaid.design.AppRadii
 import androidx.compose.ui.semantics.stateDescription
@@ -10,6 +24,7 @@ import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.FilterNone
+import androidx.compose.material.icons.rounded.BurstMode
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.background
@@ -55,6 +70,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.photomaid.R
 import app.photomaid.ads.RewardedAdResult
+import app.photomaid.ads.RewardOffer
+import app.photomaid.design.AppIconSize
+import app.photomaid.design.Badge
+import app.photomaid.design.PlainButton
+import androidx.compose.ui.platform.testTag
+import kotlinx.coroutines.delay
 import app.photomaid.billing.PurchaseResult
 import app.photomaid.core.capabilities.Capabilities
 import app.photomaid.core.capabilities.PurchaseState
@@ -73,15 +94,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/** Restminuten, aufgerundet (nie „0 Min.“, solange noch etwas läuft). */
+fun minutesLeft(d: java.time.Duration): Int = ((d.seconds + 59) / 60).toInt().coerceAtLeast(1)
+
 /**
- * Screen 14 – PhotoMaid Pro. Einmalkauf, echter Storepreis, Wiederherstellen, freiwillige
- * Rewarded-Vorschau (30 Minuten, 1× pro Tag, Tageslimit bleibt 15).
+ * Screen 14 – PhotoMaid Pro. Primär: Einmalkauf (echter Storepreis) und Wiederherstellen. Sekundär und ruhig:
+ * „30 Minuten Pro testen“ (Rewarded, 1× täglich; Papierkorb-Limit bleibt unverändert). Lifetime-Nutzer sehen
+ * nur ihren Status – keine Werbung, kein Upsell.
  */
 @Composable
 fun ProScreen(nav: Nav) {
     val app = LocalApp.current
     val c = PM.colors
-    val ctx = LocalContext.current
     val res = LocalResources.current
     val scope = rememberCoroutineScope()
     val purchases = app.purchases
@@ -92,8 +116,11 @@ fun ProScreen(nav: Nav) {
     var busy by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(Unit) { withContext(Dispatchers.IO) { runCatching { purchases.refresh() } } }
-    now; rewards
+    // Ablauf des Tests auch bei offenem Screen sichtbar machen.
+    LaunchedEffect(Unit) { while (true) { delay(15_000); app.entitlements.tick() } }
+    now; rewards; state
     val caps = app.capabilities
+    val lifetime = caps.tier == Capabilities.Tier.LIFETIME_PRO
 
     AppBackground {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).navigationBarsPadding()) {
@@ -102,37 +129,42 @@ fun ProScreen(nav: Nav) {
             }
             Column(Modifier.padding(horizontal = AppSpacing.pageMargin), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
-                Box(Modifier.size(80.dp).clip(RoundedCornerShape(AppRadii.card)).background(c.accent.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
-                    Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(44.dp))
-                }
+                // Lebende Wischkarte wie im Onboarding-Angebot (gleiche Bausteine).
+                OfferHero()
                 Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
                     Text(stringResource(R.string.pro_title), style = AppTypography.largeTitle, color = c.textPrimary, textAlign = TextAlign.Center)
-                    Text(stringResource(R.string.pro_subtitle), style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
+                    Text(stringResource(if (lifetime) R.string.pro_active_sub else R.string.pro_subtitle), style = AppTypography.subheadline,
+                        color = c.textSecondary, textAlign = TextAlign.Center)
                 }
-                // Drei tatsächlich freigeschaltete Kernvorteile (Capabilities: Limit, Duplikate, dauerhafte Routinen).
-                SurfaceCard {
+                // Tatsächlich freigeschaltete Vorteile (Capabilities: werbefrei, Limit, identische Kopien, eigene Sammlungen).
+                // Free: ehrlicher Vergleich wie im Onboarding (kostenlos unbegrenzt + Pro einmalig). Lifetime: freigeschaltete Vorteile.
+                if (!lifetime) OfferBenefits()
+                else SurfaceCard {
                     Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
+                        Feature(Icons.Rounded.Block, R.string.pro_f1, R.string.pro_f1d)
                         Feature(Icons.Rounded.AllInclusive, R.string.pro_f2, R.string.pro_f2d)
+                        Feature(Icons.Rounded.BurstMode, R.string.pro_f6, R.string.pro_f6d)
                         Feature(Icons.Rounded.FilterNone, R.string.pro_f3, R.string.pro_f3d)
                         Feature(Icons.Rounded.SettingsSuggest, R.string.pro_f5, R.string.pro_f5d)
                     }
                 }
-                Text(stringResource(R.string.pro_also), style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
-                // Kaufbereich
-                when (state) {
-                    PurchaseState.PURCHASED -> Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                if (!lifetime) Text(stringResource(R.string.pro_also), style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
+                // Kaufbereich (primär)
+                when {
+                    lifetime -> Row(Modifier.testTag("pro.lifetime"), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         Icon(Icons.Rounded.Verified, null, tint = c.success)
-                        Text(stringResource(R.string.pro_active), style = AppTypography.headline, color = c.success)
+                        Text(stringResource(R.string.pro_active_title), style = AppTypography.headline, color = c.success)
                     }
-                    PurchaseState.PENDING -> Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    state == PurchaseState.PENDING -> Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         Icon(Icons.Rounded.HourglassTop, null, tint = c.textSecondary)
                         Text(stringResource(R.string.pro_pending), style = AppTypography.subheadline, color = c.textPrimary)
                     }
                     else -> Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                        caps.rewardRemaining?.let { left -> TemporaryProStatus(minutesLeft(left)) }
                         val p = product
                         if (purchases.isConfigured && p != null) {
                             ProminentButton(stringResource(R.string.pro_unlock), fillWidth = true, large = true, enabled = !busy,
-                                subtitle = stringResource(R.string.pro_price_once, p.localizedPrice)) {
+                                modifier = Modifier.testTag("pro.buy"), subtitle = stringResource(R.string.pro_price_once, p.localizedPrice)) {
                                 val activity = SystemDialogs.activity ?: return@ProminentButton
                                 scope.launch {
                                     busy = true
@@ -157,7 +189,7 @@ fun ProScreen(nav: Nav) {
                                     style = AppTypography.subheadline, color = c.textPrimary)
                             }
                         }
-                        if (purchases.isConfigured) GlassButton(stringResource(R.string.pro_restore), enabled = !busy) {
+                        if (purchases.isConfigured) PlainButton(stringResource(R.string.pro_restore), enabled = !busy) {
                             scope.launch {
                                 busy = true
                                 message = res.getString(if (purchases.restore() == PurchaseResult.Purchased) R.string.pro_msg_restored else R.string.pro_msg_nothing)
@@ -168,38 +200,19 @@ fun ProScreen(nav: Nav) {
                         if (state == PurchaseState.REVOKED) Text(stringResource(R.string.pro_revoked), style = AppTypography.caption, color = c.warning)
                     }
                 }
-                // Rewarded-Bereich
-                val remaining = caps.rewardRemaining
-                if (caps.tier == Capabilities.Tier.REWARDED_PREVIEW && remaining != null) {
-                    SurfaceCard {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                            Icon(Icons.Rounded.Timer, null, tint = c.accent)
-                            Text(stringResource(R.string.pro_preview_active, (remaining.seconds / 60 + 1).toInt()), style = AppTypography.body, color = c.textPrimary)
+                // Sekundär: 30-Minuten-Test. Nie für Lifetime, nie ohne Anbieter, nie automatisch gestartet.
+                val offer = app.entitlements.rewardOffer
+                if (offer != RewardOffer.HIDDEN && offer != RewardOffer.ACTIVE) RewardCard(offer, busy) {
+                    scope.launch {
+                        busy = true
+                        message = when (app.entitlements.watchRewardedAd { app.player.stop() }) {
+                            is RewardedAdResult.Rewarded -> res.getString(R.string.pro_msg_rewarded)
+                            RewardedAdResult.DismissedWithoutReward -> res.getString(R.string.pro_msg_dismissed)
+                            RewardedAdResult.NoFill -> res.getString(R.string.pro_msg_nofill)
+                            is RewardedAdResult.Failed, RewardedAdResult.NotConfigured -> res.getString(R.string.pro_msg_ad_unavailable)
                         }
-                    }
-                } else if (state != PurchaseState.PURCHASED) {
-                    // Nachgeordnet: freiwillige Vorschau. Ohne Werbeanbieter nur ein Satz, kein deaktivierter Button.
-                    ListSection(header = stringResource(R.string.pro_preview_header)) {
-                        Column(Modifier.padding(vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                            if (!app.entitlements.ads.isConfigured) {
-                                Text(stringResource(R.string.pro_reward_unavailable), style = AppTypography.footnote, color = c.textSecondary)
-                            } else {
-                                Text(stringResource(R.string.pro_reward_sub), style = AppTypography.footnote, color = c.textSecondary)
-                                GlassButton(stringResource(R.string.pro_reward_cta), fillWidth = true, enabled = app.entitlements.canOfferReward && !busy) {
-                                    scope.launch {
-                                        busy = true
-                                        message = when (app.entitlements.watchRewardedAd { app.player.stop() }) {
-                                            is RewardedAdResult.Rewarded -> res.getString(R.string.pro_msg_rewarded)
-                                            RewardedAdResult.DismissedWithoutReward -> res.getString(R.string.pro_msg_dismissed)
-                                            RewardedAdResult.NoFill -> res.getString(R.string.pro_msg_nofill)
-                                            is RewardedAdResult.Failed, RewardedAdResult.NotConfigured -> res.getString(R.string.pro_msg_ad_unavailable)
-                                        }
-                                        busy = false
-                                    }
-                                }
-                                Text(stringResource(R.string.pro_reward_limit), style = AppTypography.caption, color = c.textSecondary)
-                            }
-                        }
+                        app.reload()
+                        busy = false
                     }
                 }
                 // Technische Einzelheiten nachgeordnet und aufklappbar.
@@ -216,12 +229,66 @@ fun ProScreen(nav: Nav) {
                             Text(stringResource(t), style = AppTypography.footnote, color = c.textSecondary)
                     }
                 }
-                Text(stringResource(R.string.pro_privacy), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+                Text(stringResource(if (app.adSdk.isConfigured || app.entitlements.ads.isConfigured) R.string.pro_privacy else R.string.pro_privacy_no_ads), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
                 Spacer(Modifier.height(AppSpacing.l))
             }
         }
     }
     NoticeDialog(message) { message = null }
+}
+
+/** Dezenter Status des laufenden Tests + der Limit-Hinweis (kein Countdown-Banner). */
+@Composable
+fun TemporaryProStatus(minutes: Int, modifier: Modifier = Modifier) {
+    val c = PM.colors
+    Column(modifier.fillMaxWidth().clip(RoundedCornerShape(AppRadii.small)).background(c.accent.copy(alpha = 0.08f)).padding(AppSpacing.s)
+        .semantics(mergeDescendants = true) {}.testTag("pro.temporary"), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            Icon(Icons.Rounded.Timer, null, tint = c.accent, modifier = Modifier.size(AppIconSize.small))
+            Text(stringResource(R.string.reward_active, minutes), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+        }
+        Text(stringResource(R.string.reward_limit_note), style = AppTypography.footnote, color = c.textSecondary)
+    }
+}
+
+/** In Pro-Werkzeugen: kleiner Hinweis, dass sie gerade über den 30-Minuten-Test freigeschaltet sind. */
+@Composable
+fun TemporaryProTag(caps: Capabilities, modifier: Modifier = Modifier) {
+    val left = caps.rewardRemaining ?: return
+    if (caps.tier != Capabilities.Tier.TEMPORARY_PRO) return
+    Row(modifier.testTag("pro.temporary.tag"), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
+        Icon(Icons.Rounded.Timer, null, tint = PM.colors.accent, modifier = Modifier.size(AppIconSize.small))
+        Text(stringResource(R.string.reward_active_tools, minutesLeft(left)), style = AppTypography.caption, color = PM.colors.textSecondary)
+    }
+}
+
+@Composable
+private fun RewardCard(offer: RewardOffer, busy: Boolean, watch: () -> Unit) {
+    val c = PM.colors
+    SurfaceCard(Modifier.testTag("pro.reward")) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            Text(stringResource(R.string.reward_title), style = AppTypography.headline, color = c.textPrimary, modifier = Modifier.weight(1f))
+            Badge(stringResource(R.string.reward_badge), color = c.accent)
+        }
+        Spacer(Modifier.height(AppSpacing.xxs))
+        Text(stringResource(R.string.reward_body), style = AppTypography.subheadline, color = c.textSecondary)
+        Spacer(Modifier.height(AppSpacing.xs))
+        // Direkt sichtbar, nicht im Kleingedruckten.
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+            Icon(Icons.Rounded.Info, null, tint = c.textPrimary, modifier = Modifier.size(AppIconSize.small))
+            Text(stringResource(R.string.reward_limit_note), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+        }
+        Spacer(Modifier.height(AppSpacing.s))
+        when (offer) {
+            RewardOffer.AVAILABLE -> GlassButton(stringResource(R.string.reward_cta), fillWidth = true, enabled = !busy, onClick = watch)
+            RewardOffer.USED_TODAY -> Column(Modifier.fillMaxWidth().testTag("pro.reward.used"), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(stringResource(R.string.reward_used), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+                Text(stringResource(R.string.reward_tomorrow), style = AppTypography.footnote, color = c.textSecondary)
+            }
+            else -> Text(stringResource(R.string.reward_not_now), style = AppTypography.footnote, color = c.textSecondary,
+                modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+        }
+    }
 }
 
 @Composable
@@ -231,7 +298,10 @@ private fun Feature(icon: ImageVector, title: Int, detail: Int) {
         Icon(icon, null, tint = c.accent, modifier = Modifier.size(24.dp))
         Column {
             Text(stringResource(title), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
-            Text(stringResource(detail), style = AppTypography.caption, color = c.textSecondary)
+            // pro_f2d enthält das kostenlose Tageslimit als Platzhalter.
+            Text(if (detail == R.string.pro_f2d) stringResource(detail, Capabilities.FREE_DAILY_CLEANUP_LIMIT) else stringResource(detail),
+                style = AppTypography.caption, color = c.textSecondary)
         }
     }
 }
+

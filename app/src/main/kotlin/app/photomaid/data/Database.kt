@@ -1,6 +1,7 @@
 package app.photomaid.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Entity
@@ -65,13 +66,17 @@ interface KeyValueDao {
 }
 
 @Database(
-    entities = [ItemRecordEntity::class, EventEntity::class, IntentEntity::class, DayUsageEntity::class, KeyValueEntity::class],
-    version = 1,
+    entities = [ItemRecordEntity::class, EventEntity::class, IntentEntity::class, DayUsageEntity::class, KeyValueEntity::class,
+        AlbumEntity::class, AlbumItemEntity::class, MediaTagEntity::class, MediaNoteEntity::class, BasketItemEntity::class, MediaRefEntity::class],
+    version = 2,
     exportSchema = true,
+    // Version 2 (Organisieren): nur neue Tabellen – bestehende Daten bleiben unverändert.
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
 )
 abstract class PhotoMaidDatabase : RoomDatabase() {
     abstract fun ledger(): LedgerDao
     abstract fun keyValue(): KeyValueDao
+    abstract fun organize(): OrganizeDao
 
     companion object {
         const val NAME = "photomaid.db"

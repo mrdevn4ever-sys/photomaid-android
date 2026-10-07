@@ -1,5 +1,6 @@
 package app.photomaid.feature.later
 
+import androidx.compose.material.icons.rounded.EventBusy
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.BookmarkRemove
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Visibility
@@ -39,6 +39,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import app.photomaid.FeedRequest
 import app.photomaid.R
+import app.photomaid.design.spacedItem
+import app.photomaid.design.lazyListSection
+import androidx.compose.material.icons.rounded.Schedule
+import app.photomaid.design.EmptyState
 import app.photomaid.core.decisions.DecisionAction
 import app.photomaid.core.decisions.ItemRecord
 import app.photomaid.core.later.LaterGroup
@@ -58,9 +62,18 @@ import app.photomaid.design.ScreenScaffold
 import app.photomaid.design.SurfaceCard
 import app.photomaid.feature.common.ThumbnailView
 import app.photomaid.feature.review.LaterDateDialog
+import android.Manifest
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.platform.testTag
+import app.photomaid.design.GlassButton
+import app.photomaid.notifications.ReminderScheduler
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.PageEndSpacer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -88,35 +101,51 @@ fun LaterScreen(nav: Nav) {
         }
     }
 
+    val notif by app.reminders.access.collectAsState()
+    // Mitteilungen erst hier anfragen: im Kontext von „Später“, und nur, wenn es etwas Zurückgestelltes gibt.
+    val notifLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+        scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
+    }
     ScreenScaffold(stringResource(R.string.later), onBack = nav::back) { mod ->
-        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-            if (groups.isEmpty()) item {
-                SurfaceCard { Text(stringResource(R.string.later_empty), style = AppTypography.body, color = c.textSecondary) }
+        val headers = groups.map { (key, records) ->
+            when (key) {
+                LaterGroup.Due -> stringResource(R.string.later_group_due, records.size)
+                LaterGroup.Tomorrow -> stringResource(R.string.later_group_tomorrow, records.size)
+                LaterGroup.WithinSevenDays -> stringResource(R.string.later_group_7, records.size)
+                is LaterGroup.Later -> stringResource(R.string.later_group_from, DayText.string(key.day), records.size)
+                LaterGroup.NoDate -> stringResource(R.string.later_group_nodate, records.size)
+                LaterGroup.Bookmarked -> stringResource(R.string.later_group_bookmarked, records.size)
             }
-            items(groups, key = { it.first.toString() }) { (key, records) ->
-                val header = when (key) {
-                    LaterGroup.Due -> stringResource(R.string.later_group_due, records.size)
-                    LaterGroup.Tomorrow -> stringResource(R.string.later_group_tomorrow, records.size)
-                    LaterGroup.WithinSevenDays -> stringResource(R.string.later_group_7, records.size)
-                    is LaterGroup.Later -> stringResource(R.string.later_group_from, DayText.string(key.day), records.size)
-                    LaterGroup.NoDate -> stringResource(R.string.later_group_nodate, records.size)
-                }
-                ListSection(header = header) {
-                    records.forEachIndexed { i, r ->
-                        if (i > 0) RowDivider()
-                        LaterRow(r, names[r.item], kinds[r.item.localIdentifier], app.today, onEdit = { editing = r },
-                            onReview = { nav.openFeed(FeedRequest(FeedRequest.Source.Items(listOf(r.item), R.string.later))) },
-                            onRemove = { scope.launch { app.decide(r.item, DecisionAction.RemoveDeferral) } })
-                    }
-                    if (key == LaterGroup.Due) {
-                        RowDivider()
-                        PlainButton(stringResource(R.string.later_review_now_count, records.size)) {
-                            nav.openFeed(FeedRequest(FeedRequest.Source.Items(records.map { it.item }, R.string.feed_title_due)))
-                        }
+        }
+        val reviewDue = groups.firstOrNull { it.first == LaterGroup.Due }?.second?.size?.let { stringResource(R.string.later_review_now_count, it) }
+        // Lazy je Zeile: lange Später-Listen laden nur sichtbare Vorschaubilder.
+        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin)) {
+            if (groups.isNotEmpty() && notif == ReminderScheduler.Access.NOT_DETERMINED) spacedItem("notify") {
+                SurfaceCard(Modifier.testTag("later.notify")) {
+                    Text(stringResource(R.string.later_notify_title), style = AppTypography.headline, color = c.textPrimary)
+                    Text(stringResource(R.string.privacy_notifications_text), style = AppTypography.caption, color = c.textSecondary)
+                    Spacer(Modifier.height(AppSpacing.s))
+                    GlassButton(stringResource(R.string.privacy_notifications_allow)) {
+                        if (Build.VERSION.SDK_INT >= 33) notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        else scope.launch { app.updateSettings { s -> s.copy(notificationsOptIn = true) }; app.reminders.refresh() }
                     }
                 }
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            if (groups.isEmpty()) spacedItem("empty") {
+                EmptyState(Icons.Rounded.Schedule, stringResource(R.string.later_empty_title), stringResource(R.string.later_empty),
+                    hint = stringResource(R.string.later_empty_hint), tint = c.later)
+            }
+            groups.forEachIndexed { gi, (key, records) ->
+                lazyListSection(key.toString(), records, { it.item.localIdentifier }, header = headers[gi],
+                    trailingRow = if (key == LaterGroup.Due && reviewDue != null) ({
+                        PlainButton(reviewDue) { nav.openFeed(FeedRequest(FeedRequest.Source.Items(records.map { it.item }, R.string.feed_title_due))) }
+                    }) else null) { r ->
+                    LaterRow(r, names[r.item], kinds[r.item.localIdentifier], app.today, onEdit = { editing = r },
+                        onReview = { nav.openFeed(FeedRequest(FeedRequest.Source.Items(listOf(r.item), R.string.later))) },
+                        onRemove = { scope.launch { app.decide(r.item, DecisionAction.RemoveDeferral) } })
+                }
+            }
+            item { PageEndSpacer() }
         }
     }
     editing?.let { r ->
@@ -143,6 +172,7 @@ private fun LaterRow(r: ItemRecord, fileName: String?, kind: MediaKind?, today: 
     })
     val day = r.dueDay
     val when_ = when {
+        r.bookmarked -> stringResource(R.string.later_bookmarked_row)
         day == null -> stringResource(R.string.later_next_review)
         day == today -> stringResource(R.string.later_due_today)
         day < today -> stringResource(R.string.later_due_since, DayText.string(day))
@@ -165,7 +195,8 @@ private fun LaterRow(r: ItemRecord, fileName: String?, kind: MediaKind?, today: 
             DropdownMenu(menu, { menu = false }) {
                 DropdownMenuItem({ Text(stringResource(R.string.change_date)) }, leadingIcon = { Icon(Icons.Rounded.CalendarMonth, null) }, onClick = { menu = false; onEdit() })
                 if (isPhoto) DropdownMenuItem({ Text(stringResource(R.string.later_review_now)) }, leadingIcon = { Icon(Icons.Rounded.Visibility, null) }, onClick = { menu = false; onReview() })
-                DropdownMenuItem({ Text(stringResource(R.string.later_remove)) }, leadingIcon = { Icon(Icons.Rounded.BookmarkRemove, null) }, onClick = { menu = false; onRemove() })
+                DropdownMenuItem({ Text(stringResource(if (r.bookmarked) R.string.later_back_to_stack else R.string.later_remove)) },
+                    leadingIcon = { Icon(Icons.Rounded.EventBusy, null) }, onClick = { menu = false; onRemove() }, modifier = Modifier.testTag("later.remove"))
             }
         }
     }

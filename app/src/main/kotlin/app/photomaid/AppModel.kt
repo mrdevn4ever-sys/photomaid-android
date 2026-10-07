@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import app.photomaid.ads.EntitlementCenter
 import app.photomaid.ads.UnconfiguredRewardedAdGateway
+import app.photomaid.ads.RewardedAdGateway
 import app.photomaid.billing.PlayBillingGateway
 import app.photomaid.billing.PurchaseGateway
 import app.photomaid.billing.UnconfiguredPurchaseGateway
@@ -35,7 +36,7 @@ import app.photomaid.core.model.SystemClock
 import app.photomaid.data.KeyValueStore
 import app.photomaid.data.PhotoMaidDatabase
 import app.photomaid.data.RoomLedgerPersistence
-import app.photomaid.feature.rules.RulesStore
+import app.photomaid.feature.collections.CollectionsStore
 import app.photomaid.files.ConnectedSourceStore
 import app.photomaid.media.MediaLibrary
 import app.photomaid.media.PhotoLibraryService
@@ -49,6 +50,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.withLock
 
 sealed interface CleanupRunResult {
     data class Finished(val intent: OperationIntent) : CleanupRunResult
@@ -77,22 +79,61 @@ class AppModel(
     val isQAFixtureMode: Boolean = false,
     purchaseOverride: PurchaseGateway? = null,
     mediaOverride: ((() -> Boolean) -> MediaLibrary)? = null,
+    /** Tests: Werbeanbieter-Fakes. Produktion: AdMob, sofern IDs konfiguriert sind (sonst keine Werbung). */
+    adsOverride: RewardedAdGateway? = null,
+    feedAdsOverride: app.photomaid.ads.FeedAdSource? = null,
 ) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    /** Wanduhr in ms (Werbeabstand, Anzeigedauer). Tests können sie verschieben. */
+    var wallClockMs: () -> Long = { System.currentTimeMillis() }
     val store = KeyValueStore(db)
     val ledger = DecisionLedger(persistence, SystemClock)
     private val _settings = MutableStateFlow(AppSettingsData())
     val settings: StateFlow<AppSettingsData> = _settings.asStateFlow()
-    val photos: MediaLibrary = mediaOverride?.invoke { _settings.value.mediaPermissionAsked }
+    /** Rohe Mediathek (ohne Ausnahmen) – nur für die Ordnerauswahl beim Ausnehmen selbst. */
+    val allPhotos: MediaLibrary = mediaOverride?.invoke { _settings.value.mediaPermissionAsked }
         ?: PhotoLibraryService(context) { _settings.value.mediaPermissionAsked }
+    /** Mediathek für alle Feeds und Zahlen: ohne ausgenommene und ohne ausgeblendete Ordner/Medien. */
+    val photos: MediaLibrary = app.photomaid.media.ExcludingMediaLibrary(allPhotos, { _settings.value.hiddenMedia }) {
+        _settings.value.excludedFolders + _settings.value.hiddenFolders
+    }
+    /** Tab „Fotos“: alles außer „In PhotoMaid ausgeblendet“ (vom Aufräumen ausgenommene Ordner bleiben ansehbar). */
+    val visiblePhotos: MediaLibrary = app.photomaid.media.ExcludingMediaLibrary(allPhotos, { _settings.value.hiddenMedia }) { _settings.value.hiddenFolders }
+    /** Kamera-Modelle aus EXIF für Suche/Info (nur im Speicher). */
+    val cameras = app.photomaid.media.CameraIndex { allPhotos.openStream(it) }
     val sources = ConnectedSourceStore(context, store)
     val player = FeedPlayer(context)
     val reminders = ReminderScheduler(context) { _settings.value.notificationsOptIn }
     val purchases: PurchaseGateway = purchaseOverride ?: BuildConfig.PLAY_PRO_PRODUCT_ID.let { id ->
         if (id.isBlank()) UnconfiguredPurchaseGateway() else PlayBillingGateway(context, id, store)
     }
-    val entitlements = EntitlementCenter(store, purchases, UnconfiguredRewardedAdGateway())
-    val rules = RulesStore(store)
+    val adSdk = app.photomaid.ads.AdMobSdk(context)
+    private val useAdMob = adsOverride == null && feedAdsOverride == null && !isQAFixtureMode && adSdk.isConfigured
+    val entitlements = EntitlementCenter(store, purchases,
+        adsOverride ?: if (useAdMob) app.photomaid.ads.AdMobRewardedGateway(context, adSdk) else UnconfiguredRewardedAdGateway())
+    /** Werbekarten im Feed (nur Free). */
+    val feedAds: app.photomaid.ads.FeedAdSource = feedAdsOverride ?: if (useAdMob) app.photomaid.ads.AdMobFeedAds(context, adSdk) else app.photomaid.ads.NoFeedAds
+    val feedAdCounter = app.photomaid.ads.FeedAdsStore(store)
+    val collections = CollectionsStore(store)
+    /** Bearbeiten (lokal): Bild-Engine, Video-Schnitt, Liste „Bearbeitet“, Ergebnis-Meldungen an den Feed. */
+    val editEngine = app.photomaid.media.ImageEditEngine(context)
+    var videoTrimmer: app.photomaid.media.VideoTrimmer = app.photomaid.media.Media3VideoTrimmer(context)
+    var videoExporter: app.photomaid.media.VideoEditExporter = app.photomaid.media.Media3VideoEditExporter(context)
+    /** P6: Video zusammenfügen / Diashow als Video. */
+    var movieExporter: app.photomaid.media.MovieExporter = app.photomaid.media.Media3MovieExporter(context)
+    /** Lange Exporte (Video) unabhängig vom Bildschirm, mit Vordergrunddienst. */
+    val exports = app.photomaid.export.ExportCoordinator(context, scope)
+    val edits = app.photomaid.feature.editor.EditStore(store)
+    val presets = app.photomaid.feature.editor.PresetStore(store)
+    /** Studio: Collage-Zeichner (Vorschau = Export) und lokale Entwürfe. */
+    val collageRenderer = app.photomaid.feature.studio.CollageRenderer(editEngine)
+    val drafts = app.photomaid.feature.studio.DraftStore(store, context)
+    val editEvents = kotlinx.coroutines.flow.MutableSharedFlow<app.photomaid.feature.editor.EditOutcome>(extraBufferCapacity = 8)
+    val quickAccess = app.photomaid.feature.quickaccess.QuickAccessStore(store)
+    /** Organisieren: Alben, Schlagwörter, Notizen, Auswahlkorb (nur Verwaltungsdaten, nie eine Entscheidung). */
+    val organize = app.photomaid.feature.organize.OrganizeStore(db)
+    /** Gespeicherte Arbeitsabläufe (Paket 2). */
+    val workflows = app.photomaid.feature.workflow.WorkflowStore(store)
 
     private val _read = MutableStateFlow(LedgerReadModel())
     val read: StateFlow<LedgerReadModel> = _read.asStateFlow()
@@ -108,15 +149,31 @@ class AppModel(
     /** Blockierend laden (Boot, abseits des Main-Threads). */
     fun loadBlocking() {
         _settings.value = store.value<AppSettingsData>(SETTINGS_KEY) ?: AppSettingsData()
+        if (_settings.value.firstSeenDay == null) {
+            _settings.value = _settings.value.copy(firstSeenDay = today)
+            runCatching { store.setValue(SETTINGS_KEY, _settings.value) }
+        }
         sources.load()
-        rules.load()
+        collections.load()
+        edits.load()
+        presets.load()
+        drafts.load()
+        quickAccess.load()
+        organize.load()
+        workflows.load()
+        feedAdCounter.load()
         entitlements.load()
         (purchases as? PlayBillingGateway)?.loadCache()
         reminders.ensureChannel()
     }
 
     fun start() {
-        scope.launch { ledger.stateFlow.collect { derive(it) } }
+        scope.launch { ledger.stateFlow.collect { publishRead() } }
+        // Nach Absturz/Abbruch: halbfertige Exporte entfernen, alte Teilen-Dateien löschen (nie als Erfolg zeigen).
+        scope.launch(Dispatchers.IO) {
+            runCatching { allPhotos.cleanupPendingExports() }
+            runCatching { app.photomaid.feature.studio.ShareCache.cleanup(context) }
+        }
     }
 
     val capabilities: Capabilities get() = entitlements.capabilities
@@ -145,21 +202,46 @@ class AppModel(
             recoverOperations()
         }
         reload()
-        rules.evaluateOnResume(this)
     }
 
-    suspend fun reload() = derive(ledger.snapshotState())
+    suspend fun reload() { ledger.snapshotState(); publishRead() }
 
-    private fun derive(s: LedgerState) {
+    private val readMutex = kotlinx.coroutines.sync.Mutex()
+
+    /**
+     * Lesemodell (Papierkorb, Später, Limit …) neu berechnen – NICHT auf dem Main-Thread (Filtern/Sortieren aller
+     * Einträge bei jeder Entscheidung kostete Frames im Feed). Serialisiert und immer aus dem neuesten Ledger-Stand,
+     * damit ein langsamerer älterer Lauf nie einen neueren überschreibt.
+     */
+    private suspend fun publishRead() = readMutex.withLock {
+        val s = ledger.stateFlow.value
         val limit = capabilities.dailyCleanupLimit
-        _read.value = LedgerReadModel(
-            basket = s.records.values.filter { it.disposition == Disposition.MARKED_FOR_CLEANUP }.sortedBy { it.item.description },
+        _read.value = withContext(Dispatchers.Default) { derive(s, limit) }
+    }
+
+    private fun derive(s: LedgerState, limit: Int?): LedgerReadModel {
+        return LedgerReadModel(
+            // Eine Datei, die über mehrere verbundene Ordner markiert wurde, zählt nur einmal (keine erfundenen Zahlen).
+            basket = s.records.values.filter { it.disposition == Disposition.MARKED_FOR_CLEANUP }.sortedBy { it.item.description }
+                .distinctBy { aliasOf(it.item) },
             laterRecords = s.records.values.filter { it.disposition == Disposition.LATER },
             events = s.events,
             allowance = ledger.allowance(s, limit),
             canUndo = s.undoStack.isNotEmpty(),
             reconciliationNeeded = s.intents.values.filter { it.state == OperationState.RECONCILIATION_REQUIRED },
         )
+    }
+
+    /** Schlüssel der tatsächlichen Ressource (Datei über mehrere Quellen = ein Schlüssel). */
+    fun aliasOf(item: ItemReference): String = sources.aliasKey(item) ?: item.description
+
+    /**
+     * Noch zu prüfende Medien – dieselbe Regel wie der Feed ([ReviewQueues.normalQueue]).
+     * Einzige Quelle für „Heute“ (Zahl, „Alles geprüft“) und die Zähler im Tab „Aufräumen“.
+     */
+    suspend fun pendingQueue(assets: List<app.photomaid.media.MediaAsset>): List<ItemReference> {
+        val refs = assets.map { it.reference }
+        return ReviewQueues.normalQueue(refs, ledger.records(refs), ReviewSessionID(), today)
     }
 
     val dueCount: Int
@@ -207,7 +289,7 @@ class AppModel(
         try {
             val limit = capabilities.dailyCleanupLimit
             val intent = try {
-                ledger.prepareCleanup(items, kind, limit).also { ledger.markSubmitted(it.id) }
+                ledger.prepareCleanup(items, kind, limit, aliasKeys = items.associateWith(::aliasOf)).also { ledger.markSubmitted(it.id) }
             } catch (e: CleanupError) {
                 return CleanupRunResult.Rejected(e)
             } catch (e: Exception) {
@@ -217,12 +299,17 @@ class AppModel(
             val outcome: OperationOutcome = when (kind) {
                 CleanupOperationKind.PHOTO_LIBRARY_DELETE -> photos.trash(items.map { it.localIdentifier })
                     ?: return CleanupRunResult.NeedsReconciliation
+                // Nur mit der Einstellung „Endgültig löschen“ (Standard aus); Android bestätigt selbst.
+                CleanupOperationKind.PHOTO_LIBRARY_DELETE_PERMANENTLY -> photos.deletePermanently(items.map { it.localIdentifier })
+                    ?: return CleanupRunResult.NeedsReconciliation
                 CleanupOperationKind.FILE_DELETE_PERMANENTLY -> withContext(Dispatchers.IO) { sources.deletePermanently(items) }
-                // Nicht angeboten: kein universeller Datei-Papierkorb (siehe PORTING_MATRIX).
-                CleanupOperationKind.FILE_MOVE_TO_TRASH -> OperationOutcome.Failed("trash-not-supported")
+                // Nur angeboten, wenn der Speicherort einen Papierkorb hat (Android 17+, FLAG_SUPPORTS_TRASH).
+                CleanupOperationKind.FILE_MOVE_TO_TRASH -> withContext(Dispatchers.IO) { sources.moveToTrash(items) }
             }
             return try {
-                CleanupRunResult.Finished(ledger.reconcile(intent.id, outcome))
+                val done = ledger.reconcile(intent.id, outcome)
+                unmarkAliasesOf(done.confirmedRemoved)
+                CleanupRunResult.Finished(done)
             } catch (e: Exception) {
                 // Systemoperation lief, DB-Abgleich scheiterte: beim nächsten Start reconciliationRequired.
                 CleanupRunResult.NeedsReconciliation
@@ -231,6 +318,19 @@ class AppModel(
             }
         } finally {
             cleanupInFlight = false
+        }
+    }
+
+    /**
+     * Ältere Doppel-Markierungen derselben Datei (anderer verbundener Ordner) verlassen den Papierkorb, sobald die Datei
+     * entfernt ist – sonst tauchte sie dort danach erneut auf. Nur „Zurücklegen“, nie eine weitere Löschung.
+     */
+    private suspend fun unmarkAliasesOf(removed: Set<ItemReference>) {
+        if (removed.none { it.provider != ItemProvider.PhotoLibrary }) return
+        val gone = removed.map(::aliasOf).toSet()
+        for (r in ledger.stateFlow.value.records.values) {
+            if (r.disposition == Disposition.MARKED_FOR_CLEANUP && r.item !in removed && aliasOf(r.item) in gone)
+                runCatching { apply(DecisionCommand(item = r.item, expectedRevision = r.revision, action = DecisionAction.Unmark)) }
         }
     }
 

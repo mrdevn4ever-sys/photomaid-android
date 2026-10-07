@@ -98,7 +98,7 @@ Alle 74 Swift-Testfunktionen werden als JUnit-Tests portiert (`core/src/test`).
   Gestenhilfe blendet beim Öffnen 2,6 s ein (abwählbar). Rückgängig in der Kopfzeile.
 - Free: 15 **bestätigte** Bereinigungen je lokalem Kalendertag (Reservierung bei Vorbereitung,
   Buchung auf den Reservierungstag). Pro: unbegrenzt, Duplikate, erweiterte Werkzeuge, dauerhafte Routinen,
-  keine Werbung. Rewarded: 30 Min., 1×/Tag, nur nach Reward-Callback.
+  keine Werbung. Rewarded: 30 Min., 1×/Tag, nur nach Reward-Callback. Android Free: Werbekarte alle 7 Entscheidungen (s. Abweichungen).
 - Später: Termin als lokaler Kalendertag, Gruppen Wieder fällig / Morgen / 7 Tage / ab Datum / ohne Datum.
 - Verlauf: Filter Alle / Behalten / Bereinigt / Später; keine „x GB freigegeben“.
 
@@ -110,6 +110,11 @@ Alle 74 Swift-Testfunktionen werden als JUnit-Tests portiert (`core/src/test`).
 | Speicherübersicht B | nur Anzahl für Fotos/Videos | Anzahl **und** Summe bekannter Größen („mind.“ bei unbekannten) | wie oben |
 | iCloud-Hinweise | „Nur in iCloud“ / „Zuletzt gelöscht“ / iCloud-Sync | „Papierkorb des Systems“ (30 Tage); Cloud-Sync anderer Apps (z. B. Google Fotos) ausdrücklich nicht einsehbar | Plattform |
 | Tageslimit-Anzeige | `Heute noch x von 15` | identisch | – |
+| Werbung (Free) | iOS: nur Rewarded geplant (Anbieter offen) | **Abweichung (Produktentscheidung 2026-09-30):** native Werbekarte (AdMob) im Feed nach je 7 Entscheidungen; erste 30 Entscheidungen werbefrei, max. 30/Tag (Feed-Karte + Zusammenfassung, 2026-10-02); ruhige Anzeige ganz unten in der Sitzungs-Zusammenfassung (nicht neben dem deutlichen Pro-Angebot); Video-Bonus „+10 für heute“ im Limit-Blatt (1× täglich, nur Reward-Callback, nie unbegrenzt); Karte ist nie eine Entscheidung, zählt nicht fürs Limit, jede Wischrichtung überspringt sie nach 1,5 s, „runter“/Rückgängig sofort; nie während Videowiedergabe (Player stoppt), nie für Pro/Pro-Test. Einwilligung per Google UMP vor dem SDK-Start (`MobileAdsInitProvider` entfernt). Rewarded über AdMob. | Umsatz Free-Stufe; iOS wird ggf. nachgezogen |
+| Onboarding + Tutorial | iOS: Datenschutz-Intro + Gestenhilfe | **Abweichung (Produktentscheidung 2026-10-04):** 5-stufiges Onboarding (Geschichte, Üben mit Demo-Stapel ohne Speicherung, Sicherheit, Angebot „kostenlos unbegrenzt + Pro einmalig“ zum Store-Preis, Berechtigungen) und Hinweiskarten auf „Heute“/im Feed; Free-Limit 20/Tag + Video-Bonus 20; warme Farbpalette | Umsatz, Verständnis; iOS ggf. nachziehen |
+| Nach dem Leeren | Meldung „N Medien … verschoben“ | **Ergänzung (2026-10-04):** Vollbild „Papierkorb geleert“ mit „gespart“ = Summe der **bekannten Größen tatsächlich entfernter** Elemente (vor dem Löschen gemessen; keine Kandidatengrößen, unbekannt ≠ 0 → „mind.“, ohne bekannte Größe keine Zahl), Kacheln Entfernt / Heute behalten, Summe „insgesamt gespart“ (lokal), Hinweis: Medien liegen im Android-Papierkorb, Platz frei nach dessen Leerung (spätestens 30 Tage); Dateien sofort | Motivation; Ehrlichkeitsregel bleibt |
+| Wisch-Schwellen | iOS `GestureConfig`: Commit 110 pt, Schwung 650 pt/s + 36 pt, lockRatio 1.6 | **Abweichung (Gerätebefund 2026-10-04 „zu schwerfällig“):** 72 dp, Schwung 380 dp/s + 20 dp, lockRatio 1.3 (Achse bis ≈ 38°); Totzone rechts ≤ 45° ↔ hoch/runter ab ≈ 52° bleibt; eine Geste = ein Schritt unverändert | Bedienung; iOS ggf. nachziehen |
+| Kaufmomente | – | Zusammenfassung: einmalig deutliches Pro-Angebot nach dem ersten Durchgang mit Aussortiertem, danach eine leise Zeile; Limit ab < 5 frei vorab sichtbar; Limit-Blatt: „Alle N entfernen – mit Pro“ primär; leiser Pro-Hinweis auf „Heute“ ab Nutzungstag 2 (nur Free) | Umsatz |
 | „Dateien im Container“ (QA) | QA-Fixtures nur in Debug + Startargument | QA-Fixtures nur im `qa`-Build-Typ | Plattform |
 | Ordner-Cloud-Anbieter | iCloud Drive abgelehnt | SAF-Anbieter mit `FLAG_VIRTUAL_DOCUMENT`/virtuellen Dateien werden nicht gelöscht; Google-Drive-Tree abgelehnt (Authority `com.google.android.apps.docs.storage`) | Plattform |
 
@@ -122,6 +127,7 @@ Gefundene iOS-Auffälligkeiten (nicht absichtlich nachgebaut):
 | 3 | `LargeFilesView` zählt als „unbekannt“ nur `size == .unknown`, Mindestgröße gilt nur für bekannte | identisch (korrekt) | identisch |
 | 4 | `AppModel.onForeground` ruft bei **jedem** Resume `recoverAfterLaunch` + `resolveReconciliation`. Kehrt die App während des System-Löschdialogs in den Vordergrund zurück, wird eine laufende `submitted`-Operation als `reconciliationRequired` markiert und (Items existieren noch) sofort als `failed` abgeschlossen; die spätere Bestätigung wird dann verworfen | Abgleich nur nach echtem Neustart bzw. nie während einer laufenden Operation | Einmal je Prozessstart und nie während `runCleanup` (`recoveredThisProcess`, `cleanupInFlight`) |
 | 5 | Der erste über den Dateibrowser verbundene Ordner heißt immer „Downloads“ (`asDownloads: importAsDownloads && downloadsSource == nil`, `importAsDownloads` ist immer `true`) – auch wenn es z. B. „Rechnungen“ ist | Titel „Downloads“ nur für eine Downloads-Quelle | Nur Ordner namens „Download“/„Downloads“ werden als Downloads-Quelle markiert |
+| 6 | `DecisionRules.transition` lehnt jede Aktion auf `.removed` ab, `normalQueue` schließt `.removed` aus. Holt jemand ein entferntes Medium aus „Zuletzt gelöscht“/dem System-Papierkorb zurück (gleiche ID), taucht es nie wieder auf | Ein wieder vorhandenes Medium ist wieder offen und neu entscheidbar | Kandidaten sind nur vorhandene Medien → `REMOVED` gilt dort als offen; Behalten/Papierkorb/Später erlaubt (Verlauf: Entscheidung), Rückgängig führt zurück auf „entfernt“; Termin-/Markierungsaktionen bleiben ungültig (Gerätetest Lauf 4, K5) |
 
 Android-spezifische Befunde während des Ports (behoben):
 
@@ -142,6 +148,11 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 | Reduce Motion | „Animationen entfernen“ (`ANIMATOR_DURATION_SCALE = 0`) | Android-Äquivalent |
 | Erhöhter Kontrast | Android 14+ `UiModeManager.contrast ≥ 0,5` | Android-Äquivalent |
 | UI-Polish (Auftrag „Gezielter UI-Polish“, nur Android) | Heute: Review-Karte zuerst mit Hauptaktion, Zähler als Zahl + Plural; Feed ohne weiße Karte, Rahmen im Seitenverhältnis, Infozeile; Später mit Medientyp/Termin; Verlauf fasst Später + ersten Termin zusammen; Pro mit drei echten Kernvorteilen; Gestenlegende als Liste | ausdrücklicher Auftrag des Nutzers; Verhalten, Gesten und Datenmodell unverändert. Details: `docs/ANDROID_UI_POLISH_REPORT.md` |
+| Umbau 2026-09-29 (Produktentscheidung, nur Android) | Diagonale ↗ entfällt (rechts bis 45° = Später, Termin über „Ändern“); Tipp aufs Video = Pause/Play + dünne Fortschrittsleiste; keine Richtungs-Kapsel; „Regeln & Routinen“ → **Sammlungen** (dauerhafte Filter, fertige gratis, eigene Pro); Tab „Ordnen“ entfällt, Sammlungen als Reiter in „Aufräumen“; Tabbar nur auf Tab-Startseiten; Navigation schiebt statt überblendet | Nutzerwunsch nach Gerätetest; iOS folgt. Details: `docs/REWORK_2026-09-29.md` |
+| Ausrichtung | Hochformat gesperrt (`screenOrientation="portrait"`). Ab Android 16 ignoriert das System die Sperre auf großen Bildschirmen (≥ 600 dp): Tablets und aufgeklappte Foldables drehen weiter; seitliche Safe-Insets bleiben dafür aktiv | Produktentscheidung 2026-09-29: der Feed ist vertikal, Querformat bringt auf dem Telefon keinen Nutzen |
+| Navigation/Rückmeldung (Nutzerwunsch nach Gerätevideo) | Zurück und Tabwechsel sofort, Öffnen 150-ms-Fade, `enableOnBackInvokedCallback=false` (keine schrumpfende Zurück-Vorschau); dezente Richtungs-Pille beim Wischen wieder da (hoch/links/rechts) | Schrumpf-/Schiebe-Effekt beim Zurück wirkte unruhig; ohne Pille fehlte Orientierung beim Wischen |
+| Ausbau 2026-10 (nur Android, iOS offen) | Ordner ausnehmen; Monate „Nach Monat“ + Weitermachen + Neu seit; Monat erneut durchsehen; Später ohne Termin; Fotoserien vergleichen (Pro); Raster mit Mehrfachauswahl + Sammel-Verschieben/-Favorit; angepinnte/zuletzt verwendete Zielordner; Reihenfolge im Feed; Tasten zum Entscheiden (Option); Werbeabstand 60 s; Fotos älter als 1 Jahr (Sammlung); Ordner-Dateien in den Papierkorb (Android 17+); Datenschutz-Link | Nutzerauftrag 2026-10-02 („alles umsetzen“), Plan `docs/FEATURE_PLAN_2026-10.md` |
+| Sprachen (2026-10) | 16 Sprachen aus dem Übersetzungspaket, Fallback Englisch (`values`), Deutsch in `values-de`, nach dem Leeren „gespart“ (de) / „saved“ (en), App-Sprache über Android 13+ (`localeConfig`); Größen-Einheiten und Datumsformate je Sprache; RTL ohne gespiegelte Gestenpfeile | Nutzerauftrag; Längenhinweise in `docs/i18n/UI_Laengenpruefung.json` |
 
 ## 7. Blocker / Plattformgrenzen
 
@@ -150,3 +161,48 @@ Weitere Android-Anpassungen ohne iOS-Gegenstück:
 - Keine Play-Console-Konfiguration: Produkt-ID fehlt → „Käufe sind in dieser Version noch nicht verfügbar“ (wie iOS).
 - Kein Werbeanbieter entschieden (wie iOS) → Rewarded „nicht verfügbar“.
 - Application-ID `app.photomaid.android` ist ein **Platzhalter** (iOS: `app.photomaid.ios`, ebenfalls Platzhalter).
+
+## Produkt-UX-Pass 2026-09-29 (Android zuerst, iOS noch offen)
+
+| Thema | Android | Grund |
+|---|---|---|
+| Aktionsleiste im Feed (♡, Teilen, Ordner, ⋯) | neu | Produktentscheidung Masterprompt; iOS-Port offen |
+| Favorit | MediaStore `IS_FAVORITE` + `createFavoriteRequest` (Systembestätigung) | iOS wäre `PHAsset.isFavorite` über `PHAssetChangeRequest` |
+| Favoriten schützen | Einstellung, Standard an | neu |
+| Album | nur „In Ordner verschieben“ (`createWriteRequest` + `RELATIVE_PATH`) | Android hat kein universelles Album-API; iOS hätte echte Alben (`PHAssetCollection`) |
+| Papierkorb-Vorschau, Limit vor Bestätigung | neu | Masterprompt §15/§16 |
+| Entitlements | `FREE`/`TEMPORARY_PRO`/`LIFETIME_PRO` explizit | fachlich identisch zu iOS (Vorschau ändert Limit nicht) |
+
+## Editor 2026-10 (Android zuerst, iOS noch offen)
+
+| Thema | Android | Grund |
+|---|---|---|
+| Einstieg | Stift-Symbol in der Aktionsleiste (♡ · Teilen · Ordner · ✏️ · ⋯), unter 360 dp „Teilen“ im ⋯-Menü | Produktentscheidung 2026-10-02 |
+| Speichern | „Original behalten“ (Kopie, gleicher Ordner, `IS_PENDING`) oder „Original ersetzen“ = neue Datei + Original per `createTrashRequest` in den Android-Papierkorb (B1) | Android kann Dateien nicht sicher in-place ersetzen; iOS hätte `PHContentEditingOutput` (Original bleibt in Fotos rücksetzbar) |
+| Ersetzen und Tageslimit | zählt **nicht** zum Limit (kein Aufräumen) | Produktentscheidung |
+| Ledger | neue Fassung = „Behalten“; ersetztes Original verlässt Papierkorb/Später | Produktentscheidung 2026-10-02 |
+| Verlustfreies Drehen | JPEG: nur EXIF-Ausrichtung (`ExifOrientationMath`) | Plattformgrenze (iOS ändert Ausrichtung im Edit-Output) |
+| HEIC | Ausgabe JPEG (Hinweis) | kein verlässlicher HEIC-Encoder auf allen Geräten |
+| Ultra-HDR | Gain-Map bei reiner Geometrie übernommen, bei Farbänderungen Hinweis | API 34 |
+| Free/Pro | Zuschneiden/Drehen/Spiegeln/Begradigen + beide Speicherarten frei; Regler, Filter, Größe, Video kürzen speichern mit Pro oder 30-Minuten-Test (Vorschau frei, „Nur Zuschnitt speichern“) | Produktentscheidung 2026-10-02 |
+| Video kürzen | Media3 Transformer mit Trim-Optimierung | — |
+
+## Studio 2026-10 (Android zuerst, iOS noch offen)
+
+| Thema | Android | Grund |
+|---|---|---|
+| Navigation | 4. Tab „Studio“ (Heute · Aufräumen · Studio · Verlauf); „Bearbeitet“ zog vom Aufräumen-Hub ins Studio | Produktentscheidung 2026-10-02 |
+| Collage | Raster (Vorlagen + verschiebbare Trennlinien mit Einrasten), Frei (Sofortbild-Rahmen), Streifen; Feld: Ausschnitt, Zoom, Drehen, Spiegeln, Filter, Ganz zeigen; Hintergrund Farbe/unscharfes Foto; Markieren wie im Editor | „collage ganz wichtig“ |
+| Speichern | neue Datei, „Behalten“ im Ledger, Eintrag „Bearbeitet“ (Art Collage, Anzahl); Quellen ohne Entscheidung | wie Editor-Kopie |
+| Mehrfachauswahl | Raster: „Collage“ ab 2 Fotos (Wählen bleibt keine Entscheidung) | neu |
+| Bedienungshilfen | Feld-Knoten je Rasterfeld, Aktionen „Nächstes Foto auswählen“/„Tauschen“, Trennlinien mit −/+ | Ziehen nicht nötig |
+| Perspektive | Reiter Zuschneiden › Perspektive: vier Ecken (Lupe, Raster) oder Senkrecht/Waagerecht; projektive Abbildung in Vorschau, 100-%-Ansicht und Export; kostenlos | Plan §8 |
+| Farbmischer | 8 Farbbereiche, Farbton/Sättigung/Helligkeit; Farbton und Sättigung erhalten die Helligkeit (Entsättigen → Grau, nicht Weiß) | Qualität |
+| Retusche | Kreis, Verlauf, Pinsel (bis 8 Bereiche) mit Licht-/Farbreglern, Maske einblendbar, zwei Finger zoomen; Pro wie Regler | Plan §5 |
+| Rote Augen | Tippen setzt Kreis; nur deutlich rote Pixel werden zu dunklem Neutral; kostenlos | Plan §5, keine Erkennung |
+| Video-Editor | Kürzen (schneller Weg) · Bereiche entfernen (echte Neukodierung) · Tempo 0,25–4× (Tonhöhe bleibt) · Ton/Blenden/Entfernen · Format Ausfüllen/Einpassen · Farbe (LUT) · Text/Sticker mit Zeitfenster · Standbild · Ton als M4A · Profile mit „ca.“-Schätzung | Plan §6/§12 |
+| Video-Export im Hintergrund | `ExportCoordinator` im App-Bereich + Vordergrunddienst; „Im Hintergrund fortsetzen“, Fertig-Meldung | Android-Plattform (iOS: BGProcessingTask) |
+| Tab „Fotos“ | 5 Tabs (Material-Grenze); Beschriftungen passen sich bei < 360 dp an (kein Abschneiden in 16 Sprachen) | Mediathek-Plan G1 |
+| Organisieren (Alben, Schlagwörter, Notizen, Auswahlkorb) | Android-Erweiterung (Ausbau Paket 1, 2026-10): PhotoMaid-interne Alben ohne Kopieren/Verschieben, eigene Schlagwörter/Notizen, dauerhafter Auswahlkorb; Room v2 (AutoMigration, nur neue Tabellen); nie eine Entscheidung, nie eine Datei-Änderung | Produktentscheidung, `docs/AUSBAU_VORSCHLAG_2026-10.md` Paket 1 |
+| Segmentauswahl bei großer Schrift | Ab 130 % Schrift natürliche Breiten + waagrechtes Scrollen statt Abschneiden, aktive Auswahl wird ins Bild geholt | Bedienbarkeit |
+| Arbeitsabläufe + Zielgröße | Android-Erweiterung (Paket 2): gespeicherte Abläufe aus Stapel-Schritten, gemessene Zielgröße (Foto: Qualität/Kante, Video: Bitrate + 1× Nachkodieren), nie zu große Dateien, nie Löschen | Produktentscheidung, Ausbau Paket 2 |

@@ -1,5 +1,32 @@
 package app.photomaid.design
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.semantics.text
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.togetherWith
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,6 +52,8 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.automirrored.rounded.ArrowBackIos
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Delete
@@ -35,6 +64,8 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalDensity
@@ -60,13 +91,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.material.icons.rounded.Close
 import app.photomaid.R
 
-/** Helle, luftige Grundfläche (Verlauf). Kein Präsentations-Wallpaper. */
+/**
+ * Helle, luftige Grundfläche (Verlauf). Kein Präsentations-Wallpaper.
+ * Edge-to-edge: der Hintergrund reicht bis an alle Ränder; der Inhalt weicht seitlich den Systemleisten und
+ * Aussparungen aus (Querformat mit 3-Tasten-Navigation, Kamera-Notch). Oben/unten regeln die Screens selbst.
+ */
 @Composable
 fun AppBackground(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit = {}) {
     val c = PM.colors
-    Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(c.background, c.backgroundTint)))) { content() }
+    Box(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(c.background, c.backgroundTint)))) {
+        Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))) { content() }
+    }
 }
 
 /** Ruhige Inhaltsfläche (kein Glas), für Listen und Karten. */
@@ -79,13 +118,16 @@ fun SurfaceCard(
 ) {
     val c = PM.colors
     val shape = RoundedCornerShape(AppRadii.card)
+    val interaction = remember { MutableInteractionSource() }
     Column(
         modifier
             .fillMaxWidth()
+            // Tippbare Karten geben beim Drücken leicht nach (wie iOS), statt nur Ripple.
+            .then(if (onClick != null) Modifier.pressScale(interaction, pressed = 0.98f) else Modifier)
             .clip(shape)
             .background(c.surface, shape)
             .border(1.dp, c.surfaceStroke, shape)
-            .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
+            .then(if (onClick != null) Modifier.clickable(interactionSource = interaction, indication = LocalIndication.current, role = Role.Button, onClick = onClick) else Modifier)
             .padding(padding),
         content = content,
     )
@@ -119,17 +161,47 @@ fun GlassIconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     tint: Color = PM.colors.textPrimary,
+    /** Leise Variante (Feed): kleinerer sichtbarer Kreis ohne Schatten, damit das Medium dominiert. Touch bleibt 48 dp. */
+    quiet: Boolean = false,
     onClick: () -> Unit,
 ) {
+    val interaction = remember { MutableInteractionSource() }
     Box(
         modifier
             .size(AppSpacing.minTouch)
             .alpha(if (enabled) 1f else 0.45f)
-            .glassCapsule(elevation = 4.dp)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .clickable(interactionSource = interaction, indication = null, enabled = enabled, role = Role.Button, onClick = onClick)
             .semantics { contentDescription = label },
         contentAlignment = Alignment.Center,
-    ) { Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(22.dp)) }
+    ) {
+        Box(
+            Modifier
+                .size(if (quiet) AppControl.quietIcon else AppSpacing.minTouch)
+                .pressScale(interaction)
+                .then(if (quiet) Modifier.glass(PM.colors, CircleShape, elevation = 0.dp) else Modifier.glassCapsule(elevation = 4.dp)),
+            contentAlignment = Alignment.Center,
+        ) { Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(if (quiet) AppIconSize.small + 2.dp else AppIconSize.regular)) }
+    }
+}
+
+/** Dezente Druck-Rückmeldung (leicht kleiner, kurz). Keine Federshow. */
+@Composable
+fun Modifier.pressScale(interaction: MutableInteractionSource, pressed: Float = 0.96f): Modifier {
+    val isPressed by interaction.collectIsPressedAsState()
+    val scale by animateFloatAsState(if (isPressed) pressed else 1f, AppMotion.fast(), label = "press")
+    return graphicsLayer { scaleX = scale; scaleY = scale }
+}
+
+/**
+ * Weiches Erscheinen (Fade + minimales Anheben) beim ersten Anzeigen – statt harter Zustandswechsel
+ * (Zusammenfassung, Werbekarte). Ohne Bewegung bei „Animationen entfernen“.
+ */
+@Composable
+fun Modifier.appearOnce(): Modifier {
+    val reduce = LocalReduceMotion.current
+    val p = remember { androidx.compose.animation.core.Animatable(if (reduce) 1f else 0f) }
+    androidx.compose.runtime.LaunchedEffect(Unit) { p.animateTo(1f, AppMotion.normal()) }
+    return graphicsLayer { alpha = p.value; translationY = (1f - p.value) * 12.dp.toPx() }
 }
 
 /** Glas-Button (iOS `.buttonStyle(.glass)`). */
@@ -143,13 +215,15 @@ fun GlassButton(
     large: Boolean = false,
     onClick: () -> Unit,
 ) {
+    val interaction = remember { MutableInteractionSource() }
     Box(
         modifier
             .then(if (fillWidth) Modifier.fillMaxWidth() else Modifier)
-            .heightIn(min = if (large) 52.dp else AppSpacing.minTouch)
+            .heightIn(min = if (large) AppControl.largeButton else AppSpacing.minTouch)
+            .pressScale(interaction)
             .alpha(if (enabled) 1f else 0.45f)
             .glassCapsule(elevation = 3.dp)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .clickable(interactionSource = interaction, indication = LocalIndication.current, enabled = enabled, role = Role.Button, onClick = onClick)
             .padding(horizontal = AppSpacing.l, vertical = AppSpacing.xs),
         contentAlignment = Alignment.Center,
     ) {
@@ -165,21 +239,23 @@ fun ProminentButton(
     enabled: Boolean = true,
     fillWidth: Boolean = false,
     large: Boolean = false,
-    color: Color = PM.colors.accent,
+    color: Color = PM.colors.accentFill,
     subtitle: String? = null,
     onClick: () -> Unit,
 ) {
     val shape = CircleShape
+    val interaction = remember { MutableInteractionSource() }
     Column(
         modifier
             .then(if (fillWidth) Modifier.fillMaxWidth() else Modifier)
-            .heightIn(min = if (large) 52.dp else AppSpacing.minTouch)
+            .heightIn(min = if (large) AppControl.largeButton else AppSpacing.minTouch)
+            .pressScale(interaction)
             .alpha(if (enabled) 1f else 0.45f)
             .shadow(6.dp, shape, clip = false, spotColor = color.copy(alpha = 0.5f))
             .clip(shape)
             .background(Brush.verticalGradient(listOf(color.copy(alpha = 0.92f), color)), shape)
-            .border(1.dp, Color.White.copy(alpha = 0.35f), shape)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .border(AppStroke.regular, Color.White.copy(alpha = 0.35f), shape)
+            .clickable(interactionSource = interaction, indication = LocalIndication.current, enabled = enabled, role = Role.Button, onClick = onClick)
             .padding(horizontal = AppSpacing.l, vertical = AppSpacing.xs),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -191,14 +267,15 @@ fun ProminentButton(
 
 /** Textbutton ohne Fläche (iOS Plain-Button in Listen). */
 @Composable
-fun PlainButton(text: String, modifier: Modifier = Modifier, color: Color = PM.colors.accent, enabled: Boolean = true, onClick: () -> Unit) {
+fun PlainButton(text: String, modifier: Modifier = Modifier, color: Color = PM.colors.accent, enabled: Boolean = true,
+                style: TextStyle = AppTypography.body, onClick: () -> Unit) {
     Box(
         modifier
             .heightIn(min = AppSpacing.minTouch)
             .alpha(if (enabled) 1f else 0.45f)
             .clickable(enabled = enabled, role = Role.Button, onClick = onClick),
         contentAlignment = Alignment.CenterStart,
-    ) { Text(text, style = AppTypography.body, color = color) }
+    ) { Text(text, style = style, color = color) }
 }
 
 /** Kopfzeile mit Titel, Untertitel und Glas-Buttons (Mockup-Stil, iOS `GlassToolbar`). */
@@ -234,10 +311,12 @@ fun GlassToolbar(
 
 /** Großer Titel der Tab-Wurzeln (Heute, Aufräumen, Ordnen). */
 @Composable
-fun LargeTitleHeader(title: String, subtitle: String? = null, trailing: @Composable () -> Unit = {}) {
+fun LargeTitleHeader(title: String, subtitle: String? = null, eyebrow: String? = null, trailing: @Composable () -> Unit = {}) {
     val c = PM.colors
     Row(Modifier.fillMaxWidth().padding(top = AppSpacing.s), verticalAlignment = Alignment.Top) {
         Column(Modifier.weight(1f).semantics(mergeDescendants = true) { heading() }, verticalArrangement = Arrangement.spacedBy(AppSpacing.xxs)) {
+            // Kleine, freundliche Zeile über dem Titel (z. B. Begrüßung auf „Heute“).
+            if (eyebrow != null) Text(eyebrow, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
             Text(title, style = AppTypography.largeTitle, color = c.textPrimary)
             if (subtitle != null) Text(subtitle, style = AppTypography.subheadline, color = c.textSecondary)
         }
@@ -284,33 +363,37 @@ fun SourceRow(
     showChevron: Boolean = true,
     /** Vorlesetext für einen knappen Wert (z. B. „6“ → „6 Elemente“). */
     valueDescription: String? = null,
+    /** Symbol statt Zahl an derselben Stelle (z. B. ✓ = nichts zu prüfen). */
+    valueIcon: ImageVector? = null,
 ) {
     val c = PM.colors
-    // Große Schrift (≥ 130 %): Werte unter den Titel statt daneben (iOS: Accessibility-Größen stapeln).
+    // Große Schrift (≥ 130 %): nur längere Detailtexte wandern unter den Titel. Zahl/Haken bleiben IMMER rechts.
     val stacked = LocalDensity.current.fontScale >= 1.3f
-    val trailing = listOfNotNull(value, detail)
     Row(
         modifier.fillMaxWidth().heightIn(min = AppSpacing.minTouch).semantics(mergeDescendants = true) {},
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.s),
     ) {
+        // Gleiche Geometrie wie [ListRow]: 32-dp-Kachel, 20-dp-Symbol, Titel in Body.
         Box(
-            Modifier.size(40.dp).clip(RoundedCornerShape(AppRadii.small)).background(tint.copy(alpha = 0.12f)),
+            Modifier.size(32.dp).clip(RoundedCornerShape(AppRadii.tile)).background(tint.copy(alpha = 0.12f)),
             contentAlignment = Alignment.Center,
-        ) { Icon(icon, null, tint = tint, modifier = Modifier.size(22.dp)) }
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(title, style = AppTypography.headline, color = c.textPrimary)
-            if (subtitle != null) Text(subtitle, style = AppTypography.caption, color = c.textSecondary)
-            // Gestapelt ist Platz für den ausgeschriebenen Wert („6 Elemente“ statt einer nackten Zahl).
-            if (stacked && trailing.isNotEmpty()) Text(valueDescription ?: trailing.joinToString(" "), style = AppTypography.caption, color = c.textSecondary)
+        ) { Icon(icon, null, tint = tint, modifier = Modifier.size(20.dp)) }
+        Column(Modifier.weight(1f).padding(vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            // Große Schrift: lange Wörter („Speicherübersicht“) mit Silbentrennung statt mitten im Wort umbrechen.
+            Text(title, style = AppTypography.body.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph), color = c.textPrimary)
+            if (subtitle != null) Text(subtitle, style = AppTypography.footnote, color = c.textSecondary)
+            if (stacked && detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary)
         }
-        // Detail begrenzt, damit der Titel auf schmalen Geräten nicht zerquetscht wird.
-        if (!stacked && trailing.isNotEmpty()) {
+        if (value != null || valueIcon != null || (!stacked && detail != null)) {
+            // Detail begrenzt, damit der Titel auf schmalen Geräten nicht zerquetscht wird.
             Column(Modifier.widthIn(max = 132.dp), horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary,
-                    textAlign = TextAlign.End, maxLines = 1,
+                if (valueIcon != null) Icon(valueIcon, null, tint = c.success, modifier = Modifier.size(20.dp)
+                    .then(if (valueDescription != null) Modifier.semantics { contentDescription = valueDescription } else Modifier))
+                if (value != null) Text(value, style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+                    color = c.textPrimary, textAlign = TextAlign.End, maxLines = 1, softWrap = false,
                     modifier = if (valueDescription != null) Modifier.semantics { contentDescription = valueDescription } else Modifier)
-                if (detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.End)
+                if (!stacked && detail != null) Text(detail, style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.End)
             }
         }
         if (showChevron) Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(20.dp))
@@ -373,17 +456,26 @@ fun EmptyState(
     modifier: Modifier = Modifier,
     actionTitle: String? = null,
     action: (() -> Unit)? = null,
+    /** Kleiner Zusatz, z. B. die passende Geste („→ Später“). */
+    hint: String? = null,
+    /** Bedeutungsfarbe des Zustands (z. B. Später = Türkis); Standard Akzent. */
+    tint: Color = PM.colors.accent,
 ) {
     val c = PM.colors
     Column(
-        modifier.fillMaxWidth().padding(AppSpacing.xl),
+        modifier.fillMaxWidth().padding(horizontal = AppSpacing.xl, vertical = AppSpacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(AppSpacing.s),
     ) {
-        Icon(icon, null, tint = c.textSecondary, modifier = Modifier.size(52.dp))
+        // Ruhig: Symbol in einem weichen Akzentkreis statt großem grauen Icon – kein Problem, nur ein Zustand.
+        Box(Modifier.size(72.dp).clip(CircleShape).background(tint.copy(alpha = 0.10f)).clearAndSetSemantics {}, contentAlignment = Alignment.Center) {
+            Icon(icon, null, tint = tint, modifier = Modifier.size(AppIconSize.medium + 4.dp))
+        }
+        Spacer(Modifier.size(AppSpacing.xxs))
         Text(title, style = AppTypography.title, color = c.textPrimary, textAlign = TextAlign.Center, modifier = Modifier.semantics { heading() })
         Text(message, style = AppTypography.subheadline, color = c.textSecondary, textAlign = TextAlign.Center)
-        if (actionTitle != null && action != null) ProminentButton(actionTitle, onClick = action)
+        if (hint != null) Text(hint, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary, textAlign = TextAlign.Center)
+        if (actionTitle != null && action != null) { Spacer(Modifier.size(AppSpacing.xs)); ProminentButton(actionTitle, onClick = action) }
     }
 }
 
@@ -399,15 +491,20 @@ fun ErrorState(message: String, modifier: Modifier = Modifier, retry: (() -> Uni
 @Composable
 fun <T> SegmentedPicker(options: List<Pair<T, String>>, selected: T, modifier: Modifier = Modifier, onSelect: (T) -> Unit) {
     val c = PM.colors
+    // Große Schrift: natürliche Breiten und waagrechtes Scrollen statt abgeschnittener Beschriftungen.
+    val large = androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f
     Row(
-        modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(c.backgroundTint.copy(alpha = 0.9f)).padding(3.dp),
+        modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(c.backgroundTint.copy(alpha = 0.9f))
+            .then(if (large) Modifier.horizontalScroll(androidx.compose.foundation.rememberScrollState()) else Modifier).padding(3.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         for ((value, label) in options) {
             val isSel = value == selected
+            val bring = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
+            if (large) LaunchedEffect(isSel) { if (isSel) { androidx.compose.runtime.withFrameNanos { }; runCatching { bring.bringIntoView() } } }
             Box(
                 Modifier
-                    .weight(1f)
+                    .then(if (large) Modifier.widthIn(min = 72.dp).bringIntoViewRequester(bring) else Modifier.weight(1f))
                     .heightIn(min = 36.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .then(if (isSel) Modifier.background(c.surface.copy(alpha = 1f)).border(0.5.dp, c.surfaceStroke, RoundedCornerShape(8.dp)) else Modifier)
@@ -418,7 +515,7 @@ fun <T> SegmentedPicker(options: List<Pair<T, String>>, selected: T, modifier: M
             ) {
                 Text(
                     label, style = AppTypography.footnote.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Normal),
-                    color = c.textPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                    color = c.textPrimary, maxLines = 1, overflow = if (large) TextOverflow.Clip else TextOverflow.Ellipsis, softWrap = !large,
                 )
             }
         }
@@ -450,8 +547,189 @@ fun ListSection(
     }
 }
 
+/**
+ * Lazy-Variante von [ListSection] für lange Listen (Papierkorb, Später, Verlauf, Große Dateien, Ordner):
+ * sieht gleich aus (eine Karte mit Trennern), aber jede Zeile ist ein eigenes Lazy-Item – nur sichtbare Zeilen
+ * werden komponiert und laden Vorschaubilder. Die umgebende LazyColumn darf KEIN `spacedBy` haben; Abstände
+ * anderer Items über [spacedItem].
+ */
+fun <T> LazyListScope.lazyListSection(
+    sectionKey: String,
+    rows: List<T>,
+    rowKey: (T) -> Any,
+    header: String? = null,
+    footer: String? = null,
+    trailingRow: (@Composable () -> Unit)? = null,
+    row: @Composable (T) -> Unit,
+) {
+    if (header != null) item(key = "$sectionKey:header", contentType = "section.header") { SectionHeader(header) }
+    val count = rows.size + if (trailingRow != null) 1 else 0
+    itemsIndexed(rows, key = { _, r -> "$sectionKey:${rowKey(r)}" }, contentType = { _, _ -> "section.row" }) { i, r ->
+        SectionRowSurface(first = i == 0, last = i == count - 1) { row(r) }
+    }
+    if (trailingRow != null) item(key = "$sectionKey:trailing", contentType = "section.row") {
+        SectionRowSurface(first = rows.isEmpty(), last = true) { trailingRow() }
+    }
+    item(key = "$sectionKey:footer", contentType = "section.footer") {
+        Column(Modifier.fillMaxWidth().padding(bottom = AppSpacing.m)) {
+            if (footer != null) Text(footer, style = AppTypography.caption, color = PM.colors.textSecondary,
+                modifier = Modifier.padding(horizontal = AppSpacing.m, vertical = AppSpacing.xxs))
+        }
+    }
+}
+
+/** Einzelnes Lazy-Item mit dem Abstand, den sonst `spacedBy(AppSpacing.m)` erzeugt hätte. */
+fun LazyListScope.spacedItem(key: Any? = null, content: @Composable () -> Unit) =
+    item(key = key) { Box(Modifier.fillMaxWidth().padding(bottom = AppSpacing.m)) { content() } }
+
 @Composable
-fun RowDivider() = HorizontalDivider(thickness = 0.5.dp, color = PM.colors.textSecondary.copy(alpha = 0.22f))
+private fun SectionHeader(text: String) {
+    Text(text, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = PM.colors.textSecondary,
+        modifier = Modifier.fillMaxWidth().padding(start = AppSpacing.m, bottom = AppSpacing.xxs, top = AppSpacing.xs).semantics { heading() })
+}
+
+/** Ein Stück der Kartenfläche: oben/unten gerundet nur am Rand der Gruppe, Kontur durchgehend, Trenner dazwischen. */
+@Composable
+private fun SectionRowSurface(first: Boolean, last: Boolean, content: @Composable () -> Unit) {
+    val c = PM.colors
+    val r = AppRadii.card
+    val shape = RoundedCornerShape(topStart = if (first) r else 0.dp, topEnd = if (first) r else 0.dp,
+        bottomStart = if (last) r else 0.dp, bottomEnd = if (last) r else 0.dp)
+    Column(Modifier.fillMaxWidth().clip(shape).background(c.surface, shape)
+        .drawBehind {
+            // Kontur als verlängertes Rechteck, auf die Zeile beschnitten: Seiten durchgehend, Rundung nur am Gruppenrand.
+            val sw = 1.dp.toPx(); val ext = r.toPx() * 2
+            val top = if (first) sw / 2 else -ext
+            val bottom = if (last) size.height - sw / 2 else size.height + ext
+            clipRect {
+                drawRoundRect(c.surfaceStroke, topLeft = Offset(sw / 2, top), size = Size(size.width - sw, bottom - top),
+                    cornerRadius = CornerRadius(r.toPx()), style = Stroke(sw))
+            }
+        }
+        .padding(horizontal = AppSpacing.m).padding(top = if (first) AppSpacing.xxs else 0.dp, bottom = if (last) AppSpacing.xxs else 0.dp)) {
+        if (!first) RowDivider()
+        content()
+    }
+}
+
+/** Trenner in Gruppen; [inset] rückt ihn bis zum Zeilentitel ein (nach der Symbolkachel). */
+@Composable
+fun RowDivider(inset: Dp = 0.dp) = HorizontalDivider(Modifier.padding(start = inset), thickness = 0.5.dp, color = PM.colors.textSecondary.copy(alpha = 0.22f))
+
+/** Einzug der Trenner unter [ListRow]: Kachel (32) + Abstand (12). */
+val RowDividerInset = 44.dp
+
+/** Status rechts in einer [ListRow] – immer an derselben Stelle, bei jeder Schriftgröße. */
+sealed interface RowStatus {
+    data object None : RowStatus
+    /** Offene Anzahl; 0 wird leise (gedeckt, normal) gezeigt. */
+    data class Count(val n: Int) : RowStatus
+    /** Mitglieder vorhanden, nichts offen. */
+    data object Done : RowStatus
+    /** Kurzer Text, z. B. „Leer“ oder „Auf Heute“. */
+    data class Label(val text: String) : RowStatus
+}
+
+/**
+ * Einheitliche Listenzeile (Heute, Aufräumen, Sheets): Symbolkachel · Titel (+ Untertitel) · Status rechts · Chevron.
+ * 56 dp einzeilig, 64 dp mit Untertitel. Zahlen rollen beim Ändern kurz (ohne „Animationen entfernen“).
+ * Quellen haben neutrale Kacheln; nur Zustände (Papierkorb, Später) tragen Farbe.
+ */
+@Composable
+fun ListRow(
+    icon: ImageVector,
+    title: String,
+    modifier: Modifier = Modifier,
+    tint: Color = PM.colors.accent,
+    tile: Color = PM.colors.backgroundTint,
+    subtitle: String? = null,
+    status: RowStatus = RowStatus.None,
+    badge: String? = null,
+    showChevron: Boolean = true,
+    /** Vorlesetext der ganzen Zeile (sonst Titel + sichtbarer Status). */
+    description: String? = null,
+    titleColor: Color = PM.colors.textPrimary,
+    enabled: Boolean = true,
+    /** Kurz hervorheben (z. B. gerade hinzugefügt). */
+    highlight: Boolean = false,
+    onClick: (() -> Unit)? = null,
+) {
+    val c = PM.colors
+    val large = LocalDensity.current.fontScale >= 1.3f
+    val reduce = LocalReduceMotion.current
+    val hl by androidx.compose.animation.animateColorAsState(if (highlight) c.accent.copy(alpha = 0.10f) else Color.Transparent,
+        if (reduce) androidx.compose.animation.core.snap() else androidx.compose.animation.core.tween(600), label = "highlight")
+    Row(
+        modifier.fillMaxWidth().heightIn(min = if (subtitle != null) AppSpacing.rowTwoLine else AppSpacing.row)
+            .background(hl)
+            .alpha(if (enabled) 1f else 0.45f)
+            .then(if (onClick != null) Modifier.clickable(enabled = enabled, role = Role.Button, onClick = onClick) else Modifier)
+            .semantics(mergeDescendants = true) { if (description != null) contentDescription = description },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(AppSpacing.s),
+    ) {
+        Box(Modifier.size(32.dp).clip(RoundedCornerShape(AppRadii.tile)).background(tile), contentAlignment = Alignment.Center) {
+            Icon(icon, null, tint = tint, modifier = Modifier.size(20.dp))
+        }
+        Column(Modifier.weight(1f).padding(vertical = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(title, style = AppTypography.body.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph), color = titleColor,
+                maxLines = if (large) 3 else 2, overflow = TextOverflow.Ellipsis)
+            if (subtitle != null) Text(subtitle, style = AppTypography.footnote, color = c.textSecondary, maxLines = if (large) 4 else 2, overflow = TextOverflow.Ellipsis)
+        }
+        if (badge != null) Badge(badge)
+        when (status) {
+            RowStatus.None -> Unit
+            RowStatus.Done -> Icon(androidx.compose.material.icons.Icons.Rounded.Check, null, tint = c.success, modifier = Modifier.size(20.dp))
+            is RowStatus.Label -> Text(status.text, style = AppTypography.subheadline, color = c.textSecondary, maxLines = 1, softWrap = false)
+            is RowStatus.Count -> RollingCount(status.n, reduce)
+        }
+        if (showChevron) Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, null, tint = c.textSecondary, modifier = Modifier.size(20.dp))
+    }
+}
+
+/** Zahl mit kurzem vertikalem Wechsel (200 ms), gleich breite Ziffern; 0 leise. */
+@Composable
+private fun RollingCount(n: Int, reduce: Boolean) {
+    val c = PM.colors
+    androidx.compose.animation.AnimatedContent(n, label = "count", transitionSpec = {
+        if (reduce) androidx.compose.animation.EnterTransition.None togetherWith androidx.compose.animation.ExitTransition.None
+        else {
+            val up = targetState > initialState
+            (androidx.compose.animation.slideInVertically(androidx.compose.animation.core.tween(200)) { h -> if (up) h else -h } +
+                androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(200))) togetherWith
+                (androidx.compose.animation.slideOutVertically(androidx.compose.animation.core.tween(200)) { h -> if (up) -h else h } +
+                    androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(200)))
+        }
+    }) { v ->
+        Text("$v", style = AppTypography.body.copy(fontWeight = if (v == 0) FontWeight.Normal else FontWeight.SemiBold, fontFeatureSettings = "tnum"),
+            color = if (v == 0) c.textSecondary else c.textPrimary, maxLines = 1, softWrap = false, textAlign = TextAlign.End)
+    }
+}
+
+/** Abschnittsüberschrift über einer Gruppe (Versalien, gedeckt) mit optionaler Aktion rechts. 8 dp zur Gruppe. */
+@Composable
+fun SectionTitle(text: String, modifier: Modifier = Modifier, action: (@Composable () -> Unit)? = null) {
+    Row(modifier.fillMaxWidth().padding(start = AppSpacing.xxs), verticalAlignment = Alignment.CenterVertically) {
+        // Sichtbar in Versalien; vorgelesen in normaler Schreibweise (TTS buchstabiert sonst manche Wörter).
+        Text(text.uppercase(), style = AppTypography.sectionHeader.copy(hyphens = Hyphens.Auto, lineBreak = LineBreak.Paragraph),
+            color = PM.colors.textSecondary, modifier = Modifier.weight(1f).clearAndSetSemantics { heading(); spokenText(text) })
+        // Aktion behält ihre 48-dp-Tippfläche, zählt aber nur mit 24 dp zur Höhe – die Überschrift bleibt nah an ihrer Gruppe.
+        if (action != null) Box(Modifier.layout { m, cs ->
+            val p = m.measure(cs.copy(minHeight = 0))
+            val h = 24.dp.roundToPx()
+            layout(p.width, h) { p.place(0, (h - p.height) / 2) }
+        }) { action() }
+    }
+}
+
+private fun androidx.compose.ui.semantics.SemanticsPropertyReceiver.spokenText(t: String) {
+    this.text = androidx.compose.ui.text.AnnotatedString(t)
+}
+
+/** Gruppe aus [ListRow]s in einer Karte (Innenrand 16 dp). */
+@Composable
+fun RowGroup(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) =
+    SurfaceCard(modifier.animateContentSize(), padding = PaddingValues(horizontal = AppSpacing.m, vertical = 0.dp), content = content)
 
 /** Kleines Abzeichen (z. B. „Pro“). */
 @Composable
@@ -518,5 +796,59 @@ fun <T> MenuRowPicker(title: String, options: List<Pair<T, String>>, selected: T
     }
 }
 
+/** Schnellwahl als Chips (Einfachauswahl) – ersetzt +/−-Zähler. */
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+@Composable
+fun <T> ChoiceChips(options: List<Pair<T, String>>, selected: T, modifier: Modifier = Modifier, onSelect: (T) -> Unit) {
+    val c = PM.colors
+    androidx.compose.foundation.layout.FlowRow(modifier, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        for ((value, label) in options) {
+            val isSel = value == selected
+            Box(
+                Modifier
+                    .heightIn(min = AppSpacing.minTouch)
+                    .clip(CircleShape)
+                    .background(if (isSel) c.accent else c.backgroundTint)
+                    .clickable(role = Role.RadioButton) { onSelect(value) }
+                    .semantics { this.selected = isSel }
+                    .padding(horizontal = AppSpacing.m),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(label, style = AppTypography.subheadline.copy(fontWeight = if (isSel) FontWeight.SemiBold else FontWeight.Normal),
+                    color = if (isSel) Color.White else c.textPrimary)
+            }
+        }
+    }
+}
+
 /** Lesbare Maximalbreite auf Tablets/Foldables (Inhalt zentriert, Telefone unverändert). */
 fun Modifier.readableWidth(): Modifier = widthIn(max = 720.dp)
+
+/**
+ * Pfeile für die PHYSISCHE Wischrichtung (links = Papierkorb, rechts = Später). Sie werden – anders als
+ * `Icons.AutoMirrored` – bei Rechts-nach-links-Sprachen (Arabisch) NICHT gespiegelt, weil die Geste gleich bleibt.
+ */
+object GestureIcons {
+    @Suppress("DEPRECATION") val Left: ImageVector = Icons.Rounded.ArrowBack
+    @Suppress("DEPRECATION") val Right: ImageVector = Icons.Rounded.ArrowForward
+}
+
+/**
+ * Kurze Beschriftung unter Symbolen/Reitern: passt sich in der Größe an statt mitten im Wort umzubrechen oder abgeschnitten
+ * zu werden (wichtig bei großer Systemschrift). Zeilen = Anzahl Wörter (höchstens 2).
+ */
+@Composable
+fun FitLabel(text: String, style: TextStyle, color: Color, modifier: Modifier = Modifier) {
+    val lines = text.trim().split(Regex("\\s+")).size.coerceIn(1, 2)
+    androidx.compose.foundation.text.BasicText(text, modifier, style.merge(TextStyle(color = color, textAlign = TextAlign.Center)), maxLines = lines,
+        overflow = TextOverflow.Clip,
+        autoSize = androidx.compose.foundation.text.TextAutoSize.StepBased(minFontSize = 6.sp, maxFontSize = style.fontSize, stepSize = 0.5.sp))
+}
+
+/** „Abbrechen“ in Kopfzeilen: Text, bei großer Systemschrift (> 130 %) ein ×-Symbol mit gleicher Beschriftung für TalkBack. */
+@Composable
+fun CancelButton(text: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit) {
+    if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f)
+        GlassIconButton(androidx.compose.material.icons.Icons.Rounded.Close, text, modifier, enabled = enabled, quiet = true, onClick = onClick)
+    else PlainButton(text, modifier, enabled = enabled, onClick = onClick)
+}

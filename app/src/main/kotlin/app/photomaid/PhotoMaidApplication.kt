@@ -32,7 +32,7 @@ class PhotoMaidApplication : Application(), SingletonImageLoader.Factory {
      * werden nicht zusätzlich auf den Datenträger kopiert (Thumbnails stammen aus MediaStore/Speicher).
      */
     override fun newImageLoader(context: PlatformContext): ImageLoader = ImageLoader.Builder(context)
-        .components { add(VideoFrameDecoder.Factory()) }
+        .components { add(app.photomaid.media.VideoPosterFetcher.Factory()); add(VideoFrameDecoder.Factory()) }
         .memoryCache { MemoryCache.Builder().maxSizePercent(context, 0.2).build() }
         .memoryCacheMaxSizePercentWhileInBackground(0.5)
         .diskCachePolicy(CachePolicy.DISABLED)

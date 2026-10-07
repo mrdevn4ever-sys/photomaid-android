@@ -1,9 +1,38 @@
 package app.photomaid.feature.review
 
+import app.photomaid.playback.FitVideo
+import app.photomaid.design.glassRect
+import app.photomaid.design.PlainButton
+import app.photomaid.design.ProminentButton
+import app.photomaid.design.AppIconSize
+import app.photomaid.design.AppStroke
+import app.photomaid.design.AppMotion
+import androidx.compose.material.icons.rounded.BrokenImage
+import androidx.compose.foundation.border
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,13 +46,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.VolumeOff
 import androidx.compose.material.icons.automirrored.rounded.VolumeUp
-import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
-import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -96,43 +121,79 @@ fun PrefetchImage(asset: MediaAsset, px: Pair<Int, Int>, onResult: (Boolean) -> 
  */
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
-fun MediaPage(asset: MediaAsset, px: Pair<Int, Int>, preview: PreviewState, onResult: (Boolean) -> Unit, skip: () -> Unit, zoomed: Boolean) {
+fun MediaPage(
+    asset: MediaAsset,
+    px: Pair<Int, Int>,
+    preview: PreviewState,
+    onResult: (Boolean) -> Unit,
+    skip: () -> Unit,
+    zoomed: Boolean,
+    /** Bedeutungsfarbe, sobald Loslassen entscheiden würde (feine Kontur statt Text/Kapsel). */
+    intentColor: Color? = null,
+    /** Zähler für „Erneut versuchen“ – ein neuer Wert lädt das Vorschaubild neu. */
+    retry: Int = 0,
+    onRetry: () -> Unit = {},
+    /** Beschriftung des Auswegs (Feed: „Weiter ohne Entscheidung“, Vorschau: „Schließen“). */
+    skipLabel: Int = R.string.skip_without_decision,
+    /**
+     * `false` = nächstes Medium unter dem aktuellen (Vorschau beim Wischen): kein Player, keine Bedienung,
+     * keine Lade-/Fehleranzeige, für TalkBack unsichtbar.
+     */
+    interactive: Boolean = true,
+) {
     val c = PM.colors
     val app = LocalApp.current
     val player by app.player.state.collectAsState()
     val kind = stringResource(when (asset.kind) { MediaKind.VIDEO -> R.string.video; MediaKind.SCREENSHOT -> R.string.screenshot; else -> R.string.photo })
     val description = asset.creationDate?.let { stringResource(R.string.a11y_kind_date, kind, DateText.long(it)) } ?: kind
+    val isVideo = asset.kind == MediaKind.VIDEO
+    val playPauseLabel = stringResource(if (player.itemID == asset.id && player.isPlaying) R.string.pause else R.string.play)
     BoxWithConstraints(Modifier.fillMaxSize()
-        .testTag(if (preview == PreviewState.READY) "feed.media.ready" else "feed.media")
-        .semantics { contentDescription = description }, contentAlignment = Alignment.Center) {
+        .then(if (!interactive) Modifier.testTag("feed.media.next").clearAndSetSemantics {} else Modifier
+            .testTag(if (preview == PreviewState.READY) "feed.media.ready" else "feed.media")
+            .semantics {
+                contentDescription = description
+                // TalkBack/Schalter: Wiedergabe ohne Tipp-Geste.
+                if (isVideo) customActions = listOf(CustomAccessibilityAction(playPauseLabel) { toggleVideo(app.player, asset); true })
+            }), contentAlignment = Alignment.Center) {
         val knownRatio = asset.pixelWidth > 0 && asset.pixelHeight > 0
         val ratio = asset.aspectRatio
         val shape = RoundedCornerShape(AppRadii.media)
         val tall = ratio < maxWidth / maxHeight
         val frame = if (knownRatio) Modifier.aspectRatio(ratio, matchHeightConstraintsFirst = tall) else Modifier.fillMaxSize()
-        Box(frame.clip(shape).background(if (knownRatio) c.backgroundTint else Color.Transparent).testTag("feed.media.frame")) {
-            val active = asset.kind == MediaKind.VIDEO && player.itemID == asset.id
+        val ring by animateColorAsState(intentColor ?: Color.Transparent, AppMotion.fast(), label = "intent")
+        Box(frame.clip(shape).background(if (knownRatio) c.backgroundTint else Color.Transparent)
+            .border(AppStroke.intent, ring, shape).testTag(if (intentColor != null) "feed.media.intent" else "feed.media.frame")) {
+            val active = interactive && asset.kind == MediaKind.VIDEO && player.itemID == asset.id
             if (active && app.player.player != null) {
                 // Ohne bekannte Maße wie bisher: Player in sein Seitenverhältnis einpassen, nie strecken.
-                PlayerSurface(app.player.player, if (knownRatio) Modifier.fillMaxSize() else Modifier.align(Alignment.Center).fillMaxWidth()
-                    .aspectRatio(ratio, matchHeightConstraintsFirst = tall), surfaceType = SURFACE_TYPE_SURFACE_VIEW)
+                FitVideo(app.player.player!!, Modifier.fillMaxSize())
             } else {
-                AsyncImage(
-                    model = previewRequest(asset, px), contentDescription = null, contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxSize().clearAndSetSemantics {},
-                    onSuccess = { onResult(true) }, onError = { onResult(false) },
-                )
+                androidx.compose.runtime.key(retry) {
+                    AsyncImage(
+                        model = previewRequest(asset, px), contentDescription = null, contentScale = ContentScale.Fit,
+                        modifier = Modifier.fillMaxSize().clearAndSetSemantics {},
+                        onSuccess = { onResult(true) }, onError = { onResult(false) },
+                    )
+                }
             }
+            if (interactive && isVideo && !zoomed && preview != PreviewState.LOADING) VideoControls(asset, skip, skipLabel)
         }
-        when (preview) {
-            PreviewState.LOADING -> CircularProgressIndicator(Modifier.align(Alignment.Center))
-            PreviewState.FAILED -> Column(Modifier.align(Alignment.Center).padding(AppSpacing.m), horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                Icon(Icons.Rounded.WarningAmber, null, tint = c.warning, modifier = Modifier.size(44.dp))
-                Text(stringResource(R.string.preview_failed), style = AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
-                GlassButton(stringResource(R.string.skip_without_decision), onClick = skip)
-            }
-            PreviewState.READY -> if (asset.kind == MediaKind.VIDEO && !zoomed) VideoOverlay(asset)
+        // Video ohne Standbild: trotzdem abspielbar; sobald das erste Bild wirklich läuft, gilt es als gesehen.
+        LaunchedEffect(asset.id, player.itemID, player.firstFrameRendered) {
+            if (asset.kind == MediaKind.VIDEO && player.itemID == asset.id && player.firstFrameRendered && preview != PreviewState.READY) onResult(true)
+        }
+        if (interactive) when (preview) {
+            PreviewState.LOADING -> CircularProgressIndicator(Modifier.align(Alignment.Center).size(AppIconSize.large), strokeWidth = AppStroke.progress)
+            PreviewState.FAILED -> if (isVideo && !zoomed) {
+                Column(Modifier.align(Alignment.TopCenter).padding(AppSpacing.m), horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    Text(stringResource(R.string.video_poster_failed), style = AppTypography.footnote, color = c.textPrimary, textAlign = TextAlign.Center,
+                        modifier = Modifier.glassCapsule().padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs))
+                    GlassButton(stringResource(skipLabel), onClick = skip)
+                }
+            } else MediaProblem(stringResource(R.string.preview_failed), stringResource(R.string.preview_failed_hint), onRetry, skip, Modifier.align(Alignment.Center), skipLabel)
+            PreviewState.READY -> Unit
         }
     }
 }
@@ -148,43 +209,132 @@ fun MediaInfoLine(asset: MediaAsset?, modifier: Modifier = Modifier) {
         asset.size.bytesOrNull?.let { SizeText.bytes(it) },
         if (asset.kind == MediaKind.VIDEO && asset.duration > 0) DateText.duration(asset.duration) else null,
     )
-    Text(parts.joinToString(" · "), style = AppTypography.footnote, color = PM.colors.textSecondary, maxLines = 1,
-        overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = modifier.fillMaxWidth().testTag("feed.info"))
+    val app = LocalApp.current
+    val state by app.player.state.collectAsState()
+    val active = asset != null && asset.kind == MediaKind.VIDEO && state.itemID == asset.id
+    // Feste Höhe (64 dp) für Fotos UND Videos: die Medienfläche darüber bleibt gleich groß. Video-Bedienung (Ton, Zeitleiste)
+    // liegt hier unter dem Bild – nie darüber.
+    // Video: Zeile samt Zeitleiste auch in RTL nicht gespiegelt (wie im Betrachter).
+    val dir = if (asset?.kind == MediaKind.VIDEO) androidx.compose.ui.unit.LayoutDirection.Ltr else androidx.compose.ui.platform.LocalLayoutDirection.current
+    androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides dir) {
+    Row(modifier.fillMaxWidth().height(64.dp).testTag("feed.underbar"), verticalAlignment = Alignment.CenterVertically) {
+        if (asset?.kind == MediaKind.VIDEO) {
+            val muteLabel = stringResource(if (state.isMuted || !active) R.string.unmute else R.string.mute)
+            Box(Modifier.size(AppSpacing.minTouch).clip(CircleShape).clickable(enabled = active) { app.player.toggleMute() }
+                .semantics { contentDescription = muteLabel }.testTag("video.mute"), contentAlignment = Alignment.Center) {
+                Icon(if (state.isMuted || !active) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp, null,
+                    tint = PM.colors.textSecondary, modifier = Modifier.size(20.dp))
+            }
+            Column(Modifier.weight(1f)) {
+                Text(parts.joinToString(" · "), style = AppTypography.caption, color = PM.colors.textSecondary, maxLines = 1,
+                    overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth().testTag("feed.info"))
+                SeekBar(progress = if (active) state.progress else 0f, enabled = active, onSeek = app.player::seek)
+            }
+        } else {
+            Text(parts.joinToString(" · "), style = AppTypography.footnote, color = PM.colors.textSecondary, maxLines = 1,
+                overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().testTag("feed.info"))
+        }
+    }
+    }
 }
 
-/** Video-Steuerung in eigener Control-Zone (Slider verbraucht seine Bewegung → keine Entscheidungsgeste). */
+/** Tipp aufs Video (wie TikTok): läuft → Pause, pausiert → weiter, noch nicht geladen → starten (stumm). */
+fun toggleVideo(player: app.photomaid.playback.FeedPlayer, asset: MediaAsset) {
+    if (player.state.value.itemID == asset.id) player.togglePlay() else player.load(asset.id, asset.uri, autoplay = true, durationSec = asset.duration)
+}
+
+/**
+ * Video-Bedienung ohne Knopfleiste: Pause/Play per Tipp aufs Medium (vom Feed gemeldet), ein Play-Symbol nur im
+ * pausierten Zustand, unten eine dünne Fortschrittsleiste (anfassbar zum Spulen, verbraucht ihre Bewegung →
+ * keine Entscheidungsgeste) und ein kleines Stumm-Symbol.
+ */
 @Composable
-private fun VideoOverlay(asset: MediaAsset) {
+private fun BoxScope.VideoControls(asset: MediaAsset, skip: () -> Unit, skipLabel: Int) {
     val app = LocalApp.current
-    val c = PM.colors
     val reduceMotion = LocalReduceMotion.current
     val state by app.player.state.collectAsState()
     val active = state.itemID == asset.id
-    fun start(autoplay: Boolean) = app.player.load(asset.id, asset.uri, autoplay, asset.duration)
     // Autoplay stumm, wenn Animationen nicht reduziert sind.
-    LaunchedEffect(asset.id) { if (!reduceMotion) start(true) }
-    LaunchedEffect(active, state.isPlaying) { while (active && state.isPlaying) { app.player.tick(); delay(250) } }
-    Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(Modifier.weight(1f))
-        val playLabel = stringResource(if (active && state.isPlaying) R.string.pause else R.string.play)
-        Box(Modifier.size(64.dp).glassCapsule().clickable { if (active) app.player.togglePlay() else start(true) }
-            .semantics { contentDescription = playLabel }, contentAlignment = Alignment.Center) {
-            Icon(if (active && state.isPlaying) Icons.Rounded.Pause else Icons.Rounded.PlayArrow, null, tint = c.textPrimary, modifier = Modifier.size(34.dp))
+    LaunchedEffect(asset.id) { if (!reduceMotion && !active) app.player.load(asset.id, asset.uri, autoplay = true, durationSec = asset.duration) }
+    LaunchedEffect(active, state.isPlaying) { while (active && state.isPlaying) { app.player.tick(); delay(200) } }
+    if (active && state.failed) {
+        // Wiedergabe fehlgeschlagen: erklären und einen Ausweg anbieten (nie eine Entscheidung).
+        MediaProblem(stringResource(R.string.video_failed), null,
+            onRetry = { app.player.load(asset.id, asset.uri, autoplay = true, durationSec = asset.duration) }, skip = skip,
+            modifier = Modifier.align(Alignment.Center), skipLabel = skipLabel)
+        return
+    }
+    if (!(active && state.isPlaying)) {
+        Box(Modifier.align(Alignment.Center).size(72.dp).clip(CircleShape).background(Color.Black.copy(alpha = 0.28f)).clearAndSetSemantics {}
+            .testTag("video.paused"), contentAlignment = Alignment.Center) {
+            Icon(Icons.Rounded.PlayArrow, null, tint = Color.White.copy(alpha = 0.92f), modifier = Modifier.size(44.dp))
         }
-        Spacer(Modifier.weight(1f))
-        Row(Modifier.padding(AppSpacing.s).fillMaxWidth().glassCapsule().padding(horizontal = AppSpacing.s, vertical = 2.dp),
-            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Text(DateText.duration(asset.duration), style = AppTypography.caption, color = c.textPrimary)
-            if (active) {
-                val posLabel = stringResource(R.string.playback_position)
-                Slider(value = state.progress, onValueChange = { app.player.seek(it) }, modifier = Modifier.weight(1f).semantics { contentDescription = posLabel },
-                    colors = SliderDefaults.colors(thumbColor = c.accent, activeTrackColor = c.accent, inactiveTrackColor = c.textSecondary.copy(alpha = 0.3f)))
-            } else Spacer(Modifier.weight(1f))
-            val muteLabel = stringResource(if (state.isMuted) R.string.unmute else R.string.mute)
-            Box(Modifier.size(44.dp).clip(RoundedCornerShape(22.dp)).clickable(enabled = active) { app.player.toggleMute() }
-                .semantics { contentDescription = muteLabel }, contentAlignment = Alignment.Center) {
-                Icon(if (state.isMuted || !active) Icons.AutoMirrored.Rounded.VolumeOff else Icons.AutoMirrored.Rounded.VolumeUp, null, tint = c.textPrimary)
+    }
+}
+
+/** Ruhiger Problemzustand eines Mediums: was passiert ist + „Erneut versuchen“ / „Weiter ohne Entscheidung“. */
+@Composable
+private fun MediaProblem(title: String, hint: String?, onRetry: () -> Unit, skip: () -> Unit, modifier: Modifier, skipLabel: Int = R.string.skip_without_decision) {
+    val c = PM.colors
+    // Auf kleinen Flächen kompakt (ohne Symbol/Hinweis) und notfalls scrollbar – beide Tasten bleiben immer erreichbar.
+    BoxWithConstraints(modifier, contentAlignment = Alignment.Center) {
+        val compact = maxHeight < 300.dp
+        Column(Modifier.padding(AppSpacing.m).glassRect(AppRadii.card, 0.dp).verticalScroll(rememberScrollState())
+            .padding(if (compact) AppSpacing.s else AppSpacing.l).testTag("feed.media.problem"),
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(if (compact) AppSpacing.xs else AppSpacing.s)) {
+            if (!compact) Icon(Icons.Rounded.BrokenImage, null, tint = c.textSecondary, modifier = Modifier.size(AppIconSize.large))
+            Text(title, style = if (compact) AppTypography.subheadline else AppTypography.headline, color = c.textPrimary, textAlign = TextAlign.Center)
+            if (hint != null && !compact) Text(hint, style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
+            ProminentButton(stringResource(R.string.retry), onClick = onRetry)
+            PlainButton(stringResource(skipLabel), onClick = skip)
+        }
+    }
+}
+
+/** Dünne Leiste wie bei YouTube: 3 dp, beim Anfassen dicker mit Punkt. */
+@Composable
+private fun SeekBar(progress: Float, enabled: Boolean, onSeek: (Float) -> Unit) {
+    val accent = PM.colors.accent
+    val track = PM.colors.textSecondary.copy(alpha = 0.3f)
+    val label = stringResource(R.string.playback_position)
+    var dragging by remember { mutableStateOf(false) }
+    var dragValue by remember { mutableFloatStateOf(0f) }
+    val shown = if (dragging) dragValue else progress
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(AppSpacing.minTouch)
+            .testTag("video.seek")
+            .semantics {
+                contentDescription = label
+                progressBarRangeInfo = ProgressBarRangeInfo(shown, 0f..1f)
+                if (enabled) setProgress { onSeek(it.coerceIn(0f, 1f)); true }
             }
+            .pointerInput(enabled) {
+                if (!enabled) return@pointerInput
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false)
+                    down.consume()
+                    dragging = true
+                    fun at(x: Float) = (x / size.width).coerceIn(0f, 1f)
+                    dragValue = at(down.position.x); onSeek(dragValue)
+                    while (true) {
+                        val ch = awaitPointerEvent().changes.firstOrNull { it.id == down.id } ?: break
+                        if (!ch.pressed) { ch.consume(); break }
+                        ch.consume()
+                        dragValue = at(ch.position.x); onSeek(dragValue)
+                    }
+                    dragging = false
+                }
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Canvas(Modifier.fillMaxWidth().height(if (dragging) 12.dp else 6.dp)) {
+            val h = if (dragging) 5.dp.toPx() else 3.dp.toPx()
+            val y = size.height - h
+            drawRect(track, topLeft = Offset(0f, y), size = androidx.compose.ui.geometry.Size(size.width, h))
+            drawRect(accent, topLeft = Offset(0f, y), size = androidx.compose.ui.geometry.Size(size.width * shown, h))
+            if (dragging) drawCircle(accent, radius = 6.dp.toPx(), center = Offset(size.width * shown, y + h / 2))
         }
     }
 }

@@ -1,5 +1,6 @@
 package app.photomaid.feature.history
 
+import androidx.compose.material.icons.rounded.EventBusy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Undo
-import androidx.compose.material.icons.rounded.BookmarkRemove
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Circle
@@ -42,6 +42,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import app.photomaid.R
+import app.photomaid.design.spacedItem
+import app.photomaid.design.lazyListSection
+import androidx.compose.material.icons.rounded.FilterList
+import androidx.compose.material.icons.rounded.History
+import app.photomaid.design.EmptyState
 import app.photomaid.core.decisions.DecisionEvent
 import app.photomaid.core.decisions.Disposition
 import app.photomaid.core.decisions.HistoryKind
@@ -61,7 +66,7 @@ import app.photomaid.design.SurfaceCard
 import app.photomaid.feature.common.ThumbnailView
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.TabBarEndSpacer
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 
@@ -92,20 +97,22 @@ fun HistoryScreen(nav: Nav) {
     ScreenScaffold(stringResource(R.string.tab_history), onBack = null, actions = {
         GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = read.canUndo) { scope.launch { app.undo() } }
     }) { mod ->
-        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-            item {
+        val headers = keys.map { day -> val n = days.getValue(day).size
+            pluralStringResource(R.plurals.history_day_header, n, DateText.complete(day.atStartOfDay(zone).toInstant()), n) }
+        // Lazy je Eintrag: langer Verlauf scrollt flüssig (vorher bis zu 300 Zeilen je Tag auf einmal).
+        LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin)) {
+            spacedItem("filter") {
                 SegmentedPicker(listOf(HistoryFilter.ALL to stringResource(R.string.history_all), HistoryFilter.KEPT to stringResource(R.string.history_kept),
                     HistoryFilter.CLEANED to stringResource(R.string.history_cleaned), HistoryFilter.LATER to stringResource(R.string.history_later)), filter) { filter = it }
             }
-            if (keys.isEmpty()) item { SurfaceCard { Text(stringResource(R.string.history_empty), style = AppTypography.body, color = c.textSecondary) } }
-            items(keys, key = { it.toString() }) { day ->
-                val entries = days.getValue(day)
-                ListSection(header = pluralStringResource(R.plurals.history_day_header, entries.size,
-                    DateText.complete(day.atStartOfDay(zone).toInstant()), entries.size)) {
-                    entries.take(300).forEachIndexed { i, e -> if (i > 0) RowDivider(); HistoryRow(e) }
-                }
+            if (keys.isEmpty()) spacedItem("empty") {
+                if (read.events.isEmpty()) EmptyState(Icons.Rounded.History, stringResource(R.string.history_empty_title), stringResource(R.string.history_empty))
+                else EmptyState(Icons.Rounded.FilterList, stringResource(R.string.history_filter_empty_title), stringResource(R.string.history_filter_empty))
             }
-            item { Spacer(Modifier.height(TabBarClearance)) }
+            keys.forEachIndexed { i, day ->
+                lazyListSection(day.toString(), days.getValue(day), { it.primary.id }, header = headers[i]) { e -> HistoryRow(e) }
+            }
+            item { TabBarEndSpacer() }
         }
     }
 }
@@ -117,7 +124,11 @@ private fun HistoryRow(entry: HistoryEntry) {
     val (icon, tint, title) = describe(e, c)
     // Termin des Vorgangs (zusammengefasster Termin oder ein eigenständig geänderter Termin).
     val day = (entry.schedule ?: e.takeIf { it.kind == HistoryKind.SCHEDULE_CHANGED })?.to?.dueDay
-    val text = if (day != null) stringResource(R.string.history_with_day, stringResource(title), DayText.string(day)) else stringResource(title)
+    val text = when {
+        day != null -> stringResource(R.string.history_with_day, stringResource(title), DayText.string(day))
+        entry.itemCount > 1 -> stringResource(R.string.history_with_day, stringResource(title), pluralStringResource(R.plurals.items_count, entry.itemCount, entry.itemCount))
+        else -> stringResource(title)
+    }
     Row(Modifier.fillMaxWidth().heightIn(min = 56.dp).semantics(mergeDescendants = true) {}, verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
         if (e.item.provider == ItemProvider.PhotoLibrary) ThumbnailView(e.item.localIdentifier, 44.dp)
@@ -135,7 +146,7 @@ private fun describe(e: DecisionEvent, c: PhotoMaidColors): Triple<ImageVector, 
     HistoryKind.CLEANUP_NOT_PERFORMED -> Triple(Icons.Rounded.HighlightOff, c.textSecondary, R.string.h_not_performed)
     HistoryKind.UNDO -> Triple(Icons.AutoMirrored.Rounded.Undo, c.textSecondary, R.string.h_undo)
     HistoryKind.SCHEDULE_CHANGED -> Triple(Icons.Rounded.CalendarMonth, c.later, R.string.h_schedule)
-    HistoryKind.DEFERRAL_REMOVED -> Triple(Icons.Rounded.BookmarkRemove, c.textSecondary, R.string.h_deferral_removed)
+    HistoryKind.DEFERRAL_REMOVED -> Triple(Icons.Rounded.EventBusy, c.textSecondary, R.string.h_deferral_removed)
     HistoryKind.UNMARKED -> Triple(Icons.Rounded.RemoveCircleOutline, c.textSecondary, R.string.h_unmarked)
     HistoryKind.DECISION, HistoryKind.CORRECTION -> {
         val corr = e.kind == HistoryKind.CORRECTION

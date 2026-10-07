@@ -78,7 +78,7 @@ class FeedFlowTest {
         awaitReady("2 von 5")
         assertEquals(Disposition.MARKED_FOR_CLEANUP, disposition(0))
         assertEquals(0, lib.removed.size)
-        rule.onNodeWithText("Papierkorb: 1").assertExists()
+        rule.onNode(androidx.compose.ui.test.hasContentDescription("Papierkorb: 1")).assertExists()
     }
 
     @Test fun rightLaterWithDefaultDateAndPill() {
@@ -89,6 +89,22 @@ class FeedFlowTest {
         val r = rec(0)
         assertEquals(Disposition.LATER, r.disposition)
         assertEquals(app.today.addingDays(2), r.dueDay)
+    }
+
+    /** Gerätebefund Lauf 7: mehrere „Später“ hintereinander – die Pille bleibt stehen und gehört zum neuesten Medium. */
+    @Test fun consecutiveLaterKeepsOnePillForTheLatestItem() {
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeRight() }
+        awaitReady("2 von 5")
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeRight() }
+        awaitReady("3 von 5")
+        rule.waitUntil(5_000) { rec(1).dueDay != null }
+        assertEquals(1, rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().size)
+        assertEquals(app.today.addingDays(2), rec(0).dueDay)
+        assertEquals(app.today.addingDays(2), rec(1).dueDay)
+        // „Ändern“ bezieht sich auf das zuletzt zurückgestellte Medium (nicht auf das vorige).
+        rule.onNodeWithTag("later.edit").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().isEmpty() }
     }
 
     @Test fun downGoesBackWithoutDecision() {
@@ -131,57 +147,48 @@ class FeedFlowTest {
         // Jede Geste höchstens ein Schritt; niemals zwei Entscheidungen für dasselbe Item.
         assertEquals(ev.size, ev.map { it.item }.toSet().size)
         assertEquals(ev.size, ev.count { it.kind == HistoryKind.DECISION })
-        rule.onNodeWithText("${ev.size + 1} von 5").assertExists()
+        // Mit leichteren Schwellen zählen mehr der schnellen Wische – die Anzeige folgt nach dem letzten Wegfliegen.
+        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("${events().size + 1} von 5")).fetchSemanticsNodes().isNotEmpty() }
+        val after = events()
+        assertEquals(after.size, after.map { it.item }.toSet().size)
     }
 
-    private fun swipeRightUp() = rule.onNodeWithTag("feed.stage").performTouchInput { swipe(center, center + Offset(500f, -300f), 250) }
+    /** Die Diagonale entfällt: schräg rechts oben bis ~45° ist „rechts“ = Später mit Standardtermin + Pille. */
+    @Test fun rightUpIsLaterWithDefaultDate() {
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipe(center, center + Offset(500f, -300f), 250) }
+        awaitReady("2 von 5")
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().isNotEmpty() }
+        assertEquals(Disposition.LATER, disposition(0))
+        assertEquals(app.today.addingDays(2), rec(0).dueDay)
+        rule.onNodeWithText("Datum auswählen …").assertDoesNotExist() // keine Datumsauswahl mehr per Geste
+    }
 
-    /** ↗ öffnet nur die Datumsauswahl: keine Entscheidung, kein Eintrag, gleiches Medium. Abbrechen ändert nichts. */
-    @Test fun rightUpOpensPickerWithoutDecisionAndCancelChangesNothing() {
-        swipeRightUp()
-        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Bestimmtes Datum …")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("1 von 5").assertExists()
-        assertEquals(Disposition.UNDECIDED, disposition(0))
-        assertEquals(0, events().size)
-        rule.onNodeWithText("Abbrechen").performClick()
+    /** Eigener Termin: „Ändern“ in der Pille öffnet die Auswahl für genau dieses Medium. */
+    @Test fun pillChangeOpensPickerForSameItem() {
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipeRight() }
+        awaitReady("2 von 5")
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("later.edit").fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithTag("later.edit").performClick()
+        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Datum auswählen …")).fetchSemanticsNodes().isNotEmpty() }
+        rule.onNodeWithText("Datum auswählen …").performClick()
+        rule.onNodeWithText("Fertig").performClick()
+        rule.waitUntil(5_000) { rec(0).dueDay == app.today.addingDays(14) }
+        assertEquals(Disposition.UNDECIDED, disposition(1))
+        rule.onNodeWithText("2 von 5").assertExists()
+    }
+
+    /** Zwischen „rechts“ (≤ 45°) und „hoch“ liegt eine Totzone ohne Wirkung. */
+    @Test fun steepRightUpIsDeadZone() {
+        rule.onNodeWithTag("feed.stage").performTouchInput { swipe(center, center + Offset(300f, -345f), 250) } // ≈ 49°: Totzone zwischen rechts (≤ 45°) und hoch (ab ≈ 52°)
         rule.waitForIdle()
         awaitReady("1 von 5")
-        rule.onNodeWithText("Bestimmtes Datum …").assertDoesNotExist()
-        assertEquals(Disposition.UNDECIDED, disposition(0))
-        assertNull(rec(0).dueDay)
         assertEquals(0, events().size)
-        assertEquals(false, app.read.value.canUndo)
-        // Danach funktioniert der Feed normal weiter.
-        rule.onNodeWithTag("feed.stage").performTouchInput { swipeUp() }
-        awaitReady("2 von 5")
-        assertEquals(Disposition.KEPT, disposition(0))
-    }
-
-    /** Bestätigen: Später bis zum gewählten Tag, nur für das ursprüngliche Medium, dann nächstes Medium; ein Undo. */
-    @Test fun rightUpConfirmSetsChosenDateAndAdvances() {
-        swipeRightUp()
-        rule.waitUntil(5_000) { rule.onAllNodes(androidx.compose.ui.test.hasText("Bestimmtes Datum …")).fetchSemanticsNodes().isNotEmpty() }
-        rule.onNodeWithText("Bestimmtes Datum …").performClick() // Kalender, Vorauswahl in 14 Tagen (≠ Standard 2 Tage)
-        rule.onNodeWithText("Fertig").performClick()
-        awaitReady("2 von 5")
-        rule.waitUntil(5_000) { rec(0).dueDay != null }
-        assertEquals(Disposition.LATER, disposition(0))
-        assertEquals(app.today.addingDays(14), rec(0).dueDay)
-        assertEquals(Disposition.UNDECIDED, disposition(1))
-        assertEquals(listOf(HistoryKind.DECISION, HistoryKind.SCHEDULE_CHANGED), events().map { it.kind })
-        assertEquals(setOf(item(0)), events().map { it.item }.toSet())
-        rule.onAllNodesWithTag("later.pill").fetchSemanticsNodes().let { assertEquals(0, it.size) } // kein Standard-Später
-        // Ein Rückgängig nimmt Später und Termin gemeinsam zurück.
-        rule.onNode(androidx.compose.ui.test.hasContentDescription("Rückgängig")).performClick()
-        awaitReady("1 von 5")
-        rule.waitUntil(5_000) { disposition(0) == Disposition.UNDECIDED }
-        assertNull(rec(0).dueDay)
     }
 
     @Test fun undoRestoresPreviousState() {
         rule.onNodeWithTag("feed.stage").performTouchInput { swipeLeft() }
         awaitReady("2 von 5")
-        rule.onNodeWithText("Papierkorb: 1").assertExists()
+        rule.onNode(androidx.compose.ui.test.hasContentDescription("Papierkorb: 1")).assertExists()
         rule.onNode(androidx.compose.ui.test.hasContentDescription("Rückgängig")).performClick()
 
         awaitReady("1 von 5")
@@ -193,7 +200,7 @@ class FeedFlowTest {
             rule.onNodeWithTag("feed.stage").performTouchInput { if (i % 2 == 0) swipeUp() else swipeLeft() }
             if (i < 4) awaitReady("${i + 2} von 5")
         }
-        rule.waitUntil(5_000) { rule.onAllNodesWithText("Durchgang abgeschlossen").fetchSemanticsNodes().isNotEmpty() }
+        rule.waitUntil(5_000) { rule.onAllNodesWithText("Für jetzt fertig").fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithText("Papierkorb ansehen (2)").assertExists()
     }
 }

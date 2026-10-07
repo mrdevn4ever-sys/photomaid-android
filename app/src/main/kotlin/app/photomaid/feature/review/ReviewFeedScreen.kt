@@ -1,5 +1,12 @@
 package app.photomaid.feature.review
 
+import app.photomaid.core.organize.MediaFolder
+import app.photomaid.design.MonthText
+import app.photomaid.design.GestureIcons
+import kotlinx.coroutines.launch
+import app.photomaid.design.CoachStep
+import app.photomaid.design.CoachHost
+import app.photomaid.design.coachTarget
 import android.view.accessibility.AccessibilityManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -39,7 +46,6 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.MoreHoriz
-import androidx.compose.material.icons.rounded.NorthEast
 import androidx.compose.material.icons.rounded.PanTool
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -58,6 +64,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -88,11 +95,24 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.photomaid.FeedRequest
+import androidx.compose.material.icons.rounded.Schedule
+import app.photomaid.design.appearOnce
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.material.icons.rounded.WorkspacePremium
+import app.photomaid.design.PlainButton
+import app.photomaid.core.cleanup.AllowanceSnapshot
+import app.photomaid.core.capabilities.Capabilities
 import app.photomaid.R
 import app.photomaid.core.feed.FeedIntent
+import app.photomaid.core.feed.FeedOrder
+import androidx.compose.material.icons.automirrored.rounded.Sort
+import androidx.compose.material.icons.rounded.Check
 import app.photomaid.core.feed.SessionSummary
+import app.photomaid.ads.FeedAd
 import app.photomaid.core.model.MediaKind
 import app.photomaid.design.AppBackground
+import app.photomaid.design.AppIconSize
+import app.photomaid.feature.collections.collectionTitle
 import app.photomaid.design.AppMotion
 import app.photomaid.design.AppRadii
 import app.photomaid.design.AppSpacing
@@ -112,13 +132,18 @@ import app.photomaid.design.glassCapsule
 import app.photomaid.design.glassRect
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
+import app.photomaid.system.MediaIntents
+import app.photomaid.feature.quickaccess.quickEmptyRes
+import app.photomaid.feature.quickaccess.quickTitle
+import app.photomaid.core.quickaccess.QuickSourceKind
+import app.photomaid.media.MediaCategory
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
 /**
  * Vertikaler Entscheidungs-Feed (Screens 2 und 3).
- * HOCH = Behalten · LINKS = Papierkorb · RECHTS = Später (Standardtermin) ·
- * SCHRÄG RECHTS OBEN = Drehrad (erst Bestätigen entscheidet, Abbrechen ändert nichts) · RUNTER = Zurück.
+ * HOCH = Behalten · LINKS = Papierkorb · RECHTS (bis 45° schräg) = Später mit Standardtermin, eigener Termin
+ * über „Ändern“ in der Pille · RUNTER = Zurück. Keine Richtungs-Kapsel: das Medium selbst zeigt die Bewegung.
  */
 @Composable
 fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBasket: () -> Unit) {
@@ -126,8 +151,13 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
     val model: FeedViewModel = viewModel(key = request.id, factory = viewModelFactory { initializer { FeedViewModel(app, request) } })
     val ctx = LocalContext.current
     val reduceMotion = LocalReduceMotion.current
+    SideEffect { model.reduceMotion = reduceMotion }
     val settings by app.settings.collectAsState()
-    val read by app.read.collectAsState()
+    // Nur die tatsächlich angezeigten Werte beobachten: eine Entscheidung ohne Papierkorb-Änderung
+    // komponiert den Feed nicht zusätzlich neu (weniger Arbeit auf dem Main-Thread beim schnellen Wischen).
+    val readState = app.read.collectAsState()
+    val canUndo by remember { androidx.compose.runtime.derivedStateOf { readState.value.canUndo } }
+    val basketCount by remember { androidx.compose.runtime.derivedStateOf { readState.value.basket.size } }
     val a11y = remember { ctx.getSystemService(AccessibilityManager::class.java) }
     val talkBack = remember { a11y?.isTouchExplorationEnabled == true }
     val switchAccess = remember {
@@ -135,7 +165,9 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             ?.any { it.id.contains("switchaccess", ignoreCase = true) } == true
     }
     /** Mit TalkBack oder Schaltersteuerung bleiben die Aktions-Buttons sichtbar. */
-    val needsButtons = talkBack || switchAccess
+    val needsButtons = talkBack || switchAccess || settings.decisionButtons
+    var confirmExclude by remember { mutableStateOf(false) }
+    var orderMenu by remember { mutableStateOf(false) }
     var showHints by remember { mutableStateOf(false) }
     var hintToken by remember { mutableIntStateOf(0) }
     var showInfo by remember { mutableStateOf(false) }
@@ -151,7 +183,10 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
         if (showHints) { delay(AppMotion.HINT_VISIBLE_MS); showHints = false }
     }
     LaunchedEffect(model.isLoaded) {
-        if (model.isLoaded && settings.showGestureHintOnOpen && model.session.items.isNotEmpty()) flashHints()
+        if (model.isLoaded && model.session.items.isNotEmpty() && (settings.showGestureHintOnOpen || !settings.gestureHintSeen)) {
+            flashHints()
+            if (!settings.gestureHintSeen) app.updateSettings { it.copy(gestureHintSeen = true) }
+        }
     }
     LaunchedEffect(talkBack, zoom) { model.setSuspended(talkBack || zoom > 1.01f) }
     LaunchedEffect(model.haptic) {
@@ -160,46 +195,97 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
             FeedHaptic.KEEP -> HapticFeedbackType.Confirm
             FeedHaptic.CLEANUP -> HapticFeedbackType.ContextClick
             FeedHaptic.LATER -> HapticFeedbackType.SegmentTick
-            FeedHaptic.BUMP -> HapticFeedbackType.Reject
+            FeedHaptic.READY -> HapticFeedbackType.GestureThresholdActivate
+            FeedHaptic.DATE -> HapticFeedbackType.ToggleOn
+            // Anschlag am Anfang ist kein Fehler: nur ein sehr leichter Tick.
+            FeedHaptic.BUMP -> HapticFeedbackType.SegmentFrequentTick
             FeedHaptic.UNDO -> HapticFeedbackType.VirtualKey
+            FeedHaptic.FAVORITE_ON -> HapticFeedbackType.ToggleOn
+            FeedHaptic.FAVORITE_OFF -> HapticFeedbackType.ToggleOff
         })
     }
 
+    // Hinweiskarten einmal beim ersten Feed: nach der Gestenhilfe, nur bei einem echten Medium (keine Werbung, keine Zusammenfassung).
+    val tourScope = rememberCoroutineScope()
+    val feedTour = listOf(
+        CoachStep("feed.basket", stringResource(R.string.tour_feed_basket_title), stringResource(R.string.tour_feed_basket_text)),
+        CoachStep("feed.undo", stringResource(R.string.tour_feed_undo_title), stringResource(R.string.tour_feed_undo_text)),
+        CoachStep("feed.actions", stringResource(R.string.tour_feed_actions_title), stringResource(R.string.tour_feed_actions_text)),
+    )
+    val seriesStep = CoachStep("feed.series", stringResource(R.string.tour_series_title), stringResource(R.string.tour_series_text))
+    val canTour = !showHints && model.isLoaded && model.adCard == null && !model.session.isFinished && model.currentAsset != null && !talkBack &&
+        model.seriesOpen == null
+    // Erst das Feed-Tutorial; später einmal der Hinweis auf „Serie“, sobald der Knopf das erste Mal erscheint.
+    val seriesTour = settings.feedTourSeen && !settings.seriesTourSeen && model.currentSeries != null
+    val steps = when { !settings.feedTourSeen -> feedTour; seriesTour -> listOf(seriesStep); else -> emptyList() }
+    CoachHost(steps, active = canTour && steps.isNotEmpty(), onFinish = {
+        val wasFeed = !settings.feedTourSeen
+        tourScope.launch { app.updateSettings { if (wasFeed) it.copy(feedTourSeen = true) else it.copy(seriesTourSeen = true) } }
+    }, modifier = Modifier.fillMaxSize()) {
     AppBackground {
         Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(bottom = AppSpacing.xs), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
             model.version // Session-Änderungen beobachten
             val items = model.session.items
             val (pos, total) = model.session.position
-            var menu by remember { mutableStateOf(false) }
             GlassToolbar(
-                title = stringResource(request.titleRes),
+                title = (request.source as? FeedRequest.Source.Collection)?.let { collectionTitle(it.collection) }
+                    ?: (request.source as? FeedRequest.Source.Quick)?.let { quickTitle(it.item) }
+                    ?: (request.source as? FeedRequest.Source.Month)?.let { MonthText.title(it.month) }
+                    ?: stringResource(request.titleRes),
                 subtitle = if (items.isEmpty()) null else stringResource(R.string.feed_position, pos, total),
-                leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), onClick = onClose) },
+                leading = { GlassIconButton(Icons.Rounded.Close, stringResource(R.string.close), quiet = true, onClick = onClose) },
                 trailing = {
-                    GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), enabled = read.canUndo, onClick = model::undo)
-                    Box {
-                        GlassIconButton(Icons.Rounded.MoreHoriz, stringResource(R.string.more_actions)) { menu = true }
-                        DropdownMenu(menu, onDismissRequest = { menu = false }) {
-                            DropdownMenuItem(text = { Text(stringResource(R.string.feed_view_basket)) }, leadingIcon = { Icon(Icons.Rounded.Delete, null) },
-                                onClick = { menu = false; openBasket() })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.info)) }, leadingIcon = { Icon(Icons.Rounded.Info, null) },
-                                enabled = model.currentAsset != null, onClick = { menu = false; showInfo = true })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.feed_show_hints)) }, leadingIcon = { Icon(Icons.Rounded.PanTool, null) },
-                                onClick = { menu = false; flashHints() })
+                    if (model.canReorder && model.isLoaded && items.isNotEmpty()) Box {
+                        GlassIconButton(Icons.AutoMirrored.Rounded.Sort, stringResource(R.string.order_title), Modifier.testTag("feed.order"), quiet = true) { orderMenu = true }
+                        DropdownMenu(orderMenu, onDismissRequest = { orderMenu = false }) {
+                            for ((o, label) in listOf(FeedOrder.NEWEST to R.string.order_newest, FeedOrder.OLDEST to R.string.order_oldest,
+                                FeedOrder.LARGEST to R.string.order_largest, FeedOrder.RANDOM to R.string.order_random)) {
+                                DropdownMenuItem(text = { Text(stringResource(label)) }, modifier = Modifier.testTag("order.${o.name}"),
+                                    leadingIcon = { if (model.order == o) Icon(Icons.Rounded.Check, null) },
+                                    onClick = { orderMenu = false; model.setOrder(o) })
+                            }
                         }
                     }
+                    GlassIconButton(Icons.AutoMirrored.Rounded.Undo, stringResource(R.string.undo), Modifier.coachTarget("feed.undo"), enabled = canUndo, quiet = true, onClick = model::undo)
                 },
             )
             when {
-                !model.isLoaded -> Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
-                items.isEmpty() -> Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    EmptyState(Icons.Rounded.CheckCircle, stringResource(R.string.feed_empty_title), stringResource(R.string.feed_empty_message),
-                        actionTitle = stringResource(R.string.close), action = onClose)
+                !model.isLoaded -> Column(Modifier.weight(1f).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(AppSpacing.s, Alignment.CenterVertically)) {
+                    CircularProgressIndicator()
+                    Text(stringResource(R.string.feed_loading), style = AppTypography.footnote, color = PM.colors.textSecondary)
                 }
-                model.session.isFinished -> SessionSummaryView(
-                    model.session.summary, read.basket.size, Modifier.weight(1f),
-                    reviewBasket = openBasket, goBack = { model.perform(FeedIntent.PREVIOUS, reduceMotion) }, done = onClose,
-                )
+                items.isEmpty() -> Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    val emptyMsg = when (val src = request.source) {
+                        is FeedRequest.Source.Quick -> quickEmptyRes(src.item.kind)
+                        is FeedRequest.Source.Category -> quickEmptyRes(when (src.category) {
+                            MediaCategory.PHOTOS -> QuickSourceKind.PHOTOS
+                            MediaCategory.VIDEOS -> QuickSourceKind.VIDEOS
+                            MediaCategory.SCREENSHOTS -> QuickSourceKind.SCREENSHOTS
+                        })
+                        else -> R.string.feed_empty_message
+                    }
+                    EmptyState(Icons.Rounded.CheckCircle, stringResource(R.string.qa_all_done), stringResource(emptyMsg),
+                        actionTitle = stringResource(R.string.back), action = onClose)
+                }
+                model.adCard != null -> androidx.compose.runtime.key(model.adCard!!.id) {
+                    AdStage(model, model.adCard!!, reduceMotion, openPro = nav::openPro, modifier = Modifier.weight(1f).appearOnce())
+                }
+                model.session.isFinished -> {
+                    // Kaufmoment: nur für Nutzer ohne Lifetime-Pro und nur, wenn wirklich aussortiert wurde.
+                    val summary = model.session.summary
+                    val upsell = app.capabilities.tier != Capabilities.Tier.LIFETIME_PRO && summary.marked > 0
+                    // Einmalig deutlicher (erster erfolgreicher Durchgang), danach eine leise Zeile.
+                    val strong = remember { upsell && !app.settings.value.proOfferShown }
+                    if (strong) LaunchedEffect(Unit) { app.updateSettings { it.copy(proOfferShown = true) } }
+                    LaunchedEffect(Unit) { model.prepareSummaryAd(strongUpsell = strong) }
+                    SessionSummaryView(
+                        summary, basketCount, Modifier.weight(1f).appearOnce(),
+                        reviewBasket = openBasket, goBack = { model.perform(FeedIntent.PREVIOUS, reduceMotion) }, done = onClose,
+                        upsell = when { !upsell -> null; strong -> SummaryUpsell.STRONG; else -> SummaryUpsell.QUIET },
+                        allowance = readState.value.allowance, openPro = nav::openPro, ad = model.summaryAd,
+                    )
+                }
                 else -> {
                     MediaStage(model, reduceMotion, showHints, gesturesEnabled = !talkBack && zoom <= 1.01f, zoom = zoom,
                         onZoom = { zoom = it.coerceIn(1f, 5f) }, onZoomReset = { zoom = 1f }, hideHints = ::hideHints,
@@ -207,11 +293,40 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
                     MediaInfoLine(model.currentAsset, Modifier.padding(horizontal = AppSpacing.pageMargin))
                     Column(Modifier.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         if (needsButtons) CompactActions { model.perform(it, reduceMotion) }
-                        ReviewDock(read.basket.size, Modifier.testTag("feed.dock"), onClick = openBasket)
+                        val asset = model.currentAsset
+                        val shareTitle = stringResource(R.string.share_chooser)
+                        val shareFailed = stringResource(R.string.share_failed)
+                        val openFailed = stringResource(R.string.open_failed)
+                        val series = model.currentSeries
+                        FeedActionBar(asset, basketCount, busy = model.mediaWriteBusy || model.isCommitting,
+                            seriesCount = series?.size, onSeries = {
+                                if (app.capabilities.seriesCompare) model.openSeries() else nav.openPro()
+                            }, seriesLocked = !app.capabilities.seriesCompare,
+                            onExcludeFolder = if (model.currentFolder != null) ({ confirmExclude = true }) else null,
+                            onGrid = if (gridSupported(request)) ({ nav.openGrid(request.copy(id = java.util.UUID.randomUUID().toString())) }) else null,
+                            onFavorite = model::toggleFavorite,
+                            onShare = {
+                                // Teilen ändert nichts am Prüfstand; nach der Rückkehr bleibt dasselbe Medium.
+                                asset?.let { a ->
+                                    runCatching { ctx.startActivity(MediaIntents.share(a.uri, a.kind, a.mimeType, shareTitle)) }
+                                        .onFailure { model.errorMessage = shareFailed }
+                                }
+                            },
+                            onFolder = model::openFolders,
+                            onInfo = { showInfo = true },
+                            onOpenElsewhere = {
+                                asset?.let { a ->
+                                    runCatching { ctx.startActivity(MediaIntents.view(a.uri, a.kind, a.mimeType)) }
+                                        .onFailure { model.errorMessage = openFailed }
+                                }
+                            },
+                            onEdit = { asset?.let { a -> app.player.stop(); nav.openEditor(a.id) } },
+                            onHints = ::flashHints, openBasket = openBasket)
                     }
                 }
             }
         }
+    }
     }
 
     model.errorMessage?.let { msg ->
@@ -229,8 +344,22 @@ fun ReviewFeedScreen(request: FeedRequest, nav: Nav, onClose: () -> Unit, openBa
         AlertDialog(onDismissRequest = { showInfo = false }, confirmButton = { TextButton({ showInfo = false }) { Text(stringResource(R.string.ok)) } },
             title = { Text(stringResource(R.string.info)) }, text = { Text(text) })
     }
+    model.protectedFavorite?.let { p -> ProtectedFavoriteDialog(p, onUnfavorite = model::unfavoriteProtected, onCancel = model::dismissProtected) }
+    model.folderSheetFor?.let { a ->
+        val fscope = rememberCoroutineScope()
+        FolderSheet(a.kind, a.relativePath, model.folders, settings.pinnedFolders, settings.recentFolders,
+            onTogglePin = { p -> fscope.launch { togglePinnedFolder(app, p) } }, onPick = model::moveCurrent, onDismiss = model::closeFolders)
+    }
+    if (confirmExclude) model.currentFolder?.let { f ->
+        AlertDialog(onDismissRequest = { confirmExclude = false }, modifier = Modifier.testTag("feed.exclude"),
+            title = { Text(stringResource(R.string.excl_confirm_title, MediaFolder(f, 0).name)) },
+            text = { Text(stringResource(R.string.excl_confirm_text)) },
+            confirmButton = { TextButton({ confirmExclude = false; model.excludeCurrentFolder() }, Modifier.testTag("feed.exclude.ok")) { Text(stringResource(R.string.excl_confirm_action)) } },
+            dismissButton = { TextButton({ confirmExclude = false }) { Text(stringResource(R.string.cancel)) } })
+    }
+    model.seriesOpen?.let { members -> SeriesCompareDialog(members, onConfirm = { keep -> model.confirmSeries(members, keep) }, onDismiss = model::closeSeries) }
     model.pickerReceipt?.let { receipt ->
-        LaterPickerSheet(initial = model.defaultLaterInterval, today = model.today) { day -> model.pickerFinished(receipt, day) }
+        LaterPickerSheet(initial = model.defaultLaterInterval, today = model.today, onNoDate = { model.pickerNoDate(receipt) }) { day -> model.pickerFinished(receipt, day) }
     }
     // Schräg rechts oben: Auswahl ist noch keine Entscheidung; Abbrechen lässt alles unverändert.
     model.customLater?.let { req ->
@@ -254,6 +383,7 @@ private fun MediaStage(
     modifier: Modifier,
 ) {
     val density = LocalDensity.current
+    val app = LocalApp.current
     val labels = listOf(
         stringResource(R.string.act_keep_next) to FeedIntent.KEEP, stringResource(R.string.act_trash) to FeedIntent.MARK_FOR_CLEANUP,
         stringResource(R.string.act_later) to FeedIntent.LATER, stringResource(R.string.act_later_custom) to FeedIntent.LATER_CUSTOM,
@@ -281,54 +411,91 @@ private fun MediaStage(
                 onCancel = model::dragCancelled,
                 onZoom = { onZoom(it) },
                 onDoubleTap = onZoomReset,
+                // Tipp aufs Video = Pause/Play (wie TikTok); bei Fotos ohne Wirkung. Nie eine Entscheidung.
+                onTap = { model.currentAsset?.takeIf { it.kind == MediaKind.VIDEO && zoom <= 1.01f }?.let { toggleVideo(app.player, it) } },
+                waitForDoubleTap = { zoom > 1.01f },
             ),
     ) {
         model.viewSizeDp = Size(maxWidth.value, maxHeight.value)
         val px = rememberPreviewPx(maxWidth.value, maxHeight.value)
         val item = model.current
-        val asset = model.currentAsset
+        val next = model.next
         // Vorschaufenster: vorheriges/nächste Medien vorab dekodieren (unsichtbar, gleiche Zielgröße).
-        for (ref in model.windowItems()) if (ref != item) model.assets[ref.localIdentifier]?.let { PrefetchImage(it, px) { ok -> model.previewResult(ref, ok) } }
-        if (item != null && asset != null) {
-            val o = model.offset.value
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .offset { with(density) { IntOffset(o.x.dp.roundToPx(), o.y.dp.roundToPx()) } }
-                    .graphicsLayer { rotationZ = if (reduceMotion) 0f else o.x / 40f; scaleX = zoom; scaleY = zoom },
-            ) {
-                androidx.compose.runtime.key(item) {
-                    MediaPage(asset, px, model.previews[item] ?: PreviewState.LOADING, onResult = { ok -> model.previewResult(item, ok) },
-                        skip = model::skipWithoutDecision, zoomed = zoom > 1.01f)
+        for (ref in model.windowItems()) if (ref != item && ref != next) model.assets[ref.localIdentifier]?.let { PrefetchImage(it, px) { ok -> model.previewResult(ref, ok) } }
+        if (item != null && model.currentAsset != null) {
+            val c = PM.colors
+            val reveal = maxWidth.value * 0.9f
+            // Zwei Karten: das nächste Medium liegt unsichtbar darunter und blendet beim Wischen ein. Nach dem Commit
+            // wird es ohne Neuladen zur oberen Karte (gleicher key) – kein Aufpoppen, keine leere Fläche.
+            // Versatz/Drehung/Einblendung werden nur in Layout/Zeichnen gelesen: kein Recompose pro Frame.
+            for (ref in listOfNotNull(next, item)) androidx.compose.runtime.key(ref) {
+                val asset = model.assets[ref.localIdentifier]
+                val top = ref == item
+                val layer = if (top) Modifier
+                    .offset { val o = model.offset.value; with(density) { IntOffset(o.x.dp.roundToPx(), o.y.dp.roundToPx()) } }
+                    .graphicsLayer { rotationZ = if (reduceMotion) 0f else model.offset.value.x / 40f; scaleX = zoom; scaleY = zoom }
+                else Modifier.graphicsLayer {
+                    val o = model.offset.value
+                    val p = (kotlin.math.hypot(o.x, o.y) / reveal).coerceIn(0f, 1f)
+                    alpha = p
+                    val sc = if (reduceMotion) 1f else 0.94f + 0.06f * p
+                    scaleX = sc; scaleY = sc
+                }
+                if (asset != null) Box(Modifier.fillMaxSize().then(layer)) {
+                    val intent = if (!top) null else when (model.readyDirection?.let { FeedIntent.of(it) }) {
+                        FeedIntent.KEEP -> c.keep
+                        FeedIntent.MARK_FOR_CLEANUP -> c.cleanup
+                        FeedIntent.LATER, FeedIntent.LATER_CUSTOM -> c.later
+                        else -> null
+                    }
+                    MediaPage(asset, px, model.previews[ref] ?: PreviewState.LOADING, onResult = { ok -> model.previewResult(ref, ok) },
+                        skip = model::skipWithoutDecision, zoomed = top && zoom > 1.01f, intentColor = intent,
+                        retry = model.retries[ref] ?: 0, onRetry = { model.retryPreview(ref) }, interactive = top)
                 }
             }
-            DirectionTint(model, Modifier.align(Alignment.Center))
         }
+        DirectionPill(model, Modifier.align(Alignment.TopCenter).padding(top = AppSpacing.s))
         AnimatedVisibility(showHints, enter = fadeIn(), exit = fadeOut(tween(AppMotion.HINT_FADE_MS))) { GestureHintOverlay() }
         val pill = model.laterPill
-        AnimatedVisibility(pill != null, Modifier.align(Alignment.BottomCenter).padding(bottom = AppSpacing.l),
+        // Bei Videos über Stumm-Schalter und Fortschrittsleiste (sonst verdeckt die Pille die Bedienung).
+        val pillBottom = if (model.currentAsset?.kind == MediaKind.VIDEO) 72.dp else AppSpacing.l
+        AnimatedVisibility(pill != null, Modifier.align(Alignment.BottomCenter).padding(bottom = pillBottom),
             enter = slideInVertically { it } + fadeIn(), exit = slideOutVertically { it } + fadeOut()) {
             pill?.let { LaterPillView(it, model::editLater) }
+        }
+        val notice = model.notice
+        AnimatedVisibility(notice != null && pill == null, Modifier.align(Alignment.BottomCenter).padding(bottom = pillBottom),
+            enter = fadeIn(AppMotion.fast()), exit = fadeOut(AppMotion.fast())) {
+            notice?.let { NoticePill(it.text) }
         }
     }
 }
 
-/** Dezente Richtungsfarbe während der Bewegung (keine permanente Überdeckung). */
+/**
+ * Dezente Pille während des Wischens (Nutzerwunsch): „↑ Behalten“, „← Papierkorb“, „→ Später“. Ruhig oben über dem
+ * Medium, nur für Entscheidungen (nicht für „runter“). Kräftiger, sobald Loslassen entscheiden würde.
+ */
 @Composable
-private fun DirectionTint(model: FeedViewModel, modifier: Modifier) {
+private fun DirectionPill(model: FeedViewModel, modifier: Modifier) {
     val c = PM.colors
-    val d = model.lockedDirection ?: return
-    val (color, label, icon) = when (FeedIntent.of(d)) {
-        FeedIntent.KEEP -> Triple(c.keep, stringResource(R.string.dir_keep), Icons.Rounded.ArrowUpward)
-        FeedIntent.MARK_FOR_CLEANUP -> Triple(c.cleanup, stringResource(R.string.dir_trash), Icons.Rounded.Delete)
-        FeedIntent.LATER -> Triple(c.later, stringResource(R.string.dir_later), Icons.AutoMirrored.Rounded.ArrowForward)
-        FeedIntent.LATER_CUSTOM -> Triple(c.later, stringResource(R.string.dir_later_custom), Icons.Rounded.NorthEast)
-        FeedIntent.PREVIOUS -> Triple(c.textSecondary, stringResource(R.string.dir_back), Icons.Rounded.ArrowDownward)
+    val d = model.lockedDirection
+    val meaning = when (d?.let { FeedIntent.of(it) }) {
+        FeedIntent.KEEP -> Triple(Icons.Rounded.ArrowUpward, R.string.dir_keep, c.keep)
+        FeedIntent.MARK_FOR_CLEANUP -> Triple(GestureIcons.Left, R.string.dir_trash, c.cleanup)
+        FeedIntent.LATER -> Triple(GestureIcons.Right, R.string.dir_later, c.later)
+        else -> null
     }
-    Row(modifier.glassCapsule().padding(horizontal = AppSpacing.m, vertical = AppSpacing.xs).clearAndSetSemantics {},
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-        Icon(icon, null, tint = color)
-        Text(label, style = AppTypography.headline, color = color)
+    var last by remember { mutableStateOf(meaning) }
+    if (meaning != null) last = meaning
+    val ready = model.readyDirection != null
+    AnimatedVisibility(meaning != null, modifier, enter = fadeIn(AppMotion.fast()), exit = fadeOut(AppMotion.fast())) {
+        val (icon, label, tint) = last ?: return@AnimatedVisibility
+        Row(Modifier.alpha(if (ready) 1f else 0.8f).glassCapsule(elevation = 0.dp).padding(horizontal = AppSpacing.s, vertical = AppSpacing.xxs + 2.dp)
+            .testTag("feed.direction").clearAndSetSemantics {},
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xxs + 2.dp)) {
+            Icon(icon, null, tint = tint, modifier = Modifier.size(AppIconSize.small))
+            Text(stringResource(label), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = tint)
+        }
     }
 }
 
@@ -345,7 +512,7 @@ fun CompactActions(act: (FeedIntent) -> Unit) {
         b(Icons.Rounded.ArrowDownward, stringResource(R.string.act_previous), c.textSecondary, FeedIntent.PREVIOUS)
         b(Icons.Rounded.Delete, stringResource(R.string.act_trash), c.cleanup, FeedIntent.MARK_FOR_CLEANUP)
         b(Icons.Rounded.ArrowUpward, stringResource(R.string.act_keep_next), c.keep, FeedIntent.KEEP)
-        b(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.act_later), c.later, FeedIntent.LATER)
+        b(GestureIcons.Right, stringResource(R.string.act_later), c.later, FeedIntent.LATER)
         b(Icons.Rounded.CalendarMonth, stringResource(R.string.act_later_custom), c.later, FeedIntent.LATER_CUSTOM)
     }
 }
@@ -357,7 +524,7 @@ fun LaterPillView(pill: LaterPill, edit: () -> Unit) {
     val ctx = LocalContext.current
     Row(Modifier.glassCapsule().padding(horizontal = AppSpacing.m).testTag("later.pill"),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-        Icon(Icons.Rounded.History, null, tint = c.later)
+        Icon(Icons.Rounded.Schedule, null, tint = c.later)
         Text(LaterText.inInterval(ctx, pill.interval), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
         Box(Modifier.heightIn(min = AppSpacing.minTouch).clickable(onClick = edit).testTag("later.edit"), contentAlignment = Alignment.Center) {
             Text(stringResource(R.string.change), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.accent)
@@ -374,11 +541,8 @@ fun GestureHintOverlay() {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
             Hint(Icons.Rounded.ArrowUpward, stringResource(R.string.hint_up), stringResource(R.string.dir_keep), c.keep)
             Row(horizontalArrangement = Arrangement.spacedBy(AppSpacing.m), verticalAlignment = Alignment.CenterVertically) {
-                Hint(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.hint_left), stringResource(R.string.dir_trash), c.cleanup)
-                Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-                    Hint(Icons.Rounded.NorthEast, stringResource(R.string.hint_diag), stringResource(R.string.act_later_custom), c.later)
-                    Hint(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.hint_right), stringResource(R.string.dir_later), c.later)
-                }
+                Hint(GestureIcons.Left, stringResource(R.string.hint_left), stringResource(R.string.dir_trash), c.cleanup)
+                Hint(GestureIcons.Right, stringResource(R.string.hint_right), stringResource(R.string.dir_later), c.later)
             }
             Hint(Icons.Rounded.ArrowDownward, stringResource(R.string.hint_down), stringResource(R.string.dir_back), c.textSecondary)
         }
@@ -395,10 +559,14 @@ private fun Hint(icon: ImageVector, title: String, meaning: String, tint: Color)
     }
 }
 
+enum class SummaryUpsell { QUIET, STRONG }
+
 @Composable
-fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modifier, reviewBasket: () -> Unit, goBack: () -> Unit, done: () -> Unit) {
+fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modifier, reviewBasket: () -> Unit, goBack: () -> Unit, done: () -> Unit,
+                       upsell: SummaryUpsell? = null, allowance: AllowanceSnapshot? = null, openPro: () -> Unit = {}, ad: FeedAd? = null) {
     val c = PM.colors
-    Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(AppSpacing.pageMargin),
+    val scroll = rememberScrollState()
+    Column(modifier.fillMaxWidth().verticalScroll(scroll).padding(AppSpacing.pageMargin),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(AppSpacing.l)) {
         Icon(Icons.Rounded.Verified, null, tint = c.accent, modifier = Modifier.size(56.dp))
         Text(stringResource(R.string.summary_done), style = AppTypography.title, color = c.textPrimary)
@@ -413,17 +581,62 @@ fun SessionSummaryView(summary: SessionSummary, basketCount: Int, modifier: Modi
             }
             row(Icons.Rounded.ArrowUpward, stringResource(R.string.summary_kept), summary.kept, c.keep)
             row(Icons.Rounded.Delete, stringResource(R.string.summary_trash), summary.marked, c.cleanup)
-            row(Icons.AutoMirrored.Rounded.ArrowForward, stringResource(R.string.summary_later), summary.later, c.later)
+            row(GestureIcons.Right, stringResource(R.string.summary_later), summary.later, c.later)
         }
         if (basketCount > 0) {
             ProminentButton(stringResource(R.string.summary_view_basket, basketCount), fillWidth = true, large = true, onClick = reviewBasket)
             Text(stringResource(R.string.summary_basket_hint), style = AppTypography.caption, color = c.textSecondary, textAlign = TextAlign.Center)
+            // Limit früh zeigen (echte Zahl aus dem Ledger), bevor das Leeren daran scheitert.
+            val left = allowance?.available
+            if (upsell != null && left != null && left < LIMIT_SOON) LimitSoon(left, allowance.limit ?: 0, openPro)
+        }
+        when (upsell) {
+            SummaryUpsell.STRONG -> SurfaceCard(Modifier.testTag("summary.offer")) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                    Box(Modifier.size(44.dp).clip(RoundedCornerShape(AppRadii.small)).background(c.accent.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
+                        Icon(Icons.Rounded.WorkspacePremium, null, tint = c.accent, modifier = Modifier.size(AppIconSize.medium))
+                    }
+                    Text(stringResource(R.string.summary_offer_title), style = AppTypography.headline, color = c.textPrimary, modifier = Modifier.weight(1f))
+                }
+                Spacer(Modifier.size(AppSpacing.xs))
+                Text(stringResource(R.string.summary_offer_text), style = AppTypography.subheadline, color = c.textSecondary)
+                Spacer(Modifier.size(AppSpacing.s))
+                GlassButton(stringResource(R.string.pro_view), Modifier.testTag("summary.pro"), fillWidth = true, onClick = openPro)
+            }
+            SummaryUpsell.QUIET -> Column(Modifier.fillMaxWidth().testTag("summary.upsell"), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(pluralStringResource(R.plurals.summary_upsell_count, summary.marked, summary.marked) + " " + stringResource(R.string.summary_upsell),
+                    style = AppTypography.footnote, color = c.textSecondary, textAlign = TextAlign.Center)
+                PlainButton(stringResource(R.string.pro_view), Modifier.testTag("summary.pro"), onClick = openPro)
+            }
+            null -> Unit
         }
         GlassButton(stringResource(R.string.summary_last), onClick = goBack)
         GlassButton(stringResource(R.string.done), onClick = done)
+        // Anzeige ganz unten: die Zusammenfassung und ihre Knöpfe bleiben zuerst sichtbar.
+        if (ad != null) SummaryAd(ad, scroll, openPro, Modifier.appearOnce())
         Spacer(Modifier.size(AppSpacing.s))
     }
 }
 
 @Suppress("unused")
 private fun Modifier.dim(v: Boolean) = if (v) alpha(0.45f) else this
+
+/** Ab hier wird das Tageslimit vorab gezeigt („Heute noch 3 von 20 frei“). */
+const val LIMIT_SOON = 5
+
+@Composable
+fun LimitSoon(available: Int, limit: Int, openPro: () -> Unit) {
+    val c = PM.colors
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(AppRadii.small)).background(c.backgroundTint).padding(horizontal = AppSpacing.s).testTag("limit.soon"),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+        Text(stringResource(R.string.limit_soon, available, limit), style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold),
+            color = c.textPrimary, modifier = Modifier.weight(1f))
+        PlainButton(stringResource(R.string.limit_soon_pro), onClick = openPro)
+    }
+}
+
+/** Raster-Übersicht nur für Quellen mit fester Mitgliedermenge (nicht Papierkorb-/Serienlisten, nicht „wieder fällig“). */
+fun gridSupported(r: FeedRequest): Boolean = when (r.source) {
+    is FeedRequest.Source.Items, FeedRequest.Source.Due -> false
+    else -> true
+}

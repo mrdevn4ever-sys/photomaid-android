@@ -1,0 +1,59 @@
+PHOTOMAID – PRÜFBERICHT
+======================
+
+DATEN-/FORMATSTATUS: PASS
+Nicht mit einer Geräte- oder Release-Abnahme gleichzusetzen.
+
+Ausgangsexport: 557 Kennungen, davon 21 Plurals.
+Entfernt gemäß Unbenutzt-Markierung: 5 Kennungen.
+Ziel: 552 Kennungen = 522 Strings + 30 Plurals.
+Sprachen: 16.
+Kennung-Sprach-Kombinationen: 8.832.
+Einzelne Texte einschließlich aller Pluralformen: 9.672.
+Deutsche Einträge geändert: 230; unverändert: 322.
+Neue string→plurals-Umstellungen: 9.
+Neue Tageslimit-Formatargumente: 2.
+
+Ergebnisse
+----------
+JSON-Schema 2020-12: PASS
+Ressourcen, Platzhalter und Labelgruppen: PASS
+Java String.format: PASS
+  9672 Varianten × 19 Zahlenbeispiele
+  = 183.768 echte Formatierungen.
+  Java-Version: 21.0.11
+Integer-Pluralauswahl: 9120 Ressourcen/Mengen-Prüfungen.
+Babel-Gegenprüfung: 4912 Vergleiche, 0 Abweichungen.
+XML: 17 geparste Dateien, 9384 Ressourcen-Roundtrips.
+Längenheuristik: 39 visuell nachzuprüfende Varianten, keine nachgewiesenen Überläufe.
+
+PASS: JSON ohne doppelte Objektschlüssel
+PASS: 552 IDs je Sprache
+PASS: 16 Sprachfelder je ID
+PASS: 522 Strings und 30 Plurals
+PASS: vollständige Locale-spezifische Pluralformen
+PASS: keine leeren Übersetzungen
+PASS: gleiche nummerierte Tokens einschließlich Wiederholungen
+PASS: keine fehlerhaften Prozentzeichen
+PASS: de identisch zum deutschen Master
+PASS: gleiche feste Labels je Sprache
+PASS: geschützte Marken unverändert
+PASS: keine Soft-Hyphens oder unerwarteten Bidi-Steuerzeichen
+PASS: UTF-8/NFC
+PASS: keine fest codierten 20er-Limits
+
+Nicht durchgeführt
+------------------
+AAPT2-Compile, App-Build, Installation, Geräte-/Emulatorscreenshots, TalkBack,
+RTL-Gestenprüfung, unabhängige muttersprachliche Abnahme, rechtliche oder
+SDK-Datenschutzprüfung.
+
+Die Quelldateien und der Commit 0974248 wurden nicht in einem Repository geprüft.
+Das Paket wurde erstellt; Änderungen im Android-Projekt wurden nicht vorgenommen.
+
+Die numerischen Produktkonstanten 30 Minuten, einmal täglich, 2 Tage und das
+Filterbeispiel 500 MB wurden nicht neu entschieden. Die komplette Liste der
+übrig gebliebenen numerischen Literale steht in QA_BERICHT.json.
+
+Die vollständigen Testergebnisse, Mengenbeispiele und Grenzen der Prüfung stehen
+in QA_BERICHT.json. Die gezielte Codeübergabe steht in CODE_AENDERUNGEN.json.

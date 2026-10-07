@@ -1,37 +1,65 @@
 package app.photomaid.feature.today
 
-import androidx.compose.foundation.layout.Arrangement
-import app.photomaid.design.AppRadii
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.draw.clip
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.layout.Box
+import app.photomaid.design.GestureIcons
+import app.photomaid.design.coachTarget
+import app.photomaid.design.LocalReduceMotion
+import app.photomaid.design.RowDividerInset
+import app.photomaid.design.RowDivider
+import app.photomaid.design.RowStatus
+import app.photomaid.design.RowGroup
+import app.photomaid.design.ListRow
+import app.photomaid.design.AppControl
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material.icons.rounded.NewReleases
+import app.photomaid.core.progress.MonthKey
+import app.photomaid.design.MonthText
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.draw.shadow
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.Crossfade
+import androidx.compose.material.icons.rounded.WorkspacePremium
+import app.photomaid.core.capabilities.Capabilities
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Bookmark
-import androidx.compose.material.icons.rounded.Screenshot
-import androidx.compose.material.icons.rounded.Download
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.EventRepeat
-import androidx.compose.material.icons.rounded.FilterNone
-import androidx.compose.material.icons.rounded.Photo
 import androidx.compose.material.icons.rounded.PhotoLibrary
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Sync
-import androidx.compose.material.icons.rounded.Videocam
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,45 +70,60 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.photomaid.FeedRequest
 import app.photomaid.R
-import app.photomaid.core.later.ReviewQueues
-import app.photomaid.core.model.ReviewSessionID
 import app.photomaid.core.storage.DeviceCapacity
 import app.photomaid.design.AppBackground
+import app.photomaid.design.AppIconSize
+import app.photomaid.design.AppRadii
 import app.photomaid.design.AppSpacing
-import app.photomaid.design.readableWidth
-import androidx.compose.foundation.layout.wrapContentWidth
+import app.photomaid.design.AppStroke
 import app.photomaid.design.AppTypography
 import app.photomaid.design.GlassIconButton
 import app.photomaid.design.LargeTitleHeader
-import app.photomaid.design.MetricCard
 import app.photomaid.design.PM
+import app.photomaid.design.PlainButton
 import app.photomaid.design.ProminentButton
-import app.photomaid.design.RowDivider
 import app.photomaid.design.SizeText
-import app.photomaid.design.SourceRow
 import app.photomaid.design.SurfaceCard
-import app.photomaid.design.clickableRow
+import app.photomaid.design.readableWidth
 import app.photomaid.feature.common.DeviceStorage
-import app.photomaid.media.MediaCategory
+import app.photomaid.feature.quickaccess.QuickAccessSection
 import app.photomaid.media.PhotoAccess
+import app.photomaid.media.MediaAsset
 import app.photomaid.media.reviewableMedia
 import app.photomaid.navigation.LocalApp
 import app.photomaid.navigation.Nav
 import app.photomaid.navigation.Routes
-import app.photomaid.navigation.TabBarClearance
+import app.photomaid.navigation.TabBarEndSpacer
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/** Screen 1 – Heute: fortsetzbare Review-Session, echte Kennzahlen, Wieder-fällig-Hinweis. */
+/**
+ * Screen 1 – Heute. Beantwortet „Was kann ich jetzt tun?“: ein Hero zum Feed („Jetzt aufräumen“ bzw.
+ * „Weiter aufräumen“) mit den nächsten echten Medien, danach Wieder-fällig, eine kompakte Zeile Papierkorb/Später
+ * und zuletzt – bewusst leise – der Gerätespeicher. Kategorien und Werkzeuge liegen unter „Aufräumen“.
+ */
 @Composable
 fun TodayScreen(nav: Nav) {
     val app = LocalApp.current
@@ -89,50 +132,84 @@ fun TodayScreen(nav: Nav) {
     val access by app.photos.access.collectAsState()
     val token by app.photos.changeToken.collectAsState()
     val read by app.read.collectAsState()
-    val sources by app.sources.sources.collectAsState()
-    var counts by remember { mutableStateOf<Map<MediaCategory, Int>>(emptyMap()) }
-    var pending by remember { mutableStateOf<Int?>(null) }
+    var pending by remember { mutableStateOf<List<String>?>(null) }
+    // Eine Momentaufnahme für Hero UND Schnellzugriffe (keine zweite Mediathek-Abfrage je Kachel).
+    var snapshot by remember { mutableStateOf<List<MediaAsset>>(emptyList()) }
     var device by remember { mutableStateOf<DeviceCapacity?>(null) }
 
-    LaunchedEffect(token, access, read.basket.size, read.laterRecords.size) {
+    val settings by app.settings.collectAsState()
+    // „Weitermachen“ (zuletzt benutzter Monat) und „Neu seit dem letzten Aufräumen“ – echte offene Zahlen.
+    var continueOpen by remember { mutableStateOf(0) }
+    var newSince by remember { mutableStateOf(0) }
+    val continueMonth = MonthKey.parse(settings.continueMonth)
+    LaunchedEffect(token, access, read.basket.size, read.laterRecords.size, read.events.size, settings.continueMonth, settings.lastSessionEndMs) {
         withContext(Dispatchers.IO) {
             device = DeviceStorage.read(ctx)
-            counts = MediaCategory.entries.associateWith { app.photos.count(it) }
-            pending = if (!access.canRead) null else {
-                val refs = app.photos.reviewableMedia().map { it.reference }
-                ReviewQueues.normalQueue(refs, app.ledger.records(refs), ReviewSessionID(), app.today).size
-            }
+            val all = if (access.canRead) app.photos.reviewableMedia() else emptyList()
+            snapshot = all
+            val open = if (!access.canRead) null else app.pendingQueue(all).map { it.localIdentifier }
+            pending = open
+            val openSet = open.orEmpty().toSet()
+            val zone = java.time.ZoneId.systemDefault()
+            continueOpen = if (continueMonth == null) 0 else all.count { a -> a.id in openSet && a.creationDate?.let { MonthKey.of(it, zone) } == continueMonth }
+            val since = settings.lastSessionEndMs
+            newSince = if (since <= 0) 0 else all.count { a -> a.id in openSet && (a.dateAdded?.toEpochMilli() ?: 0) > since }
         }
     }
 
     AppBackground {
+        // Rhythmus: 24 dp zwischen Blöcken; Reihenfolge Handlung → Zustand → Einstiege → Info.
         Column(Modifier.fillMaxSize().wrapContentWidth().readableWidth().fillMaxWidth().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = AppSpacing.pageMargin),
-            verticalArrangement = Arrangement.spacedBy(AppSpacing.m)) {
-            LargeTitleHeader(stringResource(R.string.app_name), stringResource(R.string.today_subtitle)) {
+            verticalArrangement = Arrangement.spacedBy(AppSpacing.block)) {
+            // Begrüßung nach Tageszeit: weniger „Werkzeug“, mehr persönlich.
+            val hour = remember { java.time.LocalTime.now().hour }
+            val greeting = stringResource(when (hour) { in 5..10 -> R.string.today_greeting_morning; in 18..23, in 0..4 -> R.string.today_greeting_evening; else -> R.string.today_greeting_day })
+            LargeTitleHeader(stringResource(R.string.tab_today), eyebrow = greeting) {
                 GlassIconButton(Icons.Rounded.Settings, stringResource(R.string.settings), onClick = nav::openSettings)
             }
             if (!access.canRead) {
                 SurfaceCard {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
                         Icon(Icons.Rounded.PhotoLibrary, null, tint = c.accent)
-                        Text(stringResource(R.string.today_access_title), style = AppTypography.headline, color = c.textPrimary)
+                        Text(stringResource(if (access == PhotoAccess.DENIED) R.string.today_access_denied_title else R.string.today_access_title),
+                            style = AppTypography.headline, color = c.textPrimary)
                     }
                     Spacer(Modifier.height(AppSpacing.s))
                     Text(stringResource(if (access == PhotoAccess.DENIED) R.string.today_access_denied else R.string.today_access_default),
                         style = AppTypography.subheadline, color = c.textSecondary)
                     Spacer(Modifier.height(AppSpacing.s))
-                    ProminentButton(stringResource(R.string.learn_more), onClick = nav::openPrivacy)
+                    // Was kann ich tun? Direkt zur Zugriffsseite (dort Systemdialog bzw. Android-Einstellungen).
+                    ProminentButton(stringResource(if (access == PhotoAccess.DENIED) R.string.today_limited_action else R.string.privacy_allow),
+                        fillWidth = true, large = true, onClick = nav::openPrivacy)
                 }
             }
-            if (access.canRead) ReviewEntryCard(pending, hasHistory = read.events.isNotEmpty()) {
+            if (access.canRead) ReviewHero(pending, hasHistory = read.events.isNotEmpty(), showGestures = !settings.gestureHintSeen) {
                 nav.openFeed(FeedRequest(FeedRequest.Source.AllMedia))
             }
-            if (app.dueCount > 0) {
-                SurfaceCard(onClick = { nav.openFeed(FeedRequest(FeedRequest.Source.Due)) }) {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
-                        Icon(Icons.Rounded.EventRepeat, null, tint = c.accent)
-                        Text(pluralStringResource(R.plurals.today_due, app.dueCount, app.dueCount), style = AppTypography.headline, color = c.textPrimary)
+            if (access.canRead && ((continueMonth != null && continueOpen > 0) || newSince > 0)) RowGroup(Modifier.testTag("today.progress")) {
+                if (continueMonth != null && continueOpen > 0) {
+                    ListRow(Icons.Rounded.CalendarMonth, stringResource(R.string.today_continue_month, MonthText.title(continueMonth)), Modifier.testTag("today.continue"),
+                        tint = c.earth, tile = c.earth.copy(alpha = 0.13f), subtitle = pluralStringResource(R.plurals.hub_pending, continueOpen, continueOpen)) {
+                        nav.openFeed(FeedRequest(FeedRequest.Source.Month(continueMonth)))
                     }
+                    if (newSince > 0) RowDivider(RowDividerInset)
+                }
+                if (newSince > 0) ListRow(Icons.Rounded.NewReleases, pluralStringResource(R.plurals.today_new_since, newSince, newSince), Modifier.testTag("today.new"),
+                    tint = c.accent, tile = c.accent.copy(alpha = 0.12f), subtitle = stringResource(R.string.today_new_since_sub)) {
+                    nav.openFeed(FeedRequest(FeedRequest.Source.NewSince(settings.lastSessionEndMs)))
+                }
+            }
+            if (access == PhotoAccess.LIMITED) {
+                // Nachgeordnet und ruhig: der Feed funktioniert mit den freigegebenen Medien.
+                SurfaceCard(Modifier.testTag("today.limited"), padding = PaddingValues(horizontal = AppSpacing.m, vertical = AppSpacing.s)) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                        Icon(Icons.Rounded.PhotoLibrary, null, tint = c.accent)
+                        Column(Modifier.weight(1f)) {
+                            Text(stringResource(R.string.today_limited_title), style = AppTypography.subheadline.copy(fontWeight = FontWeight.SemiBold), color = c.textPrimary)
+                            Text(stringResource(R.string.today_limited_text), style = AppTypography.caption, color = c.textSecondary)
+                        }
+                    }
+                    PlainButton(stringResource(R.string.today_limited_action), onClick = nav::openPrivacy)
                 }
             }
             if (read.reconciliationNeeded.isNotEmpty()) {
@@ -143,71 +220,142 @@ fun TodayScreen(nav: Nav) {
                     }
                 }
             }
-            device?.let { d ->
-                MetricCard(SizeText.bytes(d.usedBytes), stringResource(R.string.storage_used_of, SizeText.bytes(d.totalBytes)),
-                    progress = if (d.totalBytes > 0) d.usedBytes.toFloat() / d.totalBytes else null,
-                    footnote = stringResource(R.string.storage_device_footnote))
-            }
-            SurfaceCard {
-                @Composable
-                fun cat(cat: MediaCategory, icon: androidx.compose.ui.graphics.vector.ImageVector, title: Int) {
-                    val enabled = access.canRead
-                    SourceRow(icon, c.accent, stringResource(title), Modifier.alpha(if (enabled) 1f else 0.45f)
-                        .then(if (enabled) Modifier.clickableRow { nav.openFeed(FeedRequest(FeedRequest.Source.Category(cat))) } else Modifier),
-                        value = counts[cat]?.toString(), valueDescription = counts[cat]?.let { pluralStringResource(R.plurals.items_count, it, it) })
+            // Feste Gruppe: was im Papierkorb liegt, was zurückgestellt ist, was wieder dran ist. Echte Zahlen, 0 leise.
+            RowGroup(Modifier.testTag("today.status").coachTarget("today.status")) {
+                val basketDesc = pluralStringResource(R.plurals.items_count, read.basket.size, read.basket.size)
+                val laterDesc = pluralStringResource(R.plurals.items_count, read.laterRecords.size, read.laterRecords.size)
+                val basket = stringResource(R.string.basket); val later = stringResource(R.string.later)
+                if (app.dueCount > 0) {
+                    ListRow(Icons.Rounded.EventRepeat, pluralStringResource(R.plurals.today_due, app.dueCount, app.dueCount), Modifier.testTag("today.due"),
+                        tint = c.later, tile = c.later.copy(alpha = 0.12f), titleColor = c.textPrimary) { nav.openFeed(FeedRequest(FeedRequest.Source.Due)) }
+                    RowDivider(RowDividerInset)
                 }
-                cat(MediaCategory.PHOTOS, Icons.Rounded.Photo, R.string.cat_photos); RowDivider()
-                cat(MediaCategory.VIDEOS, Icons.Rounded.Videocam, R.string.cat_videos); RowDivider()
-                cat(MediaCategory.SCREENSHOTS, Icons.Rounded.Screenshot, R.string.cat_screenshots); RowDivider()
-                SourceRow(Icons.Rounded.Download, c.accent, stringResource(if (app.sources.downloadsSource == null) R.string.files else R.string.downloads),
-                    Modifier.clickableRow { nav.push(Routes.FILES) },
-                    subtitle = stringResource(if (sources.isEmpty()) R.string.choose_folder else R.string.connected_sources_short))
-                RowDivider()
-                SourceRow(Icons.Rounded.FilterNone, c.indigo, stringResource(R.string.duplicates), Modifier.clickableRow { nav.push(Routes.DUPLICATES) },
-                    subtitle = stringResource(R.string.duplicates_subtitle_today))
-                RowDivider()
-                SourceRow(Icons.Rounded.Bookmark, c.later, stringResource(R.string.later), Modifier.clickableRow { nav.push(Routes.LATER) },
-                    value = read.laterRecords.size.toString(),
-                    valueDescription = pluralStringResource(R.plurals.items_count, read.laterRecords.size, read.laterRecords.size))
+                ListRow(Icons.Rounded.Delete, basket, Modifier.testTag("today.basket"), tint = c.cleanup, tile = c.cleanup.copy(alpha = 0.12f),
+                    status = RowStatus.Count(read.basket.size), description = "$basket, $basketDesc") { nav.push(Routes.BASKET) }
+                RowDivider(RowDividerInset)
+                ListRow(Icons.Rounded.Schedule, later, Modifier.testTag("today.later"), tint = c.later, tile = c.later.copy(alpha = 0.12f),
+                    status = RowStatus.Count(read.laterRecords.size), description = "$later, $laterDesc") { nav.push(Routes.LATER) }
             }
-            Spacer(Modifier.height(TabBarClearance))
+            // Schnellzugriffe: gefilterte Einstiege in denselben Feed; neu berechnet bei Mediathek- oder Entscheidungsänderung.
+            if (access.canRead) QuickAccessSection(nav, snapshot, pending?.toSet())
+            // Leiser Pro-Hinweis: nur Free, erst ab dem zweiten Nutzungstag – dieselbe Zeile wie alle anderen, kein Banner.
+            val firstDay = settings.firstSeenDay
+            if (app.capabilities.tier == Capabilities.Tier.FREE && firstDay != null && app.today > firstDay) RowGroup {
+                ListRow(Icons.Rounded.WorkspacePremium, stringResource(R.string.today_pro_title), Modifier.testTag("today.pro"),
+                    subtitle = stringResource(R.string.today_pro_text), onClick = nav::openPro)
+            }
+            device?.let { d -> StorageLine(d) { nav.push(Routes.STORAGE) } }
+            TabBarEndSpacer(minus = AppSpacing.block)
         }
     }
 }
 
+/** Gerätespeicher: bewusst leise – keine Karte, nur eine Zeile + dünner Balken; öffnet die Speicherübersicht. */
+@Composable
+private fun StorageLine(d: DeviceCapacity, onClick: () -> Unit) {
+    val c = PM.colors
+    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(AppRadii.small)).clickable(role = Role.Button, onClick = onClick)
+        .padding(horizontal = AppSpacing.xxs, vertical = AppSpacing.xs).testTag("today.storage").semantics(mergeDescendants = true) {}) {
+        val title = stringResource(R.string.today_storage_title)
+        val value = stringResource(R.string.today_storage_value, SizeText.bytes(d.usedBytes), SizeText.bytes(d.totalBytes))
+        // Große Schrift: untereinander statt nebeneinander (sonst bricht der Titel zeichenweise um).
+        if (LocalDensity.current.fontScale >= 1.3f) {
+            Text(title, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary)
+            Text(value, style = AppTypography.footnote, color = c.textSecondary)
+        } else Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+            Text(title, style = AppTypography.footnote.copy(fontWeight = FontWeight.SemiBold), color = c.textSecondary, maxLines = 1,
+                overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+            Text(value, style = AppTypography.footnote, color = c.textSecondary, maxLines = 1)
+        }
+        if (d.totalBytes > 0) {
+            Spacer(Modifier.height(AppSpacing.xs))
+            LinearProgressIndicator(progress = { (d.usedBytes.toFloat() / d.totalBytes).coerceIn(0f, 1f) },
+                modifier = Modifier.fillMaxWidth().height(AppStroke.progress).clip(CircleShape),
+                color = c.textSecondary.copy(alpha = 0.55f), trackColor = c.backgroundTint, strokeCap = StrokeCap.Round, gapSize = 0.dp, drawStopIndicator = {})
+        }
+    }
+}
 
 /**
- * Haupteinstieg in die Prüfung – stärker gewichtet als Speicher und Kategorien.
- * Zustand: neue Prüfung, Fortsetzung (es gibt schon Entscheidungen) oder nichts offen.
+ * Hero: der Feed ist das Produkt. Die nächsten echten Medien randlos oben in der Karte (1–3, nie leere Kacheln),
+ * darunter die Zahl offener Medien und EIN großer CTA. Zustände: neu („Jetzt aufräumen“), Fortsetzung („Weiter
+ * aufräumen“), alles geprüft, Laden (ruhige Fläche statt Spinner). Einzige Karte mit Schatten.
  */
 @Composable
-private fun ReviewEntryCard(pending: Int?, hasHistory: Boolean, start: () -> Unit) {
+private fun ReviewHero(pending: List<String>?, hasHistory: Boolean, showGestures: Boolean, start: () -> Unit) {
     val c = PM.colors
-    SurfaceCard(Modifier.testTag("today.review")) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
-            Box(Modifier.size(48.dp).clip(RoundedCornerShape(AppRadii.small)).background(c.accent.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
-                Icon(if (pending == 0) Icons.Rounded.CheckCircle else Icons.Rounded.PhotoLibrary, null, tint = c.accent, modifier = Modifier.size(28.dp))
+    val shape = RoundedCornerShape(AppRadii.hero)
+    Column(Modifier.fillMaxWidth().shadow(12.dp, shape, clip = false, ambientColor = Color(0x14000000), spotColor = Color(0x14000000))
+        .clip(shape).background(c.surface, shape).border(1.dp, c.surfaceStroke, shape).testTag("today.review").coachTarget("today.review")) {
+        when {
+            pending == null -> {
+                // Laden: ruhige Flächen in der späteren Geometrie (kein Spinner, kein Springen).
+                Box(Modifier.fillMaxWidth().height(HeroStripHeight).background(c.backgroundTint))
+                Column(Modifier.padding(AppSpacing.m), verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)) {
+                    Box(Modifier.fillMaxWidth(0.6f).height(22.dp).clip(RoundedCornerShape(6.dp)).background(c.backgroundTint))
+                    Box(Modifier.fillMaxWidth(0.8f).height(14.dp).clip(RoundedCornerShape(6.dp)).background(c.backgroundTint))
+                    Spacer(Modifier.height(AppSpacing.xs))
+                    Box(Modifier.fillMaxWidth().height(AppControl.largeButton).clip(CircleShape).background(c.backgroundTint))
+                }
             }
-            Column(Modifier.weight(1f).semantics(mergeDescendants = true) {}, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                when {
-                    pending == null -> CircularProgressIndicator(Modifier.size(24.dp))
-                    pending == 0 -> {
-                        Text(stringResource(R.string.today_done_title), style = AppTypography.title, color = c.textPrimary)
-                        Text(stringResource(R.string.today_done_subtitle), style = AppTypography.subheadline, color = c.textSecondary)
+            pending.isEmpty() -> Row(Modifier.padding(AppSpacing.m), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
+                Box(Modifier.size(48.dp).clip(RoundedCornerShape(AppRadii.small)).background(c.success.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
+                    Icon(Icons.Rounded.CheckCircle, null, tint = c.success, modifier = Modifier.size(AppIconSize.medium))
+                }
+                Column(Modifier.weight(1f).semantics(mergeDescendants = true) {}) {
+                    Text(stringResource(R.string.today_done_title), style = AppTypography.title, color = c.textPrimary)
+                    Text(stringResource(R.string.today_done_subtitle), style = AppTypography.subheadline, color = c.textSecondary)
+                }
+            }
+            else -> {
+                // Randlos: 1 Bild = volle Breite, 2 = Hälften, 3 = Drittel; 2 dp Fugen.
+                Row(Modifier.fillMaxWidth().height(HeroStripHeight).clearAndSetSemantics {}, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                    pending.take(3).forEachIndexed { i, uri -> HeroThumb(i, uri, Modifier.weight(1f).fillMaxHeight()) }
+                }
+                Column(Modifier.padding(start = AppSpacing.m, end = AppSpacing.m, top = AppSpacing.m, bottom = AppSpacing.m)) {
+                    Column(Modifier.semantics(mergeDescendants = true) {}, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(pluralStringResource(R.plurals.today_pending_count, pending.size, pending.size), style = AppTypography.title, color = c.textPrimary)
+                        Text(stringResource(if (hasHistory) R.string.today_continue_sub else R.string.today_start_sub), style = AppTypography.subheadline, color = c.textSecondary)
                     }
-                    else -> {
-                        Text(stringResource(if (hasHistory) R.string.today_continue_title else R.string.today_start_title),
-                            style = AppTypography.title, color = c.textPrimary)
-                        Text(pluralStringResource(R.plurals.today_pending_count, pending, pending), style = AppTypography.subheadline, color = c.textSecondary)
+                    Spacer(Modifier.height(AppSpacing.s))
+                    val hint = stringResource(R.string.today_review_hint)
+                    ProminentButton(stringResource(if (hasHistory) R.string.today_continue_cta else R.string.today_start_cta), fillWidth = true, large = true,
+                        modifier = Modifier.testTag("today.cta").semantics { onClick(label = hint) { start(); true } }, onClick = start)
+                    // Gesten nur für Neulinge (bis die Gestenhilfe im Feed gesehen wurde) – Symbole statt Pfeilzeichen.
+                    if (showGestures) {
+                        Spacer(Modifier.height(AppSpacing.xs))
+                        Row(Modifier.fillMaxWidth().clearAndSetSemantics {}.testTag("today.gestures"), horizontalArrangement = Arrangement.spacedBy(AppSpacing.m, Alignment.CenterHorizontally),
+                            verticalAlignment = Alignment.CenterVertically) {
+                            GestureChip(Icons.Rounded.ArrowUpward, stringResource(R.string.dir_keep), c.keep)
+                            GestureChip(GestureIcons.Left, stringResource(R.string.dir_trash), c.cleanup)
+                            GestureChip(GestureIcons.Right, stringResource(R.string.dir_later), c.later)
+                        }
                     }
                 }
             }
         }
-        if (pending != null && pending > 0) {
-            Spacer(Modifier.height(AppSpacing.m))
-            val hint = stringResource(R.string.today_review_hint)
-            ProminentButton(stringResource(if (hasHistory) R.string.today_continue_cta else R.string.today_start_cta), fillWidth = true, large = true,
-                modifier = Modifier.semantics { onClick(label = hint) { start(); true } }, onClick = start)
+    }
+}
+
+private val HeroStripHeight = 168.dp
+
+@Composable
+private fun GestureChip(icon: ImageVector, label: String, tint: Color) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        Icon(icon, null, tint = tint, modifier = Modifier.size(16.dp))
+        Text(label, style = AppTypography.footnote, color = PM.colors.textSecondary)
+    }
+}
+
+/** Vorschaubild der Hero; wechselt nach einer Entscheidung weich zum nächsten offenen Medium. */
+@Composable
+private fun HeroThumb(slot: Int, uri: String, modifier: Modifier) {
+    val px = with(LocalDensity.current) { 180.dp.roundToPx() }
+    val reduce = LocalReduceMotion.current
+    Box(modifier.background(PM.colors.backgroundTint)) {
+        Crossfade(uri, animationSpec = if (reduce) snap() else tween(200), label = "hero$slot") { u ->
+            AsyncImage(ImageRequest.Builder(LocalContext.current).data(android.net.Uri.parse(u)).size(px, px).memoryCacheKey("hero:$u").build(),
+                contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         }
     }
 }

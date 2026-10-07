@@ -21,6 +21,12 @@ enum class CleanupOperationKind {
 
     /** `DocumentsContract.deleteDocument` nach eigener, deutlicher Bestätigung. Kein Undo. */
     FILE_DELETE_PERMANENTLY,
+
+    /**
+     * `MediaStore.createDeleteRequest`: nur, wenn der Nutzer „Endgültig löschen“ in den Einstellungen einschaltet
+     * (Standard aus). Das System bestätigt; danach gibt es kein Zurück (nicht im Android-Papierkorb).
+     */
+    PHOTO_LIBRARY_DELETE_PERMANENTLY,
 }
 
 @Serializable
@@ -96,7 +102,7 @@ sealed class CleanupError(message: String) : Exception(message) {
     data class PersistenceFailed(val reason: String) : CleanupError(reason)
 }
 
-/** Tageskontingent für bestätigte Bereinigungen (Free: 15 pro lokalem Kalendertag). */
+/** Tageskontingent für bestätigte Bereinigungen (Free: 20 pro lokalem Kalendertag). */
 @Serializable
 data class DayUsage(
     val confirmed: Int = 0,
