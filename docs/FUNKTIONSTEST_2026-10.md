@@ -5,7 +5,7 @@ Grundlage: `docs/FUNKTIONS_PRUEFPLAN_2026-10.md` (jede ID dort hat hier eine Zei
 Prüfstatus: **PASS / FAIL / NOT RUN / BLOCKED**. Alles hier läuft automatisch auf der JVM (Robolectric). Das ist keine
 Geräteabnahme: was nur echte Hardware zeigt, steht als **NOT RUN (Gerät)** in der Restliste.
 
-Gesamtlauf: NOT RUN (läuft, Zahlen folgen)
+Gesamtlauf (Stand `53d8ced`): Core **227/227 PASS** · App **567/567 PASS** · Lint **0 Fehler** · `assemblePerf` PASS. APK `PhotoMaid-af55578.apk` (perf, SHA-256 `697684a9…3347`, Zertifikat `c408b7d4…`). Geräteprüfung: NOT RUN.
 
 ## 1. Was neu ist
 
@@ -23,7 +23,8 @@ Gesamtlauf: NOT RUN (läuft, Zahlen folgen)
 | Nr. | Fehler | Folge für Nutzer | Behebung | Status |
 |---|---|---|---|---|
 | B1 | **„Standort entfernen“ kodierte JPEGs neu.** Der verlustfreie Weg (Bytes kopieren, nur EXIF ändern) griff nur, wenn das Foto zusätzlich gedreht wurde. Ohne Drehung lief jedes Foto durch die normale Neukodierung. | Kopie leicht schlechter und anders groß als nötig, obwohl nur der Standort weg sollte | `ImageEditEngine.export`: der verlustfreie Weg gilt jetzt auch, wenn das Rezept nichts am Bild ändert (`isIdentity`). Neuer Test sichert bitgleiche Pixel. | PASS |
-| B2 | `FeedAdsTest.nextCardAfterSevenMoreDecisions` lief in der Gesamtsuite einmal in die 30-s-Grenze, allein 3/3 PASS | keine (nur Testlast) | Wartezeit 60 s wie bei `MonetizationTest` | PASS |
+| B2 | `FeedAdsTest.nextCardAfterSevenMoreDecisions` und `PremiumPassTest.gestureHintShownOnFirstFeedOnly` liefen in der Gesamtsuite je einmal in die 30-s-Grenze, allein PASS | keine (nur Testlast) | Wartezeit 60 s wie bei `MonetizationTest` | PASS |
+| B4 | `G4Test` suchte noch „Medien endgültig löschen“; der Text heißt jetzt „Elemente endgültig löschen“ (T2) | keine (Testtext veraltet) | Test angepasst | PASS |
 | B3 | Tab-Leiste hatte keine Test-Kennungen | keine | `apptab.<TAB>` je Tab (nur Semantik) | PASS |
 
 Sonst hat kein Test einen Fehler der App gezeigt.
