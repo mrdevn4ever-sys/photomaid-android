@@ -7,6 +7,8 @@ Geräteabnahme: was nur echte Hardware zeigt, steht als **NOT RUN (Gerät)** in 
 
 Gesamtlauf (Stand `53d8ced`): Core **227/227 PASS** · App **567/567 PASS** · Lint **0 Fehler** · `assemblePerf` PASS. APK `PhotoMaid-af55578.apk` (perf, SHA-256 `697684a9…3347`, Zertifikat `c408b7d4…`). Geräteprüfung: NOT RUN.
 
+Gesamtlauf Paket 5 (Stand `9286c6c`, 2026-10-08): Core **237/237 PASS** · App **588/588 PASS** · Lint **0 Fehler** · `assemblePerf` PASS. APK `PhotoMaid-9286c6c.apk` (perf, SHA-256 `336827d3…5c49b`, Zertifikat `c408b7d4…`). Geräteprüfung: NOT RUN.
+
 ## 1. Was neu ist
 
 | Neu | Was es prüft | Ergebnis |
