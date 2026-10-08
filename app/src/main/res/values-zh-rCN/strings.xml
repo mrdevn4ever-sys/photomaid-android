@@ -1580,4 +1580,166 @@
     <string name="tour_history_text">在这里查看你保留、挑出或留到稍后的内容。任何决定都可以在这里更改。</string>
     <string name="tour_settings_title">设置与帮助</string>
     <string name="tour_settings_text">按你的喜好设置 PhotoMaid，并找到答案。你可以随时重新查看这个导览。</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">归档</string>
+    <string name="archive_studio_sub">复制到 SD 卡或 U 盘，并检查每份副本</string>
+    <string name="archive_pick">要复制什么？</string>
+    <string name="archive_running">正在复制并检查…</string>
+    <string name="archive_total_size">共计：%1$s</string>
+    <string name="archive_target">目标位置</string>
+    <string name="archive_target_none">尚未选择文件夹</string>
+    <string name="archive_choose">选择文件夹</string>
+    <string name="archive_choose_other">选择其他文件夹</string>
+    <string name="archive_kind_removable">SD 卡或 U 盘——独立的存储设备。</string>
+    <string name="archive_kind_device">此文件夹与照片位于同一存储空间。手机丢失或损坏时，那里的第二份副本帮不上忙。</string>
+    <string name="archive_kind_provider">此文件夹属于另一个应用，例如在线存储。文件留在手机上还是上传到网上，由该应用决定。</string>
+    <string name="archive_free">目标位置可用空间：%1$s</string>
+    <string name="archive_free_unknown">目标位置可用空间：未知</string>
+    <string name="archive_no_space">空间不足：需要 %1$s，可用 %2$s。</string>
+    <string name="archive_options">选项</string>
+    <string name="archive_by_month">按年和月建文件夹</string>
+    <string name="archive_write_list">同时保存核对清单</string>
+    <string name="archive_write_list_note">一张表格，列出每个文件的名称、日期、大小和校验和，以及你的相册、标签和备注。</string>
+    <string name="archive_step_verify">随后会重新读取每份副本，并与原件逐字节比对。</string>
+    <string name="archive_step_only_verified">只有检查过的副本才算数。如有不一致，会立即删除该副本。</string>
+    <string name="archive_step_originals">你的原件保持不变。</string>
+    <string name="archive_start">复制并检查</string>
+    <string name="archive_failed">复制意外停止。结果中会显示已检查的内容。</string>
+    <string name="archive_last_interrupted">上次操作被中断。已检查：%1$d / %2$d。</string>
+    <string name="archive_show_result">查看结果</string>
+    <string name="archive_result_title">结果</string>
+    <string name="archive_verified_bytes">已检查：%1$s</string>
+    <string name="archive_list_saved">已保存核对清单：%1$s</string>
+    <string name="archive_meaning">“已检查”表示副本与原件逐字节一致。存储设备能用多久，谁也无法检查——重要内容请保存在两个地方。</string>
+    <string name="archive_files">文件</string>
+    <string name="archive_status_verified">已检查</string>
+    <string name="archive_status_already">已存在且相同</string>
+    <string name="archive_status_failed">失败</string>
+    <string name="archive_status_notdone">未复制</string>
+    <string name="archive_reason_read">无法读取原件</string>
+    <string name="archive_reason_write">目标位置拒绝保存（已满、写保护，或文件对该存储来说太大）</string>
+    <string name="archive_reason_mismatch">副本不一致——已删除</string>
+    <string name="archive_reason_cancelled">已取消</string>
+    <string name="archive_reason_interrupted">已中断——不完整的副本已删除</string>
+    <string name="archive_reason_space">目标位置已无空间</string>
+    <string name="archive_cleanup_button">将原件移到回收站…</string>
+    <string name="archive_cleanup_text">这些照片和视频现在在“%1$s”上有经过检查的副本。它们只会进入 PhotoMaid 回收站。在你清空回收站且 Android 再次确认之前，不会删除任何内容。</string>
+    <string name="archive_cleanup_action">移到回收站</string>
+    <string name="archive_open_basket">打开回收站</string>
+    <string name="archive_no_cleanup_device">副本与照片位于同一存储空间，因此 PhotoMaid 不会在此建议移除原件。</string>
+    <string name="archive_no_cleanup_provider">副本在另一个应用中。PhotoMaid 无法判断它们在那里是否安全，因此不会建议移除原件。</string>
+    <string name="archive_undated">无日期</string>
+    <string name="archive_list_file">PhotoMaid 核对清单 %1$s.csv</string>
+    <string name="archive_col_folder">文件夹</string>
+    <string name="archive_col_name">名称</string>
+    <string name="archive_col_taken">拍摄时间</string>
+    <string name="archive_col_bytes">字节</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">相册</string>
+    <string name="archive_col_tags">标签</string>
+    <string name="archive_col_note">备注</string>
+    <string name="backup_title">备份与恢复</string>
+    <string name="backup_save_header">备份</string>
+    <string name="backup_save_text">将你的 PhotoMaid 数据保存到一个小文件中：决定、相册、标签、备注、选择篮、隐藏项、设置、工作流程和预设。不包含照片。</string>
+    <string name="backup_contains">包含：%1$s</string>
+    <string name="backup_privacy">该文件包含文件名、标签和备注。只保存在你想要的位置，例如 U 盘。</string>
+    <string name="backup_save_button">保存备份…</string>
+    <string name="backup_file_name">PhotoMaid 备份 %1$s.json</string>
+    <string name="backup_saved">备份已保存。</string>
+    <string name="backup_save_failed">无法保存备份。</string>
+    <string name="backup_restore_header">恢复</string>
+    <string name="backup_restore_text">导入一份备份，例如在新手机上。照片会通过名称、大小和拍摄时间重新找到。此处已做出的决定或已输入的内容保持不变。</string>
+    <string name="backup_open_button">打开备份…</string>
+    <string name="backup_not_backup">此文件不是 PhotoMaid 备份。</string>
+    <string name="backup_too_new">此备份来自更新版本的 PhotoMaid。请先更新 PhotoMaid。</string>
+    <string name="backup_unreadable">无法读取该文件。</string>
+    <string name="backup_from">%1$s 的备份</string>
+    <string name="backup_step_settings">设置会被沿用（“永久删除”除外）；工作流程、预设和你的合集会被添加。</string>
+    <string name="backup_missing_note">这些照片和视频不在此设备上（或无法明确匹配）。不会为它们导入任何内容。</string>
+    <string name="backup_missing_show">显示列表</string>
+    <string name="backup_missing_hide">隐藏列表</string>
+    <string name="backup_nothing">此备份中没有此处缺少的内容。</string>
+    <string name="backup_apply">导入</string>
+    <string name="backup_done">已导入</string>
+    <plurals name="archive_step_copy">
+        <item quantity="other">将把 %1$d 个文件复制到“%2$s”。</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="other">已复制并检查 %1$d 个</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="other">%1$d 个已存在</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="other">%1$d 个失败</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="other">%1$d 个未复制</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="other">将 %1$d 个原件移到 PhotoMaid 回收站？</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="other">%1$d 个收藏保持不变（保护收藏）。</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="other">%1$d 个原件现已在 PhotoMaid 回收站中。</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="other">%1$d 个决定</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="other">%1$d 个相册</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="other">%1$d 个带标签</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="other">%1$d 条备注</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="other">选择篮中 %1$d 个</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="other">%1$d 个已隐藏</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="other">%1$d 个工作流程</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="other">%1$d 个预设</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="other">%1$d 个自定义合集</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="other">将导入 %1$d 个决定。</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="other">%1$d 个已在此处做出决定，保持不变。</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="other">%1$d 张照片和视频的标签。</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="other">%1$d 条备注（已有备注保留）。</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="other">%1$d 个会放入选择篮。</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="other">%1$d 个会在 PhotoMaid 中隐藏。</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="other">%1$d 个未找到</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="other">%1$d 个无法导入。</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="other">将新建 %1$d 个相册。</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="other">将补充 %1$d 个已有相册。</item>
+    </plurals>
 </resources>

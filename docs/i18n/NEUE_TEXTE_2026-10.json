@@ -15209,6 +15209,1446 @@
    "tr": "Fotoğrafların cihazında kalır",
    "uk": "Фото лишаються на пристрої",
    "zh": "照片只保存在你的设备上"
+  },
+  "archive_title": {
+   "en": "Archive",
+   "de": "Auslagern",
+   "ar": "أرشفة",
+   "es": "Archivar",
+   "fr": "Archiver",
+   "it": "Archivia",
+   "ja": "アーカイブ",
+   "ko": "보관하기",
+   "nl": "Archiveren",
+   "pl": "Archiwizuj",
+   "pt": "Arquivar",
+   "ro": "Arhivează",
+   "ru": "Архивировать",
+   "tr": "Arşivle",
+   "uk": "Архівувати",
+   "zh": "归档"
+  },
+  "archive_studio_sub": {
+   "en": "Copy to an SD card or USB drive and check every copy",
+   "de": "Auf SD-Karte oder USB-Stick kopieren und jede Kopie prüfen",
+   "ar": "انسخ إلى بطاقة SD أو ذاكرة USB وتحقق من كل نسخة",
+   "es": "Copia a una tarjeta SD o memoria USB y comprueba cada copia",
+   "fr": "Copier sur une carte SD ou une clé USB et vérifier chaque copie",
+   "it": "Copia su scheda SD o chiavetta USB e controlla ogni copia",
+   "ja": "SDカードやUSBメモリにコピーし、すべてのコピーを確認",
+   "ko": "SD 카드나 USB에 복사하고 모든 사본을 확인해요",
+   "nl": "Kopiëren naar een SD-kaart of USB-stick en elke kopie controleren",
+   "pl": "Skopiuj na kartę SD lub pendrive i sprawdź każdą kopię",
+   "pt": "Copiar para um cartão SD ou pen USB e verificar cada cópia",
+   "ro": "Copiază pe card SD sau stick USB și verifică fiecare copie",
+   "ru": "Скопировать на SD-карту или USB-накопитель и проверить каждую копию",
+   "tr": "SD karta veya USB belleğe kopyala ve her kopyayı kontrol et",
+   "uk": "Скопіювати на SD-картку чи USB-накопичувач і перевірити кожну копію",
+   "zh": "复制到 SD 卡或 U 盘，并检查每份副本"
+  },
+  "archive_pick": {
+   "en": "What should be copied?",
+   "de": "Was soll kopiert werden?",
+   "ar": "ما الذي تريد نسخه؟",
+   "es": "¿Qué quieres copiar?",
+   "fr": "Que faut-il copier ?",
+   "it": "Cosa vuoi copiare?",
+   "ja": "何をコピーしますか？",
+   "ko": "무엇을 복사할까요?",
+   "nl": "Wat moet er worden gekopieerd?",
+   "pl": "Co skopiować?",
+   "pt": "O que quer copiar?",
+   "ro": "Ce vrei să copiezi?",
+   "ru": "Что скопировать?",
+   "tr": "Ne kopyalansın?",
+   "uk": "Що скопіювати?",
+   "zh": "要复制什么？"
+  },
+  "archive_running": {
+   "en": "Copying and checking …",
+   "de": "Wird kopiert und geprüft …",
+   "ar": "جارٍ النسخ والتحقق …",
+   "es": "Copiando y comprobando…",
+   "fr": "Copie et vérification…",
+   "it": "Copia e controllo in corso…",
+   "ja": "コピーして確認しています…",
+   "ko": "복사하고 확인하는 중…",
+   "nl": "Bezig met kopiëren en controleren …",
+   "pl": "Kopiowanie i sprawdzanie…",
+   "pt": "A copiar e verificar…",
+   "ro": "Se copiază și se verifică…",
+   "ru": "Копирование и проверка…",
+   "tr": "Kopyalanıyor ve kontrol ediliyor…",
+   "uk": "Копіювання й перевірка…",
+   "zh": "正在复制并检查…"
+  },
+  "archive_total_size": {
+   "en": "Total: %1$s",
+   "de": "Zusammen: %1$s",
+   "ar": "المجموع: %1$s",
+   "es": "En total: %1$s",
+   "fr": "Au total : %1$s",
+   "it": "In totale: %1$s",
+   "ja": "合計: %1$s",
+   "ko": "합계: %1$s",
+   "nl": "Samen: %1$s",
+   "pl": "Razem: %1$s",
+   "pt": "No total: %1$s",
+   "ro": "În total: %1$s",
+   "ru": "Всего: %1$s",
+   "tr": "Toplam: %1$s",
+   "uk": "Разом: %1$s",
+   "zh": "共计：%1$s"
+  },
+  "archive_target": {
+   "en": "Destination",
+   "de": "Ziel",
+   "ar": "الوجهة",
+   "es": "Destino",
+   "fr": "Destination",
+   "it": "Destinazione",
+   "ja": "保存先",
+   "ko": "저장 위치",
+   "nl": "Bestemming",
+   "pl": "Miejsce docelowe",
+   "pt": "Destino",
+   "ro": "Destinație",
+   "ru": "Куда",
+   "tr": "Hedef",
+   "uk": "Куди",
+   "zh": "目标位置"
+  },
+  "archive_target_none": {
+   "en": "No folder chosen yet",
+   "de": "Noch kein Ordner gewählt",
+   "ar": "لم يتم اختيار مجلد بعد",
+   "es": "Aún no has elegido una carpeta",
+   "fr": "Aucun dossier choisi pour l’instant",
+   "it": "Nessuna cartella scelta",
+   "ja": "フォルダーがまだ選ばれていません",
+   "ko": "아직 폴더를 고르지 않았어요",
+   "nl": "Nog geen map gekozen",
+   "pl": "Nie wybrano jeszcze folderu",
+   "pt": "Ainda não escolheu uma pasta",
+   "ro": "Încă nu ai ales un dosar",
+   "ru": "Папка ещё не выбрана",
+   "tr": "Henüz klasör seçilmedi",
+   "uk": "Папку ще не вибрано",
+   "zh": "尚未选择文件夹"
+  },
+  "archive_choose": {
+   "en": "Choose folder",
+   "de": "Ordner wählen",
+   "ar": "اختر مجلدًا",
+   "es": "Elegir carpeta",
+   "fr": "Choisir un dossier",
+   "it": "Scegli cartella",
+   "ja": "フォルダーを選ぶ",
+   "ko": "폴더 고르기",
+   "nl": "Map kiezen",
+   "pl": "Wybierz folder",
+   "pt": "Escolher pasta",
+   "ro": "Alege dosarul",
+   "ru": "Выбрать папку",
+   "tr": "Klasör seç",
+   "uk": "Вибрати папку",
+   "zh": "选择文件夹"
+  },
+  "archive_choose_other": {
+   "en": "Choose another folder",
+   "de": "Anderen Ordner wählen",
+   "ar": "اختر مجلدًا آخر",
+   "es": "Elegir otra carpeta",
+   "fr": "Choisir un autre dossier",
+   "it": "Scegli un’altra cartella",
+   "ja": "別のフォルダーを選ぶ",
+   "ko": "다른 폴더 고르기",
+   "nl": "Andere map kiezen",
+   "pl": "Wybierz inny folder",
+   "pt": "Escolher outra pasta",
+   "ro": "Alege alt dosar",
+   "ru": "Выбрать другую папку",
+   "tr": "Başka klasör seç",
+   "uk": "Вибрати іншу папку",
+   "zh": "选择其他文件夹"
+  },
+  "archive_kind_removable": {
+   "en": "SD card or USB drive – a separate storage device.",
+   "de": "SD-Karte oder USB-Speicher – ein eigener Datenträger.",
+   "ar": "بطاقة SD أو ذاكرة USB – وسيط تخزين منفصل.",
+   "es": "Tarjeta SD o memoria USB: un soporte de almacenamiento aparte.",
+   "fr": "Carte SD ou clé USB : un support de stockage séparé.",
+   "it": "Scheda SD o memoria USB: un supporto di archiviazione separato.",
+   "ja": "SDカードまたはUSBメモリ：別の記憶装置です。",
+   "ko": "SD 카드 또는 USB: 별도의 저장 장치예요.",
+   "nl": "SD-kaart of USB-opslag – een aparte gegevensdrager.",
+   "pl": "Karta SD lub pamięć USB – osobny nośnik.",
+   "pt": "Cartão SD ou memória USB – um suporte de armazenamento separado.",
+   "ro": "Card SD sau memorie USB – un suport de stocare separat.",
+   "ru": "SD-карта или USB-накопитель — отдельный носитель.",
+   "tr": "SD kart veya USB bellek – ayrı bir depolama aygıtı.",
+   "uk": "SD-картка або USB-накопичувач — окремий носій.",
+   "zh": "SD 卡或 U 盘——独立的存储设备。"
+  },
+  "archive_kind_device": {
+   "en": "This folder is on the same storage as your photos. A second copy there won’t help if your phone is lost or breaks.",
+   "de": "Dieser Ordner liegt auf demselben Speicher wie deine Fotos. Eine zweite Kopie dort hilft nicht, wenn das Handy verloren geht oder kaputtgeht.",
+   "ar": "هذا المجلد على نفس مساحة التخزين التي تحتوي على صورك. لن تفيد نسخة ثانية هناك إذا ضاع هاتفك أو تعطل.",
+   "es": "Esta carpeta está en el mismo almacenamiento que tus fotos. Una segunda copia ahí no sirve si pierdes el móvil o se estropea.",
+   "fr": "Ce dossier se trouve sur le même stockage que vos photos. Une deuxième copie à cet endroit n’aide pas si le téléphone est perdu ou cassé.",
+   "it": "Questa cartella si trova sulla stessa memoria delle tue foto. Una seconda copia lì non aiuta se il telefono si perde o si rompe.",
+   "ja": "このフォルダーは写真と同じストレージにあります。そこに2つ目のコピーがあっても、スマホをなくしたり壊れたりしたときには役に立ちません。",
+   "ko": "이 폴더는 사진과 같은 저장 공간에 있어요. 휴대폰을 잃어버리거나 고장 나면 그곳의 두 번째 사본은 도움이 되지 않아요.",
+   "nl": "Deze map staat op dezelfde opslag als je foto’s. Een tweede kopie daar helpt niet als je telefoon kwijtraakt of kapotgaat.",
+   "pl": "Ten folder jest w tej samej pamięci co Twoje zdjęcia. Druga kopia w tym miejscu nie pomoże, jeśli telefon zginie lub się zepsuje.",
+   "pt": "Esta pasta está no mesmo armazenamento que as suas fotos. Uma segunda cópia aí não ajuda se o telemóvel se perder ou avariar.",
+   "ro": "Acest dosar este pe aceeași memorie ca fotografiile tale. O a doua copie acolo nu ajută dacă telefonul se pierde sau se strică.",
+   "ru": "Эта папка находится в той же памяти, что и ваши фото. Вторая копия там не поможет, если телефон потеряется или сломается.",
+   "tr": "Bu klasör fotoğraflarınla aynı depolama alanında. Telefon kaybolursa veya bozulursa oradaki ikinci kopya işe yaramaz.",
+   "uk": "Ця папка в тій самій пам’яті, що й ваші фото. Друга копія там не допоможе, якщо телефон загубиться чи зламається.",
+   "zh": "此文件夹与照片位于同一存储空间。手机丢失或损坏时，那里的第二份副本帮不上忙。"
+  },
+  "archive_kind_provider": {
+   "en": "This folder belongs to another app, such as an online storage service. That app decides whether the files stay on your phone or go online.",
+   "de": "Dieser Ordner gehört zu einer anderen App, zum Beispiel einem Online-Speicher. Ob die Dateien dort auf dem Handy oder im Internet liegen, entscheidet diese App.",
+   "ar": "ينتمي هذا المجلد إلى تطبيق آخر، مثل خدمة تخزين عبر الإنترنت. هذا التطبيق هو من يقرر إن كانت الملفات تبقى على الهاتف أو تُرفع إلى الإنترنت.",
+   "es": "Esta carpeta pertenece a otra app, por ejemplo un almacenamiento en línea. Esa app decide si los archivos se quedan en el móvil o van a internet.",
+   "fr": "Ce dossier appartient à une autre app, par exemple un stockage en ligne. C’est elle qui décide si les fichiers restent sur le téléphone ou partent en ligne.",
+   "it": "Questa cartella appartiene a un’altra app, ad esempio uno spazio di archiviazione online. È quell’app a decidere se i file restano sul telefono o vanno online.",
+   "ja": "このフォルダーは別のアプリ（オンラインストレージなど）のものです。ファイルをスマホに置くかオンラインに送るかは、そのアプリが決めます。",
+   "ko": "이 폴더는 온라인 저장소 같은 다른 앱의 것이에요. 파일을 휴대폰에 둘지 온라인에 올릴지는 그 앱이 정해요.",
+   "nl": "Deze map hoort bij een andere app, bijvoorbeeld een onlineopslag. Die app bepaalt of de bestanden op je telefoon blijven of online gaan.",
+   "pl": "Ten folder należy do innej aplikacji, np. usługi przechowywania online. To ona decyduje, czy pliki zostaną w telefonie, czy trafią do internetu.",
+   "pt": "Esta pasta pertence a outra app, por exemplo um armazenamento online. É essa app que decide se os ficheiros ficam no telemóvel ou vão para a internet.",
+   "ro": "Acest dosar aparține altei aplicații, de exemplu unui spațiu de stocare online. Ea decide dacă fișierele rămân pe telefon sau ajung online.",
+   "ru": "Эта папка принадлежит другому приложению, например онлайн-хранилищу. Оно и решает, останутся ли файлы на телефоне или уйдут в интернет.",
+   "tr": "Bu klasör başka bir uygulamaya, örneğin çevrimiçi bir depolama hizmetine ait. Dosyaların telefonda mı kalacağına yoksa internete mi gideceğine o uygulama karar verir.",
+   "uk": "Ця папка належить іншому застосунку, наприклад онлайн-сховищу. Саме він вирішує, чи залишаться файли на телефоні, чи підуть в інтернет.",
+   "zh": "此文件夹属于另一个应用，例如在线存储。文件留在手机上还是上传到网上，由该应用决定。"
+  },
+  "archive_free": {
+   "en": "Free at destination: %1$s",
+   "de": "Frei am Ziel: %1$s",
+   "ar": "المساحة الفارغة في الوجهة: %1$s",
+   "es": "Libre en el destino: %1$s",
+   "fr": "Libre à destination : %1$s",
+   "it": "Libero a destinazione: %1$s",
+   "ja": "保存先の空き容量: %1$s",
+   "ko": "저장 위치 여유 공간: %1$s",
+   "nl": "Vrij op bestemming: %1$s",
+   "pl": "Wolne miejsce docelowe: %1$s",
+   "pt": "Livre no destino: %1$s",
+   "ro": "Liber la destinație: %1$s",
+   "ru": "Свободно в месте назначения: %1$s",
+   "tr": "Hedefte boş alan: %1$s",
+   "uk": "Вільно в місці призначення: %1$s",
+   "zh": "目标位置可用空间：%1$s"
+  },
+  "archive_free_unknown": {
+   "en": "Free space at destination: unknown",
+   "de": "Freier Platz am Ziel: unbekannt",
+   "ar": "المساحة الفارغة في الوجهة: غير معروفة",
+   "es": "Espacio libre en el destino: desconocido",
+   "fr": "Espace libre à destination : inconnu",
+   "it": "Spazio libero a destinazione: sconosciuto",
+   "ja": "保存先の空き容量: 不明",
+   "ko": "저장 위치 여유 공간: 알 수 없음",
+   "nl": "Vrije ruimte op bestemming: onbekend",
+   "pl": "Wolne miejsce docelowe: nieznane",
+   "pt": "Espaço livre no destino: desconhecido",
+   "ro": "Spațiu liber la destinație: necunoscut",
+   "ru": "Свободное место: неизвестно",
+   "tr": "Hedefte boş alan: bilinmiyor",
+   "uk": "Вільне місце: невідомо",
+   "zh": "目标位置可用空间：未知"
+  },
+  "archive_no_space": {
+   "en": "Not enough space: needs %1$s, free %2$s.",
+   "de": "Nicht genug Platz: gebraucht %1$s, frei %2$s.",
+   "ar": "لا توجد مساحة كافية: المطلوب %1$s، والمتاح %2$s.",
+   "es": "No hay espacio suficiente: se necesitan %1$s, libres %2$s.",
+   "fr": "Pas assez de place : il faut %1$s, libre %2$s.",
+   "it": "Spazio insufficiente: servono %1$s, liberi %2$s.",
+   "ja": "空き容量が足りません：必要 %1$s、空き %2$s。",
+   "ko": "공간이 부족해요: 필요 %1$s, 여유 %2$s.",
+   "nl": "Niet genoeg ruimte: nodig %1$s, vrij %2$s.",
+   "pl": "Za mało miejsca: potrzeba %1$s, wolne %2$s.",
+   "pt": "Espaço insuficiente: são precisos %1$s, livres %2$s.",
+   "ro": "Spațiu insuficient: necesar %1$s, liber %2$s.",
+   "ru": "Недостаточно места: нужно %1$s, свободно %2$s.",
+   "tr": "Yeterli alan yok: gereken %1$s, boş %2$s.",
+   "uk": "Недостатньо місця: потрібно %1$s, вільно %2$s.",
+   "zh": "空间不足：需要 %1$s，可用 %2$s。"
+  },
+  "archive_options": {
+   "en": "Options",
+   "de": "Optionen",
+   "ar": "الخيارات",
+   "es": "Opciones",
+   "fr": "Options",
+   "it": "Opzioni",
+   "ja": "オプション",
+   "ko": "옵션",
+   "nl": "Opties",
+   "pl": "Opcje",
+   "pt": "Opções",
+   "ro": "Opțiuni",
+   "ru": "Параметры",
+   "tr": "Seçenekler",
+   "uk": "Параметри",
+   "zh": "选项"
+  },
+  "archive_by_month": {
+   "en": "Folders by year and month",
+   "de": "Ordner nach Jahr und Monat",
+   "ar": "مجلدات حسب السنة والشهر",
+   "es": "Carpetas por año y mes",
+   "fr": "Dossiers par année et mois",
+   "it": "Cartelle per anno e mese",
+   "ja": "年と月ごとのフォルダー",
+   "ko": "연도와 월별 폴더",
+   "nl": "Mappen per jaar en maand",
+   "pl": "Foldery według roku i miesiąca",
+   "pt": "Pastas por ano e mês",
+   "ro": "Dosare după an și lună",
+   "ru": "Папки по году и месяцу",
+   "tr": "Yıla ve aya göre klasörler",
+   "uk": "Папки за роком і місяцем",
+   "zh": "按年和月建文件夹"
+  },
+  "archive_write_list": {
+   "en": "Also save a checklist",
+   "de": "Prüfliste mitspeichern",
+   "ar": "حفظ قائمة تحقق أيضًا",
+   "es": "Guardar también una lista de comprobación",
+   "fr": "Enregistrer aussi une liste de contrôle",
+   "it": "Salva anche una lista di controllo",
+   "ja": "チェックリストも保存",
+   "ko": "확인 목록도 저장",
+   "nl": "Ook een controlelijst opslaan",
+   "pl": "Zapisz też listę kontrolną",
+   "pt": "Guardar também uma lista de verificação",
+   "ro": "Salvează și o listă de verificare",
+   "ru": "Сохранить и контрольный список",
+   "tr": "Kontrol listesini de kaydet",
+   "uk": "Зберегти й контрольний список",
+   "zh": "同时保存核对清单"
+  },
+  "archive_write_list_note": {
+   "en": "A table with each file’s name, date, size and checksum, plus your albums, tags and notes.",
+   "de": "Eine Tabelle mit Name, Datum, Größe und Prüfsumme jeder Datei sowie deinen Alben, Schlagwörtern und Notizen.",
+   "ar": "جدول باسم كل ملف وتاريخه وحجمه ومجموعه الاختباري، إلى جانب ألبوماتك ووسومك وملاحظاتك.",
+   "es": "Una tabla con el nombre, la fecha, el tamaño y la suma de verificación de cada archivo, además de tus álbumes, etiquetas y notas.",
+   "fr": "Un tableau avec le nom, la date, la taille et la somme de contrôle de chaque fichier, ainsi que vos albums, mots-clés et notes.",
+   "it": "Una tabella con nome, data, dimensione e checksum di ogni file, più i tuoi album, tag e note.",
+   "ja": "各ファイルの名前・日付・サイズ・チェックサムと、アルバム・タグ・メモをまとめた表です。",
+   "ko": "각 파일의 이름, 날짜, 크기, 체크섬과 앨범·태그·메모를 담은 표예요.",
+   "nl": "Een tabel met naam, datum, grootte en controlesom van elk bestand, plus je albums, labels en notities.",
+   "pl": "Tabela z nazwą, datą, rozmiarem i sumą kontrolną każdego pliku oraz Twoimi albumami, tagami i notatkami.",
+   "pt": "Uma tabela com o nome, a data, o tamanho e a soma de verificação de cada ficheiro, mais os seus álbuns, etiquetas e notas.",
+   "ro": "Un tabel cu numele, data, dimensiunea și suma de control a fiecărui fișier, plus albumele, etichetele și notele tale.",
+   "ru": "Таблица с именем, датой, размером и контрольной суммой каждого файла, а также вашими альбомами, метками и заметками.",
+   "tr": "Her dosyanın adı, tarihi, boyutu ve sağlama toplamının yanı sıra albümlerin, etiketlerin ve notlarının yer aldığı bir tablo.",
+   "uk": "Таблиця з назвою, датою, розміром і контрольною сумою кожного файлу, а також вашими альбомами, мітками й нотатками.",
+   "zh": "一张表格，列出每个文件的名称、日期、大小和校验和，以及你的相册、标签和备注。"
+  },
+  "archive_step_verify": {
+   "en": "Each copy is then read again and compared byte by byte with the original.",
+   "de": "Jede Kopie wird danach neu gelesen und Byte für Byte mit dem Original verglichen.",
+   "ar": "بعد ذلك تُقرأ كل نسخة من جديد وتُقارن بالأصل بايتًا ببايت.",
+   "es": "Después, cada copia se vuelve a leer y se compara byte a byte con el original.",
+   "fr": "Chaque copie est ensuite relue et comparée octet par octet à l’original.",
+   "it": "Poi ogni copia viene riletta e confrontata byte per byte con l’originale.",
+   "ja": "その後、各コピーを読み直し、元のファイルと1バイトずつ比べます。",
+   "ko": "그다음 각 사본을 다시 읽어 원본과 바이트 단위로 비교해요.",
+   "nl": "Daarna wordt elke kopie opnieuw gelezen en byte voor byte met het origineel vergeleken.",
+   "pl": "Potem każda kopia jest odczytywana ponownie i porównywana bajt po bajcie z oryginałem.",
+   "pt": "Depois, cada cópia é lida de novo e comparada byte a byte com o original.",
+   "ro": "Apoi fiecare copie este citită din nou și comparată octet cu octet cu originalul.",
+   "ru": "Затем каждая копия читается заново и побайтно сравнивается с оригиналом.",
+   "tr": "Ardından her kopya yeniden okunur ve orijinalle bayt bayt karşılaştırılır.",
+   "uk": "Потім кожну копію читають знову й побайтово порівнюють з оригіналом.",
+   "zh": "随后会重新读取每份副本，并与原件逐字节比对。"
+  },
+  "archive_step_only_verified": {
+   "en": "Only checked copies count. If one differs, it is removed right away.",
+   "de": "Nur geprüfte Kopien zählen. Weicht eine ab, wird sie gleich wieder entfernt.",
+   "ar": "لا تُحتسب إلا النسخ التي تم التحقق منها. إذا اختلفت نسخة، تُزال فورًا.",
+   "es": "Solo cuentan las copias comprobadas. Si una no coincide, se elimina enseguida.",
+   "fr": "Seules les copies vérifiées comptent. Si l’une diffère, elle est aussitôt supprimée.",
+   "it": "Contano solo le copie controllate. Se una è diversa, viene subito rimossa.",
+   "ja": "確認済みのコピーだけが有効です。違いがあったコピーはすぐに削除します。",
+   "ko": "확인된 사본만 인정돼요. 다른 사본은 바로 지워요.",
+   "nl": "Alleen gecontroleerde kopieën tellen. Wijkt er een af, dan wordt die meteen weer verwijderd.",
+   "pl": "Liczą się tylko sprawdzone kopie. Jeśli któraś się różni, zostaje od razu usunięta.",
+   "pt": "Só contam as cópias verificadas. Se uma for diferente, é logo removida.",
+   "ro": "Contează doar copiile verificate. Dacă una diferă, este eliminată imediat.",
+   "ru": "Учитываются только проверенные копии. Если копия отличается, она сразу удаляется.",
+   "tr": "Yalnızca kontrol edilmiş kopyalar sayılır. Farklı çıkan kopya hemen kaldırılır.",
+   "uk": "Зараховуються лише перевірені копії. Якщо копія відрізняється, її одразу видаляють.",
+   "zh": "只有检查过的副本才算数。如有不一致，会立即删除该副本。"
+  },
+  "archive_step_originals": {
+   "en": "Your originals stay as they are.",
+   "de": "Deine Originale bleiben, wie sie sind.",
+   "ar": "تبقى ملفاتك الأصلية كما هي.",
+   "es": "Tus originales se quedan como están.",
+   "fr": "Vos originaux restent tels quels.",
+   "it": "I tuoi originali restano come sono.",
+   "ja": "元のファイルはそのまま残ります。",
+   "ko": "원본은 그대로 남아요.",
+   "nl": "Je originelen blijven zoals ze zijn.",
+   "pl": "Twoje oryginały pozostają bez zmian.",
+   "pt": "Os seus originais ficam como estão.",
+   "ro": "Originalele tale rămân neschimbate.",
+   "ru": "Ваши оригиналы остаются без изменений.",
+   "tr": "Orijinallerin olduğu gibi kalır.",
+   "uk": "Ваші оригінали залишаються без змін.",
+   "zh": "你的原件保持不变。"
+  },
+  "archive_start": {
+   "en": "Copy and check",
+   "de": "Kopieren und prüfen",
+   "ar": "انسخ وتحقق",
+   "es": "Copiar y comprobar",
+   "fr": "Copier et vérifier",
+   "it": "Copia e controlla",
+   "ja": "コピーして確認",
+   "ko": "복사하고 확인하기",
+   "nl": "Kopiëren en controleren",
+   "pl": "Kopiuj i sprawdź",
+   "pt": "Copiar e verificar",
+   "ro": "Copiază și verifică",
+   "ru": "Скопировать и проверить",
+   "tr": "Kopyala ve kontrol et",
+   "uk": "Скопіювати й перевірити",
+   "zh": "复制并检查"
+  },
+  "archive_failed": {
+   "en": "Copying stopped unexpectedly. The result shows what was checked.",
+   "de": "Das Kopieren wurde unerwartet beendet. Was geprüft ist, siehst du im Ergebnis.",
+   "ar": "توقف النسخ بشكل غير متوقع. تُظهر النتيجة ما تم التحقق منه.",
+   "es": "La copia se detuvo de forma inesperada. En el resultado verás lo que se ha comprobado.",
+   "fr": "La copie s’est arrêtée de façon inattendue. Le résultat indique ce qui a été vérifié.",
+   "it": "La copia si è interrotta inaspettatamente. Nel risultato vedi cosa è stato controllato.",
+   "ja": "コピーが予期せず止まりました。確認済みのものは結果で見られます。",
+   "ko": "복사가 예기치 않게 멈췄어요. 확인된 항목은 결과에서 볼 수 있어요.",
+   "nl": "Het kopiëren is onverwacht gestopt. In het resultaat zie je wat er is gecontroleerd.",
+   "pl": "Kopiowanie nieoczekiwanie się zatrzymało. W wyniku zobaczysz, co zostało sprawdzone.",
+   "pt": "A cópia parou inesperadamente. No resultado vê o que foi verificado.",
+   "ro": "Copierea s-a oprit neașteptat. În rezultat vezi ce a fost verificat.",
+   "ru": "Копирование неожиданно прервалось. В результате видно, что уже проверено.",
+   "tr": "Kopyalama beklenmedik şekilde durdu. Neyin kontrol edildiğini sonuçta görebilirsin.",
+   "uk": "Копіювання несподівано зупинилося. У результаті видно, що вже перевірено.",
+   "zh": "复制意外停止。结果中会显示已检查的内容。"
+  },
+  "archive_last_interrupted": {
+   "en": "The last run was interrupted. Checked: %1$d of %2$d.",
+   "de": "Der letzte Durchgang wurde unterbrochen. Geprüft: %1$d von %2$d.",
+   "ar": "تمت مقاطعة العملية الأخيرة. تم التحقق من: %1$d من %2$d.",
+   "es": "La última pasada se interrumpió. Comprobados: %1$d de %2$d.",
+   "fr": "Le dernier passage a été interrompu. Vérifiés : %1$d sur %2$d.",
+   "it": "L’ultimo passaggio è stato interrotto. Controllati: %1$d su %2$d.",
+   "ja": "前回の処理は中断されました。確認済み: %2$d件中%1$d件。",
+   "ko": "지난 작업이 중단됐어요. 확인됨: %2$d개 중 %1$d개.",
+   "nl": "De laatste ronde is onderbroken. Gecontroleerd: %1$d van %2$d.",
+   "pl": "Ostatnie przejście zostało przerwane. Sprawdzono: %1$d z %2$d.",
+   "pt": "A última passagem foi interrompida. Verificados: %1$d de %2$d.",
+   "ro": "Ultima rulare a fost întreruptă. Verificate: %1$d din %2$d.",
+   "ru": "Последний запуск был прерван. Проверено: %1$d из %2$d.",
+   "tr": "Son işlem yarıda kaldı. Kontrol edilen: %2$d dosyadan %1$d.",
+   "uk": "Останній запуск було перервано. Перевірено: %1$d з %2$d.",
+   "zh": "上次操作被中断。已检查：%1$d / %2$d。"
+  },
+  "archive_show_result": {
+   "en": "View result",
+   "de": "Ergebnis ansehen",
+   "ar": "عرض النتيجة",
+   "es": "Ver resultado",
+   "fr": "Voir le résultat",
+   "it": "Vedi risultato",
+   "ja": "結果を見る",
+   "ko": "결과 보기",
+   "nl": "Resultaat bekijken",
+   "pl": "Pokaż wynik",
+   "pt": "Ver resultado",
+   "ro": "Vezi rezultatul",
+   "ru": "Показать результат",
+   "tr": "Sonucu göster",
+   "uk": "Показати результат",
+   "zh": "查看结果"
+  },
+  "archive_result_title": {
+   "en": "Result",
+   "de": "Ergebnis",
+   "ar": "النتيجة",
+   "es": "Resultado",
+   "fr": "Résultat",
+   "it": "Risultato",
+   "ja": "結果",
+   "ko": "결과",
+   "nl": "Resultaat",
+   "pl": "Wynik",
+   "pt": "Resultado",
+   "ro": "Rezultat",
+   "ru": "Результат",
+   "tr": "Sonuç",
+   "uk": "Результат",
+   "zh": "结果"
+  },
+  "archive_verified_bytes": {
+   "en": "Checked: %1$s",
+   "de": "Geprüft: %1$s",
+   "ar": "تم التحقق: %1$s",
+   "es": "Comprobado: %1$s",
+   "fr": "Vérifié : %1$s",
+   "it": "Controllato: %1$s",
+   "ja": "確認済み: %1$s",
+   "ko": "확인됨: %1$s",
+   "nl": "Gecontroleerd: %1$s",
+   "pl": "Sprawdzono: %1$s",
+   "pt": "Verificado: %1$s",
+   "ro": "Verificat: %1$s",
+   "ru": "Проверено: %1$s",
+   "tr": "Kontrol edildi: %1$s",
+   "uk": "Перевірено: %1$s",
+   "zh": "已检查：%1$s"
+  },
+  "archive_list_saved": {
+   "en": "Checklist saved: %1$s",
+   "de": "Prüfliste gespeichert: %1$s",
+   "ar": "تم حفظ قائمة التحقق: %1$s",
+   "es": "Lista de comprobación guardada: %1$s",
+   "fr": "Liste de contrôle enregistrée : %1$s",
+   "it": "Lista di controllo salvata: %1$s",
+   "ja": "チェックリストを保存しました: %1$s",
+   "ko": "확인 목록 저장됨: %1$s",
+   "nl": "Controlelijst opgeslagen: %1$s",
+   "pl": "Zapisano listę kontrolną: %1$s",
+   "pt": "Lista de verificação guardada: %1$s",
+   "ro": "Listă de verificare salvată: %1$s",
+   "ru": "Контрольный список сохранён: %1$s",
+   "tr": "Kontrol listesi kaydedildi: %1$s",
+   "uk": "Контрольний список збережено: %1$s",
+   "zh": "已保存核对清单：%1$s"
+  },
+  "archive_meaning": {
+   "en": "“Checked” means the copy is identical to the original, byte for byte. No one can check how long a storage device will last – keep important things in two places.",
+   "de": "„Geprüft“ heißt: Die Kopie ist Byte für Byte gleich wie das Original. Ob ein Datenträger lange hält, kann niemand prüfen – bewahre Wichtiges an zwei Orten auf.",
+   "ar": "«تم التحقق» يعني أن النسخة مطابقة للأصل بايتًا ببايت. لا أحد يستطيع التحقق من المدة التي سيصمد فيها وسيط التخزين – احتفظ بالأشياء المهمة في مكانين.",
+   "es": "«Comprobado» significa que la copia es idéntica al original, byte a byte. Nadie puede comprobar cuánto durará un soporte: guarda lo importante en dos sitios.",
+   "fr": "« Vérifié » signifie que la copie est identique à l’original, octet par octet. Personne ne peut vérifier combien de temps un support tiendra : gardez l’essentiel à deux endroits.",
+   "it": "«Controllato» significa che la copia è identica all’originale, byte per byte. Nessuno può verificare quanto durerà un supporto: conserva le cose importanti in due posti.",
+   "ja": "「確認済み」とは、コピーが元のファイルと1バイト単位で同じという意味です。記憶装置がどれだけもつかは誰にも確かめられません。大切なものは2か所に保管しましょう。",
+   "ko": "‘확인됨’은 사본이 원본과 바이트 단위까지 같다는 뜻이에요. 저장 장치가 얼마나 오래갈지는 누구도 확인할 수 없어요. 중요한 것은 두 곳에 보관하세요.",
+   "nl": "‘Gecontroleerd’ betekent: de kopie is byte voor byte gelijk aan het origineel. Hoe lang een gegevensdrager meegaat, kan niemand controleren – bewaar belangrijke dingen op twee plekken.",
+   "pl": "„Sprawdzono” oznacza, że kopia jest bajt po bajcie taka sama jak oryginał. Nikt nie sprawdzi, jak długo wytrzyma nośnik – ważne rzeczy trzymaj w dwóch miejscach.",
+   "pt": "“Verificado” significa que a cópia é igual ao original, byte a byte. Ninguém consegue verificar quanto tempo um suporte dura – guarde o que é importante em dois sítios.",
+   "ro": "„Verificat” înseamnă că copia este identică cu originalul, octet cu octet. Nimeni nu poate verifica cât rezistă un suport – păstrează lucrurile importante în două locuri.",
+   "ru": "«Проверено» значит, что копия побайтно совпадает с оригиналом. Сколько прослужит носитель, проверить невозможно — храните важное в двух местах.",
+   "tr": "“Kontrol edildi”, kopyanın orijinalle bayt bayt aynı olduğu anlamına gelir. Bir depolama aygıtının ne kadar dayanacağını kimse kontrol edemez – önemli şeyleri iki yerde sakla.",
+   "uk": "«Перевірено» означає, що копія побайтово збігається з оригіналом. Скільки прослужить носій, перевірити неможливо — зберігайте важливе у двох місцях.",
+   "zh": "“已检查”表示副本与原件逐字节一致。存储设备能用多久，谁也无法检查——重要内容请保存在两个地方。"
+  },
+  "archive_files": {
+   "en": "Files",
+   "de": "Dateien",
+   "ar": "الملفات",
+   "es": "Archivos",
+   "fr": "Fichiers",
+   "it": "File",
+   "ja": "ファイル",
+   "ko": "파일",
+   "nl": "Bestanden",
+   "pl": "Pliki",
+   "pt": "Ficheiros",
+   "ro": "Fișiere",
+   "ru": "Файлы",
+   "tr": "Dosyalar",
+   "uk": "Файли",
+   "zh": "文件"
+  },
+  "archive_status_verified": {
+   "en": "Checked",
+   "de": "Geprüft",
+   "ar": "تم التحقق",
+   "es": "Comprobado",
+   "fr": "Vérifié",
+   "it": "Controllato",
+   "ja": "確認済み",
+   "ko": "확인됨",
+   "nl": "Gecontroleerd",
+   "pl": "Sprawdzono",
+   "pt": "Verificado",
+   "ro": "Verificat",
+   "ru": "Проверено",
+   "tr": "Kontrol edildi",
+   "uk": "Перевірено",
+   "zh": "已检查"
+  },
+  "archive_status_already": {
+   "en": "Already there, identical",
+   "de": "Schon da und gleich",
+   "ar": "موجود مسبقًا ومطابق",
+   "es": "Ya estaba, idéntico",
+   "fr": "Déjà présent, identique",
+   "it": "Già presente, identico",
+   "ja": "既にあり、同一",
+   "ko": "이미 있고 동일함",
+   "nl": "Al aanwezig, gelijk",
+   "pl": "Już jest, identyczny",
+   "pt": "Já existia, igual",
+   "ro": "Există deja, identic",
+   "ru": "Уже есть, совпадает",
+   "tr": "Zaten var, aynı",
+   "uk": "Уже є, збігається",
+   "zh": "已存在且相同"
+  },
+  "archive_status_failed": {
+   "en": "Failed",
+   "de": "Fehlgeschlagen",
+   "ar": "فشل",
+   "es": "Error",
+   "fr": "Échec",
+   "it": "Non riuscito",
+   "ja": "失敗",
+   "ko": "실패",
+   "nl": "Mislukt",
+   "pl": "Nie udało się",
+   "pt": "Falhou",
+   "ro": "Eșuat",
+   "ru": "Не удалось",
+   "tr": "Başarısız",
+   "uk": "Не вдалося",
+   "zh": "失败"
+  },
+  "archive_status_notdone": {
+   "en": "Not copied",
+   "de": "Nicht kopiert",
+   "ar": "لم يُنسخ",
+   "es": "No copiado",
+   "fr": "Non copié",
+   "it": "Non copiato",
+   "ja": "未コピー",
+   "ko": "복사 안 됨",
+   "nl": "Niet gekopieerd",
+   "pl": "Nie skopiowano",
+   "pt": "Não copiado",
+   "ro": "Necopiat",
+   "ru": "Не скопировано",
+   "tr": "Kopyalanmadı",
+   "uk": "Не скопійовано",
+   "zh": "未复制"
+  },
+  "archive_reason_read": {
+   "en": "Original can’t be read",
+   "de": "Original nicht lesbar",
+   "ar": "تعذرت قراءة الأصل",
+   "es": "No se puede leer el original",
+   "fr": "Original illisible",
+   "it": "Originale non leggibile",
+   "ja": "元のファイルを読めません",
+   "ko": "원본을 읽을 수 없어요",
+   "nl": "Origineel niet leesbaar",
+   "pl": "Nie można odczytać oryginału",
+   "pt": "Não é possível ler o original",
+   "ro": "Originalul nu poate fi citit",
+   "ru": "Оригинал не читается",
+   "tr": "Orijinal okunamıyor",
+   "uk": "Оригінал не читається",
+   "zh": "无法读取原件"
+  },
+  "archive_reason_write": {
+   "en": "The destination refused to save it (full, write-protected or file too large for this storage)",
+   "de": "Ziel hat das Speichern abgelehnt (voll, schreibgeschützt oder Datei zu groß für diesen Speicher)",
+   "ar": "رفضت الوجهة الحفظ (ممتلئة أو محمية من الكتابة أو الملف كبير جدًا لهذا الوسيط)",
+   "es": "El destino no lo ha guardado (lleno, protegido contra escritura o archivo demasiado grande para este almacenamiento)",
+   "fr": "La destination a refusé l’enregistrement (pleine, protégée en écriture ou fichier trop volumineux pour ce stockage)",
+   "it": "La destinazione non ha salvato il file (piena, protetta da scrittura o file troppo grande per questa memoria)",
+   "ja": "保存先が保存を拒否しました（容量不足、書き込み禁止、またはこのストレージには大きすぎるファイル）",
+   "ko": "저장 위치에서 저장을 거부했어요(가득 참, 쓰기 금지 또는 이 저장소에 비해 너무 큰 파일)",
+   "nl": "De bestemming weigerde het op te slaan (vol, beveiligd tegen schrijven of bestand te groot voor deze opslag)",
+   "pl": "Miejsce docelowe odmówiło zapisu (pełne, chronione przed zapisem lub plik za duży dla tego nośnika)",
+   "pt": "O destino recusou guardar (cheio, protegido contra escrita ou ficheiro demasiado grande para este armazenamento)",
+   "ro": "Destinația a refuzat salvarea (plină, protejată la scriere sau fișier prea mare pentru această memorie)",
+   "ru": "Место назначения не приняло файл (заполнено, защищено от записи или файл слишком большой для этого носителя)",
+   "tr": "Hedef kaydetmeyi reddetti (dolu, yazmaya karşı korumalı veya dosya bu depolama için çok büyük)",
+   "uk": "Місце призначення не прийняло файл (заповнене, захищене від запису або файл завеликий для цього носія)",
+   "zh": "目标位置拒绝保存（已满、写保护，或文件对该存储来说太大）"
+  },
+  "archive_reason_mismatch": {
+   "en": "Copy didn’t match – removed again",
+   "de": "Kopie war nicht gleich – wieder entfernt",
+   "ar": "لم تتطابق النسخة – أُزيلت مجددًا",
+   "es": "La copia no coincidía: se ha eliminado",
+   "fr": "La copie ne correspondait pas : supprimée",
+   "it": "La copia non corrispondeva: rimossa",
+   "ja": "コピーが一致しなかったため削除しました",
+   "ko": "사본이 같지 않아 다시 지웠어요",
+   "nl": "Kopie was niet gelijk – weer verwijderd",
+   "pl": "Kopia się różniła – usunięta",
+   "pt": "A cópia não era igual – removida",
+   "ro": "Copia nu era identică – eliminată",
+   "ru": "Копия не совпала — удалена",
+   "tr": "Kopya aynı değildi – yeniden kaldırıldı",
+   "uk": "Копія не збіглася — видалено",
+   "zh": "副本不一致——已删除"
+  },
+  "archive_reason_cancelled": {
+   "en": "Cancelled",
+   "de": "Abgebrochen",
+   "ar": "أُلغي",
+   "es": "Cancelado",
+   "fr": "Annulé",
+   "it": "Annullato",
+   "ja": "キャンセルしました",
+   "ko": "취소됨",
+   "nl": "Geannuleerd",
+   "pl": "Anulowano",
+   "pt": "Cancelado",
+   "ro": "Anulat",
+   "ru": "Отменено",
+   "tr": "İptal edildi",
+   "uk": "Скасовано",
+   "zh": "已取消"
+  },
+  "archive_reason_interrupted": {
+   "en": "Interrupted – partial copy removed",
+   "de": "Unterbrochen – halbe Kopie entfernt",
+   "ar": "تمت المقاطعة – أُزيلت النسخة الجزئية",
+   "es": "Interrumpido: se eliminó la copia parcial",
+   "fr": "Interrompu : copie partielle supprimée",
+   "it": "Interrotto: copia parziale rimossa",
+   "ja": "中断しました（途中までのコピーは削除）",
+   "ko": "중단됨 – 일부만 된 사본은 지웠어요",
+   "nl": "Onderbroken – halve kopie verwijderd",
+   "pl": "Przerwano – usunięto niepełną kopię",
+   "pt": "Interrompido – cópia parcial removida",
+   "ro": "Întrerupt – copia parțială a fost eliminată",
+   "ru": "Прервано — неполная копия удалена",
+   "tr": "Yarıda kaldı – yarım kopya kaldırıldı",
+   "uk": "Перервано — неповну копію видалено",
+   "zh": "已中断——不完整的副本已删除"
+  },
+  "archive_reason_space": {
+   "en": "No space left at destination",
+   "de": "Kein Platz mehr am Ziel",
+   "ar": "لم تعد هناك مساحة في الوجهة",
+   "es": "No queda espacio en el destino",
+   "fr": "Plus de place à destination",
+   "it": "Spazio esaurito a destinazione",
+   "ja": "保存先の空き容量がありません",
+   "ko": "저장 위치에 공간이 없어요",
+   "nl": "Geen ruimte meer op bestemming",
+   "pl": "Brak miejsca w miejscu docelowym",
+   "pt": "Sem espaço no destino",
+   "ro": "Nu mai e spațiu la destinație",
+   "ru": "Не осталось места",
+   "tr": "Hedefte yer kalmadı",
+   "uk": "Не залишилося місця",
+   "zh": "目标位置已无空间"
+  },
+  "archive_cleanup_button": {
+   "en": "Move originals to Trash …",
+   "de": "Originale in den Papierkorb …",
+   "ar": "نقل الأصول إلى سلة المهملات …",
+   "es": "Mover originales a la papelera…",
+   "fr": "Mettre les originaux à la corbeille…",
+   "it": "Sposta gli originali nel cestino…",
+   "ja": "元のファイルをゴミ箱へ…",
+   "ko": "원본을 휴지통으로…",
+   "nl": "Originelen naar prullenbak …",
+   "pl": "Oryginały do kosza…",
+   "pt": "Mover originais para o lixo…",
+   "ro": "Mută originalele în coș…",
+   "ru": "Оригиналы в корзину…",
+   "tr": "Orijinalleri çöp kutusuna…",
+   "uk": "Оригінали в кошик…",
+   "zh": "将原件移到回收站…"
+  },
+  "archive_cleanup_text": {
+   "en": "There is now a checked copy of these photos and videos on “%1$s”. They only go to the PhotoMaid trash. Nothing is deleted until you empty it and Android asks once more.",
+   "de": "Von diesen Fotos und Videos gibt es jetzt eine geprüfte Kopie auf „%1$s“. Sie kommen nur in den PhotoMaid-Papierkorb. Gelöscht wird erst, wenn du ihn leerst und Android noch einmal nachfragt.",
+   "ar": "توجد الآن نسخة تم التحقق منها من هذه الصور والفيديوهات على «%1$s». ستنتقل فقط إلى سلة مهملات PhotoMaid. لن يُحذف شيء حتى تفرغها ويسألك Android مرة أخرى.",
+   "es": "Ahora hay una copia comprobada de estas fotos y vídeos en «%1$s». Solo van a la papelera de PhotoMaid. No se borra nada hasta que la vacíes y Android vuelva a preguntar.",
+   "fr": "Il existe maintenant une copie vérifiée de ces photos et vidéos sur « %1$s ». Elles vont seulement dans la corbeille PhotoMaid. Rien n’est supprimé tant que vous ne la videz pas et qu’Android ne redemande pas.",
+   "it": "Ora c’è una copia controllata di queste foto e video su «%1$s». Finiscono solo nel cestino di PhotoMaid. Non si elimina nulla finché non lo svuoti e Android lo chiede di nuovo.",
+   "ja": "これらの写真と動画には、「%1$s」に確認済みのコピーがあります。移動先はPhotoMaidのゴミ箱だけです。ゴミ箱を空にし、Androidがもう一度確認するまで何も削除されません。",
+   "ko": "이 사진과 동영상은 이제 ‘%1$s’에 확인된 사본이 있어요. PhotoMaid 휴지통으로만 옮겨요. 휴지통을 비우고 Android가 한 번 더 물어볼 때까지 아무것도 삭제되지 않아요.",
+   "nl": "Van deze foto’s en video’s staat nu een gecontroleerde kopie op ‘%1$s’. Ze gaan alleen naar de PhotoMaid-prullenbak. Er wordt pas iets verwijderd als je die leegt en Android nog een keer vraagt.",
+   "pl": "Te zdjęcia i filmy mają teraz sprawdzoną kopię na „%1$s”. Trafią tylko do kosza PhotoMaid. Nic nie zostanie usunięte, dopóki go nie opróżnisz, a Android nie zapyta jeszcze raz.",
+   "pt": "Estas fotos e vídeos têm agora uma cópia verificada em “%1$s”. Só vão para o lixo do PhotoMaid. Nada é eliminado até o esvaziar e o Android perguntar mais uma vez.",
+   "ro": "Aceste fotografii și videoclipuri au acum o copie verificată pe „%1$s”. Ajung doar în coșul PhotoMaid. Nu se șterge nimic până nu golești coșul și Android întreabă încă o dată.",
+   "ru": "У этих фото и видео теперь есть проверенная копия на «%1$s». Они попадут только в корзину PhotoMaid. Ничего не удалится, пока вы её не очистите и Android не спросит ещё раз.",
+   "tr": "Bu fotoğraf ve videoların artık “%1$s” üzerinde kontrol edilmiş bir kopyası var. Yalnızca PhotoMaid çöp kutusuna taşınırlar. Sen onu boşaltıp Android bir kez daha sorana kadar hiçbir şey silinmez.",
+   "uk": "Ці фото й відео тепер мають перевірену копію на «%1$s». Вони потраплять лише в кошик PhotoMaid. Нічого не видалиться, доки ви його не очистите й Android не перепитає.",
+   "zh": "这些照片和视频现在在“%1$s”上有经过检查的副本。它们只会进入 PhotoMaid 回收站。在你清空回收站且 Android 再次确认之前，不会删除任何内容。"
+  },
+  "archive_cleanup_action": {
+   "en": "Move to Trash",
+   "de": "In den Papierkorb legen",
+   "ar": "نقل إلى سلة المهملات",
+   "es": "Mover a la papelera",
+   "fr": "Mettre à la corbeille",
+   "it": "Sposta nel cestino",
+   "ja": "ゴミ箱へ移動",
+   "ko": "휴지통으로 옮기기",
+   "nl": "Naar prullenbak",
+   "pl": "Przenieś do kosza",
+   "pt": "Mover para o lixo",
+   "ro": "Mută în coș",
+   "ru": "Переместить в корзину",
+   "tr": "Çöp kutusuna taşı",
+   "uk": "Перемістити в кошик",
+   "zh": "移到回收站"
+  },
+  "archive_open_basket": {
+   "en": "Open Trash",
+   "de": "Papierkorb öffnen",
+   "ar": "فتح سلة المهملات",
+   "es": "Abrir papelera",
+   "fr": "Ouvrir la corbeille",
+   "it": "Apri cestino",
+   "ja": "ゴミ箱を開く",
+   "ko": "휴지통 열기",
+   "nl": "Prullenbak openen",
+   "pl": "Otwórz kosz",
+   "pt": "Abrir lixo",
+   "ro": "Deschide coșul",
+   "ru": "Открыть корзину",
+   "tr": "Çöp kutusunu aç",
+   "uk": "Відкрити кошик",
+   "zh": "打开回收站"
+  },
+  "archive_no_cleanup_device": {
+   "en": "The copies are on the same storage as your photos, so PhotoMaid doesn’t offer to remove originals here.",
+   "de": "Die Kopien liegen auf demselben Speicher wie deine Fotos. Deshalb bietet PhotoMaid hier nicht an, Originale zu entfernen.",
+   "ar": "النسخ موجودة على نفس مساحة التخزين التي تحتوي على صورك، لذلك لا يعرض PhotoMaid هنا إزالة الأصول.",
+   "es": "Las copias están en el mismo almacenamiento que tus fotos, así que PhotoMaid no ofrece aquí quitar los originales.",
+   "fr": "Les copies sont sur le même stockage que vos photos ; PhotoMaid ne propose donc pas ici de retirer les originaux.",
+   "it": "Le copie sono sulla stessa memoria delle tue foto, quindi qui PhotoMaid non propone di rimuovere gli originali.",
+   "ja": "コピーは写真と同じストレージにあるため、PhotoMaidはここで元のファイルを削除する提案をしません。",
+   "ko": "사본이 사진과 같은 저장 공간에 있어서 PhotoMaid는 여기서 원본을 지우자고 하지 않아요.",
+   "nl": "De kopieën staan op dezelfde opslag als je foto’s. Daarom biedt PhotoMaid hier niet aan om originelen te verwijderen.",
+   "pl": "Kopie są w tej samej pamięci co Twoje zdjęcia, więc PhotoMaid nie proponuje tu usunięcia oryginałów.",
+   "pt": "As cópias estão no mesmo armazenamento que as suas fotos, por isso o PhotoMaid não propõe aqui remover os originais.",
+   "ro": "Copiile sunt pe aceeași memorie ca fotografiile tale, așa că PhotoMaid nu propune aici eliminarea originalelor.",
+   "ru": "Копии лежат в той же памяти, что и ваши фото, поэтому PhotoMaid не предлагает здесь убрать оригиналы.",
+   "tr": "Kopyalar fotoğraflarınla aynı depolama alanında; bu yüzden PhotoMaid burada orijinalleri kaldırmayı önermez.",
+   "uk": "Копії лежать у тій самій пам’яті, що й ваші фото, тому PhotoMaid не пропонує тут прибрати оригінали.",
+   "zh": "副本与照片位于同一存储空间，因此 PhotoMaid 不会在此建议移除原件。"
+  },
+  "archive_no_cleanup_provider": {
+   "en": "The copies are with another app. PhotoMaid can’t see whether they’re safe there, so it doesn’t offer to remove originals.",
+   "de": "Die Kopien liegen bei einer anderen App. Ob sie dort sicher sind, kann PhotoMaid nicht sehen – deshalb kein Angebot, Originale zu entfernen.",
+   "ar": "النسخ لدى تطبيق آخر. لا يستطيع PhotoMaid معرفة إن كانت آمنة هناك، لذلك لا يعرض إزالة الأصول.",
+   "es": "Las copias están en otra app. PhotoMaid no puede ver si están seguras ahí, así que no ofrece quitar los originales.",
+   "fr": "Les copies sont dans une autre app. PhotoMaid ne peut pas voir si elles y sont en sécurité ; il ne propose donc pas de retirer les originaux.",
+   "it": "Le copie si trovano in un’altra app. PhotoMaid non può vedere se lì sono al sicuro, quindi non propone di rimuovere gli originali.",
+   "ja": "コピーは別のアプリにあります。そこで安全かどうかPhotoMaidには分からないため、元のファイルを削除する提案はしません。",
+   "ko": "사본이 다른 앱에 있어요. 그곳에서 안전한지 PhotoMaid는 알 수 없어서 원본을 지우자고 하지 않아요.",
+   "nl": "De kopieën staan bij een andere app. PhotoMaid kan niet zien of ze daar veilig zijn – daarom geen aanbod om originelen te verwijderen.",
+   "pl": "Kopie są w innej aplikacji. PhotoMaid nie widzi, czy są tam bezpieczne, więc nie proponuje usunięcia oryginałów.",
+   "pt": "As cópias estão noutra app. O PhotoMaid não consegue ver se estão seguras aí, por isso não propõe remover os originais.",
+   "ro": "Copiile sunt la altă aplicație. PhotoMaid nu poate vedea dacă sunt în siguranță acolo, așa că nu propune eliminarea originalelor.",
+   "ru": "Копии находятся в другом приложении. PhotoMaid не видит, надёжно ли они там хранятся, поэтому не предлагает убрать оригиналы.",
+   "tr": "Kopyalar başka bir uygulamada. PhotoMaid orada güvende olup olmadıklarını göremez; bu yüzden orijinalleri kaldırmayı önermez.",
+   "uk": "Копії зберігаються в іншому застосунку. PhotoMaid не бачить, чи вони там у безпеці, тому не пропонує прибрати оригінали.",
+   "zh": "副本在另一个应用中。PhotoMaid 无法判断它们在那里是否安全，因此不会建议移除原件。"
+  },
+  "archive_undated": {
+   "en": "No date",
+   "de": "Ohne Datum",
+   "ar": "بدون تاريخ",
+   "es": "Sin fecha",
+   "fr": "Sans date",
+   "it": "Senza data",
+   "ja": "日付なし",
+   "ko": "날짜 없음",
+   "nl": "Zonder datum",
+   "pl": "Bez daty",
+   "pt": "Sem data",
+   "ro": "Fără dată",
+   "ru": "Без даты",
+   "tr": "Tarihsiz",
+   "uk": "Без дати",
+   "zh": "无日期"
+  },
+  "archive_list_file": {
+   "en": "PhotoMaid checklist %1$s.csv",
+   "de": "PhotoMaid-Prüfliste %1$s.csv",
+   "ar": "قائمة تحقق PhotoMaid %1$s.csv",
+   "es": "Lista de comprobación PhotoMaid %1$s.csv",
+   "fr": "Liste de contrôle PhotoMaid %1$s.csv",
+   "it": "Lista di controllo PhotoMaid %1$s.csv",
+   "ja": "PhotoMaidチェックリスト %1$s.csv",
+   "ko": "PhotoMaid 확인 목록 %1$s.csv",
+   "nl": "PhotoMaid-controlelijst %1$s.csv",
+   "pl": "Lista kontrolna PhotoMaid %1$s.csv",
+   "pt": "Lista de verificação PhotoMaid %1$s.csv",
+   "ro": "Listă de verificare PhotoMaid %1$s.csv",
+   "ru": "Контрольный список PhotoMaid %1$s.csv",
+   "tr": "PhotoMaid kontrol listesi %1$s.csv",
+   "uk": "Контрольний список PhotoMaid %1$s.csv",
+   "zh": "PhotoMaid 核对清单 %1$s.csv"
+  },
+  "archive_col_folder": {
+   "en": "Folder",
+   "de": "Ordner",
+   "ar": "المجلد",
+   "es": "Carpeta",
+   "fr": "Dossier",
+   "it": "Cartella",
+   "ja": "フォルダー",
+   "ko": "폴더",
+   "nl": "Map",
+   "pl": "Folder",
+   "pt": "Pasta",
+   "ro": "Dosar",
+   "ru": "Папка",
+   "tr": "Klasör",
+   "uk": "Папка",
+   "zh": "文件夹"
+  },
+  "archive_col_name": {
+   "en": "Name",
+   "de": "Name",
+   "ar": "الاسم",
+   "es": "Nombre",
+   "fr": "Nom",
+   "it": "Nome",
+   "ja": "名前",
+   "ko": "이름",
+   "nl": "Naam",
+   "pl": "Nazwa",
+   "pt": "Nome",
+   "ro": "Nume",
+   "ru": "Имя",
+   "tr": "Ad",
+   "uk": "Назва",
+   "zh": "名称"
+  },
+  "archive_col_taken": {
+   "en": "Taken",
+   "de": "Aufgenommen",
+   "ar": "تاريخ الالتقاط",
+   "es": "Tomada",
+   "fr": "Prise le",
+   "it": "Scattata",
+   "ja": "撮影日時",
+   "ko": "촬영",
+   "nl": "Gemaakt",
+   "pl": "Wykonano",
+   "pt": "Captada",
+   "ro": "Realizată",
+   "ru": "Снято",
+   "tr": "Çekim",
+   "uk": "Знято",
+   "zh": "拍摄时间"
+  },
+  "archive_col_bytes": {
+   "en": "Bytes",
+   "de": "Bytes",
+   "ar": "البايتات",
+   "es": "Bytes",
+   "fr": "Octets",
+   "it": "Byte",
+   "ja": "バイト",
+   "ko": "바이트",
+   "nl": "Bytes",
+   "pl": "Bajty",
+   "pt": "Bytes",
+   "ro": "Octeți",
+   "ru": "Байты",
+   "tr": "Bayt",
+   "uk": "Байти",
+   "zh": "字节"
+  },
+  "archive_col_sha": {
+   "en": "SHA-256",
+   "de": "SHA-256",
+   "ar": "SHA-256",
+   "es": "SHA-256",
+   "fr": "SHA-256",
+   "it": "SHA-256",
+   "ja": "SHA-256",
+   "ko": "SHA-256",
+   "nl": "SHA-256",
+   "pl": "SHA-256",
+   "pt": "SHA-256",
+   "ro": "SHA-256",
+   "ru": "SHA-256",
+   "tr": "SHA-256",
+   "uk": "SHA-256",
+   "zh": "SHA-256"
+  },
+  "archive_col_albums": {
+   "en": "Albums",
+   "de": "Alben",
+   "ar": "الألبومات",
+   "es": "Álbumes",
+   "fr": "Albums",
+   "it": "Album",
+   "ja": "アルバム",
+   "ko": "앨범",
+   "nl": "Albums",
+   "pl": "Albumy",
+   "pt": "Álbuns",
+   "ro": "Albume",
+   "ru": "Альбомы",
+   "tr": "Albümler",
+   "uk": "Альбоми",
+   "zh": "相册"
+  },
+  "archive_col_tags": {
+   "en": "Tags",
+   "de": "Schlagwörter",
+   "ar": "الوسوم",
+   "es": "Etiquetas",
+   "fr": "Mots-clés",
+   "it": "Tag",
+   "ja": "タグ",
+   "ko": "태그",
+   "nl": "Labels",
+   "pl": "Tagi",
+   "pt": "Etiquetas",
+   "ro": "Etichete",
+   "ru": "Метки",
+   "tr": "Etiketler",
+   "uk": "Мітки",
+   "zh": "标签"
+  },
+  "archive_col_note": {
+   "en": "Note",
+   "de": "Notiz",
+   "ar": "ملاحظة",
+   "es": "Nota",
+   "fr": "Note",
+   "it": "Nota",
+   "ja": "メモ",
+   "ko": "메모",
+   "nl": "Notitie",
+   "pl": "Notatka",
+   "pt": "Nota",
+   "ro": "Notă",
+   "ru": "Заметка",
+   "tr": "Not",
+   "uk": "Нотатка",
+   "zh": "备注"
+  },
+  "backup_title": {
+   "en": "Back up and restore",
+   "de": "Sichern und wiederherstellen",
+   "ar": "النسخ الاحتياطي والاستعادة",
+   "es": "Copia de seguridad y restauración",
+   "fr": "Sauvegarder et restaurer",
+   "it": "Backup e ripristino",
+   "ja": "バックアップと復元",
+   "ko": "백업 및 복원",
+   "nl": "Back-up en herstellen",
+   "pl": "Kopia zapasowa i przywracanie",
+   "pt": "Cópia de segurança e restauro",
+   "ro": "Backup și restaurare",
+   "ru": "Резервная копия и восстановление",
+   "tr": "Yedekle ve geri yükle",
+   "uk": "Резервна копія та відновлення",
+   "zh": "备份与恢复"
+  },
+  "backup_save_header": {
+   "en": "Back up",
+   "de": "Sichern",
+   "ar": "النسخ الاحتياطي",
+   "es": "Copia de seguridad",
+   "fr": "Sauvegarder",
+   "it": "Backup",
+   "ja": "バックアップ",
+   "ko": "백업",
+   "nl": "Back-up",
+   "pl": "Kopia zapasowa",
+   "pt": "Cópia de segurança",
+   "ro": "Backup",
+   "ru": "Резервная копия",
+   "tr": "Yedekle",
+   "uk": "Резервна копія",
+   "zh": "备份"
+  },
+  "backup_save_text": {
+   "en": "Saves your PhotoMaid data in a small file: decisions, albums, tags, notes, selection basket, hidden items, settings, workflows and presets. No photos are included.",
+   "de": "Speichert deine PhotoMaid-Daten in eine kleine Datei: Entscheidungen, Alben, Schlagwörter, Notizen, Auswahlkorb, Ausgeblendetes, Einstellungen, Abläufe und Vorlagen. Fotos sind nicht dabei.",
+   "ar": "يحفظ بيانات PhotoMaid في ملف صغير: القرارات والألبومات والوسوم والملاحظات وسلة التحديد والعناصر المخفية والإعدادات وسير العمل والإعدادات المسبقة. لا يتضمن الصور.",
+   "es": "Guarda tus datos de PhotoMaid en un archivo pequeño: decisiones, álbumes, etiquetas, notas, cesta de selección, elementos ocultos, ajustes, flujos de trabajo y ajustes guardados. No incluye fotos.",
+   "fr": "Enregistre vos données PhotoMaid dans un petit fichier : décisions, albums, mots-clés, notes, panier de sélection, éléments masqués, réglages, flux de travail et préréglages. Aucune photo n’est incluse.",
+   "it": "Salva i tuoi dati di PhotoMaid in un piccolo file: decisioni, album, tag, note, cestino di selezione, elementi nascosti, impostazioni, flussi di lavoro e preset. Le foto non sono incluse.",
+   "ja": "PhotoMaidのデータを小さなファイルに保存します：判断、アルバム、タグ、メモ、選択かご、非表示の項目、設定、ワークフロー、プリセット。写真は含まれません。",
+   "ko": "PhotoMaid 데이터를 작은 파일에 저장해요: 결정, 앨범, 태그, 메모, 선택 바구니, 숨긴 항목, 설정, 작업 흐름, 프리셋. 사진은 들어가지 않아요.",
+   "nl": "Slaat je PhotoMaid-gegevens op in een klein bestand: beslissingen, albums, labels, notities, selectiemand, verborgen items, instellingen, werkstromen en voorinstellingen. Er zitten geen foto’s in.",
+   "pl": "Zapisuje dane PhotoMaid w małym pliku: decyzje, albumy, tagi, notatki, koszyk wyboru, ukryte elementy, ustawienia, przepływy pracy i ustawienia filtrów. Bez zdjęć.",
+   "pt": "Guarda os seus dados do PhotoMaid num ficheiro pequeno: decisões, álbuns, etiquetas, notas, cesto de seleção, itens ocultos, definições, fluxos de trabalho e predefinições. Não inclui fotos.",
+   "ro": "Salvează datele PhotoMaid într-un fișier mic: decizii, albume, etichete, note, coș de selecție, elemente ascunse, setări, fluxuri de lucru și presetări. Fotografiile nu sunt incluse.",
+   "ru": "Сохраняет данные PhotoMaid в небольшой файл: решения, альбомы, метки, заметки, корзину выбора, скрытое, настройки, сценарии и пресеты. Фото в него не входят.",
+   "tr": "PhotoMaid verilerini küçük bir dosyaya kaydeder: kararlar, albümler, etiketler, notlar, seçim sepeti, gizlenen öğeler, ayarlar, iş akışları ve hazır ayarlar. Fotoğraflar dahil değildir.",
+   "uk": "Зберігає дані PhotoMaid у невеликий файл: рішення, альбоми, мітки, нотатки, кошик вибору, приховане, налаштування, сценарії та пресети. Фото до нього не входять.",
+   "zh": "将你的 PhotoMaid 数据保存到一个小文件中：决定、相册、标签、备注、选择篮、隐藏项、设置、工作流程和预设。不包含照片。"
+  },
+  "backup_contains": {
+   "en": "Contains: %1$s",
+   "de": "Enthält: %1$s",
+   "ar": "يحتوي على: %1$s",
+   "es": "Contiene: %1$s",
+   "fr": "Contient : %1$s",
+   "it": "Contiene: %1$s",
+   "ja": "内容: %1$s",
+   "ko": "포함: %1$s",
+   "nl": "Bevat: %1$s",
+   "pl": "Zawiera: %1$s",
+   "pt": "Contém: %1$s",
+   "ro": "Conține: %1$s",
+   "ru": "Содержит: %1$s",
+   "tr": "İçerik: %1$s",
+   "uk": "Містить: %1$s",
+   "zh": "包含：%1$s"
+  },
+  "backup_privacy": {
+   "en": "The file contains file names, tags and notes. Save it only where you want it – on a USB drive, for example.",
+   "de": "Die Datei enthält Dateinamen, Schlagwörter und Notizen. Speichere sie nur dort, wo du sie haben willst – zum Beispiel auf einem USB-Stick.",
+   "ar": "يحتوي الملف على أسماء الملفات والوسوم والملاحظات. احفظه فقط حيث تريد – على ذاكرة USB مثلًا.",
+   "es": "El archivo contiene nombres de archivo, etiquetas y notas. Guárdalo solo donde quieras, por ejemplo en una memoria USB.",
+   "fr": "Le fichier contient des noms de fichiers, des mots-clés et des notes. Enregistrez-le seulement là où vous le souhaitez, par exemple sur une clé USB.",
+   "it": "Il file contiene nomi di file, tag e note. Salvalo solo dove vuoi, ad esempio su una chiavetta USB.",
+   "ja": "このファイルにはファイル名、タグ、メモが含まれます。保存先は自分で決めた場所だけに（例：USBメモリ）。",
+   "ko": "이 파일에는 파일 이름, 태그, 메모가 들어 있어요. 원하는 곳에만 저장하세요(예: USB).",
+   "nl": "Het bestand bevat bestandsnamen, labels en notities. Sla het alleen op waar jij het wilt – bijvoorbeeld op een USB-stick.",
+   "pl": "Plik zawiera nazwy plików, tagi i notatki. Zapisz go tylko tam, gdzie chcesz – na przykład na pendrivie.",
+   "pt": "O ficheiro contém nomes de ficheiros, etiquetas e notas. Guarde-o apenas onde quiser – por exemplo, numa pen USB.",
+   "ro": "Fișierul conține nume de fișiere, etichete și note. Salvează-l doar unde vrei – de exemplu pe un stick USB.",
+   "ru": "Файл содержит имена файлов, метки и заметки. Сохраняйте его только там, где хотите, — например, на USB-накопителе.",
+   "tr": "Dosyada dosya adları, etiketler ve notlar bulunur. Yalnızca istediğin yere kaydet – örneğin bir USB belleğe.",
+   "uk": "Файл містить назви файлів, мітки й нотатки. Зберігайте його лише там, де хочете, — наприклад, на USB-накопичувачі.",
+   "zh": "该文件包含文件名、标签和备注。只保存在你想要的位置，例如 U 盘。"
+  },
+  "backup_save_button": {
+   "en": "Save backup …",
+   "de": "Sicherung speichern …",
+   "ar": "حفظ النسخة الاحتياطية …",
+   "es": "Guardar copia de seguridad…",
+   "fr": "Enregistrer la sauvegarde…",
+   "it": "Salva backup…",
+   "ja": "バックアップを保存…",
+   "ko": "백업 저장…",
+   "nl": "Back-up opslaan …",
+   "pl": "Zapisz kopię zapasową…",
+   "pt": "Guardar cópia de segurança…",
+   "ro": "Salvează backupul…",
+   "ru": "Сохранить резервную копию…",
+   "tr": "Yedeği kaydet…",
+   "uk": "Зберегти резервну копію…",
+   "zh": "保存备份…"
+  },
+  "backup_file_name": {
+   "en": "PhotoMaid backup %1$s.json",
+   "de": "PhotoMaid-Sicherung %1$s.json",
+   "ar": "نسخة PhotoMaid الاحتياطية %1$s.json",
+   "es": "Copia de PhotoMaid %1$s.json",
+   "fr": "Sauvegarde PhotoMaid %1$s.json",
+   "it": "Backup PhotoMaid %1$s.json",
+   "ja": "PhotoMaidバックアップ %1$s.json",
+   "ko": "PhotoMaid 백업 %1$s.json",
+   "nl": "PhotoMaid-back-up %1$s.json",
+   "pl": "Kopia PhotoMaid %1$s.json",
+   "pt": "Cópia PhotoMaid %1$s.json",
+   "ro": "Backup PhotoMaid %1$s.json",
+   "ru": "Резервная копия PhotoMaid %1$s.json",
+   "tr": "PhotoMaid yedeği %1$s.json",
+   "uk": "Резервна копія PhotoMaid %1$s.json",
+   "zh": "PhotoMaid 备份 %1$s.json"
+  },
+  "backup_saved": {
+   "en": "Backup saved.",
+   "de": "Sicherung gespeichert.",
+   "ar": "تم حفظ النسخة الاحتياطية.",
+   "es": "Copia de seguridad guardada.",
+   "fr": "Sauvegarde enregistrée.",
+   "it": "Backup salvato.",
+   "ja": "バックアップを保存しました。",
+   "ko": "백업을 저장했어요.",
+   "nl": "Back-up opgeslagen.",
+   "pl": "Zapisano kopię zapasową.",
+   "pt": "Cópia de segurança guardada.",
+   "ro": "Backup salvat.",
+   "ru": "Резервная копия сохранена.",
+   "tr": "Yedek kaydedildi.",
+   "uk": "Резервну копію збережено.",
+   "zh": "备份已保存。"
+  },
+  "backup_save_failed": {
+   "en": "The backup couldn’t be saved.",
+   "de": "Die Sicherung konnte nicht gespeichert werden.",
+   "ar": "تعذر حفظ النسخة الاحتياطية.",
+   "es": "No se ha podido guardar la copia de seguridad.",
+   "fr": "La sauvegarde n’a pas pu être enregistrée.",
+   "it": "Impossibile salvare il backup.",
+   "ja": "バックアップを保存できませんでした。",
+   "ko": "백업을 저장하지 못했어요.",
+   "nl": "De back-up kon niet worden opgeslagen.",
+   "pl": "Nie udało się zapisać kopii zapasowej.",
+   "pt": "Não foi possível guardar a cópia de segurança.",
+   "ro": "Backupul nu a putut fi salvat.",
+   "ru": "Не удалось сохранить резервную копию.",
+   "tr": "Yedek kaydedilemedi.",
+   "uk": "Не вдалося зберегти резервну копію.",
+   "zh": "无法保存备份。"
+  },
+  "backup_restore_header": {
+   "en": "Restore",
+   "de": "Wiederherstellen",
+   "ar": "الاستعادة",
+   "es": "Restaurar",
+   "fr": "Restaurer",
+   "it": "Ripristina",
+   "ja": "復元",
+   "ko": "복원",
+   "nl": "Herstellen",
+   "pl": "Przywracanie",
+   "pt": "Restaurar",
+   "ro": "Restaurare",
+   "ru": "Восстановление",
+   "tr": "Geri yükle",
+   "uk": "Відновлення",
+   "zh": "恢复"
+  },
+  "backup_restore_text": {
+   "en": "Brings in a backup, for example on a new phone. Photos are found again by name, size and time taken. Anything already decided or entered here stays as it is.",
+   "de": "Übernimmt eine Sicherung, zum Beispiel auf einem neuen Handy. Fotos werden über Name, Größe und Aufnahmezeit wiedergefunden. Was hier schon entschieden oder eingetragen ist, bleibt, wie es ist.",
+   "ar": "يستعيد نسخة احتياطية، على هاتف جديد مثلًا. يُعثر على الصور مجددًا من خلال الاسم والحجم ووقت الالتقاط. ما تم تحديده أو إدخاله هنا يبقى كما هو.",
+   "es": "Recupera una copia de seguridad, por ejemplo en un móvil nuevo. Las fotos se vuelven a encontrar por nombre, tamaño y hora de captura. Lo que ya esté decidido o anotado aquí se queda como está.",
+   "fr": "Reprend une sauvegarde, par exemple sur un nouveau téléphone. Les photos sont retrouvées grâce au nom, à la taille et à l’heure de prise. Ce qui est déjà décidé ou saisi ici reste tel quel.",
+   "it": "Recupera un backup, ad esempio su un nuovo telefono. Le foto vengono ritrovate da nome, dimensione e ora dello scatto. Ciò che è già deciso o inserito qui resta com’è.",
+   "ja": "新しいスマホなどでバックアップを取り込みます。写真は名前・サイズ・撮影日時で見つけ直します。ここで既に判断・入力した内容はそのままです。",
+   "ko": "새 휴대폰 등에서 백업을 가져와요. 사진은 이름, 크기, 촬영 시각으로 다시 찾아요. 여기서 이미 정했거나 입력한 것은 그대로 남아요.",
+   "nl": "Neemt een back-up over, bijvoorbeeld op een nieuwe telefoon. Foto’s worden teruggevonden via naam, grootte en opnametijd. Wat hier al besloten of ingevuld is, blijft zoals het is.",
+   "pl": "Przywraca kopię zapasową, np. na nowym telefonie. Zdjęcia są odnajdywane po nazwie, rozmiarze i czasie wykonania. To, co już tu zdecydowano lub wpisano, zostaje bez zmian.",
+   "pt": "Recupera uma cópia de segurança, por exemplo num telemóvel novo. As fotos são reencontradas pelo nome, tamanho e hora da captação. O que já estiver decidido ou registado aqui fica como está.",
+   "ro": "Preia un backup, de exemplu pe un telefon nou. Fotografiile sunt regăsite după nume, dimensiune și ora realizării. Ce este deja decis sau introdus aici rămâne neschimbat.",
+   "ru": "Переносит резервную копию, например на новый телефон. Фото находятся по имени, размеру и времени съёмки. То, что здесь уже решено или записано, остаётся как есть.",
+   "tr": "Bir yedeği, örneğin yeni bir telefona aktarır. Fotoğraflar ad, boyut ve çekim zamanıyla yeniden bulunur. Burada zaten karar verilmiş veya girilmiş olanlar olduğu gibi kalır.",
+   "uk": "Переносить резервну копію, наприклад на новий телефон. Фото знаходяться за назвою, розміром і часом зйомки. Те, що тут уже вирішено чи записано, лишається як є.",
+   "zh": "导入一份备份，例如在新手机上。照片会通过名称、大小和拍摄时间重新找到。此处已做出的决定或已输入的内容保持不变。"
+  },
+  "backup_open_button": {
+   "en": "Open backup …",
+   "de": "Sicherung öffnen …",
+   "ar": "فتح نسخة احتياطية …",
+   "es": "Abrir copia de seguridad…",
+   "fr": "Ouvrir une sauvegarde…",
+   "it": "Apri backup…",
+   "ja": "バックアップを開く…",
+   "ko": "백업 열기…",
+   "nl": "Back-up openen …",
+   "pl": "Otwórz kopię zapasową…",
+   "pt": "Abrir cópia de segurança…",
+   "ro": "Deschide un backup…",
+   "ru": "Открыть резервную копию…",
+   "tr": "Yedek aç…",
+   "uk": "Відкрити резервну копію…",
+   "zh": "打开备份…"
+  },
+  "backup_not_backup": {
+   "en": "This file isn’t a PhotoMaid backup.",
+   "de": "Diese Datei ist keine PhotoMaid-Sicherung.",
+   "ar": "هذا الملف ليس نسخة احتياطية من PhotoMaid.",
+   "es": "Este archivo no es una copia de seguridad de PhotoMaid.",
+   "fr": "Ce fichier n’est pas une sauvegarde PhotoMaid.",
+   "it": "Questo file non è un backup di PhotoMaid.",
+   "ja": "このファイルはPhotoMaidのバックアップではありません。",
+   "ko": "이 파일은 PhotoMaid 백업이 아니에요.",
+   "nl": "Dit bestand is geen PhotoMaid-back-up.",
+   "pl": "Ten plik nie jest kopią zapasową PhotoMaid.",
+   "pt": "Este ficheiro não é uma cópia de segurança do PhotoMaid.",
+   "ro": "Acest fișier nu este un backup PhotoMaid.",
+   "ru": "Этот файл — не резервная копия PhotoMaid.",
+   "tr": "Bu dosya bir PhotoMaid yedeği değil.",
+   "uk": "Цей файл — не резервна копія PhotoMaid.",
+   "zh": "此文件不是 PhotoMaid 备份。"
+  },
+  "backup_too_new": {
+   "en": "This backup comes from a newer version of PhotoMaid. Please update PhotoMaid first.",
+   "de": "Diese Sicherung stammt aus einer neueren PhotoMaid-Version. Bitte aktualisiere PhotoMaid zuerst.",
+   "ar": "هذه النسخة الاحتياطية من إصدار أحدث من PhotoMaid. حدّث PhotoMaid أولًا.",
+   "es": "Esta copia de seguridad es de una versión más reciente de PhotoMaid. Actualiza PhotoMaid primero.",
+   "fr": "Cette sauvegarde provient d’une version plus récente de PhotoMaid. Mettez d’abord PhotoMaid à jour.",
+   "it": "Questo backup proviene da una versione più recente di PhotoMaid. Aggiorna prima PhotoMaid.",
+   "ja": "このバックアップは新しいバージョンのPhotoMaidで作られました。先にPhotoMaidを更新してください。",
+   "ko": "이 백업은 더 새로운 PhotoMaid 버전에서 만들어졌어요. 먼저 PhotoMaid를 업데이트하세요.",
+   "nl": "Deze back-up komt uit een nieuwere versie van PhotoMaid. Werk PhotoMaid eerst bij.",
+   "pl": "Ta kopia zapasowa pochodzi z nowszej wersji PhotoMaid. Najpierw zaktualizuj PhotoMaid.",
+   "pt": "Esta cópia de segurança vem de uma versão mais recente do PhotoMaid. Atualize primeiro o PhotoMaid.",
+   "ro": "Acest backup provine dintr-o versiune mai nouă de PhotoMaid. Actualizează mai întâi PhotoMaid.",
+   "ru": "Эта резервная копия создана в более новой версии PhotoMaid. Сначала обновите PhotoMaid.",
+   "tr": "Bu yedek PhotoMaid’in daha yeni bir sürümünden. Lütfen önce PhotoMaid’i güncelle.",
+   "uk": "Цю резервну копію створено в новішій версії PhotoMaid. Спершу оновіть PhotoMaid.",
+   "zh": "此备份来自更新版本的 PhotoMaid。请先更新 PhotoMaid。"
+  },
+  "backup_unreadable": {
+   "en": "The file couldn’t be read.",
+   "de": "Die Datei konnte nicht gelesen werden.",
+   "ar": "تعذرت قراءة الملف.",
+   "es": "No se ha podido leer el archivo.",
+   "fr": "Le fichier n’a pas pu être lu.",
+   "it": "Impossibile leggere il file.",
+   "ja": "ファイルを読み込めませんでした。",
+   "ko": "파일을 읽지 못했어요.",
+   "nl": "Het bestand kon niet worden gelezen.",
+   "pl": "Nie udało się odczytać pliku.",
+   "pt": "Não foi possível ler o ficheiro.",
+   "ro": "Fișierul nu a putut fi citit.",
+   "ru": "Не удалось прочитать файл.",
+   "tr": "Dosya okunamadı.",
+   "uk": "Не вдалося прочитати файл.",
+   "zh": "无法读取该文件。"
+  },
+  "backup_from": {
+   "en": "Backup from %1$s",
+   "de": "Sicherung vom %1$s",
+   "ar": "نسخة احتياطية من %1$s",
+   "es": "Copia del %1$s",
+   "fr": "Sauvegarde du %1$s",
+   "it": "Backup del %1$s",
+   "ja": "%1$s のバックアップ",
+   "ko": "%1$s 백업",
+   "nl": "Back-up van %1$s",
+   "pl": "Kopia z %1$s",
+   "pt": "Cópia de %1$s",
+   "ro": "Backup din %1$s",
+   "ru": "Резервная копия от %1$s",
+   "tr": "%1$s tarihli yedek",
+   "uk": "Резервна копія від %1$s",
+   "zh": "%1$s 的备份"
+  },
+  "backup_step_settings": {
+   "en": "Settings are taken over (except “Permanently delete”); workflows, presets and your own collections are added.",
+   "de": "Einstellungen werden übernommen (außer „Endgültig löschen“); Abläufe, Vorlagen und eigene Sammlungen kommen dazu.",
+   "ar": "تُستعاد الإعدادات (باستثناء «حذف نهائيًا»)، وتُضاف مسارات سير العمل والإعدادات المسبقة ومجموعاتك الخاصة.",
+   "es": "Se recuperan los ajustes (excepto «Eliminar definitivamente»); se añaden flujos de trabajo, ajustes guardados y tus colecciones.",
+   "fr": "Les réglages sont repris (sauf « Supprimer définitivement ») ; les flux de travail, préréglages et vos collections sont ajoutés.",
+   "it": "Le impostazioni vengono riprese (tranne «Elimina definitivamente»); flussi di lavoro, preset e le tue raccolte vengono aggiunti.",
+   "ja": "設定を引き継ぎます（「完全に削除」を除く）。ワークフロー、プリセット、自分のコレクションは追加されます。",
+   "ko": "설정을 가져와요(‘영구 삭제’ 제외). 작업 흐름, 프리셋, 내 모음은 추가돼요.",
+   "nl": "Instellingen worden overgenomen (behalve ‘Definitief verwijderen’); werkstromen, voorinstellingen en eigen verzamelingen komen erbij.",
+   "pl": "Ustawienia zostaną przejęte (oprócz „Trwale usuwaj”); przepływy pracy, ustawienia filtrów i Twoje kolekcje zostaną dodane.",
+   "pt": "As definições são recuperadas (exceto “Eliminar definitivamente”); fluxos de trabalho, predefinições e as suas coleções são adicionados.",
+   "ro": "Setările sunt preluate (cu excepția „Șterge definitiv”); fluxurile de lucru, presetările și colecțiile tale sunt adăugate.",
+   "ru": "Настройки переносятся (кроме «Удалять навсегда»); сценарии, пресеты и ваши подборки добавляются.",
+   "tr": "Ayarlar aktarılır (“Kalıcı olarak sil” hariç); iş akışları, hazır ayarlar ve kendi koleksiyonların eklenir.",
+   "uk": "Налаштування переносяться (крім «Видаляти назавжди»); сценарії, пресети й ваші добірки додаються.",
+   "zh": "设置会被沿用（“永久删除”除外）；工作流程、预设和你的合集会被添加。"
+  },
+  "backup_missing_note": {
+   "en": "These photos and videos aren’t on this device (or can’t be matched clearly). Nothing is brought in for them.",
+   "de": "Diese Fotos und Videos gibt es auf diesem Gerät nicht (oder nicht eindeutig). Für sie wird nichts übernommen.",
+   "ar": "هذه الصور والفيديوهات غير موجودة على هذا الجهاز (أو لا يمكن مطابقتها بوضوح). لن يُستعاد لها شيء.",
+   "es": "Estas fotos y vídeos no están en este dispositivo (o no se pueden identificar con claridad). No se recupera nada para ellos.",
+   "fr": "Ces photos et vidéos ne sont pas sur cet appareil (ou ne peuvent pas être identifiées avec certitude). Rien n’est repris pour elles.",
+   "it": "Queste foto e video non sono su questo dispositivo (o non si possono abbinare con certezza). Per loro non viene ripreso nulla.",
+   "ja": "これらの写真と動画はこの端末にありません（または確実に一致させられません）。これらについては何も取り込みません。",
+   "ko": "이 사진과 동영상은 이 기기에 없거나 정확히 찾을 수 없어요. 이 항목들은 가져오지 않아요.",
+   "nl": "Deze foto’s en video’s staan niet op dit apparaat (of zijn niet eenduidig te vinden). Voor deze wordt niets overgenomen.",
+   "pl": "Tych zdjęć i filmów nie ma na tym urządzeniu (lub nie da się ich jednoznacznie dopasować). Dla nich nic nie zostanie przywrócone.",
+   "pt": "Estas fotos e vídeos não estão neste dispositivo (ou não é possível identificá-los com certeza). Nada é recuperado para eles.",
+   "ro": "Aceste fotografii și videoclipuri nu sunt pe acest dispozitiv (sau nu pot fi potrivite clar). Pentru ele nu se preia nimic.",
+   "ru": "Этих фото и видео нет на устройстве (или их нельзя однозначно сопоставить). Для них ничего не переносится.",
+   "tr": "Bu fotoğraf ve videolar bu cihazda yok (ya da açıkça eşleştirilemiyor). Onlar için hiçbir şey aktarılmaz.",
+   "uk": "Цих фото й відео немає на пристрої (або їх не можна однозначно зіставити). Для них нічого не переноситься.",
+   "zh": "这些照片和视频不在此设备上（或无法明确匹配）。不会为它们导入任何内容。"
+  },
+  "backup_missing_show": {
+   "en": "Show list",
+   "de": "Liste zeigen",
+   "ar": "عرض القائمة",
+   "es": "Mostrar lista",
+   "fr": "Afficher la liste",
+   "it": "Mostra elenco",
+   "ja": "リストを表示",
+   "ko": "목록 보기",
+   "nl": "Lijst tonen",
+   "pl": "Pokaż listę",
+   "pt": "Mostrar lista",
+   "ro": "Arată lista",
+   "ru": "Показать список",
+   "tr": "Listeyi göster",
+   "uk": "Показати список",
+   "zh": "显示列表"
+  },
+  "backup_missing_hide": {
+   "en": "Hide list",
+   "de": "Liste ausblenden",
+   "ar": "إخفاء القائمة",
+   "es": "Ocultar lista",
+   "fr": "Masquer la liste",
+   "it": "Nascondi elenco",
+   "ja": "リストを隠す",
+   "ko": "목록 숨기기",
+   "nl": "Lijst verbergen",
+   "pl": "Ukryj listę",
+   "pt": "Ocultar lista",
+   "ro": "Ascunde lista",
+   "ru": "Скрыть список",
+   "tr": "Listeyi gizle",
+   "uk": "Сховати список",
+   "zh": "隐藏列表"
+  },
+  "backup_nothing": {
+   "en": "There’s nothing in this backup that’s missing here.",
+   "de": "In dieser Sicherung ist nichts, was hier noch fehlt.",
+   "ar": "لا يوجد في هذه النسخة الاحتياطية شيء ينقص هنا.",
+   "es": "En esta copia no hay nada que falte aquí.",
+   "fr": "Cette sauvegarde ne contient rien qui manque ici.",
+   "it": "In questo backup non c’è nulla che manchi qui.",
+   "ja": "このバックアップには、ここに足りないものはありません。",
+   "ko": "이 백업에는 여기에 없는 것이 없어요.",
+   "nl": "In deze back-up staat niets wat hier nog ontbreekt.",
+   "pl": "W tej kopii nie ma niczego, czego tu brakuje.",
+   "pt": "Nesta cópia não há nada que falte aqui.",
+   "ro": "În acest backup nu e nimic care să lipsească aici.",
+   "ru": "В этой резервной копии нет ничего, чего здесь не хватает.",
+   "tr": "Bu yedekte burada eksik olan bir şey yok.",
+   "uk": "У цій резервній копії немає нічого, чого тут бракує.",
+   "zh": "此备份中没有此处缺少的内容。"
+  },
+  "backup_apply": {
+   "en": "Restore",
+   "de": "Übernehmen",
+   "ar": "استعادة",
+   "es": "Restaurar",
+   "fr": "Restaurer",
+   "it": "Ripristina",
+   "ja": "取り込む",
+   "ko": "가져오기",
+   "nl": "Overnemen",
+   "pl": "Przywróć",
+   "pt": "Restaurar",
+   "ro": "Restaurează",
+   "ru": "Перенести",
+   "tr": "Geri yükle",
+   "uk": "Перенести",
+   "zh": "导入"
+  },
+  "backup_done": {
+   "en": "Restored",
+   "de": "Übernommen",
+   "ar": "تمت الاستعادة",
+   "es": "Restaurado",
+   "fr": "Restauré",
+   "it": "Ripristinato",
+   "ja": "取り込みました",
+   "ko": "가져왔어요",
+   "nl": "Overgenomen",
+   "pl": "Przywrócono",
+   "pt": "Restaurado",
+   "ro": "Restaurat",
+   "ru": "Перенесено",
+   "tr": "Geri yüklendi",
+   "uk": "Перенесено",
+   "zh": "已导入"
   }
  },
  "plurals": {
@@ -18720,6 +20160,2112 @@
    },
    "zh": {
     "other": "%1$d 张照片无法读取，其位置留空。"
+   }
+  },
+  "archive_step_copy": {
+   "en": {
+    "one": "%1$d file is copied to “%2$s”.",
+    "other": "%1$d files are copied to “%2$s”."
+   },
+   "de": {
+    "one": "%1$d Datei wird nach „%2$s“ kopiert.",
+    "other": "%1$d Dateien werden nach „%2$s“ kopiert."
+   },
+   "ar": {
+    "zero": "يُنسخ %1$d ملف إلى «%2$s».",
+    "one": "يُنسخ ملف واحد إلى «%2$s».",
+    "two": "يُنسخ ملفان إلى «%2$s».",
+    "few": "تُنسخ %1$d ملفات إلى «%2$s».",
+    "many": "يُنسخ %1$d ملفًا إلى «%2$s».",
+    "other": "يُنسخ %1$d ملف إلى «%2$s»."
+   },
+   "es": {
+    "one": "Se copia %1$d archivo a «%2$s».",
+    "many": "Se copian %1$d archivos a «%2$s».",
+    "other": "Se copian %1$d archivos a «%2$s»."
+   },
+   "fr": {
+    "one": "%1$d fichier est copié vers « %2$s ».",
+    "many": "%1$d fichiers sont copiés vers « %2$s ».",
+    "other": "%1$d fichiers sont copiés vers « %2$s »."
+   },
+   "it": {
+    "one": "%1$d file viene copiato in «%2$s».",
+    "many": "%1$d file vengono copiati in «%2$s».",
+    "other": "%1$d file vengono copiati in «%2$s»."
+   },
+   "ja": {
+    "other": "%1$d件のファイルを「%2$s」にコピーします。"
+   },
+   "ko": {
+    "other": "파일 %1$d개를 ‘%2$s’에 복사해요."
+   },
+   "nl": {
+    "one": "%1$d bestand wordt gekopieerd naar ‘%2$s’.",
+    "other": "%1$d bestanden worden gekopieerd naar ‘%2$s’."
+   },
+   "pl": {
+    "one": "%1$d plik zostanie skopiowany do „%2$s”.",
+    "few": "%1$d pliki zostaną skopiowane do „%2$s”.",
+    "many": "%1$d plików zostanie skopiowanych do „%2$s”.",
+    "other": "%1$d pliki zostaną skopiowane do „%2$s”."
+   },
+   "pt": {
+    "one": "%1$d ficheiro é copiado para “%2$s”.",
+    "many": "%1$d ficheiros são copiados para “%2$s”.",
+    "other": "%1$d ficheiros são copiados para “%2$s”."
+   },
+   "ro": {
+    "one": "%1$d fișier este copiat în „%2$s”.",
+    "few": "%1$d fișiere sunt copiate în „%2$s”.",
+    "other": "%1$d de fișiere sunt copiate în „%2$s”."
+   },
+   "ru": {
+    "one": "%1$d файл будет скопирован в «%2$s».",
+    "few": "%1$d файла будут скопированы в «%2$s».",
+    "many": "%1$d файлов будут скопированы в «%2$s».",
+    "other": "%1$d файла будут скопированы в «%2$s»."
+   },
+   "tr": {
+    "one": "%1$d dosya “%2$s” konumuna kopyalanır.",
+    "other": "%1$d dosya “%2$s” konumuna kopyalanır."
+   },
+   "uk": {
+    "one": "%1$d файл буде скопійовано до «%2$s».",
+    "few": "%1$d файли буде скопійовано до «%2$s».",
+    "many": "%1$d файлів буде скопійовано до «%2$s».",
+    "other": "%1$d файли буде скопійовано до «%2$s»."
+   },
+   "zh": {
+    "other": "将把 %1$d 个文件复制到“%2$s”。"
+   }
+  },
+  "archive_part_verified": {
+   "en": {
+    "one": "%1$d copied and checked",
+    "other": "%1$d copied and checked"
+   },
+   "de": {
+    "one": "%1$d geprüft kopiert",
+    "other": "%1$d geprüft kopiert"
+   },
+   "ar": {
+    "zero": "%1$d نُسخ وتم التحقق منه",
+    "one": "%1$d نُسخ وتم التحقق منه",
+    "two": "%1$d نُسخا وتم التحقق منهما",
+    "few": "%1$d نُسخت وتم التحقق منها",
+    "many": "%1$d نُسخ وتم التحقق منه",
+    "other": "%1$d نُسخ وتم التحقق منه"
+   },
+   "es": {
+    "one": "%1$d copiado y comprobado",
+    "many": "%1$d copiados y comprobados",
+    "other": "%1$d copiados y comprobados"
+   },
+   "fr": {
+    "one": "%1$d copié et vérifié",
+    "many": "%1$d copiés et vérifiés",
+    "other": "%1$d copiés et vérifiés"
+   },
+   "it": {
+    "one": "%1$d copiato e controllato",
+    "many": "%1$d copiati e controllati",
+    "other": "%1$d copiati e controllati"
+   },
+   "ja": {
+    "other": "%1$d件をコピーして確認"
+   },
+   "ko": {
+    "other": "%1$d개 복사·확인됨"
+   },
+   "nl": {
+    "one": "%1$d gekopieerd en gecontroleerd",
+    "other": "%1$d gekopieerd en gecontroleerd"
+   },
+   "pl": {
+    "one": "%1$d skopiowany i sprawdzony",
+    "few": "%1$d skopiowane i sprawdzone",
+    "many": "%1$d skopiowanych i sprawdzonych",
+    "other": "%1$d skopiowane i sprawdzone"
+   },
+   "pt": {
+    "one": "%1$d copiado e verificado",
+    "many": "%1$d copiados e verificados",
+    "other": "%1$d copiados e verificados"
+   },
+   "ro": {
+    "one": "%1$d copiat și verificat",
+    "few": "%1$d copiate și verificate",
+    "other": "%1$d de copiate și verificate"
+   },
+   "ru": {
+    "one": "%1$d скопирован и проверен",
+    "few": "%1$d скопировано и проверено",
+    "many": "%1$d скопировано и проверено",
+    "other": "%1$d скопировано и проверено"
+   },
+   "tr": {
+    "one": "%1$d kopyalandı ve kontrol edildi",
+    "other": "%1$d kopyalandı ve kontrol edildi"
+   },
+   "uk": {
+    "one": "%1$d скопійовано й перевірено",
+    "few": "%1$d скопійовано й перевірено",
+    "many": "%1$d скопійовано й перевірено",
+    "other": "%1$d скопійовано й перевірено"
+   },
+   "zh": {
+    "other": "已复制并检查 %1$d 个"
+   }
+  },
+  "archive_part_already": {
+   "en": {
+    "one": "%1$d already there",
+    "other": "%1$d already there"
+   },
+   "de": {
+    "one": "%1$d schon vorhanden",
+    "other": "%1$d schon vorhanden"
+   },
+   "ar": {
+    "zero": "%1$d موجود مسبقًا",
+    "one": "%1$d موجود مسبقًا",
+    "two": "%1$d موجودان مسبقًا",
+    "few": "%1$d موجودة مسبقًا",
+    "many": "%1$d موجود مسبقًا",
+    "other": "%1$d موجود مسبقًا"
+   },
+   "es": {
+    "one": "%1$d ya estaba",
+    "many": "%1$d ya estaban",
+    "other": "%1$d ya estaban"
+   },
+   "fr": {
+    "one": "%1$d déjà présent",
+    "many": "%1$d déjà présents",
+    "other": "%1$d déjà présents"
+   },
+   "it": {
+    "one": "%1$d già presente",
+    "many": "%1$d già presenti",
+    "other": "%1$d già presenti"
+   },
+   "ja": {
+    "other": "%1$d件は既にあり"
+   },
+   "ko": {
+    "other": "%1$d개 이미 있음"
+   },
+   "nl": {
+    "one": "%1$d al aanwezig",
+    "other": "%1$d al aanwezig"
+   },
+   "pl": {
+    "one": "%1$d już jest",
+    "few": "%1$d już są",
+    "many": "%1$d już jest",
+    "other": "%1$d już są"
+   },
+   "pt": {
+    "one": "%1$d já existia",
+    "many": "%1$d já existiam",
+    "other": "%1$d já existiam"
+   },
+   "ro": {
+    "one": "%1$d există deja",
+    "few": "%1$d există deja",
+    "other": "%1$d de fișiere există deja"
+   },
+   "ru": {
+    "one": "%1$d уже есть",
+    "few": "%1$d уже есть",
+    "many": "%1$d уже есть",
+    "other": "%1$d уже есть"
+   },
+   "tr": {
+    "one": "%1$d zaten var",
+    "other": "%1$d zaten var"
+   },
+   "uk": {
+    "one": "%1$d уже є",
+    "few": "%1$d уже є",
+    "many": "%1$d уже є",
+    "other": "%1$d уже є"
+   },
+   "zh": {
+    "other": "%1$d 个已存在"
+   }
+  },
+  "archive_part_failed": {
+   "en": {
+    "one": "%1$d failed",
+    "other": "%1$d failed"
+   },
+   "de": {
+    "one": "%1$d fehlgeschlagen",
+    "other": "%1$d fehlgeschlagen"
+   },
+   "ar": {
+    "zero": "فشل %1$d",
+    "one": "فشل %1$d",
+    "two": "فشل %1$d",
+    "few": "فشلت %1$d",
+    "many": "فشل %1$d",
+    "other": "فشل %1$d"
+   },
+   "es": {
+    "one": "%1$d con error",
+    "many": "%1$d con error",
+    "other": "%1$d con error"
+   },
+   "fr": {
+    "one": "%1$d en échec",
+    "many": "%1$d en échec",
+    "other": "%1$d en échec"
+   },
+   "it": {
+    "one": "%1$d non riuscito",
+    "many": "%1$d non riusciti",
+    "other": "%1$d non riusciti"
+   },
+   "ja": {
+    "other": "%1$d件失敗"
+   },
+   "ko": {
+    "other": "%1$d개 실패"
+   },
+   "nl": {
+    "one": "%1$d mislukt",
+    "other": "%1$d mislukt"
+   },
+   "pl": {
+    "one": "%1$d nieudany",
+    "few": "%1$d nieudane",
+    "many": "%1$d nieudanych",
+    "other": "%1$d nieudane"
+   },
+   "pt": {
+    "one": "%1$d falhou",
+    "many": "%1$d falharam",
+    "other": "%1$d falharam"
+   },
+   "ro": {
+    "one": "%1$d eșuat",
+    "few": "%1$d eșuate",
+    "other": "%1$d de eșuate"
+   },
+   "ru": {
+    "one": "%1$d с ошибкой",
+    "few": "%1$d с ошибкой",
+    "many": "%1$d с ошибкой",
+    "other": "%1$d с ошибкой"
+   },
+   "tr": {
+    "one": "%1$d başarısız",
+    "other": "%1$d başarısız"
+   },
+   "uk": {
+    "one": "%1$d з помилкою",
+    "few": "%1$d з помилкою",
+    "many": "%1$d з помилкою",
+    "other": "%1$d з помилкою"
+   },
+   "zh": {
+    "other": "%1$d 个失败"
+   }
+  },
+  "archive_part_notdone": {
+   "en": {
+    "one": "%1$d not copied",
+    "other": "%1$d not copied"
+   },
+   "de": {
+    "one": "%1$d nicht kopiert",
+    "other": "%1$d nicht kopiert"
+   },
+   "ar": {
+    "zero": "%1$d لم يُنسخ",
+    "one": "%1$d لم يُنسخ",
+    "two": "%1$d لم يُنسخا",
+    "few": "%1$d لم تُنسخ",
+    "many": "%1$d لم يُنسخ",
+    "other": "%1$d لم يُنسخ"
+   },
+   "es": {
+    "one": "%1$d sin copiar",
+    "many": "%1$d sin copiar",
+    "other": "%1$d sin copiar"
+   },
+   "fr": {
+    "one": "%1$d non copié",
+    "many": "%1$d non copiés",
+    "other": "%1$d non copiés"
+   },
+   "it": {
+    "one": "%1$d non copiato",
+    "many": "%1$d non copiati",
+    "other": "%1$d non copiati"
+   },
+   "ja": {
+    "other": "%1$d件は未コピー"
+   },
+   "ko": {
+    "other": "%1$d개 복사 안 됨"
+   },
+   "nl": {
+    "one": "%1$d niet gekopieerd",
+    "other": "%1$d niet gekopieerd"
+   },
+   "pl": {
+    "one": "%1$d nieskopiowany",
+    "few": "%1$d nieskopiowane",
+    "many": "%1$d nieskopiowanych",
+    "other": "%1$d nieskopiowane"
+   },
+   "pt": {
+    "one": "%1$d não copiado",
+    "many": "%1$d não copiados",
+    "other": "%1$d não copiados"
+   },
+   "ro": {
+    "one": "%1$d necopiat",
+    "few": "%1$d necopiate",
+    "other": "%1$d de necopiate"
+   },
+   "ru": {
+    "one": "%1$d не скопирован",
+    "few": "%1$d не скопировано",
+    "many": "%1$d не скопировано",
+    "other": "%1$d не скопировано"
+   },
+   "tr": {
+    "one": "%1$d kopyalanmadı",
+    "other": "%1$d kopyalanmadı"
+   },
+   "uk": {
+    "one": "%1$d не скопійовано",
+    "few": "%1$d не скопійовано",
+    "many": "%1$d не скопійовано",
+    "other": "%1$d не скопійовано"
+   },
+   "zh": {
+    "other": "%1$d 个未复制"
+   }
+  },
+  "archive_cleanup_title": {
+   "en": {
+    "one": "Move %1$d original to the PhotoMaid trash?",
+    "other": "Move %1$d originals to the PhotoMaid trash?"
+   },
+   "de": {
+    "one": "%1$d Original in den PhotoMaid-Papierkorb legen?",
+    "other": "%1$d Originale in den PhotoMaid-Papierkorb legen?"
+   },
+   "ar": {
+    "zero": "نقل %1$d أصل إلى سلة مهملات PhotoMaid؟",
+    "one": "نقل أصل واحد إلى سلة مهملات PhotoMaid؟",
+    "two": "نقل أصلين إلى سلة مهملات PhotoMaid؟",
+    "few": "نقل %1$d أصول إلى سلة مهملات PhotoMaid؟",
+    "many": "نقل %1$d أصلًا إلى سلة مهملات PhotoMaid؟",
+    "other": "نقل %1$d أصل إلى سلة مهملات PhotoMaid؟"
+   },
+   "es": {
+    "one": "¿Mover %1$d original a la papelera de PhotoMaid?",
+    "many": "¿Mover %1$d originales a la papelera de PhotoMaid?",
+    "other": "¿Mover %1$d originales a la papelera de PhotoMaid?"
+   },
+   "fr": {
+    "one": "Mettre %1$d original dans la corbeille PhotoMaid ?",
+    "many": "Mettre %1$d originaux dans la corbeille PhotoMaid ?",
+    "other": "Mettre %1$d originaux dans la corbeille PhotoMaid ?"
+   },
+   "it": {
+    "one": "Spostare %1$d originale nel cestino di PhotoMaid?",
+    "many": "Spostare %1$d originali nel cestino di PhotoMaid?",
+    "other": "Spostare %1$d originali nel cestino di PhotoMaid?"
+   },
+   "ja": {
+    "other": "%1$d件の元ファイルをPhotoMaidのゴミ箱に移動しますか？"
+   },
+   "ko": {
+    "other": "원본 %1$d개를 PhotoMaid 휴지통으로 옮길까요?"
+   },
+   "nl": {
+    "one": "%1$d origineel naar de PhotoMaid-prullenbak?",
+    "other": "%1$d originelen naar de PhotoMaid-prullenbak?"
+   },
+   "pl": {
+    "one": "Przenieść %1$d oryginał do kosza PhotoMaid?",
+    "few": "Przenieść %1$d oryginały do kosza PhotoMaid?",
+    "many": "Przenieść %1$d oryginałów do kosza PhotoMaid?",
+    "other": "Przenieść %1$d oryginały do kosza PhotoMaid?"
+   },
+   "pt": {
+    "one": "Mover %1$d original para o lixo do PhotoMaid?",
+    "many": "Mover %1$d originais para o lixo do PhotoMaid?",
+    "other": "Mover %1$d originais para o lixo do PhotoMaid?"
+   },
+   "ro": {
+    "one": "Muți %1$d original în coșul PhotoMaid?",
+    "few": "Muți %1$d originale în coșul PhotoMaid?",
+    "other": "Muți %1$d de originale în coșul PhotoMaid?"
+   },
+   "ru": {
+    "one": "Переместить %1$d оригинал в корзину PhotoMaid?",
+    "few": "Переместить %1$d оригинала в корзину PhotoMaid?",
+    "many": "Переместить %1$d оригиналов в корзину PhotoMaid?",
+    "other": "Переместить %1$d оригинала в корзину PhotoMaid?"
+   },
+   "tr": {
+    "one": "%1$d orijinal PhotoMaid çöp kutusuna taşınsın mı?",
+    "other": "%1$d orijinal PhotoMaid çöp kutusuna taşınsın mı?"
+   },
+   "uk": {
+    "one": "Перемістити %1$d оригінал у кошик PhotoMaid?",
+    "few": "Перемістити %1$d оригінали в кошик PhotoMaid?",
+    "many": "Перемістити %1$d оригіналів у кошик PhotoMaid?",
+    "other": "Перемістити %1$d оригінали в кошик PhotoMaid?"
+   },
+   "zh": {
+    "other": "将 %1$d 个原件移到 PhotoMaid 回收站？"
+   }
+  },
+  "archive_cleanup_favs": {
+   "en": {
+    "one": "%1$d favorite stays (Protect favorites).",
+    "other": "%1$d favorites stay (Protect favorites)."
+   },
+   "de": {
+    "one": "%1$d Favorit bleibt (Favoriten schützen).",
+    "other": "%1$d Favoriten bleiben (Favoriten schützen)."
+   },
+   "ar": {
+    "zero": "يبقى %1$d من المفضلة (حماية المفضلة).",
+    "one": "يبقى عنصر مفضل واحد (حماية المفضلة).",
+    "two": "يبقى عنصران مفضلان (حماية المفضلة).",
+    "few": "تبقى %1$d عناصر مفضلة (حماية المفضلة).",
+    "many": "يبقى %1$d عنصرًا مفضلًا (حماية المفضلة).",
+    "other": "يبقى %1$d عنصر مفضل (حماية المفضلة)."
+   },
+   "es": {
+    "one": "%1$d favorito se queda (Proteger favoritos).",
+    "many": "%1$d favoritos se quedan (Proteger favoritos).",
+    "other": "%1$d favoritos se quedan (Proteger favoritos)."
+   },
+   "fr": {
+    "one": "%1$d favori reste (Protéger les favoris).",
+    "many": "%1$d favoris restent (Protéger les favoris).",
+    "other": "%1$d favoris restent (Protéger les favoris)."
+   },
+   "it": {
+    "one": "%1$d preferito resta (Proteggi i preferiti).",
+    "many": "%1$d preferiti restano (Proteggi i preferiti).",
+    "other": "%1$d preferiti restano (Proteggi i preferiti)."
+   },
+   "ja": {
+    "other": "お気に入り%1$d件はそのままです（お気に入りを保護）。"
+   },
+   "ko": {
+    "other": "즐겨찾기 %1$d개는 그대로 남아요(즐겨찾기 보호)."
+   },
+   "nl": {
+    "one": "%1$d favoriet blijft (Favorieten beschermen).",
+    "other": "%1$d favorieten blijven (Favorieten beschermen)."
+   },
+   "pl": {
+    "one": "%1$d ulubiony zostaje (Chroń ulubione).",
+    "few": "%1$d ulubione zostają (Chroń ulubione).",
+    "many": "%1$d ulubionych zostaje (Chroń ulubione).",
+    "other": "%1$d ulubione zostają (Chroń ulubione)."
+   },
+   "pt": {
+    "one": "%1$d favorito fica (Proteger favoritos).",
+    "many": "%1$d favoritos ficam (Proteger favoritos).",
+    "other": "%1$d favoritos ficam (Proteger favoritos)."
+   },
+   "ro": {
+    "one": "%1$d favorit rămâne (Protejează favoritele).",
+    "few": "%1$d favorite rămân (Protejează favoritele).",
+    "other": "%1$d de favorite rămân (Protejează favoritele)."
+   },
+   "ru": {
+    "one": "%1$d избранный остаётся (Защищать избранное).",
+    "few": "%1$d избранных остаются (Защищать избранное).",
+    "many": "%1$d избранных остаются (Защищать избранное).",
+    "other": "%1$d избранных остаются (Защищать избранное)."
+   },
+   "tr": {
+    "one": "%1$d favori kalır (Favorileri koru).",
+    "other": "%1$d favori kalır (Favorileri koru)."
+   },
+   "uk": {
+    "one": "%1$d обраний лишається (Захищати обране).",
+    "few": "%1$d обраних лишаються (Захищати обране).",
+    "many": "%1$d обраних лишаються (Захищати обране).",
+    "other": "%1$d обраних лишаються (Захищати обране)."
+   },
+   "zh": {
+    "other": "%1$d 个收藏保持不变（保护收藏）。"
+   }
+  },
+  "archive_cleanup_done": {
+   "en": {
+    "one": "%1$d original is now in the PhotoMaid trash.",
+    "other": "%1$d originals are now in the PhotoMaid trash."
+   },
+   "de": {
+    "one": "%1$d Original liegt jetzt im PhotoMaid-Papierkorb.",
+    "other": "%1$d Originale liegen jetzt im PhotoMaid-Papierkorb."
+   },
+   "ar": {
+    "zero": "أصبح %1$d أصل الآن في سلة مهملات PhotoMaid.",
+    "one": "أصبح أصل واحد الآن في سلة مهملات PhotoMaid.",
+    "two": "أصبح أصلان الآن في سلة مهملات PhotoMaid.",
+    "few": "أصبحت %1$d أصول الآن في سلة مهملات PhotoMaid.",
+    "many": "أصبح %1$d أصلًا الآن في سلة مهملات PhotoMaid.",
+    "other": "أصبح %1$d أصل الآن في سلة مهملات PhotoMaid."
+   },
+   "es": {
+    "one": "%1$d original está ahora en la papelera de PhotoMaid.",
+    "many": "%1$d originales están ahora en la papelera de PhotoMaid.",
+    "other": "%1$d originales están ahora en la papelera de PhotoMaid."
+   },
+   "fr": {
+    "one": "%1$d original est maintenant dans la corbeille PhotoMaid.",
+    "many": "%1$d originaux sont maintenant dans la corbeille PhotoMaid.",
+    "other": "%1$d originaux sont maintenant dans la corbeille PhotoMaid."
+   },
+   "it": {
+    "one": "%1$d originale ora è nel cestino di PhotoMaid.",
+    "many": "%1$d originali ora sono nel cestino di PhotoMaid.",
+    "other": "%1$d originali ora sono nel cestino di PhotoMaid."
+   },
+   "ja": {
+    "other": "%1$d件の元ファイルがPhotoMaidのゴミ箱に入りました。"
+   },
+   "ko": {
+    "other": "원본 %1$d개가 이제 PhotoMaid 휴지통에 있어요."
+   },
+   "nl": {
+    "one": "%1$d origineel staat nu in de PhotoMaid-prullenbak.",
+    "other": "%1$d originelen staan nu in de PhotoMaid-prullenbak."
+   },
+   "pl": {
+    "one": "%1$d oryginał jest teraz w koszu PhotoMaid.",
+    "few": "%1$d oryginały są teraz w koszu PhotoMaid.",
+    "many": "%1$d oryginałów jest teraz w koszu PhotoMaid.",
+    "other": "%1$d oryginały są teraz w koszu PhotoMaid."
+   },
+   "pt": {
+    "one": "%1$d original está agora no lixo do PhotoMaid.",
+    "many": "%1$d originais estão agora no lixo do PhotoMaid.",
+    "other": "%1$d originais estão agora no lixo do PhotoMaid."
+   },
+   "ro": {
+    "one": "%1$d original este acum în coșul PhotoMaid.",
+    "few": "%1$d originale sunt acum în coșul PhotoMaid.",
+    "other": "%1$d de originale sunt acum în coșul PhotoMaid."
+   },
+   "ru": {
+    "one": "%1$d оригинал теперь в корзине PhotoMaid.",
+    "few": "%1$d оригинала теперь в корзине PhotoMaid.",
+    "many": "%1$d оригиналов теперь в корзине PhotoMaid.",
+    "other": "%1$d оригинала теперь в корзине PhotoMaid."
+   },
+   "tr": {
+    "one": "%1$d orijinal artık PhotoMaid çöp kutusunda.",
+    "other": "%1$d orijinal artık PhotoMaid çöp kutusunda."
+   },
+   "uk": {
+    "one": "%1$d оригінал тепер у кошику PhotoMaid.",
+    "few": "%1$d оригінали тепер у кошику PhotoMaid.",
+    "many": "%1$d оригіналів тепер у кошику PhotoMaid.",
+    "other": "%1$d оригінали тепер у кошику PhotoMaid."
+   },
+   "zh": {
+    "other": "%1$d 个原件现已在 PhotoMaid 回收站中。"
+   }
+  },
+  "backup_part_decisions": {
+   "en": {
+    "one": "%1$d decision",
+    "other": "%1$d decisions"
+   },
+   "de": {
+    "one": "%1$d Entscheidung",
+    "other": "%1$d Entscheidungen"
+   },
+   "ar": {
+    "zero": "%1$d قرار",
+    "one": "قرار واحد",
+    "two": "قراران",
+    "few": "%1$d قرارات",
+    "many": "%1$d قرارًا",
+    "other": "%1$d قرار"
+   },
+   "es": {
+    "one": "%1$d decisión",
+    "many": "%1$d decisiones",
+    "other": "%1$d decisiones"
+   },
+   "fr": {
+    "one": "%1$d décision",
+    "many": "%1$d décisions",
+    "other": "%1$d décisions"
+   },
+   "it": {
+    "one": "%1$d decisione",
+    "many": "%1$d decisioni",
+    "other": "%1$d decisioni"
+   },
+   "ja": {
+    "other": "判断 %1$d件"
+   },
+   "ko": {
+    "other": "결정 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d beslissing",
+    "other": "%1$d beslissingen"
+   },
+   "pl": {
+    "one": "%1$d decyzja",
+    "few": "%1$d decyzje",
+    "many": "%1$d decyzji",
+    "other": "%1$d decyzje"
+   },
+   "pt": {
+    "one": "%1$d decisão",
+    "many": "%1$d decisões",
+    "other": "%1$d decisões"
+   },
+   "ro": {
+    "one": "%1$d decizie",
+    "few": "%1$d decizii",
+    "other": "%1$d de decizii"
+   },
+   "ru": {
+    "one": "%1$d решение",
+    "few": "%1$d решения",
+    "many": "%1$d решений",
+    "other": "%1$d решения"
+   },
+   "tr": {
+    "one": "%1$d karar",
+    "other": "%1$d karar"
+   },
+   "uk": {
+    "one": "%1$d рішення",
+    "few": "%1$d рішення",
+    "many": "%1$d рішень",
+    "other": "%1$d рішення"
+   },
+   "zh": {
+    "other": "%1$d 个决定"
+   }
+  },
+  "backup_part_albums": {
+   "en": {
+    "one": "%1$d album",
+    "other": "%1$d albums"
+   },
+   "de": {
+    "one": "%1$d Album",
+    "other": "%1$d Alben"
+   },
+   "ar": {
+    "zero": "%1$d ألبوم",
+    "one": "ألبوم واحد",
+    "two": "ألبومان",
+    "few": "%1$d ألبومات",
+    "many": "%1$d ألبومًا",
+    "other": "%1$d ألبوم"
+   },
+   "es": {
+    "one": "%1$d álbum",
+    "many": "%1$d álbumes",
+    "other": "%1$d álbumes"
+   },
+   "fr": {
+    "one": "%1$d album",
+    "many": "%1$d albums",
+    "other": "%1$d albums"
+   },
+   "it": {
+    "one": "%1$d album",
+    "many": "%1$d album",
+    "other": "%1$d album"
+   },
+   "ja": {
+    "other": "アルバム %1$d件"
+   },
+   "ko": {
+    "other": "앨범 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d album",
+    "other": "%1$d albums"
+   },
+   "pl": {
+    "one": "%1$d album",
+    "few": "%1$d albumy",
+    "many": "%1$d albumów",
+    "other": "%1$d albumy"
+   },
+   "pt": {
+    "one": "%1$d álbum",
+    "many": "%1$d álbuns",
+    "other": "%1$d álbuns"
+   },
+   "ro": {
+    "one": "%1$d album",
+    "few": "%1$d albume",
+    "other": "%1$d de albume"
+   },
+   "ru": {
+    "one": "%1$d альбом",
+    "few": "%1$d альбома",
+    "many": "%1$d альбомов",
+    "other": "%1$d альбома"
+   },
+   "tr": {
+    "one": "%1$d albüm",
+    "other": "%1$d albüm"
+   },
+   "uk": {
+    "one": "%1$d альбом",
+    "few": "%1$d альбоми",
+    "many": "%1$d альбомів",
+    "other": "%1$d альбоми"
+   },
+   "zh": {
+    "other": "%1$d 个相册"
+   }
+  },
+  "backup_part_tagged": {
+   "en": {
+    "one": "%1$d with tags",
+    "other": "%1$d with tags"
+   },
+   "de": {
+    "one": "%1$d mit Schlagwörtern",
+    "other": "%1$d mit Schlagwörtern"
+   },
+   "ar": {
+    "zero": "%1$d بوسوم",
+    "one": "%1$d بوسوم",
+    "two": "%1$d بوسوم",
+    "few": "%1$d بوسوم",
+    "many": "%1$d بوسوم",
+    "other": "%1$d بوسوم"
+   },
+   "es": {
+    "one": "%1$d con etiquetas",
+    "many": "%1$d con etiquetas",
+    "other": "%1$d con etiquetas"
+   },
+   "fr": {
+    "one": "%1$d avec mots-clés",
+    "many": "%1$d avec mots-clés",
+    "other": "%1$d avec mots-clés"
+   },
+   "it": {
+    "one": "%1$d con tag",
+    "many": "%1$d con tag",
+    "other": "%1$d con tag"
+   },
+   "ja": {
+    "other": "タグ付き %1$d件"
+   },
+   "ko": {
+    "other": "태그 있는 항목 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d met labels",
+    "other": "%1$d met labels"
+   },
+   "pl": {
+    "one": "%1$d z tagami",
+    "few": "%1$d z tagami",
+    "many": "%1$d z tagami",
+    "other": "%1$d z tagami"
+   },
+   "pt": {
+    "one": "%1$d com etiquetas",
+    "many": "%1$d com etiquetas",
+    "other": "%1$d com etiquetas"
+   },
+   "ro": {
+    "one": "%1$d cu etichete",
+    "few": "%1$d cu etichete",
+    "other": "%1$d cu etichete"
+   },
+   "ru": {
+    "one": "%1$d с метками",
+    "few": "%1$d с метками",
+    "many": "%1$d с метками",
+    "other": "%1$d с метками"
+   },
+   "tr": {
+    "one": "%1$d etiketli",
+    "other": "%1$d etiketli"
+   },
+   "uk": {
+    "one": "%1$d з мітками",
+    "few": "%1$d з мітками",
+    "many": "%1$d з мітками",
+    "other": "%1$d з мітками"
+   },
+   "zh": {
+    "other": "%1$d 个带标签"
+   }
+  },
+  "backup_part_notes": {
+   "en": {
+    "one": "%1$d note",
+    "other": "%1$d notes"
+   },
+   "de": {
+    "one": "%1$d Notiz",
+    "other": "%1$d Notizen"
+   },
+   "ar": {
+    "zero": "%1$d ملاحظة",
+    "one": "ملاحظة واحدة",
+    "two": "ملاحظتان",
+    "few": "%1$d ملاحظات",
+    "many": "%1$d ملاحظة",
+    "other": "%1$d ملاحظة"
+   },
+   "es": {
+    "one": "%1$d nota",
+    "many": "%1$d notas",
+    "other": "%1$d notas"
+   },
+   "fr": {
+    "one": "%1$d note",
+    "many": "%1$d notes",
+    "other": "%1$d notes"
+   },
+   "it": {
+    "one": "%1$d nota",
+    "many": "%1$d note",
+    "other": "%1$d note"
+   },
+   "ja": {
+    "other": "メモ %1$d件"
+   },
+   "ko": {
+    "other": "메모 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d notitie",
+    "other": "%1$d notities"
+   },
+   "pl": {
+    "one": "%1$d notatka",
+    "few": "%1$d notatki",
+    "many": "%1$d notatek",
+    "other": "%1$d notatki"
+   },
+   "pt": {
+    "one": "%1$d nota",
+    "many": "%1$d notas",
+    "other": "%1$d notas"
+   },
+   "ro": {
+    "one": "%1$d notă",
+    "few": "%1$d note",
+    "other": "%1$d de note"
+   },
+   "ru": {
+    "one": "%1$d заметка",
+    "few": "%1$d заметки",
+    "many": "%1$d заметок",
+    "other": "%1$d заметки"
+   },
+   "tr": {
+    "one": "%1$d not",
+    "other": "%1$d not"
+   },
+   "uk": {
+    "one": "%1$d нотатка",
+    "few": "%1$d нотатки",
+    "many": "%1$d нотаток",
+    "other": "%1$d нотатки"
+   },
+   "zh": {
+    "other": "%1$d 条备注"
+   }
+  },
+  "backup_part_basket": {
+   "en": {
+    "one": "%1$d in selection basket",
+    "other": "%1$d in selection basket"
+   },
+   "de": {
+    "one": "%1$d im Auswahlkorb",
+    "other": "%1$d im Auswahlkorb"
+   },
+   "ar": {
+    "zero": "%1$d في سلة التحديد",
+    "one": "%1$d في سلة التحديد",
+    "two": "%1$d في سلة التحديد",
+    "few": "%1$d في سلة التحديد",
+    "many": "%1$d في سلة التحديد",
+    "other": "%1$d في سلة التحديد"
+   },
+   "es": {
+    "one": "%1$d en la cesta de selección",
+    "many": "%1$d en la cesta de selección",
+    "other": "%1$d en la cesta de selección"
+   },
+   "fr": {
+    "one": "%1$d dans le panier de sélection",
+    "many": "%1$d dans le panier de sélection",
+    "other": "%1$d dans le panier de sélection"
+   },
+   "it": {
+    "one": "%1$d nel cestino di selezione",
+    "many": "%1$d nel cestino di selezione",
+    "other": "%1$d nel cestino di selezione"
+   },
+   "ja": {
+    "other": "選択かごに %1$d件"
+   },
+   "ko": {
+    "other": "선택 바구니에 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d in de selectiemand",
+    "other": "%1$d in de selectiemand"
+   },
+   "pl": {
+    "one": "%1$d w koszyku wyboru",
+    "few": "%1$d w koszyku wyboru",
+    "many": "%1$d w koszyku wyboru",
+    "other": "%1$d w koszyku wyboru"
+   },
+   "pt": {
+    "one": "%1$d no cesto de seleção",
+    "many": "%1$d no cesto de seleção",
+    "other": "%1$d no cesto de seleção"
+   },
+   "ro": {
+    "one": "%1$d în coșul de selecție",
+    "few": "%1$d în coșul de selecție",
+    "other": "%1$d în coșul de selecție"
+   },
+   "ru": {
+    "one": "%1$d в корзине выбора",
+    "few": "%1$d в корзине выбора",
+    "many": "%1$d в корзине выбора",
+    "other": "%1$d в корзине выбора"
+   },
+   "tr": {
+    "one": "seçim sepetinde %1$d",
+    "other": "seçim sepetinde %1$d"
+   },
+   "uk": {
+    "one": "%1$d у кошику вибору",
+    "few": "%1$d у кошику вибору",
+    "many": "%1$d у кошику вибору",
+    "other": "%1$d у кошику вибору"
+   },
+   "zh": {
+    "other": "选择篮中 %1$d 个"
+   }
+  },
+  "backup_part_hidden": {
+   "en": {
+    "one": "%1$d hidden",
+    "other": "%1$d hidden"
+   },
+   "de": {
+    "one": "%1$d ausgeblendet",
+    "other": "%1$d ausgeblendet"
+   },
+   "ar": {
+    "zero": "%1$d مخفي",
+    "one": "%1$d مخفي",
+    "two": "%1$d مخفيان",
+    "few": "%1$d مخفية",
+    "many": "%1$d مخفيًا",
+    "other": "%1$d مخفي"
+   },
+   "es": {
+    "one": "%1$d oculto",
+    "many": "%1$d ocultos",
+    "other": "%1$d ocultos"
+   },
+   "fr": {
+    "one": "%1$d masqué",
+    "many": "%1$d masqués",
+    "other": "%1$d masqués"
+   },
+   "it": {
+    "one": "%1$d nascosto",
+    "many": "%1$d nascosti",
+    "other": "%1$d nascosti"
+   },
+   "ja": {
+    "other": "非表示 %1$d件"
+   },
+   "ko": {
+    "other": "숨김 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d verborgen",
+    "other": "%1$d verborgen"
+   },
+   "pl": {
+    "one": "%1$d ukryty",
+    "few": "%1$d ukryte",
+    "many": "%1$d ukrytych",
+    "other": "%1$d ukryte"
+   },
+   "pt": {
+    "one": "%1$d oculto",
+    "many": "%1$d ocultos",
+    "other": "%1$d ocultos"
+   },
+   "ro": {
+    "one": "%1$d ascuns",
+    "few": "%1$d ascunse",
+    "other": "%1$d de ascunse"
+   },
+   "ru": {
+    "one": "%1$d скрыт",
+    "few": "%1$d скрыто",
+    "many": "%1$d скрыто",
+    "other": "%1$d скрыто"
+   },
+   "tr": {
+    "one": "%1$d gizli",
+    "other": "%1$d gizli"
+   },
+   "uk": {
+    "one": "%1$d приховано",
+    "few": "%1$d приховано",
+    "many": "%1$d приховано",
+    "other": "%1$d приховано"
+   },
+   "zh": {
+    "other": "%1$d 个已隐藏"
+   }
+  },
+  "backup_part_workflows": {
+   "en": {
+    "one": "%1$d workflow",
+    "other": "%1$d workflows"
+   },
+   "de": {
+    "one": "%1$d Ablauf",
+    "other": "%1$d Abläufe"
+   },
+   "ar": {
+    "zero": "%1$d سير عمل",
+    "one": "سير عمل واحد",
+    "two": "سيرا عمل",
+    "few": "%1$d مسارات عمل",
+    "many": "%1$d مسار عمل",
+    "other": "%1$d سير عمل"
+   },
+   "es": {
+    "one": "%1$d flujo de trabajo",
+    "many": "%1$d flujos de trabajo",
+    "other": "%1$d flujos de trabajo"
+   },
+   "fr": {
+    "one": "%1$d flux de travail",
+    "many": "%1$d flux de travail",
+    "other": "%1$d flux de travail"
+   },
+   "it": {
+    "one": "%1$d flusso di lavoro",
+    "many": "%1$d flussi di lavoro",
+    "other": "%1$d flussi di lavoro"
+   },
+   "ja": {
+    "other": "ワークフロー %1$d件"
+   },
+   "ko": {
+    "other": "작업 흐름 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d werkstroom",
+    "other": "%1$d werkstromen"
+   },
+   "pl": {
+    "one": "%1$d przepływ pracy",
+    "few": "%1$d przepływy pracy",
+    "many": "%1$d przepływów pracy",
+    "other": "%1$d przepływy pracy"
+   },
+   "pt": {
+    "one": "%1$d fluxo de trabalho",
+    "many": "%1$d fluxos de trabalho",
+    "other": "%1$d fluxos de trabalho"
+   },
+   "ro": {
+    "one": "%1$d flux de lucru",
+    "few": "%1$d fluxuri de lucru",
+    "other": "%1$d de fluxuri de lucru"
+   },
+   "ru": {
+    "one": "%1$d сценарий",
+    "few": "%1$d сценария",
+    "many": "%1$d сценариев",
+    "other": "%1$d сценария"
+   },
+   "tr": {
+    "one": "%1$d iş akışı",
+    "other": "%1$d iş akışı"
+   },
+   "uk": {
+    "one": "%1$d сценарій",
+    "few": "%1$d сценарії",
+    "many": "%1$d сценаріїв",
+    "other": "%1$d сценарії"
+   },
+   "zh": {
+    "other": "%1$d 个工作流程"
+   }
+  },
+  "backup_part_presets": {
+   "en": {
+    "one": "%1$d preset",
+    "other": "%1$d presets"
+   },
+   "de": {
+    "one": "%1$d Vorlage",
+    "other": "%1$d Vorlagen"
+   },
+   "ar": {
+    "zero": "%1$d إعداد مسبق",
+    "one": "إعداد مسبق واحد",
+    "two": "إعدادان مسبقان",
+    "few": "%1$d إعدادات مسبقة",
+    "many": "%1$d إعدادًا مسبقًا",
+    "other": "%1$d إعداد مسبق"
+   },
+   "es": {
+    "one": "%1$d ajuste guardado",
+    "many": "%1$d ajustes guardados",
+    "other": "%1$d ajustes guardados"
+   },
+   "fr": {
+    "one": "%1$d préréglage",
+    "many": "%1$d préréglages",
+    "other": "%1$d préréglages"
+   },
+   "it": {
+    "one": "%1$d preset",
+    "many": "%1$d preset",
+    "other": "%1$d preset"
+   },
+   "ja": {
+    "other": "プリセット %1$d件"
+   },
+   "ko": {
+    "other": "프리셋 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d voorinstelling",
+    "other": "%1$d voorinstellingen"
+   },
+   "pl": {
+    "one": "%1$d ustawienie filtra",
+    "few": "%1$d ustawienia filtrów",
+    "many": "%1$d ustawień filtrów",
+    "other": "%1$d ustawienia filtrów"
+   },
+   "pt": {
+    "one": "%1$d predefinição",
+    "many": "%1$d predefinições",
+    "other": "%1$d predefinições"
+   },
+   "ro": {
+    "one": "%1$d presetare",
+    "few": "%1$d presetări",
+    "other": "%1$d de presetări"
+   },
+   "ru": {
+    "one": "%1$d пресет",
+    "few": "%1$d пресета",
+    "many": "%1$d пресетов",
+    "other": "%1$d пресета"
+   },
+   "tr": {
+    "one": "%1$d hazır ayar",
+    "other": "%1$d hazır ayar"
+   },
+   "uk": {
+    "one": "%1$d пресет",
+    "few": "%1$d пресети",
+    "many": "%1$d пресетів",
+    "other": "%1$d пресети"
+   },
+   "zh": {
+    "other": "%1$d 个预设"
+   }
+  },
+  "backup_part_collections": {
+   "en": {
+    "one": "%1$d custom collection",
+    "other": "%1$d custom collections"
+   },
+   "de": {
+    "one": "%1$d eigene Sammlung",
+    "other": "%1$d eigene Sammlungen"
+   },
+   "ar": {
+    "zero": "%1$d مجموعة خاصة",
+    "one": "مجموعة خاصة واحدة",
+    "two": "مجموعتان خاصتان",
+    "few": "%1$d مجموعات خاصة",
+    "many": "%1$d مجموعة خاصة",
+    "other": "%1$d مجموعة خاصة"
+   },
+   "es": {
+    "one": "%1$d colección propia",
+    "many": "%1$d colecciones propias",
+    "other": "%1$d colecciones propias"
+   },
+   "fr": {
+    "one": "%1$d collection perso",
+    "many": "%1$d collections perso",
+    "other": "%1$d collections perso"
+   },
+   "it": {
+    "one": "%1$d raccolta personale",
+    "many": "%1$d raccolte personali",
+    "other": "%1$d raccolte personali"
+   },
+   "ja": {
+    "other": "自分のコレクション %1$d件"
+   },
+   "ko": {
+    "other": "내 모음 %1$d개"
+   },
+   "nl": {
+    "one": "%1$d eigen verzameling",
+    "other": "%1$d eigen verzamelingen"
+   },
+   "pl": {
+    "one": "%1$d własna kolekcja",
+    "few": "%1$d własne kolekcje",
+    "many": "%1$d własnych kolekcji",
+    "other": "%1$d własne kolekcje"
+   },
+   "pt": {
+    "one": "%1$d coleção própria",
+    "many": "%1$d coleções próprias",
+    "other": "%1$d coleções próprias"
+   },
+   "ro": {
+    "one": "%1$d colecție proprie",
+    "few": "%1$d colecții proprii",
+    "other": "%1$d de colecții proprii"
+   },
+   "ru": {
+    "one": "%1$d своя подборка",
+    "few": "%1$d свои подборки",
+    "many": "%1$d своих подборок",
+    "other": "%1$d свои подборки"
+   },
+   "tr": {
+    "one": "%1$d kendi koleksiyonu",
+    "other": "%1$d kendi koleksiyonu"
+   },
+   "uk": {
+    "one": "%1$d власна добірка",
+    "few": "%1$d власні добірки",
+    "many": "%1$d власних добірок",
+    "other": "%1$d власні добірки"
+   },
+   "zh": {
+    "other": "%1$d 个自定义合集"
+   }
+  },
+  "backup_step_decisions": {
+   "en": {
+    "one": "%1$d decision is restored.",
+    "other": "%1$d decisions are restored."
+   },
+   "de": {
+    "one": "%1$d Entscheidung wird übernommen.",
+    "other": "%1$d Entscheidungen werden übernommen."
+   },
+   "ar": {
+    "zero": "تُستعاد %1$d قرارات.",
+    "one": "يُستعاد قرار واحد.",
+    "two": "يُستعاد قراران.",
+    "few": "تُستعاد %1$d قرارات.",
+    "many": "يُستعاد %1$d قرارًا.",
+    "other": "يُستعاد %1$d قرار."
+   },
+   "es": {
+    "one": "Se recupera %1$d decisión.",
+    "many": "Se recuperan %1$d decisiones.",
+    "other": "Se recuperan %1$d decisiones."
+   },
+   "fr": {
+    "one": "%1$d décision est reprise.",
+    "many": "%1$d décisions sont reprises.",
+    "other": "%1$d décisions sont reprises."
+   },
+   "it": {
+    "one": "Viene ripresa %1$d decisione.",
+    "many": "Vengono riprese %1$d decisioni.",
+    "other": "Vengono riprese %1$d decisioni."
+   },
+   "ja": {
+    "other": "判断 %1$d件を取り込みます。"
+   },
+   "ko": {
+    "other": "결정 %1$d개를 가져와요."
+   },
+   "nl": {
+    "one": "%1$d beslissing wordt overgenomen.",
+    "other": "%1$d beslissingen worden overgenomen."
+   },
+   "pl": {
+    "one": "Przywrócona zostanie %1$d decyzja.",
+    "few": "Przywrócone zostaną %1$d decyzje.",
+    "many": "Przywróconych zostanie %1$d decyzji.",
+    "other": "Przywrócone zostaną %1$d decyzje."
+   },
+   "pt": {
+    "one": "É recuperada %1$d decisão.",
+    "many": "São recuperadas %1$d decisões.",
+    "other": "São recuperadas %1$d decisões."
+   },
+   "ro": {
+    "one": "Se preia %1$d decizie.",
+    "few": "Se preiau %1$d decizii.",
+    "other": "Se preiau %1$d de decizii."
+   },
+   "ru": {
+    "one": "Переносится %1$d решение.",
+    "few": "Переносятся %1$d решения.",
+    "many": "Переносится %1$d решений.",
+    "other": "Переносятся %1$d решения."
+   },
+   "tr": {
+    "one": "%1$d karar aktarılır.",
+    "other": "%1$d karar aktarılır."
+   },
+   "uk": {
+    "one": "Переноситься %1$d рішення.",
+    "few": "Переносяться %1$d рішення.",
+    "many": "Переноситься %1$d рішень.",
+    "other": "Переносяться %1$d рішення."
+   },
+   "zh": {
+    "other": "将导入 %1$d 个决定。"
+   }
+  },
+  "backup_step_kept_local": {
+   "en": {
+    "one": "%1$d is already decided here and stays as it is.",
+    "other": "%1$d are already decided here and stay as they are."
+   },
+   "de": {
+    "one": "%1$d ist hier schon entschieden und bleibt, wie es ist.",
+    "other": "%1$d sind hier schon entschieden und bleiben, wie sie sind."
+   },
+   "ar": {
+    "zero": "%1$d محسومة هنا بالفعل وتبقى كما هي.",
+    "one": "عنصر واحد محسوم هنا بالفعل ويبقى كما هو.",
+    "two": "عنصران محسومان هنا بالفعل ويبقيان كما هما.",
+    "few": "%1$d عناصر محسومة هنا بالفعل وتبقى كما هي.",
+    "many": "%1$d عنصرًا محسومًا هنا بالفعل ويبقى كما هو.",
+    "other": "%1$d عنصر محسوم هنا بالفعل ويبقى كما هو."
+   },
+   "es": {
+    "one": "%1$d ya está decidido aquí y se queda como está.",
+    "many": "%1$d ya están decididos aquí y se quedan como están.",
+    "other": "%1$d ya están decididos aquí y se quedan como están."
+   },
+   "fr": {
+    "one": "%1$d est déjà décidé ici et reste tel quel.",
+    "many": "%1$d sont déjà décidés ici et restent tels quels.",
+    "other": "%1$d sont déjà décidés ici et restent tels quels."
+   },
+   "it": {
+    "one": "%1$d è già deciso qui e resta com’è.",
+    "many": "%1$d sono già decisi qui e restano come sono.",
+    "other": "%1$d sono già decisi qui e restano come sono."
+   },
+   "ja": {
+    "other": "%1$d件はここで既に判断済みのため、そのままです。"
+   },
+   "ko": {
+    "other": "%1$d개는 여기서 이미 정해져 있어 그대로 남아요."
+   },
+   "nl": {
+    "one": "%1$d is hier al besloten en blijft zoals het is.",
+    "other": "%1$d zijn hier al besloten en blijven zoals ze zijn."
+   },
+   "pl": {
+    "one": "%1$d jest już tu zdecydowany i zostaje bez zmian.",
+    "few": "%1$d są już tu zdecydowane i zostają bez zmian.",
+    "many": "%1$d jest już tu zdecydowanych i zostaje bez zmian.",
+    "other": "%1$d są już tu zdecydowane i zostają bez zmian."
+   },
+   "pt": {
+    "one": "%1$d já está decidido aqui e fica como está.",
+    "many": "%1$d já estão decididos aqui e ficam como estão.",
+    "other": "%1$d já estão decididos aqui e ficam como estão."
+   },
+   "ro": {
+    "one": "%1$d este deja decis aici și rămâne neschimbat.",
+    "few": "%1$d sunt deja decise aici și rămân neschimbate.",
+    "other": "%1$d de elemente sunt deja decise aici și rămân neschimbate."
+   },
+   "ru": {
+    "one": "%1$d уже решён здесь и остаётся как есть.",
+    "few": "%1$d уже решены здесь и остаются как есть.",
+    "many": "%1$d уже решены здесь и остаются как есть.",
+    "other": "%1$d уже решены здесь и остаются как есть."
+   },
+   "tr": {
+    "one": "%1$d öğe burada zaten kararlaştırıldı ve olduğu gibi kalır.",
+    "other": "%1$d öğe burada zaten kararlaştırıldı ve olduğu gibi kalır."
+   },
+   "uk": {
+    "one": "%1$d уже вирішено тут, лишається як є.",
+    "few": "%1$d уже вирішено тут, лишаються як є.",
+    "many": "%1$d уже вирішено тут, лишаються як є.",
+    "other": "%1$d уже вирішено тут, лишаються як є."
+   },
+   "zh": {
+    "other": "%1$d 个已在此处做出决定，保持不变。"
+   }
+  },
+  "backup_step_tags": {
+   "en": {
+    "one": "Tags for %1$d photo or video.",
+    "other": "Tags for %1$d photos and videos."
+   },
+   "de": {
+    "one": "Schlagwörter für %1$d Foto oder Video.",
+    "other": "Schlagwörter für %1$d Fotos und Videos."
+   },
+   "ar": {
+    "zero": "وسوم لـ %1$d صورة وفيديو.",
+    "one": "وسوم لصورة أو فيديو واحد.",
+    "two": "وسوم لعنصرين.",
+    "few": "وسوم لـ %1$d صور وفيديوهات.",
+    "many": "وسوم لـ %1$d صورة وفيديو.",
+    "other": "وسوم لـ %1$d صورة وفيديو."
+   },
+   "es": {
+    "one": "Etiquetas para %1$d foto o vídeo.",
+    "many": "Etiquetas para %1$d fotos y vídeos.",
+    "other": "Etiquetas para %1$d fotos y vídeos."
+   },
+   "fr": {
+    "one": "Mots-clés pour %1$d photo ou vidéo.",
+    "many": "Mots-clés pour %1$d photos et vidéos.",
+    "other": "Mots-clés pour %1$d photos et vidéos."
+   },
+   "it": {
+    "one": "Tag per %1$d foto o video.",
+    "many": "Tag per %1$d foto e video.",
+    "other": "Tag per %1$d foto e video."
+   },
+   "ja": {
+    "other": "写真・動画 %1$d件のタグ。"
+   },
+   "ko": {
+    "other": "사진·동영상 %1$d개의 태그."
+   },
+   "nl": {
+    "one": "Labels voor %1$d foto of video.",
+    "other": "Labels voor %1$d foto’s en video’s."
+   },
+   "pl": {
+    "one": "Tagi dla %1$d zdjęcia lub filmu.",
+    "few": "Tagi dla %1$d zdjęć i filmów.",
+    "many": "Tagi dla %1$d zdjęć i filmów.",
+    "other": "Tagi dla %1$d zdjęć i filmów."
+   },
+   "pt": {
+    "one": "Etiquetas para %1$d foto ou vídeo.",
+    "many": "Etiquetas para %1$d fotos e vídeos.",
+    "other": "Etiquetas para %1$d fotos e vídeos."
+   },
+   "ro": {
+    "one": "Etichete pentru %1$d fotografie sau videoclip.",
+    "few": "Etichete pentru %1$d fotografii și videoclipuri.",
+    "other": "Etichete pentru %1$d de fotografii și videoclipuri."
+   },
+   "ru": {
+    "one": "Метки для %1$d фото или видео.",
+    "few": "Метки для %1$d фото и видео.",
+    "many": "Метки для %1$d фото и видео.",
+    "other": "Метки для %1$d фото и видео."
+   },
+   "tr": {
+    "one": "%1$d fotoğraf veya video için etiketler.",
+    "other": "%1$d fotoğraf ve video için etiketler."
+   },
+   "uk": {
+    "one": "Мітки для %1$d фото чи відео.",
+    "few": "Мітки для %1$d фото й відео.",
+    "many": "Мітки для %1$d фото й відео.",
+    "other": "Мітки для %1$d фото й відео."
+   },
+   "zh": {
+    "other": "%1$d 张照片和视频的标签。"
+   }
+  },
+  "backup_step_notes": {
+   "en": {
+    "one": "%1$d note (existing notes stay).",
+    "other": "%1$d notes (existing notes stay)."
+   },
+   "de": {
+    "one": "%1$d Notiz (vorhandene Notizen bleiben).",
+    "other": "%1$d Notizen (vorhandene Notizen bleiben)."
+   },
+   "ar": {
+    "zero": "%1$d ملاحظة (تبقى الملاحظات الموجودة).",
+    "one": "ملاحظة واحدة (تبقى الملاحظات الموجودة).",
+    "two": "ملاحظتان (تبقى الملاحظات الموجودة).",
+    "few": "%1$d ملاحظات (تبقى الملاحظات الموجودة).",
+    "many": "%1$d ملاحظة (تبقى الملاحظات الموجودة).",
+    "other": "%1$d ملاحظة (تبقى الملاحظات الموجودة)."
+   },
+   "es": {
+    "one": "%1$d nota (las existentes se quedan).",
+    "many": "%1$d notas (las existentes se quedan).",
+    "other": "%1$d notas (las existentes se quedan)."
+   },
+   "fr": {
+    "one": "%1$d note (les notes existantes restent).",
+    "many": "%1$d notes (les notes existantes restent).",
+    "other": "%1$d notes (les notes existantes restent)."
+   },
+   "it": {
+    "one": "%1$d nota (le note esistenti restano).",
+    "many": "%1$d note (le note esistenti restano).",
+    "other": "%1$d note (le note esistenti restano)."
+   },
+   "ja": {
+    "other": "メモ %1$d件（既存のメモはそのまま）。"
+   },
+   "ko": {
+    "other": "메모 %1$d개(기존 메모는 그대로)."
+   },
+   "nl": {
+    "one": "%1$d notitie (bestaande notities blijven).",
+    "other": "%1$d notities (bestaande notities blijven)."
+   },
+   "pl": {
+    "one": "%1$d notatka (istniejące zostają).",
+    "few": "%1$d notatki (istniejące zostają).",
+    "many": "%1$d notatek (istniejące zostają).",
+    "other": "%1$d notatki (istniejące zostają)."
+   },
+   "pt": {
+    "one": "%1$d nota (as existentes ficam).",
+    "many": "%1$d notas (as existentes ficam).",
+    "other": "%1$d notas (as existentes ficam)."
+   },
+   "ro": {
+    "one": "%1$d notă (notele existente rămân).",
+    "few": "%1$d note (notele existente rămân).",
+    "other": "%1$d de note (notele existente rămân)."
+   },
+   "ru": {
+    "one": "%1$d заметка (имеющиеся остаются).",
+    "few": "%1$d заметки (имеющиеся остаются).",
+    "many": "%1$d заметок (имеющиеся остаются).",
+    "other": "%1$d заметки (имеющиеся остаются)."
+   },
+   "tr": {
+    "one": "%1$d not (mevcut notlar kalır).",
+    "other": "%1$d not (mevcut notlar kalır)."
+   },
+   "uk": {
+    "one": "%1$d нотатка (наявні лишаються).",
+    "few": "%1$d нотатки (наявні лишаються).",
+    "many": "%1$d нотаток (наявні лишаються).",
+    "other": "%1$d нотатки (наявні лишаються)."
+   },
+   "zh": {
+    "other": "%1$d 条备注（已有备注保留）。"
+   }
+  },
+  "backup_step_basket": {
+   "en": {
+    "one": "%1$d goes into the selection basket.",
+    "other": "%1$d go into the selection basket."
+   },
+   "de": {
+    "one": "%1$d kommt in den Auswahlkorb.",
+    "other": "%1$d kommen in den Auswahlkorb."
+   },
+   "ar": {
+    "zero": "يدخل %1$d إلى سلة التحديد.",
+    "one": "يدخل عنصر واحد إلى سلة التحديد.",
+    "two": "يدخل عنصران إلى سلة التحديد.",
+    "few": "تدخل %1$d عناصر إلى سلة التحديد.",
+    "many": "يدخل %1$d عنصرًا إلى سلة التحديد.",
+    "other": "يدخل %1$d عنصر إلى سلة التحديد."
+   },
+   "es": {
+    "one": "%1$d va a la cesta de selección.",
+    "many": "%1$d van a la cesta de selección.",
+    "other": "%1$d van a la cesta de selección."
+   },
+   "fr": {
+    "one": "%1$d va dans le panier de sélection.",
+    "many": "%1$d vont dans le panier de sélection.",
+    "other": "%1$d vont dans le panier de sélection."
+   },
+   "it": {
+    "one": "%1$d va nel cestino di selezione.",
+    "many": "%1$d vanno nel cestino di selezione.",
+    "other": "%1$d vanno nel cestino di selezione."
+   },
+   "ja": {
+    "other": "%1$d件を選択かごに入れます。"
+   },
+   "ko": {
+    "other": "%1$d개를 선택 바구니에 담아요."
+   },
+   "nl": {
+    "one": "%1$d gaat in de selectiemand.",
+    "other": "%1$d gaan in de selectiemand."
+   },
+   "pl": {
+    "one": "%1$d trafi do koszyka wyboru.",
+    "few": "%1$d trafią do koszyka wyboru.",
+    "many": "%1$d trafi do koszyka wyboru.",
+    "other": "%1$d trafią do koszyka wyboru."
+   },
+   "pt": {
+    "one": "%1$d vai para o cesto de seleção.",
+    "many": "%1$d vão para o cesto de seleção.",
+    "other": "%1$d vão para o cesto de seleção."
+   },
+   "ro": {
+    "one": "%1$d ajunge în coșul de selecție.",
+    "few": "%1$d ajung în coșul de selecție.",
+    "other": "%1$d de elemente ajung în coșul de selecție."
+   },
+   "ru": {
+    "one": "%1$d попадает в корзину выбора.",
+    "few": "%1$d попадают в корзину выбора.",
+    "many": "%1$d попадают в корзину выбора.",
+    "other": "%1$d попадают в корзину выбора."
+   },
+   "tr": {
+    "one": "%1$d öğe seçim sepetine girer.",
+    "other": "%1$d öğe seçim sepetine girer."
+   },
+   "uk": {
+    "one": "%1$d потрапляє до кошика вибору.",
+    "few": "%1$d потрапляють до кошика вибору.",
+    "many": "%1$d потрапляють до кошика вибору.",
+    "other": "%1$d потрапляють до кошика вибору."
+   },
+   "zh": {
+    "other": "%1$d 个会放入选择篮。"
+   }
+  },
+  "backup_step_hidden": {
+   "en": {
+    "one": "%1$d is hidden in PhotoMaid.",
+    "other": "%1$d are hidden in PhotoMaid."
+   },
+   "de": {
+    "one": "%1$d wird in PhotoMaid ausgeblendet.",
+    "other": "%1$d werden in PhotoMaid ausgeblendet."
+   },
+   "ar": {
+    "zero": "يُخفى %1$d في PhotoMaid.",
+    "one": "يُخفى عنصر واحد في PhotoMaid.",
+    "two": "يُخفى عنصران في PhotoMaid.",
+    "few": "تُخفى %1$d عناصر في PhotoMaid.",
+    "many": "يُخفى %1$d عنصرًا في PhotoMaid.",
+    "other": "يُخفى %1$d عنصر في PhotoMaid."
+   },
+   "es": {
+    "one": "%1$d se oculta en PhotoMaid.",
+    "many": "%1$d se ocultan en PhotoMaid.",
+    "other": "%1$d se ocultan en PhotoMaid."
+   },
+   "fr": {
+    "one": "%1$d est masqué dans PhotoMaid.",
+    "many": "%1$d sont masqués dans PhotoMaid.",
+    "other": "%1$d sont masqués dans PhotoMaid."
+   },
+   "it": {
+    "one": "%1$d viene nascosto in PhotoMaid.",
+    "many": "%1$d vengono nascosti in PhotoMaid.",
+    "other": "%1$d vengono nascosti in PhotoMaid."
+   },
+   "ja": {
+    "other": "%1$d件をPhotoMaidで非表示にします。"
+   },
+   "ko": {
+    "other": "%1$d개를 PhotoMaid에서 숨겨요."
+   },
+   "nl": {
+    "one": "%1$d wordt verborgen in PhotoMaid.",
+    "other": "%1$d worden verborgen in PhotoMaid."
+   },
+   "pl": {
+    "one": "%1$d zostanie ukryty w PhotoMaid.",
+    "few": "%1$d zostaną ukryte w PhotoMaid.",
+    "many": "%1$d zostanie ukrytych w PhotoMaid.",
+    "other": "%1$d zostaną ukryte w PhotoMaid."
+   },
+   "pt": {
+    "one": "%1$d fica oculto no PhotoMaid.",
+    "many": "%1$d ficam ocultos no PhotoMaid.",
+    "other": "%1$d ficam ocultos no PhotoMaid."
+   },
+   "ro": {
+    "one": "%1$d este ascuns în PhotoMaid.",
+    "few": "%1$d sunt ascunse în PhotoMaid.",
+    "other": "%1$d de elemente sunt ascunse în PhotoMaid."
+   },
+   "ru": {
+    "one": "%1$d скрывается в PhotoMaid.",
+    "few": "%1$d скрываются в PhotoMaid.",
+    "many": "%1$d скрываются в PhotoMaid.",
+    "other": "%1$d скрываются в PhotoMaid."
+   },
+   "tr": {
+    "one": "%1$d öğe PhotoMaid’de gizlenir.",
+    "other": "%1$d öğe PhotoMaid’de gizlenir."
+   },
+   "uk": {
+    "one": "%1$d ховається в PhotoMaid.",
+    "few": "%1$d ховаються в PhotoMaid.",
+    "many": "%1$d ховаються в PhotoMaid.",
+    "other": "%1$d ховаються в PhotoMaid."
+   },
+   "zh": {
+    "other": "%1$d 个会在 PhotoMaid 中隐藏。"
+   }
+  },
+  "backup_missing": {
+   "en": {
+    "one": "%1$d not found",
+    "other": "%1$d not found"
+   },
+   "de": {
+    "one": "%1$d nicht gefunden",
+    "other": "%1$d nicht gefunden"
+   },
+   "ar": {
+    "zero": "لم يُعثر على %1$d",
+    "one": "لم يُعثر على عنصر واحد",
+    "two": "لم يُعثر على عنصرين",
+    "few": "لم يُعثر على %1$d عناصر",
+    "many": "لم يُعثر على %1$d عنصرًا",
+    "other": "لم يُعثر على %1$d عنصر"
+   },
+   "es": {
+    "one": "%1$d no encontrado",
+    "many": "%1$d no encontrados",
+    "other": "%1$d no encontrados"
+   },
+   "fr": {
+    "one": "%1$d introuvable",
+    "many": "%1$d introuvables",
+    "other": "%1$d introuvables"
+   },
+   "it": {
+    "one": "%1$d non trovato",
+    "many": "%1$d non trovati",
+    "other": "%1$d non trovati"
+   },
+   "ja": {
+    "other": "%1$d件が見つかりません"
+   },
+   "ko": {
+    "other": "%1$d개를 찾지 못했어요"
+   },
+   "nl": {
+    "one": "%1$d niet gevonden",
+    "other": "%1$d niet gevonden"
+   },
+   "pl": {
+    "one": "Nie znaleziono %1$d",
+    "few": "Nie znaleziono %1$d",
+    "many": "Nie znaleziono %1$d",
+    "other": "Nie znaleziono %1$d"
+   },
+   "pt": {
+    "one": "%1$d não encontrado",
+    "many": "%1$d não encontrados",
+    "other": "%1$d não encontrados"
+   },
+   "ro": {
+    "one": "%1$d negăsit",
+    "few": "%1$d negăsite",
+    "other": "%1$d de elemente negăsite"
+   },
+   "ru": {
+    "one": "Не найдено: %1$d",
+    "few": "Не найдено: %1$d",
+    "many": "Не найдено: %1$d",
+    "other": "Не найдено: %1$d"
+   },
+   "tr": {
+    "one": "%1$d bulunamadı",
+    "other": "%1$d bulunamadı"
+   },
+   "uk": {
+    "one": "Не знайдено: %1$d",
+    "few": "Не знайдено: %1$d",
+    "many": "Не знайдено: %1$d",
+    "other": "Не знайдено: %1$d"
+   },
+   "zh": {
+    "other": "%1$d 个未找到"
+   }
+  },
+  "backup_failed_some": {
+   "en": {
+    "one": "%1$d couldn’t be restored.",
+    "other": "%1$d couldn’t be restored."
+   },
+   "de": {
+    "one": "%1$d konnte nicht übernommen werden.",
+    "other": "%1$d konnten nicht übernommen werden."
+   },
+   "ar": {
+    "zero": "تعذرت استعادة %1$d.",
+    "one": "تعذرت استعادة عنصر واحد.",
+    "two": "تعذرت استعادة عنصرين.",
+    "few": "تعذرت استعادة %1$d عناصر.",
+    "many": "تعذرت استعادة %1$d عنصرًا.",
+    "other": "تعذرت استعادة %1$d عنصر."
+   },
+   "es": {
+    "one": "No se pudo recuperar %1$d.",
+    "many": "No se pudieron recuperar %1$d.",
+    "other": "No se pudieron recuperar %1$d."
+   },
+   "fr": {
+    "one": "%1$d n’a pas pu être repris.",
+    "many": "%1$d n’ont pas pu être repris.",
+    "other": "%1$d n’ont pas pu être repris."
+   },
+   "it": {
+    "one": "Non è stato possibile riprendere %1$d elemento.",
+    "many": "Non è stato possibile riprendere %1$d elementi.",
+    "other": "Non è stato possibile riprendere %1$d elementi."
+   },
+   "ja": {
+    "other": "%1$d件は取り込めませんでした。"
+   },
+   "ko": {
+    "other": "%1$d개는 가져오지 못했어요."
+   },
+   "nl": {
+    "one": "%1$d kon niet worden overgenomen.",
+    "other": "%1$d konden niet worden overgenomen."
+   },
+   "pl": {
+    "one": "Nie udało się przywrócić %1$d elementu.",
+    "few": "Nie udało się przywrócić %1$d elementów.",
+    "many": "Nie udało się przywrócić %1$d elementów.",
+    "other": "Nie udało się przywrócić %1$d elementów."
+   },
+   "pt": {
+    "one": "Não foi possível recuperar %1$d.",
+    "many": "Não foi possível recuperar %1$d.",
+    "other": "Não foi possível recuperar %1$d."
+   },
+   "ro": {
+    "one": "%1$d nu a putut fi preluat.",
+    "few": "%1$d nu au putut fi preluate.",
+    "other": "%1$d de elemente nu au putut fi preluate."
+   },
+   "ru": {
+    "one": "Не удалось перенести: %1$d.",
+    "few": "Не удалось перенести: %1$d.",
+    "many": "Не удалось перенести: %1$d.",
+    "other": "Не удалось перенести: %1$d."
+   },
+   "tr": {
+    "one": "%1$d öğe aktarılamadı.",
+    "other": "%1$d öğe aktarılamadı."
+   },
+   "uk": {
+    "one": "Не вдалося перенести: %1$d.",
+    "few": "Не вдалося перенести: %1$d.",
+    "many": "Не вдалося перенести: %1$d.",
+    "other": "Не вдалося перенести: %1$d."
+   },
+   "zh": {
+    "other": "%1$d 个无法导入。"
+   }
+  },
+  "backup_step_albums_new": {
+   "en": {
+    "one": "%1$d album is created.",
+    "other": "%1$d albums are created."
+   },
+   "de": {
+    "one": "%1$d Album wird neu angelegt.",
+    "other": "%1$d Alben werden neu angelegt."
+   },
+   "ar": {
+    "zero": "يُنشأ %1$d ألبوم.",
+    "one": "يُنشأ ألبوم واحد.",
+    "two": "يُنشأ ألبومان.",
+    "few": "تُنشأ %1$d ألبومات.",
+    "many": "يُنشأ %1$d ألبومًا.",
+    "other": "يُنشأ %1$d ألبوم."
+   },
+   "es": {
+    "one": "Se crea %1$d álbum.",
+    "many": "Se crean %1$d álbumes.",
+    "other": "Se crean %1$d álbumes."
+   },
+   "fr": {
+    "one": "%1$d album est créé.",
+    "many": "%1$d albums sont créés.",
+    "other": "%1$d albums sont créés."
+   },
+   "it": {
+    "one": "Viene creato %1$d album.",
+    "many": "Vengono creati %1$d album.",
+    "other": "Vengono creati %1$d album."
+   },
+   "ja": {
+    "other": "アルバム %1$d件を新しく作ります。"
+   },
+   "ko": {
+    "other": "앨범 %1$d개를 새로 만들어요."
+   },
+   "nl": {
+    "one": "%1$d album wordt aangemaakt.",
+    "other": "%1$d albums worden aangemaakt."
+   },
+   "pl": {
+    "one": "Powstanie %1$d nowy album.",
+    "few": "Powstaną %1$d nowe albumy.",
+    "many": "Powstanie %1$d nowych albumów.",
+    "other": "Powstaną %1$d nowe albumy."
+   },
+   "pt": {
+    "one": "É criado %1$d álbum.",
+    "many": "São criados %1$d álbuns.",
+    "other": "São criados %1$d álbuns."
+   },
+   "ro": {
+    "one": "Se creează %1$d album.",
+    "few": "Se creează %1$d albume.",
+    "other": "Se creează %1$d de albume."
+   },
+   "ru": {
+    "one": "Создаётся %1$d альбом.",
+    "few": "Создаются %1$d альбома.",
+    "many": "Создаётся %1$d альбомов.",
+    "other": "Создаются %1$d альбома."
+   },
+   "tr": {
+    "one": "%1$d albüm oluşturulur.",
+    "other": "%1$d albüm oluşturulur."
+   },
+   "uk": {
+    "one": "Створюється %1$d альбом.",
+    "few": "Створюються %1$d альбоми.",
+    "many": "Створюється %1$d альбомів.",
+    "other": "Створюються %1$d альбоми."
+   },
+   "zh": {
+    "other": "将新建 %1$d 个相册。"
+   }
+  },
+  "backup_step_albums_extend": {
+   "en": {
+    "one": "%1$d existing album is extended.",
+    "other": "%1$d existing albums are extended."
+   },
+   "de": {
+    "one": "%1$d vorhandenes Album wird ergänzt.",
+    "other": "%1$d vorhandene Alben werden ergänzt."
+   },
+   "ar": {
+    "zero": "يُستكمل %1$d ألبوم موجود.",
+    "one": "يُستكمل ألبوم موجود واحد.",
+    "two": "يُستكمل ألبومان موجودان.",
+    "few": "تُستكمل %1$d ألبومات موجودة.",
+    "many": "يُستكمل %1$d ألبومًا موجودًا.",
+    "other": "يُستكمل %1$d ألبوم موجود."
+   },
+   "es": {
+    "one": "Se completa %1$d álbum existente.",
+    "many": "Se completan %1$d álbumes existentes.",
+    "other": "Se completan %1$d álbumes existentes."
+   },
+   "fr": {
+    "one": "%1$d album existant est complété.",
+    "many": "%1$d albums existants sont complétés.",
+    "other": "%1$d albums existants sont complétés."
+   },
+   "it": {
+    "one": "Viene completato %1$d album esistente.",
+    "many": "Vengono completati %1$d album esistenti.",
+    "other": "Vengono completati %1$d album esistenti."
+   },
+   "ja": {
+    "other": "既存のアルバム %1$d件に追加します。"
+   },
+   "ko": {
+    "other": "기존 앨범 %1$d개를 보충해요."
+   },
+   "nl": {
+    "one": "%1$d bestaand album wordt aangevuld.",
+    "other": "%1$d bestaande albums worden aangevuld."
+   },
+   "pl": {
+    "one": "Zostanie uzupełniony %1$d istniejący album.",
+    "few": "Zostaną uzupełnione %1$d istniejące albumy.",
+    "many": "Zostanie uzupełnionych %1$d istniejących albumów.",
+    "other": "Zostaną uzupełnione %1$d istniejące albumy."
+   },
+   "pt": {
+    "one": "É completado %1$d álbum existente.",
+    "many": "São completados %1$d álbuns existentes.",
+    "other": "São completados %1$d álbuns existentes."
+   },
+   "ro": {
+    "one": "Se completează %1$d album existent.",
+    "few": "Se completează %1$d albume existente.",
+    "other": "Se completează %1$d de albume existente."
+   },
+   "ru": {
+    "one": "Дополняется %1$d имеющийся альбом.",
+    "few": "Дополняются %1$d имеющихся альбома.",
+    "many": "Дополняется %1$d имеющихся альбомов.",
+    "other": "Дополняются %1$d имеющихся альбома."
+   },
+   "tr": {
+    "one": "Mevcut %1$d albüm tamamlanır.",
+    "other": "Mevcut %1$d albüm tamamlanır."
+   },
+   "uk": {
+    "one": "Доповнюється %1$d наявний альбом.",
+    "few": "Доповнюються %1$d наявні альбоми.",
+    "many": "Доповнюється %1$d наявних альбомів.",
+    "other": "Доповнюються %1$d наявні альбоми."
+   },
+   "zh": {
+    "other": "将补充 %1$d 个已有相册。"
    }
   }
  }

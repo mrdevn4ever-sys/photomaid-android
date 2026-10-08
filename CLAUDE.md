@@ -93,6 +93,14 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   keine Dateinamen als Text, Dokument-Info nur „PhotoMaid“. Speichern nach `Documents/PhotoMaid/` (kein Medium, keine
   Entscheidung, Quellen unverändert) oder nur teilen; Größe gemessen. Free bis 10 Fotos, 1–2 je Seite; Kontaktbögen (ab 4)
   und bis 200 Fotos mit `hasProToolsAccess`. Keine Text-/Dokumenterkennung. Einstiege: Studio, Auswahl › ⋯, Teilen-Ziel.
+- Auslagern + Sichern (Ausbau Paket 5, 2026-10, `archive/`, `feature/archive/`, Kern `core/.../archive/`): Kopie auf einen vom
+  Nutzer gewählten Ordner (SAF), jede Kopie neu gelesen und per SHA-256 verglichen – nur geprüfte zählen, abweichende/halbe Kopien
+  werden entfernt, Journal je Datei (übersteht Abbruch/Prozessende). Ziel wird ehrlich eingeordnet (`TargetKind`: eigener
+  Datenträger / gleicher Gerätespeicher = kein Auslagern / andere App = nie automatisch „lokal“). Originale bleiben; nur bei eigenem
+  Datenträger und nur auf Tipp: geprüfte Originale in den PhotoMaid-Papierkorb (Ledger, Favoriten bleiben). Free bis 10 Dateien je
+  Durchgang. Sicherung = JSON ohne Fotos an selbst gewähltem Ort; Wiederherstellen über `Rematch` (ID, sonst eindeutiger
+  Fingerabdruck), „Das passiert“ vorher, überschreibt nie Hiesiges, „Endgültig löschen“ wird nie übernommen. Gespeicherte
+  Zahlen/Namen immer mit ASCII-Ziffern (`Locale.ROOT`), nie von der Gerätesprache abhängig.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
   Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3

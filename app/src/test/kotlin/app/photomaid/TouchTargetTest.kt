@@ -31,6 +31,11 @@ import app.photomaid.feature.months.MonthsScreen
 import app.photomaid.feature.pro.ProScreen
 import app.photomaid.feature.review.ReviewFeedScreen
 import app.photomaid.feature.settings.SettingsScreen
+import app.photomaid.feature.archive.ArchiveRequest
+import app.photomaid.archive.FileArchiveTarget
+import app.photomaid.core.archive.TargetKind
+import app.photomaid.feature.archive.ArchiveScreen
+import app.photomaid.feature.archive.BackupScreen
 import app.photomaid.feature.storage.LargeFilesScreen
 import app.photomaid.feature.studio.CollageRequest
 import app.photomaid.feature.studio.CollageScreen
@@ -145,6 +150,7 @@ class TouchTargetTest {
             app.decide(all[0].reference, DecisionAction.MarkForCleanup); app.decide(all[1].reference, DecisionAction.Keep)
         }
         val photos = all.filter { it.kind != MediaKind.VIDEO }
+        app.archive.testTarget = FileArchiveTarget(java.io.File(rule.activity.cacheDir, "sd-touch"), TargetKind.REMOVABLE, "SD-Karte")
         val video = all.first { it.kind == MediaKind.VIDEO }
         val screens: List<Pair<String, @Composable () -> Unit>> = listOf(
             "Heute" to { TodayScreen(nav) },
@@ -171,6 +177,8 @@ class TouchTargetTest {
             "Film" to { MovieScreen(MovieRequest("m", movieFrom(all.take(4), false), false), nav, onClose = {}) },
             "Werkzeug Verkleinern" to { ToolsScreen(ToolRequest("t", ToolKind.RESIZE, photos.map { it.id }), nav, onClose = {}) },
             "Werkzeug GIF" to { ToolsScreen(ToolRequest("g", ToolKind.GIF, photos.take(3).map { it.id }), nav, onClose = {}) },
+            "Auslagern" to { ArchiveScreen(ArchiveRequest("a", photos.map { it.id }), nav, onClose = {}) },
+            "Sichern" to { BackupScreen(nav) },
         )
         val problems = mutableListOf<String>()
         for ((name, screen) in screens) {

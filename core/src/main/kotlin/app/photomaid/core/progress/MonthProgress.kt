@@ -9,12 +9,16 @@ import java.time.ZoneId
 /** Ein Kalendermonat (lokale Zeitzone), z. B. `2026-09`. Monate sind nur Filter – nichts wird je Monat gespeichert. */
 data class MonthKey(val year: Int, val month: Int) : Comparable<MonthKey> {
     override fun compareTo(other: MonthKey) = compareValuesBy(this, other, { it.year }, { it.month })
-    override fun toString() = "%04d-%02d".format(year, month)
+    /** `2026-09`, immer mit ASCII-Ziffern (wird gespeichert, z. B. „Weitermachen“). */
+    override fun toString(): String = YearMonth.of(year, month).toString()
     val yearMonth: YearMonth get() = YearMonth.of(year, month)
 
     companion object {
         fun of(t: Instant, zone: ZoneId = ZoneId.systemDefault()): MonthKey = t.atZone(zone).let { MonthKey(it.year, it.monthValue) }
-        fun parse(s: String?): MonthKey? = s?.let { runCatching { YearMonth.parse(it) }.getOrNull() }?.let { MonthKey(it.year, it.monthValue) }
+        /** Liest auch ältere Einträge mit arabisch-indischen Ziffern (vor 2026-10-08 sprachabhängig gespeichert). */
+        fun parse(s: String?): MonthKey? = s?.let { runCatching { YearMonth.parse(asciiDigits(it)) }.getOrNull() }?.let { MonthKey(it.year, it.monthValue) }
+
+        private fun asciiDigits(s: String) = buildString { for (ch in s) append(if (Character.isDigit(ch)) ('0' + Character.digit(ch, 10)) else ch) }
     }
 }
 

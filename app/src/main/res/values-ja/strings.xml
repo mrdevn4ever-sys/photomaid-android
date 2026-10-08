@@ -1580,4 +1580,166 @@
     <string name="tour_history_text">残したもの、外したもの、あとで見るものを確認できます。どの判断もここで変更できます。</string>
     <string name="tour_settings_title">設定とヘルプ</string>
     <string name="tour_settings_text">PhotoMaid を好みに合わせて設定し、答えを探せます。このツアーはいつでももう一度見られます。</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">アーカイブ</string>
+    <string name="archive_studio_sub">SDカードやUSBメモリにコピーし、すべてのコピーを確認</string>
+    <string name="archive_pick">何をコピーしますか？</string>
+    <string name="archive_running">コピーして確認しています…</string>
+    <string name="archive_total_size">合計: %1$s</string>
+    <string name="archive_target">保存先</string>
+    <string name="archive_target_none">フォルダーがまだ選ばれていません</string>
+    <string name="archive_choose">フォルダーを選ぶ</string>
+    <string name="archive_choose_other">別のフォルダーを選ぶ</string>
+    <string name="archive_kind_removable">SDカードまたはUSBメモリ：別の記憶装置です。</string>
+    <string name="archive_kind_device">このフォルダーは写真と同じストレージにあります。そこに2つ目のコピーがあっても、スマホをなくしたり壊れたりしたときには役に立ちません。</string>
+    <string name="archive_kind_provider">このフォルダーは別のアプリ（オンラインストレージなど）のものです。ファイルをスマホに置くかオンラインに送るかは、そのアプリが決めます。</string>
+    <string name="archive_free">保存先の空き容量: %1$s</string>
+    <string name="archive_free_unknown">保存先の空き容量: 不明</string>
+    <string name="archive_no_space">空き容量が足りません：必要 %1$s、空き %2$s。</string>
+    <string name="archive_options">オプション</string>
+    <string name="archive_by_month">年と月ごとのフォルダー</string>
+    <string name="archive_write_list">チェックリストも保存</string>
+    <string name="archive_write_list_note">各ファイルの名前・日付・サイズ・チェックサムと、アルバム・タグ・メモをまとめた表です。</string>
+    <string name="archive_step_verify">その後、各コピーを読み直し、元のファイルと1バイトずつ比べます。</string>
+    <string name="archive_step_only_verified">確認済みのコピーだけが有効です。違いがあったコピーはすぐに削除します。</string>
+    <string name="archive_step_originals">元のファイルはそのまま残ります。</string>
+    <string name="archive_start">コピーして確認</string>
+    <string name="archive_failed">コピーが予期せず止まりました。確認済みのものは結果で見られます。</string>
+    <string name="archive_last_interrupted">前回の処理は中断されました。確認済み: %2$d件中%1$d件。</string>
+    <string name="archive_show_result">結果を見る</string>
+    <string name="archive_result_title">結果</string>
+    <string name="archive_verified_bytes">確認済み: %1$s</string>
+    <string name="archive_list_saved">チェックリストを保存しました: %1$s</string>
+    <string name="archive_meaning">「確認済み」とは、コピーが元のファイルと1バイト単位で同じという意味です。記憶装置がどれだけもつかは誰にも確かめられません。大切なものは2か所に保管しましょう。</string>
+    <string name="archive_files">ファイル</string>
+    <string name="archive_status_verified">確認済み</string>
+    <string name="archive_status_already">既にあり、同一</string>
+    <string name="archive_status_failed">失敗</string>
+    <string name="archive_status_notdone">未コピー</string>
+    <string name="archive_reason_read">元のファイルを読めません</string>
+    <string name="archive_reason_write">保存先が保存を拒否しました（容量不足、書き込み禁止、またはこのストレージには大きすぎるファイル）</string>
+    <string name="archive_reason_mismatch">コピーが一致しなかったため削除しました</string>
+    <string name="archive_reason_cancelled">キャンセルしました</string>
+    <string name="archive_reason_interrupted">中断しました（途中までのコピーは削除）</string>
+    <string name="archive_reason_space">保存先の空き容量がありません</string>
+    <string name="archive_cleanup_button">元のファイルをゴミ箱へ…</string>
+    <string name="archive_cleanup_text">これらの写真と動画には、「%1$s」に確認済みのコピーがあります。移動先はPhotoMaidのゴミ箱だけです。ゴミ箱を空にし、Androidがもう一度確認するまで何も削除されません。</string>
+    <string name="archive_cleanup_action">ゴミ箱へ移動</string>
+    <string name="archive_open_basket">ゴミ箱を開く</string>
+    <string name="archive_no_cleanup_device">コピーは写真と同じストレージにあるため、PhotoMaidはここで元のファイルを削除する提案をしません。</string>
+    <string name="archive_no_cleanup_provider">コピーは別のアプリにあります。そこで安全かどうかPhotoMaidには分からないため、元のファイルを削除する提案はしません。</string>
+    <string name="archive_undated">日付なし</string>
+    <string name="archive_list_file">PhotoMaidチェックリスト %1$s.csv</string>
+    <string name="archive_col_folder">フォルダー</string>
+    <string name="archive_col_name">名前</string>
+    <string name="archive_col_taken">撮影日時</string>
+    <string name="archive_col_bytes">バイト</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">アルバム</string>
+    <string name="archive_col_tags">タグ</string>
+    <string name="archive_col_note">メモ</string>
+    <string name="backup_title">バックアップと復元</string>
+    <string name="backup_save_header">バックアップ</string>
+    <string name="backup_save_text">PhotoMaidのデータを小さなファイルに保存します：判断、アルバム、タグ、メモ、選択かご、非表示の項目、設定、ワークフロー、プリセット。写真は含まれません。</string>
+    <string name="backup_contains">内容: %1$s</string>
+    <string name="backup_privacy">このファイルにはファイル名、タグ、メモが含まれます。保存先は自分で決めた場所だけに（例：USBメモリ）。</string>
+    <string name="backup_save_button">バックアップを保存…</string>
+    <string name="backup_file_name">PhotoMaidバックアップ %1$s.json</string>
+    <string name="backup_saved">バックアップを保存しました。</string>
+    <string name="backup_save_failed">バックアップを保存できませんでした。</string>
+    <string name="backup_restore_header">復元</string>
+    <string name="backup_restore_text">新しいスマホなどでバックアップを取り込みます。写真は名前・サイズ・撮影日時で見つけ直します。ここで既に判断・入力した内容はそのままです。</string>
+    <string name="backup_open_button">バックアップを開く…</string>
+    <string name="backup_not_backup">このファイルはPhotoMaidのバックアップではありません。</string>
+    <string name="backup_too_new">このバックアップは新しいバージョンのPhotoMaidで作られました。先にPhotoMaidを更新してください。</string>
+    <string name="backup_unreadable">ファイルを読み込めませんでした。</string>
+    <string name="backup_from">%1$s のバックアップ</string>
+    <string name="backup_step_settings">設定を引き継ぎます（「完全に削除」を除く）。ワークフロー、プリセット、自分のコレクションは追加されます。</string>
+    <string name="backup_missing_note">これらの写真と動画はこの端末にありません（または確実に一致させられません）。これらについては何も取り込みません。</string>
+    <string name="backup_missing_show">リストを表示</string>
+    <string name="backup_missing_hide">リストを隠す</string>
+    <string name="backup_nothing">このバックアップには、ここに足りないものはありません。</string>
+    <string name="backup_apply">取り込む</string>
+    <string name="backup_done">取り込みました</string>
+    <plurals name="archive_step_copy">
+        <item quantity="other">%1$d件のファイルを「%2$s」にコピーします。</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="other">%1$d件をコピーして確認</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="other">%1$d件は既にあり</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="other">%1$d件失敗</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="other">%1$d件は未コピー</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="other">%1$d件の元ファイルをPhotoMaidのゴミ箱に移動しますか？</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="other">お気に入り%1$d件はそのままです（お気に入りを保護）。</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="other">%1$d件の元ファイルがPhotoMaidのゴミ箱に入りました。</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="other">判断 %1$d件</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="other">アルバム %1$d件</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="other">タグ付き %1$d件</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="other">メモ %1$d件</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="other">選択かごに %1$d件</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="other">非表示 %1$d件</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="other">ワークフロー %1$d件</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="other">プリセット %1$d件</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="other">自分のコレクション %1$d件</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="other">判断 %1$d件を取り込みます。</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="other">%1$d件はここで既に判断済みのため、そのままです。</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="other">写真・動画 %1$d件のタグ。</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="other">メモ %1$d件（既存のメモはそのまま）。</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="other">%1$d件を選択かごに入れます。</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="other">%1$d件をPhotoMaidで非表示にします。</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="other">%1$d件が見つかりません</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="other">%1$d件は取り込めませんでした。</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="other">アルバム %1$d件を新しく作ります。</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="other">既存のアルバム %1$d件に追加します。</item>
+    </plurals>
 </resources>

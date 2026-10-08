@@ -165,6 +165,11 @@ class OrganizeStore(private val db: PhotoMaidDatabase, private val now: () -> Lo
     suspend fun removeFromBasket(mediaIds: Collection<String>) { if (mediaIds.isNotEmpty()) write { dao.deleteFromBasket(mediaIds.toList()) } }
     suspend fun clearBasket() = write { dao.clearBasket() }
 
+    /** Gespeicherte Fingerabdrücke aller Bezüge (für die Sicherung: auch Medien, die gerade nicht auffindbar sind). */
+    suspend fun storedRefs(): Map<String, MediaRef> = withContext(Dispatchers.IO) {
+        runCatching { dao.refs() }.getOrDefault(emptyList()).associate { it.mediaId to MediaRef(it.mediaId, it.name, it.size, it.takenMillis) }
+    }
+
     // Wiederfinden ---------------------------------------------------------------------------------------------------
 
     /**

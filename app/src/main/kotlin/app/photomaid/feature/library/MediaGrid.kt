@@ -11,6 +11,8 @@ import app.photomaid.feature.organize.OrganizeMenuItems
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.SdCard
+import app.photomaid.feature.archive.ArchiveRequest
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.horizontalScroll
@@ -360,6 +362,10 @@ internal fun SelectionActions(
                 if (chosen.any { it.kind != MediaKind.VIDEO }) DropdownMenuItem(text = { Text(stringResource(R.string.pdf_from_selection)) },
                     leadingIcon = { Icon(Icons.Rounded.PictureAsPdf, null) }, modifier = Modifier.testTag("lib.sel.pdf"), onClick = {
                         more = false; nav.openPdf(PdfRequest(UUID.randomUUID().toString(), chosen.map { it.id }))
+                    })
+                DropdownMenuItem(text = { Text(stringResource(R.string.archive_title)) }, leadingIcon = { Icon(Icons.Rounded.SdCard, null) },
+                    modifier = Modifier.testTag("lib.sel.archive"), onClick = {
+                        more = false; nav.openArchive(ArchiveRequest(UUID.randomUUID().toString(), chosen.map { it.id }))
                     })
                 DropdownMenuItem(text = { Text(stringResource(R.string.share)) }, leadingIcon = { Icon(Icons.Rounded.Share, null) },
                     modifier = Modifier.testTag("lib.sel.share"), onClick = {

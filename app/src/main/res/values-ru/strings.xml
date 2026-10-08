@@ -1805,4 +1805,247 @@
     <string name="tour_history_text">Здесь видно, что вы оставили, отложили в сторону или на потом. Любое решение можно изменить.</string>
     <string name="tour_settings_title">Настройки и помощь</string>
     <string name="tour_settings_text">Настройте PhotoMaid под себя и найдите ответы. Этот обзор можно повторить в любое время.</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">Архивировать</string>
+    <string name="archive_studio_sub">Скопировать на SD-карту или USB-накопитель и проверить каждую копию</string>
+    <string name="archive_pick">Что скопировать?</string>
+    <string name="archive_running">Копирование и проверка…</string>
+    <string name="archive_total_size">Всего: %1$s</string>
+    <string name="archive_target">Куда</string>
+    <string name="archive_target_none">Папка ещё не выбрана</string>
+    <string name="archive_choose">Выбрать папку</string>
+    <string name="archive_choose_other">Выбрать другую папку</string>
+    <string name="archive_kind_removable">SD-карта или USB-накопитель — отдельный носитель.</string>
+    <string name="archive_kind_device">Эта папка находится в той же памяти, что и ваши фото. Вторая копия там не поможет, если телефон потеряется или сломается.</string>
+    <string name="archive_kind_provider">Эта папка принадлежит другому приложению, например онлайн-хранилищу. Оно и решает, останутся ли файлы на телефоне или уйдут в интернет.</string>
+    <string name="archive_free">Свободно в месте назначения: %1$s</string>
+    <string name="archive_free_unknown">Свободное место: неизвестно</string>
+    <string name="archive_no_space">Недостаточно места: нужно %1$s, свободно %2$s.</string>
+    <string name="archive_options">Параметры</string>
+    <string name="archive_by_month">Папки по году и месяцу</string>
+    <string name="archive_write_list">Сохранить и контрольный список</string>
+    <string name="archive_write_list_note">Таблица с именем, датой, размером и контрольной суммой каждого файла, а также вашими альбомами, метками и заметками.</string>
+    <string name="archive_step_verify">Затем каждая копия читается заново и побайтно сравнивается с оригиналом.</string>
+    <string name="archive_step_only_verified">Учитываются только проверенные копии. Если копия отличается, она сразу удаляется.</string>
+    <string name="archive_step_originals">Ваши оригиналы остаются без изменений.</string>
+    <string name="archive_start">Скопировать и проверить</string>
+    <string name="archive_failed">Копирование неожиданно прервалось. В результате видно, что уже проверено.</string>
+    <string name="archive_last_interrupted">Последний запуск был прерван. Проверено: %1$d из %2$d.</string>
+    <string name="archive_show_result">Показать результат</string>
+    <string name="archive_result_title">Результат</string>
+    <string name="archive_verified_bytes">Проверено: %1$s</string>
+    <string name="archive_list_saved">Контрольный список сохранён: %1$s</string>
+    <string name="archive_meaning">«Проверено» значит, что копия побайтно совпадает с оригиналом. Сколько прослужит носитель, проверить невозможно — храните важное в двух местах.</string>
+    <string name="archive_files">Файлы</string>
+    <string name="archive_status_verified">Проверено</string>
+    <string name="archive_status_already">Уже есть, совпадает</string>
+    <string name="archive_status_failed">Не удалось</string>
+    <string name="archive_status_notdone">Не скопировано</string>
+    <string name="archive_reason_read">Оригинал не читается</string>
+    <string name="archive_reason_write">Место назначения не приняло файл (заполнено, защищено от записи или файл слишком большой для этого носителя)</string>
+    <string name="archive_reason_mismatch">Копия не совпала — удалена</string>
+    <string name="archive_reason_cancelled">Отменено</string>
+    <string name="archive_reason_interrupted">Прервано — неполная копия удалена</string>
+    <string name="archive_reason_space">Не осталось места</string>
+    <string name="archive_cleanup_button">Оригиналы в корзину…</string>
+    <string name="archive_cleanup_text">У этих фото и видео теперь есть проверенная копия на «%1$s». Они попадут только в корзину PhotoMaid. Ничего не удалится, пока вы её не очистите и Android не спросит ещё раз.</string>
+    <string name="archive_cleanup_action">Переместить в корзину</string>
+    <string name="archive_open_basket">Открыть корзину</string>
+    <string name="archive_no_cleanup_device">Копии лежат в той же памяти, что и ваши фото, поэтому PhotoMaid не предлагает здесь убрать оригиналы.</string>
+    <string name="archive_no_cleanup_provider">Копии находятся в другом приложении. PhotoMaid не видит, надёжно ли они там хранятся, поэтому не предлагает убрать оригиналы.</string>
+    <string name="archive_undated">Без даты</string>
+    <string name="archive_list_file">Контрольный список PhotoMaid %1$s.csv</string>
+    <string name="archive_col_folder">Папка</string>
+    <string name="archive_col_name">Имя</string>
+    <string name="archive_col_taken">Снято</string>
+    <string name="archive_col_bytes">Байты</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">Альбомы</string>
+    <string name="archive_col_tags">Метки</string>
+    <string name="archive_col_note">Заметка</string>
+    <string name="backup_title">Резервная копия и восстановление</string>
+    <string name="backup_save_header">Резервная копия</string>
+    <string name="backup_save_text">Сохраняет данные PhotoMaid в небольшой файл: решения, альбомы, метки, заметки, корзину выбора, скрытое, настройки, сценарии и пресеты. Фото в него не входят.</string>
+    <string name="backup_contains">Содержит: %1$s</string>
+    <string name="backup_privacy">Файл содержит имена файлов, метки и заметки. Сохраняйте его только там, где хотите, — например, на USB-накопителе.</string>
+    <string name="backup_save_button">Сохранить резервную копию…</string>
+    <string name="backup_file_name">Резервная копия PhotoMaid %1$s.json</string>
+    <string name="backup_saved">Резервная копия сохранена.</string>
+    <string name="backup_save_failed">Не удалось сохранить резервную копию.</string>
+    <string name="backup_restore_header">Восстановление</string>
+    <string name="backup_restore_text">Переносит резервную копию, например на новый телефон. Фото находятся по имени, размеру и времени съёмки. То, что здесь уже решено или записано, остаётся как есть.</string>
+    <string name="backup_open_button">Открыть резервную копию…</string>
+    <string name="backup_not_backup">Этот файл — не резервная копия PhotoMaid.</string>
+    <string name="backup_too_new">Эта резервная копия создана в более новой версии PhotoMaid. Сначала обновите PhotoMaid.</string>
+    <string name="backup_unreadable">Не удалось прочитать файл.</string>
+    <string name="backup_from">Резервная копия от %1$s</string>
+    <string name="backup_step_settings">Настройки переносятся (кроме «Удалять навсегда»); сценарии, пресеты и ваши подборки добавляются.</string>
+    <string name="backup_missing_note">Этих фото и видео нет на устройстве (или их нельзя однозначно сопоставить). Для них ничего не переносится.</string>
+    <string name="backup_missing_show">Показать список</string>
+    <string name="backup_missing_hide">Скрыть список</string>
+    <string name="backup_nothing">В этой резервной копии нет ничего, чего здесь не хватает.</string>
+    <string name="backup_apply">Перенести</string>
+    <string name="backup_done">Перенесено</string>
+    <plurals name="archive_step_copy">
+        <item quantity="one">%1$d файл будет скопирован в «%2$s».</item>
+        <item quantity="few">%1$d файла будут скопированы в «%2$s».</item>
+        <item quantity="many">%1$d файлов будут скопированы в «%2$s».</item>
+        <item quantity="other">%1$d файла будут скопированы в «%2$s».</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="one">%1$d скопирован и проверен</item>
+        <item quantity="few">%1$d скопировано и проверено</item>
+        <item quantity="many">%1$d скопировано и проверено</item>
+        <item quantity="other">%1$d скопировано и проверено</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="one">%1$d уже есть</item>
+        <item quantity="few">%1$d уже есть</item>
+        <item quantity="many">%1$d уже есть</item>
+        <item quantity="other">%1$d уже есть</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="one">%1$d с ошибкой</item>
+        <item quantity="few">%1$d с ошибкой</item>
+        <item quantity="many">%1$d с ошибкой</item>
+        <item quantity="other">%1$d с ошибкой</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="one">%1$d не скопирован</item>
+        <item quantity="few">%1$d не скопировано</item>
+        <item quantity="many">%1$d не скопировано</item>
+        <item quantity="other">%1$d не скопировано</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="one">Переместить %1$d оригинал в корзину PhotoMaid?</item>
+        <item quantity="few">Переместить %1$d оригинала в корзину PhotoMaid?</item>
+        <item quantity="many">Переместить %1$d оригиналов в корзину PhotoMaid?</item>
+        <item quantity="other">Переместить %1$d оригинала в корзину PhotoMaid?</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="one">%1$d избранный остаётся (Защищать избранное).</item>
+        <item quantity="few">%1$d избранных остаются (Защищать избранное).</item>
+        <item quantity="many">%1$d избранных остаются (Защищать избранное).</item>
+        <item quantity="other">%1$d избранных остаются (Защищать избранное).</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="one">%1$d оригинал теперь в корзине PhotoMaid.</item>
+        <item quantity="few">%1$d оригинала теперь в корзине PhotoMaid.</item>
+        <item quantity="many">%1$d оригиналов теперь в корзине PhotoMaid.</item>
+        <item quantity="other">%1$d оригинала теперь в корзине PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="one">%1$d решение</item>
+        <item quantity="few">%1$d решения</item>
+        <item quantity="many">%1$d решений</item>
+        <item quantity="other">%1$d решения</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="one">%1$d альбом</item>
+        <item quantity="few">%1$d альбома</item>
+        <item quantity="many">%1$d альбомов</item>
+        <item quantity="other">%1$d альбома</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="one">%1$d с метками</item>
+        <item quantity="few">%1$d с метками</item>
+        <item quantity="many">%1$d с метками</item>
+        <item quantity="other">%1$d с метками</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="one">%1$d заметка</item>
+        <item quantity="few">%1$d заметки</item>
+        <item quantity="many">%1$d заметок</item>
+        <item quantity="other">%1$d заметки</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="one">%1$d в корзине выбора</item>
+        <item quantity="few">%1$d в корзине выбора</item>
+        <item quantity="many">%1$d в корзине выбора</item>
+        <item quantity="other">%1$d в корзине выбора</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="one">%1$d скрыт</item>
+        <item quantity="few">%1$d скрыто</item>
+        <item quantity="many">%1$d скрыто</item>
+        <item quantity="other">%1$d скрыто</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="one">%1$d сценарий</item>
+        <item quantity="few">%1$d сценария</item>
+        <item quantity="many">%1$d сценариев</item>
+        <item quantity="other">%1$d сценария</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="one">%1$d пресет</item>
+        <item quantity="few">%1$d пресета</item>
+        <item quantity="many">%1$d пресетов</item>
+        <item quantity="other">%1$d пресета</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="one">%1$d своя подборка</item>
+        <item quantity="few">%1$d свои подборки</item>
+        <item quantity="many">%1$d своих подборок</item>
+        <item quantity="other">%1$d свои подборки</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="one">Переносится %1$d решение.</item>
+        <item quantity="few">Переносятся %1$d решения.</item>
+        <item quantity="many">Переносится %1$d решений.</item>
+        <item quantity="other">Переносятся %1$d решения.</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="one">%1$d уже решён здесь и остаётся как есть.</item>
+        <item quantity="few">%1$d уже решены здесь и остаются как есть.</item>
+        <item quantity="many">%1$d уже решены здесь и остаются как есть.</item>
+        <item quantity="other">%1$d уже решены здесь и остаются как есть.</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="one">Метки для %1$d фото или видео.</item>
+        <item quantity="few">Метки для %1$d фото и видео.</item>
+        <item quantity="many">Метки для %1$d фото и видео.</item>
+        <item quantity="other">Метки для %1$d фото и видео.</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="one">%1$d заметка (имеющиеся остаются).</item>
+        <item quantity="few">%1$d заметки (имеющиеся остаются).</item>
+        <item quantity="many">%1$d заметок (имеющиеся остаются).</item>
+        <item quantity="other">%1$d заметки (имеющиеся остаются).</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="one">%1$d попадает в корзину выбора.</item>
+        <item quantity="few">%1$d попадают в корзину выбора.</item>
+        <item quantity="many">%1$d попадают в корзину выбора.</item>
+        <item quantity="other">%1$d попадают в корзину выбора.</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="one">%1$d скрывается в PhotoMaid.</item>
+        <item quantity="few">%1$d скрываются в PhotoMaid.</item>
+        <item quantity="many">%1$d скрываются в PhotoMaid.</item>
+        <item quantity="other">%1$d скрываются в PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="one">Не найдено: %1$d</item>
+        <item quantity="few">Не найдено: %1$d</item>
+        <item quantity="many">Не найдено: %1$d</item>
+        <item quantity="other">Не найдено: %1$d</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="one">Не удалось перенести: %1$d.</item>
+        <item quantity="few">Не удалось перенести: %1$d.</item>
+        <item quantity="many">Не удалось перенести: %1$d.</item>
+        <item quantity="other">Не удалось перенести: %1$d.</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="one">Создаётся %1$d альбом.</item>
+        <item quantity="few">Создаются %1$d альбома.</item>
+        <item quantity="many">Создаётся %1$d альбомов.</item>
+        <item quantity="other">Создаются %1$d альбома.</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="one">Дополняется %1$d имеющийся альбом.</item>
+        <item quantity="few">Дополняются %1$d имеющихся альбома.</item>
+        <item quantity="many">Дополняется %1$d имеющихся альбомов.</item>
+        <item quantity="other">Дополняются %1$d имеющихся альбома.</item>
+    </plurals>
 </resources>

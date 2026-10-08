@@ -34,7 +34,9 @@ class RoomLedgerPersistence(private val db: PhotoMaidDatabase) : LedgerPersisten
         val records = dao.records().map { PhotoMaidJson.decodeFromString<ItemRecord>(it.payload) }.associateBy { it.item }
         val events = dao.events().map { PhotoMaidJson.decodeFromString<DecisionEvent>(it.payload) }
         val intents = dao.intents().map { PhotoMaidJson.decodeFromString<OperationIntent>(it.payload) }.associateBy { it.id }
-        val usage = dao.usage().map { PhotoMaidJson.decodeFromString<DayUsageEntry>(it.payload) }.associate { it.day to it.usage }
+        // Früher hing der Schlüssel von der Gerätesprache ab (arabische Ziffern): gibt es einen Tag doppelt, gilt der ASCII-Schlüssel.
+        val usage = dao.usage().map { it to PhotoMaidJson.decodeFromString<DayUsageEntry>(it.payload) }
+            .sortedBy { (e, d) -> e.dayKey == d.day.toString() }.associate { (_, d) -> d.day to d.usage }
         val undo = kv.get(UNDO_KEY)?.let { PhotoMaidJson.decodeFromString<List<UndoEntry>>(it) } ?: emptyList()
         return LedgerState(records, events, undo, intents, usage)
     }

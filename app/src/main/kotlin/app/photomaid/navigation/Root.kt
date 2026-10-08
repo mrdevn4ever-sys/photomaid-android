@@ -161,6 +161,10 @@ import app.photomaid.feature.library.LibraryScreen
 import app.photomaid.feature.library.ViewerRequest
 import app.photomaid.feature.library.ViewerRequests
 import app.photomaid.feature.library.ViewerScreen
+import app.photomaid.feature.archive.ArchiveRequest
+import app.photomaid.feature.archive.ArchiveRequests
+import app.photomaid.feature.archive.ArchiveScreen
+import app.photomaid.feature.archive.BackupScreen
 
 val LocalApp = staticCompositionLocalOf<AppModel> { error("AppModel fehlt") }
 
@@ -185,6 +189,8 @@ interface Nav {
     fun openWorkflowRun(request: WorkflowRunRequest) {}
     /** Paket 4: PDF / Kontaktbogen aus Fotos. */
     fun openPdf(request: PdfRequest) {}
+    /** Paket 5: Auswahl auf SD-Karte/USB auslagern (kopieren und prüfen). Nie eine Entscheidung ohne eigenen Tipp. */
+    fun openArchive(request: ArchiveRequest) {}
     /** Diashow (nur Ansehen). */
     fun openSlideshow(request: SlideshowRequest) {}
     /** Studio P6: Video zusammenfügen / Diashow als Video. */
@@ -207,6 +213,7 @@ object Routes {
     const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"; const val STUDIO = "studio"
     const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"; const val FOLDER = "folder/{target}"; const val HIDDEN = "hidden"; const val SLIDESHOW = "slideshow/{id}"; const val SYSTEM_TRASH = "systemTrash"; const val MOVIE = "movie/{id}"; const val TOOLS = "tools/{id}"
     const val PICKER = "picker/{id}"; const val COLLAGE = "collage/{id}"
+    const val ARCHIVE = "archive/{id}"; const val BACKUP = "backup"
     fun editor(id: String) = "editor/$id"
     fun grid(id: String) = "grid/$id"
     fun feed(id: String) = "feed/$id"
@@ -307,6 +314,9 @@ private fun RootNav(app: AppModel) {
             }
             override fun openWorkflows(request: WorkflowRequest) { WorkflowRequests.lists[request.id] = request; root.navigate("workflows/${request.id}") }
             override fun openWorkflowRun(request: WorkflowRunRequest) { WorkflowRequests.runs[request.id] = request; root.navigate("workflow/run/${request.id}") }
+            override fun openArchive(request: ArchiveRequest) {
+                ArchiveRequests.map[request.id] = request; root.navigate("archive/${request.id}")
+            }
             override fun openPdf(request: PdfRequest) {
                 PdfRequests.map[request.id] = request; root.navigate("pdf/${request.id}")
             }
@@ -433,6 +443,13 @@ private fun RootNav(app: AppModel) {
             if (target == null) LaunchedEffect(entry) { close() }
             else OrganizeScreen(target, nav, onClose = { close() })
         }
+        composable(Routes.ARCHIVE) { entry ->
+            val key = entry.arguments?.getString("id"); val req = key?.let { ArchiveRequests.map[it] }
+            val close = { if (root.currentBackStackEntry?.id == entry.id) root.popBackStack() }
+            if (req == null) LaunchedEffect(entry) { close() }
+            else ArchiveScreen(req, nav, onClose = { key?.let { ArchiveRequests.map.remove(it) }; close() })
+        }
+        composable(Routes.BACKUP) { BackupScreen(nav) }
         composable(Routes.HIDDEN) { HiddenScreen(nav) }
         composable(Routes.SYSTEM_TRASH) { SystemTrashScreen(nav) }
         composable(Routes.MOVIE) { entry ->

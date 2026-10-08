@@ -1655,4 +1655,193 @@
     <string name="tour_history_text">Neyi tuttuğunu, ayırdığını veya sonraya bıraktığını burada görürsün. Her kararı burada değiştirebilirsin.</string>
     <string name="tour_settings_title">Ayarlar ve yardım</string>
     <string name="tour_settings_text">PhotoMaid’i zevkine göre ayarla ve yanıtları bul. Bu turu istediğin zaman tekrarlayabilirsin.</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">Arşivle</string>
+    <string name="archive_studio_sub">SD karta veya USB belleğe kopyala ve her kopyayı kontrol et</string>
+    <string name="archive_pick">Ne kopyalansın?</string>
+    <string name="archive_running">Kopyalanıyor ve kontrol ediliyor…</string>
+    <string name="archive_total_size">Toplam: %1$s</string>
+    <string name="archive_target">Hedef</string>
+    <string name="archive_target_none">Henüz klasör seçilmedi</string>
+    <string name="archive_choose">Klasör seç</string>
+    <string name="archive_choose_other">Başka klasör seç</string>
+    <string name="archive_kind_removable">SD kart veya USB bellek – ayrı bir depolama aygıtı.</string>
+    <string name="archive_kind_device">Bu klasör fotoğraflarınla aynı depolama alanında. Telefon kaybolursa veya bozulursa oradaki ikinci kopya işe yaramaz.</string>
+    <string name="archive_kind_provider">Bu klasör başka bir uygulamaya, örneğin çevrimiçi bir depolama hizmetine ait. Dosyaların telefonda mı kalacağına yoksa internete mi gideceğine o uygulama karar verir.</string>
+    <string name="archive_free">Hedefte boş alan: %1$s</string>
+    <string name="archive_free_unknown">Hedefte boş alan: bilinmiyor</string>
+    <string name="archive_no_space">Yeterli alan yok: gereken %1$s, boş %2$s.</string>
+    <string name="archive_options">Seçenekler</string>
+    <string name="archive_by_month">Yıla ve aya göre klasörler</string>
+    <string name="archive_write_list">Kontrol listesini de kaydet</string>
+    <string name="archive_write_list_note">Her dosyanın adı, tarihi, boyutu ve sağlama toplamının yanı sıra albümlerin, etiketlerin ve notlarının yer aldığı bir tablo.</string>
+    <string name="archive_step_verify">Ardından her kopya yeniden okunur ve orijinalle bayt bayt karşılaştırılır.</string>
+    <string name="archive_step_only_verified">Yalnızca kontrol edilmiş kopyalar sayılır. Farklı çıkan kopya hemen kaldırılır.</string>
+    <string name="archive_step_originals">Orijinallerin olduğu gibi kalır.</string>
+    <string name="archive_start">Kopyala ve kontrol et</string>
+    <string name="archive_failed">Kopyalama beklenmedik şekilde durdu. Neyin kontrol edildiğini sonuçta görebilirsin.</string>
+    <string name="archive_last_interrupted">Son işlem yarıda kaldı. Kontrol edilen: %2$d dosyadan %1$d.</string>
+    <string name="archive_show_result">Sonucu göster</string>
+    <string name="archive_result_title">Sonuç</string>
+    <string name="archive_verified_bytes">Kontrol edildi: %1$s</string>
+    <string name="archive_list_saved">Kontrol listesi kaydedildi: %1$s</string>
+    <string name="archive_meaning">“Kontrol edildi”, kopyanın orijinalle bayt bayt aynı olduğu anlamına gelir. Bir depolama aygıtının ne kadar dayanacağını kimse kontrol edemez – önemli şeyleri iki yerde sakla.</string>
+    <string name="archive_files">Dosyalar</string>
+    <string name="archive_status_verified">Kontrol edildi</string>
+    <string name="archive_status_already">Zaten var, aynı</string>
+    <string name="archive_status_failed">Başarısız</string>
+    <string name="archive_status_notdone">Kopyalanmadı</string>
+    <string name="archive_reason_read">Orijinal okunamıyor</string>
+    <string name="archive_reason_write">Hedef kaydetmeyi reddetti (dolu, yazmaya karşı korumalı veya dosya bu depolama için çok büyük)</string>
+    <string name="archive_reason_mismatch">Kopya aynı değildi – yeniden kaldırıldı</string>
+    <string name="archive_reason_cancelled">İptal edildi</string>
+    <string name="archive_reason_interrupted">Yarıda kaldı – yarım kopya kaldırıldı</string>
+    <string name="archive_reason_space">Hedefte yer kalmadı</string>
+    <string name="archive_cleanup_button">Orijinalleri çöp kutusuna…</string>
+    <string name="archive_cleanup_text">Bu fotoğraf ve videoların artık “%1$s” üzerinde kontrol edilmiş bir kopyası var. Yalnızca PhotoMaid çöp kutusuna taşınırlar. Sen onu boşaltıp Android bir kez daha sorana kadar hiçbir şey silinmez.</string>
+    <string name="archive_cleanup_action">Çöp kutusuna taşı</string>
+    <string name="archive_open_basket">Çöp kutusunu aç</string>
+    <string name="archive_no_cleanup_device">Kopyalar fotoğraflarınla aynı depolama alanında; bu yüzden PhotoMaid burada orijinalleri kaldırmayı önermez.</string>
+    <string name="archive_no_cleanup_provider">Kopyalar başka bir uygulamada. PhotoMaid orada güvende olup olmadıklarını göremez; bu yüzden orijinalleri kaldırmayı önermez.</string>
+    <string name="archive_undated">Tarihsiz</string>
+    <string name="archive_list_file">PhotoMaid kontrol listesi %1$s.csv</string>
+    <string name="archive_col_folder">Klasör</string>
+    <string name="archive_col_name">Ad</string>
+    <string name="archive_col_taken">Çekim</string>
+    <string name="archive_col_bytes">Bayt</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">Albümler</string>
+    <string name="archive_col_tags">Etiketler</string>
+    <string name="archive_col_note">Not</string>
+    <string name="backup_title">Yedekle ve geri yükle</string>
+    <string name="backup_save_header">Yedekle</string>
+    <string name="backup_save_text">PhotoMaid verilerini küçük bir dosyaya kaydeder: kararlar, albümler, etiketler, notlar, seçim sepeti, gizlenen öğeler, ayarlar, iş akışları ve hazır ayarlar. Fotoğraflar dahil değildir.</string>
+    <string name="backup_contains">İçerik: %1$s</string>
+    <string name="backup_privacy">Dosyada dosya adları, etiketler ve notlar bulunur. Yalnızca istediğin yere kaydet – örneğin bir USB belleğe.</string>
+    <string name="backup_save_button">Yedeği kaydet…</string>
+    <string name="backup_file_name">PhotoMaid yedeği %1$s.json</string>
+    <string name="backup_saved">Yedek kaydedildi.</string>
+    <string name="backup_save_failed">Yedek kaydedilemedi.</string>
+    <string name="backup_restore_header">Geri yükle</string>
+    <string name="backup_restore_text">Bir yedeği, örneğin yeni bir telefona aktarır. Fotoğraflar ad, boyut ve çekim zamanıyla yeniden bulunur. Burada zaten karar verilmiş veya girilmiş olanlar olduğu gibi kalır.</string>
+    <string name="backup_open_button">Yedek aç…</string>
+    <string name="backup_not_backup">Bu dosya bir PhotoMaid yedeği değil.</string>
+    <string name="backup_too_new">Bu yedek PhotoMaid’in daha yeni bir sürümünden. Lütfen önce PhotoMaid’i güncelle.</string>
+    <string name="backup_unreadable">Dosya okunamadı.</string>
+    <string name="backup_from">%1$s tarihli yedek</string>
+    <string name="backup_step_settings">Ayarlar aktarılır (“Kalıcı olarak sil” hariç); iş akışları, hazır ayarlar ve kendi koleksiyonların eklenir.</string>
+    <string name="backup_missing_note">Bu fotoğraf ve videolar bu cihazda yok (ya da açıkça eşleştirilemiyor). Onlar için hiçbir şey aktarılmaz.</string>
+    <string name="backup_missing_show">Listeyi göster</string>
+    <string name="backup_missing_hide">Listeyi gizle</string>
+    <string name="backup_nothing">Bu yedekte burada eksik olan bir şey yok.</string>
+    <string name="backup_apply">Geri yükle</string>
+    <string name="backup_done">Geri yüklendi</string>
+    <plurals name="archive_step_copy">
+        <item quantity="one">%1$d dosya “%2$s” konumuna kopyalanır.</item>
+        <item quantity="other">%1$d dosya “%2$s” konumuna kopyalanır.</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="one">%1$d kopyalandı ve kontrol edildi</item>
+        <item quantity="other">%1$d kopyalandı ve kontrol edildi</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="one">%1$d zaten var</item>
+        <item quantity="other">%1$d zaten var</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="one">%1$d başarısız</item>
+        <item quantity="other">%1$d başarısız</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="one">%1$d kopyalanmadı</item>
+        <item quantity="other">%1$d kopyalanmadı</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="one">%1$d orijinal PhotoMaid çöp kutusuna taşınsın mı?</item>
+        <item quantity="other">%1$d orijinal PhotoMaid çöp kutusuna taşınsın mı?</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="one">%1$d favori kalır (Favorileri koru).</item>
+        <item quantity="other">%1$d favori kalır (Favorileri koru).</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="one">%1$d orijinal artık PhotoMaid çöp kutusunda.</item>
+        <item quantity="other">%1$d orijinal artık PhotoMaid çöp kutusunda.</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="one">%1$d karar</item>
+        <item quantity="other">%1$d karar</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="one">%1$d albüm</item>
+        <item quantity="other">%1$d albüm</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="one">%1$d etiketli</item>
+        <item quantity="other">%1$d etiketli</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="one">%1$d not</item>
+        <item quantity="other">%1$d not</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="one">seçim sepetinde %1$d</item>
+        <item quantity="other">seçim sepetinde %1$d</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="one">%1$d gizli</item>
+        <item quantity="other">%1$d gizli</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="one">%1$d iş akışı</item>
+        <item quantity="other">%1$d iş akışı</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="one">%1$d hazır ayar</item>
+        <item quantity="other">%1$d hazır ayar</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="one">%1$d kendi koleksiyonu</item>
+        <item quantity="other">%1$d kendi koleksiyonu</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="one">%1$d karar aktarılır.</item>
+        <item quantity="other">%1$d karar aktarılır.</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="one">%1$d öğe burada zaten kararlaştırıldı ve olduğu gibi kalır.</item>
+        <item quantity="other">%1$d öğe burada zaten kararlaştırıldı ve olduğu gibi kalır.</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="one">%1$d fotoğraf veya video için etiketler.</item>
+        <item quantity="other">%1$d fotoğraf ve video için etiketler.</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="one">%1$d not (mevcut notlar kalır).</item>
+        <item quantity="other">%1$d not (mevcut notlar kalır).</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="one">%1$d öğe seçim sepetine girer.</item>
+        <item quantity="other">%1$d öğe seçim sepetine girer.</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="one">%1$d öğe PhotoMaid’de gizlenir.</item>
+        <item quantity="other">%1$d öğe PhotoMaid’de gizlenir.</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="one">%1$d bulunamadı</item>
+        <item quantity="other">%1$d bulunamadı</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="one">%1$d öğe aktarılamadı.</item>
+        <item quantity="other">%1$d öğe aktarılamadı.</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="one">%1$d albüm oluşturulur.</item>
+        <item quantity="other">%1$d albüm oluşturulur.</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="one">Mevcut %1$d albüm tamamlanır.</item>
+        <item quantity="other">Mevcut %1$d albüm tamamlanır.</item>
+    </plurals>
 </resources>

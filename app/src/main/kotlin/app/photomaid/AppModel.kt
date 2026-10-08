@@ -136,6 +136,8 @@ class AppModel(
     val organize = app.photomaid.feature.organize.OrganizeStore(db)
     /** Gespeicherte Arbeitsabläufe (Paket 2). */
     val workflows = app.photomaid.feature.workflow.WorkflowStore(store)
+    /** Paket 5: Auslagern (letzter Durchgang, zuletzt gewähltes Ziel). */
+    val archive = app.photomaid.archive.ArchiveCenter(context, store)
 
     private val _read = MutableStateFlow(LedgerReadModel())
     val read: StateFlow<LedgerReadModel> = _read.asStateFlow()
@@ -163,6 +165,7 @@ class AppModel(
         quickAccess.load()
         organize.load()
         workflows.load()
+        archive.load()
         feedAdCounter.load()
         entitlements.load()
         (purchases as? PlayBillingGateway)?.loadCache()
@@ -177,6 +180,8 @@ class AppModel(
         scope.launch(Dispatchers.IO) {
             runCatching { allPhotos.cleanupPendingExports() }
             runCatching { app.photomaid.feature.studio.ShareCache.cleanup(context) }
+            // Unterbrochenes Auslagern: nur geprüfte Kopien zählen, die halbe Kopie wird entfernt.
+            runCatching { archive.recoverAfterRestart() }
         }
     }
 

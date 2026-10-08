@@ -1655,4 +1655,193 @@
     <string name="tour_history_text">Zie wat je hebt bewaard, apart gezet of voor later bewaard. Elke keuze kun je hier nog aanpassen.</string>
     <string name="tour_settings_title">Instellingen &amp; hulp</string>
     <string name="tour_settings_text">Stel PhotoMaid naar wens in en vind antwoorden. Deze rondleiding kun je altijd opnieuw bekijken.</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">Archiveren</string>
+    <string name="archive_studio_sub">Kopiëren naar een SD-kaart of USB-stick en elke kopie controleren</string>
+    <string name="archive_pick">Wat moet er worden gekopieerd?</string>
+    <string name="archive_running">Bezig met kopiëren en controleren …</string>
+    <string name="archive_total_size">Samen: %1$s</string>
+    <string name="archive_target">Bestemming</string>
+    <string name="archive_target_none">Nog geen map gekozen</string>
+    <string name="archive_choose">Map kiezen</string>
+    <string name="archive_choose_other">Andere map kiezen</string>
+    <string name="archive_kind_removable">SD-kaart of USB-opslag – een aparte gegevensdrager.</string>
+    <string name="archive_kind_device">Deze map staat op dezelfde opslag als je foto’s. Een tweede kopie daar helpt niet als je telefoon kwijtraakt of kapotgaat.</string>
+    <string name="archive_kind_provider">Deze map hoort bij een andere app, bijvoorbeeld een onlineopslag. Die app bepaalt of de bestanden op je telefoon blijven of online gaan.</string>
+    <string name="archive_free">Vrij op bestemming: %1$s</string>
+    <string name="archive_free_unknown">Vrije ruimte op bestemming: onbekend</string>
+    <string name="archive_no_space">Niet genoeg ruimte: nodig %1$s, vrij %2$s.</string>
+    <string name="archive_options">Opties</string>
+    <string name="archive_by_month">Mappen per jaar en maand</string>
+    <string name="archive_write_list">Ook een controlelijst opslaan</string>
+    <string name="archive_write_list_note">Een tabel met naam, datum, grootte en controlesom van elk bestand, plus je albums, labels en notities.</string>
+    <string name="archive_step_verify">Daarna wordt elke kopie opnieuw gelezen en byte voor byte met het origineel vergeleken.</string>
+    <string name="archive_step_only_verified">Alleen gecontroleerde kopieën tellen. Wijkt er een af, dan wordt die meteen weer verwijderd.</string>
+    <string name="archive_step_originals">Je originelen blijven zoals ze zijn.</string>
+    <string name="archive_start">Kopiëren en controleren</string>
+    <string name="archive_failed">Het kopiëren is onverwacht gestopt. In het resultaat zie je wat er is gecontroleerd.</string>
+    <string name="archive_last_interrupted">De laatste ronde is onderbroken. Gecontroleerd: %1$d van %2$d.</string>
+    <string name="archive_show_result">Resultaat bekijken</string>
+    <string name="archive_result_title">Resultaat</string>
+    <string name="archive_verified_bytes">Gecontroleerd: %1$s</string>
+    <string name="archive_list_saved">Controlelijst opgeslagen: %1$s</string>
+    <string name="archive_meaning">‘Gecontroleerd’ betekent: de kopie is byte voor byte gelijk aan het origineel. Hoe lang een gegevensdrager meegaat, kan niemand controleren – bewaar belangrijke dingen op twee plekken.</string>
+    <string name="archive_files">Bestanden</string>
+    <string name="archive_status_verified">Gecontroleerd</string>
+    <string name="archive_status_already">Al aanwezig, gelijk</string>
+    <string name="archive_status_failed">Mislukt</string>
+    <string name="archive_status_notdone">Niet gekopieerd</string>
+    <string name="archive_reason_read">Origineel niet leesbaar</string>
+    <string name="archive_reason_write">De bestemming weigerde het op te slaan (vol, beveiligd tegen schrijven of bestand te groot voor deze opslag)</string>
+    <string name="archive_reason_mismatch">Kopie was niet gelijk – weer verwijderd</string>
+    <string name="archive_reason_cancelled">Geannuleerd</string>
+    <string name="archive_reason_interrupted">Onderbroken – halve kopie verwijderd</string>
+    <string name="archive_reason_space">Geen ruimte meer op bestemming</string>
+    <string name="archive_cleanup_button">Originelen naar prullenbak …</string>
+    <string name="archive_cleanup_text">Van deze foto’s en video’s staat nu een gecontroleerde kopie op ‘%1$s’. Ze gaan alleen naar de PhotoMaid-prullenbak. Er wordt pas iets verwijderd als je die leegt en Android nog een keer vraagt.</string>
+    <string name="archive_cleanup_action">Naar prullenbak</string>
+    <string name="archive_open_basket">Prullenbak openen</string>
+    <string name="archive_no_cleanup_device">De kopieën staan op dezelfde opslag als je foto’s. Daarom biedt PhotoMaid hier niet aan om originelen te verwijderen.</string>
+    <string name="archive_no_cleanup_provider">De kopieën staan bij een andere app. PhotoMaid kan niet zien of ze daar veilig zijn – daarom geen aanbod om originelen te verwijderen.</string>
+    <string name="archive_undated">Zonder datum</string>
+    <string name="archive_list_file">PhotoMaid-controlelijst %1$s.csv</string>
+    <string name="archive_col_folder">Map</string>
+    <string name="archive_col_name">Naam</string>
+    <string name="archive_col_taken">Gemaakt</string>
+    <string name="archive_col_bytes">Bytes</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">Albums</string>
+    <string name="archive_col_tags">Labels</string>
+    <string name="archive_col_note">Notitie</string>
+    <string name="backup_title">Back-up en herstellen</string>
+    <string name="backup_save_header">Back-up</string>
+    <string name="backup_save_text">Slaat je PhotoMaid-gegevens op in een klein bestand: beslissingen, albums, labels, notities, selectiemand, verborgen items, instellingen, werkstromen en voorinstellingen. Er zitten geen foto’s in.</string>
+    <string name="backup_contains">Bevat: %1$s</string>
+    <string name="backup_privacy">Het bestand bevat bestandsnamen, labels en notities. Sla het alleen op waar jij het wilt – bijvoorbeeld op een USB-stick.</string>
+    <string name="backup_save_button">Back-up opslaan …</string>
+    <string name="backup_file_name">PhotoMaid-back-up %1$s.json</string>
+    <string name="backup_saved">Back-up opgeslagen.</string>
+    <string name="backup_save_failed">De back-up kon niet worden opgeslagen.</string>
+    <string name="backup_restore_header">Herstellen</string>
+    <string name="backup_restore_text">Neemt een back-up over, bijvoorbeeld op een nieuwe telefoon. Foto’s worden teruggevonden via naam, grootte en opnametijd. Wat hier al besloten of ingevuld is, blijft zoals het is.</string>
+    <string name="backup_open_button">Back-up openen …</string>
+    <string name="backup_not_backup">Dit bestand is geen PhotoMaid-back-up.</string>
+    <string name="backup_too_new">Deze back-up komt uit een nieuwere versie van PhotoMaid. Werk PhotoMaid eerst bij.</string>
+    <string name="backup_unreadable">Het bestand kon niet worden gelezen.</string>
+    <string name="backup_from">Back-up van %1$s</string>
+    <string name="backup_step_settings">Instellingen worden overgenomen (behalve ‘Definitief verwijderen’); werkstromen, voorinstellingen en eigen verzamelingen komen erbij.</string>
+    <string name="backup_missing_note">Deze foto’s en video’s staan niet op dit apparaat (of zijn niet eenduidig te vinden). Voor deze wordt niets overgenomen.</string>
+    <string name="backup_missing_show">Lijst tonen</string>
+    <string name="backup_missing_hide">Lijst verbergen</string>
+    <string name="backup_nothing">In deze back-up staat niets wat hier nog ontbreekt.</string>
+    <string name="backup_apply">Overnemen</string>
+    <string name="backup_done">Overgenomen</string>
+    <plurals name="archive_step_copy">
+        <item quantity="one">%1$d bestand wordt gekopieerd naar ‘%2$s’.</item>
+        <item quantity="other">%1$d bestanden worden gekopieerd naar ‘%2$s’.</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="one">%1$d gekopieerd en gecontroleerd</item>
+        <item quantity="other">%1$d gekopieerd en gecontroleerd</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="one">%1$d al aanwezig</item>
+        <item quantity="other">%1$d al aanwezig</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="one">%1$d mislukt</item>
+        <item quantity="other">%1$d mislukt</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="one">%1$d niet gekopieerd</item>
+        <item quantity="other">%1$d niet gekopieerd</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="one">%1$d origineel naar de PhotoMaid-prullenbak?</item>
+        <item quantity="other">%1$d originelen naar de PhotoMaid-prullenbak?</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="one">%1$d favoriet blijft (Favorieten beschermen).</item>
+        <item quantity="other">%1$d favorieten blijven (Favorieten beschermen).</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="one">%1$d origineel staat nu in de PhotoMaid-prullenbak.</item>
+        <item quantity="other">%1$d originelen staan nu in de PhotoMaid-prullenbak.</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="one">%1$d beslissing</item>
+        <item quantity="other">%1$d beslissingen</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="one">%1$d album</item>
+        <item quantity="other">%1$d albums</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="one">%1$d met labels</item>
+        <item quantity="other">%1$d met labels</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="one">%1$d notitie</item>
+        <item quantity="other">%1$d notities</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="one">%1$d in de selectiemand</item>
+        <item quantity="other">%1$d in de selectiemand</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="one">%1$d verborgen</item>
+        <item quantity="other">%1$d verborgen</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="one">%1$d werkstroom</item>
+        <item quantity="other">%1$d werkstromen</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="one">%1$d voorinstelling</item>
+        <item quantity="other">%1$d voorinstellingen</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="one">%1$d eigen verzameling</item>
+        <item quantity="other">%1$d eigen verzamelingen</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="one">%1$d beslissing wordt overgenomen.</item>
+        <item quantity="other">%1$d beslissingen worden overgenomen.</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="one">%1$d is hier al besloten en blijft zoals het is.</item>
+        <item quantity="other">%1$d zijn hier al besloten en blijven zoals ze zijn.</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="one">Labels voor %1$d foto of video.</item>
+        <item quantity="other">Labels voor %1$d foto’s en video’s.</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="one">%1$d notitie (bestaande notities blijven).</item>
+        <item quantity="other">%1$d notities (bestaande notities blijven).</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="one">%1$d gaat in de selectiemand.</item>
+        <item quantity="other">%1$d gaan in de selectiemand.</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="one">%1$d wordt verborgen in PhotoMaid.</item>
+        <item quantity="other">%1$d worden verborgen in PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="one">%1$d niet gevonden</item>
+        <item quantity="other">%1$d niet gevonden</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="one">%1$d kon niet worden overgenomen.</item>
+        <item quantity="other">%1$d konden niet worden overgenomen.</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="one">%1$d album wordt aangemaakt.</item>
+        <item quantity="other">%1$d albums worden aangemaakt.</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="one">%1$d bestaand album wordt aangevuld.</item>
+        <item quantity="other">%1$d bestaande albums worden aangevuld.</item>
+    </plurals>
 </resources>

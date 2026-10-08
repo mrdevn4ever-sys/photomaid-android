@@ -37,6 +37,8 @@ import androidx.compose.material.icons.rounded.Dashboard
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.PhotoLibrary
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.SdCard
+import app.photomaid.feature.archive.ArchiveRequest
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -154,6 +156,15 @@ fun StudioScreen(nav: Nav) {
                         nav.openPicker(PickRequest(UUID.randomUUID().toString(), photos = true, videos = false, min = 1,
                             max = PdfRules.PRO_MAX, title = R.string.pdf_pick, library = true) { picked ->
                             nav.openPdf(PdfRequest(UUID.randomUUID().toString(), picked))
+                        })
+                    }
+                    RowDivider(RowDividerInset)
+                    // Paket 5: auf SD-Karte/USB kopieren und jede Kopie prüfen (Originale bleiben, keine Entscheidung).
+                    ListRow(Icons.Rounded.SdCard, stringResource(R.string.archive_title), Modifier.testTag("studio.archive"), tint = c.accent,
+                        tile = c.accent.copy(alpha = 0.13f), subtitle = stringResource(R.string.archive_studio_sub), enabled = access.canRead) {
+                        nav.openPicker(PickRequest(UUID.randomUUID().toString(), photos = true, videos = true, min = 1, max = 2000,
+                            title = R.string.archive_pick, library = true) { ids ->
+                            nav.openArchive(ArchiveRequest(UUID.randomUUID().toString(), ids))
                         })
                     }
                     RowDivider(RowDividerInset)

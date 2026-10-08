@@ -1730,4 +1730,220 @@
     <string name="tour_history_text">Voyez ce que vous avez gardé, écarté ou remis à plus tard. Vous pouvez encore changer chaque décision ici.</string>
     <string name="tour_settings_title">Paramètres et aide</string>
     <string name="tour_settings_text">Réglez PhotoMaid à votre goût et trouvez des réponses. Vous pouvez refaire cette visite à tout moment.</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">Archiver</string>
+    <string name="archive_studio_sub">Copier sur une carte SD ou une clé USB et vérifier chaque copie</string>
+    <string name="archive_pick">Que faut-il copier ?</string>
+    <string name="archive_running">Copie et vérification…</string>
+    <string name="archive_total_size">Au total : %1$s</string>
+    <string name="archive_target">Destination</string>
+    <string name="archive_target_none">Aucun dossier choisi pour l’instant</string>
+    <string name="archive_choose">Choisir un dossier</string>
+    <string name="archive_choose_other">Choisir un autre dossier</string>
+    <string name="archive_kind_removable">Carte SD ou clé USB : un support de stockage séparé.</string>
+    <string name="archive_kind_device">Ce dossier se trouve sur le même stockage que vos photos. Une deuxième copie à cet endroit n’aide pas si le téléphone est perdu ou cassé.</string>
+    <string name="archive_kind_provider">Ce dossier appartient à une autre app, par exemple un stockage en ligne. C’est elle qui décide si les fichiers restent sur le téléphone ou partent en ligne.</string>
+    <string name="archive_free">Libre à destination : %1$s</string>
+    <string name="archive_free_unknown">Espace libre à destination : inconnu</string>
+    <string name="archive_no_space">Pas assez de place : il faut %1$s, libre %2$s.</string>
+    <string name="archive_options">Options</string>
+    <string name="archive_by_month">Dossiers par année et mois</string>
+    <string name="archive_write_list">Enregistrer aussi une liste de contrôle</string>
+    <string name="archive_write_list_note">Un tableau avec le nom, la date, la taille et la somme de contrôle de chaque fichier, ainsi que vos albums, mots-clés et notes.</string>
+    <string name="archive_step_verify">Chaque copie est ensuite relue et comparée octet par octet à l’original.</string>
+    <string name="archive_step_only_verified">Seules les copies vérifiées comptent. Si l’une diffère, elle est aussitôt supprimée.</string>
+    <string name="archive_step_originals">Vos originaux restent tels quels.</string>
+    <string name="archive_start">Copier et vérifier</string>
+    <string name="archive_failed">La copie s’est arrêtée de façon inattendue. Le résultat indique ce qui a été vérifié.</string>
+    <string name="archive_last_interrupted">Le dernier passage a été interrompu. Vérifiés : %1$d sur %2$d.</string>
+    <string name="archive_show_result">Voir le résultat</string>
+    <string name="archive_result_title">Résultat</string>
+    <string name="archive_verified_bytes">Vérifié : %1$s</string>
+    <string name="archive_list_saved">Liste de contrôle enregistrée : %1$s</string>
+    <string name="archive_meaning">« Vérifié » signifie que la copie est identique à l’original, octet par octet. Personne ne peut vérifier combien de temps un support tiendra : gardez l’essentiel à deux endroits.</string>
+    <string name="archive_files">Fichiers</string>
+    <string name="archive_status_verified">Vérifié</string>
+    <string name="archive_status_already">Déjà présent, identique</string>
+    <string name="archive_status_failed">Échec</string>
+    <string name="archive_status_notdone">Non copié</string>
+    <string name="archive_reason_read">Original illisible</string>
+    <string name="archive_reason_write">La destination a refusé l’enregistrement (pleine, protégée en écriture ou fichier trop volumineux pour ce stockage)</string>
+    <string name="archive_reason_mismatch">La copie ne correspondait pas : supprimée</string>
+    <string name="archive_reason_cancelled">Annulé</string>
+    <string name="archive_reason_interrupted">Interrompu : copie partielle supprimée</string>
+    <string name="archive_reason_space">Plus de place à destination</string>
+    <string name="archive_cleanup_button">Mettre les originaux à la corbeille…</string>
+    <string name="archive_cleanup_text">Il existe maintenant une copie vérifiée de ces photos et vidéos sur « %1$s ». Elles vont seulement dans la corbeille PhotoMaid. Rien n’est supprimé tant que vous ne la videz pas et qu’Android ne redemande pas.</string>
+    <string name="archive_cleanup_action">Mettre à la corbeille</string>
+    <string name="archive_open_basket">Ouvrir la corbeille</string>
+    <string name="archive_no_cleanup_device">Les copies sont sur le même stockage que vos photos ; PhotoMaid ne propose donc pas ici de retirer les originaux.</string>
+    <string name="archive_no_cleanup_provider">Les copies sont dans une autre app. PhotoMaid ne peut pas voir si elles y sont en sécurité ; il ne propose donc pas de retirer les originaux.</string>
+    <string name="archive_undated">Sans date</string>
+    <string name="archive_list_file">Liste de contrôle PhotoMaid %1$s.csv</string>
+    <string name="archive_col_folder">Dossier</string>
+    <string name="archive_col_name">Nom</string>
+    <string name="archive_col_taken">Prise le</string>
+    <string name="archive_col_bytes">Octets</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">Albums</string>
+    <string name="archive_col_tags">Mots-clés</string>
+    <string name="archive_col_note">Note</string>
+    <string name="backup_title">Sauvegarder et restaurer</string>
+    <string name="backup_save_header">Sauvegarder</string>
+    <string name="backup_save_text">Enregistre vos données PhotoMaid dans un petit fichier : décisions, albums, mots-clés, notes, panier de sélection, éléments masqués, réglages, flux de travail et préréglages. Aucune photo n’est incluse.</string>
+    <string name="backup_contains">Contient : %1$s</string>
+    <string name="backup_privacy">Le fichier contient des noms de fichiers, des mots-clés et des notes. Enregistrez-le seulement là où vous le souhaitez, par exemple sur une clé USB.</string>
+    <string name="backup_save_button">Enregistrer la sauvegarde…</string>
+    <string name="backup_file_name">Sauvegarde PhotoMaid %1$s.json</string>
+    <string name="backup_saved">Sauvegarde enregistrée.</string>
+    <string name="backup_save_failed">La sauvegarde n’a pas pu être enregistrée.</string>
+    <string name="backup_restore_header">Restaurer</string>
+    <string name="backup_restore_text">Reprend une sauvegarde, par exemple sur un nouveau téléphone. Les photos sont retrouvées grâce au nom, à la taille et à l’heure de prise. Ce qui est déjà décidé ou saisi ici reste tel quel.</string>
+    <string name="backup_open_button">Ouvrir une sauvegarde…</string>
+    <string name="backup_not_backup">Ce fichier n’est pas une sauvegarde PhotoMaid.</string>
+    <string name="backup_too_new">Cette sauvegarde provient d’une version plus récente de PhotoMaid. Mettez d’abord PhotoMaid à jour.</string>
+    <string name="backup_unreadable">Le fichier n’a pas pu être lu.</string>
+    <string name="backup_from">Sauvegarde du %1$s</string>
+    <string name="backup_step_settings">Les réglages sont repris (sauf « Supprimer définitivement ») ; les flux de travail, préréglages et vos collections sont ajoutés.</string>
+    <string name="backup_missing_note">Ces photos et vidéos ne sont pas sur cet appareil (ou ne peuvent pas être identifiées avec certitude). Rien n’est repris pour elles.</string>
+    <string name="backup_missing_show">Afficher la liste</string>
+    <string name="backup_missing_hide">Masquer la liste</string>
+    <string name="backup_nothing">Cette sauvegarde ne contient rien qui manque ici.</string>
+    <string name="backup_apply">Restaurer</string>
+    <string name="backup_done">Restauré</string>
+    <plurals name="archive_step_copy">
+        <item quantity="one">%1$d fichier est copié vers « %2$s ».</item>
+        <item quantity="many">%1$d fichiers sont copiés vers « %2$s ».</item>
+        <item quantity="other">%1$d fichiers sont copiés vers « %2$s ».</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="one">%1$d copié et vérifié</item>
+        <item quantity="many">%1$d copiés et vérifiés</item>
+        <item quantity="other">%1$d copiés et vérifiés</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="one">%1$d déjà présent</item>
+        <item quantity="many">%1$d déjà présents</item>
+        <item quantity="other">%1$d déjà présents</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="one">%1$d en échec</item>
+        <item quantity="many">%1$d en échec</item>
+        <item quantity="other">%1$d en échec</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="one">%1$d non copié</item>
+        <item quantity="many">%1$d non copiés</item>
+        <item quantity="other">%1$d non copiés</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="one">Mettre %1$d original dans la corbeille PhotoMaid ?</item>
+        <item quantity="many">Mettre %1$d originaux dans la corbeille PhotoMaid ?</item>
+        <item quantity="other">Mettre %1$d originaux dans la corbeille PhotoMaid ?</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="one">%1$d favori reste (Protéger les favoris).</item>
+        <item quantity="many">%1$d favoris restent (Protéger les favoris).</item>
+        <item quantity="other">%1$d favoris restent (Protéger les favoris).</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="one">%1$d original est maintenant dans la corbeille PhotoMaid.</item>
+        <item quantity="many">%1$d originaux sont maintenant dans la corbeille PhotoMaid.</item>
+        <item quantity="other">%1$d originaux sont maintenant dans la corbeille PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="one">%1$d décision</item>
+        <item quantity="many">%1$d décisions</item>
+        <item quantity="other">%1$d décisions</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="one">%1$d album</item>
+        <item quantity="many">%1$d albums</item>
+        <item quantity="other">%1$d albums</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="one">%1$d avec mots-clés</item>
+        <item quantity="many">%1$d avec mots-clés</item>
+        <item quantity="other">%1$d avec mots-clés</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="one">%1$d note</item>
+        <item quantity="many">%1$d notes</item>
+        <item quantity="other">%1$d notes</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="one">%1$d dans le panier de sélection</item>
+        <item quantity="many">%1$d dans le panier de sélection</item>
+        <item quantity="other">%1$d dans le panier de sélection</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="one">%1$d masqué</item>
+        <item quantity="many">%1$d masqués</item>
+        <item quantity="other">%1$d masqués</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="one">%1$d flux de travail</item>
+        <item quantity="many">%1$d flux de travail</item>
+        <item quantity="other">%1$d flux de travail</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="one">%1$d préréglage</item>
+        <item quantity="many">%1$d préréglages</item>
+        <item quantity="other">%1$d préréglages</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="one">%1$d collection perso</item>
+        <item quantity="many">%1$d collections perso</item>
+        <item quantity="other">%1$d collections perso</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="one">%1$d décision est reprise.</item>
+        <item quantity="many">%1$d décisions sont reprises.</item>
+        <item quantity="other">%1$d décisions sont reprises.</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="one">%1$d est déjà décidé ici et reste tel quel.</item>
+        <item quantity="many">%1$d sont déjà décidés ici et restent tels quels.</item>
+        <item quantity="other">%1$d sont déjà décidés ici et restent tels quels.</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="one">Mots-clés pour %1$d photo ou vidéo.</item>
+        <item quantity="many">Mots-clés pour %1$d photos et vidéos.</item>
+        <item quantity="other">Mots-clés pour %1$d photos et vidéos.</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="one">%1$d note (les notes existantes restent).</item>
+        <item quantity="many">%1$d notes (les notes existantes restent).</item>
+        <item quantity="other">%1$d notes (les notes existantes restent).</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="one">%1$d va dans le panier de sélection.</item>
+        <item quantity="many">%1$d vont dans le panier de sélection.</item>
+        <item quantity="other">%1$d vont dans le panier de sélection.</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="one">%1$d est masqué dans PhotoMaid.</item>
+        <item quantity="many">%1$d sont masqués dans PhotoMaid.</item>
+        <item quantity="other">%1$d sont masqués dans PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="one">%1$d introuvable</item>
+        <item quantity="many">%1$d introuvables</item>
+        <item quantity="other">%1$d introuvables</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="one">%1$d n’a pas pu être repris.</item>
+        <item quantity="many">%1$d n’ont pas pu être repris.</item>
+        <item quantity="other">%1$d n’ont pas pu être repris.</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="one">%1$d album est créé.</item>
+        <item quantity="many">%1$d albums sont créés.</item>
+        <item quantity="other">%1$d albums sont créés.</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="one">%1$d album existant est complété.</item>
+        <item quantity="many">%1$d albums existants sont complétés.</item>
+        <item quantity="other">%1$d albums existants sont complétés.</item>
+    </plurals>
 </resources>

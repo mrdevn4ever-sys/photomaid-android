@@ -1955,4 +1955,301 @@
     <string name="tour_history_text">هنا ترى ما احتفظت به أو استبعدته أو أجّلته. يمكنك تغيير أي قرار من هنا.</string>
     <string name="tour_settings_title">الإعدادات والمساعدة</string>
     <string name="tour_settings_text">اضبط PhotoMaid كما تحب واعثر على الإجابات هنا. يمكنك إعادة هذه الجولة في أي وقت.</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">أرشفة</string>
+    <string name="archive_studio_sub">انسخ إلى بطاقة SD أو ذاكرة USB وتحقق من كل نسخة</string>
+    <string name="archive_pick">ما الذي تريد نسخه؟</string>
+    <string name="archive_running">جارٍ النسخ والتحقق …</string>
+    <string name="archive_total_size">المجموع: %1$s</string>
+    <string name="archive_target">الوجهة</string>
+    <string name="archive_target_none">لم يتم اختيار مجلد بعد</string>
+    <string name="archive_choose">اختر مجلدًا</string>
+    <string name="archive_choose_other">اختر مجلدًا آخر</string>
+    <string name="archive_kind_removable">بطاقة SD أو ذاكرة USB – وسيط تخزين منفصل.</string>
+    <string name="archive_kind_device">هذا المجلد على نفس مساحة التخزين التي تحتوي على صورك. لن تفيد نسخة ثانية هناك إذا ضاع هاتفك أو تعطل.</string>
+    <string name="archive_kind_provider">ينتمي هذا المجلد إلى تطبيق آخر، مثل خدمة تخزين عبر الإنترنت. هذا التطبيق هو من يقرر إن كانت الملفات تبقى على الهاتف أو تُرفع إلى الإنترنت.</string>
+    <string name="archive_free">المساحة الفارغة في الوجهة: %1$s</string>
+    <string name="archive_free_unknown">المساحة الفارغة في الوجهة: غير معروفة</string>
+    <string name="archive_no_space">لا توجد مساحة كافية: المطلوب %1$s، والمتاح %2$s.</string>
+    <string name="archive_options">الخيارات</string>
+    <string name="archive_by_month">مجلدات حسب السنة والشهر</string>
+    <string name="archive_write_list">حفظ قائمة تحقق أيضًا</string>
+    <string name="archive_write_list_note">جدول باسم كل ملف وتاريخه وحجمه ومجموعه الاختباري، إلى جانب ألبوماتك ووسومك وملاحظاتك.</string>
+    <string name="archive_step_verify">بعد ذلك تُقرأ كل نسخة من جديد وتُقارن بالأصل بايتًا ببايت.</string>
+    <string name="archive_step_only_verified">لا تُحتسب إلا النسخ التي تم التحقق منها. إذا اختلفت نسخة، تُزال فورًا.</string>
+    <string name="archive_step_originals">تبقى ملفاتك الأصلية كما هي.</string>
+    <string name="archive_start">انسخ وتحقق</string>
+    <string name="archive_failed">توقف النسخ بشكل غير متوقع. تُظهر النتيجة ما تم التحقق منه.</string>
+    <string name="archive_last_interrupted">تمت مقاطعة العملية الأخيرة. تم التحقق من: %1$d من %2$d.</string>
+    <string name="archive_show_result">عرض النتيجة</string>
+    <string name="archive_result_title">النتيجة</string>
+    <string name="archive_verified_bytes">تم التحقق: %1$s</string>
+    <string name="archive_list_saved">تم حفظ قائمة التحقق: %1$s</string>
+    <string name="archive_meaning">«تم التحقق» يعني أن النسخة مطابقة للأصل بايتًا ببايت. لا أحد يستطيع التحقق من المدة التي سيصمد فيها وسيط التخزين – احتفظ بالأشياء المهمة في مكانين.</string>
+    <string name="archive_files">الملفات</string>
+    <string name="archive_status_verified">تم التحقق</string>
+    <string name="archive_status_already">موجود مسبقًا ومطابق</string>
+    <string name="archive_status_failed">فشل</string>
+    <string name="archive_status_notdone">لم يُنسخ</string>
+    <string name="archive_reason_read">تعذرت قراءة الأصل</string>
+    <string name="archive_reason_write">رفضت الوجهة الحفظ (ممتلئة أو محمية من الكتابة أو الملف كبير جدًا لهذا الوسيط)</string>
+    <string name="archive_reason_mismatch">لم تتطابق النسخة – أُزيلت مجددًا</string>
+    <string name="archive_reason_cancelled">أُلغي</string>
+    <string name="archive_reason_interrupted">تمت المقاطعة – أُزيلت النسخة الجزئية</string>
+    <string name="archive_reason_space">لم تعد هناك مساحة في الوجهة</string>
+    <string name="archive_cleanup_button">نقل الأصول إلى سلة المهملات …</string>
+    <string name="archive_cleanup_text">توجد الآن نسخة تم التحقق منها من هذه الصور والفيديوهات على «%1$s». ستنتقل فقط إلى سلة مهملات PhotoMaid. لن يُحذف شيء حتى تفرغها ويسألك Android مرة أخرى.</string>
+    <string name="archive_cleanup_action">نقل إلى سلة المهملات</string>
+    <string name="archive_open_basket">فتح سلة المهملات</string>
+    <string name="archive_no_cleanup_device">النسخ موجودة على نفس مساحة التخزين التي تحتوي على صورك، لذلك لا يعرض PhotoMaid هنا إزالة الأصول.</string>
+    <string name="archive_no_cleanup_provider">النسخ لدى تطبيق آخر. لا يستطيع PhotoMaid معرفة إن كانت آمنة هناك، لذلك لا يعرض إزالة الأصول.</string>
+    <string name="archive_undated">بدون تاريخ</string>
+    <string name="archive_list_file">قائمة تحقق PhotoMaid %1$s.csv</string>
+    <string name="archive_col_folder">المجلد</string>
+    <string name="archive_col_name">الاسم</string>
+    <string name="archive_col_taken">تاريخ الالتقاط</string>
+    <string name="archive_col_bytes">البايتات</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">الألبومات</string>
+    <string name="archive_col_tags">الوسوم</string>
+    <string name="archive_col_note">ملاحظة</string>
+    <string name="backup_title">النسخ الاحتياطي والاستعادة</string>
+    <string name="backup_save_header">النسخ الاحتياطي</string>
+    <string name="backup_save_text">يحفظ بيانات PhotoMaid في ملف صغير: القرارات والألبومات والوسوم والملاحظات وسلة التحديد والعناصر المخفية والإعدادات وسير العمل والإعدادات المسبقة. لا يتضمن الصور.</string>
+    <string name="backup_contains">يحتوي على: %1$s</string>
+    <string name="backup_privacy">يحتوي الملف على أسماء الملفات والوسوم والملاحظات. احفظه فقط حيث تريد – على ذاكرة USB مثلًا.</string>
+    <string name="backup_save_button">حفظ النسخة الاحتياطية …</string>
+    <string name="backup_file_name">نسخة PhotoMaid الاحتياطية %1$s.json</string>
+    <string name="backup_saved">تم حفظ النسخة الاحتياطية.</string>
+    <string name="backup_save_failed">تعذر حفظ النسخة الاحتياطية.</string>
+    <string name="backup_restore_header">الاستعادة</string>
+    <string name="backup_restore_text">يستعيد نسخة احتياطية، على هاتف جديد مثلًا. يُعثر على الصور مجددًا من خلال الاسم والحجم ووقت الالتقاط. ما تم تحديده أو إدخاله هنا يبقى كما هو.</string>
+    <string name="backup_open_button">فتح نسخة احتياطية …</string>
+    <string name="backup_not_backup">هذا الملف ليس نسخة احتياطية من PhotoMaid.</string>
+    <string name="backup_too_new">هذه النسخة الاحتياطية من إصدار أحدث من PhotoMaid. حدّث PhotoMaid أولًا.</string>
+    <string name="backup_unreadable">تعذرت قراءة الملف.</string>
+    <string name="backup_from">نسخة احتياطية من %1$s</string>
+    <string name="backup_step_settings">تُستعاد الإعدادات (باستثناء «حذف نهائيًا»)، وتُضاف مسارات سير العمل والإعدادات المسبقة ومجموعاتك الخاصة.</string>
+    <string name="backup_missing_note">هذه الصور والفيديوهات غير موجودة على هذا الجهاز (أو لا يمكن مطابقتها بوضوح). لن يُستعاد لها شيء.</string>
+    <string name="backup_missing_show">عرض القائمة</string>
+    <string name="backup_missing_hide">إخفاء القائمة</string>
+    <string name="backup_nothing">لا يوجد في هذه النسخة الاحتياطية شيء ينقص هنا.</string>
+    <string name="backup_apply">استعادة</string>
+    <string name="backup_done">تمت الاستعادة</string>
+    <plurals name="archive_step_copy">
+        <item quantity="zero">يُنسخ %1$d ملف إلى «%2$s».</item>
+        <item quantity="one">يُنسخ ملف واحد إلى «%2$s».</item>
+        <item quantity="two">يُنسخ ملفان إلى «%2$s».</item>
+        <item quantity="few">تُنسخ %1$d ملفات إلى «%2$s».</item>
+        <item quantity="many">يُنسخ %1$d ملفًا إلى «%2$s».</item>
+        <item quantity="other">يُنسخ %1$d ملف إلى «%2$s».</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="zero">%1$d نُسخ وتم التحقق منه</item>
+        <item quantity="one">%1$d نُسخ وتم التحقق منه</item>
+        <item quantity="two">%1$d نُسخا وتم التحقق منهما</item>
+        <item quantity="few">%1$d نُسخت وتم التحقق منها</item>
+        <item quantity="many">%1$d نُسخ وتم التحقق منه</item>
+        <item quantity="other">%1$d نُسخ وتم التحقق منه</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="zero">%1$d موجود مسبقًا</item>
+        <item quantity="one">%1$d موجود مسبقًا</item>
+        <item quantity="two">%1$d موجودان مسبقًا</item>
+        <item quantity="few">%1$d موجودة مسبقًا</item>
+        <item quantity="many">%1$d موجود مسبقًا</item>
+        <item quantity="other">%1$d موجود مسبقًا</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="zero">فشل %1$d</item>
+        <item quantity="one">فشل %1$d</item>
+        <item quantity="two">فشل %1$d</item>
+        <item quantity="few">فشلت %1$d</item>
+        <item quantity="many">فشل %1$d</item>
+        <item quantity="other">فشل %1$d</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="zero">%1$d لم يُنسخ</item>
+        <item quantity="one">%1$d لم يُنسخ</item>
+        <item quantity="two">%1$d لم يُنسخا</item>
+        <item quantity="few">%1$d لم تُنسخ</item>
+        <item quantity="many">%1$d لم يُنسخ</item>
+        <item quantity="other">%1$d لم يُنسخ</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="zero">نقل %1$d أصل إلى سلة مهملات PhotoMaid؟</item>
+        <item quantity="one">نقل أصل واحد إلى سلة مهملات PhotoMaid؟</item>
+        <item quantity="two">نقل أصلين إلى سلة مهملات PhotoMaid؟</item>
+        <item quantity="few">نقل %1$d أصول إلى سلة مهملات PhotoMaid؟</item>
+        <item quantity="many">نقل %1$d أصلًا إلى سلة مهملات PhotoMaid؟</item>
+        <item quantity="other">نقل %1$d أصل إلى سلة مهملات PhotoMaid؟</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="zero">يبقى %1$d من المفضلة (حماية المفضلة).</item>
+        <item quantity="one">يبقى عنصر مفضل واحد (حماية المفضلة).</item>
+        <item quantity="two">يبقى عنصران مفضلان (حماية المفضلة).</item>
+        <item quantity="few">تبقى %1$d عناصر مفضلة (حماية المفضلة).</item>
+        <item quantity="many">يبقى %1$d عنصرًا مفضلًا (حماية المفضلة).</item>
+        <item quantity="other">يبقى %1$d عنصر مفضل (حماية المفضلة).</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="zero">أصبح %1$d أصل الآن في سلة مهملات PhotoMaid.</item>
+        <item quantity="one">أصبح أصل واحد الآن في سلة مهملات PhotoMaid.</item>
+        <item quantity="two">أصبح أصلان الآن في سلة مهملات PhotoMaid.</item>
+        <item quantity="few">أصبحت %1$d أصول الآن في سلة مهملات PhotoMaid.</item>
+        <item quantity="many">أصبح %1$d أصلًا الآن في سلة مهملات PhotoMaid.</item>
+        <item quantity="other">أصبح %1$d أصل الآن في سلة مهملات PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="zero">%1$d قرار</item>
+        <item quantity="one">قرار واحد</item>
+        <item quantity="two">قراران</item>
+        <item quantity="few">%1$d قرارات</item>
+        <item quantity="many">%1$d قرارًا</item>
+        <item quantity="other">%1$d قرار</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="zero">%1$d ألبوم</item>
+        <item quantity="one">ألبوم واحد</item>
+        <item quantity="two">ألبومان</item>
+        <item quantity="few">%1$d ألبومات</item>
+        <item quantity="many">%1$d ألبومًا</item>
+        <item quantity="other">%1$d ألبوم</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="zero">%1$d بوسوم</item>
+        <item quantity="one">%1$d بوسوم</item>
+        <item quantity="two">%1$d بوسوم</item>
+        <item quantity="few">%1$d بوسوم</item>
+        <item quantity="many">%1$d بوسوم</item>
+        <item quantity="other">%1$d بوسوم</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="zero">%1$d ملاحظة</item>
+        <item quantity="one">ملاحظة واحدة</item>
+        <item quantity="two">ملاحظتان</item>
+        <item quantity="few">%1$d ملاحظات</item>
+        <item quantity="many">%1$d ملاحظة</item>
+        <item quantity="other">%1$d ملاحظة</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="zero">%1$d في سلة التحديد</item>
+        <item quantity="one">%1$d في سلة التحديد</item>
+        <item quantity="two">%1$d في سلة التحديد</item>
+        <item quantity="few">%1$d في سلة التحديد</item>
+        <item quantity="many">%1$d في سلة التحديد</item>
+        <item quantity="other">%1$d في سلة التحديد</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="zero">%1$d مخفي</item>
+        <item quantity="one">%1$d مخفي</item>
+        <item quantity="two">%1$d مخفيان</item>
+        <item quantity="few">%1$d مخفية</item>
+        <item quantity="many">%1$d مخفيًا</item>
+        <item quantity="other">%1$d مخفي</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="zero">%1$d سير عمل</item>
+        <item quantity="one">سير عمل واحد</item>
+        <item quantity="two">سيرا عمل</item>
+        <item quantity="few">%1$d مسارات عمل</item>
+        <item quantity="many">%1$d مسار عمل</item>
+        <item quantity="other">%1$d سير عمل</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="zero">%1$d إعداد مسبق</item>
+        <item quantity="one">إعداد مسبق واحد</item>
+        <item quantity="two">إعدادان مسبقان</item>
+        <item quantity="few">%1$d إعدادات مسبقة</item>
+        <item quantity="many">%1$d إعدادًا مسبقًا</item>
+        <item quantity="other">%1$d إعداد مسبق</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="zero">%1$d مجموعة خاصة</item>
+        <item quantity="one">مجموعة خاصة واحدة</item>
+        <item quantity="two">مجموعتان خاصتان</item>
+        <item quantity="few">%1$d مجموعات خاصة</item>
+        <item quantity="many">%1$d مجموعة خاصة</item>
+        <item quantity="other">%1$d مجموعة خاصة</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="zero">تُستعاد %1$d قرارات.</item>
+        <item quantity="one">يُستعاد قرار واحد.</item>
+        <item quantity="two">يُستعاد قراران.</item>
+        <item quantity="few">تُستعاد %1$d قرارات.</item>
+        <item quantity="many">يُستعاد %1$d قرارًا.</item>
+        <item quantity="other">يُستعاد %1$d قرار.</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="zero">%1$d محسومة هنا بالفعل وتبقى كما هي.</item>
+        <item quantity="one">عنصر واحد محسوم هنا بالفعل ويبقى كما هو.</item>
+        <item quantity="two">عنصران محسومان هنا بالفعل ويبقيان كما هما.</item>
+        <item quantity="few">%1$d عناصر محسومة هنا بالفعل وتبقى كما هي.</item>
+        <item quantity="many">%1$d عنصرًا محسومًا هنا بالفعل ويبقى كما هو.</item>
+        <item quantity="other">%1$d عنصر محسوم هنا بالفعل ويبقى كما هو.</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="zero">وسوم لـ %1$d صورة وفيديو.</item>
+        <item quantity="one">وسوم لصورة أو فيديو واحد.</item>
+        <item quantity="two">وسوم لعنصرين.</item>
+        <item quantity="few">وسوم لـ %1$d صور وفيديوهات.</item>
+        <item quantity="many">وسوم لـ %1$d صورة وفيديو.</item>
+        <item quantity="other">وسوم لـ %1$d صورة وفيديو.</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="zero">%1$d ملاحظة (تبقى الملاحظات الموجودة).</item>
+        <item quantity="one">ملاحظة واحدة (تبقى الملاحظات الموجودة).</item>
+        <item quantity="two">ملاحظتان (تبقى الملاحظات الموجودة).</item>
+        <item quantity="few">%1$d ملاحظات (تبقى الملاحظات الموجودة).</item>
+        <item quantity="many">%1$d ملاحظة (تبقى الملاحظات الموجودة).</item>
+        <item quantity="other">%1$d ملاحظة (تبقى الملاحظات الموجودة).</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="zero">يدخل %1$d إلى سلة التحديد.</item>
+        <item quantity="one">يدخل عنصر واحد إلى سلة التحديد.</item>
+        <item quantity="two">يدخل عنصران إلى سلة التحديد.</item>
+        <item quantity="few">تدخل %1$d عناصر إلى سلة التحديد.</item>
+        <item quantity="many">يدخل %1$d عنصرًا إلى سلة التحديد.</item>
+        <item quantity="other">يدخل %1$d عنصر إلى سلة التحديد.</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="zero">يُخفى %1$d في PhotoMaid.</item>
+        <item quantity="one">يُخفى عنصر واحد في PhotoMaid.</item>
+        <item quantity="two">يُخفى عنصران في PhotoMaid.</item>
+        <item quantity="few">تُخفى %1$d عناصر في PhotoMaid.</item>
+        <item quantity="many">يُخفى %1$d عنصرًا في PhotoMaid.</item>
+        <item quantity="other">يُخفى %1$d عنصر في PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="zero">لم يُعثر على %1$d</item>
+        <item quantity="one">لم يُعثر على عنصر واحد</item>
+        <item quantity="two">لم يُعثر على عنصرين</item>
+        <item quantity="few">لم يُعثر على %1$d عناصر</item>
+        <item quantity="many">لم يُعثر على %1$d عنصرًا</item>
+        <item quantity="other">لم يُعثر على %1$d عنصر</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="zero">تعذرت استعادة %1$d.</item>
+        <item quantity="one">تعذرت استعادة عنصر واحد.</item>
+        <item quantity="two">تعذرت استعادة عنصرين.</item>
+        <item quantity="few">تعذرت استعادة %1$d عناصر.</item>
+        <item quantity="many">تعذرت استعادة %1$d عنصرًا.</item>
+        <item quantity="other">تعذرت استعادة %1$d عنصر.</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="zero">يُنشأ %1$d ألبوم.</item>
+        <item quantity="one">يُنشأ ألبوم واحد.</item>
+        <item quantity="two">يُنشأ ألبومان.</item>
+        <item quantity="few">تُنشأ %1$d ألبومات.</item>
+        <item quantity="many">يُنشأ %1$d ألبومًا.</item>
+        <item quantity="other">يُنشأ %1$d ألبوم.</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="zero">يُستكمل %1$d ألبوم موجود.</item>
+        <item quantity="one">يُستكمل ألبوم موجود واحد.</item>
+        <item quantity="two">يُستكمل ألبومان موجودان.</item>
+        <item quantity="few">تُستكمل %1$d ألبومات موجودة.</item>
+        <item quantity="many">يُستكمل %1$d ألبومًا موجودًا.</item>
+        <item quantity="other">يُستكمل %1$d ألبوم موجود.</item>
+    </plurals>
 </resources>

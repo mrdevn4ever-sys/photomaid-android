@@ -35,6 +35,7 @@ import androidx.compose.material.icons.rounded.FolderOff
 import androidx.compose.material.icons.rounded.Policy
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Shield
+import androidx.compose.material.icons.rounded.SettingsBackupRestore
 import androidx.compose.material.icons.rounded.WorkspacePremium
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -118,6 +119,10 @@ fun SettingsScreen(nav: Nav) {
                 RowDivider()
                 SourceRow(Icons.Rounded.FolderOff, c.accent, stringResource(R.string.set_excluded_folders), Modifier.clickableRow { nav.push(Routes.EXCLUDED) }.testTag("settings.excluded"),
                     detail = settings.excludedFolders.size.takeIf { it > 0 }?.toString())
+                RowDivider()
+                // Paket 5: PhotoMaid-Daten (ohne Fotos) in eine eigene Datei sichern bzw. daraus übernehmen.
+                SourceRow(Icons.Rounded.SettingsBackupRestore, c.accent, stringResource(R.string.backup_title),
+                    Modifier.clickableRow { nav.push(Routes.BACKUP) }.testTag("settings.backup"))
                 if (BuildConfig.PRIVACY_POLICY_URL.isNotBlank()) {
                     RowDivider()
                     // Öffentliche Erklärung: Deutsch für de, sonst die englische Fassung.

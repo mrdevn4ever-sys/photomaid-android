@@ -160,6 +160,20 @@ Spalte „Regeln“: welche der drei harten Regeln hier besonders zählt.
 | S3 | Direktes Teilen an Ablauf | Ablauf anlegen, im Teilen-Menü wählen | Vorschau „Das passiert“, nichts läuft ohne „Starten“ | B |
 | S4 | App-Shortcuts | Langdruck, anheften, Ablauf löschen | 4 feste + eigene Abläufe; gelöschter Ablauf angeheftet = deaktiviert | – |
 
+#### Auslagern und Sichern (Paket 5)
+
+| ID | Funktion | Prüfen | Erwartet | Regeln |
+|---|---|---|---|---|
+| AR1 | Einstiege | Studio › Auslagern, Auswahl › ⋯ › Auslagern, Album/Schlagwort/Auswahlkorb › ⋯ | Seite „Auslagern“ mit der Auswahl, keine Entscheidung | B |
+| AR2 | Ziel | SD-Karte, USB-Stick, interner Ordner, Ordner einer Cloud-App | richtige Einordnung (eigener Datenträger / gleicher Speicher / andere App), freier Platz gemessen oder „unbekannt“ | – |
+| AR3 | Kopieren und prüfen | 50 Fotos + 3 Videos (auch > 1 GB) auf SD/USB | jede Kopie neu gelesen und gleich; Ordner Jahr/Monat; Prüfliste (CSV) im Zielordner | – |
+| AR4 | Abbruch / Unterbrechung | Abbrechen, App wegwischen, Stick abziehen, Speicher voll | nur geprüfte Kopien zählen; halbe Kopie entfernt; Ergebnis nach Neustart ansehbar | – |
+| AR5 | Originale in den Papierkorb | nach Auslagern auf SD/USB, mit Favoriten | nur auf Tipp, nur geprüfte, Favoriten bleiben; nichts gelöscht bis zum Leeren; bei internem Ziel/anderer App kein Angebot | B |
+| AR6 | Zweiter Durchgang | dieselbe Auswahl erneut | „Schon da und gleich“, nichts überschrieben; abweichende Datei → „(2)“ | – |
+| BK1 | Sichern | Einstellungen › Sichern und wiederherstellen › Sicherung speichern | kleine JSON-Datei am gewählten Ort, „Enthält …“ stimmt, keine Fotos | – |
+| BK2 | Wiederherstellen (neues Gerät) | Sicherung auf einem zweiten Gerät öffnen | „Das passiert“ vor dem Übernehmen; Entscheidungen, Alben, Schlagwörter, Notizen, Korb übernommen; nicht Gefundenes als Liste | – |
+| BK3 | Nichts überschreiben | dieselbe Sicherung zweimal, mit eigenen neueren Entscheidungen | nichts doppelt, Hiesiges bleibt; „Endgültig löschen“ nie übernommen | – |
+
 ### 2.8 Studio (Tab 4)
 | ID | Funktion | Prüfen | Erwartet | Regeln |
 |---|---|---|---|---|

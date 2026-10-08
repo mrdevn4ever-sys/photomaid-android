@@ -33,7 +33,8 @@ data class LocalDay(val year: Int, val month: Int, val day: Int) : Comparable<Lo
     override fun compareTo(other: LocalDay): Int =
         compareValuesBy(this, other, LocalDay::year, LocalDay::month, LocalDay::day)
 
-    override fun toString(): String = "%04d-%02d-%02d".format(year, month, day)
+    /** ISO `2026-10-08`, immer mit ASCII-Ziffern (Speicherschlüssel – nie abhängig von der Gerätesprache). */
+    override fun toString(): String = date.toString()
 
     companion object {
         fun of(d: LocalDate) = LocalDay(d.year, d.monthValue, d.dayOfMonth)

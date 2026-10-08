@@ -1,6 +1,6 @@
 # PhotoMaid Android – alle Funktionen
 
-Stand 03.10.2026, Branch `claude/product-ux-favorites`. Reine Übersicht, was die App kann. Wie jede Funktion
+Stand 08.10.2026, Branch `claude/product-ux-favorites`. Reine Übersicht, was die App kann. Wie jede Funktion
 geprüft wird, steht in `docs/FUNKTIONS_PRUEFPLAN_2026-10.md` (gleiche Kennungen in Klammern).
 
 Grundsätze, die überall gelten:
@@ -19,7 +19,7 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Einführung in fünf Schritten mit Demo-Karten, jederzeit überspringbar (S1)
 - Angebotsseite am Ende der Einführung, später auch in der App aufrufbar (S2)
 - Datenschutz- und Zugriffsseite: Zugriff erlauben, ablehnen oder „nur ausgewählte“, jeweils mit passender Folgeansicht (S3)
-- Kurze Hinweise (Coach-Marks) beim ersten Besuch von Heute, Feed, Editor, Monaten, Serien und Raster; jeder kommt nur einmal (S4)
+- Rundgang in 8 Schritten durch alle Bereiche (Heute, Fotos, Aufräumen, Studio, Verlauf, Einstellungen), wiederholbar über Hilfe; kurze Hinweise beim ersten Besuch von Feed, Editor, Monaten, Serien und Raster, jeder nur einmal (S4)
 
 ## 2. Heute (Tab 1)
 - Großer Einstieg „Jetzt aufräumen“ / „Weiter aufräumen“ mit Vorschau und echter Anzahl (H1)
@@ -145,6 +145,19 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Bilder werden neu eingebettet: kein Standort, keine Aufnahmedaten, keine Dateinamen als Text im PDF; Originale unverändert, keine Entscheidung
 - Free: bis 10 Fotos, 1–2 je Seite; Pro / 30-Minuten-Test: Kontaktbögen und bis 200 Fotos (Vorschau immer frei)
 
+## 8d. Auslagern und Sichern (Ausbau Paket 5)
+- **Auslagern**: Studio › Auslagern, Auswahl › ⋯ › Auslagern oder ⋯ in Album, Schlagwort und Auswahlkorb (AR1)
+  - Zielordner über die Android-Dateiauswahl; die App sagt, wo er liegt: eigener Datenträger (SD-Karte, USB), derselbe Speicher wie die Fotos (Warnung: kein Auslagern) oder Speicherort einer anderen App (kann online sein, nie automatisch „lokal“) (AR2)
+  - Freier Platz gemessen oder „unbekannt“; reicht er sicher nicht, startet nichts
+  - Kopieren und prüfen: jede Kopie wird neu gelesen und Byte für Byte (SHA-256) mit dem Original verglichen; nur geprüfte zählen, eine abweichende Kopie wird sofort entfernt; Ordner nach Jahr/Monat (Standard), Prüfliste als CSV mit Name, Datum, Bytes, Prüfsumme, Alben, Schlagwörtern, Notiz (AR3)
+  - Abbrechen, Unterbrechung, voller Speicher: halbe Kopie entfernt, Ergebnis je Datei, auch nach einem Neustart (AR4)
+  - Danach nur auf Tipp und nur bei eigenem Datenträger: „Originale in den Papierkorb …“ – geprüfte Originale in den PhotoMaid-Papierkorb (eine Entscheidung je Medium), Favoriten bleiben; gelöscht wird erst beim Leeren (AR5)
+  - Zweiter Durchgang erkennt gleiche Dateien („Schon da und gleich“), überschreibt nie (AR6)
+  - Free bis 10 Dateien je Durchgang, Pro/30-Minuten-Test ohne Grenze; Originale bleiben immer unverändert
+- **Sichern und wiederherstellen** (Einstellungen): PhotoMaid-Daten als kleine Datei an einen selbst gewählten Ort – Entscheidungen, Alben, Schlagwörter, Notizen, Auswahlkorb, Ausgeblendetes, Einstellungen, Abläufe, Vorlagen, eigene Sammlungen; keine Fotos (BK1)
+  - Wiederherstellen (z. B. neues Handy): Fotos werden über Name, Größe und Aufnahmezeit wiedergefunden, vorher „Das passiert“, nicht Gefundenes als Liste (BK2)
+  - Überschreibt nie, was hier schon entschieden oder eingetragen ist; „Endgültig löschen“ wird nie übernommen (BK3)
+
 ## 9. Foto-Editor (✏️ aus Feed, Betrachter oder Studio)
 - Editor im Stil der Fotos-App (Nutzerwunsch 07.10.2026), immer dunkel:
   - Kopf: ✕ und ✓ als Kapseln; darunter Rückgängig/Wiederholen · Werkzeugname mit Größe/Zoom · Vergleich (halten) und ⋯ (Histogramm, Warnung für abgeschnittene Bereiche, Zurücksetzen); beim Zuschneiden Spiegeln/Drehen im Kopf
@@ -196,6 +209,7 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
   - Ausgenommene Ordner
   - Erinnerungen
   - Datenschutz
+  - Sichern und wiederherstellen
 - Dunkelmodus auf allen Bildschirmen (X5)
 - Große Schrift bis 200 %: nichts abgeschnitten, Leisten scrollen statt zu schrumpfen (X6)
 - TalkBack: alles beschriftet, Entscheidungs-Tasten im Feed (X7)

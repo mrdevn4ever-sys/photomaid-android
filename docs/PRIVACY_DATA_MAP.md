@@ -89,6 +89,17 @@ Keine Werbung im Studio. Medienauswahl speichert nichts.
 
 Keine Werbung in der Mediathek-Verwaltung; Werbe-Anfragen erhalten nie Medien, Namen, Pfade oder IDs.
 
+## Auslagern und Sichern (Paket 5, 2026-10)
+
+| Daten | Wo | Wer sieht es | Hinweis in der App |
+|---|---|---|---|
+| Kopien der ausgewählten Fotos/Videos | vom Nutzer gewählter Ordner (SD, USB oder Ordner einer anderen App) | wer Zugriff auf diesen Speicher hat; bei einer anderen App gelten deren Regeln | Zielart wird angezeigt, andere App „kann online sein“ |
+| Prüfliste (CSV): Name, Datum, Bytes, SHA-256, Alben, Schlagwörter, Notiz | im selben Zielordner (abschaltbar) | wie oben | Option mit Erklärung |
+| Sicherungsdatei (JSON): Medien-IDs, Dateinamen, Größen, Aufnahmezeiten, Entscheidungen, Alben, Schlagwörter, Notizen, Einstellungen | vom Nutzer gewählter Ort | wie oben | „Die Datei enthält Dateinamen, Schlagwörter und Notizen …“ |
+| Zuletzt gewählter Zielordner (Tree-URI) und letztes Journal | App-Datenbank (lokal) | niemand außer der App | – |
+
+Nichts davon geht an PhotoMaid, Google Play oder Werbung; PhotoMaid lädt nichts hoch. Der Nutzer bestimmt den Ort.
+
 ## Entwurf „Datensicherheit“ (Play Console) – vom Inhaber zu bestätigen
 
 - Erfasste Daten: **keine** durch den Entwickler (Käufe werden von Google Play verarbeitet).

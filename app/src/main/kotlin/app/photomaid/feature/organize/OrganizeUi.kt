@@ -31,6 +31,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.SdCard
+import app.photomaid.feature.archive.ArchiveRequest
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Delete
@@ -299,6 +301,10 @@ fun OrganizeScreen(target: OrganizeTarget, nav: Nav, onClose: () -> Unit) {
                 DropdownMenuItem(text = { Text(stringResource(R.string.slideshow_start)) }, leadingIcon = { Icon(Icons.Rounded.Slideshow, null) },
                     enabled = members.isNotEmpty(), modifier = Modifier.testTag("org.slideshow"),
                     onClick = { menu = false; nav.openSlideshow(SlideshowRequest(UUID.randomUUID().toString(), members)) })
+                // Paket 5: Album, Schlagwort oder Korb auf SD-Karte/USB auslagern (Originale bleiben).
+                DropdownMenuItem(text = { Text(stringResource(R.string.archive_title)) }, leadingIcon = { Icon(Icons.Rounded.SdCard, null) },
+                    enabled = members.isNotEmpty(), modifier = Modifier.testTag("org.archive"),
+                    onClick = { menu = false; nav.openArchive(ArchiveRequest(UUID.randomUUID().toString(), members.map { it.id })) })
                 when (target) {
                     is OrganizeTarget.AlbumOf -> {
                         DropdownMenuItem(text = { Text(stringResource(R.string.org_rename)) }, leadingIcon = { Icon(Icons.Rounded.Edit, null) },

@@ -1730,4 +1730,220 @@
     <string name="tour_history_text">Vezi ce ai păstrat, ai pus deoparte sau ai lăsat pe mai târziu. Poți schimba aici orice decizie.</string>
     <string name="tour_settings_title">Setări și ajutor</string>
     <string name="tour_settings_text">Setează PhotoMaid după gustul tău și găsește răspunsuri. Poți relua oricând acest tur.</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">Arhivează</string>
+    <string name="archive_studio_sub">Copiază pe card SD sau stick USB și verifică fiecare copie</string>
+    <string name="archive_pick">Ce vrei să copiezi?</string>
+    <string name="archive_running">Se copiază și se verifică…</string>
+    <string name="archive_total_size">În total: %1$s</string>
+    <string name="archive_target">Destinație</string>
+    <string name="archive_target_none">Încă nu ai ales un dosar</string>
+    <string name="archive_choose">Alege dosarul</string>
+    <string name="archive_choose_other">Alege alt dosar</string>
+    <string name="archive_kind_removable">Card SD sau memorie USB – un suport de stocare separat.</string>
+    <string name="archive_kind_device">Acest dosar este pe aceeași memorie ca fotografiile tale. O a doua copie acolo nu ajută dacă telefonul se pierde sau se strică.</string>
+    <string name="archive_kind_provider">Acest dosar aparține altei aplicații, de exemplu unui spațiu de stocare online. Ea decide dacă fișierele rămân pe telefon sau ajung online.</string>
+    <string name="archive_free">Liber la destinație: %1$s</string>
+    <string name="archive_free_unknown">Spațiu liber la destinație: necunoscut</string>
+    <string name="archive_no_space">Spațiu insuficient: necesar %1$s, liber %2$s.</string>
+    <string name="archive_options">Opțiuni</string>
+    <string name="archive_by_month">Dosare după an și lună</string>
+    <string name="archive_write_list">Salvează și o listă de verificare</string>
+    <string name="archive_write_list_note">Un tabel cu numele, data, dimensiunea și suma de control a fiecărui fișier, plus albumele, etichetele și notele tale.</string>
+    <string name="archive_step_verify">Apoi fiecare copie este citită din nou și comparată octet cu octet cu originalul.</string>
+    <string name="archive_step_only_verified">Contează doar copiile verificate. Dacă una diferă, este eliminată imediat.</string>
+    <string name="archive_step_originals">Originalele tale rămân neschimbate.</string>
+    <string name="archive_start">Copiază și verifică</string>
+    <string name="archive_failed">Copierea s-a oprit neașteptat. În rezultat vezi ce a fost verificat.</string>
+    <string name="archive_last_interrupted">Ultima rulare a fost întreruptă. Verificate: %1$d din %2$d.</string>
+    <string name="archive_show_result">Vezi rezultatul</string>
+    <string name="archive_result_title">Rezultat</string>
+    <string name="archive_verified_bytes">Verificat: %1$s</string>
+    <string name="archive_list_saved">Listă de verificare salvată: %1$s</string>
+    <string name="archive_meaning">„Verificat” înseamnă că copia este identică cu originalul, octet cu octet. Nimeni nu poate verifica cât rezistă un suport – păstrează lucrurile importante în două locuri.</string>
+    <string name="archive_files">Fișiere</string>
+    <string name="archive_status_verified">Verificat</string>
+    <string name="archive_status_already">Există deja, identic</string>
+    <string name="archive_status_failed">Eșuat</string>
+    <string name="archive_status_notdone">Necopiat</string>
+    <string name="archive_reason_read">Originalul nu poate fi citit</string>
+    <string name="archive_reason_write">Destinația a refuzat salvarea (plină, protejată la scriere sau fișier prea mare pentru această memorie)</string>
+    <string name="archive_reason_mismatch">Copia nu era identică – eliminată</string>
+    <string name="archive_reason_cancelled">Anulat</string>
+    <string name="archive_reason_interrupted">Întrerupt – copia parțială a fost eliminată</string>
+    <string name="archive_reason_space">Nu mai e spațiu la destinație</string>
+    <string name="archive_cleanup_button">Mută originalele în coș…</string>
+    <string name="archive_cleanup_text">Aceste fotografii și videoclipuri au acum o copie verificată pe „%1$s”. Ajung doar în coșul PhotoMaid. Nu se șterge nimic până nu golești coșul și Android întreabă încă o dată.</string>
+    <string name="archive_cleanup_action">Mută în coș</string>
+    <string name="archive_open_basket">Deschide coșul</string>
+    <string name="archive_no_cleanup_device">Copiile sunt pe aceeași memorie ca fotografiile tale, așa că PhotoMaid nu propune aici eliminarea originalelor.</string>
+    <string name="archive_no_cleanup_provider">Copiile sunt la altă aplicație. PhotoMaid nu poate vedea dacă sunt în siguranță acolo, așa că nu propune eliminarea originalelor.</string>
+    <string name="archive_undated">Fără dată</string>
+    <string name="archive_list_file">Listă de verificare PhotoMaid %1$s.csv</string>
+    <string name="archive_col_folder">Dosar</string>
+    <string name="archive_col_name">Nume</string>
+    <string name="archive_col_taken">Realizată</string>
+    <string name="archive_col_bytes">Octeți</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">Albume</string>
+    <string name="archive_col_tags">Etichete</string>
+    <string name="archive_col_note">Notă</string>
+    <string name="backup_title">Backup și restaurare</string>
+    <string name="backup_save_header">Backup</string>
+    <string name="backup_save_text">Salvează datele PhotoMaid într-un fișier mic: decizii, albume, etichete, note, coș de selecție, elemente ascunse, setări, fluxuri de lucru și presetări. Fotografiile nu sunt incluse.</string>
+    <string name="backup_contains">Conține: %1$s</string>
+    <string name="backup_privacy">Fișierul conține nume de fișiere, etichete și note. Salvează-l doar unde vrei – de exemplu pe un stick USB.</string>
+    <string name="backup_save_button">Salvează backupul…</string>
+    <string name="backup_file_name">Backup PhotoMaid %1$s.json</string>
+    <string name="backup_saved">Backup salvat.</string>
+    <string name="backup_save_failed">Backupul nu a putut fi salvat.</string>
+    <string name="backup_restore_header">Restaurare</string>
+    <string name="backup_restore_text">Preia un backup, de exemplu pe un telefon nou. Fotografiile sunt regăsite după nume, dimensiune și ora realizării. Ce este deja decis sau introdus aici rămâne neschimbat.</string>
+    <string name="backup_open_button">Deschide un backup…</string>
+    <string name="backup_not_backup">Acest fișier nu este un backup PhotoMaid.</string>
+    <string name="backup_too_new">Acest backup provine dintr-o versiune mai nouă de PhotoMaid. Actualizează mai întâi PhotoMaid.</string>
+    <string name="backup_unreadable">Fișierul nu a putut fi citit.</string>
+    <string name="backup_from">Backup din %1$s</string>
+    <string name="backup_step_settings">Setările sunt preluate (cu excepția „Șterge definitiv”); fluxurile de lucru, presetările și colecțiile tale sunt adăugate.</string>
+    <string name="backup_missing_note">Aceste fotografii și videoclipuri nu sunt pe acest dispozitiv (sau nu pot fi potrivite clar). Pentru ele nu se preia nimic.</string>
+    <string name="backup_missing_show">Arată lista</string>
+    <string name="backup_missing_hide">Ascunde lista</string>
+    <string name="backup_nothing">În acest backup nu e nimic care să lipsească aici.</string>
+    <string name="backup_apply">Restaurează</string>
+    <string name="backup_done">Restaurat</string>
+    <plurals name="archive_step_copy">
+        <item quantity="one">%1$d fișier este copiat în „%2$s”.</item>
+        <item quantity="few">%1$d fișiere sunt copiate în „%2$s”.</item>
+        <item quantity="other">%1$d de fișiere sunt copiate în „%2$s”.</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="one">%1$d copiat și verificat</item>
+        <item quantity="few">%1$d copiate și verificate</item>
+        <item quantity="other">%1$d de copiate și verificate</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="one">%1$d există deja</item>
+        <item quantity="few">%1$d există deja</item>
+        <item quantity="other">%1$d de fișiere există deja</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="one">%1$d eșuat</item>
+        <item quantity="few">%1$d eșuate</item>
+        <item quantity="other">%1$d de eșuate</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="one">%1$d necopiat</item>
+        <item quantity="few">%1$d necopiate</item>
+        <item quantity="other">%1$d de necopiate</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="one">Muți %1$d original în coșul PhotoMaid?</item>
+        <item quantity="few">Muți %1$d originale în coșul PhotoMaid?</item>
+        <item quantity="other">Muți %1$d de originale în coșul PhotoMaid?</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="one">%1$d favorit rămâne (Protejează favoritele).</item>
+        <item quantity="few">%1$d favorite rămân (Protejează favoritele).</item>
+        <item quantity="other">%1$d de favorite rămân (Protejează favoritele).</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="one">%1$d original este acum în coșul PhotoMaid.</item>
+        <item quantity="few">%1$d originale sunt acum în coșul PhotoMaid.</item>
+        <item quantity="other">%1$d de originale sunt acum în coșul PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="one">%1$d decizie</item>
+        <item quantity="few">%1$d decizii</item>
+        <item quantity="other">%1$d de decizii</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="one">%1$d album</item>
+        <item quantity="few">%1$d albume</item>
+        <item quantity="other">%1$d de albume</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="one">%1$d cu etichete</item>
+        <item quantity="few">%1$d cu etichete</item>
+        <item quantity="other">%1$d cu etichete</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="one">%1$d notă</item>
+        <item quantity="few">%1$d note</item>
+        <item quantity="other">%1$d de note</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="one">%1$d în coșul de selecție</item>
+        <item quantity="few">%1$d în coșul de selecție</item>
+        <item quantity="other">%1$d în coșul de selecție</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="one">%1$d ascuns</item>
+        <item quantity="few">%1$d ascunse</item>
+        <item quantity="other">%1$d de ascunse</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="one">%1$d flux de lucru</item>
+        <item quantity="few">%1$d fluxuri de lucru</item>
+        <item quantity="other">%1$d de fluxuri de lucru</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="one">%1$d presetare</item>
+        <item quantity="few">%1$d presetări</item>
+        <item quantity="other">%1$d de presetări</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="one">%1$d colecție proprie</item>
+        <item quantity="few">%1$d colecții proprii</item>
+        <item quantity="other">%1$d de colecții proprii</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="one">Se preia %1$d decizie.</item>
+        <item quantity="few">Se preiau %1$d decizii.</item>
+        <item quantity="other">Se preiau %1$d de decizii.</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="one">%1$d este deja decis aici și rămâne neschimbat.</item>
+        <item quantity="few">%1$d sunt deja decise aici și rămân neschimbate.</item>
+        <item quantity="other">%1$d de elemente sunt deja decise aici și rămân neschimbate.</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="one">Etichete pentru %1$d fotografie sau videoclip.</item>
+        <item quantity="few">Etichete pentru %1$d fotografii și videoclipuri.</item>
+        <item quantity="other">Etichete pentru %1$d de fotografii și videoclipuri.</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="one">%1$d notă (notele existente rămân).</item>
+        <item quantity="few">%1$d note (notele existente rămân).</item>
+        <item quantity="other">%1$d de note (notele existente rămân).</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="one">%1$d ajunge în coșul de selecție.</item>
+        <item quantity="few">%1$d ajung în coșul de selecție.</item>
+        <item quantity="other">%1$d de elemente ajung în coșul de selecție.</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="one">%1$d este ascuns în PhotoMaid.</item>
+        <item quantity="few">%1$d sunt ascunse în PhotoMaid.</item>
+        <item quantity="other">%1$d de elemente sunt ascunse în PhotoMaid.</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="one">%1$d negăsit</item>
+        <item quantity="few">%1$d negăsite</item>
+        <item quantity="other">%1$d de elemente negăsite</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="one">%1$d nu a putut fi preluat.</item>
+        <item quantity="few">%1$d nu au putut fi preluate.</item>
+        <item quantity="other">%1$d de elemente nu au putut fi preluate.</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="one">Se creează %1$d album.</item>
+        <item quantity="few">Se creează %1$d albume.</item>
+        <item quantity="other">Se creează %1$d de albume.</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="one">Se completează %1$d album existent.</item>
+        <item quantity="few">Se completează %1$d albume existente.</item>
+        <item quantity="other">Se completează %1$d de albume existente.</item>
+    </plurals>
 </resources>

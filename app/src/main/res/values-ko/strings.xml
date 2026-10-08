@@ -1580,4 +1580,166 @@
     <string name="tour_history_text">보관한 것, 골라낸 것, 나중에 볼 것을 확인할 수 있어요. 여기서 모든 결정을 바꿀 수 있어요.</string>
     <string name="tour_settings_title">설정 및 도움말</string>
     <string name="tour_settings_text">PhotoMaid를 원하는 대로 설정하고 답을 찾아보세요. 이 둘러보기는 언제든 다시 볼 수 있어요.</string>
+    <!-- Ausbau Paket 5 (Auslagern, Sichern und wiederherstellen) -->
+    <string name="archive_title">보관하기</string>
+    <string name="archive_studio_sub">SD 카드나 USB에 복사하고 모든 사본을 확인해요</string>
+    <string name="archive_pick">무엇을 복사할까요?</string>
+    <string name="archive_running">복사하고 확인하는 중…</string>
+    <string name="archive_total_size">합계: %1$s</string>
+    <string name="archive_target">저장 위치</string>
+    <string name="archive_target_none">아직 폴더를 고르지 않았어요</string>
+    <string name="archive_choose">폴더 고르기</string>
+    <string name="archive_choose_other">다른 폴더 고르기</string>
+    <string name="archive_kind_removable">SD 카드 또는 USB: 별도의 저장 장치예요.</string>
+    <string name="archive_kind_device">이 폴더는 사진과 같은 저장 공간에 있어요. 휴대폰을 잃어버리거나 고장 나면 그곳의 두 번째 사본은 도움이 되지 않아요.</string>
+    <string name="archive_kind_provider">이 폴더는 온라인 저장소 같은 다른 앱의 것이에요. 파일을 휴대폰에 둘지 온라인에 올릴지는 그 앱이 정해요.</string>
+    <string name="archive_free">저장 위치 여유 공간: %1$s</string>
+    <string name="archive_free_unknown">저장 위치 여유 공간: 알 수 없음</string>
+    <string name="archive_no_space">공간이 부족해요: 필요 %1$s, 여유 %2$s.</string>
+    <string name="archive_options">옵션</string>
+    <string name="archive_by_month">연도와 월별 폴더</string>
+    <string name="archive_write_list">확인 목록도 저장</string>
+    <string name="archive_write_list_note">각 파일의 이름, 날짜, 크기, 체크섬과 앨범·태그·메모를 담은 표예요.</string>
+    <string name="archive_step_verify">그다음 각 사본을 다시 읽어 원본과 바이트 단위로 비교해요.</string>
+    <string name="archive_step_only_verified">확인된 사본만 인정돼요. 다른 사본은 바로 지워요.</string>
+    <string name="archive_step_originals">원본은 그대로 남아요.</string>
+    <string name="archive_start">복사하고 확인하기</string>
+    <string name="archive_failed">복사가 예기치 않게 멈췄어요. 확인된 항목은 결과에서 볼 수 있어요.</string>
+    <string name="archive_last_interrupted">지난 작업이 중단됐어요. 확인됨: %2$d개 중 %1$d개.</string>
+    <string name="archive_show_result">결과 보기</string>
+    <string name="archive_result_title">결과</string>
+    <string name="archive_verified_bytes">확인됨: %1$s</string>
+    <string name="archive_list_saved">확인 목록 저장됨: %1$s</string>
+    <string name="archive_meaning">‘확인됨’은 사본이 원본과 바이트 단위까지 같다는 뜻이에요. 저장 장치가 얼마나 오래갈지는 누구도 확인할 수 없어요. 중요한 것은 두 곳에 보관하세요.</string>
+    <string name="archive_files">파일</string>
+    <string name="archive_status_verified">확인됨</string>
+    <string name="archive_status_already">이미 있고 동일함</string>
+    <string name="archive_status_failed">실패</string>
+    <string name="archive_status_notdone">복사 안 됨</string>
+    <string name="archive_reason_read">원본을 읽을 수 없어요</string>
+    <string name="archive_reason_write">저장 위치에서 저장을 거부했어요(가득 참, 쓰기 금지 또는 이 저장소에 비해 너무 큰 파일)</string>
+    <string name="archive_reason_mismatch">사본이 같지 않아 다시 지웠어요</string>
+    <string name="archive_reason_cancelled">취소됨</string>
+    <string name="archive_reason_interrupted">중단됨 – 일부만 된 사본은 지웠어요</string>
+    <string name="archive_reason_space">저장 위치에 공간이 없어요</string>
+    <string name="archive_cleanup_button">원본을 휴지통으로…</string>
+    <string name="archive_cleanup_text">이 사진과 동영상은 이제 ‘%1$s’에 확인된 사본이 있어요. PhotoMaid 휴지통으로만 옮겨요. 휴지통을 비우고 Android가 한 번 더 물어볼 때까지 아무것도 삭제되지 않아요.</string>
+    <string name="archive_cleanup_action">휴지통으로 옮기기</string>
+    <string name="archive_open_basket">휴지통 열기</string>
+    <string name="archive_no_cleanup_device">사본이 사진과 같은 저장 공간에 있어서 PhotoMaid는 여기서 원본을 지우자고 하지 않아요.</string>
+    <string name="archive_no_cleanup_provider">사본이 다른 앱에 있어요. 그곳에서 안전한지 PhotoMaid는 알 수 없어서 원본을 지우자고 하지 않아요.</string>
+    <string name="archive_undated">날짜 없음</string>
+    <string name="archive_list_file">PhotoMaid 확인 목록 %1$s.csv</string>
+    <string name="archive_col_folder">폴더</string>
+    <string name="archive_col_name">이름</string>
+    <string name="archive_col_taken">촬영</string>
+    <string name="archive_col_bytes">바이트</string>
+    <string name="archive_col_sha">SHA-256</string>
+    <string name="archive_col_albums">앨범</string>
+    <string name="archive_col_tags">태그</string>
+    <string name="archive_col_note">메모</string>
+    <string name="backup_title">백업 및 복원</string>
+    <string name="backup_save_header">백업</string>
+    <string name="backup_save_text">PhotoMaid 데이터를 작은 파일에 저장해요: 결정, 앨범, 태그, 메모, 선택 바구니, 숨긴 항목, 설정, 작업 흐름, 프리셋. 사진은 들어가지 않아요.</string>
+    <string name="backup_contains">포함: %1$s</string>
+    <string name="backup_privacy">이 파일에는 파일 이름, 태그, 메모가 들어 있어요. 원하는 곳에만 저장하세요(예: USB).</string>
+    <string name="backup_save_button">백업 저장…</string>
+    <string name="backup_file_name">PhotoMaid 백업 %1$s.json</string>
+    <string name="backup_saved">백업을 저장했어요.</string>
+    <string name="backup_save_failed">백업을 저장하지 못했어요.</string>
+    <string name="backup_restore_header">복원</string>
+    <string name="backup_restore_text">새 휴대폰 등에서 백업을 가져와요. 사진은 이름, 크기, 촬영 시각으로 다시 찾아요. 여기서 이미 정했거나 입력한 것은 그대로 남아요.</string>
+    <string name="backup_open_button">백업 열기…</string>
+    <string name="backup_not_backup">이 파일은 PhotoMaid 백업이 아니에요.</string>
+    <string name="backup_too_new">이 백업은 더 새로운 PhotoMaid 버전에서 만들어졌어요. 먼저 PhotoMaid를 업데이트하세요.</string>
+    <string name="backup_unreadable">파일을 읽지 못했어요.</string>
+    <string name="backup_from">%1$s 백업</string>
+    <string name="backup_step_settings">설정을 가져와요(‘영구 삭제’ 제외). 작업 흐름, 프리셋, 내 모음은 추가돼요.</string>
+    <string name="backup_missing_note">이 사진과 동영상은 이 기기에 없거나 정확히 찾을 수 없어요. 이 항목들은 가져오지 않아요.</string>
+    <string name="backup_missing_show">목록 보기</string>
+    <string name="backup_missing_hide">목록 숨기기</string>
+    <string name="backup_nothing">이 백업에는 여기에 없는 것이 없어요.</string>
+    <string name="backup_apply">가져오기</string>
+    <string name="backup_done">가져왔어요</string>
+    <plurals name="archive_step_copy">
+        <item quantity="other">파일 %1$d개를 ‘%2$s’에 복사해요.</item>
+    </plurals>
+    <plurals name="archive_part_verified">
+        <item quantity="other">%1$d개 복사·확인됨</item>
+    </plurals>
+    <plurals name="archive_part_already">
+        <item quantity="other">%1$d개 이미 있음</item>
+    </plurals>
+    <plurals name="archive_part_failed">
+        <item quantity="other">%1$d개 실패</item>
+    </plurals>
+    <plurals name="archive_part_notdone">
+        <item quantity="other">%1$d개 복사 안 됨</item>
+    </plurals>
+    <plurals name="archive_cleanup_title">
+        <item quantity="other">원본 %1$d개를 PhotoMaid 휴지통으로 옮길까요?</item>
+    </plurals>
+    <plurals name="archive_cleanup_favs">
+        <item quantity="other">즐겨찾기 %1$d개는 그대로 남아요(즐겨찾기 보호).</item>
+    </plurals>
+    <plurals name="archive_cleanup_done">
+        <item quantity="other">원본 %1$d개가 이제 PhotoMaid 휴지통에 있어요.</item>
+    </plurals>
+    <plurals name="backup_part_decisions">
+        <item quantity="other">결정 %1$d개</item>
+    </plurals>
+    <plurals name="backup_part_albums">
+        <item quantity="other">앨범 %1$d개</item>
+    </plurals>
+    <plurals name="backup_part_tagged">
+        <item quantity="other">태그 있는 항목 %1$d개</item>
+    </plurals>
+    <plurals name="backup_part_notes">
+        <item quantity="other">메모 %1$d개</item>
+    </plurals>
+    <plurals name="backup_part_basket">
+        <item quantity="other">선택 바구니에 %1$d개</item>
+    </plurals>
+    <plurals name="backup_part_hidden">
+        <item quantity="other">숨김 %1$d개</item>
+    </plurals>
+    <plurals name="backup_part_workflows">
+        <item quantity="other">작업 흐름 %1$d개</item>
+    </plurals>
+    <plurals name="backup_part_presets">
+        <item quantity="other">프리셋 %1$d개</item>
+    </plurals>
+    <plurals name="backup_part_collections">
+        <item quantity="other">내 모음 %1$d개</item>
+    </plurals>
+    <plurals name="backup_step_decisions">
+        <item quantity="other">결정 %1$d개를 가져와요.</item>
+    </plurals>
+    <plurals name="backup_step_kept_local">
+        <item quantity="other">%1$d개는 여기서 이미 정해져 있어 그대로 남아요.</item>
+    </plurals>
+    <plurals name="backup_step_tags">
+        <item quantity="other">사진·동영상 %1$d개의 태그.</item>
+    </plurals>
+    <plurals name="backup_step_notes">
+        <item quantity="other">메모 %1$d개(기존 메모는 그대로).</item>
+    </plurals>
+    <plurals name="backup_step_basket">
+        <item quantity="other">%1$d개를 선택 바구니에 담아요.</item>
+    </plurals>
+    <plurals name="backup_step_hidden">
+        <item quantity="other">%1$d개를 PhotoMaid에서 숨겨요.</item>
+    </plurals>
+    <plurals name="backup_missing">
+        <item quantity="other">%1$d개를 찾지 못했어요</item>
+    </plurals>
+    <plurals name="backup_failed_some">
+        <item quantity="other">%1$d개는 가져오지 못했어요.</item>
+    </plurals>
+    <plurals name="backup_step_albums_new">
+        <item quantity="other">앨범 %1$d개를 새로 만들어요.</item>
+    </plurals>
+    <plurals name="backup_step_albums_extend">
+        <item quantity="other">기존 앨범 %1$d개를 보충해요.</item>
+    </plurals>
 </resources>
