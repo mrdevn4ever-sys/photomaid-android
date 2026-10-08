@@ -1742,4 +1742,5 @@
     <plurals name="backup_step_albums_extend">
         <item quantity="other">将补充 %1$d 个已有相册。</item>
     </plurals>
+    <string name="archive_last_result">上次操作（%1$s）：已检查 %2$d / %3$d。</string>
 </resources>

@@ -1946,4 +1946,5 @@
         <item quantity="few">Se completează %1$d albume existente.</item>
         <item quantity="other">Se completează %1$d de albume existente.</item>
     </plurals>
+    <string name="archive_last_result">Ultima rulare din %1$s: %2$d din %3$d verificate.</string>
 </resources>

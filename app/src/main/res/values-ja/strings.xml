@@ -1742,4 +1742,5 @@
     <plurals name="backup_step_albums_extend">
         <item quantity="other">既存のアルバム %1$d件に追加します。</item>
     </plurals>
+    <string name="archive_last_result">前回（%1$s）: %3$d件中%2$d件を確認済み。</string>
 </resources>

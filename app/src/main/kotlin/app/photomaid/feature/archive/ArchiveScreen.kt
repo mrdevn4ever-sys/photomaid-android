@@ -65,6 +65,7 @@ import app.photomaid.core.batch.BatchRules
 import app.photomaid.core.model.SizeTally
 import app.photomaid.design.AppSpacing
 import app.photomaid.design.AppTypography
+import app.photomaid.design.DateText
 import app.photomaid.design.ListSection
 import app.photomaid.design.PM
 import app.photomaid.design.PlainButton
@@ -115,11 +116,11 @@ fun ArchiveScreen(req: ArchiveRequest, nav: Nav, onClose: () -> Unit) {
 
     LaunchedEffect(req.assetIds) {
         assets = withContext(Dispatchers.IO) { app.allPhotos.assets(req.assetIds) }
-        target = withContext(Dispatchers.IO) { app.archive.lastTarget() }
+        target = withContext(Dispatchers.IO) { app.archive.lastTarget()?.also { it.label } } // Anzeigename abseits des Main-Threads lesen
     }
     LaunchedEffect(target) { available = target?.let { t -> withContext(Dispatchers.IO) { runCatching { t.availableBytes() }.getOrNull() } } }
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
-        if (uri != null) scope.launch { target = withContext(Dispatchers.IO) { app.archive.choose(uri) } }
+        if (uri != null) scope.launch { target = withContext(Dispatchers.IO) { app.archive.choose(uri)?.also { it.label } } }
     }
 
     val list = assets.orEmpty()
@@ -141,15 +142,22 @@ fun ArchiveScreen(req: ArchiveRequest, nav: Nav, onClose: () -> Unit) {
         }
     }
 
+    // Seite verlassen, während kopiert wird: der Durchgang läuft weiter (Vordergrunddienst) und meldet sich am Ende.
+    androidx.compose.runtime.DisposableEffect(Unit) { onDispose { if (app.exports.state.value != null) app.exports.background() } }
     androidx.activity.compose.BackHandler { if (!running) onClose() }
     ScreenScaffold(stringResource(R.string.archive_title), onBack = { if (!running) onClose() }, modifier = Modifier.testTag("archive")) { mod ->
         val r = result
         LazyColumn(mod.padding(horizontal = AppSpacing.pageMargin), verticalArrangement = Arrangement.spacedBy(AppSpacing.s)) {
             if (r == null) {
                 val prev = last
-                if (prev != null && prev.finished && prev.entries.any { it.reason == EntryReason.INTERRUPTED }) item("interrupted") {
-                    SurfaceCard(Modifier.fillMaxWidth().testTag("archive.interrupted")) {
-                        Text(stringResource(R.string.archive_last_interrupted, prev.verified.size, prev.entries.size), style = AppTypography.subheadline, color = c.textPrimary)
+                // Letzter Durchgang (auch einer, der nach Verlassen der Seite weiterlief) bleibt ansehbar.
+                if (prev != null && prev.finished && !running) item("last") {
+                    val interrupted = prev.entries.any { it.reason == EntryReason.INTERRUPTED }
+                    SurfaceCard(Modifier.fillMaxWidth().testTag(if (interrupted) "archive.interrupted" else "archive.last")) {
+                        Text(if (interrupted) stringResource(R.string.archive_last_interrupted, prev.verified.size, prev.entries.size)
+                            else stringResource(R.string.archive_last_result, DateText.longWithTime(java.time.Instant.ofEpochMilli(prev.startedAt)),
+                                prev.verified.size, prev.entries.size),
+                            style = AppTypography.subheadline, color = c.textPrimary)
                         PlainButton(stringResource(R.string.archive_show_result), Modifier.testTag("archive.showlast")) { result = prev }
                     }
                 }

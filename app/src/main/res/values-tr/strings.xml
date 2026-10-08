@@ -1844,4 +1844,5 @@
         <item quantity="one">Mevcut %1$d albüm tamamlanır.</item>
         <item quantity="other">Mevcut %1$d albüm tamamlanır.</item>
     </plurals>
+    <string name="archive_last_result">Son işlem (%1$s): %3$d dosyadan %2$d kontrol edildi.</string>
 </resources>

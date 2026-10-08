@@ -121,7 +121,7 @@ fun BackupScreen(nav: Nav, onClose: () -> Unit = nav::back) {
                 scope.launch {
                     applying = 0f
                     restored = runCatching { BackupService.apply(app, b, p) { applying = it } }.getOrNull()
-                    if (restored == null) error = app.string(R.string.backup_unreadable)
+                    if (restored == null) error = app.string(R.string.error_change_not_saved)
                     applying = null
                     current = BackupService.create(app)
                 }

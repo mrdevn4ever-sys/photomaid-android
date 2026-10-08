@@ -16649,6 +16649,24 @@
    "tr": "Geri yüklendi",
    "uk": "Перенесено",
    "zh": "已导入"
+  },
+  "archive_last_result": {
+   "en": "Last run on %1$s: %2$d of %3$d checked.",
+   "de": "Letzter Durchgang vom %1$s: %2$d von %3$d geprüft.",
+   "ar": "آخر عملية في %1$s: تم التحقق من %2$d من %3$d.",
+   "es": "Última pasada del %1$s: %2$d de %3$d comprobados.",
+   "fr": "Dernier passage du %1$s : %2$d sur %3$d vérifiés.",
+   "it": "Ultimo passaggio del %1$s: %2$d su %3$d controllati.",
+   "ja": "前回（%1$s）: %3$d件中%2$d件を確認済み。",
+   "ko": "지난 작업(%1$s): %3$d개 중 %2$d개 확인됨.",
+   "nl": "Laatste ronde van %1$s: %2$d van %3$d gecontroleerd.",
+   "pl": "Ostatnie przejście z %1$s: sprawdzono %2$d z %3$d.",
+   "pt": "Última passagem de %1$s: %2$d de %3$d verificados.",
+   "ro": "Ultima rulare din %1$s: %2$d din %3$d verificate.",
+   "ru": "Последний запуск %1$s: проверено %2$d из %3$d.",
+   "tr": "Son işlem (%1$s): %3$d dosyadan %2$d kontrol edildi.",
+   "uk": "Останній запуск %1$s: перевірено %2$d з %3$d.",
+   "zh": "上次操作（%1$s）：已检查 %2$d / %3$d。"
   }
  },
  "plurals": {

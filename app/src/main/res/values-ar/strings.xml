@@ -2252,4 +2252,5 @@
         <item quantity="many">يُستكمل %1$d ألبومًا موجودًا.</item>
         <item quantity="other">يُستكمل %1$d ألبوم موجود.</item>
     </plurals>
+    <string name="archive_last_result">آخر عملية في %1$s: تم التحقق من %2$d من %3$d.</string>
 </resources>

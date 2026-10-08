@@ -1742,4 +1742,5 @@
     <plurals name="backup_step_albums_extend">
         <item quantity="other">기존 앨범 %1$d개를 보충해요.</item>
     </plurals>
+    <string name="archive_last_result">지난 작업(%1$s): %3$d개 중 %2$d개 확인됨.</string>
 </resources>

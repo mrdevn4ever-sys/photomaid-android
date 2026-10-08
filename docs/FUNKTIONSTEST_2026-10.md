@@ -26,6 +26,7 @@ Gesamtlauf (Stand `53d8ced`): Core **227/227 PASS** · App **567/567 PASS** · L
 | B2 | `FeedAdsTest.nextCardAfterSevenMoreDecisions` und `PremiumPassTest.gestureHintShownOnFirstFeedOnly` liefen in der Gesamtsuite je einmal in die 30-s-Grenze, allein PASS | keine (nur Testlast) | Wartezeit 60 s wie bei `MonetizationTest` | PASS |
 | B4 | `G4Test` suchte noch „Medien endgültig löschen“; der Text heißt jetzt „Elemente endgültig löschen“ (T2) | keine (Testtext veraltet) | Test angepasst | PASS |
 | B3 | Tab-Leiste hatte keine Test-Kennungen | keine | `apptab.<TAB>` je Tab (nur Semantik) | PASS |
+| B5 | **Gespeicherte Zahlen hingen von der Gerätesprache ab** (gefunden beim Paket-5-Screenshot auf Arabisch): `String.format` schrieb arabisch-indische Ziffern in den Schlüssel des Tageszählers (`LocalDay`) und in den Monat für „Weitermachen“ (`MonthKey`) | Arabisch: „Weitermachen“ fand den Monat nicht wieder; nach einem Sprachwechsel konnte es den Tageszähler doppelt geben | Immer ISO/ASCII (`LocalDate`/`YearMonth.toString`); ältere Einträge werden weiter gelesen, beim Tageszähler gilt der ASCII-Schlüssel | PASS |
 
 Sonst hat kein Test einen Fehler der App gezeigt.
 
@@ -108,6 +109,21 @@ Sonst hat kein Test einen Fehler der App gezeigt.
 | X8 | Arabisch (RTL) | RasterShotsTest.arabic | PASS |
 | X9 | Querformat/Tablet | ScreenshotTest m_tablet*, m_fold_* | PASS |
 | X10 | Zurück | DeviceFindingsTest.closingFeedReturnsToTodayRepeatedly, **AppCrawlTest** (50 × Zurück je Lauf) | PASS |
+
+### Paket 5 (Auslagern, Sichern) – 2026-10-08
+
+| ID | Funktion | Test(s) | Status |
+|---|---|---|---|
+| AR1 | Einstiege (Studio, Auswahl › ⋯, Album/Schlagwort/Korb › ⋯) | ArchiveUiTest.entriesFromStudioSelectionAndAlbumOpenArchiving, selectionMenuOpensArchiving | PASS |
+| AR2 | Ziel einordnen, freier Platz | core ArchiveTest.targetKindSeparatesDeviceRemovableAndOtherApps, spaceIsOnlyEnoughWhenEverythingIsKnown; ArchiveUiTest.sameDeviceWarnsAndOffersNoTrash, notEnoughSpaceBlocksTheStartAndFreeIsLimited | PASS (echte SD/USB/Cloud: NOT RUN) |
+| AR3 | Kopieren und prüfen, Ordner, Prüfliste | ArchiveEngineTest.copiesChecksEveryFileAndKeepsOriginals, aCopyThatDiffersIsRemovedAndNeverCounts; core listIsValidCsvAndNeverAFormula, folderNamesNeverDependOnTheDeviceLanguage | PASS |
+| AR4 | Abbruch, Unterbrechung, voll | ArchiveEngineTest.cancelInTheMiddleRemovesThePartialCopy, afterARestartOnlyCheckedCopiesCountAndTheHalfCopyIsRemoved, fullDestinationStopsCleanly | PASS (Stick abziehen: NOT RUN) |
+| AR5 | Originale in den Papierkorb (nur auf Tipp) | ArchiveEngineTest.originalsGoToTrashOnlyOnRequestOnlyFromOwnStorageAndFavoritesStay, ArchiveUiTest.copyAndCheckThenOfferTrashOnlyOnRequest | PASS |
+| AR6 | Zweiter Durchgang | ArchiveEngineTest.secondRunFindsIdenticalFilesAndNeverOverwritesADifferentOne | PASS |
+| BK1 | Sichern | ArchiveEngineTest.backupMovesToANewPhoneAndNeverOverwrites (Inhalt), ArchiveUiTest.backupPage… | PASS (echte Dateiauswahl: NOT RUN) |
+| BK2 | Wiederherstellen auf neuem Gerät | ArchiveEngineTest.backupMovesToANewPhoneAndNeverOverwrites, core restoreFindsMediaOnANewPhoneAndNeverOverwrites | PASS |
+| BK3 | Nichts überschreiben, „Endgültig löschen“ nie | dieselben + notABackupAndTooNewAreRecognised | PASS |
+| – | Tasten ≥ 48 dp, Aufnahmen hell/dunkel/200 %/Arabisch | TouchTargetTest („Auslagern“, „Sichern“), ArchiveShotsTest (6) | PASS (Sichtprüfung JVM) |
 
 ## 4. Texte und Rundgang
 

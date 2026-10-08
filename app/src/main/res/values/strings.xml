@@ -1844,4 +1844,5 @@
         <item quantity="one">%1$d existing album is extended.</item>
         <item quantity="other">%1$d existing albums are extended.</item>
     </plurals>
+    <string name="archive_last_result">Last run on %1$s: %2$d of %3$d checked.</string>
 </resources>

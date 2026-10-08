@@ -1844,4 +1844,5 @@
         <item quantity="one">%1$d vorhandenes Album wird ergänzt.</item>
         <item quantity="other">%1$d vorhandene Alben werden ergänzt.</item>
     </plurals>
+    <string name="archive_last_result">Letzter Durchgang vom %1$s: %2$d von %3$d geprüft.</string>
 </resources>

@@ -1844,4 +1844,5 @@
         <item quantity="one">%1$d bestaand album wordt aangevuld.</item>
         <item quantity="other">%1$d bestaande albums worden aangevuld.</item>
     </plurals>
+    <string name="archive_last_result">Laatste ronde van %1$s: %2$d van %3$d gecontroleerd.</string>
 </resources>

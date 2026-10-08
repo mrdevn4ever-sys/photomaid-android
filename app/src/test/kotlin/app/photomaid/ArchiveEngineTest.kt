@@ -9,6 +9,7 @@ import app.photomaid.archive.BackupService
 import app.photomaid.archive.FileArchiveTarget
 import app.photomaid.core.archive.ArchiveJournal
 import app.photomaid.core.archive.ArchiveOptions
+import app.photomaid.core.archive.ArchivePlan
 import app.photomaid.core.archive.BackupCheck
 import app.photomaid.core.archive.EntryReason
 import app.photomaid.core.archive.EntryState
@@ -74,6 +75,7 @@ class ArchiveEngineTest {
             val f = File(dir, (e.folder + e.name).joinToString("/"))
             val a = assets.first { it.id == e.sourceId }
             assertEquals(listOf("2026", "09"), e.folder) // Aufnahme September 2026 (Testdaten)
+            assertTrue("Endung aus dem Dateityp ergänzt: ${e.name}", e.name.endsWith(".png") || e.name.endsWith(".mp4"))
             assertArrayEquals(file(a).readBytes(), f.readBytes())
             assertEquals(sha(f), e.sha256)
             assertEquals(f.length(), e.bytes)
@@ -105,7 +107,7 @@ class ArchiveEngineTest {
         val third = run(app, t, assets, ArchiveOptions(writeList = false))
         val e = third.entries.first { it.sourceId == first.sourceId }
         assertEquals(EntryState.VERIFIED, e.state)
-        assertEquals("${first.name} (2)", e.name)
+        assertEquals(ArchivePlan.uniqueName(setOf(first.name), first.name), e.name) // „QA_0 (2).png“
         assertArrayEquals(other, existing.readBytes())
     }
 
@@ -137,7 +139,7 @@ class ArchiveEngineTest {
         val scope = CoroutineScope(Dispatchers.IO + Job())
         var started = false
         lateinit var job: kotlinx.coroutines.Deferred<ArchiveJournal>
-        t.beforeWrite = { name -> if (name == assets[1].displayName && !started) { started = true; job.cancel() } }
+        t.beforeWrite = { name -> if (name.startsWith(assets[1].displayName!!) && !started) { started = true; job.cancel() } }
         job = scope.async { ArchiveRunner.run(app, t, assets, ArchiveOptions(writeList = false), zone = utc) }
         val cancelled = runBlocking { runCatching { job.await() }.exceptionOrNull() }
         assertTrue(cancelled is CancellationException)

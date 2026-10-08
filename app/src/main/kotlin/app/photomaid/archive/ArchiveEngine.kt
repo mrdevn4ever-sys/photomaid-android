@@ -286,7 +286,9 @@ object ArchiveRunner {
                 coroutineContext.ensureActive()
                 val src = ArchiveSource(a.id, a.displayName, a.mimeType, a.size.bytesOrNull, a.creationDate?.toEpochMilli())
                 val path = ArchivePlan.folderFor(src, options, undated, zone)
+                // Ohne Endung hängte der Speicher selbst eine an – dann fände ein zweiter Durchgang die Datei nicht wieder.
                 val wanted = ArchivePlan.safeName(a.displayName, ArchivePlan.fallbackName(i, a.mimeType))
+                    .let { if (ArchivePlan.extension(it).isEmpty()) it + ArchivePlan.extensionFor(a.mimeType) else it }
                 val entry = try {
                     val folder = folders.getOrPut(path) { path.fold(root) { f, seg -> f.subfolder(seg) } }
                     copyOne(app, a, folder, wanted) { uri, name -> j = j.update(a.id) { it.copy(state = EntryState.COPYING, targetUri = uri, name = name, folder = path) }; center.save(j) }

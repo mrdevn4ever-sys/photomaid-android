@@ -2048,4 +2048,5 @@
         <item quantity="many">Доповнюється %1$d наявних альбомів.</item>
         <item quantity="other">Доповнюються %1$d наявні альбоми.</item>
     </plurals>
+    <string name="archive_last_result">Останній запуск %1$s: перевірено %2$d з %3$d.</string>
 </resources>

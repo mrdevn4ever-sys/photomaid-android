@@ -1946,4 +1946,5 @@
         <item quantity="many">Vengono completati %1$d album esistenti.</item>
         <item quantity="other">Vengono completati %1$d album esistenti.</item>
     </plurals>
+    <string name="archive_last_result">Ultimo passaggio del %1$s: %2$d su %3$d controllati.</string>
 </resources>

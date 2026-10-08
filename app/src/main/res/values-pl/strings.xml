@@ -2048,4 +2048,5 @@
         <item quantity="many">Zostanie uzupełnionych %1$d istniejących albumów.</item>
         <item quantity="other">Zostaną uzupełnione %1$d istniejące albumy.</item>
     </plurals>
+    <string name="archive_last_result">Ostatnie przejście z %1$s: sprawdzono %2$d z %3$d.</string>
 </resources>
