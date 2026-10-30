@@ -108,7 +108,7 @@ class EditorTest {
         val src = app.editEngine.loadPreview(a.uri, a.mimeType)
         assertEquals(300, src.full.width); assertEquals(400, src.full.height)
         val recipe = EditRecipe(quarterTurns = 1, crop = NormRect(0f, 0f, 0.5f, 1f), filter = FilterId.MONO)
-        val out = app.editEngine.export(a.uri, a.mimeType, recipe, src.full, removeLocation = false, softwareTag = "PhotoMaid")
+        val out = app.editEngine.export(a.uri, a.mimeType, recipe, src.full, removeLocation = false, softwareTag = "GaleriQ")
         val b = BitmapFactory.decodeFile(out.file.absolutePath)
         // Gedreht → 400 × 300, linke Hälfte → 200 × 300.
         assertEquals(200, b.width); assertEquals(300, b.height)
@@ -127,7 +127,7 @@ class EditorTest {
         val f = jpegWithExif()
         val pixelsBefore = BitmapFactory.decodeFile(f.absolutePath).let { it.getPixel(10, 10) }
         val out = app.editEngine.export(Uri.fromFile(f), "image/jpeg", EditRecipe(quarterTurns = 1), PxSize(120, 80),
-            removeLocation = true, softwareTag = "PhotoMaid")
+            removeLocation = true, softwareTag = "GaleriQ")
         assertTrue(out.lossless)
         val ex = ExifInterface(out.file)
         assertEquals(ExifInterface.ORIENTATION_ROTATE_90, ex.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0))
@@ -144,7 +144,7 @@ class EditorTest {
         io {
         val f = jpegWithExif()
         val keep = app.editEngine.export(Uri.fromFile(f), "image/jpeg", EditRecipe(crop = NormRect(0.25f, 0f, 1f, 1f)), PxSize(120, 80),
-            removeLocation = false, softwareTag = "PhotoMaid")
+            removeLocation = false, softwareTag = "GaleriQ")
         assertFalse(keep.lossless)
         val ek = ExifInterface(keep.file)
         assertEquals("2026:09:20 10:11:12", ek.getAttribute(ExifInterface.TAG_DATETIME_ORIGINAL))
@@ -152,7 +152,7 @@ class EditorTest {
         assertEquals(ExifInterface.ORIENTATION_NORMAL, ek.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL))
         assertEquals(90, BitmapFactory.decodeFile(keep.file.absolutePath).width)
         val drop = app.editEngine.export(Uri.fromFile(f), "image/jpeg", EditRecipe(crop = NormRect(0.25f, 0f, 1f, 1f)), PxSize(120, 80),
-            removeLocation = true, softwareTag = "PhotoMaid")
+            removeLocation = true, softwareTag = "GaleriQ")
         assertNull(ExifInterface(drop.file).latLong)
         keep.file.delete(); drop.file.delete()
         }
@@ -165,7 +165,7 @@ class EditorTest {
         val f = jpegWithExif()
         assertTrue(app.editEngine.hasLocation(Uri.fromFile(f)))
         val out = app.editEngine.export(Uri.fromFile(f), "image/jpeg", EditRecipe(), PxSize(120, 80), removeLocation = true,
-            softwareTag = "PhotoMaid", formatOverride = EditFormat.JPEG, quality = null)
+            softwareTag = "GaleriQ", formatOverride = EditFormat.JPEG, quality = null)
         assertTrue(out.lossless)
         assertFalse(app.editEngine.hasLocation(Uri.fromFile(out.file)))
         assertEquals("2026:09:20 10:11:12", ExifInterface(out.file).getAttribute(ExifInterface.TAG_DATETIME_ORIGINAL))
@@ -343,7 +343,7 @@ class EditorTest {
         waitTag("size.result")
         // 300 × 400: keine der Vorgaben (4096/2048/1080) verkleinert → nur „Originalgröße“ und „Eigene“.
         assertTrue(rule.onAllNodesWithTag("size.1080").fetchSemanticsNodes().isEmpty())
-        rule.onNode(hasText("Dieses Foto ist schon klein. PhotoMaid vergrößert nie.")).assertExists()
+        rule.onNode(hasText("Dieses Foto ist schon klein. GaleriQ vergrößert nie.")).assertExists()
     }
 
     // MARK: Einstieg im Feed + Rückmeldung

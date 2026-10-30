@@ -82,13 +82,13 @@ class WorkflowRunTest {
     @Test fun photosBecomeNewNumberedFilesInChosenFolderAndVideosAreSkipped() {
         start()
         val w = Workflow("w", "Kleinanzeige", WorkflowFormat.JPEG, longEdge = 1080, removeLocation = true, nameBase = "Anzeige",
-            folder = "Pictures/PhotoMaid/", finish = WorkflowFinish.SAVE)
+            folder = "Pictures/GaleriQ/", finish = WorkflowFinish.SAVE)
         val r = runNow(w)
         val photos = r.items.filter { it.asset.kind != MediaKind.VIDEO }
         assertTrue(photos.all { it.status == WorkflowItemResult.Status.DONE })
         assertEquals(listOf("Anzeige_001.jpg", "Anzeige_002.jpg", "Anzeige_003.jpg", "Anzeige_004.jpg").take(photos.size),
             lib.saved.map { it.displayName })
-        assertTrue(lib.saved.all { it.relativePath == "Pictures/PhotoMaid/" && it.mime == "image/jpeg" && !it.replace })
+        assertTrue(lib.saved.all { it.relativePath == "Pictures/GaleriQ/" && it.mime == "image/jpeg" && !it.replace })
         val v = r.items.single { it.asset.kind == MediaKind.VIDEO }
         assertEquals(WorkflowItemResult.Status.SKIPPED, v.status); assertEquals(WorkflowItemResult.Reason.VIDEO_NOT_IN_WORKFLOW, v.reason)
         assertTrue(r.shared.isEmpty())
@@ -200,7 +200,7 @@ class WorkflowRunTest {
 
     @Test fun runScreenPreviewsStepsThenShowsMeasuredResult() {
         start()
-        val w = Workflow("w2", "Familie", WorkflowFormat.JPEG, longEdge = 1080, finish = WorkflowFinish.SAVE, folder = "Pictures/PhotoMaid/")
+        val w = Workflow("w2", "Familie", WorkflowFormat.JPEG, longEdge = 1080, finish = WorkflowFinish.SAVE, folder = "Pictures/GaleriQ/")
         runBlocking { app.workflows.upsert(w) }
         rule.setContent { TestHost(app) { WorkflowRunScreen(WorkflowRunRequest("x", w.id, media().map { it.id }), nav) {} } }
         pumpUntil { count("wf.steps") == 1 && count("wf.counts") == 1 }

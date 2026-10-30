@@ -173,5 +173,5 @@ object EditSaver {
         return ShareCache.stage(app.context, export.file, name)
     }
 
-    const val SOFTWARE = "PhotoMaid"
+    const val SOFTWARE = "GaleriQ"
 }

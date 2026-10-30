@@ -132,12 +132,12 @@ class ToolsTest {
         click("tools.start")
         pumpUntil { lib.saved.size == 1 }
         val st = lib.saved.single()
-        assertEquals("image/png", st.mime); assertEquals("Pictures/PhotoMaid/", st.relativePath)
+        assertEquals("image/png", st.mime); assertEquals("Pictures/GaleriQ/", st.relativePath)
         val o = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
         val out = File(lib.all.last().id.removePrefix("file://"))
         android.graphics.BitmapFactory.decodeFile(out.absolutePath, o)
         assertEquals(300, o.outWidth); assertEquals(1200, o.outHeight) // untereinander, gleiche Breite, nicht verzerrt
-        pumpUntil { has("Pictures/PhotoMaid") }
+        pumpUntil { has("Pictures/GaleriQ") }
 
         rule.onAllNodes(hasText("OK")).fetchSemanticsNodes() // Hinweis offen lassen: neuer Auftrag ersetzt den Bildschirm
         open(ToolKind.GIF, shots.map { it.id })

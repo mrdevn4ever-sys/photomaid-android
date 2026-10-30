@@ -106,8 +106,8 @@ object WorkflowRules {
             val digits = max(3, total.toString().length)
             return base + "_" + (index + 1).toString().padStart(digits, '0')
         }
-        val stem = originalName?.substringBeforeLast('.')?.let(::sanitizeBase) ?: "PhotoMaid"
-        return stem + "_" + (sanitizeBase(suffix) ?: "PhotoMaid")
+        val stem = originalName?.substringBeforeLast('.')?.let(::sanitizeBase) ?: "GaleriQ"
+        return stem + "_" + (sanitizeBase(suffix) ?: "GaleriQ")
     }
 
     /** Gemeinsames Budget für eine Auswahl: Anteile nach Originalgröße; sind Größen unbekannt, gleich verteilt. */

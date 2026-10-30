@@ -147,7 +147,7 @@ fun PdfScreen(req: PdfRequest, nav: Nav, onClose: () -> Unit) {
     val order = remember { mutableStateListOf<String>() }
     var sizes by remember { mutableStateOf<Map<String, SourceSize>>(emptyMap()) }
     var options by remember { mutableStateOf(req.options) }
-    var name by remember { mutableStateOf("PhotoMaid_${LocalDate.now()}") }
+    var name by remember { mutableStateOf("GaleriQ_${LocalDate.now()}") }
     var progress by remember { mutableStateOf<Float?>(null) }
     var message by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(req) {
@@ -176,7 +176,7 @@ fun PdfScreen(req: PdfRequest, nav: Nav, onClose: () -> Unit) {
 
     fun run(share: Boolean) {
         if (needsPro && !pro) { nav.openPro(); return }
-        val file = PdfRules.fileName(name, "PhotoMaid")
+        val file = PdfRules.fileName(name, "GaleriQ")
         progress = 0f
         scope.launch {
             val (r, uri) = buildPdf(app, ordered, options, file, share) { progress = it }

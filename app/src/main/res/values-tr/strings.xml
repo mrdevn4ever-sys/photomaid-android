@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generated PhotoMaid UI translations. See CODE_AENDERUNGEN.json before integration. -->
+<!-- Generated GaleriQ UI translations. See CODE_AENDERUNGEN.json before integration. -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PhotoMaid</string>
+    <string name="app_name">GaleriQ</string>
     <string name="ok">Tamam</string>
     <string name="cancel">İptal</string>
     <string name="done">Bitti</string>
@@ -17,7 +17,7 @@
     <string name="info">Bilgi</string>
     <string name="error_title">Bu işlem olmadı</string>
     <string name="retry">Tekrar dene</string>
-    <string name="store_open_failed">PhotoMaid kayıtlı verilerini açamadı.</string>
+    <string name="store_open_failed">GaleriQ kayıtlı verilerini açamadı.</string>
     <plurals name="items_count">
         <item quantity="one">%1$d öğe</item>
         <item quantity="other">%1$d öğe</item>
@@ -42,12 +42,12 @@
     <string name="tab_cleanup">Temizle</string>
     <string name="tab_history">Geçmiş</string>
     <string name="today_limited_title">Sınırlı erişim</string>
-    <string name="today_limited_text">PhotoMaid yalnızca izin verdiğin fotoğraf ve videoları gösterir. Bunları her zamanki gibi düzenleyebilirsin.</string>
+    <string name="today_limited_text">GaleriQ yalnızca izin verdiğin fotoğraf ve videoları gösterir. Bunları her zamanki gibi düzenleyebilirsin.</string>
     <string name="today_limited_action">Erişimi değiştir</string>
     <string name="today_access_title">Fotoğraf ve video erişimi</string>
     <string name="today_access_denied_title">Fotoğraf ve videolarına erişim yok</string>
-    <string name="today_access_denied">PhotoMaid için Android ayarlarından erişim izni ver. Önceki seçimlerin kayıtlı kalır.</string>
-    <string name="today_access_default">Fotoğraf ve videolarını görüntüleyip düzenlemek için PhotoMaid uygulamasına erişim izni ver.</string>
+    <string name="today_access_denied">GaleriQ için Android ayarlarından erişim izni ver. Önceki seçimlerin kayıtlı kalır.</string>
+    <string name="today_access_default">Fotoğraf ve videolarını görüntüleyip düzenlemek için GaleriQ uygulamasına erişim izni ver.</string>
     <string name="storage_used_of">/ %1$s kullanılıyor</string>
     <string name="today_start_sub">Fotoğraf ve videolarını kaydırarak incele.</string>
     <string name="today_continue_sub">Kaldığın yerden devam et.</string>
@@ -204,20 +204,20 @@
         <item quantity="other">%1$d dosya kalıcı olarak silindi.</item>
     </plurals>
     <plurals name="result_partial">
-        <item quantity="one">Kaldırılan: %1$d / %2$d. Kalanlar PhotoMaid çöp kutusunda durur.</item>
-        <item quantity="other">Kaldırılan: %1$d / %2$d. Kalanlar PhotoMaid çöp kutusunda durur.</item>
+        <item quantity="one">Kaldırılan: %1$d / %2$d. Kalanlar GaleriQ çöp kutusunda durur.</item>
+        <item quantity="other">Kaldırılan: %1$d / %2$d. Kalanlar GaleriQ çöp kutusunda durur.</item>
     </plurals>
     <string name="result_cancelled">İptal edildi. Hiçbir şey kaldırılmadı.</string>
     <string name="result_nothing">Hiçbir şey kaldırılmadı.</string>
     <plurals name="result_allowance">
-        <item quantity="one">Seçilen: %2$d. Bugün %1$d öğe daha kaldırabilirsin. En fazla %1$d seç veya PhotoMaid Pro kullan.</item>
-        <item quantity="other">Seçilen: %2$d. Bugün %1$d öğe daha kaldırabilirsin. En fazla %1$d seç veya PhotoMaid Pro kullan.</item>
+        <item quantity="one">Seçilen: %2$d. Bugün %1$d öğe daha kaldırabilirsin. En fazla %1$d seç veya GaleriQ Pro kullan.</item>
+        <item quantity="other">Seçilen: %2$d. Bugün %1$d öğe daha kaldırabilirsin. En fazla %1$d seç veya GaleriQ Pro kullan.</item>
     </plurals>
     <string name="result_changed">Seçimin değişti. Lütfen yeniden kontrol et.</string>
     <string name="result_reconcile">Sonucu bir sonraki açılışta kontrol edeceğiz. Hiçbir şey yeniden silinmeyecek.</string>
     <string name="item_actions_for">%1$s için işlemler</string>
     <string name="files_none_title">Henüz bağlı klasör yok</string>
-    <string name="files_none_message">Dosyalarını PhotoMaid içinde incelemek için bir klasör seç.</string>
+    <string name="files_none_message">Dosyalarını GaleriQ içinde incelemek için bir klasör seç.</string>
     <string name="files_none_tip">İndirilenler klasörü burada seçilemez. Bunun yerine içindeki bir alt klasörü seç.</string>
     <string name="file_type">Dosya türü</string>
     <string name="kind_all">Tümü</string>
@@ -240,7 +240,7 @@
     <string name="sources_ro">Yalnızca görüntüleme</string>
     <string name="sources_unreachable">Erişilemiyor — yeniden bağla</string>
     <string name="sources_remove">Klasör bağlantısını kes</string>
-    <string name="sources_footer">Klasör bağlantısını kesmek dosyaları silmez. Bu görünümde PhotoMaid uygulamasının hangi klasörlere erişeceğini sen seçersin.</string>
+    <string name="sources_footer">Klasör bağlantısını kesmek dosyaları silmez. Bu görünümde GaleriQ uygulamasının hangi klasörlere erişeceğini sen seçersin.</string>
     <plurals name="large_in_files">
         <item quantity="one">%1$d büyük dosyada</item>
         <item quantity="other">%1$d büyük dosyada</item>
@@ -258,12 +258,12 @@
     <string name="storage_a">Cihazın</string>
     <string name="storage_available">Android verilerine göre %1$s boş</string>
     <string name="storage_unavailable">Depolama bilgisi şu anda alınamıyor</string>
-    <string name="storage_b">PhotoMaid için görünür</string>
+    <string name="storage_b">GaleriQ için görünür</string>
     <string name="storage_of_which_screens">ekran görüntüleri dâhil</string>
     <string name="storage_connected_folders">Bağlı klasörler</string>
     <string name="storage_b_footer">Ekran görüntüleri zaten fotoğraflara dâhildir. Büyük dosyalar ve kopyalar yeniden sayılmaz. Bilinmeyen boyutlar toplama katılmaz; bu durumda “En az” gösterilir.</string>
-    <string name="storage_c">PhotoMaid için görünmez</string>
-    <string name="storage_c_text">PhotoMaid diğer uygulamaları, sistem dosyalarını, bulut içeriğini ve izin verilmeyen klasörleri inceleyemez. Bunlar için boyut gösterilmez.</string>
+    <string name="storage_c">GaleriQ için görünmez</string>
+    <string name="storage_c_text">GaleriQ diğer uygulamaları, sistem dosyalarını, bulut içeriğini ve izin verilmeyen klasörleri inceleyemez. Bunlar için boyut gösterilmez.</string>
     <string name="storage_local">Depolama analizi cihazında kalır.</string>
     <plurals name="storage_value_items">
         <item quantity="one">%1$d öğe · %2$s</item>
@@ -271,11 +271,11 @@
     </plurals>
     <string name="dup_find">Birebir aynı kopyaları bul</string>
     <string name="dup_explain">İçeriği birebir aynı fotoğraf, video ve dosyaları bul. Hangi kopyaların çöp kutusuna gideceğine sen karar verirsin.</string>
-    <string name="dup_how">PhotoMaid dosya içeriklerini cihazında karşılaştırır. Benzer görünen resimler birebir aynı kopya sayılmaz.</string>
+    <string name="dup_how">GaleriQ dosya içeriklerini cihazında karşılaştırır. Benzer görünen resimler birebir aynı kopya sayılmaz.</string>
     <string name="dup_checking">Dosyalar karşılaştırılıyor …</string>
     <string name="dup_start">Kopya ara</string>
     <string name="dup_again">Yeniden ara</string>
-    <string name="pro_view">PhotoMaid Pro’yu incele</string>
+    <string name="pro_view">GaleriQ Pro’yu incele</string>
     <string name="dup_none">Birebir aynı kopya bulunamadı</string>
     <string name="dup_none_message">Erişilebilen alanlarda birebir aynı kopya bulunamadı.</string>
     <plurals name="dup_not_comparable">
@@ -367,7 +367,7 @@
     <string name="h_later">Sonra için saklandı</string>
     <string name="h_later_corr">Değiştirildi: sonra</string>
     <string name="h_changed">Değiştirildi</string>
-    <string name="pro_title">PhotoMaid Pro</string>
+    <string name="pro_title">GaleriQ Pro</string>
     <string name="pro_subtitle">Bir kez satın al. Abonelik yok.</string>
     <string name="pro_f2">Günlük sınır olmadan temizle</string>
     <string name="pro_f2d">Günlük %1$d sınırı olmadan istediğin kadar kaldır.</string>
@@ -375,24 +375,24 @@
     <string name="pro_f3d">Bağlı klasörlerdeki aynı fotoğraf, video ve dosyaları bul.</string>
     <string name="pro_f5">Özel koleksiyonlar</string>
     <string name="pro_f5d">“500 MB’tan büyük videolar” gibi kendi filtrelerini kaydet. Tek dokunuşla eşleşen içerikleri aç.</string>
-    <string name="pro_also">Bir kez satın al, reklamsız temizle. Abonelik ve PhotoMaid hesabı yok.</string>
+    <string name="pro_also">Bir kez satın al, reklamsız temizle. Abonelik ve GaleriQ hesabı yok.</string>
     <string name="pro_f1">Reklamsız</string>
     <string name="pro_f1d">Fotoğraf ve videoların arasında reklam kartı yok.</string>
     <string name="pro_details">Pro nasıl çalışır?</string>
-    <string name="pro_details_dup">Kopyalar en ince ayrıntısına kadar aynı olan dosyalardır. PhotoMaid bunları bulutta değil cihazında karşılaştırır. Yalnızca benzeyen görseller kopya sayılmaz.</string>
+    <string name="pro_details_dup">Kopyalar en ince ayrıntısına kadar aynı olan dosyalardır. GaleriQ bunları bulutta değil cihazında karşılaştırır. Yalnızca benzeyen görseller kopya sayılmaz.</string>
     <string name="pro_details_rules">Koleksiyonlar cihazındaki eşleşen içerikleri gösterir. Bunları kendin açıp incelersin. Otomatik silmez veya arka planda temizlik yapmazlar.</string>
     <string name="pro_details_cleanup">Günlük sınıra yalnızca çöp kutusundan gerçekten kaldırdıkların sayılır. Kaydırmak asla sayılmaz.</string>
     <string name="expanded">Genişletildi</string>
     <string name="collapsed">Daraltıldı</string>
     <string name="pro_privacy">Fotoğrafların ve dosyaların yalnızca cihazında incelenir ve sıralanır. Satın almalar ve reklamlar için Google’a veya reklamcılara yalnızca gerekenler gider – asla fotoğrafların, adları veya onlardan elde edilen bilgiler değil.</string>
     <string name="pro_pending">Satın alman onay bekliyor.</string>
-    <string name="pro_unlock">PhotoMaid Pro’yu aç</string>
+    <string name="pro_unlock">GaleriQ Pro’yu aç</string>
     <string name="pro_price_once">%1$s · Tek seferlik satın alma</string>
     <string name="pro_price_loading">Fiyat yükleniyor …</string>
     <string name="pro_unavailable">Bu sürümde satın alma henüz kullanılamıyor.</string>
     <string name="pro_restore">Satın alımları geri yükle</string>
     <string name="pro_revoked">Önceki bir satın alma iade edildi veya geri alındı.</string>
-    <string name="pro_msg_active">PhotoMaid Pro artık etkin.</string>
+    <string name="pro_msg_active">GaleriQ Pro artık etkin.</string>
     <string name="pro_msg_pending">Satın alman onay bekliyor. Onaylanınca Pro açılır.</string>
     <string name="pro_msg_failed">Satın alma tamamlanamadı.</string>
     <string name="pro_msg_restored">Satın alman geri yüklendi.</string>
@@ -430,13 +430,13 @@
     <string name="help_decide">Karar verme</string>
     <string name="help_decide_text">Saklamak için yukarı, çöp kutusu için sola, sonra için sağa kaydır. Varsayılan olarak öğe 2 gün sonra geri gelir. Bu süreyi ayarlardan değiştirebilirsin. Kaydırdıktan hemen sonra “Değiştir” ile başka bir tarih seç. Yeni karar vermeden geri dönmek için aşağı kaydır.</string>
     <string name="help_delete">Silme</string>
-    <string name="help_delete_text">Kaydırmak hiçbir zaman bir şey silmez. Ayırdığın şeyler önce PhotoMaid çöp kutusuna gider. Ancak onu boşalttığında gerçekten silinir – fotoğraflar ve videolar, Android bir kez daha sorduktan sonra Android çöp kutusuna taşınır. Bağlı klasörlerdeki dosyalar kalıcı olarak silinir.</string>
+    <string name="help_delete_text">Kaydırmak hiçbir zaman bir şey silmez. Ayırdığın şeyler önce GaleriQ çöp kutusuna gider. Ancak onu boşalttığında gerçekten silinir – fotoğraflar ve videolar, Android bir kez daha sorduktan sonra Android çöp kutusuna taşınır. Bağlı klasörlerdeki dosyalar kalıcı olarak silinir.</string>
     <string name="help_cloud">Bulut</string>
-    <string name="help_cloud_text">Google Fotoğraflar gibi bulut hizmetleri silme işlemlerini diğer cihazlarla eşitleyebilir. Ayarlarını kontrol et. PhotoMaid yalnızca bulutta bulunan içerikleri indirmez.</string>
+    <string name="help_cloud_text">Google Fotoğraflar gibi bulut hizmetleri silme işlemlerini diğer cihazlarla eşitleyebilir. Ayarlarını kontrol et. GaleriQ yalnızca bulutta bulunan içerikleri indirmez.</string>
     <string name="help_free">Ücretsiz</string>
     <string name="help_free_text">Görüntüleme, kaydırma ve sonra için saklama sınırsızdır. Pro olmadan günde en fazla %1$d öğe kaldırabilirsin.</string>
     <string name="privacy_title">Önce gizliliğin</string>
-    <string name="privacy_text">PhotoMaid fotoğraflarına, videolarına ve izin verdiğin dosyalara yalnızca cihazında bakar. Hesap gerekmez ve PhotoMaid sunucusu yoktur. Bilmekte fayda var: Google Fotoğraflar gibi bulut hizmetlerinde sildiklerin diğer cihazlarından da kaybolabilir.</string>
+    <string name="privacy_text">GaleriQ fotoğraflarına, videolarına ve izin verdiğin dosyalara yalnızca cihazında bakar. Hesap gerekmez ve GaleriQ sunucusu yoktur. Bilmekte fayda var: Google Fotoğraflar gibi bulut hizmetlerinde sildiklerin diğer cihazlarından da kaybolabilir.</string>
     <string name="privacy_media">Fotoğraf ve videolar</string>
     <string name="privacy_media_text">Fotoğraf ve videoları görüntülemek, düzenlemek ve onayından sonra kaldırmak için.</string>
     <string name="privacy_allow">Erişime izin ver</string>
@@ -487,7 +487,7 @@
     <string name="basket_preview_note">Görüntülemek seçimini değiştirmez.</string>
     <string name="limit_title_partial">Bugün %1$d kaldı</string>
     <string name="limit_title_none">Günlük sınıra ulaşıldı</string>
-    <string name="limit_message">Seçilen: %2$d. Pro olmadan günde en fazla %1$d kaldırabilirsin. Diğerleri PhotoMaid çöp kutusunda kalır.</string>
+    <string name="limit_message">Seçilen: %2$d. Pro olmadan günde en fazla %1$d kaldırabilirsin. Diğerleri GaleriQ çöp kutusunda kalır.</string>
     <string name="limit_tomorrow">Günlük hakkın yarın yenilenir.</string>
     <string name="limit_take_partial">Bunlardan %1$d öğeyi kaldır</string>
     <string name="reward_title">Pro araçlarını 30 dakika dene</string>
@@ -560,14 +560,14 @@
     <string name="limit_all_with_pro">Pro ile hepsini kaldır (%1$d)</string>
     <string name="summary_upsell">Pro ile günlük sınır ve reklam yok.</string>
     <string name="summary_offer_title">Biraz daha düzenli</string>
-    <string name="summary_offer_text">PhotoMaid Pro ile günlük sınır ve reklam olmadan temizle. Bir kez satın al, abonelik yok.</string>
+    <string name="summary_offer_text">GaleriQ Pro ile günlük sınır ve reklam olmadan temizle. Bir kez satın al, abonelik yok.</string>
     <string name="limit_soon">Bugün %2$d haktan %1$d kaldı</string>
     <string name="limit_soon_pro">Pro ile sınırsız</string>
     <string name="limit_bonus">Reklam izle: bugün %1$d daha kaldır</string>
     <string name="limit_bonus_note">Günde bir kez. Bonus yalnızca bugün geçerlidir.</string>
     <string name="limit_bonus_dismissed">Reklam erken kapatıldı. Hiçbir şey açılmadı. Bugün yeniden deneyebilirsin.</string>
     <string name="limit_bonus_unavailable">Şu anda kullanılabilir reklam yok. Hiçbir şey açılmadı.</string>
-    <string name="today_pro_title">PhotoMaid Pro</string>
+    <string name="today_pro_title">GaleriQ Pro</string>
     <string name="today_pro_text">Günlük sınır yok, reklam yok. Tek seferlik satın alma.</string>
     <plurals name="summary_upsell_count">
         <item quantity="one">Kaldırmak için ayrılan: %1$d.</item>
@@ -582,8 +582,8 @@
     <string name="onb_try_done">İşte bu kadar. Şimdi sıra fotoğraflarında.</string>
     <string name="onb_demo_desc">Alıştırma kartları. Burada hiçbir şey kaydedilmez.</string>
     <string name="onb_safe_title">Neyin silineceğine sen karar ver</string>
-    <string name="onb_safe_text">Öğeler önce PhotoMaid çöp kutusuna gider. Kaldırmayı orada onaylarsın. Fotoğraf ve videolar için Android ayrıca onay ister.</string>
-    <string name="onb_safe_local">Fotoğrafların cihazında kalır. PhotoMaid hesabı ve fotoğraf yüklemesi yok.</string>
+    <string name="onb_safe_text">Öğeler önce GaleriQ çöp kutusuna gider. Kaldırmayı orada onaylarsın. Fotoğraf ve videolar için Android ayrıca onay ister.</string>
+    <string name="onb_safe_local">Fotoğrafların cihazında kalır. GaleriQ hesabı ve fotoğraf yüklemesi yok.</string>
     <string name="onb_safe_sheet">Kaldır</string>
     <string name="onb_safe_dialog">Android onay ister</string>
     <string name="onb_offer_title">Ücretsiz başla</string>
@@ -592,7 +592,7 @@
     <string name="onb_buy">Pro satın al · tek seferlik %1$s</string>
     <string name="onb_buy_noprice">Pro’yu bir kez satın al</string>
     <string name="onb_access_title">Fotoğraf ve video erişimi</string>
-    <string name="onb_access_text">PhotoMaid, düzenleyebilmen için fotoğraf ve videolarını cihazında gösterir. PhotoMaid hesabı veya sunucusu yok.</string>
+    <string name="onb_access_text">GaleriQ, düzenleyebilmen için fotoğraf ve videolarını cihazında gösterir. GaleriQ hesabı veya sunucusu yok.</string>
     <string name="onb_progress">Adım %1$d / %2$d</string>
     <string name="offer_free_title">Ücretsiz kullan</string>
     <string name="offer_free_text">İstediğin kadar kaydır ve düzenle, süre sınırı olmadan.</string>
@@ -642,7 +642,7 @@
         <item quantity="other">%1$d öğenin boyutu bilinmiyor. Toplama katılmadı.</item>
     </plurals>
     <string name="done_button">Bitti</string>
-    <string name="done_partial">Kaldırılmayan öğeler PhotoMaid çöp kutusunda kalır.</string>
+    <string name="done_partial">Kaldırılmayan öğeler GaleriQ çöp kutusunda kalır.</string>
     <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
     <string name="basket_confirm_files_trash_title">Depolama konumunun çöp kutusuna taşınsın mı?</string>
     <string name="basket_confirm_files_trash_message">Dosyalar depolama konumlarının çöp kutusuna gider ve oradan geri yüklenebilir. Alan ancak orada silindiklerinde boşalır.</string>
@@ -698,7 +698,7 @@
     <string name="series_button">%1$d fotoğraflık seriyi karşılaştır</string>
     <string name="series_confirm">%1$d sakla · %2$d çöp kutusuna</string>
     <string name="series_done">%1$d saklandı · %2$d çöp kutusunda</string>
-    <string name="series_footer">Hiçbir şey silinmez. Çöp kutusu PhotoMaid’e aittir ve yalnızca onayladığında boşalır.</string>
+    <string name="series_footer">Hiçbir şey silinmez. Çöp kutusu GaleriQ’e aittir ve yalnızca onayladığında boşalır.</string>
     <string name="series_hint">Aşağıda karşılaştırmak için bir fotoğrafa dokun. Onay işareti neyin kalacağını belirler.</string>
     <string name="series_keep_toggle">Sakla</string>
     <string name="series_state_keep">Sakla</string>
@@ -805,7 +805,7 @@
     <string name="edit_ratio_locked">En-boy oranı kilitli</string>
     <string name="edit_ratio_free">En-boy oranı serbest</string>
     <string name="edit_size_result">%1$d × %2$d → %3$d × %4$d px</string>
-    <string name="edit_size_small">Bu fotoğraf zaten küçük. PhotoMaid asla büyütmez.</string>
+    <string name="edit_size_small">Bu fotoğraf zaten küçük. GaleriQ asla büyütmez.</string>
     <string name="edit_pro_hint">Önizleme ücretsiz · kaydetmek için Pro veya 30 dakikalık deneme</string>
     <string name="edit_pro_more">Daha fazla</string>
     <string name="edit_pro_title">Pro ile kaydet</string>
@@ -846,7 +846,7 @@
     <string name="redo">Yinele</string>
     <string name="edits_title">Düzenlenenler</string>
     <string name="hub_edits_sub">Kopyalar ve değiştirilen orijinaller</string>
-    <string name="edits_intro">PhotoMaid düzenleyicisinde kaydettiğin her şey, en yeniler önce. Yalnızca bu cihazda saklanır.</string>
+    <string name="edits_intro">GaleriQ düzenleyicisinde kaydettiğin her şey, en yeniler önce. Yalnızca bu cihazda saklanır.</string>
     <string name="edits_empty_title">Henüz düzenleme yok</string>
     <string name="edits_empty_text">İnceleme sırasında bir fotoğraf veya videonun altındaki kaleme dokunarak kırpabilir, ayarlayabilir veya kısaltabilirsin.</string>
     <string name="edits_badge_copy">Kopya</string>
@@ -1038,7 +1038,7 @@
     <string name="col_png_hint">PNG: kayıpsız ve keskin, ama dosya daha büyük.</string>
     <string name="col_pro_text">Bu kolaj Pro özelliklerini kullanıyor (4’ten fazla fotoğraf, serbest düzen veya A4 baskı). Kaydetmek için Pro’yu ya da ücretsiz 30 dakikalık denemeyi aç.</string>
     <string name="col_save_action">Galeriye kaydet</string>
-    <string name="col_save_where">„Pictures/PhotoMaid” içine yeni bir görsel olarak kaydedilir. Fotoğrafların değişmez.</string>
+    <string name="col_save_where">„Pictures/GaleriQ” içine yeni bir görsel olarak kaydedilir. Fotoğrafların değişmez.</string>
     <plurals name="picker_next">
         <item quantity="one">%1$d ile devam</item>
         <item quantity="other">%1$d ile devam</item>
@@ -1127,7 +1127,7 @@
     <string name="vid_audio_export">Yalnızca sesi kaydet</string>
     <string name="vid_audio_suffix">ses</string>
     <string name="vid_audio_running">Ses kaydediliyor</string>
-    <string name="vid_audio_saved">„%1$s” Music/PhotoMaid içine kaydedildi.</string>
+    <string name="vid_audio_saved">„%1$s” Music/GaleriQ içine kaydedildi.</string>
     <string name="vid_audio_failed">Ses kaydedilemedi.</string>
     <string name="vid_fill">Doldur</string>
     <string name="vid_fit">Videonun tamamını göster</string>
@@ -1157,10 +1157,10 @@
     <string name="lib_level_finer">Daha büyük kutucuklar</string>
     <string name="lib_level_coarser">Daha küçük kutucuklar</string>
     <string name="lib_trash_action">Çöp kutusuna taşı</string>
-    <string name="lib_trash_text">PhotoMaid çöp kutusuna – hiçbir şey silinmez. Sonra orada karar verirsin.</string>
-    <string name="lib_trash_text_fav">PhotoMaid çöp kutusuna – hiçbir şey silinmez. Favoriler kalır („Favorileri koru” açık).</string>
+    <string name="lib_trash_text">GaleriQ çöp kutusuna – hiçbir şey silinmez. Sonra orada karar verirsin.</string>
+    <string name="lib_trash_text_fav">GaleriQ çöp kutusuna – hiçbir şey silinmez. Favoriler kalır („Favorileri koru” açık).</string>
     <string name="lib_trash_fav_protected">Bu bir favori. „Favorileri koru” açık olduğu için çöp kutusuna gitmez. Bunu ayarlardan değiştirebilirsin.</string>
-    <string name="lib_trashed_one">PhotoMaid çöp kutusunda</string>
+    <string name="lib_trashed_one">GaleriQ çöp kutusunda</string>
     <string name="lib_review_from_here">Buradan itibaren temizle</string>
     <string name="lib_feed_title">Kitaplıktan</string>
     <string name="lib_info_name">Ad</string>
@@ -1176,8 +1176,8 @@
         <item quantity="other">%1$d öğe çöp kutusuna taşınsın mı?</item>
     </plurals>
     <plurals name="lib_trashed">
-        <item quantity="one">%1$d öğe PhotoMaid çöp kutusunda.</item>
-        <item quantity="other">%1$d öğe PhotoMaid çöp kutusunda.</item>
+        <item quantity="one">%1$d öğe GaleriQ çöp kutusunda.</item>
+        <item quantity="other">%1$d öğe GaleriQ çöp kutusunda.</item>
     </plurals>
     <string name="lib_mode_timeline">Zaman çizelgesi</string>
     <string name="lib_mode_folders">Klasörler</string>
@@ -1218,16 +1218,16 @@
     <string name="lib_sort_name">Ad</string>
     <string name="lib_sort_largest">Önce en büyük</string>
     <string name="lib_sort_default">Tüm klasörlerde kullan</string>
-    <string name="lib_hide">PhotoMaid’de gizle</string>
-    <string name="lib_hide_text">PhotoMaid bunları artık göstermez – ne Fotoğraflar’da ne de temizlikte. Dosyalar değişmez ve diğer uygulamalarda görünür kalır. Bu bir kasa değildir.</string>
-    <string name="lib_hide_folder_title">“%1$s” PhotoMaid’de gizlensin mi?</string>
+    <string name="lib_hide">GaleriQ’de gizle</string>
+    <string name="lib_hide_text">GaleriQ bunları artık göstermez – ne Fotoğraflar’da ne de temizlikte. Dosyalar değişmez ve diğer uygulamalarda görünür kalır. Bu bir kasa değildir.</string>
+    <string name="lib_hide_folder_title">“%1$s” GaleriQ’de gizlensin mi?</string>
     <string name="lib_hide_folder_text">Klasör ve alt klasörleri artık Fotoğraflar’da ve temizlikte görünmez. Hiçbir şey taşınmaz veya silinmez; diğer uygulamalar göstermeye devam eder. Klasörler › Gizli bölümünden yeniden göster.</string>
     <string name="lib_hidden_title">Gizli</string>
-    <string name="lib_hidden_row">PhotoMaid’in göstermediği klasörler ve medya</string>
-    <string name="lib_hidden_intro">PhotoMaid bunları hiçbir yerde göstermez. Dosyalar değişmedi, diğer uygulamalar göstermeye devam eder.</string>
+    <string name="lib_hidden_row">GaleriQ’in göstermediği klasörler ve medya</string>
+    <string name="lib_hidden_intro">GaleriQ bunları hiçbir yerde göstermez. Dosyalar değişmedi, diğer uygulamalar göstermeye devam eder.</string>
     <string name="lib_hidden_none_title">Gizlenen bir şey yok</string>
-    <string name="lib_hidden_none_text">Bir klasör, fotoğraf veya seçimde “PhotoMaid’de gizle”yi kullan.</string>
-    <string name="lib_hidden_one">PhotoMaid’de gizlendi</string>
+    <string name="lib_hidden_none_text">Bir klasör, fotoğraf veya seçimde “GaleriQ’de gizle”yi kullan.</string>
+    <string name="lib_hidden_one">GaleriQ’de gizlendi</string>
     <string name="lib_unhide">Yeniden göster</string>
     <string name="lib_info_camera">Kamera</string>
     <plurals name="lib_subfolders">
@@ -1239,12 +1239,12 @@
         <item quantity="other">%1$d klasör</item>
     </plurals>
     <plurals name="lib_hide_title">
-        <item quantity="one">%1$d öğe PhotoMaid’de gizlensin mi?</item>
-        <item quantity="other">%1$d öğe PhotoMaid’de gizlensin mi?</item>
+        <item quantity="one">%1$d öğe GaleriQ’de gizlensin mi?</item>
+        <item quantity="other">%1$d öğe GaleriQ’de gizlensin mi?</item>
     </plurals>
     <plurals name="lib_hidden_done">
-        <item quantity="one">%1$d öğe PhotoMaid’de gizlendi</item>
-        <item quantity="other">%1$d öğe PhotoMaid’de gizlendi</item>
+        <item quantity="one">%1$d öğe GaleriQ’de gizlendi</item>
+        <item quantity="other">%1$d öğe GaleriQ’de gizlendi</item>
     </plurals>
     <plurals name="lib_unhidden">
         <item quantity="one">%1$d öğe yeniden gösteriliyor</item>
@@ -1284,7 +1284,7 @@
     <string name="done_note_media_deleted">Fotoğraflar ve videolar kalıcı olarak silindi; Android çöp kutusunda değiller.</string>
     <string name="systrash_open">Android çöp kutusunu aç</string>
     <string name="systrash_title">Android çöp kutusu</string>
-    <string name="systrash_intro">Android’in çöp kutusunda tuttuğu her şey – PhotoMaid’den ve diğer uygulamalardan. Süre dolunca Android kendisi siler.</string>
+    <string name="systrash_intro">Android’in çöp kutusunda tuttuğu her şey – GaleriQ’den ve diğer uygulamalardan. Süre dolunca Android kendisi siler.</string>
     <string name="systrash_empty_title">Android çöp kutusu boş</string>
     <string name="systrash_empty_text">Kaldırdığın fotoğraf ve videolar bir süre burada görünür ve geri yüklenebilir.</string>
     <string name="systrash_partial">%2$d öğeden %1$d tamamlandı. Kalanlar olduğu gibi kaldı.</string>
@@ -1293,7 +1293,7 @@
     <string name="set_delete_permanently">Kalıcı olarak sil</string>
     <string name="set_delete_permanently_detail">Kapalı: Boşaltınca her şey önce Android çöp kutusuna gider ve bir süre geri alınabilir. Açık: Her şey hemen kalıcı olarak silinir.</string>
     <string name="set_delete_permanently_confirm_title">Kalıcı silme açılsın mı?</string>
-    <string name="set_delete_permanently_confirm_text">Bundan sonra PhotoMaid çöp kutusunu boşaltmak fotoğraf ve videoları kalıcı olarak siler. Android çöp kutusuna gitmezler ve geri yüklenemezler – henüz eşitlenmemiş yedeklerden de. Android yine her seferinde sorar.</string>
+    <string name="set_delete_permanently_confirm_text">Bundan sonra GaleriQ çöp kutusunu boşaltmak fotoğraf ve videoları kalıcı olarak siler. Android çöp kutusuna gitmezler ve geri yüklenemezler – henüz eşitlenmemiş yedeklerden de. Android yine her seferinde sorar.</string>
     <string name="set_delete_permanently_confirm_action">Aç</string>
     <plurals name="result_media_deleted">
         <item quantity="one">%1$d öğe kalıcı olarak silindi.</item>
@@ -1352,10 +1352,10 @@
     <string name="movie_music_volume">Müzik sesi</string>
     <string name="movie_music_fade">Müziği yavaşça aç ve kapat</string>
     <string name="movie_original_off">Orijinal sesi kaldır</string>
-    <string name="movie_music_note">Kendi dosyan, baştan çalar ve gerekirse tekrarlanır. PhotoMaid müzik içermez. Paylaşırken haklara dikkat et.</string>
+    <string name="movie_music_note">Kendi dosyan, baştan çalar ve gerekirse tekrarlanır. GaleriQ müzik içermez. Paylaşırken haklara dikkat et.</string>
     <string name="movie_running">Video oluşturuluyor…</string>
     <string name="movie_running_slideshow">Slayt gösterisi oluşturuluyor…</string>
-    <string name="movie_saved">Movies/PhotoMaid içine yeni video olarak kaydedildi. Orijinaller değişmedi.</string>
+    <string name="movie_saved">Movies/GaleriQ içine yeni video olarak kaydedildi. Orijinaller değişmedi.</string>
     <string name="movie_failed">Video oluşturulamadı. Hiçbir şey kaydedilmedi, orijinaller değişmedi.</string>
     <string name="movie_too_few">En az iki klip ekle.</string>
     <string name="movie_too_many">Video başına en fazla 50 klip.</string>
@@ -1376,8 +1376,8 @@
     <string name="tools_pick">Fotoğraf seç</string>
     <string name="tools_pick_gif">Fotoğraf ya da bir video seç</string>
     <string name="tools_running">Dosyalar işleniyor…</string>
-    <string name="tools_stitch_saved">Pictures/PhotoMaid içine yeni görsel olarak kaydedildi.</string>
-    <string name="tools_gif_saved">GIF, Pictures/PhotoMaid içine kaydedildi (%1$s).</string>
+    <string name="tools_stitch_saved">Pictures/GaleriQ içine yeni görsel olarak kaydedildi.</string>
+    <string name="tools_gif_saved">GIF, Pictures/GaleriQ içine kaydedildi (%1$s).</string>
     <string name="tools_failed">Olmadı. Orijinallerin değişmedi.</string>
     <string name="tools_pro_save">Pro ile oluştur</string>
     <string name="tools_start">Başlat</string>
@@ -1432,8 +1432,8 @@
     <string name="dock_more">Diğer</string>
     <string name="vid_trim_hint_short">Başlangıcı ve bitişi belirlemek için tutamaçları sürükle.</string>
     <string name="vid_export_info">Nasıl kaydedilir</string>
-    <string name="vid_export_info_fast">Yalnızca başı ve sonu kestin. Bu hızlıdır ve görüntü kalitesi orijinaldeki gibi kalır. Bu video buna izin vermezse PhotoMaid onu baştan oluşturur – biraz daha uzun sürer. Toplam süre %1$s.</string>
-    <string name="vid_export_info_reencode">Diğer değişikliklerin nedeniyle PhotoMaid kaydederken videonun tamamını yeniden oluşturur. Bu biraz sürebilir. Toplam süre %1$s.</string>
+    <string name="vid_export_info_fast">Yalnızca başı ve sonu kestin. Bu hızlıdır ve görüntü kalitesi orijinaldeki gibi kalır. Bu video buna izin vermezse GaleriQ onu baştan oluşturur – biraz daha uzun sürer. Toplam süre %1$s.</string>
+    <string name="vid_export_info_reencode">Diğer değişikliklerin nedeniyle GaleriQ kaydederken videonun tamamını yeniden oluşturur. Bu biraz sürebilir. Toplam süre %1$s.</string>
     <string name="lib_mode_albums">Albümler</string>
     <string name="org_new_album">Yeni albüm</string>
     <string name="org_album_name">Albüm adı</string>
@@ -1447,13 +1447,13 @@
     <string name="org_already_in_album">Hepsi zaten “%1$s” içinde.</string>
     <string name="org_albums_empty_title">Henüz albüm yok</string>
     <string name="org_albums_empty_text">Albüm, her klasörden fotoğraf ve videoları kopyalamadan veya taşımadan bir araya getirir. Bir fotoğraf birden fazla albümde olabilir.</string>
-    <string name="org_albums_footer">Albümler yalnızca PhotoMaid’de vardır. Klasörler dosyanın nerede olduğunu gösterir; koleksiyonlar medyayı bir koşula göre bulur.</string>
+    <string name="org_albums_footer">Albümler yalnızca GaleriQ’de vardır. Klasörler dosyanın nerede olduğunu gösterir; koleksiyonlar medyayı bir koşula göre bulur.</string>
     <string name="org_album_empty">Bu albüm boş. “Fotoğraflar”da medya seç ve ⋯ › Albüme ekle’ye dokun.</string>
     <string name="org_missing_remove">Listeden çıkar</string>
     <string name="org_tags">Etiketler</string>
     <string name="org_tag_new_hint">Yeni etiket</string>
     <string name="org_tag_add">Ekle</string>
-    <string name="org_tags_none">Henüz etiket yok. “Fatura” veya “Tatil” gibi kendi kelimelerini ekle – PhotoMaid yalnızca senin girdiklerini bilir.</string>
+    <string name="org_tags_none">Henüz etiket yok. “Fatura” veya “Tatil” gibi kendi kelimelerini ekle – GaleriQ yalnızca senin girdiklerini bilir.</string>
     <string name="org_tag_remove">Etiketi kaldır</string>
     <string name="org_tag_delete">Her yerden kaldır</string>
     <string name="org_tag_delete_title">“%1$s” etiketi her yerden kaldırılsın mı?</string>
@@ -1461,7 +1461,7 @@
     <string name="org_tag_state_all">hepsinde</string>
     <string name="org_tag_state_some">bazılarında</string>
     <string name="org_note">Not</string>
-    <string name="org_note_hint">Not (yalnızca PhotoMaid’de, dosya değişmez)</string>
+    <string name="org_note_hint">Not (yalnızca GaleriQ’de, dosya değişmez)</string>
     <string name="org_note_save">Notu kaydet</string>
     <string name="org_basket">Seçim sepeti</string>
     <string name="org_basket_add">Seçim sepetine ekle</string>
@@ -1518,7 +1518,7 @@
     <string name="wf_target">Fotoğraf başına en fazla</string>
     <string name="wf_off">Yok</string>
     <string name="wf_min_edge">Asla daha küçük değil (en uzun kenar)</string>
-    <string name="wf_target_note">PhotoMaid sonucu ölçer. Hedefe bu sınırlar içinde ulaşılamazsa dosya oluşturulmaz ve nedenini görürsün.</string>
+    <string name="wf_target_note">GaleriQ sonucu ölçer. Hedefe bu sınırlar içinde ulaşılamazsa dosya oluşturulmaz ve nedenini görürsün.</string>
     <string name="wf_videos">Videolar</string>
     <string name="wf_video_skip">Atla</string>
     <string name="wf_video_note">Videolar hedef boyuta uyacak şekilde yeniden kaydedilir. Görüntü yalnızca gerekirse küçülür.</string>
@@ -1527,7 +1527,7 @@
     <string name="wf_name_base_hint">örn. İlan → İlan_001 (boş = orijinal ad)</string>
     <string name="wf_folder">Klasör</string>
     <string name="wf_folder_same">Orijinalle aynı</string>
-    <string name="wf_folder_photomaid">PhotoMaid klasörü</string>
+    <string name="wf_folder_photomaid">GaleriQ klasörü</string>
     <string name="wf_finish">Sonunda</string>
     <string name="wf_finish_save">Kaydet</string>
     <string name="wf_finish_share">Yalnızca paylaş</string>
@@ -1566,10 +1566,10 @@
     <string name="wf_share_again">Tekrar paylaş</string>
     <string name="wf_counts">%1$s fotoğraf · %2$s video</string>
     <string name="wf_start">Başlat</string>
-    <string name="share_target_label">PhotoMaid’e gönder</string>
+    <string name="share_target_label">GaleriQ’e gönder</string>
     <string name="share_title">Alındı</string>
     <string name="share_none">Paylaşılan dosyaların hiçbiri bu cihazın fotoğraf arşivinde değil.</string>
-    <string name="share_no_access">PhotoMaid henüz fotoğraflarına erişemiyor. Ayarlarda erişime izin verip yeniden gönder.</string>
+    <string name="share_no_access">GaleriQ henüz fotoğraflarına erişemiyor. Ayarlarda erişime izin verip yeniden gönder.</string>
     <string name="share_never">Hiçbir şey silinmez veya karara bağlanmaz. Yeni dosya yalnızca kaydettiğinde oluşur.</string>
     <string name="share_workflow">İş akışı uygula</string>
     <string name="share_edit">Düzenle</string>
@@ -1600,7 +1600,7 @@
     <string name="pdf_from_selection">PDF oluştur</string>
     <string name="pdf_no_photos">Bu seçimde fotoğraf yok. Videolar PDF’e eklenemez.</string>
     <string name="pdf_no_date">Tarih yok</string>
-    <string name="pdf_saved">“Documents/PhotoMaid” klasörüne kaydedildi · %1$s</string>
+    <string name="pdf_saved">“Documents/GaleriQ” klasörüne kaydedildi · %1$s</string>
     <string name="pdf_failed">PDF kaydedilemedi.</string>
     <string name="pdf_page_of">Sayfa %1$d / %2$d</string>
     <string name="pdf_capped">PDF başına en fazla %1$d fotoğraf – ilk %1$d tanesi alındı.</string>
@@ -1654,5 +1654,5 @@
     <string name="tour_history_title">Sonra ve geçmiş</string>
     <string name="tour_history_text">Neyi tuttuğunu, ayırdığını veya sonraya bıraktığını burada görürsün. Her kararı burada değiştirebilirsin.</string>
     <string name="tour_settings_title">Ayarlar ve yardım</string>
-    <string name="tour_settings_text">PhotoMaid’i zevkine göre ayarla ve yanıtları bul. Bu turu istediğin zaman tekrarlayabilirsin.</string>
+    <string name="tour_settings_text">GaleriQ’i zevkine göre ayarla ve yanıtları bul. Bu turu istediğin zaman tekrarlayabilirsin.</string>
 </resources>

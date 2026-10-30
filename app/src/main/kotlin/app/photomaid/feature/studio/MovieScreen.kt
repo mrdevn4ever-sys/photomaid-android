@@ -231,7 +231,7 @@ fun MovieScreen(req: MovieRequest, nav: Nav, onClose: () -> Unit) {
             try {
                 val stamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"))
                 val r = app.photos.saveEdited(EditSaveRequest(sourceId = "", file = file, mime = "video/mp4",
-                    displayName = "PhotoMaid_${if (req.slideshow) "Diashow" else "Film"}_$stamp.mp4", relativePath = "Movies/PhotoMaid/",
+                    displayName = "GaleriQ_${if (req.slideshow) "Diashow" else "Film"}_$stamp.mp4", relativePath = "Movies/GaleriQ/",
                     dateTakenMs = System.currentTimeMillis(), video = true, replace = false, favorite = false, replaceName = null))
                 val saved = r as? EditSaveResult.Saved ?: throw IllegalStateException("save")
                 runCatching { app.decide(ItemReference.photo(saved.newId), DecisionAction.Keep) }

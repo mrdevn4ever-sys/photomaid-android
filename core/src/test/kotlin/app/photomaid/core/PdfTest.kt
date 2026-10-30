@@ -76,8 +76,8 @@ class PdfTest {
         assertTrue(PdfRules.needsPro(PdfOptions(perPage = PerPage.FOUR), 2))
         assertTrue(PdfRules.needsPro(PdfOptions(), PdfRules.FREE_MAX + 1))
         assertFalse(PdfRules.needsPro(PdfOptions(perPage = PerPage.TWO), PdfRules.FREE_MAX))
-        assertEquals("Rechnung 2026.pdf", PdfRules.fileName(" Rechnung/ 2026 ", "PhotoMaid"))
-        assertEquals("PhotoMaid.pdf", PdfRules.fileName("..", "PhotoMaid"))
+        assertEquals("Rechnung 2026.pdf", PdfRules.fileName(" Rechnung/ 2026 ", "GaleriQ"))
+        assertEquals("GaleriQ.pdf", PdfRules.fileName("..", "GaleriQ"))
         assertEquals("a.pdf", PdfRules.fileName("a.PDF".lowercase(), "x"))
     }
 

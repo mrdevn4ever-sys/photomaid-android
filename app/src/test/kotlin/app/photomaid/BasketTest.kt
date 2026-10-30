@@ -83,7 +83,7 @@ class BasketTest {
         waitText("4 Fotos und Videos entfernen")
         rule.onNodeWithText("4 Fotos und Videos entfernen").performClick()
         waitText("Heute noch 2 frei")
-        rule.onNodeWithText("Ausgewählt: 4. Ohne Pro kannst du pro Tag bis zu 20 entfernen. Alles Weitere bleibt im PhotoMaid-Papierkorb.").assertExists()
+        rule.onNodeWithText("Ausgewählt: 4. Ohne Pro kannst du pro Tag bis zu 20 entfernen. Alles Weitere bleibt im GaleriQ-Papierkorb.").assertExists()
         assertTrue(rule.onAllNodes(hasText("über Android entfernen", substring = true)).fetchSemanticsNodes().isEmpty())
         rule.onNodeWithText("2 davon entfernen").performClick()
         waitText("2 entfernen")

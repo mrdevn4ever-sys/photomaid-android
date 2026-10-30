@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generated PhotoMaid UI translations. See CODE_AENDERUNGEN.json before integration. -->
+<!-- Generated GaleriQ UI translations. See CODE_AENDERUNGEN.json before integration. -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PhotoMaid</string>
+    <string name="app_name">GaleriQ</string>
     <string name="ok">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="done">Listo</string>
@@ -17,7 +17,7 @@
     <string name="info">Información</string>
     <string name="error_title">No ha funcionado</string>
     <string name="retry">Reintentar</string>
-    <string name="store_open_failed">PhotoMaid no ha podido abrir sus datos guardados.</string>
+    <string name="store_open_failed">GaleriQ no ha podido abrir sus datos guardados.</string>
     <plurals name="items_count">
         <item quantity="one">%1$d elemento</item>
         <item quantity="many">%1$d elementos</item>
@@ -43,12 +43,12 @@
     <string name="tab_cleanup">Limpiar</string>
     <string name="tab_history">Historial</string>
     <string name="today_limited_title">Acceso limitado</string>
-    <string name="today_limited_text">PhotoMaid solo muestra las fotos y los vídeos que has autorizado. Puedes revisarlos como siempre.</string>
+    <string name="today_limited_text">GaleriQ solo muestra las fotos y los vídeos que has autorizado. Puedes revisarlos como siempre.</string>
     <string name="today_limited_action">Cambiar acceso</string>
     <string name="today_access_title">Acceso a fotos y vídeos</string>
     <string name="today_access_denied_title">Sin acceso a tus fotos y vídeos</string>
-    <string name="today_access_denied">Permite el acceso en los ajustes de Android para PhotoMaid. Tus decisiones anteriores seguirán guardadas.</string>
-    <string name="today_access_default">Permite el acceso a PhotoMaid para ver y organizar tus fotos y vídeos.</string>
+    <string name="today_access_denied">Permite el acceso en los ajustes de Android para GaleriQ. Tus decisiones anteriores seguirán guardadas.</string>
+    <string name="today_access_default">Permite el acceso a GaleriQ para ver y organizar tus fotos y vídeos.</string>
     <string name="storage_used_of">de %1$s en uso</string>
     <string name="today_start_sub">Desliza para revisar tus fotos y vídeos.</string>
     <string name="today_continue_sub">Continúa donde lo dejaste.</string>
@@ -217,22 +217,22 @@
         <item quantity="other">Se han borrado %1$d archivos definitivamente.</item>
     </plurals>
     <plurals name="result_partial">
-        <item quantity="one">Quitados: %1$d de %2$d. El resto sigue en la papelera de PhotoMaid.</item>
-        <item quantity="many">Quitados: %1$d de %2$d. El resto sigue en la papelera de PhotoMaid.</item>
-        <item quantity="other">Quitados: %1$d de %2$d. El resto sigue en la papelera de PhotoMaid.</item>
+        <item quantity="one">Quitados: %1$d de %2$d. El resto sigue en la papelera de GaleriQ.</item>
+        <item quantity="many">Quitados: %1$d de %2$d. El resto sigue en la papelera de GaleriQ.</item>
+        <item quantity="other">Quitados: %1$d de %2$d. El resto sigue en la papelera de GaleriQ.</item>
     </plurals>
     <string name="result_cancelled">Cancelado. No se ha quitado nada.</string>
     <string name="result_nothing">No se ha quitado nada.</string>
     <plurals name="result_allowance">
-        <item quantity="one">Seleccionados: %2$d. Hoy puedes quitar %1$d elemento más. Selecciona hasta %1$d o consigue PhotoMaid Pro.</item>
-        <item quantity="many">Seleccionados: %2$d. Hoy puedes quitar %1$d elementos más. Selecciona hasta %1$d o consigue PhotoMaid Pro.</item>
-        <item quantity="other">Seleccionados: %2$d. Hoy puedes quitar %1$d elementos más. Selecciona hasta %1$d o consigue PhotoMaid Pro.</item>
+        <item quantity="one">Seleccionados: %2$d. Hoy puedes quitar %1$d elemento más. Selecciona hasta %1$d o consigue GaleriQ Pro.</item>
+        <item quantity="many">Seleccionados: %2$d. Hoy puedes quitar %1$d elementos más. Selecciona hasta %1$d o consigue GaleriQ Pro.</item>
+        <item quantity="other">Seleccionados: %2$d. Hoy puedes quitar %1$d elementos más. Selecciona hasta %1$d o consigue GaleriQ Pro.</item>
     </plurals>
     <string name="result_changed">Tu selección ha cambiado. Revísala de nuevo.</string>
     <string name="result_reconcile">Comprobaremos el resultado la próxima vez que abras la app. No se volverá a borrar nada.</string>
     <string name="item_actions_for">Acciones para %1$s</string>
     <string name="files_none_title">Aún no hay carpetas conectadas</string>
-    <string name="files_none_message">Elige una carpeta para revisar sus archivos en PhotoMaid.</string>
+    <string name="files_none_message">Elige una carpeta para revisar sus archivos en GaleriQ.</string>
     <string name="files_none_tip">No puedes seleccionar la carpeta Descargas aquí. Elige una subcarpeta dentro de ella.</string>
     <string name="file_type">Tipo de archivo</string>
     <string name="kind_all">Todos</string>
@@ -255,7 +255,7 @@
     <string name="sources_ro">Solo lectura</string>
     <string name="sources_unreachable">No disponible: vuelve a conectar</string>
     <string name="sources_remove">Desconectar carpeta</string>
-    <string name="sources_footer">Desconectar una carpeta no borra sus archivos. Tú eliges a qué carpetas puede acceder PhotoMaid en esta vista.</string>
+    <string name="sources_footer">Desconectar una carpeta no borra sus archivos. Tú eliges a qué carpetas puede acceder GaleriQ en esta vista.</string>
     <plurals name="large_in_files">
         <item quantity="one">en %1$d archivo grande</item>
         <item quantity="many">en %1$d archivos grandes</item>
@@ -274,12 +274,12 @@
     <string name="storage_a">Tu dispositivo</string>
     <string name="storage_available">%1$s libres según Android</string>
     <string name="storage_unavailable">Ahora no se puede consultar el almacenamiento</string>
-    <string name="storage_b">Visible para PhotoMaid</string>
+    <string name="storage_b">Visible para GaleriQ</string>
     <string name="storage_of_which_screens">incluye capturas de pantalla</string>
     <string name="storage_connected_folders">Carpetas conectadas</string>
     <string name="storage_b_footer">Las capturas de pantalla ya se incluyen en las fotos. Los archivos grandes y duplicados no se cuentan de nuevo. Los tamaños desconocidos se excluyen del total, que entonces indica «Al menos».</string>
-    <string name="storage_c">No visible para PhotoMaid</string>
-    <string name="storage_c_text">PhotoMaid no puede revisar otras apps, archivos del sistema, contenido en la nube ni carpetas no autorizadas. No se muestra su tamaño.</string>
+    <string name="storage_c">No visible para GaleriQ</string>
+    <string name="storage_c_text">GaleriQ no puede revisar otras apps, archivos del sistema, contenido en la nube ni carpetas no autorizadas. No se muestra su tamaño.</string>
     <string name="storage_local">El análisis de almacenamiento se realiza en tu dispositivo.</string>
     <plurals name="storage_value_items">
         <item quantity="one">%1$d elemento · %2$s</item>
@@ -288,11 +288,11 @@
     </plurals>
     <string name="dup_find">Buscar copias idénticas</string>
     <string name="dup_explain">Encuentra fotos, vídeos y archivos con el mismo contenido exacto. Tú eliges qué copias van a la papelera.</string>
-    <string name="dup_how">PhotoMaid compara el contenido de los archivos en tu dispositivo. Las imágenes parecidas no cuentan como copias idénticas.</string>
+    <string name="dup_how">GaleriQ compara el contenido de los archivos en tu dispositivo. Las imágenes parecidas no cuentan como copias idénticas.</string>
     <string name="dup_checking">Comparando archivos …</string>
     <string name="dup_start">Buscar copias</string>
     <string name="dup_again">Volver a buscar</string>
-    <string name="pro_view">Ver PhotoMaid Pro</string>
+    <string name="pro_view">Ver GaleriQ Pro</string>
     <string name="dup_none">No se han encontrado copias idénticas</string>
     <string name="dup_none_message">No se han encontrado copias idénticas en las zonas accesibles.</string>
     <plurals name="dup_not_comparable">
@@ -390,7 +390,7 @@
     <string name="h_later">Guardado para después</string>
     <string name="h_later_corr">Cambiado: después</string>
     <string name="h_changed">Cambiado</string>
-    <string name="pro_title">PhotoMaid Pro</string>
+    <string name="pro_title">GaleriQ Pro</string>
     <string name="pro_subtitle">Una sola compra. Sin suscripción.</string>
     <string name="pro_f2">Limpia sin límite diario</string>
     <string name="pro_f2d">Quita tantos elementos como quieras, sin el límite diario de %1$d.</string>
@@ -398,24 +398,24 @@
     <string name="pro_f3d">Encuentra fotos, vídeos y archivos idénticos de carpetas conectadas.</string>
     <string name="pro_f5">Colecciones propias</string>
     <string name="pro_f5d">Guarda tus filtros, como «Vídeos de más de 500 MB». Un toque abre el contenido que coincida.</string>
-    <string name="pro_also">Compra una vez y limpia sin anuncios. Sin suscripción ni cuenta de PhotoMaid.</string>
+    <string name="pro_also">Compra una vez y limpia sin anuncios. Sin suscripción ni cuenta de GaleriQ.</string>
     <string name="pro_f1">Sin anuncios</string>
     <string name="pro_f1d">Sin tarjetas publicitarias entre tus fotos y vídeos.</string>
     <string name="pro_details">Cómo funciona Pro</string>
-    <string name="pro_details_dup">Las copias son archivos idénticos hasta el último detalle. PhotoMaid los compara en tu dispositivo, no en la nube. Las imágenes que solo se parecen no cuentan como copias.</string>
+    <string name="pro_details_dup">Las copias son archivos idénticos hasta el último detalle. GaleriQ los compara en tu dispositivo, no en la nube. Las imágenes que solo se parecen no cuentan como copias.</string>
     <string name="pro_details_rules">Las colecciones muestran contenido de tu dispositivo que coincide con un filtro. Tú lo abres y revisas. No borran nada automáticamente ni limpian en segundo plano.</string>
     <string name="pro_details_cleanup">Al límite diario solo cuenta lo que eliminas de verdad en la papelera. Deslizar nunca cuenta.</string>
     <string name="expanded">Desplegado</string>
     <string name="collapsed">Plegado</string>
     <string name="pro_privacy">Tus fotos y archivos se revisan y ordenan solo en tu dispositivo. Para compras y anuncios solo se envía lo imprescindible a Google o a los anunciantes, nunca tus fotos, sus nombres ni nada obtenido de ellas.</string>
     <string name="pro_pending">Tu compra está pendiente de confirmación.</string>
-    <string name="pro_unlock">Desbloquear PhotoMaid Pro</string>
+    <string name="pro_unlock">Desbloquear GaleriQ Pro</string>
     <string name="pro_price_once">%1$s · Compra única</string>
     <string name="pro_price_loading">Cargando precio …</string>
     <string name="pro_unavailable">Las compras aún no están disponibles en esta versión.</string>
     <string name="pro_restore">Restaurar compras</string>
     <string name="pro_revoked">Una compra anterior se ha reembolsado o revocado.</string>
-    <string name="pro_msg_active">PhotoMaid Pro ya está activo.</string>
+    <string name="pro_msg_active">GaleriQ Pro ya está activo.</string>
     <string name="pro_msg_pending">Tu compra está pendiente de confirmación. Pro se desbloqueará cuando se confirme.</string>
     <string name="pro_msg_failed">No se ha podido completar la compra.</string>
     <string name="pro_msg_restored">Tu compra se ha restaurado.</string>
@@ -454,13 +454,13 @@
     <string name="help_decide">Decidir</string>
     <string name="help_decide_text">Desliza arriba para conservar, a la izquierda para la papelera y a la derecha para después. Por defecto, vuelve en 2 días. Puedes cambiar el plazo en los ajustes. Justo después de deslizar, usa «Cambiar» para elegir otra fecha. Desliza abajo para volver sin tomar una nueva decisión.</string>
     <string name="help_delete">Borrado</string>
-    <string name="help_delete_text">Deslizar nunca borra nada. Lo que apartas va primero a la papelera de PhotoMaid. Solo se elimina al vaciarla: las fotos y vídeos pasan entonces a la papelera de Android después de que Android vuelva a preguntar. Los archivos de carpetas vinculadas se eliminan definitivamente.</string>
+    <string name="help_delete_text">Deslizar nunca borra nada. Lo que apartas va primero a la papelera de GaleriQ. Solo se elimina al vaciarla: las fotos y vídeos pasan entonces a la papelera de Android después de que Android vuelva a preguntar. Los archivos de carpetas vinculadas se eliminan definitivamente.</string>
     <string name="help_cloud">Nube</string>
-    <string name="help_cloud_text">Los servicios en la nube, como Google Fotos, pueden sincronizar los borrados con otros dispositivos. Revisa sus ajustes. PhotoMaid no descarga contenido que solo está en la nube.</string>
+    <string name="help_cloud_text">Los servicios en la nube, como Google Fotos, pueden sincronizar los borrados con otros dispositivos. Revisa sus ajustes. GaleriQ no descarga contenido que solo está en la nube.</string>
     <string name="help_free">Gratis</string>
     <string name="help_free_text">Ver, deslizar y guardar para después no tiene límite. Sin Pro, puedes quitar hasta %1$d al día.</string>
     <string name="privacy_title">Tu privacidad, primero</string>
-    <string name="privacy_text">PhotoMaid mira tus fotos, vídeos y archivos permitidos solo en tu dispositivo. No necesitas cuenta y no hay servidor de PhotoMaid. Ten en cuenta que con servicios en la nube como Google Fotos lo que borres puede desaparecer también en tus otros dispositivos.</string>
+    <string name="privacy_text">GaleriQ mira tus fotos, vídeos y archivos permitidos solo en tu dispositivo. No necesitas cuenta y no hay servidor de GaleriQ. Ten en cuenta que con servicios en la nube como Google Fotos lo que borres puede desaparecer también en tus otros dispositivos.</string>
     <string name="privacy_media">Fotos y vídeos</string>
     <string name="privacy_media_text">Para ver, organizar y quitar fotos y vídeos tras tu confirmación.</string>
     <string name="privacy_allow">Permitir acceso</string>
@@ -511,7 +511,7 @@
     <string name="basket_preview_note">Verlo no cambia tu selección.</string>
     <string name="limit_title_partial">Quedan %1$d hoy</string>
     <string name="limit_title_none">Límite diario alcanzado</string>
-    <string name="limit_message">Seleccionados: %2$d. Sin Pro, puedes quitar hasta %1$d al día. El resto sigue en la papelera de PhotoMaid.</string>
+    <string name="limit_message">Seleccionados: %2$d. Sin Pro, puedes quitar hasta %1$d al día. El resto sigue en la papelera de GaleriQ.</string>
     <string name="limit_tomorrow">Mañana volverás a disponer de tu cupo diario.</string>
     <string name="limit_take_partial">Quitar %1$d de estos</string>
     <string name="reward_title">Prueba las herramientas Pro 30 minutos</string>
@@ -588,14 +588,14 @@
     <string name="limit_all_with_pro">Quitar todos (%1$d) con Pro</string>
     <string name="summary_upsell">Sin límite diario ni anuncios con Pro.</string>
     <string name="summary_offer_title">Un poco más de orden</string>
-    <string name="summary_offer_text">Con PhotoMaid Pro, limpia sin límite diario ni anuncios. Una sola compra, sin suscripción.</string>
+    <string name="summary_offer_text">Con GaleriQ Pro, limpia sin límite diario ni anuncios. Una sola compra, sin suscripción.</string>
     <string name="limit_soon">Quedan %1$d de %2$d hoy</string>
     <string name="limit_soon_pro">Sin límite con Pro</string>
     <string name="limit_bonus">Ver anuncio: quitar %1$d más hoy</string>
     <string name="limit_bonus_note">Una vez al día. La bonificación solo vale hoy.</string>
     <string name="limit_bonus_dismissed">El anuncio se ha cerrado antes de terminar. No se ha desbloqueado nada. Puedes volver a intentarlo hoy.</string>
     <string name="limit_bonus_unavailable">Ahora no hay anuncios disponibles. No se ha desbloqueado nada.</string>
-    <string name="today_pro_title">PhotoMaid Pro</string>
+    <string name="today_pro_title">GaleriQ Pro</string>
     <string name="today_pro_text">Sin límite diario ni anuncios. Compra única.</string>
     <plurals name="summary_upsell_count">
         <item quantity="one">%1$d apartado para quitar.</item>
@@ -611,8 +611,8 @@
     <string name="onb_try_done">Así funciona. Ahora les toca a tus fotos.</string>
     <string name="onb_demo_desc">Tarjetas de práctica. Aquí no se guarda nada.</string>
     <string name="onb_safe_title">Tú decides qué se borra</string>
-    <string name="onb_safe_text">Los elementos van primero a la papelera de PhotoMaid. Allí confirmas que quieres quitarlos. Android pide otra confirmación para las fotos y los vídeos.</string>
-    <string name="onb_safe_local">Tus fotos se quedan en tu dispositivo. Sin cuenta de PhotoMaid ni subidas de fotos.</string>
+    <string name="onb_safe_text">Los elementos van primero a la papelera de GaleriQ. Allí confirmas que quieres quitarlos. Android pide otra confirmación para las fotos y los vídeos.</string>
+    <string name="onb_safe_local">Tus fotos se quedan en tu dispositivo. Sin cuenta de GaleriQ ni subidas de fotos.</string>
     <string name="onb_safe_sheet">Quitar</string>
     <string name="onb_safe_dialog">Android pide confirmación</string>
     <string name="onb_offer_title">Empezar gratis</string>
@@ -621,7 +621,7 @@
     <string name="onb_buy">Comprar Pro · %1$s una vez</string>
     <string name="onb_buy_noprice">Comprar Pro una vez</string>
     <string name="onb_access_title">Acceso a fotos y vídeos</string>
-    <string name="onb_access_text">PhotoMaid muestra tus fotos y vídeos en tu dispositivo para que puedas hacer limpieza. Sin cuenta ni servidor de PhotoMaid.</string>
+    <string name="onb_access_text">GaleriQ muestra tus fotos y vídeos en tu dispositivo para que puedas hacer limpieza. Sin cuenta ni servidor de GaleriQ.</string>
     <string name="onb_progress">Paso %1$d de %2$d</string>
     <string name="offer_free_title">Usar gratis</string>
     <string name="offer_free_text">Desliza y organiza sin límite, todo el tiempo que quieras.</string>
@@ -672,7 +672,7 @@
         <item quantity="other">Se desconoce el tamaño de %1$d elementos. No se incluyen en el total.</item>
     </plurals>
     <string name="done_button">Listo</string>
-    <string name="done_partial">Los elementos que no se han quitado siguen en la papelera de PhotoMaid.</string>
+    <string name="done_partial">Los elementos que no se han quitado siguen en la papelera de GaleriQ.</string>
     <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
     <string name="basket_confirm_files_trash_title">¿Mover a la papelera del almacenamiento?</string>
     <string name="basket_confirm_files_trash_message">Los archivos van a la papelera de su ubicación y se pueden restaurar allí. El espacio solo se libera cuando se eliminan allí.</string>
@@ -728,7 +728,7 @@
     <string name="series_button">Comparar serie de %1$d fotos</string>
     <string name="series_confirm">Conservar %1$d · %2$d a la papelera</string>
     <string name="series_done">%1$d conservadas · %2$d en la papelera</string>
-    <string name="series_footer">No se elimina nada. La papelera es de PhotoMaid y solo se vacía cuando lo confirmas.</string>
+    <string name="series_footer">No se elimina nada. La papelera es de GaleriQ y solo se vacía cuando lo confirmas.</string>
     <string name="series_hint">Toca una foto para compararla abajo. La marca decide qué se queda.</string>
     <string name="series_keep_toggle">Conservar</string>
     <string name="series_state_keep">Conservar</string>
@@ -844,7 +844,7 @@
     <string name="edit_ratio_locked">Proporción bloqueada</string>
     <string name="edit_ratio_free">Proporción libre</string>
     <string name="edit_size_result">%1$d × %2$d → %3$d × %4$d px</string>
-    <string name="edit_size_small">Esta foto ya es pequeña. PhotoMaid nunca amplía.</string>
+    <string name="edit_size_small">Esta foto ya es pequeña. GaleriQ nunca amplía.</string>
     <string name="edit_pro_hint">Vista previa gratis · guardar con Pro o la prueba de 30 minutos</string>
     <string name="edit_pro_more">Más</string>
     <string name="edit_pro_title">Guardar con Pro</string>
@@ -885,7 +885,7 @@
     <string name="redo">Rehacer</string>
     <string name="edits_title">Editados</string>
     <string name="hub_edits_sub">Copias y originales sustituidos</string>
-    <string name="edits_intro">Todo lo que guardaste en el editor de PhotoMaid, lo más reciente primero. Solo en este dispositivo.</string>
+    <string name="edits_intro">Todo lo que guardaste en el editor de GaleriQ, lo más reciente primero. Solo en este dispositivo.</string>
     <string name="edits_empty_title">Aún no has editado nada</string>
     <string name="edits_empty_text">Toca el lápiz debajo de una foto o un vídeo durante la revisión para recortarlo, ajustarlo o acortarlo.</string>
     <string name="edits_badge_copy">Copia</string>
@@ -1077,7 +1077,7 @@
     <string name="col_png_hint">PNG: sin pérdidas y nítido, pero el archivo es mayor.</string>
     <string name="col_pro_text">Este collage usa funciones Pro (más de 4 fotos, diseño libre o impresión A4). Desbloquea Pro o la prueba gratuita de 30 minutos para guardarlo.</string>
     <string name="col_save_action">Guardar en la galería</string>
-    <string name="col_save_where">Se guarda como imagen nueva en «Pictures/PhotoMaid». Tus fotos no cambian.</string>
+    <string name="col_save_where">Se guarda como imagen nueva en «Pictures/GaleriQ». Tus fotos no cambian.</string>
     <plurals name="picker_next">
         <item quantity="one">Continuar con %1$d</item>
         <item quantity="many">Continuar con %1$d</item>
@@ -1169,7 +1169,7 @@
     <string name="vid_audio_export">Guardar solo el sonido</string>
     <string name="vid_audio_suffix">sonido</string>
     <string name="vid_audio_running">Guardando sonido</string>
-    <string name="vid_audio_saved">«%1$s» guardado en Music/PhotoMaid.</string>
+    <string name="vid_audio_saved">«%1$s» guardado en Music/GaleriQ.</string>
     <string name="vid_audio_failed">No se pudo guardar el sonido.</string>
     <string name="vid_fill">Rellenar</string>
     <string name="vid_fit">Mostrar vídeo entero</string>
@@ -1199,10 +1199,10 @@
     <string name="lib_level_finer">Miniaturas más grandes</string>
     <string name="lib_level_coarser">Miniaturas más pequeñas</string>
     <string name="lib_trash_action">Mover a la papelera</string>
-    <string name="lib_trash_text">A la papelera de PhotoMaid; no se borra nada. Decides allí más tarde.</string>
-    <string name="lib_trash_text_fav">A la papelera de PhotoMaid; no se borra nada. Los favoritos se quedan («Proteger favoritos» está activado).</string>
+    <string name="lib_trash_text">A la papelera de GaleriQ; no se borra nada. Decides allí más tarde.</string>
+    <string name="lib_trash_text_fav">A la papelera de GaleriQ; no se borra nada. Los favoritos se quedan («Proteger favoritos» está activado).</string>
     <string name="lib_trash_fav_protected">Es un favorito. «Proteger favoritos» está activado, así que no va a la papelera. Puedes cambiarlo en Ajustes.</string>
-    <string name="lib_trashed_one">En la papelera de PhotoMaid</string>
+    <string name="lib_trashed_one">En la papelera de GaleriQ</string>
     <string name="lib_review_from_here">Ordenar desde aquí</string>
     <string name="lib_feed_title">De la biblioteca</string>
     <string name="lib_info_name">Nombre</string>
@@ -1219,9 +1219,9 @@
         <item quantity="other">¿Mover %1$d elementos a la papelera?</item>
     </plurals>
     <plurals name="lib_trashed">
-        <item quantity="one">%1$d elemento está en la papelera de PhotoMaid.</item>
-        <item quantity="many">%1$d elementos están en la papelera de PhotoMaid.</item>
-        <item quantity="other">%1$d elementos están en la papelera de PhotoMaid.</item>
+        <item quantity="one">%1$d elemento está en la papelera de GaleriQ.</item>
+        <item quantity="many">%1$d elementos están en la papelera de GaleriQ.</item>
+        <item quantity="other">%1$d elementos están en la papelera de GaleriQ.</item>
     </plurals>
     <string name="lib_mode_timeline">Cronología</string>
     <string name="lib_mode_folders">Carpetas</string>
@@ -1262,16 +1262,16 @@
     <string name="lib_sort_name">Nombre</string>
     <string name="lib_sort_largest">Más grandes primero</string>
     <string name="lib_sort_default">Usar en todas las carpetas</string>
-    <string name="lib_hide">Ocultar en PhotoMaid</string>
-    <string name="lib_hide_text">PhotoMaid dejará de mostrarlos, ni en Fotos ni al limpiar. Los archivos no cambian y siguen visibles en otras apps. No es una caja fuerte.</string>
-    <string name="lib_hide_folder_title">¿Ocultar «%1$s» en PhotoMaid?</string>
+    <string name="lib_hide">Ocultar en GaleriQ</string>
+    <string name="lib_hide_text">GaleriQ dejará de mostrarlos, ni en Fotos ni al limpiar. Los archivos no cambian y siguen visibles en otras apps. No es una caja fuerte.</string>
+    <string name="lib_hide_folder_title">¿Ocultar «%1$s» en GaleriQ?</string>
     <string name="lib_hide_folder_text">La carpeta y sus subcarpetas dejarán de aparecer en Fotos y al limpiar. No se mueve ni elimina nada; otras apps la siguen mostrando. Vuelve a mostrarla en Carpetas › Ocultas.</string>
     <string name="lib_hidden_title">Ocultos</string>
-    <string name="lib_hidden_row">Carpetas y archivos que PhotoMaid no muestra</string>
-    <string name="lib_hidden_intro">PhotoMaid no muestra esto en ningún sitio. Los archivos no cambian y otras apps los siguen mostrando.</string>
+    <string name="lib_hidden_row">Carpetas y archivos que GaleriQ no muestra</string>
+    <string name="lib_hidden_intro">GaleriQ no muestra esto en ningún sitio. Los archivos no cambian y otras apps los siguen mostrando.</string>
     <string name="lib_hidden_none_title">Nada oculto</string>
-    <string name="lib_hidden_none_text">Usa «Ocultar en PhotoMaid» en una carpeta, una foto o una selección.</string>
-    <string name="lib_hidden_one">Oculto en PhotoMaid</string>
+    <string name="lib_hidden_none_text">Usa «Ocultar en GaleriQ» en una carpeta, una foto o una selección.</string>
+    <string name="lib_hidden_one">Oculto en GaleriQ</string>
     <string name="lib_unhide">Volver a mostrar</string>
     <string name="lib_info_camera">Cámara</string>
     <plurals name="lib_subfolders">
@@ -1285,14 +1285,14 @@
         <item quantity="other">%1$d carpetas</item>
     </plurals>
     <plurals name="lib_hide_title">
-        <item quantity="one">¿Ocultar %1$d elemento en PhotoMaid?</item>
-        <item quantity="many">¿Ocultar %1$d elementos en PhotoMaid?</item>
-        <item quantity="other">¿Ocultar %1$d elementos en PhotoMaid?</item>
+        <item quantity="one">¿Ocultar %1$d elemento en GaleriQ?</item>
+        <item quantity="many">¿Ocultar %1$d elementos en GaleriQ?</item>
+        <item quantity="other">¿Ocultar %1$d elementos en GaleriQ?</item>
     </plurals>
     <plurals name="lib_hidden_done">
-        <item quantity="one">%1$d elemento oculto en PhotoMaid</item>
-        <item quantity="many">%1$d elementos ocultos en PhotoMaid</item>
-        <item quantity="other">%1$d elementos ocultos en PhotoMaid</item>
+        <item quantity="one">%1$d elemento oculto en GaleriQ</item>
+        <item quantity="many">%1$d elementos ocultos en GaleriQ</item>
+        <item quantity="other">%1$d elementos ocultos en GaleriQ</item>
     </plurals>
     <plurals name="lib_unhidden">
         <item quantity="one">%1$d elemento visible de nuevo</item>
@@ -1334,7 +1334,7 @@
     <string name="done_note_media_deleted">Las fotos y vídeos se han eliminado definitivamente; no están en la papelera de Android.</string>
     <string name="systrash_open">Ver la papelera de Android</string>
     <string name="systrash_title">Papelera de Android</string>
-    <string name="systrash_intro">Todo lo que Android guarda en su papelera, de PhotoMaid y de otras apps. Cuando vence el plazo, Android lo elimina.</string>
+    <string name="systrash_intro">Todo lo que Android guarda en su papelera, de GaleriQ y de otras apps. Cuando vence el plazo, Android lo elimina.</string>
     <string name="systrash_empty_title">La papelera de Android está vacía</string>
     <string name="systrash_empty_text">Las fotos y vídeos que quitas aparecen aquí durante un tiempo y se pueden recuperar.</string>
     <string name="systrash_partial">%1$d de %2$d hechos. El resto queda como estaba.</string>
@@ -1343,7 +1343,7 @@
     <string name="set_delete_permanently">Eliminar definitivamente</string>
     <string name="set_delete_permanently_detail">Desactivado: al vaciar, todo pasa primero a la papelera de Android y se puede recuperar durante un tiempo. Activado: todo se borra definitivamente al momento.</string>
     <string name="set_delete_permanently_confirm_title">¿Activar la eliminación definitiva?</string>
-    <string name="set_delete_permanently_confirm_text">A partir de ahora, vaciar la papelera de PhotoMaid elimina fotos y vídeos para siempre. No van a la papelera de Android y no se pueden recuperar, ni desde copias aún no sincronizadas. Android seguirá preguntando cada vez.</string>
+    <string name="set_delete_permanently_confirm_text">A partir de ahora, vaciar la papelera de GaleriQ elimina fotos y vídeos para siempre. No van a la papelera de Android y no se pueden recuperar, ni desde copias aún no sincronizadas. Android seguirá preguntando cada vez.</string>
     <string name="set_delete_permanently_confirm_action">Activar</string>
     <plurals name="result_media_deleted">
         <item quantity="one">%1$d elemento eliminado definitivamente.</item>
@@ -1407,10 +1407,10 @@
     <string name="movie_music_volume">Volumen de la música</string>
     <string name="movie_music_fade">Fundido de entrada y salida</string>
     <string name="movie_original_off">Quitar el sonido original</string>
-    <string name="movie_music_note">Tu propio archivo, desde el inicio y repetido si hace falta. PhotoMaid no incluye música. Ten en cuenta los derechos al compartir.</string>
+    <string name="movie_music_note">Tu propio archivo, desde el inicio y repetido si hace falta. GaleriQ no incluye música. Ten en cuenta los derechos al compartir.</string>
     <string name="movie_running">Creando vídeo…</string>
     <string name="movie_running_slideshow">Creando presentación…</string>
-    <string name="movie_saved">Guardado como vídeo nuevo en Movies/PhotoMaid. Los originales no cambian.</string>
+    <string name="movie_saved">Guardado como vídeo nuevo en Movies/GaleriQ. Los originales no cambian.</string>
     <string name="movie_failed">No se pudo crear el vídeo. No se guardó nada y los originales no cambian.</string>
     <string name="movie_too_few">Añade al menos dos clips.</string>
     <string name="movie_too_many">Como máximo 50 clips por vídeo.</string>
@@ -1431,8 +1431,8 @@
     <string name="tools_pick">Elegir fotos</string>
     <string name="tools_pick_gif">Elegir fotos o un vídeo</string>
     <string name="tools_running">Procesando tus archivos…</string>
-    <string name="tools_stitch_saved">Guardada como imagen nueva en Pictures/PhotoMaid.</string>
-    <string name="tools_gif_saved">GIF guardado en Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_stitch_saved">Guardada como imagen nueva en Pictures/GaleriQ.</string>
+    <string name="tools_gif_saved">GIF guardado en Pictures/GaleriQ (%1$s).</string>
     <string name="tools_failed">No ha funcionado. Tus originales no han cambiado.</string>
     <string name="tools_pro_save">Crear con Pro</string>
     <string name="tools_start">Empezar</string>
@@ -1493,8 +1493,8 @@
     <string name="dock_more">Más</string>
     <string name="vid_trim_hint_short">Arrastra los controles para fijar el inicio y el final.</string>
     <string name="vid_export_info">Cómo se guarda</string>
-    <string name="vid_export_info_fast">Solo has recortado el inicio y el final. Es rápido y la calidad se mantiene como en el original. Si este vídeo no lo permite, PhotoMaid lo genera de nuevo por completo y tarda un poco más. Duración total %1$s.</string>
-    <string name="vid_export_info_reencode">Por tus otros cambios, PhotoMaid vuelve a generar todo el vídeo al guardar. Puede tardar un momento. Duración total %1$s.</string>
+    <string name="vid_export_info_fast">Solo has recortado el inicio y el final. Es rápido y la calidad se mantiene como en el original. Si este vídeo no lo permite, GaleriQ lo genera de nuevo por completo y tarda un poco más. Duración total %1$s.</string>
+    <string name="vid_export_info_reencode">Por tus otros cambios, GaleriQ vuelve a generar todo el vídeo al guardar. Puede tardar un momento. Duración total %1$s.</string>
     <string name="lib_mode_albums">Álbumes</string>
     <string name="org_new_album">Nuevo álbum</string>
     <string name="org_album_name">Nombre del álbum</string>
@@ -1508,13 +1508,13 @@
     <string name="org_already_in_album">Ya están todos en «%1$s».</string>
     <string name="org_albums_empty_title">Aún no hay álbumes</string>
     <string name="org_albums_empty_text">Un álbum reúne fotos y vídeos de cualquier carpeta sin copiarlos ni moverlos. Una foto puede estar en varios álbumes.</string>
-    <string name="org_albums_footer">Los álbumes solo existen en PhotoMaid. Las carpetas muestran dónde está un archivo; las colecciones encuentran contenido según una condición.</string>
+    <string name="org_albums_footer">Los álbumes solo existen en GaleriQ. Las carpetas muestran dónde está un archivo; las colecciones encuentran contenido según una condición.</string>
     <string name="org_album_empty">Este álbum está vacío. En «Fotos», selecciona contenido y toca ⋯ › Añadir a un álbum.</string>
     <string name="org_missing_remove">Quitar de la lista</string>
     <string name="org_tags">Etiquetas</string>
     <string name="org_tag_new_hint">Nueva etiqueta</string>
     <string name="org_tag_add">Añadir</string>
-    <string name="org_tags_none">Aún no hay etiquetas. Añade tus propias palabras, como «Factura» o «Vacaciones»: PhotoMaid solo sabe lo que tú escribes.</string>
+    <string name="org_tags_none">Aún no hay etiquetas. Añade tus propias palabras, como «Factura» o «Vacaciones»: GaleriQ solo sabe lo que tú escribes.</string>
     <string name="org_tag_remove">Quitar etiqueta</string>
     <string name="org_tag_delete">Quitar de todo</string>
     <string name="org_tag_delete_title">¿Quitar la etiqueta «%1$s» de todo?</string>
@@ -1522,7 +1522,7 @@
     <string name="org_tag_state_all">en todos</string>
     <string name="org_tag_state_some">en algunos</string>
     <string name="org_note">Nota</string>
-    <string name="org_note_hint">Nota (solo en PhotoMaid; el archivo no cambia)</string>
+    <string name="org_note_hint">Nota (solo en GaleriQ; el archivo no cambia)</string>
     <string name="org_note_save">Guardar nota</string>
     <string name="org_basket">Cesta de selección</string>
     <string name="org_basket_add">Añadir a la cesta de selección</string>
@@ -1585,7 +1585,7 @@
     <string name="wf_target">Tamaño máximo por foto</string>
     <string name="wf_off">Ninguno</string>
     <string name="wf_min_edge">Nunca menor que (lado más largo)</string>
-    <string name="wf_target_note">PhotoMaid mide el resultado. Si no se puede alcanzar el objetivo dentro de estos límites, no se crea ningún archivo y verás por qué.</string>
+    <string name="wf_target_note">GaleriQ mide el resultado. Si no se puede alcanzar el objetivo dentro de estos límites, no se crea ningún archivo y verás por qué.</string>
     <string name="wf_videos">Vídeos</string>
     <string name="wf_video_skip">Omitir</string>
     <string name="wf_video_note">Los vídeos se vuelven a guardar para ajustarse al tamaño objetivo. La imagen solo se reduce si hace falta.</string>
@@ -1594,7 +1594,7 @@
     <string name="wf_name_base_hint">p. ej. Anuncio → Anuncio_001 (vacío = nombre original)</string>
     <string name="wf_folder">Carpeta</string>
     <string name="wf_folder_same">Igual que el original</string>
-    <string name="wf_folder_photomaid">Carpeta PhotoMaid</string>
+    <string name="wf_folder_photomaid">Carpeta GaleriQ</string>
     <string name="wf_finish">Al final</string>
     <string name="wf_finish_save">Guardar</string>
     <string name="wf_finish_share">Solo compartir</string>
@@ -1633,10 +1633,10 @@
     <string name="wf_share_again">Compartir de nuevo</string>
     <string name="wf_counts">%1$s fotos · %2$s vídeos</string>
     <string name="wf_start">Iniciar</string>
-    <string name="share_target_label">Enviar a PhotoMaid</string>
+    <string name="share_target_label">Enviar a GaleriQ</string>
     <string name="share_title">Recibido</string>
     <string name="share_none">Ninguno de los archivos compartidos está en la fototeca de este dispositivo.</string>
-    <string name="share_no_access">PhotoMaid aún no puede acceder a tus fotos. Permite el acceso en Ajustes y vuelve a enviar.</string>
+    <string name="share_no_access">GaleriQ aún no puede acceder a tus fotos. Permite el acceso en Ajustes y vuelve a enviar.</string>
     <string name="share_never">No se elimina ni se decide nada. Solo se crea un archivo nuevo cuando guardas.</string>
     <string name="share_workflow">Aplicar flujo de trabajo</string>
     <string name="share_edit">Editar</string>
@@ -1671,7 +1671,7 @@
     <string name="pdf_from_selection">Crear PDF</string>
     <string name="pdf_no_photos">No hay fotos en esta selección. Los vídeos no se pueden incluir en un PDF.</string>
     <string name="pdf_no_date">Sin fecha</string>
-    <string name="pdf_saved">Guardado en «Documents/PhotoMaid» · %1$s</string>
+    <string name="pdf_saved">Guardado en «Documents/GaleriQ» · %1$s</string>
     <string name="pdf_failed">No se ha podido guardar el PDF.</string>
     <string name="pdf_page_of">Página %1$d de %2$d</string>
     <string name="pdf_capped">Como máximo %1$d fotos por PDF: se han incluido las primeras %1$d.</string>
@@ -1729,5 +1729,5 @@
     <string name="tour_history_title">Después e historial</string>
     <string name="tour_history_text">Aquí ves lo que has conservado, apartado o dejado para después. Puedes cambiar cualquier decisión.</string>
     <string name="tour_settings_title">Ajustes y ayuda</string>
-    <string name="tour_settings_text">Configura PhotoMaid a tu gusto y encuentra respuestas. Puedes repetir este recorrido cuando quieras.</string>
+    <string name="tour_settings_text">Configura GaleriQ a tu gusto y encuentra respuestas. Puedes repetir este recorrido cuando quieras.</string>
 </resources>

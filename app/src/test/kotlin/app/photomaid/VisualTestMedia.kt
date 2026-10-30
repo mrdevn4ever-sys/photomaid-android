@@ -112,6 +112,6 @@ object VisualTestMedia {
             y += rowH
         }
         p.color = Color.rgb(120, 120, 128); p.textSize = w * 0.032f
-        c.drawText("Testmotiv · PhotoMaid QA", w * 0.06f, h * 0.97f, p)
+        c.drawText("Testmotiv · GaleriQ QA", w * 0.06f, h * 0.97f, p)
     }
 }

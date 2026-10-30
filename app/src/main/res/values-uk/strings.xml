@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generated PhotoMaid UI translations. See CODE_AENDERUNGEN.json before integration. -->
+<!-- Generated GaleriQ UI translations. See CODE_AENDERUNGEN.json before integration. -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PhotoMaid</string>
+    <string name="app_name">GaleriQ</string>
     <string name="ok">OK</string>
     <string name="cancel">Скасувати</string>
     <string name="done">Готово</string>
@@ -17,7 +17,7 @@
     <string name="info">Інформація</string>
     <string name="error_title">Не вдалося виконати</string>
     <string name="retry">Спробувати ще раз</string>
-    <string name="store_open_failed">PhotoMaid не вдалося відкрити збережені дані.</string>
+    <string name="store_open_failed">GaleriQ не вдалося відкрити збережені дані.</string>
     <plurals name="items_count">
         <item quantity="one">%1$d елемент</item>
         <item quantity="few">%1$d елементи</item>
@@ -44,12 +44,12 @@
     <string name="tab_cleanup">Прибирання</string>
     <string name="tab_history">Історія</string>
     <string name="today_limited_title">Обмежений доступ</string>
-    <string name="today_limited_text">PhotoMaid показує лише фото й відео, до яких ти надаєш доступ. Їх можна впорядковувати як завжди.</string>
+    <string name="today_limited_text">GaleriQ показує лише фото й відео, до яких ти надаєш доступ. Їх можна впорядковувати як завжди.</string>
     <string name="today_limited_action">Змінити доступ</string>
     <string name="today_access_title">Доступ до фото й відео</string>
     <string name="today_access_denied_title">Немає доступу до твоїх фото й відео</string>
-    <string name="today_access_denied">Надай доступ у налаштуваннях Android для PhotoMaid. Попередні рішення залишаться збереженими.</string>
-    <string name="today_access_default">Надай PhotoMaid доступ, щоб переглядати й упорядковувати фото та відео.</string>
+    <string name="today_access_denied">Надай доступ у налаштуваннях Android для GaleriQ. Попередні рішення залишаться збереженими.</string>
+    <string name="today_access_default">Надай GaleriQ доступ, щоб переглядати й упорядковувати фото та відео.</string>
     <string name="storage_used_of">із %1$s зайнято</string>
     <string name="today_start_sub">Гортай свої фото й відео.</string>
     <string name="today_continue_sub">Продовжуй із того місця, де завершився попередній перегляд.</string>
@@ -230,24 +230,24 @@
         <item quantity="other">Назавжди видалено %1$d файла.</item>
     </plurals>
     <plurals name="result_partial">
-        <item quantity="one">Видалено: %1$d із %2$d. Решта залишилася в кошику PhotoMaid.</item>
-        <item quantity="few">Видалено: %1$d із %2$d. Решта залишилася в кошику PhotoMaid.</item>
-        <item quantity="many">Видалено: %1$d із %2$d. Решта залишилася в кошику PhotoMaid.</item>
-        <item quantity="other">Видалено: %1$d із %2$d. Решта залишилася в кошику PhotoMaid.</item>
+        <item quantity="one">Видалено: %1$d із %2$d. Решта залишилася в кошику GaleriQ.</item>
+        <item quantity="few">Видалено: %1$d із %2$d. Решта залишилася в кошику GaleriQ.</item>
+        <item quantity="many">Видалено: %1$d із %2$d. Решта залишилася в кошику GaleriQ.</item>
+        <item quantity="other">Видалено: %1$d із %2$d. Решта залишилася в кошику GaleriQ.</item>
     </plurals>
     <string name="result_cancelled">Скасовано. Нічого не видалено.</string>
     <string name="result_nothing">Нічого не видалено.</string>
     <plurals name="result_allowance">
-        <item quantity="one">Вибрано: %2$d. Сьогодні можна видалити ще %1$d елемент. Вибери не більше %1$d або скористайся PhotoMaid Pro.</item>
-        <item quantity="few">Вибрано: %2$d. Сьогодні можна видалити ще %1$d елементи. Вибери не більше %1$d або скористайся PhotoMaid Pro.</item>
-        <item quantity="many">Вибрано: %2$d. Сьогодні можна видалити ще %1$d елементів. Вибери не більше %1$d або скористайся PhotoMaid Pro.</item>
-        <item quantity="other">Вибрано: %2$d. Сьогодні можна видалити ще %1$d елемента. Вибери не більше %1$d або скористайся PhotoMaid Pro.</item>
+        <item quantity="one">Вибрано: %2$d. Сьогодні можна видалити ще %1$d елемент. Вибери не більше %1$d або скористайся GaleriQ Pro.</item>
+        <item quantity="few">Вибрано: %2$d. Сьогодні можна видалити ще %1$d елементи. Вибери не більше %1$d або скористайся GaleriQ Pro.</item>
+        <item quantity="many">Вибрано: %2$d. Сьогодні можна видалити ще %1$d елементів. Вибери не більше %1$d або скористайся GaleriQ Pro.</item>
+        <item quantity="other">Вибрано: %2$d. Сьогодні можна видалити ще %1$d елемента. Вибери не більше %1$d або скористайся GaleriQ Pro.</item>
     </plurals>
     <string name="result_changed">Вибір змінився. Перевір його ще раз.</string>
     <string name="result_reconcile">Перевіримо результат під час наступного запуску. Нічого не буде видалено повторно.</string>
     <string name="item_actions_for">Дії для %1$s</string>
     <string name="files_none_title">Ще немає підключених папок</string>
-    <string name="files_none_message">Вибери папку, щоб переглянути її файли в PhotoMaid.</string>
+    <string name="files_none_message">Вибери папку, щоб переглянути її файли в GaleriQ.</string>
     <string name="files_none_tip">Папку Завантаження не можна вибрати тут. Вибери вкладену папку в ній.</string>
     <string name="file_type">Тип файлу</string>
     <string name="kind_all">Усі</string>
@@ -270,7 +270,7 @@
     <string name="sources_ro">Лише перегляд</string>
     <string name="sources_unreachable">Недоступна — підключи знову</string>
     <string name="sources_remove">Відключити папку</string>
-    <string name="sources_footer">Відключення папки не видаляє файли. У цьому розділі ти самостійно вибираєш папки, доступні для PhotoMaid.</string>
+    <string name="sources_footer">Відключення папки не видаляє файли. У цьому розділі ти самостійно вибираєш папки, доступні для GaleriQ.</string>
     <plurals name="large_in_files">
         <item quantity="one">у %1$d великому файлі</item>
         <item quantity="few">у %1$d великих файлах</item>
@@ -290,12 +290,12 @@
     <string name="storage_a">Твій пристрій</string>
     <string name="storage_available">Вільно за даними Android: %1$s</string>
     <string name="storage_unavailable">Відомості про пам’ять зараз недоступні</string>
-    <string name="storage_b">Видиме для PhotoMaid</string>
+    <string name="storage_b">Видиме для GaleriQ</string>
     <string name="storage_of_which_screens">з них знімки екрана</string>
     <string name="storage_connected_folders">Підключені папки</string>
     <string name="storage_b_footer">Знімки екрана вже враховано серед фото. Великі файли й дублікати не рахуються повторно. Невідомі розміри не входять у суму — тоді біля неї стоїть «Щонайменше».</string>
-    <string name="storage_c">Недоступне для PhotoMaid</string>
-    <string name="storage_c_text">PhotoMaid не може перевіряти інші застосунки, системні файли, хмарні дані й папки без доступу. Їхній розмір не показується.</string>
+    <string name="storage_c">Недоступне для GaleriQ</string>
+    <string name="storage_c_text">GaleriQ не може перевіряти інші застосунки, системні файли, хмарні дані й папки без доступу. Їхній розмір не показується.</string>
     <string name="storage_local">Аналіз сховища залишається на твоєму пристрої.</string>
     <plurals name="storage_value_items">
         <item quantity="one">%1$d елемент · %2$s</item>
@@ -305,11 +305,11 @@
     </plurals>
     <string name="dup_find">Знайти ідентичні копії</string>
     <string name="dup_explain">Знайди фото, відео й файли з точно однаковим вмістом. Ти вирішуєш, які копії потраплять у кошик.</string>
-    <string name="dup_how">PhotoMaid порівнює вміст файлів на твоєму пристрої. Схожі зображення не вважаються ідентичними копіями.</string>
+    <string name="dup_how">GaleriQ порівнює вміст файлів на твоєму пристрої. Схожі зображення не вважаються ідентичними копіями.</string>
     <string name="dup_checking">Порівняння файлів …</string>
     <string name="dup_start">Шукати копії</string>
     <string name="dup_again">Шукати знову</string>
-    <string name="pro_view">Переглянути PhotoMaid Pro</string>
+    <string name="pro_view">Переглянути GaleriQ Pro</string>
     <string name="dup_none">Ідентичних копій не знайдено</string>
     <string name="dup_none_message">У доступних розділах ідентичних копій не знайдено.</string>
     <plurals name="dup_not_comparable">
@@ -413,7 +413,7 @@
     <string name="h_later">Збережено на потім</string>
     <string name="h_later_corr">Змінено: пізніше</string>
     <string name="h_changed">Змінено</string>
-    <string name="pro_title">PhotoMaid Pro</string>
+    <string name="pro_title">GaleriQ Pro</string>
     <string name="pro_subtitle">Одна покупка. Без передплати.</string>
     <string name="pro_f2">Прибирай без денного ліміту</string>
     <string name="pro_f2d">Видаляй скільки потрібно — без денного ліміту %1$d.</string>
@@ -421,24 +421,24 @@
     <string name="pro_f3d">Знаходь ідентичні фото, відео й файли з підключених папок.</string>
     <string name="pro_f5">Власні добірки</string>
     <string name="pro_f5d">Зберігай власні фільтри, наприклад «Відео понад 500 МБ». Один дотик відкриває відповідний вміст.</string>
-    <string name="pro_also">Купи один раз і прибирай без реклами. Без передплати й облікового запису PhotoMaid.</string>
+    <string name="pro_also">Купи один раз і прибирай без реклами. Без передплати й облікового запису GaleriQ.</string>
     <string name="pro_f1">Без реклами</string>
     <string name="pro_f1d">Без рекламних карток між фото й відео.</string>
     <string name="pro_details">Як працює Pro</string>
-    <string name="pro_details_dup">Копії – це файли, що збігаються до найменших деталей. PhotoMaid порівнює їх на пристрої, а не в хмарі. Просто схожі знімки копіями не вважаються.</string>
+    <string name="pro_details_dup">Копії – це файли, що збігаються до найменших деталей. GaleriQ порівнює їх на пристрої, а не в хмарі. Просто схожі знімки копіями не вважаються.</string>
     <string name="pro_details_rules">Добірки показують відповідний вміст із пристрою. Ти відкриваєш і переглядаєш його самостійно. Вони нічого не видаляють автоматично й не прибирають у фоні.</string>
     <string name="pro_details_cleanup">До денного ліміту входить лише те, що ви справді видаляєте з кошика. Гортання не враховується.</string>
     <string name="expanded">Розгорнуто</string>
     <string name="collapsed">Згорнуто</string>
     <string name="pro_privacy">Ваші фото й файли перевіряються та сортуються лише на пристрої. Для покупок і реклами Google чи рекламодавцям іде тільки найнеобхідніше – ніколи ваші фото, їхні назви чи дані з них.</string>
     <string name="pro_pending">Покупка очікує підтвердження.</string>
-    <string name="pro_unlock">Відкрити PhotoMaid Pro</string>
+    <string name="pro_unlock">Відкрити GaleriQ Pro</string>
     <string name="pro_price_once">%1$s · Одноразова покупка</string>
     <string name="pro_price_loading">Завантаження ціни …</string>
     <string name="pro_unavailable">Покупки ще недоступні в цій версії.</string>
     <string name="pro_restore">Відновити покупки</string>
     <string name="pro_revoked">Попередню покупку повернуто або відкликано.</string>
-    <string name="pro_msg_active">PhotoMaid Pro уже активний.</string>
+    <string name="pro_msg_active">GaleriQ Pro уже активний.</string>
     <string name="pro_msg_pending">Покупка очікує підтвердження. Після нього Pro стане доступним.</string>
     <string name="pro_msg_failed">Не вдалося завершити покупку.</string>
     <string name="pro_msg_restored">Покупку відновлено.</string>
@@ -478,13 +478,13 @@
     <string name="help_decide">Рішення</string>
     <string name="help_decide_text">Змахни вгору, щоб залишити, ліворуч — у кошик, праворуч — на потім. Типово елемент повернеться через 2 дні. Інтервал можна змінити в налаштуваннях. Одразу після змахування натисни «Змінити», щоб вибрати іншу дату. Змахування вниз повертає назад без нового рішення.</string>
     <string name="help_delete">Видалення</string>
-    <string name="help_delete_text">Гортання ніколи нічого не видаляє. Відкладене спершу потрапляє в кошик PhotoMaid. Видаляється щось лише під час його очищення – фото й відео переходять у кошик Android після повторного запиту Android. Файли з підключених папок видаляються назавжди.</string>
+    <string name="help_delete_text">Гортання ніколи нічого не видаляє. Відкладене спершу потрапляє в кошик GaleriQ. Видаляється щось лише під час його очищення – фото й відео переходять у кошик Android після повторного запиту Android. Файли з підключених папок видаляються назавжди.</string>
     <string name="help_cloud">Хмара</string>
-    <string name="help_cloud_text">Хмарні сервіси, як-от Google Фото, можуть синхронізувати видалення з іншими пристроями. Перевір їхні налаштування. PhotoMaid не завантажує вміст, який є лише в хмарі.</string>
+    <string name="help_cloud_text">Хмарні сервіси, як-от Google Фото, можуть синхронізувати видалення з іншими пристроями. Перевір їхні налаштування. GaleriQ не завантажує вміст, який є лише в хмарі.</string>
     <string name="help_free">Безкоштовно</string>
     <string name="help_free_text">Перегляд, змахування й збереження на потім — без обмежень. Без Pro можна видалити до %1$d за день.</string>
     <string name="privacy_title">Твоя приватність — передусім</string>
-    <string name="privacy_text">PhotoMaid переглядає ваші фото, відео й дозволені файли лише на пристрої. Обліковий запис не потрібен, і сервера PhotoMaid немає. Варто знати: у хмарних сервісах, як-от Google Фото, видалене може зникнути й на інших пристроях.</string>
+    <string name="privacy_text">GaleriQ переглядає ваші фото, відео й дозволені файли лише на пристрої. Обліковий запис не потрібен, і сервера GaleriQ немає. Варто знати: у хмарних сервісах, як-от Google Фото, видалене може зникнути й на інших пристроях.</string>
     <string name="privacy_media">Фото й відео</string>
     <string name="privacy_media_text">Щоб переглядати, впорядковувати й видаляти фото та відео після твого підтвердження.</string>
     <string name="privacy_allow">Надати доступ</string>
@@ -535,7 +535,7 @@
     <string name="basket_preview_note">Перегляд не змінює твій вибір.</string>
     <string name="limit_title_partial">Сьогодні залишилося %1$d</string>
     <string name="limit_title_none">Денний ліміт вичерпано</string>
-    <string name="limit_message">Вибрано: %2$d. Без Pro можна видалити до %1$d за день. Решта залишиться в кошику PhotoMaid.</string>
+    <string name="limit_message">Вибрано: %2$d. Без Pro можна видалити до %1$d за день. Решта залишиться в кошику GaleriQ.</string>
     <string name="limit_tomorrow">Завтра денний ліміт знову буде доступний.</string>
     <string name="limit_take_partial">Видалити %1$d із них</string>
     <string name="reward_title">Спробувати інструменти Pro на 30 хвилин</string>
@@ -616,14 +616,14 @@
     <string name="limit_all_with_pro">Видалити всі (%1$d) з Pro</string>
     <string name="summary_upsell">Без денного ліміту й реклами з Pro.</string>
     <string name="summary_offer_title">Трохи більше порядку</string>
-    <string name="summary_offer_text">З PhotoMaid Pro прибирай без денного ліміту й реклами. Одна покупка, без передплати.</string>
+    <string name="summary_offer_text">З GaleriQ Pro прибирай без денного ліміту й реклами. Одна покупка, без передплати.</string>
     <string name="limit_soon">Сьогодні залишилося %1$d із %2$d</string>
     <string name="limit_soon_pro">Без ліміту з Pro</string>
     <string name="limit_bonus">Переглянути рекламу: видалити ще %1$d сьогодні</string>
     <string name="limit_bonus_note">Раз на день. Бонус діє лише сьогодні.</string>
     <string name="limit_bonus_dismissed">Рекламу закрито до завершення. Нічого не відкрито. Сьогодні можна спробувати ще раз.</string>
     <string name="limit_bonus_unavailable">Зараз немає доступної реклами. Нічого не відкрито.</string>
-    <string name="today_pro_title">PhotoMaid Pro</string>
+    <string name="today_pro_title">GaleriQ Pro</string>
     <string name="today_pro_text">Без денного ліміту й реклами. Одноразова покупка.</string>
     <plurals name="summary_upsell_count">
         <item quantity="one">Вибрано для видалення: %1$d.</item>
@@ -640,8 +640,8 @@
     <string name="onb_try_done">Ось як це працює. Тепер черга твоїх фото.</string>
     <string name="onb_demo_desc">Навчальні картки. Тут нічого не зберігається.</string>
     <string name="onb_safe_title">Ти вирішуєш, що видалити</string>
-    <string name="onb_safe_text">Елементи спочатку потрапляють у кошик PhotoMaid. Там ти підтверджуєш видалення. Для фото й відео Android просить додаткове підтвердження.</string>
-    <string name="onb_safe_local">Фото залишаються на твоєму пристрої. Без облікового запису PhotoMaid і завантаження фото на сервер.</string>
+    <string name="onb_safe_text">Елементи спочатку потрапляють у кошик GaleriQ. Там ти підтверджуєш видалення. Для фото й відео Android просить додаткове підтвердження.</string>
+    <string name="onb_safe_local">Фото залишаються на твоєму пристрої. Без облікового запису GaleriQ і завантаження фото на сервер.</string>
     <string name="onb_safe_sheet">Видалити</string>
     <string name="onb_safe_dialog">Android просить підтвердження</string>
     <string name="onb_offer_title">Почати безкоштовно</string>
@@ -650,7 +650,7 @@
     <string name="onb_buy">Купити Pro · %1$s одноразово</string>
     <string name="onb_buy_noprice">Купити Pro один раз</string>
     <string name="onb_access_title">Доступ до фото й відео</string>
-    <string name="onb_access_text">PhotoMaid показує фото й відео на пристрої, щоб ти міг навести лад. Без облікового запису й сервера PhotoMaid.</string>
+    <string name="onb_access_text">GaleriQ показує фото й відео на пристрої, щоб ти міг навести лад. Без облікового запису й сервера GaleriQ.</string>
     <string name="onb_progress">Крок %1$d із %2$d</string>
     <string name="offer_free_title">Користуватися безкоштовно</string>
     <string name="offer_free_text">Гортай і впорядковуй без обмежень, скільки завгодно.</string>
@@ -702,7 +702,7 @@
         <item quantity="other">Розмір %1$d елемента невідомий. Його не враховано в сумі.</item>
     </plurals>
     <string name="done_button">Готово</string>
-    <string name="done_partial">Невидалені елементи залишаються в кошику PhotoMaid.</string>
+    <string name="done_partial">Невидалені елементи залишаються в кошику GaleriQ.</string>
     <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
     <string name="basket_confirm_files_trash_title">Перемістити в кошик сховища?</string>
     <string name="basket_confirm_files_trash_message">Файли потраплять у кошик свого сховища, звідти їх можна відновити. Місце звільниться, лише коли їх видалять там.</string>
@@ -758,7 +758,7 @@
     <string name="series_button">Порівняти серію: %1$d фото</string>
     <string name="series_confirm">Залишити: %1$d · У кошик: %2$d</string>
     <string name="series_done">Залишено: %1$d · У кошику: %2$d</string>
-    <string name="series_footer">Нічого не видаляється. Кошик належить PhotoMaid і очищується лише після твого підтвердження.</string>
+    <string name="series_footer">Нічого не видаляється. Кошик належить GaleriQ і очищується лише після твого підтвердження.</string>
     <string name="series_hint">Торкнись фото, щоб порівняти його нижче. Позначка вирішує, що залишиться.</string>
     <string name="series_keep_toggle">Залишити</string>
     <string name="series_state_keep">Залишити</string>
@@ -883,7 +883,7 @@
     <string name="edit_ratio_locked">Пропорції закріплено</string>
     <string name="edit_ratio_free">Пропорції вільні</string>
     <string name="edit_size_result">%1$d × %2$d → %3$d × %4$d пікс.</string>
-    <string name="edit_size_small">Це фото вже маленьке. PhotoMaid ніколи не збільшує.</string>
+    <string name="edit_size_small">Це фото вже маленьке. GaleriQ ніколи не збільшує.</string>
     <string name="edit_pro_hint">Перегляд безкоштовно · збереження з Pro або 30-хвилинним тестом</string>
     <string name="edit_pro_more">Докладніше</string>
     <string name="edit_pro_title">Зберегти з Pro</string>
@@ -924,7 +924,7 @@
     <string name="redo">Повторити</string>
     <string name="edits_title">Змінені</string>
     <string name="hub_edits_sub">Копії та замінені оригінали</string>
-    <string name="edits_intro">Усе, що ти зберіг у редакторі PhotoMaid, спочатку нові. Зберігається лише на цьому пристрої.</string>
+    <string name="edits_intro">Усе, що ти зберіг у редакторі GaleriQ, спочатку нові. Зберігається лише на цьому пристрої.</string>
     <string name="edits_empty_title">Поки нічого не змінено</string>
     <string name="edits_empty_text">Під час перегляду торкнися олівця під фото чи відео, щоб обрізати, налаштувати або вкоротити.</string>
     <string name="edits_badge_copy">Копія</string>
@@ -1116,7 +1116,7 @@
     <string name="col_png_hint">PNG: без втрат і чітко, але файл більший.</string>
     <string name="col_pro_text">У цьому колажі є функції Pro (понад 4 фото, вільний макет або друк A4). Відкрий Pro або безкоштовний 30-хвилинний тест, щоб зберегти його.</string>
     <string name="col_save_action">Зберегти в галерею</string>
-    <string name="col_save_where">Зберігається як нове зображення в «Pictures/PhotoMaid». Фото не змінюються.</string>
+    <string name="col_save_where">Зберігається як нове зображення в «Pictures/GaleriQ». Фото не змінюються.</string>
     <plurals name="picker_next">
         <item quantity="one">Далі: %1$d</item>
         <item quantity="few">Далі: %1$d</item>
@@ -1211,7 +1211,7 @@
     <string name="vid_audio_export">Зберегти лише звук</string>
     <string name="vid_audio_suffix">звук</string>
     <string name="vid_audio_running">Збереження звуку</string>
-    <string name="vid_audio_saved">«%1$s» збережено в Music/PhotoMaid.</string>
+    <string name="vid_audio_saved">«%1$s» збережено в Music/GaleriQ.</string>
     <string name="vid_audio_failed">Не вдалося зберегти звук.</string>
     <string name="vid_fill">Заповнити</string>
     <string name="vid_fit">Показати все відео</string>
@@ -1241,10 +1241,10 @@
     <string name="lib_level_finer">Більші плитки</string>
     <string name="lib_level_coarser">Менші плитки</string>
     <string name="lib_trash_action">У кошик</string>
-    <string name="lib_trash_text">У кошик PhotoMaid — нічого не видаляється. Вирішиш там пізніше.</string>
-    <string name="lib_trash_text_fav">У кошик PhotoMaid — нічого не видаляється. Обране залишається (увімкнено «Захищати обране»).</string>
+    <string name="lib_trash_text">У кошик GaleriQ — нічого не видаляється. Вирішиш там пізніше.</string>
+    <string name="lib_trash_text_fav">У кошик GaleriQ — нічого не видаляється. Обране залишається (увімкнено «Захищати обране»).</string>
     <string name="lib_trash_fav_protected">Це обране. Увімкнено «Захищати обране», тому воно не потрапить у кошик. Змінити це можна в налаштуваннях.</string>
-    <string name="lib_trashed_one">У кошику PhotoMaid</string>
+    <string name="lib_trashed_one">У кошику GaleriQ</string>
     <string name="lib_review_from_here">Розібрати звідси</string>
     <string name="lib_feed_title">З медіатеки</string>
     <string name="lib_info_name">Назва</string>
@@ -1262,10 +1262,10 @@
         <item quantity="other">Перемістити %1$d елемента в кошик?</item>
     </plurals>
     <plurals name="lib_trashed">
-        <item quantity="one">%1$d елемент у кошику PhotoMaid.</item>
-        <item quantity="few">%1$d елементи в кошику PhotoMaid.</item>
-        <item quantity="many">%1$d елементів у кошику PhotoMaid.</item>
-        <item quantity="other">%1$d елемента в кошику PhotoMaid.</item>
+        <item quantity="one">%1$d елемент у кошику GaleriQ.</item>
+        <item quantity="few">%1$d елементи в кошику GaleriQ.</item>
+        <item quantity="many">%1$d елементів у кошику GaleriQ.</item>
+        <item quantity="other">%1$d елемента в кошику GaleriQ.</item>
     </plurals>
     <string name="lib_mode_timeline">Хронологія</string>
     <string name="lib_mode_folders">Папки</string>
@@ -1306,16 +1306,16 @@
     <string name="lib_sort_name">Назва</string>
     <string name="lib_sort_largest">Спочатку великі</string>
     <string name="lib_sort_default">Для всіх папок</string>
-    <string name="lib_hide">Сховати в PhotoMaid</string>
-    <string name="lib_hide_text">PhotoMaid більше не показуватиме їх – ні у «Фото», ні під час прибирання. Файли не змінюються й видимі в інших застосунках. Це не сейф.</string>
-    <string name="lib_hide_folder_title">Сховати «%1$s» у PhotoMaid?</string>
+    <string name="lib_hide">Сховати в GaleriQ</string>
+    <string name="lib_hide_text">GaleriQ більше не показуватиме їх – ні у «Фото», ні під час прибирання. Файли не змінюються й видимі в інших застосунках. Це не сейф.</string>
+    <string name="lib_hide_folder_title">Сховати «%1$s» у GaleriQ?</string>
     <string name="lib_hide_folder_text">Папка й вкладені папки більше не з’являтимуться у «Фото» та під час прибирання. Нічого не переміщується й не видаляється; інші застосунки її показують. Повернути: Папки › Приховані.</string>
     <string name="lib_hidden_title">Приховані</string>
-    <string name="lib_hidden_row">Папки й файли, які PhotoMaid не показує</string>
-    <string name="lib_hidden_intro">PhotoMaid ніде цього не показує. Файли не змінено, інші застосунки їх показують.</string>
+    <string name="lib_hidden_row">Папки й файли, які GaleriQ не показує</string>
+    <string name="lib_hidden_intro">GaleriQ ніде цього не показує. Файли не змінено, інші застосунки їх показують.</string>
     <string name="lib_hidden_none_title">Нічого не приховано</string>
-    <string name="lib_hidden_none_text">Скористайтеся «Сховати в PhotoMaid» для папки, фото чи вибору.</string>
-    <string name="lib_hidden_one">Сховано в PhotoMaid</string>
+    <string name="lib_hidden_none_text">Скористайтеся «Сховати в GaleriQ» для папки, фото чи вибору.</string>
+    <string name="lib_hidden_one">Сховано в GaleriQ</string>
     <string name="lib_unhide">Показати знову</string>
     <string name="lib_info_camera">Камера</string>
     <plurals name="lib_subfolders">
@@ -1331,16 +1331,16 @@
         <item quantity="other">%1$d папки</item>
     </plurals>
     <plurals name="lib_hide_title">
-        <item quantity="one">Сховати %1$d файл у PhotoMaid?</item>
-        <item quantity="few">Сховати %1$d файли в PhotoMaid?</item>
-        <item quantity="many">Сховати %1$d файлів у PhotoMaid?</item>
-        <item quantity="other">Сховати %1$d файлу в PhotoMaid?</item>
+        <item quantity="one">Сховати %1$d файл у GaleriQ?</item>
+        <item quantity="few">Сховати %1$d файли в GaleriQ?</item>
+        <item quantity="many">Сховати %1$d файлів у GaleriQ?</item>
+        <item quantity="other">Сховати %1$d файлу в GaleriQ?</item>
     </plurals>
     <plurals name="lib_hidden_done">
-        <item quantity="one">%1$d файл сховано в PhotoMaid</item>
-        <item quantity="few">%1$d файли сховано в PhotoMaid</item>
-        <item quantity="many">%1$d файлів сховано в PhotoMaid</item>
-        <item quantity="other">%1$d файлу сховано в PhotoMaid</item>
+        <item quantity="one">%1$d файл сховано в GaleriQ</item>
+        <item quantity="few">%1$d файли сховано в GaleriQ</item>
+        <item quantity="many">%1$d файлів сховано в GaleriQ</item>
+        <item quantity="other">%1$d файлу сховано в GaleriQ</item>
     </plurals>
     <plurals name="lib_unhidden">
         <item quantity="one">%1$d файл знову видно</item>
@@ -1384,7 +1384,7 @@
     <string name="done_note_media_deleted">Фото й відео видалено назавжди – їх немає в кошику Android.</string>
     <string name="systrash_open">Відкрити кошик Android</string>
     <string name="systrash_title">Кошик Android</string>
-    <string name="systrash_intro">Усе, що Android зберігає в кошику, – з PhotoMaid та інших застосунків. Після закінчення строку Android видаляє це сам.</string>
+    <string name="systrash_intro">Усе, що Android зберігає в кошику, – з GaleriQ та інших застосунків. Після закінчення строку Android видаляє це сам.</string>
     <string name="systrash_empty_title">Кошик Android порожній</string>
     <string name="systrash_empty_text">Видалені фото й відео деякий час є тут, їх можна відновити.</string>
     <string name="systrash_partial">Виконано %1$d з %2$d. Решта без змін.</string>
@@ -1393,7 +1393,7 @@
     <string name="set_delete_permanently">Видаляти назавжди</string>
     <string name="set_delete_permanently_detail">Вимк.: під час очищення все спершу потрапляє в кошик Android, і деякий час це можна повернути. Увімк.: усе одразу видаляється назавжди.</string>
     <string name="set_delete_permanently_confirm_title">Увімкнути видалення назавжди?</string>
-    <string name="set_delete_permanently_confirm_text">Відтепер очищення кошика PhotoMaid видаляє фото й відео назавжди. Вони не потрапляють до кошика Android, відновити їх не можна – навіть із ще не синхронізованих копій. Android однаково питатиме щоразу.</string>
+    <string name="set_delete_permanently_confirm_text">Відтепер очищення кошика GaleriQ видаляє фото й відео назавжди. Вони не потрапляють до кошика Android, відновити їх не можна – навіть із ще не синхронізованих копій. Android однаково питатиме щоразу.</string>
     <string name="set_delete_permanently_confirm_action">Увімкнути</string>
     <plurals name="result_media_deleted">
         <item quantity="one">%1$d файл видалено назавжди.</item>
@@ -1462,10 +1462,10 @@
     <string name="movie_music_volume">Гучність музики</string>
     <string name="movie_music_fade">Плавна поява й затухання</string>
     <string name="movie_original_off">Прибрати оригінальний звук</string>
-    <string name="movie_music_note">Ваш файл, з початку й з повтором за потреби. У PhotoMaid немає вбудованої музики. Під час поширення зважайте на права.</string>
+    <string name="movie_music_note">Ваш файл, з початку й з повтором за потреби. У GaleriQ немає вбудованої музики. Під час поширення зважайте на права.</string>
     <string name="movie_running">Створення відео…</string>
     <string name="movie_running_slideshow">Створення слайд-шоу…</string>
-    <string name="movie_saved">Збережено як нове відео в Movies/PhotoMaid. Оригінали не змінено.</string>
+    <string name="movie_saved">Збережено як нове відео в Movies/GaleriQ. Оригінали не змінено.</string>
     <string name="movie_failed">Не вдалося створити відео. Нічого не збережено, оригінали не змінено.</string>
     <string name="movie_too_few">Додайте щонайменше два кліпи.</string>
     <string name="movie_too_many">Не більше 50 кліпів на відео.</string>
@@ -1486,8 +1486,8 @@
     <string name="tools_pick">Виберіть фото</string>
     <string name="tools_pick_gif">Виберіть фото або одне відео</string>
     <string name="tools_running">Обробка файлів…</string>
-    <string name="tools_stitch_saved">Збережено як нове зображення в Pictures/PhotoMaid.</string>
-    <string name="tools_gif_saved">GIF збережено в Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_stitch_saved">Збережено як нове зображення в Pictures/GaleriQ.</string>
+    <string name="tools_gif_saved">GIF збережено в Pictures/GaleriQ (%1$s).</string>
     <string name="tools_failed">Не вдалося. Оригінали не змінено.</string>
     <string name="tools_pro_save">Створити з Pro</string>
     <string name="tools_start">Почати</string>
@@ -1554,8 +1554,8 @@
     <string name="dock_more">Ще</string>
     <string name="vid_trim_hint_short">Перетягни повзунки, щоб задати початок і кінець.</string>
     <string name="vid_export_info">Як зберігається</string>
-    <string name="vid_export_info_fast">Ви обрізали лише початок і кінець. Це швидко, а якість лишається як в оригіналі. Якщо це відео так не дозволяє, PhotoMaid створить його заново – це трохи довше. Загальна довжина %1$s.</string>
-    <string name="vid_export_info_reencode">Через інші зміни PhotoMaid створює все відео заново під час збереження. Це може трохи зайняти. Загальна довжина %1$s.</string>
+    <string name="vid_export_info_fast">Ви обрізали лише початок і кінець. Це швидко, а якість лишається як в оригіналі. Якщо це відео так не дозволяє, GaleriQ створить його заново – це трохи довше. Загальна довжина %1$s.</string>
+    <string name="vid_export_info_reencode">Через інші зміни GaleriQ створює все відео заново під час збереження. Це може трохи зайняти. Загальна довжина %1$s.</string>
     <string name="lib_mode_albums">Альбоми</string>
     <string name="org_new_album">Новий альбом</string>
     <string name="org_album_name">Назва альбому</string>
@@ -1569,13 +1569,13 @@
     <string name="org_already_in_album">Усе вже в «%1$s».</string>
     <string name="org_albums_empty_title">Альбомів ще немає</string>
     <string name="org_albums_empty_text">Альбом збирає фото й відео з будь-яких папок, не копіюючи й не переміщуючи їх. Одне фото може бути в кількох альбомах.</string>
-    <string name="org_albums_footer">Альбоми є лише в PhotoMaid. Папки показують, де лежить файл; добірки знаходять медіа за умовою.</string>
+    <string name="org_albums_footer">Альбоми є лише в GaleriQ. Папки показують, де лежить файл; добірки знаходять медіа за умовою.</string>
     <string name="org_album_empty">Альбом порожній. У розділі «Фото» вибери медіа й торкнися ⋯ › Додати до альбому.</string>
     <string name="org_missing_remove">Прибрати зі списку</string>
     <string name="org_tags">Мітки</string>
     <string name="org_tag_new_hint">Нова мітка</string>
     <string name="org_tag_add">Додати</string>
-    <string name="org_tags_none">Міток ще немає. Додай власні слова, наприклад «Рахунок» або «Відпустка», – PhotoMaid знає лише те, що ти вводиш сам.</string>
+    <string name="org_tags_none">Міток ще немає. Додай власні слова, наприклад «Рахунок» або «Відпустка», – GaleriQ знає лише те, що ти вводиш сам.</string>
     <string name="org_tag_remove">Прибрати мітку</string>
     <string name="org_tag_delete">Прибрати всюди</string>
     <string name="org_tag_delete_title">Прибрати мітку «%1$s» всюди?</string>
@@ -1583,7 +1583,7 @@
     <string name="org_tag_state_all">в усіх</string>
     <string name="org_tag_state_some">у деяких</string>
     <string name="org_note">Нотатка</string>
-    <string name="org_note_hint">Нотатка (лише в PhotoMaid, файл не змінюється)</string>
+    <string name="org_note_hint">Нотатка (лише в GaleriQ, файл не змінюється)</string>
     <string name="org_note_save">Зберегти нотатку</string>
     <string name="org_basket">Кошик вибору</string>
     <string name="org_basket_add">До кошика вибору</string>
@@ -1652,7 +1652,7 @@
     <string name="wf_target">Не більше на фото</string>
     <string name="wf_off">Немає</string>
     <string name="wf_min_edge">Не менше ніж (довша сторона)</string>
-    <string name="wf_target_note">PhotoMaid вимірює результат. Якщо мети не досягти в цих межах, файл не створюється, і ви побачите причину.</string>
+    <string name="wf_target_note">GaleriQ вимірює результат. Якщо мети не досягти в цих межах, файл не створюється, і ви побачите причину.</string>
     <string name="wf_videos">Відео</string>
     <string name="wf_video_skip">Пропустити</string>
     <string name="wf_video_note">Відео зберігаються заново під потрібний розмір. Зображення зменшується лише за потреби.</string>
@@ -1661,7 +1661,7 @@
     <string name="wf_name_base_hint">напр. Оголошення → Оголошення_001 (порожньо = вихідне ім’я)</string>
     <string name="wf_folder">Папка</string>
     <string name="wf_folder_same">Як в оригіналу</string>
-    <string name="wf_folder_photomaid">Папка PhotoMaid</string>
+    <string name="wf_folder_photomaid">Папка GaleriQ</string>
     <string name="wf_finish">Наприкінці</string>
     <string name="wf_finish_save">Зберегти</string>
     <string name="wf_finish_share">Лише поділитися</string>
@@ -1700,10 +1700,10 @@
     <string name="wf_share_again">Поділитися знову</string>
     <string name="wf_counts">Фото: %1$s · відео: %2$s</string>
     <string name="wf_start">Почати</string>
-    <string name="share_target_label">Надіслати в PhotoMaid</string>
+    <string name="share_target_label">Надіслати в GaleriQ</string>
     <string name="share_title">Отримано</string>
     <string name="share_none">Жодного з надісланих файлів немає в медіатеці цього пристрою.</string>
-    <string name="share_no_access">PhotoMaid ще не має доступу до фото. Дозвольте доступ у налаштуваннях і надішліть знову.</string>
+    <string name="share_no_access">GaleriQ ще не має доступу до фото. Дозвольте доступ у налаштуваннях і надішліть знову.</string>
     <string name="share_never">Нічого не видаляється і не вирішується. Новий файл з’явиться, лише коли ви збережете.</string>
     <string name="share_workflow">Застосувати сценарій</string>
     <string name="share_edit">Редагувати</string>
@@ -1742,7 +1742,7 @@
     <string name="pdf_from_selection">Створити PDF</string>
     <string name="pdf_no_photos">У вибірці немає фото. Відео не можна додати до PDF.</string>
     <string name="pdf_no_date">Без дати</string>
-    <string name="pdf_saved">Збережено в «Documents/PhotoMaid» · %1$s</string>
+    <string name="pdf_saved">Збережено в «Documents/GaleriQ» · %1$s</string>
     <string name="pdf_failed">Не вдалося зберегти PDF.</string>
     <string name="pdf_page_of">Сторінка %1$d з %2$d</string>
     <string name="pdf_capped">Не більше %1$d фото в PDF – узято перші %1$d.</string>
@@ -1804,5 +1804,5 @@
     <string name="tour_history_title">Пізніше та історія</string>
     <string name="tour_history_text">Тут видно, що ви залишили, відклали вбік чи на потім. Будь-яке рішення можна змінити.</string>
     <string name="tour_settings_title">Налаштування та допомога</string>
-    <string name="tour_settings_text">Налаштуйте PhotoMaid під себе й знайдіть відповіді. Цей огляд можна повторити будь-коли.</string>
+    <string name="tour_settings_text">Налаштуйте GaleriQ під себе й знайдіть відповіді. Цей огляд можна повторити будь-коли.</string>
 </resources>

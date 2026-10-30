@@ -155,7 +155,7 @@ class FoldersTest {
         rule.onAllNodesWithTag("lib.tile")[0].performSemanticsAction(SemanticsActions.OnLongClick); pumpUntil { count("lib.sel.hide") == 1 }
         val first = lib.reviewableMedia().first().id
         click("lib.sel.hide")
-        clickText("In PhotoMaid ausblenden")
+        clickText("In GaleriQ ausblenden")
         pumpUntil { first in app.settings.value.hiddenMedia && app.visiblePhotos.reviewableMedia().none { it.id == first } }
         // Auch beim Aufräumen nicht mehr da, Datei unverändert.
         assertFalse(app.photos.assets(MediaCategory.PHOTOS).any { it.id == first } || app.photos.assets(MediaCategory.VIDEOS).any { it.id == first })

@@ -22,7 +22,7 @@ android {
         versionCode = 1
         versionName = "0.1.0"
         buildConfigField("String", "PLAY_PRO_PRODUCT_ID", "\"${prop("photomaid.playProProductId")}\"")
-        buildConfigField("String", "PRIVACY_POLICY_URL", "\"${prop("photomaid.privacyPolicyUrl").ifBlank { "https://mrdevn4ever-sys.github.io/photomaid/privacy/" }}\"")
+        buildConfigField("String", "PRIVACY_POLICY_URL", "\"${prop("photomaid.privacyPolicyUrl").ifBlank { "https://mrdevn4ever-sys.github.io/galeriq/" }}\"")
         buildConfigField("boolean", "QA_FIXTURES", "false")
         // Werbung (AdMob): echte IDs nur per Gradle-Property, nie im Repository. Leer = keine Werbung (Release).
         manifestPlaceholders["admobAppId"] = prop("photomaid.admobAppId")

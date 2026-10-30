@@ -74,7 +74,7 @@ class AppFlowsTest {
         val app = makeTestApp(ctx, media = { FakeMediaLibrary(it, access = PhotoAccess.DENIED) })
         rule.setContent { TestHost(app) { TodayScreen(RecordingNav()) } }
         rule.onNodeWithText("Kein Zugriff auf deine Fotos und Videos").assertExists()
-        rule.onNodeWithText("Erlaube den Zugriff in den Android-Einstellungen für PhotoMaid. Deine bisherigen Entscheidungen bleiben gespeichert.").assertExists()
+        rule.onNodeWithText("Erlaube den Zugriff in den Android-Einstellungen für GaleriQ. Deine bisherigen Entscheidungen bleiben gespeichert.").assertExists()
         rule.onNodeWithText("Zugriff ändern").assertExists() // Ausweg statt Sackgasse
     }
 
@@ -159,7 +159,7 @@ class AppFlowsTest {
     @Test fun proLockedAndUnlocked() {
         val free = makeTestApp(ctx)
         rule.setContent { TestHost(free) { DuplicatesScreen(RecordingNav()) } }
-        rule.onNodeWithText("PhotoMaid Pro ansehen").assertExists()
+        rule.onNodeWithText("GaleriQ Pro ansehen").assertExists()
         rule.onNodeWithText("Pro").assertExists()
     }
 

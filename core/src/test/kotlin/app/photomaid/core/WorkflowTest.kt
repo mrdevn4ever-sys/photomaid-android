@@ -29,8 +29,8 @@ class WorkflowTest {
     }
 
     @Test fun namesAreNumberedAndSafe() {
-        assertEquals("Kleinanzeige_001", WorkflowRules.fileStem(classifieds, 0, 12, "IMG_1.jpg", "PhotoMaid"))
-        assertEquals("Kleinanzeige_0042", WorkflowRules.fileStem(classifieds, 41, 1200, "IMG_1.jpg", "PhotoMaid"))
+        assertEquals("Kleinanzeige_001", WorkflowRules.fileStem(classifieds, 0, 12, "IMG_1.jpg", "GaleriQ"))
+        assertEquals("Kleinanzeige_0042", WorkflowRules.fileStem(classifieds, 41, 1200, "IMG_1.jpg", "GaleriQ"))
         assertEquals("IMG_0042_bearbeitet", WorkflowRules.fileStem(classifieds.copy(nameBase = null), 0, 1, "IMG_0042.HEIC", "bearbeitet"))
         assertEquals("Ferien_2026", WorkflowRules.sanitizeBase(" Ferien 2026/ "))
         assertNull(WorkflowRules.sanitizeBase(" /:* "))

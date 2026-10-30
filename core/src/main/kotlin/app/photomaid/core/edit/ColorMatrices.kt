@@ -152,12 +152,12 @@ enum class EditKind { EDIT, COLLAGE, MERGE, SLIDESHOW, GIF, FRAME, COMPRESS, CON
 /** Dateiname der Kopie: „IMG_1234_bearbeitet.jpg“ (Zusatz aus den Texten). */
 object EditNames {
     fun copyName(original: String?, suffix: String, extension: String): String {
-        val base = original?.substringBeforeLast('.')?.takeIf { it.isNotBlank() } ?: "PhotoMaid"
+        val base = original?.substringBeforeLast('.')?.takeIf { it.isNotBlank() } ?: "GaleriQ"
         val clean = base.replace(Regex("[\\\\/:*?\"<>|]"), "_").take(80)
         return "${clean}_$suffix.$extension"
     }
     fun sameName(original: String?, extension: String): String {
-        val base = original?.substringBeforeLast('.')?.takeIf { it.isNotBlank() } ?: "PhotoMaid"
+        val base = original?.substringBeforeLast('.')?.takeIf { it.isNotBlank() } ?: "GaleriQ"
         return "$base.$extension"
     }
 }

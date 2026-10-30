@@ -511,7 +511,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
             put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp4")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, "Music/PhotoMaid/")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, "Music/GaleriQ/")
             put(MediaStore.MediaColumns.IS_PENDING, 1)
         }
         val uri = runCatching { resolver.insert(MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values) }.getOrNull()
@@ -532,7 +532,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
             put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, "Documents/PhotoMaid/")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, "Documents/GaleriQ/")
             put(MediaStore.MediaColumns.IS_PENDING, 1)
         }
         val uri = runCatching { resolver.insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values) }.getOrNull()
@@ -555,7 +555,7 @@ class PhotoLibraryService(private val context: Context, private val everAsked: (
         val col = collection(request.video)
         val top = setOf("DCIM", "Pictures") + if (request.video) setOf("Movies") else emptySet()
         val wanted = request.relativePath?.let { MediaFolders.normalize(it) }?.takeIf { p -> p.substringBefore('/') in top && !p.split('/').any { it.startsWith(".") } }
-        val path = wanted ?: if (request.video) "Movies/PhotoMaid/" else "Pictures/PhotoMaid/"
+        val path = wanted ?: if (request.video) "Movies/GaleriQ/" else "Pictures/GaleriQ/"
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, request.displayName)
             put(MediaStore.MediaColumns.MIME_TYPE, request.mime)

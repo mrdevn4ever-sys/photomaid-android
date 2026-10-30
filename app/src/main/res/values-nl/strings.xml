@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generated PhotoMaid UI translations. See CODE_AENDERUNGEN.json before integration. -->
+<!-- Generated GaleriQ UI translations. See CODE_AENDERUNGEN.json before integration. -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PhotoMaid</string>
+    <string name="app_name">GaleriQ</string>
     <string name="ok">OK</string>
     <string name="cancel">Annuleren</string>
     <string name="done">Klaar</string>
@@ -17,7 +17,7 @@
     <string name="info">Info</string>
     <string name="error_title">Dat is niet gelukt</string>
     <string name="retry">Opnieuw proberen</string>
-    <string name="store_open_failed">PhotoMaid kon de opgeslagen gegevens niet openen.</string>
+    <string name="store_open_failed">GaleriQ kon de opgeslagen gegevens niet openen.</string>
     <plurals name="items_count">
         <item quantity="one">%1$d item</item>
         <item quantity="other">%1$d items</item>
@@ -42,12 +42,12 @@
     <string name="tab_cleanup">Opruimen</string>
     <string name="tab_history">Geschiedenis</string>
     <string name="today_limited_title">Beperkte toegang</string>
-    <string name="today_limited_text">PhotoMaid toont alleen foto’s en video’s waarvoor je toegang hebt gegeven. Je kunt deze gewoon opruimen.</string>
+    <string name="today_limited_text">GaleriQ toont alleen foto’s en video’s waarvoor je toegang hebt gegeven. Je kunt deze gewoon opruimen.</string>
     <string name="today_limited_action">Toegang wijzigen</string>
     <string name="today_access_title">Toegang tot foto’s en video’s</string>
     <string name="today_access_denied_title">Geen toegang tot je foto’s en video’s</string>
-    <string name="today_access_denied">Geef toegang via de Android-instellingen voor PhotoMaid. Je eerdere keuzes blijven bewaard.</string>
-    <string name="today_access_default">Geef PhotoMaid toegang om je foto’s en video’s te bekijken en te ordenen.</string>
+    <string name="today_access_denied">Geef toegang via de Android-instellingen voor GaleriQ. Je eerdere keuzes blijven bewaard.</string>
+    <string name="today_access_default">Geef GaleriQ toegang om je foto’s en video’s te bekijken en te ordenen.</string>
     <string name="storage_used_of">van %1$s gebruikt</string>
     <string name="today_start_sub">Veeg door je foto’s en video’s.</string>
     <string name="today_continue_sub">Ga verder waar je gebleven was.</string>
@@ -204,20 +204,20 @@
         <item quantity="other">%1$d bestanden zijn definitief verwijderd.</item>
     </plurals>
     <plurals name="result_partial">
-        <item quantity="one">Verwijderd: %1$d van %2$d. De rest blijft in de PhotoMaid-prullenbak.</item>
-        <item quantity="other">Verwijderd: %1$d van %2$d. De rest blijft in de PhotoMaid-prullenbak.</item>
+        <item quantity="one">Verwijderd: %1$d van %2$d. De rest blijft in de GaleriQ-prullenbak.</item>
+        <item quantity="other">Verwijderd: %1$d van %2$d. De rest blijft in de GaleriQ-prullenbak.</item>
     </plurals>
     <string name="result_cancelled">Geannuleerd. Er is niets verwijderd.</string>
     <string name="result_nothing">Er is niets verwijderd.</string>
     <plurals name="result_allowance">
-        <item quantity="one">Geselecteerd: %2$d. Je kunt vandaag nog %1$d item verwijderen. Selecteer er maximaal %1$d of neem PhotoMaid Pro.</item>
-        <item quantity="other">Geselecteerd: %2$d. Je kunt vandaag nog %1$d items verwijderen. Selecteer er maximaal %1$d of neem PhotoMaid Pro.</item>
+        <item quantity="one">Geselecteerd: %2$d. Je kunt vandaag nog %1$d item verwijderen. Selecteer er maximaal %1$d of neem GaleriQ Pro.</item>
+        <item quantity="other">Geselecteerd: %2$d. Je kunt vandaag nog %1$d items verwijderen. Selecteer er maximaal %1$d of neem GaleriQ Pro.</item>
     </plurals>
     <string name="result_changed">Je selectie is gewijzigd. Controleer die opnieuw.</string>
     <string name="result_reconcile">We controleren het resultaat bij de volgende start. Er wordt niets opnieuw verwijderd.</string>
     <string name="item_actions_for">Acties voor %1$s</string>
     <string name="files_none_title">Nog geen map gekoppeld</string>
-    <string name="files_none_message">Kies een map om de bestanden in PhotoMaid te bekijken.</string>
+    <string name="files_none_message">Kies een map om de bestanden in GaleriQ te bekijken.</string>
     <string name="files_none_tip">De map Downloads kan hier niet worden gekozen. Kies in plaats daarvan een submap daarin.</string>
     <string name="file_type">Bestandstype</string>
     <string name="kind_all">Alle</string>
@@ -240,7 +240,7 @@
     <string name="sources_ro">Alleen bekijken</string>
     <string name="sources_unreachable">Niet bereikbaar — koppel opnieuw</string>
     <string name="sources_remove">Map ontkoppelen</string>
-    <string name="sources_footer">Een map ontkoppelen verwijdert geen bestanden. Je kiest zelf welke mappen PhotoMaid in deze bestandsweergave mag zien.</string>
+    <string name="sources_footer">Een map ontkoppelen verwijdert geen bestanden. Je kiest zelf welke mappen GaleriQ in deze bestandsweergave mag zien.</string>
     <plurals name="large_in_files">
         <item quantity="one">in %1$d groot bestand</item>
         <item quantity="other">in %1$d grote bestanden</item>
@@ -258,12 +258,12 @@
     <string name="storage_a">Je apparaat</string>
     <string name="storage_available">%1$s vrij volgens Android</string>
     <string name="storage_unavailable">Opslaginfo is nu niet beschikbaar</string>
-    <string name="storage_b">Zichtbaar voor PhotoMaid</string>
+    <string name="storage_b">Zichtbaar voor GaleriQ</string>
     <string name="storage_of_which_screens">waarvan schermafbeeldingen</string>
     <string name="storage_connected_folders">Gekoppelde mappen</string>
     <string name="storage_b_footer">Schermafbeeldingen zijn al meegeteld bij foto’s. Grote bestanden en duplicaten worden niet opnieuw geteld. Onbekende groottes ontbreken in het totaal; dan staat er ‘Minstens’.</string>
-    <string name="storage_c">Niet zichtbaar voor PhotoMaid</string>
-    <string name="storage_c_text">PhotoMaid kan andere apps, systeembestanden, cloudinhoud en niet-toegestane mappen niet controleren. Daarvoor wordt geen grootte getoond.</string>
+    <string name="storage_c">Niet zichtbaar voor GaleriQ</string>
+    <string name="storage_c_text">GaleriQ kan andere apps, systeembestanden, cloudinhoud en niet-toegestane mappen niet controleren. Daarvoor wordt geen grootte getoond.</string>
     <string name="storage_local">De opslaganalyse blijft op je apparaat.</string>
     <plurals name="storage_value_items">
         <item quantity="one">%1$d item · %2$s</item>
@@ -271,11 +271,11 @@
     </plurals>
     <string name="dup_find">Identieke kopieën vinden</string>
     <string name="dup_explain">Vind foto’s, video’s en bestanden met precies dezelfde inhoud. Je bepaalt zelf welke kopieën naar de prullenbak gaan.</string>
-    <string name="dup_how">PhotoMaid vergelijkt bestandsinhoud op je apparaat. Afbeeldingen die op elkaar lijken, tellen niet als identieke kopieën.</string>
+    <string name="dup_how">GaleriQ vergelijkt bestandsinhoud op je apparaat. Afbeeldingen die op elkaar lijken, tellen niet als identieke kopieën.</string>
     <string name="dup_checking">Bestanden vergelijken …</string>
     <string name="dup_start">Kopieën zoeken</string>
     <string name="dup_again">Opnieuw zoeken</string>
-    <string name="pro_view">PhotoMaid Pro bekijken</string>
+    <string name="pro_view">GaleriQ Pro bekijken</string>
     <string name="dup_none">Geen identieke kopieën gevonden</string>
     <string name="dup_none_message">Er zijn geen identieke kopieën gevonden in de toegankelijke gedeelten.</string>
     <plurals name="dup_not_comparable">
@@ -367,7 +367,7 @@
     <string name="h_later">Voor later bewaard</string>
     <string name="h_later_corr">Gewijzigd: later</string>
     <string name="h_changed">Gewijzigd</string>
-    <string name="pro_title">PhotoMaid Pro</string>
+    <string name="pro_title">GaleriQ Pro</string>
     <string name="pro_subtitle">Eén keer kopen. Geen abonnement.</string>
     <string name="pro_f2">Opruimen zonder daglimiet</string>
     <string name="pro_f2d">Verwijder zoveel je wilt, zonder de daglimiet van %1$d.</string>
@@ -375,24 +375,24 @@
     <string name="pro_f3d">Vind identieke foto’s, video’s en bestanden uit gekoppelde mappen.</string>
     <string name="pro_f5">Eigen verzamelingen</string>
     <string name="pro_f5d">Sla je eigen filters op, zoals ‘Video’s groter dan 500 MB’. Eén tik opent de passende inhoud.</string>
-    <string name="pro_also">Eén keer kopen en opruimen zonder advertenties. Geen abonnement of PhotoMaid-account.</string>
+    <string name="pro_also">Eén keer kopen en opruimen zonder advertenties. Geen abonnement of GaleriQ-account.</string>
     <string name="pro_f1">Geen advertenties</string>
     <string name="pro_f1d">Geen advertentiekaarten tussen je foto’s en video’s.</string>
     <string name="pro_details">Zo werkt Pro</string>
-    <string name="pro_details_dup">Kopieën zijn bestanden die tot in het kleinste detail gelijk zijn. PhotoMaid vergelijkt ze op je apparaat, niet in de cloud. Beelden die alleen op elkaar lijken, tellen niet als kopie.</string>
+    <string name="pro_details_dup">Kopieën zijn bestanden die tot in het kleinste detail gelijk zijn. GaleriQ vergelijkt ze op je apparaat, niet in de cloud. Beelden die alleen op elkaar lijken, tellen niet als kopie.</string>
     <string name="pro_details_rules">Verzamelingen tonen passende inhoud op je apparaat. Je opent en bekijkt die zelf. Ze verwijderen niets automatisch en ruimen niet op de achtergrond op.</string>
     <string name="pro_details_cleanup">Voor de daglimiet telt alleen wat je echt uit de prullenbak verwijdert. Vegen telt nooit.</string>
     <string name="expanded">Uitgeklapt</string>
     <string name="collapsed">Ingeklapt</string>
     <string name="pro_privacy">Je foto’s en bestanden worden alleen op je apparaat bekeken en gesorteerd. Voor aankopen en advertenties gaat alleen het hoognodige naar Google of adverteerders – nooit je foto’s, hun namen of iets wat eruit is afgeleid.</string>
     <string name="pro_pending">Je aankoop wacht op bevestiging.</string>
-    <string name="pro_unlock">PhotoMaid Pro ontgrendelen</string>
+    <string name="pro_unlock">GaleriQ Pro ontgrendelen</string>
     <string name="pro_price_once">%1$s · Eenmalige aankoop</string>
     <string name="pro_price_loading">Prijs laden …</string>
     <string name="pro_unavailable">Aankopen zijn nog niet beschikbaar in deze versie.</string>
     <string name="pro_restore">Aankopen herstellen</string>
     <string name="pro_revoked">Een eerdere aankoop is terugbetaald of ingetrokken.</string>
-    <string name="pro_msg_active">PhotoMaid Pro is nu actief.</string>
+    <string name="pro_msg_active">GaleriQ Pro is nu actief.</string>
     <string name="pro_msg_pending">Je aankoop wacht op bevestiging. Daarna wordt Pro ontgrendeld.</string>
     <string name="pro_msg_failed">De aankoop kon niet worden afgerond.</string>
     <string name="pro_msg_restored">Je aankoop is hersteld.</string>
@@ -430,13 +430,13 @@
     <string name="help_decide">Kiezen</string>
     <string name="help_decide_text">Veeg omhoog om te bewaren, naar links voor de prullenbak en naar rechts voor later. Standaard komt het item na 2 dagen terug. Je kunt die wachttijd wijzigen in de instellingen. Kies direct na het vegen via ‘Wijzigen’ een andere datum. Veeg omlaag om terug te gaan zonder een nieuwe keuze.</string>
     <string name="help_delete">Verwijderen</string>
-    <string name="help_delete_text">Vegen verwijdert nooit iets. Wat je apart zet, gaat eerst naar de PhotoMaid-prullenbak. Pas als je die leegt, wordt er echt iets verwijderd – foto’s en video’s gaan dan naar de Android-prullenbak, nadat Android het nog een keer vraagt. Bestanden uit gekoppelde mappen worden definitief verwijderd.</string>
+    <string name="help_delete_text">Vegen verwijdert nooit iets. Wat je apart zet, gaat eerst naar de GaleriQ-prullenbak. Pas als je die leegt, wordt er echt iets verwijderd – foto’s en video’s gaan dan naar de Android-prullenbak, nadat Android het nog een keer vraagt. Bestanden uit gekoppelde mappen worden definitief verwijderd.</string>
     <string name="help_cloud">Cloud</string>
-    <string name="help_cloud_text">Clouddiensten zoals Google Foto’s kunnen verwijderingen synchroniseren met andere apparaten. Controleer hun instellingen. PhotoMaid downloadt geen inhoud die alleen in de cloud staat.</string>
+    <string name="help_cloud_text">Clouddiensten zoals Google Foto’s kunnen verwijderingen synchroniseren met andere apparaten. Controleer hun instellingen. GaleriQ downloadt geen inhoud die alleen in de cloud staat.</string>
     <string name="help_free">Gratis</string>
     <string name="help_free_text">Bekijken, vegen en voor later bewaren is onbeperkt. Zonder Pro kun je er maximaal %1$d per dag verwijderen.</string>
     <string name="privacy_title">Je privacy staat voorop</string>
-    <string name="privacy_text">PhotoMaid bekijkt je foto’s, video’s en toegestane bestanden alleen op je apparaat. Je hebt geen account nodig en er is geen PhotoMaid-server. Goed om te weten: bij clouddiensten zoals Google Foto kan wat je verwijdert ook op je andere apparaten verdwijnen.</string>
+    <string name="privacy_text">GaleriQ bekijkt je foto’s, video’s en toegestane bestanden alleen op je apparaat. Je hebt geen account nodig en er is geen GaleriQ-server. Goed om te weten: bij clouddiensten zoals Google Foto kan wat je verwijdert ook op je andere apparaten verdwijnen.</string>
     <string name="privacy_media">Foto’s en video’s</string>
     <string name="privacy_media_text">Om foto’s en video’s te bekijken, te ordenen en na je bevestiging te verwijderen.</string>
     <string name="privacy_allow">Toegang toestaan</string>
@@ -487,7 +487,7 @@
     <string name="basket_preview_note">Bekijken verandert je selectie niet.</string>
     <string name="limit_title_partial">Vandaag nog %1$d over</string>
     <string name="limit_title_none">Daglimiet bereikt</string>
-    <string name="limit_message">Geselecteerd: %2$d. Zonder Pro kun je er maximaal %1$d per dag verwijderen. De rest blijft in de PhotoMaid-prullenbak.</string>
+    <string name="limit_message">Geselecteerd: %2$d. Zonder Pro kun je er maximaal %1$d per dag verwijderen. De rest blijft in de GaleriQ-prullenbak.</string>
     <string name="limit_tomorrow">Morgen is je dagelijkse tegoed weer beschikbaar.</string>
     <string name="limit_take_partial">%1$d hiervan verwijderen</string>
     <string name="reward_title">Pro-functies 30 minuten proberen</string>
@@ -560,14 +560,14 @@
     <string name="limit_all_with_pro">Alle %1$d verwijderen met Pro</string>
     <string name="summary_upsell">Geen daglimiet of advertenties met Pro.</string>
     <string name="summary_offer_title">Weer een beetje opgeruimder</string>
-    <string name="summary_offer_text">Met PhotoMaid Pro ruim je op zonder daglimiet of advertenties. Eén keer kopen, geen abonnement.</string>
+    <string name="summary_offer_text">Met GaleriQ Pro ruim je op zonder daglimiet of advertenties. Eén keer kopen, geen abonnement.</string>
     <string name="limit_soon">Vandaag nog %1$d van %2$d over</string>
     <string name="limit_soon_pro">Geen limiet met Pro</string>
     <string name="limit_bonus">Advertentie bekijken: vandaag %1$d extra verwijderen</string>
     <string name="limit_bonus_note">Eén keer per dag. De bonus geldt alleen vandaag.</string>
     <string name="limit_bonus_dismissed">De advertentie is te vroeg gesloten. Er is niets ontgrendeld. Je kunt het vandaag opnieuw proberen.</string>
     <string name="limit_bonus_unavailable">Er is nu geen advertentie beschikbaar. Er is niets ontgrendeld.</string>
-    <string name="today_pro_title">PhotoMaid Pro</string>
+    <string name="today_pro_title">GaleriQ Pro</string>
     <string name="today_pro_text">Geen daglimiet, geen advertenties. Eenmalige aankoop.</string>
     <plurals name="summary_upsell_count">
         <item quantity="one">%1$d geselecteerd voor verwijdering.</item>
@@ -582,8 +582,8 @@
     <string name="onb_try_done">Zo werkt het. Nu zijn je foto’s aan de beurt.</string>
     <string name="onb_demo_desc">Oefenkaarten. Hier wordt niets opgeslagen.</string>
     <string name="onb_safe_title">Jij bepaalt wat wordt verwijderd</string>
-    <string name="onb_safe_text">Items gaan eerst naar de PhotoMaid-prullenbak. Daar bevestig je het verwijderen. Android vraagt bij foto’s en video’s nogmaals om bevestiging.</string>
-    <string name="onb_safe_local">Je foto’s blijven op je apparaat. Geen PhotoMaid-account en geen foto-uploads.</string>
+    <string name="onb_safe_text">Items gaan eerst naar de GaleriQ-prullenbak. Daar bevestig je het verwijderen. Android vraagt bij foto’s en video’s nogmaals om bevestiging.</string>
+    <string name="onb_safe_local">Je foto’s blijven op je apparaat. Geen GaleriQ-account en geen foto-uploads.</string>
     <string name="onb_safe_sheet">Verwijderen</string>
     <string name="onb_safe_dialog">Android vraagt om bevestiging</string>
     <string name="onb_offer_title">Gratis beginnen</string>
@@ -592,7 +592,7 @@
     <string name="onb_buy">Pro kopen · %1$s eenmalig</string>
     <string name="onb_buy_noprice">Pro eenmalig kopen</string>
     <string name="onb_access_title">Toegang tot foto’s en video’s</string>
-    <string name="onb_access_text">PhotoMaid toont je foto’s en video’s op je apparaat, zodat je kunt opruimen. Zonder PhotoMaid-account of -server.</string>
+    <string name="onb_access_text">GaleriQ toont je foto’s en video’s op je apparaat, zodat je kunt opruimen. Zonder GaleriQ-account of -server.</string>
     <string name="onb_progress">Stap %1$d van %2$d</string>
     <string name="offer_free_title">Gratis gebruiken</string>
     <string name="offer_free_text">Veeg en orden zonder limieten, zolang je wilt.</string>
@@ -642,7 +642,7 @@
         <item quantity="other">Van %1$d items is de grootte onbekend. Ze zijn niet meegeteld.</item>
     </plurals>
     <string name="done_button">Klaar</string>
-    <string name="done_partial">Niet-verwijderde items blijven in de PhotoMaid-prullenbak.</string>
+    <string name="done_partial">Niet-verwijderde items blijven in de GaleriQ-prullenbak.</string>
     <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
     <string name="basket_confirm_files_trash_title">Naar de prullenbak van de opslaglocatie?</string>
     <string name="basket_confirm_files_trash_message">De bestanden gaan naar de prullenbak van hun opslaglocatie en zijn daar te herstellen. Ruimte komt pas vrij als ze daar worden verwijderd.</string>
@@ -698,7 +698,7 @@
     <string name="series_button">Reeks van %1$d foto’s vergelijken</string>
     <string name="series_confirm">%1$d bewaren · %2$d naar prullenbak</string>
     <string name="series_done">%1$d bewaard · %2$d in prullenbak</string>
-    <string name="series_footer">Er wordt niets verwijderd. De prullenbak is van PhotoMaid en wordt pas geleegd als je dat bevestigt.</string>
+    <string name="series_footer">Er wordt niets verwijderd. De prullenbak is van GaleriQ en wordt pas geleegd als je dat bevestigt.</string>
     <string name="series_hint">Tik op een foto om hem onderaan te vergelijken. Het vinkje bepaalt wat blijft.</string>
     <string name="series_keep_toggle">Bewaren</string>
     <string name="series_state_keep">Bewaren</string>
@@ -805,7 +805,7 @@
     <string name="edit_ratio_locked">Verhouding vergrendeld</string>
     <string name="edit_ratio_free">Verhouding vrij</string>
     <string name="edit_size_result">%1$d × %2$d → %3$d × %4$d px</string>
-    <string name="edit_size_small">Deze foto is al klein. PhotoMaid vergroot nooit.</string>
+    <string name="edit_size_small">Deze foto is al klein. GaleriQ vergroot nooit.</string>
     <string name="edit_pro_hint">Voorbeeld gratis · opslaan met Pro of de test van 30 minuten</string>
     <string name="edit_pro_more">Meer</string>
     <string name="edit_pro_title">Opslaan met Pro</string>
@@ -846,7 +846,7 @@
     <string name="redo">Opnieuw</string>
     <string name="edits_title">Bewerkt</string>
     <string name="hub_edits_sub">Kopieën en vervangen originelen</string>
-    <string name="edits_intro">Alles wat je in de editor van PhotoMaid hebt opgeslagen, nieuwste eerst. Alleen op dit apparaat.</string>
+    <string name="edits_intro">Alles wat je in de editor van GaleriQ hebt opgeslagen, nieuwste eerst. Alleen op dit apparaat.</string>
     <string name="edits_empty_title">Nog niets bewerkt</string>
     <string name="edits_empty_text">Tik tijdens het doornemen op het potlood onder een foto of video om bij te snijden, aan te passen of in te korten.</string>
     <string name="edits_badge_copy">Kopie</string>
@@ -1038,7 +1038,7 @@
     <string name="col_png_hint">PNG: verliesvrij en scherp, maar een groter bestand.</string>
     <string name="col_pro_text">Deze collage gebruikt Pro-functies (meer dan 4 foto’s, vrije indeling of A4-afdruk). Ontgrendel Pro of de gratis test van 30 minuten om hem op te slaan.</string>
     <string name="col_save_action">Opslaan in galerij</string>
-    <string name="col_save_where">Wordt als nieuwe afbeelding opgeslagen in ‘Pictures/PhotoMaid’. Je foto’s blijven ongewijzigd.</string>
+    <string name="col_save_where">Wordt als nieuwe afbeelding opgeslagen in ‘Pictures/GaleriQ’. Je foto’s blijven ongewijzigd.</string>
     <plurals name="picker_next">
         <item quantity="one">Verder met %1$d</item>
         <item quantity="other">Verder met %1$d</item>
@@ -1127,7 +1127,7 @@
     <string name="vid_audio_export">Alleen het geluid opslaan</string>
     <string name="vid_audio_suffix">geluid</string>
     <string name="vid_audio_running">Geluid opslaan</string>
-    <string name="vid_audio_saved">‘%1$s’ opgeslagen in Music/PhotoMaid.</string>
+    <string name="vid_audio_saved">‘%1$s’ opgeslagen in Music/GaleriQ.</string>
     <string name="vid_audio_failed">Het geluid kon niet worden opgeslagen.</string>
     <string name="vid_fill">Vullen</string>
     <string name="vid_fit">Hele video tonen</string>
@@ -1157,10 +1157,10 @@
     <string name="lib_level_finer">Grotere tegels</string>
     <string name="lib_level_coarser">Kleinere tegels</string>
     <string name="lib_trash_action">Naar prullenbak</string>
-    <string name="lib_trash_text">Naar de PhotoMaid-prullenbak – er wordt niets verwijderd. Je beslist daar later.</string>
-    <string name="lib_trash_text_fav">Naar de PhotoMaid-prullenbak – er wordt niets verwijderd. Favorieten blijven (‘Favorieten beschermen’ staat aan).</string>
+    <string name="lib_trash_text">Naar de GaleriQ-prullenbak – er wordt niets verwijderd. Je beslist daar later.</string>
+    <string name="lib_trash_text_fav">Naar de GaleriQ-prullenbak – er wordt niets verwijderd. Favorieten blijven (‘Favorieten beschermen’ staat aan).</string>
     <string name="lib_trash_fav_protected">Dit is een favoriet. ‘Favorieten beschermen’ staat aan, dus hij gaat niet naar de prullenbak. Je kunt dit wijzigen in Instellingen.</string>
-    <string name="lib_trashed_one">In de PhotoMaid-prullenbak</string>
+    <string name="lib_trashed_one">In de GaleriQ-prullenbak</string>
     <string name="lib_review_from_here">Vanaf hier opruimen</string>
     <string name="lib_feed_title">Uit de bibliotheek</string>
     <string name="lib_info_name">Naam</string>
@@ -1176,8 +1176,8 @@
         <item quantity="other">%1$d items naar de prullenbak?</item>
     </plurals>
     <plurals name="lib_trashed">
-        <item quantity="one">%1$d item staat in de PhotoMaid-prullenbak.</item>
-        <item quantity="other">%1$d items staan in de PhotoMaid-prullenbak.</item>
+        <item quantity="one">%1$d item staat in de GaleriQ-prullenbak.</item>
+        <item quantity="other">%1$d items staan in de GaleriQ-prullenbak.</item>
     </plurals>
     <string name="lib_mode_timeline">Tijdlijn</string>
     <string name="lib_mode_folders">Mappen</string>
@@ -1218,16 +1218,16 @@
     <string name="lib_sort_name">Naam</string>
     <string name="lib_sort_largest">Grootste eerst</string>
     <string name="lib_sort_default">Voor alle mappen gebruiken</string>
-    <string name="lib_hide">Verbergen in PhotoMaid</string>
-    <string name="lib_hide_text">PhotoMaid toont ze niet meer – niet bij Foto’s en niet bij opruimen. De bestanden blijven ongewijzigd en zichtbaar in andere apps. Dit is geen kluis.</string>
-    <string name="lib_hide_folder_title">‘%1$s’ verbergen in PhotoMaid?</string>
+    <string name="lib_hide">Verbergen in GaleriQ</string>
+    <string name="lib_hide_text">GaleriQ toont ze niet meer – niet bij Foto’s en niet bij opruimen. De bestanden blijven ongewijzigd en zichtbaar in andere apps. Dit is geen kluis.</string>
+    <string name="lib_hide_folder_title">‘%1$s’ verbergen in GaleriQ?</string>
     <string name="lib_hide_folder_text">De map en submappen verschijnen niet meer bij Foto’s en bij opruimen. Er wordt niets verplaatst of verwijderd; andere apps tonen hem nog. Weer tonen via Mappen › Verborgen.</string>
     <string name="lib_hidden_title">Verborgen</string>
-    <string name="lib_hidden_row">Mappen en media die PhotoMaid niet toont</string>
-    <string name="lib_hidden_intro">PhotoMaid toont dit nergens. De bestanden zijn ongewijzigd en andere apps tonen ze nog.</string>
+    <string name="lib_hidden_row">Mappen en media die GaleriQ niet toont</string>
+    <string name="lib_hidden_intro">GaleriQ toont dit nergens. De bestanden zijn ongewijzigd en andere apps tonen ze nog.</string>
     <string name="lib_hidden_none_title">Niets verborgen</string>
-    <string name="lib_hidden_none_text">Gebruik ‘Verbergen in PhotoMaid’ bij een map, een foto of een selectie.</string>
-    <string name="lib_hidden_one">Verborgen in PhotoMaid</string>
+    <string name="lib_hidden_none_text">Gebruik ‘Verbergen in GaleriQ’ bij een map, een foto of een selectie.</string>
+    <string name="lib_hidden_one">Verborgen in GaleriQ</string>
     <string name="lib_unhide">Weer tonen</string>
     <string name="lib_info_camera">Camera</string>
     <plurals name="lib_subfolders">
@@ -1239,12 +1239,12 @@
         <item quantity="other">%1$d mappen</item>
     </plurals>
     <plurals name="lib_hide_title">
-        <item quantity="one">%1$d item verbergen in PhotoMaid?</item>
-        <item quantity="other">%1$d items verbergen in PhotoMaid?</item>
+        <item quantity="one">%1$d item verbergen in GaleriQ?</item>
+        <item quantity="other">%1$d items verbergen in GaleriQ?</item>
     </plurals>
     <plurals name="lib_hidden_done">
-        <item quantity="one">%1$d item verborgen in PhotoMaid</item>
-        <item quantity="other">%1$d items verborgen in PhotoMaid</item>
+        <item quantity="one">%1$d item verborgen in GaleriQ</item>
+        <item quantity="other">%1$d items verborgen in GaleriQ</item>
     </plurals>
     <plurals name="lib_unhidden">
         <item quantity="one">%1$d item weer zichtbaar</item>
@@ -1284,7 +1284,7 @@
     <string name="done_note_media_deleted">De foto’s en video’s zijn definitief verwijderd – ze staan niet in de Android-prullenbak.</string>
     <string name="systrash_open">Android-prullenbak bekijken</string>
     <string name="systrash_title">Android-prullenbak</string>
-    <string name="systrash_intro">Alles wat Android in de prullenbak bewaart – uit PhotoMaid en andere apps. Na afloop verwijdert Android het zelf.</string>
+    <string name="systrash_intro">Alles wat Android in de prullenbak bewaart – uit GaleriQ en andere apps. Na afloop verwijdert Android het zelf.</string>
     <string name="systrash_empty_title">Android-prullenbak is leeg</string>
     <string name="systrash_empty_text">Verwijderde foto’s en video’s staan hier een tijdje en zijn terug te halen.</string>
     <string name="systrash_partial">%1$d van %2$d gedaan. De rest blijft zoals het was.</string>
@@ -1293,7 +1293,7 @@
     <string name="set_delete_permanently">Definitief verwijderen</string>
     <string name="set_delete_permanently_detail">Uit: bij het legen gaat alles eerst naar de Android-prullenbak en kun je het een tijd terughalen. Aan: alles wordt meteen definitief verwijderd.</string>
     <string name="set_delete_permanently_confirm_title">Definitief verwijderen inschakelen?</string>
-    <string name="set_delete_permanently_confirm_text">Vanaf nu verwijdert het legen van de PhotoMaid-prullenbak foto’s en video’s definitief. Ze gaan niet naar de Android-prullenbak en zijn niet terug te halen – ook niet uit nog niet gesynchroniseerde back-ups. Android vraagt toch elke keer.</string>
+    <string name="set_delete_permanently_confirm_text">Vanaf nu verwijdert het legen van de GaleriQ-prullenbak foto’s en video’s definitief. Ze gaan niet naar de Android-prullenbak en zijn niet terug te halen – ook niet uit nog niet gesynchroniseerde back-ups. Android vraagt toch elke keer.</string>
     <string name="set_delete_permanently_confirm_action">Inschakelen</string>
     <plurals name="result_media_deleted">
         <item quantity="one">%1$d item definitief verwijderd.</item>
@@ -1352,10 +1352,10 @@
     <string name="movie_music_volume">Volume muziek</string>
     <string name="movie_music_fade">Muziek in- en uitfaden</string>
     <string name="movie_original_off">Origineel geluid verwijderen</string>
-    <string name="movie_music_note">Je eigen bestand, vanaf het begin en zo nodig herhaald. PhotoMaid levert geen muziek. Let bij delen op de rechten.</string>
+    <string name="movie_music_note">Je eigen bestand, vanaf het begin en zo nodig herhaald. GaleriQ levert geen muziek. Let bij delen op de rechten.</string>
     <string name="movie_running">Video wordt gemaakt …</string>
     <string name="movie_running_slideshow">Diavoorstelling wordt gemaakt …</string>
-    <string name="movie_saved">Opgeslagen als nieuwe video in Movies/PhotoMaid. De originelen blijven ongewijzigd.</string>
+    <string name="movie_saved">Opgeslagen als nieuwe video in Movies/GaleriQ. De originelen blijven ongewijzigd.</string>
     <string name="movie_failed">De video kon niet worden gemaakt. Er is niets opgeslagen en de originelen zijn ongewijzigd.</string>
     <string name="movie_too_few">Voeg minstens twee clips toe.</string>
     <string name="movie_too_many">Maximaal 50 clips per video.</string>
@@ -1376,8 +1376,8 @@
     <string name="tools_pick">Foto’s kiezen</string>
     <string name="tools_pick_gif">Foto’s of één video kiezen</string>
     <string name="tools_running">Bestanden worden verwerkt…</string>
-    <string name="tools_stitch_saved">Opgeslagen als nieuwe afbeelding in Pictures/PhotoMaid.</string>
-    <string name="tools_gif_saved">GIF opgeslagen in Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_stitch_saved">Opgeslagen als nieuwe afbeelding in Pictures/GaleriQ.</string>
+    <string name="tools_gif_saved">GIF opgeslagen in Pictures/GaleriQ (%1$s).</string>
     <string name="tools_failed">Dat is niet gelukt. Je originelen zijn ongewijzigd.</string>
     <string name="tools_pro_save">Maken met Pro</string>
     <string name="tools_start">Starten</string>
@@ -1432,8 +1432,8 @@
     <string name="dock_more">Meer</string>
     <string name="vid_trim_hint_short">Sleep de grepen om begin en einde te bepalen.</string>
     <string name="vid_export_info">Zo wordt het opgeslagen</string>
-    <string name="vid_export_info_fast">Je hebt alleen begin en einde ingekort. Dat gaat snel en de beeldkwaliteit blijft als in het origineel. Lukt dat bij deze video niet, dan maakt PhotoMaid hem helemaal opnieuw – dat duurt iets langer. Totale lengte %1$s.</string>
-    <string name="vid_export_info_reencode">Door je andere wijzigingen maakt PhotoMaid bij het opslaan de hele video opnieuw. Dat kan even duren. Totale lengte %1$s.</string>
+    <string name="vid_export_info_fast">Je hebt alleen begin en einde ingekort. Dat gaat snel en de beeldkwaliteit blijft als in het origineel. Lukt dat bij deze video niet, dan maakt GaleriQ hem helemaal opnieuw – dat duurt iets langer. Totale lengte %1$s.</string>
+    <string name="vid_export_info_reencode">Door je andere wijzigingen maakt GaleriQ bij het opslaan de hele video opnieuw. Dat kan even duren. Totale lengte %1$s.</string>
     <string name="lib_mode_albums">Albums</string>
     <string name="org_new_album">Nieuw album</string>
     <string name="org_album_name">Albumnaam</string>
@@ -1447,13 +1447,13 @@
     <string name="org_already_in_album">Al allemaal in ‘%1$s’.</string>
     <string name="org_albums_empty_title">Nog geen albums</string>
     <string name="org_albums_empty_text">Een album verzamelt foto’s en video’s uit elke map, zonder ze te kopiëren of te verplaatsen. Een foto kan in meerdere albums staan.</string>
-    <string name="org_albums_footer">Albums bestaan alleen in PhotoMaid. Mappen tonen waar een bestand staat; collecties vinden media via een voorwaarde.</string>
+    <string name="org_albums_footer">Albums bestaan alleen in GaleriQ. Mappen tonen waar een bestand staat; collecties vinden media via een voorwaarde.</string>
     <string name="org_album_empty">Dit album is leeg. Selecteer in ‘Foto’s’ media en tik op ⋯ › Aan album toevoegen.</string>
     <string name="org_missing_remove">Uit lijst halen</string>
     <string name="org_tags">Labels</string>
     <string name="org_tag_new_hint">Nieuw label</string>
     <string name="org_tag_add">Toevoegen</string>
-    <string name="org_tags_none">Nog geen labels. Voeg eigen woorden toe zoals ‘Factuur’ of ‘Vakantie’ – PhotoMaid weet alleen wat je zelf invult.</string>
+    <string name="org_tags_none">Nog geen labels. Voeg eigen woorden toe zoals ‘Factuur’ of ‘Vakantie’ – GaleriQ weet alleen wat je zelf invult.</string>
     <string name="org_tag_remove">Label verwijderen</string>
     <string name="org_tag_delete">Overal verwijderen</string>
     <string name="org_tag_delete_title">Label ‘%1$s’ overal verwijderen?</string>
@@ -1461,7 +1461,7 @@
     <string name="org_tag_state_all">bij alle</string>
     <string name="org_tag_state_some">bij sommige</string>
     <string name="org_note">Notitie</string>
-    <string name="org_note_hint">Notitie (alleen in PhotoMaid, het bestand blijft ongewijzigd)</string>
+    <string name="org_note_hint">Notitie (alleen in GaleriQ, het bestand blijft ongewijzigd)</string>
     <string name="org_note_save">Notitie opslaan</string>
     <string name="org_basket">Selectiemand</string>
     <string name="org_basket_add">In de selectiemand</string>
@@ -1518,7 +1518,7 @@
     <string name="wf_target">Hoogstens per foto</string>
     <string name="wf_off">Geen</string>
     <string name="wf_min_edge">Nooit kleiner dan (langste zijde)</string>
-    <string name="wf_target_note">PhotoMaid meet het resultaat. Is het doel binnen deze grenzen niet haalbaar, dan ontstaat er geen bestand en zie je waarom.</string>
+    <string name="wf_target_note">GaleriQ meet het resultaat. Is het doel binnen deze grenzen niet haalbaar, dan ontstaat er geen bestand en zie je waarom.</string>
     <string name="wf_videos">Video’s</string>
     <string name="wf_video_skip">Overslaan</string>
     <string name="wf_video_note">Video’s worden opnieuw opgeslagen om bij de doelgrootte te passen. Het beeld wordt alleen kleiner als het nodig is.</string>
@@ -1527,7 +1527,7 @@
     <string name="wf_name_base_hint">bijv. Advertentie → Advertentie_001 (leeg = originele naam)</string>
     <string name="wf_folder">Map</string>
     <string name="wf_folder_same">Zoals het origineel</string>
-    <string name="wf_folder_photomaid">PhotoMaid-map</string>
+    <string name="wf_folder_photomaid">GaleriQ-map</string>
     <string name="wf_finish">Aan het eind</string>
     <string name="wf_finish_save">Opslaan</string>
     <string name="wf_finish_share">Alleen delen</string>
@@ -1566,10 +1566,10 @@
     <string name="wf_share_again">Opnieuw delen</string>
     <string name="wf_counts">%1$s foto’s · %2$s video’s</string>
     <string name="wf_start">Starten</string>
-    <string name="share_target_label">Naar PhotoMaid sturen</string>
+    <string name="share_target_label">Naar GaleriQ sturen</string>
     <string name="share_title">Ontvangen</string>
     <string name="share_none">Geen van de gedeelde bestanden staat in de fotobibliotheek van dit apparaat.</string>
-    <string name="share_no_access">PhotoMaid heeft nog geen toegang tot je foto’s. Sta toegang toe in Instellingen en stuur opnieuw.</string>
+    <string name="share_no_access">GaleriQ heeft nog geen toegang tot je foto’s. Sta toegang toe in Instellingen en stuur opnieuw.</string>
     <string name="share_never">Er wordt niets verwijderd of beslist. Een nieuw bestand ontstaat pas als je opslaat.</string>
     <string name="share_workflow">Werkstroom toepassen</string>
     <string name="share_edit">Bewerken</string>
@@ -1600,7 +1600,7 @@
     <string name="pdf_from_selection">Als PDF</string>
     <string name="pdf_no_photos">Deze selectie bevat geen foto’s. Video’s kunnen niet in een PDF.</string>
     <string name="pdf_no_date">Geen datum</string>
-    <string name="pdf_saved">Opgeslagen in ‘Documents/PhotoMaid’ · %1$s</string>
+    <string name="pdf_saved">Opgeslagen in ‘Documents/GaleriQ’ · %1$s</string>
     <string name="pdf_failed">De PDF kon niet worden opgeslagen.</string>
     <string name="pdf_page_of">Pagina %1$d van %2$d</string>
     <string name="pdf_capped">Maximaal %1$d foto’s per PDF – de eerste %1$d zijn overgenomen.</string>
@@ -1654,5 +1654,5 @@
     <string name="tour_history_title">Later &amp; geschiedenis</string>
     <string name="tour_history_text">Zie wat je hebt bewaard, apart gezet of voor later bewaard. Elke keuze kun je hier nog aanpassen.</string>
     <string name="tour_settings_title">Instellingen &amp; hulp</string>
-    <string name="tour_settings_text">Stel PhotoMaid naar wens in en vind antwoorden. Deze rondleiding kun je altijd opnieuw bekijken.</string>
+    <string name="tour_settings_text">Stel GaleriQ naar wens in en vind antwoorden. Deze rondleiding kun je altijd opnieuw bekijken.</string>
 </resources>

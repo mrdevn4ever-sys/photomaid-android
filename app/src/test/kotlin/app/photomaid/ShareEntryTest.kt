@@ -110,7 +110,7 @@ class ShareEntryTest {
     @Test fun pendingEntryGoesOnlyToItsWindowAndOnlyOnce() {
         val r = EntryRequest.Shortcut(ShortcutTarget.Due)
         AppEntry.post(1, r)
-        assertNull("anderes Fenster (z. B. PhotoMaid im Hintergrund) holt nicht ab", AppEntry.take(2))
+        assertNull("anderes Fenster (z. B. GaleriQ im Hintergrund) holt nicht ab", AppEntry.take(2))
         assertEquals(r, AppEntry.take(1))
         assertNull(AppEntry.take(1))
     }

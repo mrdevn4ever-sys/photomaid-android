@@ -46,7 +46,7 @@ enum class WorkflowTemplate(val label: Int) {
                 nameBase = app.string(R.string.wf_tpl_classifieds_base), finish = WorkflowFinish.SHARE)
             SEND_SMALL -> Workflow(id, name, WorkflowFormat.JPEG, removeLocation = true, photoMaxBytes = 2_000_000, videoMaxBytes = 20_000_000,
                 finish = WorkflowFinish.SHARE)
-            FAMILY -> Workflow(id, name, WorkflowFormat.JPEG, longEdge = 2048, quality = 85, folder = "Pictures/PhotoMaid/", finish = WorkflowFinish.SAVE)
+            FAMILY -> Workflow(id, name, WorkflowFormat.JPEG, longEdge = 2048, quality = 85, folder = "Pictures/GaleriQ/", finish = WorkflowFinish.SAVE)
         }
     }
 }
@@ -100,7 +100,7 @@ data class WorkflowBudget(val totalBytes: Long)
  * Bedarf erneut kodiert – wird sie innerhalb der Grenzen nicht erreicht, entsteht KEINE (zu große) Datei.
  */
 object WorkflowRunner {
-    private const val SOFTWARE = "PhotoMaid"
+    private const val SOFTWARE = "GaleriQ"
 
     suspend fun run(app: AppModel, w: Workflow, assets: List<MediaAsset>, budget: WorkflowBudget? = null, onProgress: (Float) -> Unit): WorkflowRun {
         val out = mutableListOf<WorkflowItemResult>()

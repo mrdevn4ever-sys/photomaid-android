@@ -88,7 +88,7 @@ class MovieTest {
         assertEquals(Disposition.KEPT, runBlocking { app.ledger.record(ItemReference.photo(rec.newId)) }.disposition)
         // Quellen ohne Entscheidung.
         assertTrue(all.all { runBlocking { app.ledger.record(it.reference) }.disposition == Disposition.UNDECIDED })
-        pumpUntil { rule.onAllNodes(hasText("Movies/PhotoMaid", substring = true)).fetchSemanticsNodes().isNotEmpty() }
+        pumpUntil { rule.onAllNodes(hasText("Movies/GaleriQ", substring = true)).fetchSemanticsNodes().isNotEmpty() }
     }
 
     @Test fun freeUsersCanTryButSavingOpensPro() {

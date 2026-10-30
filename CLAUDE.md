@@ -1,6 +1,9 @@
 # PhotoMaid Android: verbindliche Regeln
 
 Native Android-App (Kotlin, Jetpack Compose). 1:1-Port der iOS-App (`mrdevn4ever-sys/photomaid`, read-only).
+**Produktname seit 30.10.2026: „GaleriQ“** (vorher PhotoMaid): sichtbar in allen Texten, Ordnern (`Pictures/GaleriQ/`,
+`Movies/GaleriQ/`, `Documents/GaleriQ/`, `Music/GaleriQ/`), Dateinamen und Metadaten; Datenschutz unter
+https://mrdevn4ever-sys.github.io/galeriq/. Paket `app.photomaid…`, Klassen, Datenbank und Log-Tags bleiben intern „PhotoMaid“.
 Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Verhalten der iOS-App
 (außer Plattformgrenze, Sicherheit, Store-Policy, eindeutiger Bug – dann in `docs/PORTING_MATRIX.md` dokumentieren).
 
@@ -90,11 +93,11 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   `core/.../document/PdfLayout.kt` + eigener `PdfWriter`): mehrseitiges PDF aus Fotos (A4/A5/US Letter, Ausrichtung, Rand,
   1/2/4/6/12 je Seite, Einpassen oder Füllen – nie verzerren, Beschriftung Nummer/Dateiname/Datum als Bild, Reihenfolge).
   Vorschau = Export (gleiche Aufteilung, gleicher Zeichenweg). Bilder neu als JPEG eingebettet: keine EXIF-/Standortdaten,
-  keine Dateinamen als Text, Dokument-Info nur „PhotoMaid“. Speichern nach `Documents/PhotoMaid/` (kein Medium, keine
+  keine Dateinamen als Text, Dokument-Info nur „GaleriQ“. Speichern nach `Documents/GaleriQ/` (kein Medium, keine
   Entscheidung, Quellen unverändert) oder nur teilen; Größe gemessen. Free bis 10 Fotos, 1–2 je Seite; Kontaktbögen (ab 4)
   und bis 200 Fotos mit `hasProToolsAccess`. Keine Text-/Dokumenterkennung. Einstiege: Studio, Auswahl › ⋯, Teilen-Ziel.
 - Studio (4. Tab, 2026-10, `feature/studio/`, Kern `core/.../studio/`): Collage (Raster mit Trennlinien, Frei, Streifen),
-  Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/PhotoMaid/` (gilt als „Behalten“, Quellen
+  Foto bearbeiten, Entwürfe, „Bearbeitet“. Collage = neues Bild in `Pictures/GaleriQ/` (gilt als „Behalten“, Quellen
   bleiben ohne Entscheidung), Vorschau und Export über denselben `CollageRenderer`. Free: Raster/Streifen bis 4 Fotos, 3
   Entwürfe; Pro/30-Minuten-Test: bis 20 Fotos, Frei, A4-Druck, 50 Entwürfe – ausprobieren immer frei, kein Wasserzeichen.
   Medienauswahl (`MediaPickerScreen`) ist nie eine Entscheidung. Neue String-Kennungen vorher auf Kollision prüfen.
@@ -119,7 +122,7 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Schätzung. Lange Exporte über `ExportCoordinator` + Vordergrunddienst; nie hochskalieren.
   P6 Film/Diashow (`feature/studio/MovieScreen.kt`, Kern `core/.../studio/MoviePlan.kt`, Export `media/MovieExporter.kt`):
   Vorschau = Export (eine Komposition), Übergänge „keiner“/„über Schwarz“, Musik nur aus eigener Datei, Ergebnis in
-  `Movies/PhotoMaid/` = „Behalten“, Quellen ohne Entscheidung, Speichern mit `hasProToolsAccess`.
+  `Movies/GaleriQ/` = „Behalten“, Quellen ohne Entscheidung, Speichern mit `hasProToolsAccess`.
   P7 Werkzeuge (`feature/studio/ToolsScreen.kt`, Kern `core/.../batch/`): Verkleinern, Umwandeln, Standort entfernen
   (Stapel, Free bis 10 Dateien), Screenshots zusammenfügen, GIF (`GifEncoder`, Pro). Immer neue Dateien = „Behalten“,
   Quellen ohne Entscheidung; Originale nur auf Wunsch in den Android-Papierkorb (Standard aus). Größen nur gemessen,

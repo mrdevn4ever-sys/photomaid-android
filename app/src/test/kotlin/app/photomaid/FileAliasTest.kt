@@ -28,7 +28,7 @@ class FileAliasTest {
     private val download = ConnectedSourceID()
     private val test = ConnectedSourceID()
     private val other = ConnectedSourceID()
-    private val docId = "primary:Download/Test/PhotoMaid_Run6_K8_DELETE.jpg"
+    private val docId = "primary:Download/Test/GaleriQ_Run6_K8_DELETE.jpg"
 
     private fun app() = makeTestApp(ctx) { a ->
         val tree = "content://com.android.externalstorage.documents/tree/"

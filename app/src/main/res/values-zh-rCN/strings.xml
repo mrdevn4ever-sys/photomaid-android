@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generated PhotoMaid UI translations. See CODE_AENDERUNGEN.json before integration. -->
+<!-- Generated GaleriQ UI translations. See CODE_AENDERUNGEN.json before integration. -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PhotoMaid</string>
+    <string name="app_name">GaleriQ</string>
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
     <string name="done">完成</string>
@@ -17,7 +17,7 @@
     <string name="info">信息</string>
     <string name="error_title">操作未成功</string>
     <string name="retry">重试</string>
-    <string name="store_open_failed">PhotoMaid 无法打开已保存的数据。</string>
+    <string name="store_open_failed">GaleriQ 无法打开已保存的数据。</string>
     <plurals name="items_count">
         <item quantity="other">%1$d 项</item>
     </plurals>
@@ -41,12 +41,12 @@
     <string name="tab_cleanup">清理</string>
     <string name="tab_history">记录</string>
     <string name="today_limited_title">仅可访问部分内容</string>
-    <string name="today_limited_text">PhotoMaid 只会显示你允许访问的照片和视频。这些内容可以正常清理。</string>
+    <string name="today_limited_text">GaleriQ 只会显示你允许访问的照片和视频。这些内容可以正常清理。</string>
     <string name="today_limited_action">更改访问权限</string>
     <string name="today_access_title">访问照片和视频</string>
     <string name="today_access_denied_title">无法访问你的照片和视频</string>
-    <string name="today_access_denied">请在 Android 的 PhotoMaid 设置中允许访问。之前的选择会保留。</string>
-    <string name="today_access_default">请允许 PhotoMaid 访问照片和视频，以便查看和整理。</string>
+    <string name="today_access_denied">请在 Android 的 GaleriQ 设置中允许访问。之前的选择会保留。</string>
+    <string name="today_access_default">请允许 GaleriQ 访问照片和视频，以便查看和整理。</string>
     <string name="storage_used_of">已用，总容量 %1$s</string>
     <string name="today_start_sub">滑动浏览，整理你的照片和视频。</string>
     <string name="today_continue_sub">从上次停下的地方继续。</string>
@@ -191,18 +191,18 @@
         <item quantity="other">已永久删除 %1$d 个文件。</item>
     </plurals>
     <plurals name="result_partial">
-        <item quantity="other">已移除 %1$d 项，共 %2$d 项。其余内容仍在 PhotoMaid 回收站中。</item>
+        <item quantity="other">已移除 %1$d 项，共 %2$d 项。其余内容仍在 GaleriQ 回收站中。</item>
     </plurals>
     <string name="result_cancelled">已取消，未移除任何内容。</string>
     <string name="result_nothing">未移除任何内容。</string>
     <plurals name="result_allowance">
-        <item quantity="other">已选 %2$d 项，今天还可移除 %1$d 项。请选择不超过 %1$d 项，或使用 PhotoMaid Pro。</item>
+        <item quantity="other">已选 %2$d 项，今天还可移除 %1$d 项。请选择不超过 %1$d 项，或使用 GaleriQ Pro。</item>
     </plurals>
     <string name="result_changed">所选内容已变化，请再次确认。</string>
     <string name="result_reconcile">下次打开应用时会核对结果，不会重复删除。</string>
     <string name="item_actions_for">%1$s 的操作</string>
     <string name="files_none_title">尚未连接文件夹</string>
-    <string name="files_none_message">选择一个文件夹，即可在 PhotoMaid 中查看里面的文件。</string>
+    <string name="files_none_message">选择一个文件夹，即可在 GaleriQ 中查看里面的文件。</string>
     <string name="files_none_tip">这里不能直接选择“下载”文件夹。请选择其中的子文件夹。</string>
     <string name="file_type">文件类型</string>
     <string name="kind_all">全部</string>
@@ -225,7 +225,7 @@
     <string name="sources_ro">仅可查看</string>
     <string name="sources_unreachable">无法访问，请重新连接</string>
     <string name="sources_remove">断开文件夹连接</string>
-    <string name="sources_footer">断开连接不会删除任何文件。你可以自行选择此文件页面中 PhotoMaid 能访问的文件夹。</string>
+    <string name="sources_footer">断开连接不会删除任何文件。你可以自行选择此文件页面中 GaleriQ 能访问的文件夹。</string>
     <plurals name="large_in_files">
         <item quantity="other">来自 %1$d 个大文件</item>
     </plurals>
@@ -242,23 +242,23 @@
     <string name="storage_a">你的设备</string>
     <string name="storage_available">Android 显示可用 %1$s</string>
     <string name="storage_unavailable">暂时无法获取存储空间信息</string>
-    <string name="storage_b">PhotoMaid 可查看的内容</string>
+    <string name="storage_b">GaleriQ 可查看的内容</string>
     <string name="storage_of_which_screens">其中包含截图</string>
     <string name="storage_connected_folders">已连接的文件夹</string>
     <string name="storage_b_footer">截图已计入照片。大文件和重复文件不会重复累计。大小未知的内容不计入总大小，此时会标注“至少”。</string>
-    <string name="storage_c">PhotoMaid 无法查看的内容</string>
-    <string name="storage_c_text">PhotoMaid 无法检查其他应用、系统文件、云端内容或未授权的文件夹，因此不显示这些内容的大小。</string>
+    <string name="storage_c">GaleriQ 无法查看的内容</string>
+    <string name="storage_c_text">GaleriQ 无法检查其他应用、系统文件、云端内容或未授权的文件夹，因此不显示这些内容的大小。</string>
     <string name="storage_local">存储空间分析只在设备上进行。</string>
     <plurals name="storage_value_items">
         <item quantity="other">%1$d 项 · %2$s</item>
     </plurals>
     <string name="dup_find">查找相同副本</string>
     <string name="dup_explain">查找内容完全相同的照片、视频和文件。由你决定把哪些副本放入回收站。</string>
-    <string name="dup_how">PhotoMaid 直接在设备上比较文件内容。只是看起来相似的图片不算相同副本。</string>
+    <string name="dup_how">GaleriQ 直接在设备上比较文件内容。只是看起来相似的图片不算相同副本。</string>
     <string name="dup_checking">正在比较文件…</string>
     <string name="dup_start">搜索副本</string>
     <string name="dup_again">重新搜索</string>
-    <string name="pro_view">查看 PhotoMaid Pro</string>
+    <string name="pro_view">查看 GaleriQ Pro</string>
     <string name="dup_none">未找到相同副本</string>
     <string name="dup_none_message">在可访问的范围内，未找到内容完全相同的副本。</string>
     <plurals name="dup_not_comparable">
@@ -344,7 +344,7 @@
     <string name="h_later">已存入“稍后”</string>
     <string name="h_later_corr">已更改：稍后</string>
     <string name="h_changed">已更改</string>
-    <string name="pro_title">PhotoMaid Pro</string>
+    <string name="pro_title">GaleriQ Pro</string>
     <string name="pro_subtitle">一次购买，无需订阅。</string>
     <string name="pro_f2">清理不受每日上限限制</string>
     <string name="pro_f2d">随心移除内容，不受每天 %1$d 项的上限限制。</string>
@@ -352,24 +352,24 @@
     <string name="pro_f3d">查找相同的照片、视频，以及已连接文件夹中的文件。</string>
     <string name="pro_f5">自建合集</string>
     <string name="pro_f5d">保存自己的筛选条件，例如“大于 500 MB 的视频”。轻点即可查看符合条件的内容。</string>
-    <string name="pro_also">一次购买，清理无广告。无需订阅或 PhotoMaid 账号。</string>
+    <string name="pro_also">一次购买，清理无广告。无需订阅或 GaleriQ 账号。</string>
     <string name="pro_f1">无广告</string>
     <string name="pro_f1d">照片和视频之间不再出现广告卡片。</string>
     <string name="pro_details">Pro 功能说明</string>
-    <string name="pro_details_dup">副本是连最小细节都完全相同的文件。PhotoMaid 在设备上比较，而不是在云端。只是相似的图片不算副本。</string>
+    <string name="pro_details_dup">副本是连最小细节都完全相同的文件。GaleriQ 在设备上比较，而不是在云端。只是相似的图片不算副本。</string>
     <string name="pro_details_rules">合集会显示设备上符合条件的内容，由你打开并逐项查看。不会自动删除，也不会在后台清理。</string>
     <string name="pro_details_cleanup">只有你在回收站里真正移除的内容才计入每日上限。滑动永远不计入。</string>
     <string name="expanded">已展开</string>
     <string name="collapsed">已收起</string>
     <string name="pro_privacy">你的照片和文件只在设备上检查和整理。为了购买和广告，只会把最必要的信息发给 Google 或广告商——绝不会发送你的照片、照片名称或由其得出的信息。</string>
     <string name="pro_pending">购买正在等待确认。</string>
-    <string name="pro_unlock">解锁 PhotoMaid Pro</string>
+    <string name="pro_unlock">解锁 GaleriQ Pro</string>
     <string name="pro_price_once">%1$s · 一次购买</string>
     <string name="pro_price_loading">正在加载价格…</string>
     <string name="pro_unavailable">此版本暂不支持购买。</string>
     <string name="pro_restore">恢复购买</string>
     <string name="pro_revoked">之前的一笔购买已退款或被撤销。</string>
-    <string name="pro_msg_active">PhotoMaid Pro 已启用。</string>
+    <string name="pro_msg_active">GaleriQ Pro 已启用。</string>
     <string name="pro_msg_pending">购买正在等待确认。确认后即可启用 Pro。</string>
     <string name="pro_msg_failed">未能完成购买。</string>
     <string name="pro_msg_restored">已恢复购买。</string>
@@ -406,13 +406,13 @@
     <string name="help_decide">做出选择</string>
     <string name="help_decide_text">向上滑动保留，向左放入回收站，向右留待稍后。默认 2 天后再次显示，可在设置中调整间隔。滑动后立即点击“更改”，还能选择其他日期。向下滑动返回上一项，不会产生新的选择。</string>
     <string name="help_delete">关于删除</string>
-    <string name="help_delete_text">滑动永远不会删除任何内容。你挑出的内容会先进入 PhotoMaid 回收站。只有清空它时才会真正删除——照片和视频会在 Android 再次确认后移入 Android 回收站。已连接文件夹中的文件会被永久删除。</string>
+    <string name="help_delete_text">滑动永远不会删除任何内容。你挑出的内容会先进入 GaleriQ 回收站。只有清空它时才会真正删除——照片和视频会在 Android 再次确认后移入 Android 回收站。已连接文件夹中的文件会被永久删除。</string>
     <string name="help_cloud">云端</string>
-    <string name="help_cloud_text">Google 相册等云服务可能将删除操作同步到其他设备。请检查各服务的设置。PhotoMaid 不会下载仅存于云端的内容。</string>
+    <string name="help_cloud_text">Google 相册等云服务可能将删除操作同步到其他设备。请检查各服务的设置。GaleriQ 不会下载仅存于云端的内容。</string>
     <string name="help_free">免费版</string>
     <string name="help_free_text">查看、滑动和留待稍后的次数不限。无需 Pro，每天最多可移除 %1$d 项。</string>
     <string name="privacy_title">重视你的隐私</string>
-    <string name="privacy_text">PhotoMaid 只在你的设备上查看照片、视频和你允许的文件。无需账户，也没有 PhotoMaid 服务器。请注意：在 Google 相册等云服务中，你删除的内容也可能从其他设备上消失。</string>
+    <string name="privacy_text">GaleriQ 只在你的设备上查看照片、视频和你允许的文件。无需账户，也没有 GaleriQ 服务器。请注意：在 Google 相册等云服务中，你删除的内容也可能从其他设备上消失。</string>
     <string name="privacy_media">照片和视频</string>
     <string name="privacy_media_text">用于查看、整理照片和视频，并在你确认后移除。</string>
     <string name="privacy_allow">允许访问</string>
@@ -463,7 +463,7 @@
     <string name="basket_preview_note">查看不会改变你的选择。</string>
     <string name="limit_title_partial">今日还剩 %1$d 项</string>
     <string name="limit_title_none">已达今日上限</string>
-    <string name="limit_message">已选 %2$d 项。无需 Pro，每天最多可移除 %1$d 项。其余内容会留在 PhotoMaid 回收站中。</string>
+    <string name="limit_message">已选 %2$d 项。无需 Pro，每天最多可移除 %1$d 项。其余内容会留在 GaleriQ 回收站中。</string>
     <string name="limit_tomorrow">每日额度将于明天重置。</string>
     <string name="limit_take_partial">移除其中 %1$d 项</string>
     <string name="reward_title">试用 Pro 工具 30 分钟</string>
@@ -532,14 +532,14 @@
     <string name="limit_all_with_pro">用 Pro 移除全部 %1$d 项</string>
     <string name="summary_upsell">Pro 无每日上限，也无广告。</string>
     <string name="summary_offer_title">又整齐了一点</string>
-    <string name="summary_offer_text">用 PhotoMaid Pro 清理，无每日上限、无广告。一次购买，无需订阅。</string>
+    <string name="summary_offer_text">用 GaleriQ Pro 清理，无每日上限、无广告。一次购买，无需订阅。</string>
     <string name="limit_soon">今日还剩 %1$d 项，共 %2$d 项额度</string>
     <string name="limit_soon_pro">Pro 无上限</string>
     <string name="limit_bonus">观看广告：今天多移除 %1$d 项</string>
     <string name="limit_bonus_note">每天一次，额外额度仅限今天使用。</string>
     <string name="limit_bonus_dismissed">广告提前关闭，未解锁任何权益。今天仍可重试。</string>
     <string name="limit_bonus_unavailable">暂时没有可用广告，未解锁任何权益。</string>
-    <string name="today_pro_title">PhotoMaid Pro</string>
+    <string name="today_pro_title">GaleriQ Pro</string>
     <string name="today_pro_text">无每日上限，无广告。一次购买。</string>
     <plurals name="summary_upsell_count">
         <item quantity="other">已选出 %1$d 项待移除内容。</item>
@@ -553,8 +553,8 @@
     <string name="onb_try_done">就是这样，现在轮到你的照片了。</string>
     <string name="onb_demo_desc">练习卡片，不会保存任何操作。</string>
     <string name="onb_safe_title">由你决定删除什么</string>
-    <string name="onb_safe_text">内容会先进入 PhotoMaid 回收站，再由你确认移除。对于照片和视频，Android 还会请你再次确认。</string>
-    <string name="onb_safe_local">照片留在设备上，无需 PhotoMaid 账号，也不上传照片。</string>
+    <string name="onb_safe_text">内容会先进入 GaleriQ 回收站，再由你确认移除。对于照片和视频，Android 还会请你再次确认。</string>
+    <string name="onb_safe_local">照片留在设备上，无需 GaleriQ 账号，也不上传照片。</string>
     <string name="onb_safe_sheet">移除</string>
     <string name="onb_safe_dialog">Android 会再次确认</string>
     <string name="onb_offer_title">免费开始</string>
@@ -563,7 +563,7 @@
     <string name="onb_buy">购买 Pro · 一次支付 %1$s</string>
     <string name="onb_buy_noprice">一次购买 Pro</string>
     <string name="onb_access_title">访问照片和视频</string>
-    <string name="onb_access_text">PhotoMaid 直接显示设备上的照片和视频，方便你清理。无需 PhotoMaid 账号，也没有 PhotoMaid 服务器。</string>
+    <string name="onb_access_text">GaleriQ 直接显示设备上的照片和视频，方便你清理。无需 GaleriQ 账号，也没有 GaleriQ 服务器。</string>
     <string name="onb_progress">第 %1$d 步，共 %2$d 步</string>
     <string name="offer_free_title">免费使用</string>
     <string name="offer_free_text">随时滑动和整理，没有次数或使用期限限制。</string>
@@ -612,7 +612,7 @@
         <item quantity="other">有 %1$d 项大小未知，未计入总大小。</item>
     </plurals>
     <string name="done_button">完成</string>
-    <string name="done_partial">未能移除的内容会留在 PhotoMaid 回收站中。</string>
+    <string name="done_partial">未能移除的内容会留在 GaleriQ 回收站中。</string>
     <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
     <string name="basket_confirm_files_trash_title">移到存储位置的回收站？</string>
     <string name="basket_confirm_files_trash_message">文件会进入其存储位置的回收站，可在那里恢复。只有在那里删除后才会释放空间。</string>
@@ -668,7 +668,7 @@
     <string name="series_button">比较 %1$d 张连拍照片</string>
     <string name="series_confirm">保留 %1$d 张 · %2$d 张移到回收站</string>
     <string name="series_done">已保留 %1$d 张 · %2$d 张在回收站</string>
-    <string name="series_footer">不会删除任何内容。回收站属于 PhotoMaid，只有在你确认后才会清空。</string>
+    <string name="series_footer">不会删除任何内容。回收站属于 GaleriQ，只有在你确认后才会清空。</string>
     <string name="series_hint">点按照片可在下方比较。勾选决定保留哪些。</string>
     <string name="series_keep_toggle">保留</string>
     <string name="series_state_keep">保留</string>
@@ -766,7 +766,7 @@
     <string name="edit_ratio_locked">已锁定宽高比</string>
     <string name="edit_ratio_free">宽高比未锁定</string>
     <string name="edit_size_result">%1$d × %2$d → %3$d × %4$d 像素</string>
-    <string name="edit_size_small">这张照片已经很小。PhotoMaid 从不放大照片。</string>
+    <string name="edit_size_small">这张照片已经很小。GaleriQ 从不放大照片。</string>
     <string name="edit_pro_hint">预览免费 · 保存需 Pro 或 30 分钟试用</string>
     <string name="edit_pro_more">更多</string>
     <string name="edit_pro_title">使用 Pro 保存</string>
@@ -807,7 +807,7 @@
     <string name="redo">重做</string>
     <string name="edits_title">已编辑</string>
     <string name="hub_edits_sub">副本和已替换的原图</string>
-    <string name="edits_intro">你在 PhotoMaid 编辑器中保存的所有内容，最新的在前。仅保存在此设备上。</string>
+    <string name="edits_intro">你在 GaleriQ 编辑器中保存的所有内容，最新的在前。仅保存在此设备上。</string>
     <string name="edits_empty_title">还没有编辑过</string>
     <string name="edits_empty_text">浏览时点按照片或视频下方的铅笔，即可裁剪、调整或剪辑。</string>
     <string name="edits_badge_copy">副本</string>
@@ -999,7 +999,7 @@
     <string name="col_png_hint">PNG：无损且清晰，但文件更大。</string>
     <string name="col_pro_text">此拼图使用了 Pro 功能（超过 4 张照片、自由排列或 A4 打印）。解锁 Pro 或 30 分钟免费试用即可保存。</string>
     <string name="col_save_action">保存到图库</string>
-    <string name="col_save_where">将作为新图片保存到“Pictures/PhotoMaid”，原照片保持不变。</string>
+    <string name="col_save_where">将作为新图片保存到“Pictures/GaleriQ”，原照片保持不变。</string>
     <plurals name="picker_next">
         <item quantity="other">继续（%1$d）</item>
     </plurals>
@@ -1085,7 +1085,7 @@
     <string name="vid_audio_export">仅保存声音</string>
     <string name="vid_audio_suffix">声音</string>
     <string name="vid_audio_running">正在保存声音</string>
-    <string name="vid_audio_saved">已将“%1$s”保存到 Music/PhotoMaid。</string>
+    <string name="vid_audio_saved">已将“%1$s”保存到 Music/GaleriQ。</string>
     <string name="vid_audio_failed">无法保存声音。</string>
     <string name="vid_fill">填充</string>
     <string name="vid_fit">显示完整视频</string>
@@ -1115,10 +1115,10 @@
     <string name="lib_level_finer">更大的缩略图</string>
     <string name="lib_level_coarser">更小的缩略图</string>
     <string name="lib_trash_action">移到回收站</string>
-    <string name="lib_trash_text">移到 PhotoMaid 回收站——不会删除任何内容，稍后在那里决定。</string>
-    <string name="lib_trash_text_fav">移到 PhotoMaid 回收站——不会删除任何内容。收藏会保留（已开启“保护收藏”）。</string>
+    <string name="lib_trash_text">移到 GaleriQ 回收站——不会删除任何内容，稍后在那里决定。</string>
+    <string name="lib_trash_text_fav">移到 GaleriQ 回收站——不会删除任何内容。收藏会保留（已开启“保护收藏”）。</string>
     <string name="lib_trash_fav_protected">这是收藏项。已开启“保护收藏”，因此不会移到回收站。可在设置中更改。</string>
-    <string name="lib_trashed_one">已移到 PhotoMaid 回收站</string>
+    <string name="lib_trashed_one">已移到 GaleriQ 回收站</string>
     <string name="lib_review_from_here">从这里开始整理</string>
     <string name="lib_feed_title">来自图库</string>
     <string name="lib_info_name">名称</string>
@@ -1133,7 +1133,7 @@
         <item quantity="other">将 %1$d 项移到回收站？</item>
     </plurals>
     <plurals name="lib_trashed">
-        <item quantity="other">%1$d 项已在 PhotoMaid 回收站中。</item>
+        <item quantity="other">%1$d 项已在 GaleriQ 回收站中。</item>
     </plurals>
     <string name="lib_mode_timeline">时间线</string>
     <string name="lib_mode_folders">文件夹</string>
@@ -1174,16 +1174,16 @@
     <string name="lib_sort_name">名称</string>
     <string name="lib_sort_largest">最大优先</string>
     <string name="lib_sort_default">用于所有文件夹</string>
-    <string name="lib_hide">在 PhotoMaid 中隐藏</string>
-    <string name="lib_hide_text">PhotoMaid 将不再显示它们——无论在“照片”中还是整理时。文件保持不变，在其他应用中仍可见。这不是保险箱。</string>
-    <string name="lib_hide_folder_title">要在 PhotoMaid 中隐藏“%1$s”吗？</string>
+    <string name="lib_hide">在 GaleriQ 中隐藏</string>
+    <string name="lib_hide_text">GaleriQ 将不再显示它们——无论在“照片”中还是整理时。文件保持不变，在其他应用中仍可见。这不是保险箱。</string>
+    <string name="lib_hide_folder_title">要在 GaleriQ 中隐藏“%1$s”吗？</string>
     <string name="lib_hide_folder_text">该文件夹及其子文件夹将不再出现在“照片”和整理中。不会移动或删除任何内容，其他应用仍会显示。可在“文件夹 › 已隐藏”中重新显示。</string>
     <string name="lib_hidden_title">已隐藏</string>
-    <string name="lib_hidden_row">PhotoMaid 不显示的文件夹和媒体</string>
-    <string name="lib_hidden_intro">PhotoMaid 不会在任何地方显示这些内容。文件未改变，其他应用仍会显示。</string>
+    <string name="lib_hidden_row">GaleriQ 不显示的文件夹和媒体</string>
+    <string name="lib_hidden_intro">GaleriQ 不会在任何地方显示这些内容。文件未改变，其他应用仍会显示。</string>
     <string name="lib_hidden_none_title">没有隐藏的内容</string>
-    <string name="lib_hidden_none_text">对文件夹、照片或所选内容使用“在 PhotoMaid 中隐藏”。</string>
-    <string name="lib_hidden_one">已在 PhotoMaid 中隐藏</string>
+    <string name="lib_hidden_none_text">对文件夹、照片或所选内容使用“在 GaleriQ 中隐藏”。</string>
+    <string name="lib_hidden_one">已在 GaleriQ 中隐藏</string>
     <string name="lib_unhide">重新显示</string>
     <string name="lib_info_camera">相机</string>
     <plurals name="lib_subfolders">
@@ -1193,10 +1193,10 @@
         <item quantity="other">%1$d 个文件夹</item>
     </plurals>
     <plurals name="lib_hide_title">
-        <item quantity="other">要在 PhotoMaid 中隐藏 %1$d 项吗？</item>
+        <item quantity="other">要在 GaleriQ 中隐藏 %1$d 项吗？</item>
     </plurals>
     <plurals name="lib_hidden_done">
-        <item quantity="other">已在 PhotoMaid 中隐藏 %1$d 项</item>
+        <item quantity="other">已在 GaleriQ 中隐藏 %1$d 项</item>
     </plurals>
     <plurals name="lib_unhidden">
         <item quantity="other">已重新显示 %1$d 项</item>
@@ -1234,7 +1234,7 @@
     <string name="done_note_media_deleted">照片和视频已被永久删除，不在 Android 回收站中。</string>
     <string name="systrash_open">查看 Android 回收站</string>
     <string name="systrash_title">Android 回收站</string>
-    <string name="systrash_intro">Android 回收站中的所有内容（来自 PhotoMaid 和其他应用）。到期后 Android 会自行删除。</string>
+    <string name="systrash_intro">Android 回收站中的所有内容（来自 GaleriQ 和其他应用）。到期后 Android 会自行删除。</string>
     <string name="systrash_empty_title">Android 回收站为空</string>
     <string name="systrash_empty_text">移除的照片和视频会在此保留一段时间，可以恢复。</string>
     <string name="systrash_partial">已完成 %1$d/%2$d，其余保持不变。</string>
@@ -1243,7 +1243,7 @@
     <string name="set_delete_permanently">永久删除</string>
     <string name="set_delete_permanently_detail">关闭：清空时所有内容先进入 Android 回收站，一段时间内可以恢复。开启：所有内容会立即被永久删除。</string>
     <string name="set_delete_permanently_confirm_title">要开启永久删除吗？</string>
-    <string name="set_delete_permanently_confirm_text">此后清空 PhotoMaid 回收站将永久删除照片和视频。它们不会进入 Android 回收站，也无法恢复（包括尚未同步的备份）。Android 仍会每次确认。</string>
+    <string name="set_delete_permanently_confirm_text">此后清空 GaleriQ 回收站将永久删除照片和视频。它们不会进入 Android 回收站，也无法恢复（包括尚未同步的备份）。Android 仍会每次确认。</string>
     <string name="set_delete_permanently_confirm_action">开启</string>
     <plurals name="result_media_deleted">
         <item quantity="other">已永久删除 %1$d 项。</item>
@@ -1297,10 +1297,10 @@
     <string name="movie_music_volume">音乐音量</string>
     <string name="movie_music_fade">音乐淡入淡出</string>
     <string name="movie_original_off">移除原声</string>
-    <string name="movie_music_note">使用你自己的文件，从头播放，必要时循环。PhotoMaid 不附带音乐。分享时请注意版权。</string>
+    <string name="movie_music_note">使用你自己的文件，从头播放，必要时循环。GaleriQ 不附带音乐。分享时请注意版权。</string>
     <string name="movie_running">正在生成视频…</string>
     <string name="movie_running_slideshow">正在生成幻灯片…</string>
-    <string name="movie_saved">已作为新视频保存到 Movies/PhotoMaid，原文件保持不变。</string>
+    <string name="movie_saved">已作为新视频保存到 Movies/GaleriQ，原文件保持不变。</string>
     <string name="movie_failed">无法生成视频。未保存任何内容，原文件保持不变。</string>
     <string name="movie_too_few">请至少添加两个片段。</string>
     <string name="movie_too_many">每个视频最多 50 个片段。</string>
@@ -1321,8 +1321,8 @@
     <string name="tools_pick">选择照片</string>
     <string name="tools_pick_gif">选择照片或一个视频</string>
     <string name="tools_running">正在处理文件…</string>
-    <string name="tools_stitch_saved">已作为新图片保存到 Pictures/PhotoMaid。</string>
-    <string name="tools_gif_saved">GIF 已保存到 Pictures/PhotoMaid（%1$s）。</string>
+    <string name="tools_stitch_saved">已作为新图片保存到 Pictures/GaleriQ。</string>
+    <string name="tools_gif_saved">GIF 已保存到 Pictures/GaleriQ（%1$s）。</string>
     <string name="tools_failed">未成功。原文件未更改。</string>
     <string name="tools_pro_save">使用 Pro 制作</string>
     <string name="tools_start">开始</string>
@@ -1371,8 +1371,8 @@
     <string name="dock_more">更多</string>
     <string name="vid_trim_hint_short">拖动手柄来设置开头和结尾。</string>
     <string name="vid_export_info">保存方式</string>
-    <string name="vid_export_info_fast">你只修剪了开头和结尾。这样很快，画质也与原视频一样。如果这个视频无法这样处理，PhotoMaid 会完整重新生成，需要稍长时间。总时长 %1$s。</string>
-    <string name="vid_export_info_reencode">由于你的其他更改，PhotoMaid 会在保存时重新生成整个视频，可能需要一点时间。总时长 %1$s。</string>
+    <string name="vid_export_info_fast">你只修剪了开头和结尾。这样很快，画质也与原视频一样。如果这个视频无法这样处理，GaleriQ 会完整重新生成，需要稍长时间。总时长 %1$s。</string>
+    <string name="vid_export_info_reencode">由于你的其他更改，GaleriQ 会在保存时重新生成整个视频，可能需要一点时间。总时长 %1$s。</string>
     <string name="lib_mode_albums">相册</string>
     <string name="org_new_album">新建相册</string>
     <string name="org_album_name">相册名称</string>
@@ -1386,13 +1386,13 @@
     <string name="org_already_in_album">已全部在“%1$s”中。</string>
     <string name="org_albums_empty_title">还没有相册</string>
     <string name="org_albums_empty_text">相册可以汇集任意文件夹中的照片和视频，无需复制或移动。一张照片可以同时在多个相册中。</string>
-    <string name="org_albums_footer">相册只存在于 PhotoMaid 中。文件夹显示文件的存储位置，合集按条件查找媒体。</string>
+    <string name="org_albums_footer">相册只存在于 GaleriQ 中。文件夹显示文件的存储位置，合集按条件查找媒体。</string>
     <string name="org_album_empty">此相册为空。在“照片”中选择媒体，然后轻点 ⋯ › 添加到相册。</string>
     <string name="org_missing_remove">从列表中移除</string>
     <string name="org_tags">标签</string>
     <string name="org_tag_new_hint">新标签</string>
     <string name="org_tag_add">添加</string>
-    <string name="org_tags_none">还没有标签。添加你自己的词，例如“发票”或“假期”——PhotoMaid 只知道你自己输入的内容。</string>
+    <string name="org_tags_none">还没有标签。添加你自己的词，例如“发票”或“假期”——GaleriQ 只知道你自己输入的内容。</string>
     <string name="org_tag_remove">移除标签</string>
     <string name="org_tag_delete">全部移除</string>
     <string name="org_tag_delete_title">从所有媒体中移除标签“%1$s”？</string>
@@ -1400,7 +1400,7 @@
     <string name="org_tag_state_all">全部已有</string>
     <string name="org_tag_state_some">部分已有</string>
     <string name="org_note">备注</string>
-    <string name="org_note_hint">备注（仅在 PhotoMaid 中，文件保持不变）</string>
+    <string name="org_note_hint">备注（仅在 GaleriQ 中，文件保持不变）</string>
     <string name="org_note_save">保存备注</string>
     <string name="org_basket">选择篮</string>
     <string name="org_basket_add">加入选择篮</string>
@@ -1451,7 +1451,7 @@
     <string name="wf_target">每张照片最多</string>
     <string name="wf_off">无</string>
     <string name="wf_min_edge">不小于（最长边）</string>
-    <string name="wf_target_note">PhotoMaid 会测量结果。如果在这些限制内无法达到目标，就不会创建文件，并显示原因。</string>
+    <string name="wf_target_note">GaleriQ 会测量结果。如果在这些限制内无法达到目标，就不会创建文件，并显示原因。</string>
     <string name="wf_videos">视频</string>
     <string name="wf_video_skip">跳过</string>
     <string name="wf_video_note">视频会重新保存以符合目标大小。只有在需要时画面才会变小。</string>
@@ -1460,7 +1460,7 @@
     <string name="wf_name_base_hint">例如 Listing → Listing_001（留空 = 原文件名）</string>
     <string name="wf_folder">文件夹</string>
     <string name="wf_folder_same">与原文件相同</string>
-    <string name="wf_folder_photomaid">PhotoMaid 文件夹</string>
+    <string name="wf_folder_photomaid">GaleriQ 文件夹</string>
     <string name="wf_finish">最后</string>
     <string name="wf_finish_save">保存</string>
     <string name="wf_finish_share">仅分享</string>
@@ -1499,10 +1499,10 @@
     <string name="wf_share_again">再次分享</string>
     <string name="wf_counts">照片 %1$s · 视频 %2$s</string>
     <string name="wf_start">开始</string>
-    <string name="share_target_label">发送到 PhotoMaid</string>
+    <string name="share_target_label">发送到 GaleriQ</string>
     <string name="share_title">已接收</string>
     <string name="share_none">共享的文件都不在此设备的照片图库中。</string>
-    <string name="share_no_access">PhotoMaid 尚无法访问你的照片。请在设置中允许访问，然后重新发送。</string>
+    <string name="share_no_access">GaleriQ 尚无法访问你的照片。请在设置中允许访问，然后重新发送。</string>
     <string name="share_never">不会删除或决定任何内容。只有在你保存时才会生成新文件。</string>
     <string name="share_workflow">应用工作流程</string>
     <string name="share_edit">编辑</string>
@@ -1529,7 +1529,7 @@
     <string name="pdf_from_selection">生成 PDF</string>
     <string name="pdf_no_photos">所选内容中没有照片。视频无法放入 PDF。</string>
     <string name="pdf_no_date">无日期</string>
-    <string name="pdf_saved">已保存到“Documents/PhotoMaid” · %1$s</string>
+    <string name="pdf_saved">已保存到“Documents/GaleriQ” · %1$s</string>
     <string name="pdf_failed">无法保存 PDF。</string>
     <string name="pdf_page_of">第 %1$d 页，共 %2$d 页</string>
     <string name="pdf_capped">每个 PDF 最多 %1$d 张照片，已采用前 %1$d 张。</string>
@@ -1579,5 +1579,5 @@
     <string name="tour_history_title">稍后与记录</string>
     <string name="tour_history_text">在这里查看你保留、挑出或留到稍后的内容。任何决定都可以在这里更改。</string>
     <string name="tour_settings_title">设置与帮助</string>
-    <string name="tour_settings_text">按你的喜好设置 PhotoMaid，并找到答案。你可以随时重新查看这个导览。</string>
+    <string name="tour_settings_text">按你的喜好设置 GaleriQ，并找到答案。你可以随时重新查看这个导览。</string>
 </resources>

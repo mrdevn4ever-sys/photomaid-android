@@ -143,7 +143,7 @@ class RewardedProTest {
             withReward(a, Instant.now().minusSeconds(31 * 60))
         }
         rule.setContent { TestHost(app) { DuplicatesScreen(RecordingNav()) } }
-        rule.onNodeWithText("PhotoMaid Pro ansehen").assertExists()
+        rule.onNodeWithText("GaleriQ Pro ansehen").assertExists()
         assertFalse(app.capabilities.exactDuplicates)
     }
 

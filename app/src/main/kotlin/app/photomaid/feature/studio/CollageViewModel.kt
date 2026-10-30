@@ -223,7 +223,7 @@ class CollageViewModel(private val app: AppModel, start: CollageProject, private
     }
 
     private fun fileName(ext: String): String =
-        "PhotoMaid_${app.string(R.string.studio_collage_file)}_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())}.$ext"
+        "GaleriQ_${app.string(R.string.studio_collage_file)}_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())}.$ext"
             .replace(Regex("[\\\\/:*?\"<>|\\s]"), "_")
 
     fun save() {
@@ -234,7 +234,7 @@ class CollageViewModel(private val app: AppModel, start: CollageProject, private
                 val f = exportFile()
                 val ext = if (png) "png" else "jpg"
                 val r = app.photos.saveEdited(EditSaveRequest(sourceId = "", file = f, mime = if (png) "image/png" else "image/jpeg", displayName = fileName(ext),
-                    relativePath = targetFolder ?: "Pictures/PhotoMaid/", dateTakenMs = System.currentTimeMillis(), video = false, replace = false, favorite = false, replaceName = null))
+                    relativePath = targetFolder ?: "Pictures/GaleriQ/", dateTakenMs = System.currentTimeMillis(), video = false, replace = false, favorite = false, replaceName = null))
                 f.delete()
                 val saved = r as? EditSaveResult.Saved ?: throw IllegalStateException("save")
                 runCatching { app.decide(ItemReference.photo(saved.newId), DecisionAction.Keep) }

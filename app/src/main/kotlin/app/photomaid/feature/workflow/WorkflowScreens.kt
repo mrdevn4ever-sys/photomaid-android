@@ -94,7 +94,7 @@ object WorkflowRequests {
     val drafts = mutableStateMapOf<String, Workflow>()
 }
 
-private const val PHOTOMAID_FOLDER = "Pictures/PhotoMaid/"
+private const val PHOTOMAID_FOLDER = "Pictures/GaleriQ/"
 
 // ---- Liste ------------------------------------------------------------------------------------------------------
 

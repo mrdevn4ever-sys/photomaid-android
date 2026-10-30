@@ -108,7 +108,7 @@ data class ToolRequest(val id: String, val kind: ToolKind, val assetIds: List<St
 
 object ToolRequests { val map = mutableStateMapOf<String, ToolRequest>() }
 
-private const val SOFTWARE = "PhotoMaid"
+private const val SOFTWARE = "GaleriQ"
 
 /**
  * Stapel-Werkzeuge, Screenshots zusammenfügen, GIF erstellen (P7). Immer neue Dateien; Originale bleiben, außer
@@ -398,8 +398,8 @@ private suspend fun saveGif(app: AppModel, list: List<MediaAsset>, size: Int, de
 private suspend fun saveOwn(app: AppModel, f: File, mime: String, ext: String, name: String, kind: EditKind, count: Int, video: Boolean) {
     try {
         val stamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"))
-        val r = app.photos.saveEdited(EditSaveRequest(sourceId = "", file = f, mime = mime, displayName = "PhotoMaid_${name}_$stamp.$ext",
-            relativePath = "Pictures/PhotoMaid/", dateTakenMs = System.currentTimeMillis(), video = video, replace = false, favorite = false, replaceName = null))
+        val r = app.photos.saveEdited(EditSaveRequest(sourceId = "", file = f, mime = mime, displayName = "GaleriQ_${name}_$stamp.$ext",
+            relativePath = "Pictures/GaleriQ/", dateTakenMs = System.currentTimeMillis(), video = video, replace = false, favorite = false, replaceName = null))
         val saved = r as? EditSaveResult.Saved ?: throw IllegalStateException("save")
         runCatching { app.decide(ItemReference.photo(saved.newId), DecisionAction.Keep) }
         app.edits.add(EditRecord(saved.newId, "", SaveMode.COPY, video, System.currentTimeMillis(), kind, count))

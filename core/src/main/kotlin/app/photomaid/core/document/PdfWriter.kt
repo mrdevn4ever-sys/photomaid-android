@@ -59,7 +59,7 @@ class PdfWriter(output: OutputStream) {
         check(!finished); finished = true
         put(1) { it.ascii("<< /Type /Catalog /Pages 2 0 R >>") }
         put(2) { it.ascii("<< /Type /Pages /Kids [${pageIds.joinToString(" ") { id -> "$id 0 R" }}] /Count ${pageIds.size} >>") }
-        val info = obj { it.ascii("<< /Producer (PhotoMaid) >>") }
+        val info = obj { it.ascii("<< /Producer (GaleriQ) >>") }
         val xref = out.count
         val sb = StringBuilder("xref\n0 ${offsets.size + 1}\n0000000000 65535 f \n")
         for (o in offsets) sb.append(String.format(Locale.ROOT, "%010d 00000 n \n", o))

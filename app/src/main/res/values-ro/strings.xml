@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generated PhotoMaid UI translations. See CODE_AENDERUNGEN.json before integration. -->
+<!-- Generated GaleriQ UI translations. See CODE_AENDERUNGEN.json before integration. -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PhotoMaid</string>
+    <string name="app_name">GaleriQ</string>
     <string name="ok">OK</string>
     <string name="cancel">Anulează</string>
     <string name="done">Gata</string>
@@ -17,7 +17,7 @@
     <string name="info">Informații</string>
     <string name="error_title">Nu a funcționat</string>
     <string name="retry">Încearcă din nou</string>
-    <string name="store_open_failed">PhotoMaid nu a putut deschide datele salvate.</string>
+    <string name="store_open_failed">GaleriQ nu a putut deschide datele salvate.</string>
     <plurals name="items_count">
         <item quantity="one">%1$d element</item>
         <item quantity="few">%1$d elemente</item>
@@ -43,12 +43,12 @@
     <string name="tab_cleanup">Curățenie</string>
     <string name="tab_history">Istoric</string>
     <string name="today_limited_title">Acces limitat</string>
-    <string name="today_limited_text">PhotoMaid arată doar fotografiile și videoclipurile pentru care ai permis accesul. Le poți organiza ca de obicei.</string>
+    <string name="today_limited_text">GaleriQ arată doar fotografiile și videoclipurile pentru care ai permis accesul. Le poți organiza ca de obicei.</string>
     <string name="today_limited_action">Schimbă accesul</string>
     <string name="today_access_title">Acces la fotografii și videoclipuri</string>
     <string name="today_access_denied_title">Fără acces la fotografiile și videoclipurile tale</string>
-    <string name="today_access_denied">Permite accesul din setările Android pentru PhotoMaid. Alegerile tale anterioare rămân salvate.</string>
-    <string name="today_access_default">Permite accesul pentru PhotoMaid ca să vezi și să organizezi fotografiile și videoclipurile.</string>
+    <string name="today_access_denied">Permite accesul din setările Android pentru GaleriQ. Alegerile tale anterioare rămân salvate.</string>
+    <string name="today_access_default">Permite accesul pentru GaleriQ ca să vezi și să organizezi fotografiile și videoclipurile.</string>
     <string name="storage_used_of">din %1$s utilizați</string>
     <string name="today_start_sub">Glisează prin fotografiile și videoclipurile tale.</string>
     <string name="today_continue_sub">Continuă de unde ai rămas.</string>
@@ -217,22 +217,22 @@
         <item quantity="other">%1$d de fișiere au fost șterse definitiv.</item>
     </plurals>
     <plurals name="result_partial">
-        <item quantity="one">Eliminate: %1$d din %2$d. Restul rămân în coșul PhotoMaid.</item>
-        <item quantity="few">Eliminate: %1$d din %2$d. Restul rămân în coșul PhotoMaid.</item>
-        <item quantity="other">Eliminate: %1$d din %2$d. Restul rămân în coșul PhotoMaid.</item>
+        <item quantity="one">Eliminate: %1$d din %2$d. Restul rămân în coșul GaleriQ.</item>
+        <item quantity="few">Eliminate: %1$d din %2$d. Restul rămân în coșul GaleriQ.</item>
+        <item quantity="other">Eliminate: %1$d din %2$d. Restul rămân în coșul GaleriQ.</item>
     </plurals>
     <string name="result_cancelled">Anulat. Nu s-a eliminat nimic.</string>
     <string name="result_nothing">Nu s-a eliminat nimic.</string>
     <plurals name="result_allowance">
-        <item quantity="one">Selectate: %2$d. Azi mai poți elimina %1$d element. Selectează cel mult %1$d sau alege PhotoMaid Pro.</item>
-        <item quantity="few">Selectate: %2$d. Azi mai poți elimina %1$d elemente. Selectează cel mult %1$d sau alege PhotoMaid Pro.</item>
-        <item quantity="other">Selectate: %2$d. Azi mai poți elimina %1$d de elemente. Selectează cel mult %1$d sau alege PhotoMaid Pro.</item>
+        <item quantity="one">Selectate: %2$d. Azi mai poți elimina %1$d element. Selectează cel mult %1$d sau alege GaleriQ Pro.</item>
+        <item quantity="few">Selectate: %2$d. Azi mai poți elimina %1$d elemente. Selectează cel mult %1$d sau alege GaleriQ Pro.</item>
+        <item quantity="other">Selectate: %2$d. Azi mai poți elimina %1$d de elemente. Selectează cel mult %1$d sau alege GaleriQ Pro.</item>
     </plurals>
     <string name="result_changed">Selecția ta s-a schimbat. Verific-o din nou.</string>
     <string name="result_reconcile">Vom verifica rezultatul la următoarea deschidere. Nimic nu va fi șters din nou.</string>
     <string name="item_actions_for">Acțiuni pentru %1$s</string>
     <string name="files_none_title">Niciun dosar conectat încă</string>
-    <string name="files_none_message">Alege un dosar pentru a-i verifica fișierele în PhotoMaid.</string>
+    <string name="files_none_message">Alege un dosar pentru a-i verifica fișierele în GaleriQ.</string>
     <string name="files_none_tip">Dosarul Descărcări nu poate fi selectat aici. Alege un subdosar din interiorul lui.</string>
     <string name="file_type">Tip de fișier</string>
     <string name="kind_all">Toate</string>
@@ -255,7 +255,7 @@
     <string name="sources_ro">Doar citire</string>
     <string name="sources_unreachable">Inaccesibil — conectează din nou</string>
     <string name="sources_remove">Deconectează dosarul</string>
-    <string name="sources_footer">Deconectarea unui dosar nu șterge fișiere. Tu alegi dosarele pe care PhotoMaid le poate accesa în această vedere.</string>
+    <string name="sources_footer">Deconectarea unui dosar nu șterge fișiere. Tu alegi dosarele pe care GaleriQ le poate accesa în această vedere.</string>
     <plurals name="large_in_files">
         <item quantity="one">în %1$d fișier mare</item>
         <item quantity="few">în %1$d fișiere mari</item>
@@ -274,12 +274,12 @@
     <string name="storage_a">Dispozitivul tău</string>
     <string name="storage_available">%1$s disponibili conform Android</string>
     <string name="storage_unavailable">Informațiile despre spațiu nu sunt disponibile acum</string>
-    <string name="storage_b">Vizibil pentru PhotoMaid</string>
+    <string name="storage_b">Vizibil pentru GaleriQ</string>
     <string name="storage_of_which_screens">din care capturi de ecran</string>
     <string name="storage_connected_folders">Dosare conectate</string>
     <string name="storage_b_footer">Capturile de ecran sunt deja incluse în fotografii. Fișierele mari și duplicatele nu sunt numărate din nou. Dimensiunile necunoscute sunt omise din total, care atunci este marcat „Cel puțin”.</string>
-    <string name="storage_c">Invizibil pentru PhotoMaid</string>
-    <string name="storage_c_text">PhotoMaid nu poate verifica alte aplicații, fișiere de sistem, conținut cloud sau dosare fără acces. Pentru acestea nu afișează o dimensiune.</string>
+    <string name="storage_c">Invizibil pentru GaleriQ</string>
+    <string name="storage_c_text">GaleriQ nu poate verifica alte aplicații, fișiere de sistem, conținut cloud sau dosare fără acces. Pentru acestea nu afișează o dimensiune.</string>
     <string name="storage_local">Analiza stocării rămâne pe dispozitivul tău.</string>
     <plurals name="storage_value_items">
         <item quantity="one">%1$d element · %2$s</item>
@@ -288,11 +288,11 @@
     </plurals>
     <string name="dup_find">Găsește copii identice</string>
     <string name="dup_explain">Găsește fotografii, videoclipuri și fișiere cu exact același conținut. Tu alegi ce copii ajung în coș.</string>
-    <string name="dup_how">PhotoMaid compară conținutul fișierelor pe dispozitiv. Imaginile care seamănă nu sunt considerate copii identice.</string>
+    <string name="dup_how">GaleriQ compară conținutul fișierelor pe dispozitiv. Imaginile care seamănă nu sunt considerate copii identice.</string>
     <string name="dup_checking">Se compară fișierele …</string>
     <string name="dup_start">Caută copii</string>
     <string name="dup_again">Caută din nou</string>
-    <string name="pro_view">Vezi PhotoMaid Pro</string>
+    <string name="pro_view">Vezi GaleriQ Pro</string>
     <string name="dup_none">Nu s-au găsit copii identice</string>
     <string name="dup_none_message">Nu s-au găsit copii identice în zonele accesibile.</string>
     <plurals name="dup_not_comparable">
@@ -390,7 +390,7 @@
     <string name="h_later">Salvat pentru mai târziu</string>
     <string name="h_later_corr">Schimbat: mai târziu</string>
     <string name="h_changed">Schimbat</string>
-    <string name="pro_title">PhotoMaid Pro</string>
+    <string name="pro_title">GaleriQ Pro</string>
     <string name="pro_subtitle">Cumperi o singură dată. Fără abonament.</string>
     <string name="pro_f2">Curățenie fără limită zilnică</string>
     <string name="pro_f2d">Elimină cât vrei, fără limita zilnică de %1$d.</string>
@@ -398,24 +398,24 @@
     <string name="pro_f3d">Găsește fotografii, videoclipuri și fișiere identice din dosarele conectate.</string>
     <string name="pro_f5">Colecții proprii</string>
     <string name="pro_f5d">Salvează filtre proprii, de exemplu „Videoclipuri mai mari de 500 MB”. O atingere deschide conținutul potrivit.</string>
-    <string name="pro_also">Cumperi o dată și faci curățenie fără reclame. Fără abonament sau cont PhotoMaid.</string>
+    <string name="pro_also">Cumperi o dată și faci curățenie fără reclame. Fără abonament sau cont GaleriQ.</string>
     <string name="pro_f1">Fără reclame</string>
     <string name="pro_f1d">Fără carduri publicitare între fotografii și videoclipuri.</string>
     <string name="pro_details">Cum funcționează Pro</string>
-    <string name="pro_details_dup">Copiile sunt fișiere identice până la ultimul detaliu. PhotoMaid le compară pe dispozitiv, nu în cloud. Imaginile doar asemănătoare nu contează drept copii.</string>
+    <string name="pro_details_dup">Copiile sunt fișiere identice până la ultimul detaliu. GaleriQ le compară pe dispozitiv, nu în cloud. Imaginile doar asemănătoare nu contează drept copii.</string>
     <string name="pro_details_rules">Colecțiile arată conținut potrivit de pe dispozitiv. Îl deschizi și îl verifici tu. Nu șterg nimic automat și nu fac curățenie în fundal.</string>
     <string name="pro_details_cleanup">La limita zilnică se pune doar ce elimini cu adevărat din coș. Glisarea nu contează niciodată.</string>
     <string name="expanded">Extins</string>
     <string name="collapsed">Restrâns</string>
     <string name="pro_privacy">Fotografiile și fișierele tale sunt verificate și sortate doar pe dispozitiv. Pentru cumpărături și reclame ajunge la Google sau la furnizori doar strictul necesar – niciodată fotografiile, numele lor sau ceva derivat din ele.</string>
     <string name="pro_pending">Achiziția ta așteaptă confirmarea.</string>
-    <string name="pro_unlock">Deblochează PhotoMaid Pro</string>
+    <string name="pro_unlock">Deblochează GaleriQ Pro</string>
     <string name="pro_price_once">%1$s · Achiziție unică</string>
     <string name="pro_price_loading">Se încarcă prețul …</string>
     <string name="pro_unavailable">Achizițiile nu sunt încă disponibile în această versiune.</string>
     <string name="pro_restore">Restabilește achizițiile</string>
     <string name="pro_revoked">O achiziție anterioară a fost rambursată sau revocată.</string>
-    <string name="pro_msg_active">PhotoMaid Pro este acum activ.</string>
+    <string name="pro_msg_active">GaleriQ Pro este acum activ.</string>
     <string name="pro_msg_pending">Achiziția ta așteaptă confirmarea. Pro se va debloca după confirmare.</string>
     <string name="pro_msg_failed">Achiziția nu a putut fi finalizată.</string>
     <string name="pro_msg_restored">Achiziția ta a fost restabilită.</string>
@@ -454,13 +454,13 @@
     <string name="help_decide">Alegerea</string>
     <string name="help_decide_text">Glisează în sus pentru a păstra, la stânga pentru coș și la dreapta pentru mai târziu. Implicit, elementul revine în 2 zile. Poți schimba intervalul în setări. Imediat după glisare, folosește „Schimbă” pentru altă dată. Glisează în jos ca să revii fără o nouă alegere.</string>
     <string name="help_delete">Ștergerea</string>
-    <string name="help_delete_text">Glisarea nu șterge niciodată nimic. Ce pui deoparte ajunge mai întâi în coșul PhotoMaid. Abia când îl golești se elimină ceva – fotografiile și videoclipurile ajung atunci în coșul Android, după ce Android mai întreabă o dată. Fișierele din dosarele conectate se șterg definitiv.</string>
+    <string name="help_delete_text">Glisarea nu șterge niciodată nimic. Ce pui deoparte ajunge mai întâi în coșul GaleriQ. Abia când îl golești se elimină ceva – fotografiile și videoclipurile ajung atunci în coșul Android, după ce Android mai întreabă o dată. Fișierele din dosarele conectate se șterg definitiv.</string>
     <string name="help_cloud">Cloud</string>
-    <string name="help_cloud_text">Serviciile cloud precum Google Foto pot sincroniza ștergerile cu alte dispozitive. Verifică-le setările. PhotoMaid nu descarcă elemente aflate doar în cloud.</string>
+    <string name="help_cloud_text">Serviciile cloud precum Google Foto pot sincroniza ștergerile cu alte dispozitive. Verifică-le setările. GaleriQ nu descarcă elemente aflate doar în cloud.</string>
     <string name="help_free">Gratuit</string>
     <string name="help_free_text">Poți vedea, glisa și salva pentru mai târziu fără limită. Fără Pro, poți elimina cel mult %1$d pe zi.</string>
     <string name="privacy_title">Confidențialitatea ta pe primul loc</string>
-    <string name="privacy_text">PhotoMaid se uită la fotografiile, videoclipurile și fișierele permise doar pe dispozitivul tău. Nu ai nevoie de cont și nu există server PhotoMaid. Bine de știut: la servicii cloud precum Google Foto, ce ștergi poate dispărea și de pe celelalte dispozitive.</string>
+    <string name="privacy_text">GaleriQ se uită la fotografiile, videoclipurile și fișierele permise doar pe dispozitivul tău. Nu ai nevoie de cont și nu există server GaleriQ. Bine de știut: la servicii cloud precum Google Foto, ce ștergi poate dispărea și de pe celelalte dispozitive.</string>
     <string name="privacy_media">Fotografii și videoclipuri</string>
     <string name="privacy_media_text">Pentru a vedea, organiza și elimina fotografii și videoclipuri după confirmarea ta.</string>
     <string name="privacy_allow">Permite accesul</string>
@@ -511,7 +511,7 @@
     <string name="basket_preview_note">Vizualizarea nu schimbă selecția.</string>
     <string name="limit_title_partial">Mai ai %1$d azi</string>
     <string name="limit_title_none">Limita zilnică a fost atinsă</string>
-    <string name="limit_message">Selectate: %2$d. Fără Pro poți elimina cel mult %1$d pe zi. Restul rămân în coșul PhotoMaid.</string>
+    <string name="limit_message">Selectate: %2$d. Fără Pro poți elimina cel mult %1$d pe zi. Restul rămân în coșul GaleriQ.</string>
     <string name="limit_tomorrow">Limita zilnică va fi din nou disponibilă mâine.</string>
     <string name="limit_take_partial">Elimină %1$d dintre acestea</string>
     <string name="reward_title">Testează instrumentele Pro 30 de minute</string>
@@ -588,14 +588,14 @@
     <string name="limit_all_with_pro">Elimină tot (%1$d) cu Pro</string>
     <string name="summary_upsell">Fără limită zilnică și fără reclame cu Pro.</string>
     <string name="summary_offer_title">Puțin mai multă ordine</string>
-    <string name="summary_offer_text">Cu PhotoMaid Pro faci curățenie fără limită zilnică și fără reclame. O singură achiziție, fără abonament.</string>
+    <string name="summary_offer_text">Cu GaleriQ Pro faci curățenie fără limită zilnică și fără reclame. O singură achiziție, fără abonament.</string>
     <string name="limit_soon">Mai ai %1$d din %2$d azi</string>
     <string name="limit_soon_pro">Fără limită cu Pro</string>
     <string name="limit_bonus">Vezi o reclamă: elimină cu %1$d mai multe azi</string>
     <string name="limit_bonus_note">O dată pe zi. Bonusul este valabil doar azi.</string>
     <string name="limit_bonus_dismissed">Reclama a fost închisă înainte de final. Nu s-a deblocat nimic. Poți încerca din nou azi.</string>
     <string name="limit_bonus_unavailable">Nu este disponibilă nicio reclamă acum. Nu s-a deblocat nimic.</string>
-    <string name="today_pro_title">PhotoMaid Pro</string>
+    <string name="today_pro_title">GaleriQ Pro</string>
     <string name="today_pro_text">Fără limită zilnică și fără reclame. Achiziție unică.</string>
     <plurals name="summary_upsell_count">
         <item quantity="one">Selectate pentru eliminare: %1$d.</item>
@@ -611,8 +611,8 @@
     <string name="onb_try_done">Așa funcționează. Acum urmează fotografiile tale.</string>
     <string name="onb_demo_desc">Carduri de probă. Nimic nu se salvează aici.</string>
     <string name="onb_safe_title">Tu decizi ce se șterge</string>
-    <string name="onb_safe_text">Elementele ajung mai întâi în coșul PhotoMaid. Acolo confirmi eliminarea. Android cere o confirmare în plus pentru fotografii și videoclipuri.</string>
-    <string name="onb_safe_local">Fotografiile rămân pe dispozitivul tău. Fără cont PhotoMaid și fără încărcarea fotografiilor.</string>
+    <string name="onb_safe_text">Elementele ajung mai întâi în coșul GaleriQ. Acolo confirmi eliminarea. Android cere o confirmare în plus pentru fotografii și videoclipuri.</string>
+    <string name="onb_safe_local">Fotografiile rămân pe dispozitivul tău. Fără cont GaleriQ și fără încărcarea fotografiilor.</string>
     <string name="onb_safe_sheet">Elimină</string>
     <string name="onb_safe_dialog">Android cere confirmare</string>
     <string name="onb_offer_title">Începe gratuit</string>
@@ -621,7 +621,7 @@
     <string name="onb_buy">Cumpără Pro · %1$s o singură dată</string>
     <string name="onb_buy_noprice">Cumpără Pro o singură dată</string>
     <string name="onb_access_title">Acces la fotografii și videoclipuri</string>
-    <string name="onb_access_text">PhotoMaid arată fotografiile și videoclipurile direct pe dispozitiv, ca să le poți organiza. Fără cont sau server PhotoMaid.</string>
+    <string name="onb_access_text">GaleriQ arată fotografiile și videoclipurile direct pe dispozitiv, ca să le poți organiza. Fără cont sau server GaleriQ.</string>
     <string name="onb_progress">Pasul %1$d din %2$d</string>
     <string name="offer_free_title">Folosește gratuit</string>
     <string name="offer_free_text">Glisează și organizează fără limite, cât timp dorești.</string>
@@ -672,7 +672,7 @@
         <item quantity="other">Dimensiunea a %1$d de elemente este necunoscută. Nu sunt incluse în total.</item>
     </plurals>
     <string name="done_button">Gata</string>
-    <string name="done_partial">Elementele care nu au fost eliminate rămân în coșul PhotoMaid.</string>
+    <string name="done_partial">Elementele care nu au fost eliminate rămân în coșul GaleriQ.</string>
     <!-- Ausbau 2026-10 (Ordner, Monate, Serien, Raster, Reihenfolge, Tasten) -->
     <string name="basket_confirm_files_trash_title">Muți în coșul locației de stocare?</string>
     <string name="basket_confirm_files_trash_message">Fișierele ajung în coșul locației lor și pot fi restaurate de acolo. Spațiul se eliberează doar după ce sunt șterse acolo.</string>
@@ -728,7 +728,7 @@
     <string name="series_button">Compară seria de %1$d fotografii</string>
     <string name="series_confirm">Păstrează %1$d · %2$d la coș</string>
     <string name="series_done">%1$d păstrate · %2$d în coș</string>
-    <string name="series_footer">Nimic nu se șterge. Coșul aparține PhotoMaid și se golește doar când confirmi.</string>
+    <string name="series_footer">Nimic nu se șterge. Coșul aparține GaleriQ și se golește doar când confirmi.</string>
     <string name="series_hint">Atinge o fotografie ca s-o compari jos. Bifa decide ce rămâne.</string>
     <string name="series_keep_toggle">Păstrează</string>
     <string name="series_state_keep">Păstrează</string>
@@ -844,7 +844,7 @@
     <string name="edit_ratio_locked">Proporții blocate</string>
     <string name="edit_ratio_free">Proporții libere</string>
     <string name="edit_size_result">%1$d × %2$d → %3$d × %4$d px</string>
-    <string name="edit_size_small">Fotografia este deja mică. PhotoMaid nu mărește niciodată.</string>
+    <string name="edit_size_small">Fotografia este deja mică. GaleriQ nu mărește niciodată.</string>
     <string name="edit_pro_hint">Previzualizare gratuită · salvare cu Pro sau testul de 30 de minute</string>
     <string name="edit_pro_more">Mai mult</string>
     <string name="edit_pro_title">Salvează cu Pro</string>
@@ -885,7 +885,7 @@
     <string name="redo">Refă</string>
     <string name="edits_title">Editate</string>
     <string name="hub_edits_sub">Copii și originale înlocuite</string>
-    <string name="edits_intro">Tot ce ai salvat în editorul PhotoMaid, cele mai noi primele. Doar pe acest dispozitiv.</string>
+    <string name="edits_intro">Tot ce ai salvat în editorul GaleriQ, cele mai noi primele. Doar pe acest dispozitiv.</string>
     <string name="edits_empty_title">Nimic editat încă</string>
     <string name="edits_empty_text">În timpul verificării, atinge creionul de sub o fotografie sau un videoclip pentru a decupa, ajusta sau scurta.</string>
     <string name="edits_badge_copy">Copie</string>
@@ -1077,7 +1077,7 @@
     <string name="col_png_hint">PNG: fără pierderi și clar, dar fișierul e mai mare.</string>
     <string name="col_pro_text">Acest colaj folosește funcții Pro (peste 4 fotografii, aranjare liberă sau tipărire A4). Deblochează Pro sau testul gratuit de 30 de minute ca să-l salvezi.</string>
     <string name="col_save_action">Salvează în galerie</string>
-    <string name="col_save_where">Se salvează ca imagine nouă în „Pictures/PhotoMaid”. Fotografiile rămân neschimbate.</string>
+    <string name="col_save_where">Se salvează ca imagine nouă în „Pictures/GaleriQ”. Fotografiile rămân neschimbate.</string>
     <plurals name="picker_next">
         <item quantity="one">Continuă cu %1$d</item>
         <item quantity="few">Continuă cu %1$d</item>
@@ -1169,7 +1169,7 @@
     <string name="vid_audio_export">Salvează doar sunetul</string>
     <string name="vid_audio_suffix">sunet</string>
     <string name="vid_audio_running">Se salvează sunetul</string>
-    <string name="vid_audio_saved">„%1$s” a fost salvat în Music/PhotoMaid.</string>
+    <string name="vid_audio_saved">„%1$s” a fost salvat în Music/GaleriQ.</string>
     <string name="vid_audio_failed">Sunetul nu a putut fi salvat.</string>
     <string name="vid_fill">Umple</string>
     <string name="vid_fit">Arată tot videoclipul</string>
@@ -1199,10 +1199,10 @@
     <string name="lib_level_finer">Miniaturi mai mari</string>
     <string name="lib_level_coarser">Miniaturi mai mici</string>
     <string name="lib_trash_action">Mută în coș</string>
-    <string name="lib_trash_text">În coșul PhotoMaid – nu se șterge nimic. Decizi acolo mai târziu.</string>
-    <string name="lib_trash_text_fav">În coșul PhotoMaid – nu se șterge nimic. Favoritele rămân („Protejează favoritele” e activ).</string>
+    <string name="lib_trash_text">În coșul GaleriQ – nu se șterge nimic. Decizi acolo mai târziu.</string>
+    <string name="lib_trash_text_fav">În coșul GaleriQ – nu se șterge nimic. Favoritele rămân („Protejează favoritele” e activ).</string>
     <string name="lib_trash_fav_protected">Este un favorit. „Protejează favoritele” e activ, așa că nu ajunge în coș. Poți schimba asta în setări.</string>
-    <string name="lib_trashed_one">În coșul PhotoMaid</string>
+    <string name="lib_trashed_one">În coșul GaleriQ</string>
     <string name="lib_review_from_here">Curăță de aici</string>
     <string name="lib_feed_title">Din bibliotecă</string>
     <string name="lib_info_name">Nume</string>
@@ -1219,9 +1219,9 @@
         <item quantity="other">Muți %1$d de elemente în coș?</item>
     </plurals>
     <plurals name="lib_trashed">
-        <item quantity="one">%1$d element este în coșul PhotoMaid.</item>
-        <item quantity="few">%1$d elemente sunt în coșul PhotoMaid.</item>
-        <item quantity="other">%1$d de elemente sunt în coșul PhotoMaid.</item>
+        <item quantity="one">%1$d element este în coșul GaleriQ.</item>
+        <item quantity="few">%1$d elemente sunt în coșul GaleriQ.</item>
+        <item quantity="other">%1$d de elemente sunt în coșul GaleriQ.</item>
     </plurals>
     <string name="lib_mode_timeline">Cronologie</string>
     <string name="lib_mode_folders">Dosare</string>
@@ -1262,16 +1262,16 @@
     <string name="lib_sort_name">Nume</string>
     <string name="lib_sort_largest">Cele mai mari întâi</string>
     <string name="lib_sort_default">Folosește pentru toate dosarele</string>
-    <string name="lib_hide">Ascunde în PhotoMaid</string>
-    <string name="lib_hide_text">PhotoMaid nu le va mai afișa – nici la Fotografii, nici la curățare. Fișierele rămân neschimbate și vizibile în alte aplicații. Nu este un seif.</string>
-    <string name="lib_hide_folder_title">Ascunzi „%1$s” în PhotoMaid?</string>
+    <string name="lib_hide">Ascunde în GaleriQ</string>
+    <string name="lib_hide_text">GaleriQ nu le va mai afișa – nici la Fotografii, nici la curățare. Fișierele rămân neschimbate și vizibile în alte aplicații. Nu este un seif.</string>
+    <string name="lib_hide_folder_title">Ascunzi „%1$s” în GaleriQ?</string>
     <string name="lib_hide_folder_text">Dosarul și subdosarele nu mai apar la Fotografii și la curățare. Nimic nu se mută sau șterge; alte aplicații îl afișează în continuare. Reafișează din Dosare › Ascunse.</string>
     <string name="lib_hidden_title">Ascunse</string>
-    <string name="lib_hidden_row">Dosare și fișiere pe care PhotoMaid nu le arată</string>
-    <string name="lib_hidden_intro">PhotoMaid nu le afișează nicăieri. Fișierele sunt neschimbate, iar alte aplicații le afișează în continuare.</string>
+    <string name="lib_hidden_row">Dosare și fișiere pe care GaleriQ nu le arată</string>
+    <string name="lib_hidden_intro">GaleriQ nu le afișează nicăieri. Fișierele sunt neschimbate, iar alte aplicații le afișează în continuare.</string>
     <string name="lib_hidden_none_title">Nimic ascuns</string>
-    <string name="lib_hidden_none_text">Folosește „Ascunde în PhotoMaid” la un dosar, o fotografie sau o selecție.</string>
-    <string name="lib_hidden_one">Ascuns în PhotoMaid</string>
+    <string name="lib_hidden_none_text">Folosește „Ascunde în GaleriQ” la un dosar, o fotografie sau o selecție.</string>
+    <string name="lib_hidden_one">Ascuns în GaleriQ</string>
     <string name="lib_unhide">Afișează din nou</string>
     <string name="lib_info_camera">Cameră</string>
     <plurals name="lib_subfolders">
@@ -1285,14 +1285,14 @@
         <item quantity="other">%1$d de dosare</item>
     </plurals>
     <plurals name="lib_hide_title">
-        <item quantity="one">Ascunzi %1$d element în PhotoMaid?</item>
-        <item quantity="few">Ascunzi %1$d elemente în PhotoMaid?</item>
-        <item quantity="other">Ascunzi %1$d de elemente în PhotoMaid?</item>
+        <item quantity="one">Ascunzi %1$d element în GaleriQ?</item>
+        <item quantity="few">Ascunzi %1$d elemente în GaleriQ?</item>
+        <item quantity="other">Ascunzi %1$d de elemente în GaleriQ?</item>
     </plurals>
     <plurals name="lib_hidden_done">
-        <item quantity="one">%1$d element ascuns în PhotoMaid</item>
-        <item quantity="few">%1$d elemente ascunse în PhotoMaid</item>
-        <item quantity="other">%1$d de elemente ascunse în PhotoMaid</item>
+        <item quantity="one">%1$d element ascuns în GaleriQ</item>
+        <item quantity="few">%1$d elemente ascunse în GaleriQ</item>
+        <item quantity="other">%1$d de elemente ascunse în GaleriQ</item>
     </plurals>
     <plurals name="lib_unhidden">
         <item quantity="one">%1$d element afișat din nou</item>
@@ -1334,7 +1334,7 @@
     <string name="done_note_media_deleted">Fotografiile și videoclipurile sunt șterse definitiv – nu sunt în coșul Android.</string>
     <string name="systrash_open">Vezi coșul Android</string>
     <string name="systrash_title">Coșul Android</string>
-    <string name="systrash_intro">Tot ce păstrează Android în coș – din PhotoMaid și alte aplicații. La expirare, Android le șterge singur.</string>
+    <string name="systrash_intro">Tot ce păstrează Android în coș – din GaleriQ și alte aplicații. La expirare, Android le șterge singur.</string>
     <string name="systrash_empty_title">Coșul Android este gol</string>
     <string name="systrash_empty_text">Fotografiile și videoclipurile eliminate apar aici o vreme și pot fi recuperate.</string>
     <string name="systrash_partial">%1$d din %2$d gata. Restul rămâne neschimbat.</string>
@@ -1343,7 +1343,7 @@
     <string name="set_delete_permanently">Șterge definitiv</string>
     <string name="set_delete_permanently_detail">Dezactivat: la golire, totul ajunge întâi în coșul Android și poate fi recuperat o vreme. Activat: totul se șterge definitiv imediat.</string>
     <string name="set_delete_permanently_confirm_title">Activezi ștergerea definitivă?</string>
-    <string name="set_delete_permanently_confirm_text">De acum, golirea coșului PhotoMaid șterge definitiv fotografiile și videoclipurile. Nu ajung în coșul Android și nu pot fi recuperate – nici din copii nesincronizate încă. Android întreabă totuși de fiecare dată.</string>
+    <string name="set_delete_permanently_confirm_text">De acum, golirea coșului GaleriQ șterge definitiv fotografiile și videoclipurile. Nu ajung în coșul Android și nu pot fi recuperate – nici din copii nesincronizate încă. Android întreabă totuși de fiecare dată.</string>
     <string name="set_delete_permanently_confirm_action">Activează</string>
     <plurals name="result_media_deleted">
         <item quantity="one">%1$d element șters definitiv.</item>
@@ -1407,10 +1407,10 @@
     <string name="movie_music_volume">Volumul muzicii</string>
     <string name="movie_music_fade">Muzica apare și dispare treptat</string>
     <string name="movie_original_off">Elimină sunetul original</string>
-    <string name="movie_music_note">Fișierul tău, de la început și repetat la nevoie. PhotoMaid nu include muzică. Ai grijă la drepturi când distribui.</string>
+    <string name="movie_music_note">Fișierul tău, de la început și repetat la nevoie. GaleriQ nu include muzică. Ai grijă la drepturi când distribui.</string>
     <string name="movie_running">Se creează videoclipul…</string>
     <string name="movie_running_slideshow">Se creează prezentarea…</string>
-    <string name="movie_saved">Salvat ca videoclip nou în Movies/PhotoMaid. Originalele rămân neschimbate.</string>
+    <string name="movie_saved">Salvat ca videoclip nou în Movies/GaleriQ. Originalele rămân neschimbate.</string>
     <string name="movie_failed">Videoclipul nu a putut fi creat. Nu s-a salvat nimic, iar originalele sunt neschimbate.</string>
     <string name="movie_too_few">Adaugă cel puțin două clipuri.</string>
     <string name="movie_too_many">Cel mult 50 de clipuri pe videoclip.</string>
@@ -1431,8 +1431,8 @@
     <string name="tools_pick">Alege fotografii</string>
     <string name="tools_pick_gif">Alege fotografii sau un videoclip</string>
     <string name="tools_running">Se procesează fișierele…</string>
-    <string name="tools_stitch_saved">Salvată ca imagine nouă în Pictures/PhotoMaid.</string>
-    <string name="tools_gif_saved">GIF salvat în Pictures/PhotoMaid (%1$s).</string>
+    <string name="tools_stitch_saved">Salvată ca imagine nouă în Pictures/GaleriQ.</string>
+    <string name="tools_gif_saved">GIF salvat în Pictures/GaleriQ (%1$s).</string>
     <string name="tools_failed">Nu a funcționat. Originalele sunt neschimbate.</string>
     <string name="tools_pro_save">Creează cu Pro</string>
     <string name="tools_start">Pornește</string>
@@ -1493,8 +1493,8 @@
     <string name="dock_more">Mai mult</string>
     <string name="vid_trim_hint_short">Trage de mânere pentru a stabili începutul și sfârșitul.</string>
     <string name="vid_export_info">Cum se salvează</string>
-    <string name="vid_export_info_fast">Ai tăiat doar începutul și sfârșitul. Merge repede, iar calitatea rămâne ca în original. Dacă videoclipul nu permite asta, PhotoMaid îl reface complet – durează puțin mai mult. Durată totală %1$s.</string>
-    <string name="vid_export_info_reencode">Din cauza celorlalte modificări, PhotoMaid reface întregul videoclip la salvare. Poate dura un moment. Durată totală %1$s.</string>
+    <string name="vid_export_info_fast">Ai tăiat doar începutul și sfârșitul. Merge repede, iar calitatea rămâne ca în original. Dacă videoclipul nu permite asta, GaleriQ îl reface complet – durează puțin mai mult. Durată totală %1$s.</string>
+    <string name="vid_export_info_reencode">Din cauza celorlalte modificări, GaleriQ reface întregul videoclip la salvare. Poate dura un moment. Durată totală %1$s.</string>
     <string name="lib_mode_albums">Albume</string>
     <string name="org_new_album">Album nou</string>
     <string name="org_album_name">Numele albumului</string>
@@ -1508,13 +1508,13 @@
     <string name="org_already_in_album">Sunt deja toate în „%1$s”.</string>
     <string name="org_albums_empty_title">Încă nu există albume</string>
     <string name="org_albums_empty_text">Un album adună fotografii și videoclipuri din orice dosar, fără să le copieze sau să le mute. O fotografie poate fi în mai multe albume.</string>
-    <string name="org_albums_footer">Albumele există doar în PhotoMaid. Dosarele arată unde se află un fișier; colecțiile găsesc conținut după o condiție.</string>
+    <string name="org_albums_footer">Albumele există doar în GaleriQ. Dosarele arată unde se află un fișier; colecțiile găsesc conținut după o condiție.</string>
     <string name="org_album_empty">Albumul este gol. În „Fotografii”, selectează conținut și atinge ⋯ › Adaugă la album.</string>
     <string name="org_missing_remove">Scoate din listă</string>
     <string name="org_tags">Etichete</string>
     <string name="org_tag_new_hint">Etichetă nouă</string>
     <string name="org_tag_add">Adaugă</string>
-    <string name="org_tags_none">Încă nu există etichete. Adaugă propriile cuvinte, de pildă „Factură” sau „Vacanță” – PhotoMaid știe doar ce introduci tu.</string>
+    <string name="org_tags_none">Încă nu există etichete. Adaugă propriile cuvinte, de pildă „Factură” sau „Vacanță” – GaleriQ știe doar ce introduci tu.</string>
     <string name="org_tag_remove">Elimină eticheta</string>
     <string name="org_tag_delete">Elimină peste tot</string>
     <string name="org_tag_delete_title">Elimini eticheta „%1$s” peste tot?</string>
@@ -1522,7 +1522,7 @@
     <string name="org_tag_state_all">la toate</string>
     <string name="org_tag_state_some">la unele</string>
     <string name="org_note">Notă</string>
-    <string name="org_note_hint">Notă (doar în PhotoMaid, fișierul rămâne neschimbat)</string>
+    <string name="org_note_hint">Notă (doar în GaleriQ, fișierul rămâne neschimbat)</string>
     <string name="org_note_save">Salvează nota</string>
     <string name="org_basket">Coș de selecție</string>
     <string name="org_basket_add">Adaugă în coșul de selecție</string>
@@ -1585,7 +1585,7 @@
     <string name="wf_target">Maximum per fotografie</string>
     <string name="wf_off">Niciuna</string>
     <string name="wf_min_edge">Niciodată mai mic de (latura lungă)</string>
-    <string name="wf_target_note">PhotoMaid măsoară rezultatul. Dacă ținta nu poate fi atinsă în aceste limite, nu se creează niciun fișier și vezi de ce.</string>
+    <string name="wf_target_note">GaleriQ măsoară rezultatul. Dacă ținta nu poate fi atinsă în aceste limite, nu se creează niciun fișier și vezi de ce.</string>
     <string name="wf_videos">Videoclipuri</string>
     <string name="wf_video_skip">Omite</string>
     <string name="wf_video_note">Videoclipurile sunt salvate din nou ca să se încadreze în mărimea dorită. Imaginea se micșorează doar dacă e nevoie.</string>
@@ -1594,7 +1594,7 @@
     <string name="wf_name_base_hint">ex. Anunț → Anunț_001 (gol = numele original)</string>
     <string name="wf_folder">Dosar</string>
     <string name="wf_folder_same">Ca originalul</string>
-    <string name="wf_folder_photomaid">Dosarul PhotoMaid</string>
+    <string name="wf_folder_photomaid">Dosarul GaleriQ</string>
     <string name="wf_finish">La final</string>
     <string name="wf_finish_save">Salvează</string>
     <string name="wf_finish_share">Doar partajează</string>
@@ -1633,10 +1633,10 @@
     <string name="wf_share_again">Partajează din nou</string>
     <string name="wf_counts">Fotografii: %1$s · videoclipuri: %2$s</string>
     <string name="wf_start">Pornește</string>
-    <string name="share_target_label">Trimite la PhotoMaid</string>
+    <string name="share_target_label">Trimite la GaleriQ</string>
     <string name="share_title">Primite</string>
     <string name="share_none">Niciunul dintre fișierele partajate nu se află în biblioteca foto a acestui dispozitiv.</string>
-    <string name="share_no_access">PhotoMaid nu are încă acces la fotografii. Permite accesul în setări, apoi trimite din nou.</string>
+    <string name="share_no_access">GaleriQ nu are încă acces la fotografii. Permite accesul în setări, apoi trimite din nou.</string>
     <string name="share_never">Nimic nu este șters sau decis. Un fișier nou apare doar când salvezi.</string>
     <string name="share_workflow">Aplică un flux de lucru</string>
     <string name="share_edit">Editează</string>
@@ -1671,7 +1671,7 @@
     <string name="pdf_from_selection">Creează PDF</string>
     <string name="pdf_no_photos">Selecția nu conține fotografii. Videoclipurile nu pot fi puse într-un PDF.</string>
     <string name="pdf_no_date">Fără dată</string>
-    <string name="pdf_saved">Salvat în „Documents/PhotoMaid” · %1$s</string>
+    <string name="pdf_saved">Salvat în „Documents/GaleriQ” · %1$s</string>
     <string name="pdf_failed">PDF-ul nu a putut fi salvat.</string>
     <string name="pdf_page_of">Pagina %1$d din %2$d</string>
     <string name="pdf_capped">Cel mult %1$d fotografii per PDF – au fost preluate primele %1$d.</string>
@@ -1729,5 +1729,5 @@
     <string name="tour_history_title">Mai târziu și istoric</string>
     <string name="tour_history_text">Vezi ce ai păstrat, ai pus deoparte sau ai lăsat pe mai târziu. Poți schimba aici orice decizie.</string>
     <string name="tour_settings_title">Setări și ajutor</string>
-    <string name="tour_settings_text">Setează PhotoMaid după gustul tău și găsește răspunsuri. Poți relua oricând acest tur.</string>
+    <string name="tour_settings_text">Setează GaleriQ după gustul tău și găsește răspunsuri. Poți relua oricând acest tur.</string>
 </resources>

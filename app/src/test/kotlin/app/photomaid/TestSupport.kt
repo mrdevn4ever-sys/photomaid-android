@@ -259,7 +259,7 @@ class FakeVideoEditExporter(private val context: Context) : app.photomaid.media.
 
 class FakePurchaseGateway(state: PurchaseState) : PurchaseGateway {
     override val state: MutableStateFlow<PurchaseState> = MutableStateFlow(state)
-    override val product: StateFlow<StoreProductInfo?> = MutableStateFlow(StoreProductInfo("3,99 CHF (TEST)", "PhotoMaid Pro (Test)"))
+    override val product: StateFlow<StoreProductInfo?> = MutableStateFlow(StoreProductInfo("3,99 CHF (TEST)", "GaleriQ Pro (Test)"))
     override val isConfigured = true
     override suspend fun refresh() {}
     override suspend fun purchasePro(activity: Activity) = PurchaseResult.NotConfigured
