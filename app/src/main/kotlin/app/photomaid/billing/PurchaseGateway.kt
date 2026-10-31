@@ -64,7 +64,7 @@ class UnconfiguredPurchaseGateway : PurchaseGateway {
 }
 
 /**
- * Google Play Billing für das einmalige In-App-Produkt „PhotoMaid Pro“ (Non-Consumable).
+ * Google Play Billing für das einmalige In-App-Produkt „GaleriQ Pro“ (Non-Consumable).
  * Behandelt Kauf, Bestätigung (acknowledge), Wiederherstellen (queryPurchases), ausstehende Käufe,
  * Erstattung/Widerruf (Kauf verschwindet aus queryPurchases → `REVOKED`), Offline (zuletzt bekannter Status).
  * Übertragen werden nur Kaufdaten an Google – keine Medien, Dateinamen, Hashes.

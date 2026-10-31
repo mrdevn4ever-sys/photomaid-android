@@ -1,11 +1,11 @@
-# PhotoMaid Android – alle Funktionen
+# GaleriQ Android – alle Funktionen
 
 Stand 03.10.2026, Branch `claude/product-ux-favorites`. Reine Übersicht, was die App kann. Wie jede Funktion
 geprüft wird, steht in `docs/FUNKTIONS_PRUEFPLAN_2026-10.md` (gleiche Kennungen in Klammern).
 
 Grundsätze, die überall gelten:
 - Die Medienverarbeitung läuft lokal auf dem Gerät: kein PhotoMaid-Konto, kein PhotoMaid-Server, kein Upload von Medien, keine KI oder Bilderkennung. Ausnahmen mit Netzwerk: Käufe über Google Play und – nur in Free, erst nach Einwilligung – Werbung über Google AdMob. Dabei werden technische Daten an Google bzw. Werbeanbieter übertragen, nie Medien, Dateinamen, Pfade, Prüfsummen oder IDs.
-- PhotoMaid löscht nie von selbst. Endgültig entfernt wird nur nach deiner Bestätigung, normalerweise über den Android-Papierkorb.
+- GaleriQ löscht nie von selbst. Endgültig entfernt wird nur nach deiner Bestätigung, normalerweise über den Android-Papierkorb.
 - Ansehen, Auswählen, Verschieben und Bearbeiten sind nie eine Aufräum-Entscheidung.
 - Zahlen sind gemessen, nie geschätzt. Ist eine Größe unbekannt, steht „unbekannt“ da, nicht 0. Die einzige Ausnahme sind Video-Exportprofile, deren Größe ausdrücklich als „ca.“ beschriftet ist.
 - Fotos und Videos werden nie verzerrt, nur eingepasst oder beschnitten.
@@ -32,7 +32,7 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 ## 3. Aufräum-Feed (Kernfunktion)
 - Wischgesten nach der tatsächlichen Fingerbewegung (F1–F5):
   - **hoch** = Behalten
-  - **links** = PhotoMaid-Papierkorb (es wird noch nichts gelöscht)
+  - **links** = GaleriQ-Papierkorb (es wird noch nichts gelöscht)
   - **rechts** = Später mit Standardtermin (Vorgabe 2 Tage) und der Pille „In 2 Tagen wieder · Ändern“, über die man einen eigenen Termin wählt
   - **runter** = vorheriges Medium (keine Entscheidung)
   - Totzonen, zu kurze oder abgebrochene Wische: keine Aktion; eine Geste ist höchstens ein Schritt
@@ -66,7 +66,7 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Ausgenommene Ordner (inkl. Unterordner): sie fehlen in Aufräumen, bleiben aber unter „Fotos“ sichtbar (C10)
 
 ## 5. Papierkorb & Löschen
-- PhotoMaid-Papierkorb: sortierbar (hinzugefügt, aufgenommen, Größe), mit Vorschau und Abwählen (P1)
+- GaleriQ-Papierkorb: sortierbar (hinzugefügt, aufgenommen, Größe), mit Vorschau und Abwählen (P1)
 - Leeren schiebt die Medien in den Android-Papierkorb; Android fragt nach, Abbrechen ändert nichts (P2)
 - „Endgültig löschen“ als Einstellung (Standard aus), mit deutlich anderer Systembestätigung (P3)
 - Ansicht des Android-Papierkorbs, nur auf ausdrückliche Auswahl: Restzeit sehen, wiederherstellen, löschen (P4)
@@ -88,15 +88,15 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Info: Datum, Größe, Ordner, Kamera (G7)
 - Ordneransicht: Ordnerbaum, Sortierung je Ordner, Gruppen (nur Name und Pfade), „Neuer Ordner“ (Medien wählen → verschieben) (G8)
 - Favoriten-Ansicht mit den Systemfavoriten (G9)
-- „In PhotoMaid ausblenden“ für Medien und Ordner, gilt für Fotos und Aufräumen; Dateien bleiben unverändert, es gibt keinen Tresor (G10)
-- „In den Papierkorb“ aus der Mediathek: PhotoMaid-eigen, Favoriten geschützt, mit Rückgängig
+- „In GaleriQ ausblenden“ für Medien und Ordner, gilt für Fotos und Aufräumen; Dateien bleiben unverändert, es gibt keinen Tresor (G10)
+- „In den Papierkorb“ aus der Mediathek: GaleriQ-eigen, Favoriten geschützt, mit Rückgängig
 - Diashow: Start, Pause, Tempo (G11)
 - Kopfhörer-Tasten: nur Play/Pause/Spulen, nie „Weiter“ (G12)
 
 ## 7a. Organisieren (Ausbau Paket 1)
 - **Alben** (Ansicht „Alben“ im Tab „Fotos“): bewusst zusammengestellte Fotos/Videos aus beliebigen Ordnern, ohne Kopieren oder Verschieben; ein Medium kann in mehreren Alben sein. Neues Album, Umbenennen, Diashow, Album löschen (nur die Zusammenstellung). Auswahl › ⋯ › Zu Album hinzufügen (vorhandenes oder neues). „Aus Album entfernen“ löscht nie eine Datei (O1)
 - **Schlagwörter** (eigene Begriffe wie „Rechnung“, „Ferien“): für eine Auswahl vergeben/entfernen (bei allen · bei einigen), Übersicht mit Anzahl, Seite je Schlagwort, überall entfernen; die Suche findet sie ohne Akzente/Groß-klein. Keine Erkennung von Inhalten (O2)
-- **Notiz** je Medium im Betrachter › Info (nur PhotoMaid, Datei unverändert) – zusammen mit Schlagwörtern und den Alben des Mediums (O3)
+- **Notiz** je Medium im Betrachter › Info (nur GaleriQ, Datei unverändert) – zusammen mit Schlagwörtern und den Alben des Mediums (O3)
 - **Auswahlkorb**: dauerhafter Arbeitsvorrat über Monate und Ordner hinweg (bleibt nach Neustart), Symbol im Kopf von „Fotos“; Aktionen der Auswahl (Collage, Film, Teilen, …), Album aus dem Korb erstellen, Korb leeren. Hat nichts mit dem Papierkorb zu tun (O4)
 - **Teilen** mehrerer ausgewählter Medien über Android (Auswahl › ⋯ › Teilen)
 - Wiederfinden: Bezug über Medien-ID, bei neu indizierten Medien über einen eindeutigen Fingerabdruck (Name, Größe, Aufnahmezeit); nicht mehr Auffindbares wird gezählt und nur auf Wunsch aus der Liste entfernt (O5)
@@ -131,14 +131,14 @@ App-Aufbau: fünf Tabs **Heute · Fotos · Aufräumen · Studio · Verlauf**.
 - Nie löschen, nie Papierkorb, keine Entscheidung über Quellen; Free bis 10 Dateien je Durchgang
 
 ## 8b. Teilen-Ziel und App-Shortcuts
-- „An PhotoMaid senden“ aus jeder App (Fotos/Videos, einzeln oder mehrere): Seite „Übernommen“ mit Arbeitsablauf anwenden, Bearbeiten (genau ein Medium), Zu Album hinzufügen, In den Auswahlkorb (S1)
+- „An GaleriQ senden“ aus jeder App (Fotos/Videos, einzeln oder mehrere): Seite „Übernommen“ mit Arbeitsablauf anwenden, Bearbeiten (genau ein Medium), Zu Album hinzufügen, In den Auswahlkorb (S1)
 - Zuordnung zur Mediathek über die MediaStore-ID, sonst nur eindeutig über Dateiname + Größe; nicht Gefundenes und Nicht-Fotos/-Videos werden gezählt und nicht übernommen – keine Kopie (S2)
 - Direktes Teilen an einen gespeicherten Ablauf (erscheint im Teilen-Menü): öffnet sofort die Vorschau „Das passiert“; erst „Starten“ arbeitet (S3)
 - Langdruck auf das App-Symbol (auch anheftbar): Jetzt aufräumen · Fällig aus „Später“ · Auswahlkorb · Arbeitsabläufe · bis zu 4 eigene Abläufe (S4)
 - Kein Einstieg von außen entscheidet, löscht oder startet etwas ohne weiteren Tipp; Shortcuts enthalten keine Medien-IDs
 
 ## 8c. Dokumente – PDF (Ausbau Paket 4)
-- Studio › Werkzeuge › PDF erstellen, Auswahl › ⋯ › Als PDF, oder „An PhotoMaid senden“ › PDF erstellen (D1)
+- Studio › Werkzeuge › PDF erstellen, Auswahl › ⋯ › Als PDF, oder „An GaleriQ senden“ › PDF erstellen (D1)
 - Papier A4 / A5 / US Letter, Ausrichtung automatisch/hoch/quer, Rand ohne/schmal/normal, 1, 2, 4, 6 oder 12 Bilder je Seite (Kontaktbogen), Einpassen oder Füllen – nie verzerrt (D2)
 - Beschriftung je Bild: Nummer, Dateiname oder Datum; Reihenfolge mit „Nach oben/unten“; Vorschau der Seiten = Ergebnis (D3)
 - Speichern unter „Dokumente/PhotoMaid“ (Größe gemessen) oder nur teilen; Videos werden nicht übernommen (gezählt) (D4)

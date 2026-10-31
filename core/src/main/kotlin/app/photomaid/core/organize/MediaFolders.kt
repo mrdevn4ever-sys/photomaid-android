@@ -5,7 +5,7 @@ import app.photomaid.core.model.MediaKind
 /**
  * Ordner der Mediathek (MediaStore `RELATIVE_PATH`, z. B. `Pictures/Urlaub/`). Android kennt kein universelles
  * Album: Galerie-Apps zeigen diese Ordner meist als Album, eigene App-Alben (Google Fotos, Samsung) sind privat.
- * PhotoMaid bietet deshalb nur „In Ordner verschieben“ an – nie „Album“ als Systembegriff.
+ * GaleriQ bietet deshalb nur „In Ordner verschieben“ an – nie „Album“ als Systembegriff.
  */
 data class MediaFolder(
     /** Immer mit abschließendem `/`. */

@@ -319,7 +319,7 @@ class FeedViewModel(private val app: AppModel, val request: FeedRequest) : ViewM
     fun closeSeries() { seriesOpen = null }
 
     /**
-     * Auswahl der Serie bestätigen: [keep] werden behalten, alle anderen kommen in den PhotoMaid-Papierkorb (nichts
+     * Auswahl der Serie bestätigen: [keep] werden behalten, alle anderen kommen in den GaleriQ-Papierkorb (nichts
      * gelöscht). Ein Ledger-Befehl je Medium (Item-ID, Revision, Command-ID, Aktion); danach verlassen die Mitglieder
      * ohne weitere Entscheidung die Warteschlange. Keine Werbekarte, kein Werbezähler.
      */

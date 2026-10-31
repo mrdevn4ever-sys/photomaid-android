@@ -103,7 +103,7 @@ fun GridStoryScene(modifier: Modifier = Modifier) {
 }
 
 /**
- * O3 – Sicherheit: Karte wischt nach links in den PhotoMaid-Papierkorb (Zähler springt auf 1), danach öffnet sich
+ * O3 – Sicherheit: Karte wischt nach links in den GaleriQ-Papierkorb (Zähler springt auf 1), danach öffnet sich
  * angedeutet die Bestätigung, über der Android noch einmal fragt. Schematisch, ohne Speicherzahlen.
  */
 @Composable

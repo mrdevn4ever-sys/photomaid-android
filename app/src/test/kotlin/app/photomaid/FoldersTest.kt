@@ -36,7 +36,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
-/** G2: Ordnerbaum, Sortierung je Ordner, Favoriten je Ordner, Gruppen, neuer Ordner, „In PhotoMaid ausblenden“. Nie eine Entscheidung. */
+/** G2: Ordnerbaum, Sortierung je Ordner, Favoriten je Ordner, Gruppen, neuer Ordner, „In GaleriQ ausblenden“. Nie eine Entscheidung. */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "+w393dp-h852dp")

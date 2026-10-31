@@ -1,9 +1,9 @@
-# PhotoMaid Android: verbindliche Regeln
+# GaleriQ Android: verbindliche Regeln
 
 Native Android-App (Kotlin, Jetpack Compose). 1:1-Port der iOS-App (`mrdevn4ever-sys/photomaid`, read-only).
-**Produktname seit 30.10.2026: „GaleriQ“** (vorher PhotoMaid): sichtbar in allen Texten, Ordnern (`Pictures/GaleriQ/`,
+**Produktname seit 30.10.2026: „GaleriQ“** (vorher PhotoMaid, kurz Arrumo): sichtbar in allen Texten, Ordnern (`Pictures/GaleriQ/`,
 `Movies/GaleriQ/`, `Documents/GaleriQ/`, `Music/GaleriQ/`), Dateinamen und Metadaten; Datenschutz unter
-https://mrdevn4ever-sys.github.io/galeriq/. Paket `app.photomaid…`, Klassen, Datenbank und Log-Tags bleiben intern „PhotoMaid“.
+https://mrdevn4ever-sys.github.io/galeriq/. Paket `app.photomaid…`, Klassen, Datenbank und Log-Tags bleiben intern „PhotoMaid“ (wie iOS: Daten bleiben, nie umbenennen).
 Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Verhalten der iOS-App
 (außer Plattformgrenze, Sicherheit, Store-Policy, eindeutiger Bug – dann in `docs/PORTING_MATRIX.md` dokumentieren).
 
@@ -12,7 +12,7 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 | Finger | Bedeutung | Danach |
 |---|---|---|
 | hoch | **Behalten** | nächstes Medium |
-| links | **Papierkorb** (PhotoMaid-eigen, nichts gelöscht) | nächstes Medium |
+| links | **Papierkorb** (GaleriQ-eigen, nichts gelöscht) | nächstes Medium |
 | rechts (gerade oder schräg nach oben/unten, ≤ 45°) | **Später** mit Standardtermin (Vorgabe 2 Tage) | nächstes Medium + Pille „In 2 Tagen wieder · Ändern“ (eigener Termin über „Ändern“) |
 | runter | **Vorheriges Medium** (keine Entscheidung) | – |
 
@@ -28,7 +28,7 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Entscheidung (unter 360 dp wandert „Teilen“ ins ⋯-Menü).
 - Favoriten = MediaStore-Systemfavoriten (`createFavoriteRequest`), „Favoriten schützen“ (Standard an): Wisch nach
   links auf einen Favoriten fragt nach. „Album“ gibt es als Systembegriff nicht: nur „In Ordner verschieben“
-  (PhotoMaid-eigene Alben siehe „Organisieren“ – nie eine Datei-Aktion).
+  (GaleriQ-eigene Alben siehe „Organisieren“ – nie eine Datei-Aktion).
 - Schnellzugriffe auf „Heute“ (max. 6, Standard Fotos + Videos) sind nur Abfragen (`QuickAccessItem`, gespeichert ohne
   Medien-IDs). Entscheidungen hängen am Medium im Ledger; Zähler immer über `AppModel.pendingQueue` – nie je Quelle speichern.
 - Pro-Test (Rewarded, 30 min, 1× pro lokalem Tag) schaltet Pro-Werkzeuge frei, hebt das Papierkorb-Limit NIE auf
@@ -58,9 +58,9 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
 - Mediathek (Tab „Fotos“, 2. Stelle von 5: Heute · Fotos · Aufräumen · Studio · Verlauf; `feature/library/`, Kern
   `core/.../library/Timeline.kt`): Zeitachse Tag/Monat/Jahr (zwei Finger), Filter, Suche ohne Akzente (lokal), Auswahl,
   Vollbild-Betrachter (blättern, runter = schließen, Zoom; keine Wisch-Aktion nach oben). Ansehen ist NIE eine
-  Entscheidung; nur „In den Papierkorb“ (PhotoMaid-eigen, Favoriten geschützt, Rückgängig) geht über den Ledger.
+  Entscheidung; nur „In den Papierkorb“ (GaleriQ-eigen, Favoriten geschützt, Rückgängig) geht über den Ledger.
   Ansichten Zeitachse · Ordner · Favoriten (G2, `feature/library/FoldersScreen.kt`, Kern `core/.../library/FolderTree.kt`):
-  Ordnerbaum, Sortierung je Ordner, Gruppen (nur Name + Pfade), Neuer Ordner (Medien wählen → verschieben). „In PhotoMaid
+  Ordnerbaum, Sortierung je Ordner, Gruppen (nur Name + Pfade), Neuer Ordner (Medien wählen → verschieben). „In GaleriQ
   ausblenden“ (`hiddenMedia`/`hiddenFolders`) gilt für Fotos UND Aufräumen (`AppModel.photos`); der Tab „Fotos“ nutzt
   `AppModel.visiblePhotos` (vom Aufräumen ausgenommene Ordner bleiben dort sichtbar). Kein Tresor, Dateien unverändert.
   G3: Kopfhörer-Tasten über `MediaSession` auf `FeedPlayer.ButtonsOnly` (nur Play/Pause/Spulen, NIE „Weiter“ – eine
@@ -71,7 +71,7 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   (`core/.../library/RawPairs.kt`, `RawIndex`): RAW hinter dem JPEG, geht bei Papierkorb/Ausblenden/Verschieben mit.
   Plan G1–G4: `docs/GALLERY_PLAN_2026-10.md`.
 - Organisieren (Ausbau Paket 1, 2026-10, `feature/organize/`, Kern `core/.../organize/Organize.kt`, Room v2 per AutoMigration):
-  PhotoMaid-eigene Alben (bewusst zusammengestellt, Mehrfachzuordnung, Ansicht „Alben“ im Tab „Fotos“), eigene
+  GaleriQ-eigene Alben (bewusst zusammengestellt, Mehrfachzuordnung, Ansicht „Alben“ im Tab „Fotos“), eigene
   Schlagwörter + Notizen (Betrachter › Info, Suche findet sie), dauerhafter Auswahlkorb (keine Aufräum-Bedeutung, ≠ Papierkorb).
   Ordner = Speicherort · Sammlung = Suchbedingung · Album = Nutzerauswahl. Alles nur Verwaltungsdaten: „Aus Album entfernen“,
   „Album löschen“, „Schlagwort entfernen“, „Korb leeren“ ändern nie eine Datei und sind nie eine Entscheidung (kein Ledger).
@@ -84,7 +84,7 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   ein Nachkodieren); nicht erreichbar → KEINE Datei, Grund mit kleinster gemessener Größe. Abläufe löschen nie, legen nichts
   in einen Papierkorb, entscheiden nie über Quellen; gespeicherte Ergebnisse = „Behalten“. Free bis 10 Dateien je Durchgang.
 - Teilen-Ziel + App-Shortcuts (2026-10, `system/AppEntry.kt`, `system/AppShortcuts.kt`, `feature/share/ShareScreen.kt`, Kern
-  `core/.../share/Share.kt`): „An PhotoMaid senden“ (`ACTION_SEND`/`SEND_MULTIPLE`, nur `image/*`/`video/*`) öffnet nur die Seite
+  `core/.../share/Share.kt`): „An GaleriQ senden“ (`ACTION_SEND`/`SEND_MULTIPLE`, nur `image/*`/`video/*`) öffnet nur die Seite
   „Übernommen“ (Ablauf anwenden, Bearbeiten bei genau einem Medium, Album, Auswahlkorb). Zuordnung über MediaStore-ID, sonst nur
   eindeutig über Name + Größe (`ShareMatch`); Rest wird gezählt, nie kopiert. Dynamische Shortcuts (feste Ziele + bis zu 4
   Abläufe, Direktes Teilen je Ablauf über `res/xml/shortcuts.xml`) öffnen nur Ansichten: nie Entscheidung, nie Löschen, nie

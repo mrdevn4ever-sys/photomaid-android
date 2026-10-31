@@ -59,7 +59,7 @@ Verschieben/Vergleichen ist nie automatisch „Behalten“, Werbung nie mitten i
   - Oben Raster der Serie (Kacheln, ausgewählte mit Haken „Behalten“).
   - Darunter zwei Bilder groß **nebeneinander** (Hochformat: übereinander), Tipp auf eine Kachel tauscht die rechte/untere
     Seite; Doppeltipp = Vollbild mit Zoom, Zoom an beiden Seiten synchron (optional abschaltbar).
-  - Nutzer wählt selbst, was bleibt. Unten eindeutig: **„2 behalten · 5 in den Papierkorb“** (PhotoMaid-Papierkorb,
+  - Nutzer wählt selbst, was bleibt. Unten eindeutig: **„2 behalten · 5 in den Papierkorb“** (GaleriQ-Papierkorb,
     nichts gelöscht). Ein Ledger-Commit je Medium (Item-ID, Revision, Command-ID, Aktion), gemeinsames Rückgängig.
   - Nicht ausgewählt ≠ automatisch Papierkorb ohne Klick: die Aktion steht erst nach der Bestätigung fest.
 - **Free:** Knopf sichtbar mit Pro-Abzeichen; Tipp → Angebot (oder 30-Minuten-Test). Nach Ablauf eines Tests bleiben
@@ -134,7 +134,7 @@ Stand der App: Commit 022b86e + Fallback Englisch/„gespart“. Prüfstatus: NO
 ### Schon vorhanden – nichts zu tun
 | Idee (Quelle) | Stand in PhotoMaid |
 |---|---|
-| Abschlusskontrolle vor dem Entfernen (PhotoSwooper) | Gibt es: Wischen legt nur in den PhotoMaid-Papierkorb; Leeren erst nach Vorschau + Bestätigung + Android-Dialog. Zusammenfassung zeigt „Papierkorb ansehen (n)“ |
+| Abschlusskontrolle vor dem Entfernen (PhotoSwooper) | Gibt es: Wischen legt nur in den GaleriQ-Papierkorb; Leeren erst nach Vorschau + Bestätigung + Android-Dialog. Zusammenfassung zeigt „Papierkorb ansehen (n)“ |
 | Größe + bei Videos Dauer auf der Karte (Android-Doku) | Gibt es: Infozeile im Feed „Datum · Größe“, bei Videos zusätzlich Dauer (`ReviewFeedScreen` Infozeile, MediaStore-Spalten, offline). Unbekannte Größe wird nicht als 0 gezeigt |
 | Teilen vom aktuellen Bild (Swipelit) | Gibt es: Aktionsleiste „Teilen“ (Android-Teilen-Auswahl, kein Upload) |
 | Während des Wischens in Geräteordner verschieben (Sponge) | Gibt es: Aktionsleiste „In Ordner verschieben“ (`createWriteRequest`); schneller mit Phase 3.1 |

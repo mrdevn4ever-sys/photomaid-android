@@ -8390,7 +8390,7 @@
   },
   "lib_trash_text": {
    "en": "Into the PhotoMaid trash – nothing is deleted. You decide there later.",
-   "de": "In den PhotoMaid-Papierkorb – es wird nichts gelöscht. Du entscheidest dort später.",
+   "de": "In den GaleriQ-Papierkorb – es wird nichts gelöscht. Du entscheidest dort später.",
    "ar": "إلى سلة PhotoMaid – لا يُحذف شيء. تقرر لاحقًا هناك.",
    "es": "A la papelera de PhotoMaid; no se borra nada. Decides allí más tarde.",
    "fr": "Dans la corbeille PhotoMaid – rien n’est supprimé. Tu décides plus tard.",
@@ -8408,7 +8408,7 @@
   },
   "lib_trash_text_fav": {
    "en": "Into the PhotoMaid trash – nothing is deleted. Favourites stay (“Protect favourites” is on).",
-   "de": "In den PhotoMaid-Papierkorb – es wird nichts gelöscht. Favoriten bleiben („Favoriten schützen“ ist an).",
+   "de": "In den GaleriQ-Papierkorb – es wird nichts gelöscht. Favoriten bleiben („Favoriten schützen“ ist an).",
    "ar": "إلى سلة PhotoMaid – لا يُحذف شيء. تبقى المفضلة („حماية المفضلة“ مفعّل).",
    "es": "A la papelera de PhotoMaid; no se borra nada. Los favoritos se quedan («Proteger favoritos» está activado).",
    "fr": "Dans la corbeille PhotoMaid – rien n’est supprimé. Les favoris restent (« Protéger les favoris » est activé).",
@@ -8444,7 +8444,7 @@
   },
   "lib_trashed_one": {
    "en": "In the PhotoMaid trash",
-   "de": "Im PhotoMaid-Papierkorb",
+   "de": "Im GaleriQ-Papierkorb",
    "ar": "في سلة PhotoMaid",
    "es": "En la papelera de PhotoMaid",
    "fr": "Dans la corbeille PhotoMaid",
@@ -10262,7 +10262,7 @@
   },
   "set_delete_permanently_confirm_text": {
    "en": "From now on, emptying the PhotoMaid trash deletes photos and videos for good. They do not go to the Android trash and cannot be restored – also not from backups that have not synced yet. Android still asks each time.",
-   "de": "Ab jetzt löscht Leeren des PhotoMaid-Papierkorbs Fotos und Videos endgültig. Sie kommen nicht in den Android-Papierkorb und lassen sich nicht wiederherstellen – auch nicht aus noch nicht gesicherten Backups. Android fragt trotzdem jedes Mal nach.",
+   "de": "Ab jetzt löscht Leeren des GaleriQ-Papierkorbs Fotos und Videos endgültig. Sie kommen nicht in den Android-Papierkorb und lassen sich nicht wiederherstellen – auch nicht aus noch nicht gesicherten Backups. Android fragt trotzdem jedes Mal nach.",
    "ar": "من الآن فصاعدًا، يؤدي إفراغ سلة PhotoMaid إلى حذف الصور والفيديوهات نهائيًا. لن تذهب إلى سلة مهملات Android ولا يمكن استعادتها – ولا من نسخ احتياطية لم تُزامَن بعد. سيسأل Android في كل مرة.",
    "es": "A partir de ahora, vaciar la papelera de PhotoMaid elimina fotos y vídeos para siempre. No van a la papelera de Android y no se pueden recuperar, ni desde copias aún no sincronizadas. Android seguirá preguntando cada vez.",
    "fr": "Désormais, vider la corbeille PhotoMaid supprime définitivement photos et vidéos. Elles ne vont pas dans la corbeille Android et ne peuvent pas être restaurées – pas même depuis des sauvegardes pas encore synchronisées. Android demande quand même à chaque fois.",
@@ -13250,7 +13250,7 @@
   },
   "wf_folder_photomaid": {
    "en": "PhotoMaid folder",
-   "de": "PhotoMaid-Ordner",
+   "de": "GaleriQ-Ordner",
    "ar": "مجلد PhotoMaid",
    "es": "Carpeta PhotoMaid",
    "fr": "Dossier PhotoMaid",
@@ -15050,7 +15050,7 @@
   },
   "help_delete_text": {
    "en": "Swiping never deletes anything. What you set aside goes to the PhotoMaid trash first. Only when you empty it is anything removed – photos and videos then go to the Android trash after Android asks once more. Files from linked folders are deleted for good.",
-   "de": "Beim Wischen wird nie etwas gelöscht. Was du aussortierst, kommt erst in den PhotoMaid-Papierkorb. Erst wenn du ihn leerst, wird wirklich entfernt – Fotos und Videos landen dann im Android-Papierkorb, nachdem Android noch einmal nachgefragt hat. Dateien aus verbundenen Ordnern werden endgültig gelöscht.",
+   "de": "Beim Wischen wird nie etwas gelöscht. Was du aussortierst, kommt erst in den GaleriQ-Papierkorb. Erst wenn du ihn leerst, wird wirklich entfernt – Fotos und Videos landen dann im Android-Papierkorb, nachdem Android noch einmal nachgefragt hat. Dateien aus verbundenen Ordnern werden endgültig gelöscht.",
    "ar": "التمرير لا يحذف أي شيء أبدًا. ما تستبعده يذهب أولًا إلى سلة مهملات PhotoMaid. لا يُزال شيء إلا عند إفراغها – وتنتقل الصور والفيديوهات إلى سلة مهملات Android بعد أن يسألك Android مرة أخرى. أما الملفات من المجلدات المرتبطة فتُحذف نهائيًا.",
    "es": "Deslizar nunca borra nada. Lo que apartas va primero a la papelera de PhotoMaid. Solo se elimina al vaciarla: las fotos y vídeos pasan entonces a la papelera de Android después de que Android vuelva a preguntar. Los archivos de carpetas vinculadas se eliminan definitivamente.",
    "fr": "Balayer ne supprime jamais rien. Ce que vous écartez va d’abord dans la corbeille PhotoMaid. Rien n’est retiré tant que vous ne la videz pas – les photos et vidéos vont alors dans la corbeille Android, après une nouvelle confirmation d’Android. Les fichiers des dossiers associés sont supprimés définitivement.",
@@ -16232,8 +16232,8 @@
     "other": "%1$d items are in the PhotoMaid trash."
    },
    "de": {
-    "one": "%1$d Medium liegt im PhotoMaid-Papierkorb.",
-    "other": "%1$d Medien liegen im PhotoMaid-Papierkorb."
+    "one": "%1$d Medium liegt im GaleriQ-Papierkorb.",
+    "other": "%1$d Medien liegen im GaleriQ-Papierkorb."
    },
    "ar": {
     "zero": "%1$d عنصر في سلة PhotoMaid.",

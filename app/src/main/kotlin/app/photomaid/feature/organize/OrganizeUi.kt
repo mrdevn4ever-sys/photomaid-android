@@ -495,7 +495,7 @@ internal fun TagSheet(chosen: List<MediaAsset>, onDismiss: () -> Unit) {
     }
 }
 
-/** Schlagwörter und Notiz im Info-Blatt des Betrachters (nur PhotoMaid, die Datei bleibt unverändert). */
+/** Schlagwörter und Notiz im Info-Blatt des Betrachters (nur GaleriQ, die Datei bleibt unverändert). */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun MediaOrganizeInfo(a: MediaAsset, nav: Nav?) {

@@ -106,7 +106,7 @@ class G4Test {
         rule.onAllNodesWithTag("systrash.tile")[0].performSemanticsAction(SemanticsActions.OnClick); pumpUntil { count("systrash.restore") == 1 }
         click("systrash.restore")
         pumpUntil { a.id !in lib.trashed }
-        // Von PhotoMaid entfernt und zurückgeholt = behalten.
+        // Von GaleriQ entfernt und zurückgeholt = behalten.
         pumpUntil { runBlocking { app.ledger.record(a.reference) }.disposition == Disposition.KEPT }
         pumpUntil { count("systrash.tile") == 1 }
         rule.onAllNodesWithTag("systrash.tile")[0].performSemanticsAction(SemanticsActions.OnClick); pumpUntil { count("systrash.delete") == 1 }

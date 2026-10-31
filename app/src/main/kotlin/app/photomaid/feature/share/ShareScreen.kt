@@ -68,7 +68,7 @@ object ShareRequests { val map = mutableStateMapOf<String, EntryRequest.Share>()
 
 /**
  * Übergebene Dateien den Medien der Mediathek zuordnen: zuerst über die MediaStore-ID, sonst nur eindeutig über
- * Dateiname + Größe. Alles andere zählt als „nicht in der Mediathek“ – PhotoMaid legt dafür keine Kopie an.
+ * Dateiname + Größe. Alles andere zählt als „nicht in der Mediathek“ – GaleriQ legt dafür keine Kopie an.
  */
 suspend fun resolveShare(app: AppModel, items: List<SharedItem>): Pair<ShareIntake, List<MediaAsset>> = withContext(Dispatchers.IO) {
     val candidates = items.associate { it.uri to AppEntry.libraryCandidates(it.uri) }

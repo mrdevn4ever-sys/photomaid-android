@@ -114,7 +114,7 @@ fun SystemTrashScreen(nav: Nav) {
         val ids = chosen.map { it.asset.id }
         val r = app.allPhotos.restoreManyFromTrash(ids)
         val ok = r.filterValues { it == MediaWriteResult.Done }.keys
-        // Von PhotoMaid entfernte Medien: zurückgeholt = behalten (sonst würden sie nie wieder angeboten).
+        // Von GaleriQ entfernte Medien: zurückgeholt = behalten (sonst würden sie nie wieder angeboten).
         for (id in ok) {
             val ref = ItemReference.photo(id)
             if (app.ledger.record(ref).disposition == Disposition.REMOVED) app.decide(ref, DecisionAction.Keep)

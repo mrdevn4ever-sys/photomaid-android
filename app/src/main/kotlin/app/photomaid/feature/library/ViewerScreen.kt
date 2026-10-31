@@ -125,7 +125,7 @@ object ViewerRequests { val map = androidx.compose.runtime.mutableStateMapOf<Str
 /**
  * Vollbild-Betrachter: links/rechts blättern, runter = schließen, zwei Finger/Doppeltipp = Zoom, Tipp = Leisten ein/aus.
  * Keine Wisch-Aktion nach oben, keine Entscheidung durch Ansehen. Unten die bekannte Aktionsleiste; „In den Papierkorb“
- * (PhotoMaid-eigen) mit Rückgängig.
+ * (GaleriQ-eigen) mit Rückgängig.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -249,7 +249,7 @@ fun ViewerScreen(req: ViewerRequest, nav: Nav, onClose: () -> Unit) {
                 TextButton({ scope.launch { undoMark(app, before); undo = null } }, Modifier.testTag("viewer.undo.action")) { Text(stringResource(R.string.undo)) }
             }
         }
-        // „In PhotoMaid ausgeblendet · Rückgängig“ (Datei unverändert)
+        // „In GaleriQ ausgeblendet · Rückgängig“ (Datei unverändert)
         hiddenUndo?.let { id ->
             Row(Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 84.dp).glassCapsule(elevation = 6.dp)
                 .padding(start = AppSpacing.m, end = AppSpacing.xxs).testTag("viewer.hidden"), verticalAlignment = Alignment.CenterVertically) {
@@ -420,7 +420,7 @@ private fun InfoContent(a: MediaAsset, raw: MediaAsset? = null, nav: Nav? = null
             Text(k, style = AppTypography.footnote, color = c.textSecondary)
             Text(v, style = AppTypography.body, color = c.textPrimary)
         }
-        // Eigene Schlagwörter, Alben und Notiz (nur PhotoMaid, die Datei bleibt unverändert).
+        // Eigene Schlagwörter, Alben und Notiz (nur GaleriQ, die Datei bleibt unverändert).
         MediaOrganizeInfo(a, nav)
     }
 }

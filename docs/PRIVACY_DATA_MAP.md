@@ -43,7 +43,7 @@ Löschen von Dateien: ausschließlich `DocumentsContract.deleteDocument` in vom 
 - „Analyse und Sortierung erfolgen auf deinem Gerät.“ ✔
 - „Es gibt keinen PhotoMaid-Server und kein Konto.“ ✔
 - Cloud-Hinweis: Synchronisiert ein Cloud-Dienst (z. B. Google Fotos) die Mediathek, können Löschungen andere Geräte
-  betreffen – PhotoMaid kann das nicht einsehen. ✔
+  betreffen – GaleriQ kann das nicht einsehen. ✔
 - Nicht verwendet: „100 % offline“, „100 % privat“.
 
 ## Editor (2026-10)
@@ -79,7 +79,7 @@ Keine Werbung im Studio. Medienauswahl speichert nichts.
 
 | Daten | Ort | Zweck | Verlässt das Gerät? |
 |---|---|---|---|
-| „In PhotoMaid ausgeblendet“: Medien-IDs (Content-URIs) und Ordnerpfade | App-Einstellungen (Room `key_value`) | Ausgeblendetes in PhotoMaid nicht zeigen; Dateien bleiben unverändert und in anderen Apps sichtbar (kein Tresor) | nein |
+| „In GaleriQ ausgeblendet“: Medien-IDs (Content-URIs) und Ordnerpfade | App-Einstellungen (Room `key_value`) | Ausgeblendetes in GaleriQ nicht zeigen; Dateien bleiben unverändert und in anderen Apps sichtbar (kein Tresor) | nein |
 | Sortierung je Ordner, „Nur Favoriten“ je Ordner, Ordnerlisten-Reihenfolge | App-Einstellungen (Ordnerpfade, keine Medien-IDs) | Ansicht | nein |
 | Eigene Gruppen (Name + Ordnerpfade) | App-Einstellungen | Ordner zusammen anzeigen; nichts verschoben oder kopiert | nein |
 | Kamera-Modell (EXIF `Make`/`Model`) | nur im Arbeitsspeicher der Sitzung | Suche, Info-Blatt | nein; nie gespeichert |

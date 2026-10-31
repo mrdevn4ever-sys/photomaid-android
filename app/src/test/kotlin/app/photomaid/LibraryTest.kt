@@ -27,7 +27,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import java.time.Instant
 
-/** G1: Zeitachse, Filter, Suche ohne Akzente, Auswahl → PhotoMaid-Papierkorb, Betrachter. Ansehen entscheidet nie. */
+/** G1: Zeitachse, Filter, Suche ohne Akzente, Auswahl → GaleriQ-Papierkorb, Betrachter. Ansehen entscheidet nie. */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "+w393dp-h852dp")

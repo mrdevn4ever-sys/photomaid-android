@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 /**
  * Deterministische QA-Umgebung (iOS `QAFixtures`). Existiert ausschließlich im Build-Typ `qa` und wird nur mit
  * dem Intent-Extra `qa-fixtures=true` aktiv (In-Memory-Speicher). Keine persönlichen Daten.
- * Mit `qa-seed-media=true` legt der QA-Build synthetische Bilder (`QA_*.png`, Ordner `Pictures/PhotoMaid-QA`)
+ * Mit `qa-seed-media=true` legt der QA-Build synthetische Bilder (`QA_*.png`, Ordner `Pictures/GaleriQ-QA`)
  * über MediaStore an – für Emulator-Durchgänge (`scripts/ci_emulator_smoke.sh`).
  */
 object QAFixtures {
@@ -33,7 +33,7 @@ object QAFixtures {
 
     private fun seed(app: AppModel) {
         val resolver = app.context.contentResolver
-        val dir = "Pictures/PhotoMaid-QA/"
+        val dir = "Pictures/GaleriQ-QA/"
         val existing = resolver.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI, arrayOf(MediaStore.MediaColumns._ID),
             "${MediaStore.MediaColumns.RELATIVE_PATH} = ?", arrayOf(dir), null,

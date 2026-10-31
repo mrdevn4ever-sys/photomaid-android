@@ -117,7 +117,7 @@ class OrganizeUiTest {
         start()
         val media = ordered()
         val id = runBlocking { app.organize.createAlbum("Alt", media.take(2)) }!!
-        lib.removed += media[0].id   // außerhalb von PhotoMaid gelöscht (ohne Fingerabdruck-Treffer)
+        lib.removed += media[0].id   // außerhalb von GaleriQ gelöscht (ohne Fingerabdruck-Treffer)
         lib.changeToken.value += 1
         rule.setContent { TestHost(app) { OrganizeScreen(OrganizeTarget.AlbumOf(id), nav) {} } }
         pumpUntil { count("org.missing") == 1 }

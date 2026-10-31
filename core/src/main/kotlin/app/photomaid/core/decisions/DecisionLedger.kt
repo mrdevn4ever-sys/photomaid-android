@@ -122,7 +122,7 @@ class DecisionLedger(
 
     suspend fun snapshotState(): LedgerState = locked { state }
 
-    /** Items, die aktuell im PhotoMaid-Papierkorb liegen. */
+    /** Items, die aktuell im GaleriQ-Papierkorb liegen. */
     suspend fun basket(): List<ItemRecord> = locked {
         state.records.values.filter { it.disposition == Disposition.MARKED_FOR_CLEANUP }.sortedBy { it.item.description }
     }

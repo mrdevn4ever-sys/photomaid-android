@@ -62,7 +62,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- „Senden an PhotoMaid“: nur Fotos/Videos. Öffnet nur eine Auswahl von Aktionen – nie Behalten/Löschen,
+            <!-- „Senden an GaleriQ“: nur Fotos/Videos. Öffnet nur eine Auswahl von Aktionen – nie Behalten/Löschen,
                  keine dauerhafte Kopie ohne ausdrückliches Speichern. -->
             <intent-filter android:label="@string/share_target_label">
                 <action android:name="android.intent.action.SEND" />

@@ -64,7 +64,7 @@ data class AppSettingsData(
     val editSaveMode: app.photomaid.core.edit.SaveMode = app.photomaid.core.edit.SaveMode.COPY,
     val editorTourSeen: Boolean = false,
     /**
-     * „In PhotoMaid ausblenden“: Ordner (Pfade, inkl. Unterordner) und einzelne Medien (Content-URIs, nur lokal in der
+     * „In GaleriQ ausblenden“: Ordner (Pfade, inkl. Unterordner) und einzelne Medien (Content-URIs, nur lokal in der
      * App gespeichert). Ausgeblendetes erscheint weder im Tab „Fotos“ noch beim Aufräumen; die Dateien bleiben
      * unverändert und in anderen Apps sichtbar. Kein Tresor.
      */
@@ -83,10 +83,10 @@ data class AppSettingsData(
     /** Diashow: Reihenfolge, Dauer, Übergang, Videos, Wiederholen (keine Medien-IDs). */
     val slideshow: app.photomaid.core.library.SlideshowSettings = app.photomaid.core.library.SlideshowSettings(),
     /**
-     * „Endgültig löschen“ (G4): PhotoMaid-Papierkorb leeren löscht direkt (`createDeleteRequest`) statt in den
+     * „Endgültig löschen“ (G4): GaleriQ-Papierkorb leeren löscht direkt (`createDeleteRequest`) statt in den
      * Android-Papierkorb zu legen. Standard AUS – versehentliches Löschen wäre sonst nicht rückgängig zu machen.
      */
     val deletePermanently: Boolean = false,
-    /** Reihenfolge im PhotoMaid-Papierkorb (nur Ansicht). */
+    /** Reihenfolge im GaleriQ-Papierkorb (nur Ansicht). */
     val basketSort: app.photomaid.feature.cleanup.BasketSort = app.photomaid.feature.cleanup.BasketSort.ADDED,
 )

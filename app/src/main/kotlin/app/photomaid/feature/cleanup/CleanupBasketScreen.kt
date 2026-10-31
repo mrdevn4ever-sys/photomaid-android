@@ -101,10 +101,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * Screen 5 – Papierkorb (PhotoMaid-eigen, nichts ist bisher gelöscht). Reale Kandidaten, Vorschau, Abwahl,
+ * Screen 5 – Papierkorb (GaleriQ-eigen, nichts ist bisher gelöscht). Reale Kandidaten, Vorschau, Abwahl,
  * genaue Beschreibung der Operation. Gemischter Korb wird nach Provider getrennt bestätigt.
  */
-/** Reihenfolge im PhotoMaid-Papierkorb (nur Ansicht): zuletzt hineingelegt, Aufnahmedatum, Größe (unbekannt am Ende). */
+/** Reihenfolge im GaleriQ-Papierkorb (nur Ansicht): zuletzt hineingelegt, Aufnahmedatum, Größe (unbekannt am Ende). */
 enum class BasketSort(val label: Int) { ADDED(R.string.basket_sort_added), TAKEN(R.string.basket_sort_taken), SIZE(R.string.lib_sort_largest) }
 
 private val CleanupOperationKind.isPhotoLibrary get() =

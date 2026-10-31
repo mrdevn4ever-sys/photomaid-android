@@ -77,7 +77,7 @@ enum class LibraryMode(val label: Int) { TIMELINE(R.string.lib_mode_timeline), F
 /**
  * Tab „Fotos“: Zeitachse (Tag · Monat · Jahr, zwei Finger wechseln die Stufe), Ordner (Baum, Gruppen) und Favoriten
  * (nach Ordnern oder chronologisch). Suche ohne Akzente, Auswahl. Ansehen ist nie eine Entscheidung; nur „In den
- * Papierkorb“ in der Auswahl entscheidet (PhotoMaid-Papierkorb, nichts gelöscht). „In PhotoMaid ausgeblendet“ fehlt hier.
+ * Papierkorb“ in der Auswahl entscheidet (GaleriQ-Papierkorb, nichts gelöscht). „In GaleriQ ausgeblendet“ fehlt hier.
  */
 @Composable
 fun LibraryScreen(nav: Nav, initialMode: LibraryMode = LibraryMode.TIMELINE) {

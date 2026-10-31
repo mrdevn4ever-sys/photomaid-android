@@ -98,7 +98,7 @@ class AppModel(
     val photos: MediaLibrary = app.photomaid.media.ExcludingMediaLibrary(allPhotos, { _settings.value.hiddenMedia }) {
         _settings.value.excludedFolders + _settings.value.hiddenFolders
     }
-    /** Tab „Fotos“: alles außer „In PhotoMaid ausgeblendet“ (vom Aufräumen ausgenommene Ordner bleiben ansehbar). */
+    /** Tab „Fotos“: alles außer „In GaleriQ ausgeblendet“ (vom Aufräumen ausgenommene Ordner bleiben ansehbar). */
     val visiblePhotos: MediaLibrary = app.photomaid.media.ExcludingMediaLibrary(allPhotos, { _settings.value.hiddenMedia }) { _settings.value.hiddenFolders }
     /** Kamera-Modelle aus EXIF für Suche/Info (nur im Speicher). */
     val cameras = app.photomaid.media.CameraIndex { allPhotos.openStream(it) }

@@ -217,7 +217,7 @@ class EditorTest {
         assertTrue(r.replaced)
         assertTrue(a.id in lib.trashed)
         assertEquals(Disposition.KEPT, rec(r.newId)?.disposition)
-        assertFalse(rec(a.id)?.disposition == Disposition.MARKED_FOR_CLEANUP) // nicht mehr im PhotoMaid-Papierkorb
+        assertFalse(rec(a.id)?.disposition == Disposition.MARKED_FOR_CLEANUP) // nicht mehr im GaleriQ-Papierkorb
         assertEquals(SaveMode.REPLACE, app.edits.records.value.first().mode)
         }
     }

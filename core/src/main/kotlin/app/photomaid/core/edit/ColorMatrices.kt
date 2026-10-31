@@ -132,7 +132,7 @@ enum class EditFormat(val mime: String, val extension: String) {
     }
 }
 
-/** Ein von PhotoMaid gespeichertes Ergebnis (nur lokal, für die Liste „Bearbeitet“). */
+/** Ein von GaleriQ gespeichertes Ergebnis (nur lokal, für die Liste „Bearbeitet“). */
 @kotlinx.serialization.Serializable
 data class EditRecord(
     val newId: String,

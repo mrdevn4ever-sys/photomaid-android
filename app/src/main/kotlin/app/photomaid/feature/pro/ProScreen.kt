@@ -98,7 +98,7 @@ import kotlinx.coroutines.withContext
 fun minutesLeft(d: java.time.Duration): Int = ((d.seconds + 59) / 60).toInt().coerceAtLeast(1)
 
 /**
- * Screen 14 – PhotoMaid Pro. Primär: Einmalkauf (echter Storepreis) und Wiederherstellen. Sekundär und ruhig:
+ * Screen 14 – GaleriQ Pro. Primär: Einmalkauf (echter Storepreis) und Wiederherstellen. Sekundär und ruhig:
  * „30 Minuten Pro testen“ (Rewarded, 1× täglich; Papierkorb-Limit bleibt unverändert). Lifetime-Nutzer sehen
  * nur ihren Status – keine Werbung, kein Upsell.
  */

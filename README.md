@@ -1,6 +1,6 @@
-# PhotoMaid (Android)
+# GaleriQ (Android)
 
-Native Android-Version von PhotoMaid (Kotlin, Jetpack Compose): lokaler Ordnungs- und Aufräumassistent
+Native Android-Version von GaleriQ (Kotlin, Jetpack Compose): lokaler Ordnungs- und Aufräumassistent
 für Fotos, Videos, Screenshots und freigegebene Ordner. 1:1-Port der iOS-App.
 
 **Hoch behalten · Links Papierkorb · Rechts später · Runter zurück.**

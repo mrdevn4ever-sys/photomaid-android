@@ -75,7 +75,7 @@ private enum class OriginalState { PRESENT, TRASHED, GONE }
 private data class EditRow(val record: EditRecord, val asset: MediaAsset, val original: OriginalState)
 
 /**
- * Aufräumen › Mediathek › „Bearbeitet“: alle von PhotoMaid gespeicherten Fassungen, neueste zuerst. Einträge, deren
+ * Aufräumen › Mediathek › „Bearbeitet“: alle von GaleriQ gespeicherten Fassungen, neueste zuerst. Einträge, deren
  * Datei verschwunden ist, fallen weg. Bei „Original angepasst“: „Original wiederherstellen“, solange es im
  * Android-Papierkorb liegt. Antippen öffnet die Fassungen im Feed (ab der gewählten).
  */

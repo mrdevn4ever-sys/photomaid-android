@@ -16,7 +16,7 @@ Kein Release, kein Upload in die Play Console und keine Fertigmeldung, solange e
 | 10 | TalkBack-/Schaltersteuerungs-Durchgang, Schriftgröße 200 % auf Gerät, erhöhter Kontrast (Android 14+) | Abnahme | QA |
 | 11 | Performance auf Gerät (Macrobenchmark/Perfetto): 100 schnelle Entscheidungen, 30 Videowechsel, 10 000 Fotos, 4K-Video, HEIC | Abnahme | QA |
 | 12 | Finales App-Icon (aktuell eigener Vektor-Platzhalter) | Design | Inhaber |
-| 13 | Datenschutzerklärung-URL (`-Pphotomaid.privacyPolicyUrl=…`), Play-„Datensicherheit“, Altersfreigabe, Marken-/Store-Konflikt „PhotoMaid“ | Recht/Compliance | Inhaber |
+| 13 | Datenschutzerklärung-URL (`-Pphotomaid.privacyPolicyUrl=…`), Play-„Datensicherheit“, Altersfreigabe, Marken-/Store-Konflikt (früher „PhotoMaid“, dann „Arrumo“ aufgegeben; „GaleriQ“ prüfen) | Recht/Compliance | Inhaber |
 | 14 | Menschliche Code-Review | Abnahme | Inhaber |
 
 | 9 | Favorit/Verschieben: Systemdialoge (`createFavoriteRequest`, `createWriteRequest`) und Sichtbarkeit in OEM-Galerien (Realme, Samsung, Google Fotos) nur auf echtem Gerät prüfbar | Geräteabnahme | Inhaber/Testagent |

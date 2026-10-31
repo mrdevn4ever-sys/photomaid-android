@@ -192,7 +192,7 @@ kein notwendiger Hinweis verloren geht. Gute kurze Texte wurden beibehalten.
 
 Wichtige inhaltliche Präzisierungen:
 
-• PhotoMaid-Papierkorb, Android-Papierkorb und endgültige Dateilöschung werden
+• GaleriQ-Papierkorb, Android-Papierkorb und endgültige Dateilöschung werden
   unterschieden. „Endgültig“ steht nicht mehr pauschal für jede Medienentfernung.
 
 • Die frühere Anzeige „gespart“ bezeichnet nun aussortierten bzw. entfernten
@@ -255,7 +255,7 @@ BidiFormatter bzw. die vorhandene gleichwertige Behandlung verwenden. [6]
 
 Für PhotoMaid bleiben die physischen Gesten aus der Quelle bestehen:
   oben  = behalten und weiter
-  links = PhotoMaid-Papierkorb
+  links = GaleriQ-Papierkorb
   rechts = später
   unten = zurück, ohne neue Entscheidung
 

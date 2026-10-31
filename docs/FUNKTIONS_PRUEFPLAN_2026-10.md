@@ -91,7 +91,7 @@ Spalte „Regeln“: welche der drei harten Regeln hier besonders zählt.
 ### 2.5 Papierkorb & Löschen
 | ID | Funktion | Prüfen | Erwartet | Regeln |
 |---|---|---|---|---|
-| P1 | PhotoMaid-Papierkorb, Sortierung (hinzugefügt/aufgenommen/Größe) | sortieren, Vorschau, abwählen | Untere Taste verdeckt keine Kachel | W, B |
+| P1 | GaleriQ-Papierkorb, Sortierung (hinzugefügt/aufgenommen/Größe) | sortieren, Vorschau, abwählen | Untere Taste verdeckt keine Kachel | W, B |
 | P2 | Leeren → Android-Papierkorb | leeren, Systemdialog OK/Abbrechen | Abbrechen ändert nichts | B |
 | P3 | „Endgültig löschen“ (Einstellung, Standard aus) | einschalten, leeren | deutlich andere Bestätigung | B |
 | P4 | Android-Papierkorb-Ansicht (Restzeit, wiederherstellen, löschen) | wählen, wiederherstellen | zurückgeholt = behalten | B |

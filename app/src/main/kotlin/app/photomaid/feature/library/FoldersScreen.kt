@@ -547,7 +547,7 @@ private fun SubfolderCard(n: FolderNode, cover: MediaAsset?, onClick: () -> Unit
 // ---- Ausgeblendet ---------------------------------------------------------------------------------------------
 
 /**
- * „Ausgeblendet“: Ordner und Medien, die PhotoMaid nicht zeigt (weder im Tab „Fotos“ noch beim Aufräumen). Die Dateien
+ * „Ausgeblendet“: Ordner und Medien, die GaleriQ nicht zeigt (weder im Tab „Fotos“ noch beim Aufräumen). Die Dateien
  * bleiben unverändert und in anderen Apps sichtbar. Wieder einblenden je Ordner bzw. per Auswahl.
  */
 @Composable

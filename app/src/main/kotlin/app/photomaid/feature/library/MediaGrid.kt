@@ -284,7 +284,7 @@ private fun FastScroller(grid: LazyGridState, cells: List<GridCell>, modifier: M
 }
 
 /**
- * Aktionen für eine Auswahl (Favorit, Verschieben, Collage, Ausblenden, PhotoMaid-Papierkorb) samt Blättern und
+ * Aktionen für eine Auswahl (Favorit, Verschieben, Collage, Ausblenden, GaleriQ-Papierkorb) samt Blättern und
  * Meldungen. Nichts davon ist eine Entscheidung außer „In den Papierkorb“ (Ledger, Favoritenschutz).
  * [unhide] = Ansicht „Ausgeblendet“: statt Ausblenden „Wieder einblenden“, kein Papierkorb.
  */

@@ -1,4 +1,4 @@
-# PhotoMaid iOS → Android: Audit und Portierungsmatrix
+# GaleriQ iOS → Android: Audit und Portierungsmatrix
 
 Quelle der Wahrheit: iOS-Repository `mrdevn4ever-sys/photomaid` (Stand `main` @ `21717f3`), **read-only**.
 Status-Vokabular der Parität: MATCH · ANDROID PLATFORM ADAPTATION · BLOCKED BY PLATFORM · BUG.
@@ -34,7 +34,7 @@ Status-Vokabular der Parität: MATCH · ANDROID PLATFORM ADAPTATION · BLOCKED B
 | 11 | Später | `Later/LaterView.swift` | Push | `feature/later/LaterScreen.kt` | Route `later` |
 | 12 | Regeln & Routinen | `Rules/RulesView.swift`, `RulesStore.swift` | Push | `feature/rules/RulesScreen.kt` (+ `RuleEditor`) | Route `rules` |
 | 13 | Verlauf | `History/HistoryView.swift` | Tab 4 | `feature/history/HistoryScreen.kt` | Bottom-Tab 4 |
-| 14 | PhotoMaid Pro | `Pro/ProView.swift` | Sheet | `feature/pro/ProScreen.kt` | Route `pro` |
+| 14 | GaleriQ Pro | `Pro/ProView.swift` | Sheet | `feature/pro/ProScreen.kt` | Route `pro` |
 | 15 | Einstellungen | `Settings/SettingsView.swift` (+ `HelpView`) | Sheet über Zahnrad | `feature/settings/SettingsScreen.kt`, `HelpScreen.kt` | Route `settings`, `help` |
 
 Nicht vorhanden in iOS (daher auch **nicht** auf Android): eigener Video-Tab, „Ähnliche/Unscharfe“,

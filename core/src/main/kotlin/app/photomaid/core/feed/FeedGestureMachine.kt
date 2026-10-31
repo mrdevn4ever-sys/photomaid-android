@@ -13,7 +13,7 @@ enum class FeedIntent {
     /** hoch: Behalten, danach nächstes Medium. */
     KEEP,
 
-    /** links: In den PhotoMaid-Papierkorb (nichts wird gelöscht), danach nächstes Medium. */
+    /** links: In den GaleriQ-Papierkorb (nichts wird gelöscht), danach nächstes Medium. */
     MARK_FOR_CLEANUP,
 
     /** rechts (gerade oder schräg nach unten): Später mit Standardtermin, danach nächstes Medium. */

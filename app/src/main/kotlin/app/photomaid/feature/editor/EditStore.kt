@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 
-/** Lokale Liste der von PhotoMaid gespeicherten Bearbeitungen (für „Bearbeitet“). Nie hochgeladen. */
+/** Lokale Liste der von GaleriQ gespeicherten Bearbeitungen (für „Bearbeitet“). Nie hochgeladen. */
 class EditStore(private val store: KeyValueStore) {
     private val _records = MutableStateFlow<List<EditRecord>>(emptyList())
     val records: StateFlow<List<EditRecord>> = _records.asStateFlow()

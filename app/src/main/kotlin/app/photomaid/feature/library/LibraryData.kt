@@ -81,7 +81,7 @@ fun timelineTitle(context: Context, key: TimelineKey, level: TimelineLevel, loca
 }
 
 /**
- * In den PhotoMaid-Papierkorb legen (eine Entscheidung je Medium, derselbe Ledger-Weg wie im Feed). Nichts wird
+ * In den GaleriQ-Papierkorb legen (eine Entscheidung je Medium, derselbe Ledger-Weg wie im Feed). Nichts wird
  * gelöscht; endgültig entfernt wird erst im Papierkorb mit Systembestätigung.
  */
 suspend fun markForCleanup(app: AppModel, assets: List<MediaAsset>): Map<MediaAsset, Disposition> {
@@ -151,7 +151,7 @@ suspend fun setFavoritesOnly(app: AppModel, key: String, on: Boolean) = app.upda
     s.copy(folderFavoritesOnly = (s.folderFavoritesOnly - key).let { if (on) it + key else it })
 }
 
-/** Medien in PhotoMaid ausblenden bzw. wieder einblenden (nur lokale Liste; die Datei bleibt unverändert). */
+/** Medien in GaleriQ ausblenden bzw. wieder einblenden (nur lokale Liste; die Datei bleibt unverändert). */
 suspend fun setMediaHidden(app: AppModel, ids: Collection<String>, hidden: Boolean) {
     if (ids.isEmpty()) return
     app.updateSettings { s -> s.copy(hiddenMedia = if (hidden) (s.hiddenMedia + ids).distinct() else s.hiddenMedia - ids.toSet()) }

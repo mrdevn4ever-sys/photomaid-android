@@ -4,7 +4,7 @@ import app.photomaid.core.organize.MediaFolders
 
 /**
  * Mediathek ohne ausgenommene bzw. ausgeblendete Ordner (inkl. Unterordner) und ohne einzeln ausgeblendete Medien.
- * - [AppModel.photos] (Aufräumen): ohne „Ausgenommene Ordner“ und ohne „In PhotoMaid ausgeblendet“.
+ * - [AppModel.photos] (Aufräumen): ohne „Ausgenommene Ordner“ und ohne „In GaleriQ ausgeblendet“.
  * - [AppModel.visiblePhotos] (Tab „Fotos“): nur ohne Ausgeblendetes – ausgenommene Ordner bleiben ansehbar.
  * Ausgeblendete Medien erscheinen in keinem Feed, keiner Zahl, keiner Sammlung und keiner Monatsübersicht.
  * Gezielte Abfragen nach IDs (Papierkorb, Verlauf, Später) bleiben unverändert, damit bereits getroffene

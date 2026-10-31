@@ -154,7 +154,7 @@ Gleicher Dateiinhalt; keine Erkennung bloß ähnlicher Bilder.
   zh-CN: 完全相同的副本
 
 ANDROID_PAPIERKORB
-Systemseitiger Papierkorb nach bestätigtem Entfernen von Fotos/Videos; nicht die Auswahl im PhotoMaid-Papierkorb.
+Systemseitiger Papierkorb nach bestätigtem Entfernen von Fotos/Videos; nicht die Auswahl im GaleriQ-Papierkorb.
   de: Android-Papierkorb
   en: Android trash
   es: papelera de Android

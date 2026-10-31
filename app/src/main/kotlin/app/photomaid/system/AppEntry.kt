@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * Einstiege von außen: App-Shortcuts (Launcher, angeheftet) und das Teilen-Ziel („Senden an PhotoMaid“, auch direkt
+ * Einstiege von außen: App-Shortcuts (Launcher, angeheftet) und das Teilen-Ziel („Senden an GaleriQ“, auch direkt
  * an einen gespeicherten Ablauf). Ein Einstieg öffnet nur eine Ansicht – nie eine Entscheidung, nie Löschen.
  * Die App-Oberfläche holt den offenen Einstieg ab, sobald sie bereit ist (nach dem Onboarding).
  */
