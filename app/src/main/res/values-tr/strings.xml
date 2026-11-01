@@ -1778,8 +1778,8 @@
     <string name="ach_badges">Rozetler</string>
     <string name="ach_badges_count">%2$d içinden %1$d</string>
     <plurals name="ach_days_unit">
-        <item quantity="one">gün</item>
-        <item quantity="other">gün</item>
+        <item quantity="one">%d gün</item>
+        <item quantity="other">%d gün</item>
     </plurals>
     <string name="ach_earned">Kazanıldı</string>
     <string name="ach_earned_on">%s</string>

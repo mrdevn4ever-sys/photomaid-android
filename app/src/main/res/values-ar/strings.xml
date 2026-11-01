@@ -2078,12 +2078,12 @@
     <string name="ach_badges">الشارات</string>
     <string name="ach_badges_count">%1$d من %2$d</string>
     <plurals name="ach_days_unit">
-        <item quantity="zero">يوم</item>
-        <item quantity="one">يوم</item>
-        <item quantity="two">يومان</item>
-        <item quantity="few">أيام</item>
-        <item quantity="many">يومًا</item>
-        <item quantity="other">يوم</item>
+        <item quantity="zero">%d يوم</item>
+        <item quantity="one">%d يوم</item>
+        <item quantity="two">%d يومان</item>
+        <item quantity="few">%d أيام</item>
+        <item quantity="many">%d يومًا</item>
+        <item quantity="other">%d يوم</item>
     </plurals>
     <string name="ach_earned">تم تحقيقه</string>
     <string name="ach_earned_on">في %s</string>

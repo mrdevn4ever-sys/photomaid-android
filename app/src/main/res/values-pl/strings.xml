@@ -1928,10 +1928,10 @@
     <string name="ach_badges">Odznaki</string>
     <string name="ach_badges_count">%1$d z %2$d</string>
     <plurals name="ach_days_unit">
-        <item quantity="one">dzień</item>
-        <item quantity="few">dni</item>
-        <item quantity="many">dni</item>
-        <item quantity="other">dnia</item>
+        <item quantity="one">%d dzień</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="many">%d dni</item>
+        <item quantity="other">%d dnia</item>
     </plurals>
     <string name="ach_earned">Zdobyte</string>
     <string name="ach_earned_on">%s</string>

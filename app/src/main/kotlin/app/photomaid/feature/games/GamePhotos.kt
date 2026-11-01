@@ -2,7 +2,7 @@ package app.photomaid.feature.games
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
+import androidx.core.net.toUri
 import android.util.Size
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -53,7 +53,7 @@ object GamePhotos {
         }
 
     private fun thumbnail(context: Context, id: String, side: Int): ImageBitmap? = runCatching {
-        val bmp: Bitmap = context.contentResolver.loadThumbnail(Uri.parse(id), Size(side, side), null)
+        val bmp: Bitmap = context.contentResolver.loadThumbnail(id.toUri(), Size(side, side), null)
         bmp.asImageBitmap()
     }.getOrNull()
 }

@@ -1703,7 +1703,7 @@
     <string name="ach_badges">バッジ</string>
     <string name="ach_badges_count">%2$d中%1$d</string>
     <plurals name="ach_days_unit">
-        <item quantity="other">日</item>
+        <item quantity="other">%d日</item>
     </plurals>
     <string name="ach_earned">達成</string>
     <string name="ach_earned_on">%sに達成</string>

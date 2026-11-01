@@ -1703,7 +1703,7 @@
     <string name="ach_badges">배지</string>
     <string name="ach_badges_count">%2$d개 중 %1$d개</string>
     <plurals name="ach_days_unit">
-        <item quantity="other">일</item>
+        <item quantity="other">%d일</item>
     </plurals>
     <string name="ach_earned">달성</string>
     <string name="ach_earned_on">%s 달성</string>

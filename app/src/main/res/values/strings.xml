@@ -1778,8 +1778,8 @@
     <string name="ach_badges">Badges</string>
     <string name="ach_badges_count">%1$d of %2$d</string>
     <plurals name="ach_days_unit">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
     </plurals>
     <string name="ach_earned">Achieved</string>
     <string name="ach_earned_on">on %s</string>

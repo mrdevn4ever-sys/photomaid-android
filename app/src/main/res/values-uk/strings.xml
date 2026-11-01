@@ -1928,10 +1928,10 @@
     <string name="ach_badges">Значки</string>
     <string name="ach_badges_count">%1$d з %2$d</string>
     <plurals name="ach_days_unit">
-        <item quantity="one">день</item>
-        <item quantity="few">дні</item>
-        <item quantity="many">днів</item>
-        <item quantity="other">дня</item>
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дні</item>
+        <item quantity="many">%d днів</item>
+        <item quantity="other">%d дня</item>
     </plurals>
     <string name="ach_earned">Отримано</string>
     <string name="ach_earned_on">%s</string>

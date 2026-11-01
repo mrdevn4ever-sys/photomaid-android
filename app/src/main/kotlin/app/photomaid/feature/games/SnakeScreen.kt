@@ -83,6 +83,7 @@ fun SnakeScreen(onClose: () -> Unit, onOtherGames: () -> Unit) {
     val app = LocalApp.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val access by app.photos.access.collectAsState()
     val haptics = LocalHapticFeedback.current
     val prefs by app.games.snakePreferences.collectAsState()
     val records by app.games.records.collectAsState()
@@ -162,7 +163,7 @@ fun SnakeScreen(onClose: () -> Unit, onOtherGames: () -> Unit) {
             }
             r == null -> SnakeSetup(prefs, source, missing, records.snakeOverallBest, onSource = { source = it; missing = false },
                 onPrefs = ::setPrefs, onStart = { start(true) }, onSymbols = { start(false) },
-                canRead = app.photos.access.value.canRead)
+                canRead = access.canRead)
             else -> {
                 BoxWithConstraints(Modifier.fillMaxSize()) {
                     val vp = PhotoSnakeViewport.of(maxWidth.value.toDouble(), maxHeight.value.toDouble())

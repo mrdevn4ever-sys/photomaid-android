@@ -62,11 +62,15 @@ Wischgeste gesteuert (Start/Weiter auch per Knopf); Richtungen in RTL physisch.
 | iCloud-Fotos laden, Live Photos, iPhone Duo, Liquid Glass, ATT-Abfrage | Plattformgrenze | entfällt |
 | Suche im Tab „Fotos“ entfernt (iOS) | iOS-Grund (Dateinamen-Lesen langsam, keine Personennamen) gilt auf Android nicht | Android behält die Suche |
 
-## 4. Prüfungen
+## 4. Prüfungen (01.11.2026, Linux-Container, JDK 21, Android-SDK 37)
 
 | Prüfung | Status |
 |---|---|
-| `./gradlew :core:test` (inkl. neuer `GamesTest`, `ReviewProgressTest`) | siehe Abschlussmeldung |
-| `./gradlew :app:compileDebugKotlin` | siehe Abschlussmeldung |
-| `./gradlew :app:testDebugUnitTest`, `lintDebug`, `assembleRelease` | siehe Abschlussmeldung |
+| `./gradlew :core:test` (inkl. neuer `GamesTest`, `ReviewProgressTest`) | PASS |
+| `./gradlew :app:testDebugUnitTest` (Robolectric, 571 Tests inkl. neuer `GamesUiTest`) | 569 PASS, 2 FAIL in bestehenden Tests ohne Bezug zu dieser Änderung: `RewardedProTest.usedTodayShowsCalmStateWithoutCountdown` setzt „vor 40 Minuten“ und schlägt nur zwischen 0:00 und 0:40 Uhr fehl (nach 0:40 erneut ausgeführt: PASS); `PremiumPassTest.gestureHintShownOnFirstFeedOnly` Zeitüberschreitung unter Volllast (einzeln: PASS) |
+| `./gradlew :app:lintDebug` | PASS (nach Korrektur von 3 Fehlern im neuen Code) |
+| `./gradlew :app:assembleRelease` | PASS |
 | Geräte-/Emulatorlauf der Spiele | NOT RUN (kein KVM im Container) |
+
+Hinweis Build-Umgebung: `repo.maven.apache.org` antwortete im Container mit HTTP 429; gebaut wurde über einen lokalen
+Gradle-Init-Spiegel (nicht im Repository).

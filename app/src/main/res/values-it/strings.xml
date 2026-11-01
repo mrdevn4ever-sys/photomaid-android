@@ -1853,9 +1853,9 @@
     <string name="ach_badges">Badge</string>
     <string name="ach_badges_count">%1$d di %2$d</string>
     <plurals name="ach_days_unit">
-        <item quantity="one">giorno</item>
-        <item quantity="many">giorni</item>
-        <item quantity="other">giorni</item>
+        <item quantity="one">%d giorno</item>
+        <item quantity="many">%d giorni</item>
+        <item quantity="other">%d giorni</item>
     </plurals>
     <string name="ach_earned">Ottenuto</string>
     <string name="ach_earned_on">il %s</string>

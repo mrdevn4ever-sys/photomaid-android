@@ -81,6 +81,7 @@ fun MemoryScreen(onClose: () -> Unit, onOtherGames: () -> Unit) {
     val app = LocalApp.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val access by app.photos.access.collectAsState()
     val records by app.games.records.collectAsState()
     var source by remember { mutableStateOf(GamePhotoSource.LIBRARY) }
     var pairCount by remember { mutableIntStateOf(6) }
@@ -142,7 +143,7 @@ fun MemoryScreen(onClose: () -> Unit, onOtherGames: () -> Unit) {
                 if (missing) Text(stringResource(R.string.game_not_enough_photos), color = GameColors.accent, style = AppTypography.footnote)
                 Text(stringResource(R.string.game_setup_private), color = GameColors.secondary, style = AppTypography.footnote)
                 GameButton(stringResource(R.string.snake_start_game), Modifier.testTag("memory.start"), prominent = true,
-                    enabled = app.photos.access.value.canRead) { startPhotos() }
+                    enabled = access.canRead) { startPhotos() }
                 GameButton(stringResource(R.string.game_setup_pairs_symbols), Modifier.testTag("memory.symbols")) { startMotifs() }
             }
             else -> MemoryBoard(g, images, revision, elapsed, newBest,

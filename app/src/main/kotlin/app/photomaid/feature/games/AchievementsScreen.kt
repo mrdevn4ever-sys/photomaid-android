@@ -53,7 +53,6 @@ import java.text.NumberFormat
 import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.Date
-import java.util.Locale
 
 /** Tagesziel wie iOS-Standard (Einstellungen › Tagesziel 50); auf Android noch nicht einstellbar. */
 private const val DAILY_GOAL = 50
@@ -85,7 +84,8 @@ fun AchievementsScreen(onClose: () -> Unit) {
             dailyGoal = DAILY_GOAL, pairsTimes = records.memory.map { it.category.pairs to it.seconds },
             snakeBest = records.snakeOverallBest, blocksBest = blocks.best))
     }
-    val nf = NumberFormat.getIntegerInstance()
+    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]
+    val nf = remember(locale) { NumberFormat.getIntegerInstance(locale) }
     GameScaffold(stringResource(R.string.ach_title), "achievements", onClose = onClose, onOtherGames = null) {
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(stringResource(R.string.ach_sub), color = GameColors.secondary, style = AppTypography.subheadline)
@@ -102,7 +102,7 @@ fun AchievementsScreen(onClose: () -> Unit) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Box(Modifier.weight(1f)) {
                     GameSetupCard(stringResource(R.string.ach_streak)) {
-                        Text(nf.format(progress.streak) + " " + pluralStringResource(R.plurals.ach_days_unit, progress.streak),
+                        Text(pluralStringResource(R.plurals.ach_days_unit, progress.streak, progress.streak),
                             Modifier.testTag("achievements.streak"), style = AppTypography.title, color = GameColors.text)
                     }
                 }
@@ -119,7 +119,7 @@ fun AchievementsScreen(onClose: () -> Unit) {
                 val max = (week.maxOfOrNull { it.reviewed } ?: 0).coerceAtLeast(1)
                 Row(Modifier.fillMaxWidth().height(96.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.Bottom) {
                     week.forEach { d ->
-                        val name = d.day.toLocalDate().dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.getDefault())
+                        val name = d.day.toLocalDate().dayOfWeek.getDisplayName(TextStyle.NARROW, locale)
                         Column(Modifier.weight(1f).fillMaxHeight().semantics { contentDescription = "$name: ${d.reviewed}" },
                             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Bottom) {
                             Box(Modifier.fillMaxWidth().weight(1f, fill = false).height((64f * d.reviewed / max).coerceAtLeast(3f).dp)
