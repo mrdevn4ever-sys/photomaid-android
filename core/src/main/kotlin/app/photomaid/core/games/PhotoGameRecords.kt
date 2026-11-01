@@ -66,6 +66,11 @@ class PhotoGameRecords(
         return true
     }
 
+    companion object {
+        /** Unabhängige Kopie (Zustände in der Oberfläche werden nie geteilt verändert). */
+        fun copyOf(r: PhotoGameRecords) = PhotoGameRecords(r.memoryList.toMutableList(), r.snakeList.toMutableList())
+    }
+
     /** Beim Laden jeden Eintrag erneut prüfen – beschädigte lokale Daten erzeugen nie einen Rekord. */
     fun sanitized(): PhotoGameRecords {
         val clean = PhotoGameRecords()

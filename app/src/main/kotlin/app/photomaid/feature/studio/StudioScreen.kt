@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.SwapHoriz
 import androidx.compose.material.icons.rounded.LocationOff
 import androidx.compose.material.icons.rounded.ViewDay
 import androidx.compose.material.icons.rounded.Gif
+import androidx.compose.material.icons.rounded.SportsEsports
 import app.photomaid.core.batch.GifPlan
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -176,6 +177,14 @@ fun StudioScreen(nav: Nav) {
                             })
                         }
                     }
+                }
+            }
+            // „Kurze Pause“ (iOS-Port): Paare, Foto-Snake, Foto Blocks.
+            Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {
+                SectionTitle(stringResource(R.string.games_choose))
+                RowGroup {
+                    ListRow(Icons.Rounded.SportsEsports, stringResource(R.string.memory_break), Modifier.testTag("studio.games"), tint = c.later,
+                        tile = c.later.copy(alpha = 0.13f), subtitle = stringResource(R.string.art_pause_intro)) { nav.openGames() }
                 }
             }
             if (drafts.isNotEmpty()) Column(verticalArrangement = Arrangement.spacedBy(AppSpacing.headerGap)) {

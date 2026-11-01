@@ -88,6 +88,8 @@ class AppModel(
     /** Wanduhr in ms (Werbeabstand, Anzeigedauer). Tests können sie verschieben. */
     var wallClockMs: () -> Long = { System.currentTimeMillis() }
     val store = KeyValueStore(db)
+    /** Spiele „Kurze Pause“ (iOS-Port): nur Zahlen, nie eine Entscheidung. */
+    val games = app.photomaid.feature.games.GameStore(store)
     val ledger = DecisionLedger(persistence, SystemClock)
     private val _settings = MutableStateFlow(AppSettingsData())
     val settings: StateFlow<AppSettingsData> = _settings.asStateFlow()

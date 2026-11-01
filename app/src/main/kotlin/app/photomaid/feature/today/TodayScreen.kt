@@ -7,6 +7,8 @@ import app.photomaid.design.RowDividerInset
 import app.photomaid.design.RowDivider
 import app.photomaid.design.RowStatus
 import app.photomaid.design.RowGroup
+import androidx.compose.material.icons.rounded.SportsEsports
+import androidx.compose.material.icons.rounded.EmojiEvents
 import app.photomaid.design.ListRow
 import app.photomaid.design.AppControl
 import androidx.compose.material.icons.automirrored.rounded.ArrowForward
@@ -238,6 +240,14 @@ fun TodayScreen(nav: Nav) {
             }
             // Schnellzugriffe: gefilterte Einstiege in denselben Feed; neu berechnet bei Mediathek- oder Entscheidungsänderung.
             if (access.canRead) QuickAccessSection(nav, snapshot, pending?.toSet())
+            // „Kurze Pause“ (iOS-Port): Spiele mit eigenen Fotos – nie eine Entscheidung.
+            RowGroup {
+                ListRow(Icons.Rounded.SportsEsports, stringResource(R.string.memory_break), Modifier.testTag("today.games"), tint = c.later,
+                    tile = c.later.copy(alpha = 0.12f), subtitle = stringResource(R.string.art_pause_intro), onClick = nav::openGames)
+                RowDivider(RowDividerInset)
+                ListRow(Icons.Rounded.EmojiEvents, stringResource(R.string.ach_title), Modifier.testTag("today.achievements"), tint = c.accent,
+                    tile = c.accent.copy(alpha = 0.12f), subtitle = stringResource(R.string.ach_sub), onClick = nav::openAchievements)
+            }
             // Leiser Pro-Hinweis: nur Free, erst ab dem zweiten Nutzungstag – dieselbe Zeile wie alle anderen, kein Banner.
             val firstDay = settings.firstSeenDay
             if (app.capabilities.tier == Capabilities.Tier.FREE && firstDay != null && app.today > firstDay) RowGroup {

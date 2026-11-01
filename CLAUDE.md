@@ -129,6 +129,13 @@ Kein Flutter, React Native, WebView-Oberfläche. Bei Widerspruch gewinnt das Ver
   Ersparnis erst, wenn alle Originale im Papierkorb liegen und alle Größen bekannt sind (`BatchSummary.freedLaterBytes`), und
   immer als „noch nicht frei“ (frei erst, wenn Android den Papierkorb leert); keine feste Papierkorb-Frist behaupten.
 
+- Kurze Pause + Erfolge (iOS-Port 2026-11, `feature/games/`, Kern `core/.../games/`, `core/.../progress/ReviewProgress.kt`):
+  Paare, Foto-Snake (nur Wischgesten lenken, Start/Weiter auch per Knopf, keine Richtungstasten), Foto Blocks, Bestwerte,
+  Erfolge (Level, Serie mit einem Pausentag je Woche, Tagesziel 50, Abzeichen nur aus echten Daten, nie fürs Löschen).
+  Spielen/Erfolge sind NIE eine Entscheidung (kein Ledger), keine Werbung; Spielstände nur Zahlen (`GameStore`,
+  `KeyValueStore`), Fotos nur als Vorschau im Arbeitsspeicher aus `AppModel.photos`. Bericht: `docs/IOS_PORT_2026-11.md`.
+  Texte aus iOS übernehmen: `scripts/import_ios_strings.py`.
+
 ## Verbote
 
 - NIE verzerren (Nutzer-Grundsatz 2026-10-02): Fotos/Videos nur einpassen (Fit) oder beschneiden (Fill/Crop), nie

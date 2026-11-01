@@ -1,5 +1,7 @@
 package app.photomaid.navigation
 
+import app.photomaid.feature.games.GamesScreen
+import app.photomaid.feature.games.AchievementsScreen
 import app.photomaid.feature.workflow.WorkflowRunScreen
 import app.photomaid.feature.workflow.WorkflowEditorScreen
 import app.photomaid.feature.workflow.WorkflowsScreen
@@ -190,6 +192,10 @@ interface Nav {
     /** Studio P6: Video zusammenfügen / Diashow als Video. */
     fun openMovie(request: MovieRequest) {}
     fun openTool(request: ToolRequest) {}
+    /** „Kurze Pause“: Spiele (iOS-Port), nie eine Entscheidung. */
+    fun openGames() {}
+    /** „Erfolge“ (iOS-Port): nur eigene Zahlen, nie eine Entscheidung. */
+    fun openAchievements() {}
     fun openSettings()
     fun openPro()
     fun openPrivacy()
@@ -206,7 +212,7 @@ object Routes {
     const val SOURCES_MODAL = "sourcesModal"; const val EXCLUDED = "excluded"; const val MONTHS = "months"
     const val GRID = "grid/{id}"; const val EDITOR = "editor/{id}"; const val EDITS = "edits"; const val STUDIO = "studio"
     const val LIBRARY = "library"; const val VIEWER = "viewer/{id}"; const val FOLDER = "folder/{target}"; const val HIDDEN = "hidden"; const val SLIDESHOW = "slideshow/{id}"; const val SYSTEM_TRASH = "systemTrash"; const val MOVIE = "movie/{id}"; const val TOOLS = "tools/{id}"
-    const val PICKER = "picker/{id}"; const val COLLAGE = "collage/{id}"
+    const val PICKER = "picker/{id}"; const val COLLAGE = "collage/{id}"; const val GAMES = "games"; const val ACHIEVEMENTS = "achievements"
     fun editor(id: String) = "editor/$id"
     fun grid(id: String) = "grid/$id"
     fun feed(id: String) = "feed/$id"
@@ -302,6 +308,8 @@ private fun RootNav(app: AppModel) {
             }
             override fun openMovie(request: MovieRequest) { MovieRequests.map[request.id] = request; root.navigate("movie/${request.id}") }
             override fun openTool(request: ToolRequest) { ToolRequests.map[request.id] = request; root.navigate("tools/${request.id}") }
+            override fun openGames() = root.navigate(Routes.GAMES)
+            override fun openAchievements() = root.navigate(Routes.ACHIEVEMENTS)
             override fun openSlideshow(request: SlideshowRequest) {
                 SlideshowRequests.map[request.id] = request; root.navigate("slideshow/${request.id}")
             }
@@ -465,6 +473,8 @@ private fun RootNav(app: AppModel) {
             if (req == null) LaunchedEffect(entry) { close() }
             else CollageScreen(req, nav, pick = nav::openPicker, onClose = { close() })
         }
+        composable(Routes.GAMES) { GamesScreen(onClose = { root.popBackStack() }) }
+        composable(Routes.ACHIEVEMENTS) { AchievementsScreen(onClose = { root.popBackStack() }) }
         composable(Routes.PRO) { ProScreen(nav) }
         composable(Routes.PRIVACY) { PrivacyAccessScreen(onboarding = false, onDone = { root.popBackStack() }) }
     }
